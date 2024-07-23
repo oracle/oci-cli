@@ -246,6 +246,8 @@ IGNORED_COMMANDS = [
     ['database-management', 'managed-database', 'load-spb-from-cc-with-secret'],
     ['database-migration', 'migration-object-type-summary'],
     ['db', 'exadb-vm-cluster', 'list'],
+    ['apm-synthetics', 'monitor', 'create-sql-monitor'],
+    ['apm-synthetics', 'monitor', 'update-sql-monitor'],
 ]
 
 IGNORED_COMMANDS_DOCS = [

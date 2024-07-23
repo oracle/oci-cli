@@ -64,6 +64,12 @@ def security_assessment_group():
     pass
 
 
+@click.command(cli_util.override('data_safe.sensitive_data_model_sensitive_type_collection_group.command_name', 'sensitive-data-model-sensitive-type-collection'), cls=CommandGroupWithAlias, help="""A collection of sensitive types summary objects present in a sensitive data model.""")
+@cli_util.help_option_group
+def sensitive_data_model_sensitive_type_collection_group():
+    pass
+
+
 @click.command(cli_util.override('data_safe.on_prem_connector_group.command_name', 'on-prem-connector'), cls=CommandGroupWithAlias, help="""A Data Safe on-premises connector that enables Data Safe to connect to on-premises databases.""")
 @cli_util.help_option_group
 def on_prem_connector_group():
@@ -463,6 +469,7 @@ data_safe_root_group.add_command(data_safe_configuration_group)
 data_safe_root_group.add_command(database_view_access_entry_group)
 data_safe_root_group.add_command(sensitive_type_group)
 data_safe_root_group.add_command(security_assessment_group)
+data_safe_root_group.add_command(sensitive_data_model_sensitive_type_collection_group)
 data_safe_root_group.add_command(on_prem_connector_group)
 data_safe_root_group.add_command(sql_firewall_policy_group)
 data_safe_root_group.add_command(work_request_group)
@@ -2439,6 +2446,9 @@ def create_data_safe_private_endpoint(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.option('--discovery-type', help=u"""The type of the discovery job. It defines the job's scope. NEW identifies new sensitive columns in the target database that are not in the sensitive data model. DELETED identifies columns that are present in the sensitive data model but have been deleted from the target database. MODIFIED identifies columns that are present in the target database as well as the sensitive data model but some of their attributes have been modified. ALL covers all the above three scenarios and reports new, deleted and modified columns.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the discovery job. Does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--schemas-for-discovery', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas to be scanned by the discovery job. If not provided, the schemasForDiscovery attribute of the sensitive data model is used to get the list of schemas.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tables-for-discovery', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The data discovery jobs will scan the tables specified here, including both schemas and tables. In the absence of explicit input, the list of tables is obtained from the tablesForDiscovery attribute of the sensitive data model.
+
+This option is a JSON list with items of type TablesForDiscovery.  For documentation on TablesForDiscovery please see our API reference: https://docs.cloud.oracle.com/api/#/en/datasafe/20181201/datatypes/TablesForDiscovery.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sensitive-type-ids-for-discovery', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the sensitive types to be used by the discovery job. If not provided, the sensitiveTypeIdsForDiscovery attribute of the sensitive data model is used to get the list of sensitive types.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-sample-data-collection-enabled', type=click.BOOL, help=u"""Indicates if the discovery job should collect and store sample data values for the discovered columns. Sample data helps review the discovered columns and ensure that they actually contain sensitive data. As it collects original data from the target database, it's disabled by default and should be used only if it's acceptable to store sample data in Data Safe's repository in Oracle Cloud. Note that sample data values are not collected for columns with the following data types: LONG, LOB, RAW, XMLTYPE and BFILE.""")
 @cli_util.option('--is-app-defined-relation-discovery-enabled', type=click.BOOL, help=u"""Indicates if the discovery job should identify potential application-level (non-dictionary) referential relationships between columns. Note that data discovery automatically identifies and adds database-level (dictionary-defined) relationships. This option helps identify application-level relationships that are not defined in the database dictionary, which in turn, helps identify additional sensitive columns and preserve referential integrity during data masking. It's disabled by default and should be used only if there is a need to identify application-level relationships.""")
@@ -2453,12 +2463,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'tables-for-discovery': {'module': 'data_safe', 'class': 'list[TablesForDiscovery]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'DiscoveryJob'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'tables-for-discovery': {'module': 'data_safe', 'class': 'list[TablesForDiscovery]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'DiscoveryJob'})
 @cli_util.wrap_exceptions
-def create_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_data_model_id, compartment_id, discovery_type, display_name, schemas_for_discovery, sensitive_type_ids_for_discovery, is_sample_data_collection_enabled, is_app_defined_relation_discovery_enabled, is_include_all_schemas, is_include_all_sensitive_types, freeform_tags, defined_tags):
+def create_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_data_model_id, compartment_id, discovery_type, display_name, schemas_for_discovery, tables_for_discovery, sensitive_type_ids_for_discovery, is_sample_data_collection_enabled, is_app_defined_relation_discovery_enabled, is_include_all_schemas, is_include_all_sensitive_types, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2475,6 +2485,9 @@ def create_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if schemas_for_discovery is not None:
         _details['schemasForDiscovery'] = cli_util.parse_json_parameter("schemas_for_discovery", schemas_for_discovery)
+
+    if tables_for_discovery is not None:
+        _details['tablesForDiscovery'] = cli_util.parse_json_parameter("tables_for_discovery", tables_for_discovery)
 
     if sensitive_type_ids_for_discovery is not None:
         _details['sensitiveTypeIdsForDiscovery'] = cli_util.parse_json_parameter("sensitive_type_ids_for_discovery", sensitive_type_ids_for_discovery)
@@ -3611,6 +3624,7 @@ def create_sdm_masking_policy_difference(ctx, from_json, wait_for_state, max_wai
 @cli_util.option('--target-id', required=True, help=u"""The OCID of the target database on which security assessment is to be run.""")
 @cli_util.option('--display-name', help=u"""The display name of the security assessment.""")
 @cli_util.option('--description', help=u"""Description of the security assessment.""")
+@cli_util.option('--is-assessment-scheduled', type=click.BOOL, help=u"""Indicates whether the assessment is scheduled to run.""")
 @cli_util.option('--schedule', help=u"""To schedule the assessment for running periodically, specify the schedule in this attribute. Create or schedule one assessment per compartment. If not defined, the assessment runs immediately. Format - <version-string>;<version-specific-schedule>
 
 Allowed version strings - \"v1\" v1's version specific schedule -<ss> <mm> <hh> <day-of-week> <day-of-month> Each of the above fields potentially introduce constraints. A workrequest is created only when clock time satisfies all the constraints. Constraints introduced: 1. seconds = <ss> (So, the allowed range for <ss> is [0, 59]) 2. minutes = <mm> (So, the allowed range for <mm> is [0, 59]) 3. hours = <hh> (So, the allowed range for <hh> is [0, 23]) <day-of-week> can be either '*' (without quotes or a number between 1(Monday) and 7(Sunday)) 4. No constraint introduced when it is '*'. When not, day of week must equal the given value <day-of-month> can be either '*' (without quotes or a number between 1 and 28) 5. No constraint introduced when it is '*'. When not, day of month must equal the given value""")
@@ -3628,7 +3642,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'SecurityAssessment'})
 @cli_util.wrap_exceptions
-def create_security_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, target_id, display_name, description, schedule, freeform_tags, defined_tags):
+def create_security_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, target_id, display_name, description, is_assessment_scheduled, schedule, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3642,6 +3656,9 @@ def create_security_assessment(ctx, from_json, wait_for_state, max_wait_seconds,
 
     if description is not None:
         _details['description'] = description
+
+    if is_assessment_scheduled is not None:
+        _details['isAssessmentScheduled'] = is_assessment_scheduled
 
     if schedule is not None:
         _details['schedule'] = schedule
@@ -3792,6 +3809,9 @@ def create_sensitive_column(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--app-suite-name', help=u"""The application suite name identifying a collection of applications. It's useful only if maintaining a sensitive data model for a suite of applications.""")
 @cli_util.option('--description', help=u"""The description of the sensitive data model.""")
 @cli_util.option('--schemas-for-discovery', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas to be scanned by data discovery jobs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tables-for-discovery', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The data discovery jobs will scan the tables specified here, including both schemas and tables. For instance, the input could be in the format: [{schemaName: \"HR\", tableName: [\"T1\", \"T2\"]}, {schemaName: \"OE\", tableName : [\"T3\", \"T4\"]}].
+
+This option is a JSON list with items of type TablesForDiscovery.  For documentation on TablesForDiscovery please see our API reference: https://docs.cloud.oracle.com/api/#/en/datasafe/20181201/datatypes/TablesForDiscovery.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sensitive-type-ids-for-discovery', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the sensitive types to be used by data discovery jobs. If OCID of a sensitive category is provided, all its child sensitive types are used for data discovery.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-sample-data-collection-enabled', type=click.BOOL, help=u"""Indicates if data discovery jobs should collect and store sample data values for the discovered columns. Sample data helps review the discovered columns and ensure that they actually contain sensitive data. As it collects original data from the target database, it's disabled by default and should be used only if it's acceptable to store sample data in Data Safe's repository in Oracle Cloud. Note that sample data values are not collected for columns with the following data types: LONG, LOB, RAW, XMLTYPE and BFILE.""")
 @cli_util.option('--is-app-defined-relation-discovery-enabled', type=click.BOOL, help=u"""Indicates if data discovery jobs should identify potential application-level (non-dictionary) referential relationships between columns. Note that data discovery automatically identifies and adds database-level (dictionary-defined) relationships. This option helps identify application-level relationships that are not defined in the database dictionary, which in turn, helps identify additional sensitive columns and preserve referential integrity during data masking. It's disabled by default and should be used only if there is a need to identify application-level relationships.""")
@@ -3806,12 +3826,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'tables-for-discovery': {'module': 'data_safe', 'class': 'list[TablesForDiscovery]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'SensitiveDataModel'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'tables-for-discovery': {'module': 'data_safe', 'class': 'list[TablesForDiscovery]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'SensitiveDataModel'})
 @cli_util.wrap_exceptions
-def create_sensitive_data_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, target_id, display_name, app_suite_name, description, schemas_for_discovery, sensitive_type_ids_for_discovery, is_sample_data_collection_enabled, is_app_defined_relation_discovery_enabled, is_include_all_schemas, is_include_all_sensitive_types, freeform_tags, defined_tags):
+def create_sensitive_data_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, target_id, display_name, app_suite_name, description, schemas_for_discovery, tables_for_discovery, sensitive_type_ids_for_discovery, is_sample_data_collection_enabled, is_app_defined_relation_discovery_enabled, is_include_all_schemas, is_include_all_sensitive_types, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3831,6 +3851,9 @@ def create_sensitive_data_model(ctx, from_json, wait_for_state, max_wait_seconds
 
     if schemas_for_discovery is not None:
         _details['schemasForDiscovery'] = cli_util.parse_json_parameter("schemas_for_discovery", schemas_for_discovery)
+
+    if tables_for_discovery is not None:
+        _details['tablesForDiscovery'] = cli_util.parse_json_parameter("tables_for_discovery", tables_for_discovery)
 
     if sensitive_type_ids_for_discovery is not None:
         _details['sensitiveTypeIdsForDiscovery'] = cli_util.parse_json_parameter("sensitive_type_ids_for_discovery", sensitive_type_ids_for_discovery)
@@ -4923,6 +4946,7 @@ def create_target_database_on_premise_connector(ctx, from_json, wait_for_state, 
 @cli_util.option('--target-id', required=True, help=u"""The OCID of the target database on which the user assessment is to be run.""")
 @cli_util.option('--description', help=u"""The description of the user assessment.""")
 @cli_util.option('--display-name', help=u"""The display name of the user assessment.""")
+@cli_util.option('--is-assessment-scheduled', type=click.BOOL, help=u"""Indicates whether the assessment is scheduled to run.""")
 @cli_util.option('--schedule', help=u"""To schedule the assessment for saving periodically, specify the schedule in this attribute. Create or schedule one assessment per compartment. If not defined, the assessment runs immediately.  Format -   <version-string>;<version-specific-schedule>
 
   Allowed version strings - \"v1\"   v1's version specific schedule -<ss> <mm> <hh> <day-of-week> <day-of-month>   Each of the above fields potentially introduce constraints. A workrequest is created only   when clock time satisfies all the constraints. Constraints introduced:   1. seconds = <ss> (So, the allowed range for <ss> is [0, 59])   2. minutes = <mm> (So, the allowed range for <mm> is [0, 59])   3. hours = <hh> (So, the allowed range for <hh> is [0, 23])   <day-of-week> can be either '*' (without quotes or a number between 1(Monday) and 7(Sunday))   4. No constraint introduced when it is '*'. When not, day of week must equal the given value   <day-of-month> can be either '*' (without quotes or a number between 1 and 28)   5. No constraint introduced when it is '*'. When not, day of month must equal the given value""")
@@ -4940,7 +4964,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'UserAssessment'})
 @cli_util.wrap_exceptions
-def create_user_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, target_id, description, display_name, schedule, freeform_tags, defined_tags):
+def create_user_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, target_id, description, display_name, is_assessment_scheduled, schedule, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -4954,6 +4978,9 @@ def create_user_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if is_assessment_scheduled is not None:
+        _details['isAssessmentScheduled'] = is_assessment_scheduled
 
     if schedule is not None:
         _details['schedule'] = schedule
@@ -7094,7 +7121,7 @@ def generate_on_prem_connector_configuration(ctx, from_json, file, password, on_
 @cli_util.option('--report-definition-id', required=True, help=u"""Unique report definition identifier""")
 @cli_util.option('--display-name', required=True, help=u"""The name of the report to be generated""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
-@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Specifies the format of report to be .xls or .pdf""")
+@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Specifies the format of report to be .xls or .pdf or .json""")
 @cli_util.option('--target-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of database target OCIDs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""The description of the report to be generated""")
 @cli_util.option('--time-less-than', type=custom_types.CLI_DATETIME, help=u"""Specifies the time until which the data needs to be reported.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -8856,7 +8883,7 @@ def list_audit_archive_retrievals(ctx, from_json, all_pages, page_size, compartm
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--scim-query', help=u"""The scimQuery query parameter accepts filter expressions that use the syntax described in Section 3.2.2.2 of the System for Cross-Domain Identity Management (SCIM) specification, which is available at [RFC3339]. In SCIM filtering expressions, text, date, and time values must be enclosed in quotation marks, with date and time values using ISO-8601 format. (Numeric and boolean values should not be quoted.)
 
-**Example:** query=(operationTime ge '2021-06-04T01-00-26') and (eventName eq 'LOGON')""")
+**Example:** (operationTime ge \"2021-06-04T12:00:00.000Z\") and (eventName eq \"LOGON\")""")
 @cli_util.option('--summary-field', type=custom_types.CliCaseInsensitiveChoice(["auditEventTime", "dbUserName", "targetId", "targetName", "targetClass", "objectType", "clientHostname", "clientProgram", "clientId", "auditType", "eventName", "allRecord", "auditSettingsChange", "dbSchemaChange", "entitlementChange", "loginFailure", "loginSuccess", "allViolations", "realmViolations", "ruleViolations", "dvconfigActivities", "ddls", "dmls", "privilegeChanges", "auditSettingsEnables", "auditSettingsDisables", "selects", "creates", "alters", "drops", "grants", "revokes"]), multiple=True, help=u"""Specifies a subset of summarized fields to be returned in the response.""")
 @cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""An optional filter to return audit events whose creation time in the database is greater than and equal to the date-time specified, in the format defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""An optional filter to return audit events whose creation time in the database is less than and equal to the date-time specified, in the format defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -8942,7 +8969,7 @@ The parameter `compartmentIdInSubtree` applies when you perform ListAuditEvents 
 @cli_util.option('--page', help=u"""It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--scim-query', help=u"""The scimQuery query parameter accepts filter expressions that use the syntax described in Section 3.2.2.2 of the System for Cross-Domain Identity Management (SCIM) specification, which is available at [RFC3339]. In SCIM filtering expressions, text, date, and time values must be enclosed in quotation marks, with date and time values using ISO-8601 format. (Numeric and boolean values should not be quoted.)
 
-**Example:** query=(operationTime ge '2021-06-04T01-00-26') and (eventName eq 'LOGON')""")
+**Example:** (operationTime ge \"2021-06-04T12:00:00.000Z\") and (eventName eq \"LOGON\")""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["dbUserName", "targetName", "databaseType", "targetClass", "auditEventTime", "timeCollected", "osUserName", "operation", "operationStatus", "eventName", "errorCode", "errorMessage", "objectType", "objectName", "objectOwner", "clientHostname", "clientIp", "isAlerted", "actionTaken", "clientProgram", "commandText", "commandParam", "extendedEventAttributes", "auditLocation", "osTerminal", "clientId", "auditPolicies", "auditType"]), help=u"""If this query parameter is specified, the result is sorted by this query parameter value.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -10326,6 +10353,7 @@ def list_finding_analytics(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
 @cli_util.option('--finding-key', help=u"""Each finding in security assessment has an associated key (think of key as a finding's name). For a given finding, the key will be the same across targets. The user can use these keys to filter the findings.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -10334,7 +10362,7 @@ def list_finding_analytics(ctx, from_json, all_pages, page_size, compartment_id,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'list[FindingSummary]'})
 @cli_util.wrap_exceptions
-def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, is_top_finding, severity, lifecycle_state, references, limit, page, compartment_id_in_subtree, access_level, finding_key):
+def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, is_top_finding, severity, lifecycle_state, references, limit, page, compartment_id_in_subtree, access_level, target_id, finding_key):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -10359,6 +10387,8 @@ def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, 
         kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
     if access_level is not None:
         kwargs['access_level'] = access_level
+    if target_id is not None:
+        kwargs['target_id'] = target_id
     if finding_key is not None:
         kwargs['finding_key'] = finding_key
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -11695,6 +11725,12 @@ def list_report_definitions(ctx, from_json, all_pages, page_size, compartment_id
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeGenerated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeGenerated is descending. Default order for displayName is ascending. If no value is specified timeGenerated is default.""")
 @cli_util.option('--report-definition-id', help=u"""The ID of the report definition to filter the list of reports""")
+@cli_util.option('--time-generated-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return only the resources that were generated after the specified date and time, as defined by [RFC3339]. Using TimeGeneratedGreaterThanOrEqualToQueryParam parameter retrieves all resources generated after that date.
+
+**Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-generated-less-than', type=custom_types.CLI_DATETIME, help=u"""Search for resources that were generated before a specific date. Specifying this parameter corresponding `timeGeneratedLessThan` parameter will retrieve all resources generated before the specified generated date, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by RFC 3339.
+
+**Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["UPDATING", "ACTIVE"]), help=u"""An optional filter to return only resources that match the specified lifecycle state.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["GENERATED", "SCHEDULED"]), help=u"""An optional filter to return only resources that match the specified type.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -11704,7 +11740,7 @@ def list_report_definitions(ctx, from_json, all_pages, page_size, compartment_id
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'ReportCollection'})
 @cli_util.wrap_exceptions
-def list_reports(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, display_name, limit, page, sort_order, sort_by, report_definition_id, lifecycle_state, type):
+def list_reports(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, display_name, limit, page, sort_order, sort_by, report_definition_id, time_generated_greater_than_or_equal_to, time_generated_less_than, lifecycle_state, type):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -11726,6 +11762,10 @@ def list_reports(ctx, from_json, all_pages, page_size, compartment_id, compartme
         kwargs['sort_by'] = sort_by
     if report_definition_id is not None:
         kwargs['report_definition_id'] = report_definition_id
+    if time_generated_greater_than_or_equal_to is not None:
+        kwargs['time_generated_greater_than_or_equal_to'] = time_generated_greater_than_or_equal_to
+    if time_generated_less_than is not None:
+        kwargs['time_generated_less_than'] = time_generated_less_than
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     if type is not None:
@@ -12642,6 +12682,66 @@ def list_sensitive_columns(ctx, from_json, all_pages, page_size, sensitive_data_
         )
     else:
         result = client.list_sensitive_columns(
+            sensitive_data_model_id=sensitive_data_model_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@sensitive_data_model_sensitive_type_collection_group.command(name=cli_util.override('data_safe.list_sensitive_data_model_sensitive_types.command_name', 'list-sensitive-data-model-sensitive-types'), help=u"""Gets a list of sensitive type Ids present in the specified sensitive data model. \n[Command Reference](listSensitiveDataModelSensitiveTypes)""")
+@cli_util.option('--sensitive-data-model-id', required=True, help=u"""The OCID of the sensitive data model.""")
+@cli_util.option('--sensitive-type-id', help=u"""A filter to return only items related to a specific sensitive type OCID.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["count"]), help=u"""- The field to sort by. You can specify only one sorting parameter (sortorder). The default order is descending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SensitiveDataModelSensitiveTypeCollection'})
+@cli_util.wrap_exceptions
+def list_sensitive_data_model_sensitive_types(ctx, from_json, all_pages, page_size, sensitive_data_model_id, sensitive_type_id, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
+        raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if sensitive_type_id is not None:
+        kwargs['sensitive_type_id'] = sensitive_type_id
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_sensitive_data_model_sensitive_types,
+            sensitive_data_model_id=sensitive_data_model_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_sensitive_data_model_sensitive_types,
+            limit,
+            page_size,
+            sensitive_data_model_id=sensitive_data_model_id,
+            **kwargs
+        )
+    else:
+        result = client.list_sensitive_data_model_sensitive_types(
             sensitive_data_model_id=sensitive_data_model_id,
             **kwargs
         )
@@ -15620,7 +15720,7 @@ def retrieve_audit_policies(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--schedule', required=True, help=u"""The schedule to generate the report periodically in the specified format: <version-string>;<version-specific-schedule>
 
 Allowed version strings - \"v1\" v1's version specific schedule -<ss> <mm> <hh> <day-of-week> <day-of-month> Each of the above fields potentially introduce constraints. A workrequest is created only when clock time satisfies all the constraints. Constraints introduced: 1. seconds = <ss> (So, the allowed range for <ss> is [0, 59]) 2. minutes = <mm> (So, the allowed range for <mm> is [0, 59]) 3. hours = <hh> (So, the allowed range for <hh> is [0, 23]) 4. <day-of-week> can be either '*' (without quotes or a number between 1(Monday) and 7(Sunday)) No constraint introduced when it is '*'. When not, day of week must equal the given value 5. <day-of-month> can be either '*' (without quotes or a number between 1 and 28) No constraint introduced when it is '*'. When not, day of month must equal the given value""")
-@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Specifies if the report will be in .xls or .pdf format""")
+@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Specifies if the report will be in .xls or .pdf or .json format""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which the resource should be created.""")
 @cli_util.option('--report-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The name of the report to be scheduled""")
@@ -15693,7 +15793,7 @@ def schedule_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--schedule', required=True, help=u"""The schedule to generate the report periodically in the specified format: <version-string>;<version-specific-schedule>
 
 Allowed version strings - \"v1\" v1's version specific schedule -<ss> <mm> <hh> <day-of-week> <day-of-month> Each of the above fields potentially introduce constraints. A workrequest is created only when clock time satisfies all the constraints. Constraints introduced: 1. seconds = <ss> (So, the allowed range for <ss> is [0, 59]) 2. minutes = <mm> (So, the allowed range for <mm> is [0, 59]) 3. hours = <hh> (So, the allowed range for <hh> is [0, 23]) 4. <day-of-week> can be either '*' (without quotes or a number between 1(Monday) and 7(Sunday)) No constraint introduced when it is '*'. When not, day of week must equal the given value 5. <day-of-month> can be either '*' (without quotes or a number between 1 and 28) No constraint introduced when it is '*'. When not, day of month must equal the given value""")
-@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Specifies if the report will be in .xls or .pdf format""")
+@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Specifies if the report will be in .xls or .pdf or .json format""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which the resource should be created.""")
 @cli_util.option('--report-details-record-time-span', required=True, help=u"""The time span of records in report to be scheduled. <period-value><period> Allowed period strings - \"H\",\"D\",\"M\",\"Y\" Each of the above fields potentially introduce constraints. A workRequest is created only when period-value satisfies all the constraints. Constraints introduced: 1. period = H (The allowed range for period-value is [1, 23]) 2. period = D (The allowed range for period-value is [1, 30]) 3. period = M (The allowed range for period-value is [1, 11]) 4. period = Y (The minimum period-value is 1)""")
 @cli_util.option('--display-name', help=u"""The name of the report to be scheduled""")
@@ -16149,18 +16249,19 @@ def suspend_work_request(ctx, from_json, work_request_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@security_assessment_group.command(name=cli_util.override('data_safe.unset_security_assessment_baseline.command_name', 'unset-security-assessment-baseline'), help=u"""Removes the baseline setting for the saved security assessment. The saved security assessment is no longer considered a baseline. Sets the if-match parameter to the value of the etag from a previous GET or POST response for that resource. \n[Command Reference](unsetSecurityAssessmentBaseline)""")
+@security_assessment_group.command(name=cli_util.override('data_safe.unset_security_assessment_baseline.command_name', 'unset-security-assessment-baseline'), help=u"""Removes the baseline setting for the saved security assessment associated with the targetId passed via body. If no body or empty body is passed then the baseline settings of all the saved security assessments pertaining to the baseline assessment OCID provided in the path will be removed. Sets the if-match parameter to the value of the etag from a previous GET or POST response for that resource. \n[Command Reference](unsetSecurityAssessmentBaseline)""")
 @cli_util.option('--security-assessment-id', required=True, help=u"""The OCID of the security assessment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--target-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of database target OCIDs for which the user intends to unset the baseline.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'target-ids': {'module': 'data_safe', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-ids': {'module': 'data_safe', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def unset_security_assessment_baseline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, if_match):
+def unset_security_assessment_baseline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, if_match, target_ids):
 
     if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
@@ -16169,9 +16270,16 @@ def unset_security_assessment_baseline(ctx, from_json, wait_for_state, max_wait_
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if target_ids is not None:
+        _details['targetIds'] = cli_util.parse_json_parameter("target_ids", target_ids)
+
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.unset_security_assessment_baseline(
         security_assessment_id=security_assessment_id,
+        unset_security_assessment_baseline_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -16204,18 +16312,19 @@ def unset_security_assessment_baseline(ctx, from_json, wait_for_state, max_wait_
     cli_util.render_response(result, ctx)
 
 
-@user_assessment_group.command(name=cli_util.override('data_safe.unset_user_assessment_baseline.command_name', 'unset-user-assessment-baseline'), help=u"""Removes the baseline setting for the saved user assessment. The saved user assessment is no longer considered a baseline. Sets the if-match parameter to the value of the etag from a previous GET or POST response for that resource. \n[Command Reference](unsetUserAssessmentBaseline)""")
+@user_assessment_group.command(name=cli_util.override('data_safe.unset_user_assessment_baseline.command_name', 'unset-user-assessment-baseline'), help=u"""Removes the baseline setting for the saved user assessment associated with the targetId passed via body. If no body or empty body is passed then the baseline settings of all the saved user assessments pertaining to the baseline assessment OCID provided in the path will be removed. Sets the if-match parameter to the value of the etag from a previous GET or POST response for that resource. \n[Command Reference](unsetUserAssessmentBaseline)""")
 @cli_util.option('--user-assessment-id', required=True, help=u"""The OCID of the user assessment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--target-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of database target OCIDs for which the user intends to unset the baseline.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'target-ids': {'module': 'data_safe', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-ids': {'module': 'data_safe', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def unset_user_assessment_baseline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, user_assessment_id, if_match):
+def unset_user_assessment_baseline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, user_assessment_id, if_match, target_ids):
 
     if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
@@ -16224,9 +16333,16 @@ def unset_user_assessment_baseline(ctx, from_json, wait_for_state, max_wait_seco
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if target_ids is not None:
+        _details['targetIds'] = cli_util.parse_json_parameter("target_ids", target_ids)
+
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.unset_user_assessment_baseline(
         user_assessment_id=user_assessment_id,
+        unset_user_assessment_baseline_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -18238,6 +18354,7 @@ def update_sdm_masking_policy_difference(ctx, from_json, force, wait_for_state, 
 @cli_util.option('--security-assessment-id', required=True, help=u"""The OCID of the security assessment.""")
 @cli_util.option('--display-name', help=u"""The display name of the security assessment.""")
 @cli_util.option('--description', help=u"""The description of the security assessment.""")
+@cli_util.option('--is-assessment-scheduled', type=click.BOOL, help=u"""Indicates whether the assessment is scheduled to run.""")
 @cli_util.option('--schedule', help=u"""This is applicable only for save schedule and latest assessment. It updates the existing schedule in a specified format: <version-string>;<version-specific-schedule>
 
 Allowed version strings - \"v1\" v1's version specific schedule -<ss> <mm> <hh> <day-of-week> <day-of-month> Each of the above fields potentially introduce constraints. A workrequest is created only when clock time satisfies all the constraints. Constraints introduced: 1. seconds = <ss> (So, the allowed range for <ss> is [0, 59]) 2. minutes = <mm> (So, the allowed range for <mm> is [0, 59]) 3. hours = <hh> (So, the allowed range for <hh> is [0, 23]) <day-of-week> can be either '*' (without quotes or a number between 1(Monday) and 7(Sunday)) 4. No constraint introduced when it is '*'. When not, day of week must equal the given value <day-of-month> can be either '*' (without quotes or a number between 1 and 28) 5. No constraint introduced when it is '*'. When not, day of month must equal the given value""")
@@ -18257,7 +18374,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_security_assessment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, display_name, description, schedule, freeform_tags, defined_tags, if_match):
+def update_security_assessment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, security_assessment_id, display_name, description, is_assessment_scheduled, schedule, freeform_tags, defined_tags, if_match):
 
     if isinstance(security_assessment_id, six.string_types) and len(security_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --security-assessment-id cannot be whitespace or empty string')
@@ -18278,6 +18395,9 @@ def update_security_assessment(ctx, from_json, force, wait_for_state, max_wait_s
 
     if description is not None:
         _details['description'] = description
+
+    if is_assessment_scheduled is not None:
+        _details['isAssessmentScheduled'] = is_assessment_scheduled
 
     if schedule is not None:
         _details['schedule'] = schedule
@@ -18596,6 +18716,9 @@ def update_sensitive_column(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.option('--app-suite-name', help=u"""The application suite name identifying a collection of applications. It's useful only if maintaining a sensitive data model for a suite of applications.""")
 @cli_util.option('--description', help=u"""The description of the sensitive data model.""")
 @cli_util.option('--schemas-for-discovery', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas to be used for future data discovery jobs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tables-for-discovery', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The data discovery jobs will scan the tables specified here, including both schemas and tables. For instance, the input could be in the format: [{schemaName: \"HR\", tableName: [\"T1\", \"T2\"]}, {schemaName: \"OE\", tableName : [\"T3\", \"T4\"]}].
+
+This option is a JSON list with items of type TablesForDiscovery.  For documentation on TablesForDiscovery please see our API reference: https://docs.cloud.oracle.com/api/#/en/datasafe/20181201/datatypes/TablesForDiscovery.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sensitive-type-ids-for-discovery', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the sensitive types to be used for future data discovery jobs. If OCID of a sensitive category is provided, all its child sensitive types are used for data discovery.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-sample-data-collection-enabled', type=click.BOOL, help=u"""Indicates if data discovery jobs should collect and store sample data values for the discovered columns. Sample data helps review the discovered columns and ensure that they actually contain sensitive data. As it collects original data from the target database, it's disabled by default and should be used only if it's acceptable to store sample data in Data Safe's repository in Oracle Cloud. Note that sample data values are not collected for columns with the following data types: LONG, LOB, RAW, XMLTYPE and BFILE.""")
 @cli_util.option('--is-app-defined-relation-discovery-enabled', type=click.BOOL, help=u"""Indicates if data discovery jobs should identify potential application-level (non-dictionary) referential relationships between columns. Note that data discovery automatically identifies and adds database-level (dictionary-defined) relationships. This option helps identify application-level relationships that are not defined in the database dictionary, which in turn, helps identify additional sensitive columns and preserve referential integrity during data masking. It's disabled by default and should be used only if there is a need to identify application-level relationships.""")
@@ -18610,18 +18733,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'tables-for-discovery': {'module': 'data_safe', 'class': 'list[TablesForDiscovery]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'tables-for-discovery': {'module': 'data_safe', 'class': 'list[TablesForDiscovery]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_sensitive_data_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_data_model_id, display_name, target_id, app_suite_name, description, schemas_for_discovery, sensitive_type_ids_for_discovery, is_sample_data_collection_enabled, is_app_defined_relation_discovery_enabled, freeform_tags, defined_tags, if_match):
+def update_sensitive_data_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_data_model_id, display_name, target_id, app_suite_name, description, schemas_for_discovery, tables_for_discovery, sensitive_type_ids_for_discovery, is_sample_data_collection_enabled, is_app_defined_relation_discovery_enabled, freeform_tags, defined_tags, if_match):
 
     if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
     if not force:
-        if schemas_for_discovery or sensitive_type_ids_for_discovery or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to schemas-for-discovery and sensitive-type-ids-for-discovery and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if schemas_for_discovery or tables_for_discovery or sensitive_type_ids_for_discovery or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to schemas-for-discovery and tables-for-discovery and sensitive-type-ids-for-discovery and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -18645,6 +18768,9 @@ def update_sensitive_data_model(ctx, from_json, force, wait_for_state, max_wait_
 
     if schemas_for_discovery is not None:
         _details['schemasForDiscovery'] = cli_util.parse_json_parameter("schemas_for_discovery", schemas_for_discovery)
+
+    if tables_for_discovery is not None:
+        _details['tablesForDiscovery'] = cli_util.parse_json_parameter("tables_for_discovery", tables_for_discovery)
 
     if sensitive_type_ids_for_discovery is not None:
         _details['sensitiveTypeIdsForDiscovery'] = cli_util.parse_json_parameter("sensitive_type_ids_for_discovery", sensitive_type_ids_for_discovery)
@@ -19920,6 +20046,7 @@ def update_target_database_on_premise_connector(ctx, from_json, force, wait_for_
 @cli_util.option('--user-assessment-id', required=True, help=u"""The OCID of the user assessment.""")
 @cli_util.option('--description', help=u"""The description of the user assessment.""")
 @cli_util.option('--display-name', help=u"""The display name of the user assessment.""")
+@cli_util.option('--is-assessment-scheduled', type=click.BOOL, help=u"""Indicates whether the assessment is scheduled to run.""")
 @cli_util.option('--schedule', help=u"""The schedule for periodically saving the assessment. This is applicable only for assessments of type save schedule and latest assessment. It updates the existing schedule in a specified format: <version-string>;<version-specific-schedule>
 
 Allowed version strings - \"v1\" v1's version specific schedule -<ss> <mm> <hh> <day-of-week> <day-of-month> Each of the above fields potentially introduce constraints. A workrequest is created only when clock time satisfies all the constraints. Constraints introduced: 1. seconds = <ss> (So, the allowed range for <ss> is [0, 59]) 2. minutes = <mm> (So, the allowed range for <mm> is [0, 59]) 3. hours = <hh> (So, the allowed range for <hh> is [0, 23]) <day-of-week> can be either '*' (without quotes or a number between 1(Monday) and 7(Sunday)) 4. No constraint introduced when it is '*'. When not, day of week must equal the given value <day-of-month> can be either '*' (without quotes or a number between 1 and 28) 5. No constraint introduced when it is '*'. When not, day of month must equal the given value""")
@@ -19939,7 +20066,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_user_assessment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, user_assessment_id, description, display_name, schedule, freeform_tags, defined_tags, if_match):
+def update_user_assessment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, user_assessment_id, description, display_name, is_assessment_scheduled, schedule, freeform_tags, defined_tags, if_match):
 
     if isinstance(user_assessment_id, six.string_types) and len(user_assessment_id.strip()) == 0:
         raise click.UsageError('Parameter --user-assessment-id cannot be whitespace or empty string')
@@ -19960,6 +20087,9 @@ def update_user_assessment(ctx, from_json, force, wait_for_state, max_wait_secon
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if is_assessment_scheduled is not None:
+        _details['isAssessmentScheduled'] = is_assessment_scheduled
 
     if schedule is not None:
         _details['schedule'] = schedule

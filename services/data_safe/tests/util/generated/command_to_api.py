@@ -198,6 +198,7 @@ SDK_client_map = {
     "data_safe.list_security_policy_entry_states": "oci.data_safe.DataSafeClient.list_security_policy_entry_states",
     "data_safe.list_security_policy_reports": "oci.data_safe.DataSafeClient.list_security_policy_reports",
     "data_safe.list_sensitive_columns": "oci.data_safe.DataSafeClient.list_sensitive_columns",
+    "data_safe.list_sensitive_data_model_sensitive_types": "oci.data_safe.DataSafeClient.list_sensitive_data_model_sensitive_types",
     "data_safe.list_sensitive_data_models": "oci.data_safe.DataSafeClient.list_sensitive_data_models",
     "data_safe.list_sensitive_objects": "oci.data_safe.DataSafeClient.list_sensitive_objects",
     "data_safe.list_sensitive_schemas": "oci.data_safe.DataSafeClient.list_sensitive_schemas",

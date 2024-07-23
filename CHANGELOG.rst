@@ -6,6 +6,85 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.44.4 - 2024-07-23
+--------------------
+Added
+~~~~~
+* Database Service
+
+  * Support for new optional parameters in the database APIs
+
+    * ``oci db autonomous-database create --byol-compute-count-limit``
+    * ``oci db autonomous-database update --byol-compute-count-limit``
+
+  * Support for the subscription ID attribute in Cloud Exadata Infrastructure and Cloud VM Cluster in Database service
+
+    * ``oci db cloud-exa-infra create --subscription-id``
+    * ``oci db cloud-vm-cluster create --subscription-id``
+    * ``oci db cloud-exa-infra change-cloud-exadata-infrastructure-subscription --cloud-exadata-infrastructure-id --is-default --subscription-id``
+    * ``oci db cloud-vm-cluster change-cloud-vm-cluster-subscription --cloud-vm-cluster-id --is-default --subscription-id``
+
+  * Support for ``subscriptionId`` in
+
+    * ``oci db autonomous-database create --subscription-id``
+
+  * Update action API
+
+    * ``oci db autonomous-database change-autonomous-database-subscription --autonomous-database-id``
+
+* Application Performance Monitoring Synthetic Service
+
+  * Support for the sql monitor creation and updation
+
+    * ``oci apm-synthetics monitor create-sql-monitor``
+    * ``oci apm-synthetics monitor update-sql-monitor``
+
+  * Support for the ftp monitor creation and updation
+
+    * ``oci apm-synthetics monitor create-ftp-monitor``
+    * ``oci apm-synthetics monitor update-ftp-monitor``
+
+* Data Safe Service
+
+  * Support for listing discovered sensitive types and discovered sensitive schemas in sensitive data model
+
+    * ``oci data-safe sensitive-data-model-sensitive-type-collection list-sensitive-data-model-sensitive-types --sensitive-data-model-id``
+
+  * Support for creating and updating sensitive data model with only table level scope
+
+    * ``oci data-safe sensitive-data-model create --tables-for-discovery``
+    * ``oci data-safe sensitive-data-model update --tables-for-discovery``
+
+  * Support for creating discovery job with table level scope
+
+    * ``oci data-safe discovery-job create --tables-for-discovery``
+
+  * Support for filtering reports with the time of generation
+
+    * ``oci data-safe report-summary list-reports --time-generated-greater-than-or-equal-to, --time-generated-less-than``
+
+  * Support for creating and updating schedule for user assessment and security assessment
+
+    * ``oci data-safe security-assessment create --is-assessment-scheduled``
+    * ``oci data-safe security-assessment update --is-assessment-scheduled``
+    * ``oci data-safe user-assessment create --is-assessment-scheduled``
+    * ``oci data-safe user-assessment update --is-assessment-scheduled``
+
+  * Support for listing findings in security assessment
+
+    * ``oci data-safe security-assessment list-findings --target-id``
+
+  * Support for unsetting security and user assessment baseline with target ids
+
+    * ``oci data-safe security-assessment unset-security-assessment-baseline --target-ids``
+    * ``oci data-safe user-assessment unset-user-assessment-baseline --target-ids``
+
+* Support for MySQL Heatwave database systems within the Ops Insights service.
+
+  * ``oci opsi database-insights create-mds-my-sql-database``
+  * ``oci opsi database-insights enable-mds-my-sql-database``
+  * ``oci opsi database-insights update-mds-my-sql-database``
+
 3.44.3 - 2024-07-16
 -------------------
 Added

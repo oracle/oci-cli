@@ -70,6 +70,8 @@ SDK_client_map = {
     "opsi.ingest_database_configuration": "oci.opsi.OperationsInsightsClient.ingest_database_configuration",
     "opsi.ingest_host_configuration": "oci.opsi.OperationsInsightsClient.ingest_host_configuration",
     "opsi.ingest_host_metrics": "oci.opsi.OperationsInsightsClient.ingest_host_metrics",
+    "opsi.ingest_my_sql_sql_stats": "oci.opsi.OperationsInsightsClient.ingest_my_sql_sql_stats",
+    "opsi.ingest_my_sql_sql_text": "oci.opsi.OperationsInsightsClient.ingest_my_sql_sql_text",
     "opsi.ingest_sql_bucket": "oci.opsi.OperationsInsightsClient.ingest_sql_bucket",
     "opsi.ingest_sql_plan_lines": "oci.opsi.OperationsInsightsClient.ingest_sql_plan_lines",
     "opsi.ingest_sql_stats": "oci.opsi.OperationsInsightsClient.ingest_sql_stats",

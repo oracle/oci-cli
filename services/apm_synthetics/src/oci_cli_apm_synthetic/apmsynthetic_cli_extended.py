@@ -1,6 +1,29 @@
+# Copyright (c) 2016, 2023, Oracle and/or its affiliates.
+#
+# This software is dual-licensed to you under the Universal Permissive License
+# (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl and Apache License
+# 2.0 as shown at https://www.apache.org/licenses/LICENSE-2.0. You may choose
+# either license.
+#
+# If you elect to accept the software under the Apache License, Version 2.0,
+# the following applies:
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
-# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
+import base64
+import os
+import sys
+import zipfile
 
 import click  # noqa: F401
 import json  # noqa: F401
@@ -51,8 +74,9 @@ cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.dedicated_vantage_poi
 cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.dedicated_vantage_point_group, apmsynthetic_cli.update_dedicated_vantage_point_oracle_rm_stack, "update-with-oracle-rm-stack")
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_verify_texts', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_is_default_snapshot_enabled', 'configuration_verify_response_codes'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_verify_texts', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_is_default_snapshot_enabled', 'configuration_verify_response_codes', 'is_i_pv6'])
 @apmsynthetic_cli.monitor_group.command(name=cli_util.override('apm_synthetics.create_monitor_browser_monitor_configuration.command_name', 'create-browser-monitor'), help=apmsynthetic_cli.create_monitor_browser_monitor_configuration.help)
+@cli_util.option('--is-ipv6', type=click.BOOL, help="""If enabled, domain name will resolve to an IPv6 address.""")
 @cli_util.option('--is-default-snapshot-enabled', type=click.BOOL, help="""If disabled then auto snapshots are not collected.""")
 @cli_util.option('--verify-response-codes', type=custom_types.CLI_COMPLEX_TYPE, help="""Expected HTTP response codes. For status code range, set values such as 2xx, 3xx.
 This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
@@ -85,6 +109,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.wrap_exceptions
 def create_monitor_browser_monitor_configuration_extended(ctx, **kwargs):
 
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
+
     if 'is_default_snapshot_enabled' in kwargs:
         kwargs['configuration_is_default_snapshot_enabled'] = kwargs['is_default_snapshot_enabled']
         kwargs.pop('is_default_snapshot_enabled')
@@ -116,8 +144,9 @@ def create_monitor_browser_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.create_monitor_browser_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_verify_texts', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_is_default_snapshot_enabled', 'configuration_verify_response_codes'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_verify_texts', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_is_default_snapshot_enabled', 'configuration_verify_response_codes', 'is_i_pv6'])
 @apmsynthetic_cli.monitor_group.command(name=cli_util.override('apm_synthetics.update_monitor_browser_monitor_configuration.command_name', 'update-browser-monitor'), help=apmsynthetic_cli.update_monitor_browser_monitor_configuration.help)
+@cli_util.option('--is-ipv6', type=click.BOOL, help="""If enabled, domain name will resolve to an IPv6 address.""")
 @cli_util.option('--is-default-snapshot-enabled', type=click.BOOL, help="""If disabled then auto snapshots are not collected.""")
 @cli_util.option('--verify-response-codes', type=custom_types.CLI_COMPLEX_TYPE, help="""Expected HTTP response codes. For status code range, set values such as 2xx, 3xx.
 This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
@@ -150,6 +179,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.wrap_exceptions
 def update_monitor_browser_monitor_configuration_extended(ctx, **kwargs):
 
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
+
     if 'is_default_snapshot_enabled' in kwargs:
         kwargs['configuration_is_default_snapshot_enabled'] = kwargs['is_default_snapshot_enabled']
         kwargs.pop('is_default_snapshot_enabled')
@@ -181,8 +214,9 @@ def update_monitor_browser_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.update_monitor_browser_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_rest_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_is_redirection_enabled', 'configuration_req_authentication_details', 'configuration_req_authentication_scheme', 'configuration_request_headers', 'configuration_request_method', 'configuration_request_post_body', 'configuration_request_query_params', 'configuration_verify_response_codes', 'configuration_verify_response_content', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_client_certificate_details'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_rest_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_is_redirection_enabled', 'configuration_req_authentication_details', 'configuration_req_authentication_scheme', 'configuration_request_headers', 'configuration_request_method', 'configuration_request_post_body', 'configuration_request_query_params', 'configuration_verify_response_codes', 'configuration_verify_response_content', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_client_certificate_details', 'is_i_pv6'])
 @apmsynthetic_cli.monitor_group.command(name=cli_util.override('apm_synthetics.create_monitor_rest_monitor_configuration.command_name', 'create-rest-monitor'), help=apmsynthetic_cli.create_monitor_rest_monitor_configuration.help)
+@cli_util.option('--is-ipv6', type=click.BOOL, help="""If enabled, domain name will resolve to an IPv6 address.""")
 @cli_util.option('--client-certificate-details', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -236,6 +270,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'client-certificate-details': {'module': 'apm_synthetics', 'class': 'ClientCertificateDetails'}, 'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def create_monitor_rest_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
 
     if 'client_certificate_details' in kwargs:
         kwargs['configuration_client_certificate_details'] = kwargs['client_certificate_details']
@@ -296,8 +334,9 @@ def create_monitor_rest_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.create_monitor_rest_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_rest_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_is_redirection_enabled', 'configuration_req_authentication_details', 'configuration_req_authentication_scheme', 'configuration_request_headers', 'configuration_request_method', 'configuration_request_post_body', 'configuration_request_query_params', 'configuration_verify_response_codes', 'configuration_verify_response_content', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_client_certificate_details'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_rest_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_is_redirection_enabled', 'configuration_req_authentication_details', 'configuration_req_authentication_scheme', 'configuration_request_headers', 'configuration_request_method', 'configuration_request_post_body', 'configuration_request_query_params', 'configuration_verify_response_codes', 'configuration_verify_response_content', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_client_certificate_details', 'is_i_pv6'])
 @apmsynthetic_cli.monitor_group.command(name=cli_util.override('apm_synthetics.update_monitor_rest_monitor_configuration.command_name', 'update-rest-monitor'), help=apmsynthetic_cli.update_monitor_rest_monitor_configuration.help)
+@cli_util.option('--is-ipv6', type=click.BOOL, help="""If enabled, domain name will resolve to an IPv6 address.""")
 @cli_util.option('--client-certificate-details', type=custom_types.CLI_COMPLEX_TYPE, help="""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -351,6 +390,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'client-certificate-details': {'module': 'apm_synthetics', 'class': 'ClientCertificateDetails'}, 'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'req-authentication-details': {'module': 'apm_synthetics', 'class': 'RequestAuthenticationDetails'}, 'request-headers': {'module': 'apm_synthetics', 'class': 'list[Header]'}, 'request-query-params': {'module': 'apm_synthetics', 'class': 'list[RequestQueryParam]'}, 'verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def update_monitor_rest_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
 
     if 'client_certificate_details' in kwargs:
         kwargs['configuration_client_certificate_details'] = kwargs['client_certificate_details']
@@ -411,8 +454,9 @@ def update_monitor_rest_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.update_monitor_rest_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_scripted_rest_monitor_configuration, params_to_exclude=['configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_req_authentication_scheme', 'configuration_verify_response_codes'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_scripted_rest_monitor_configuration, params_to_exclude=['configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_req_authentication_scheme', 'configuration_verify_response_codes', 'is_i_pv6'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.create_monitor_scripted_rest_monitor_configuration.name, help=apmsynthetic_cli.create_monitor_scripted_rest_monitor_configuration.help)
+@cli_util.option('--is-ipv6', type=click.BOOL, help="""If enabled, domain name will resolve to an IPv6 address.""")
 @cli_util.option('--req-authentication-scheme', type=custom_types.CliCaseInsensitiveChoice(["NONE", "RESOURCE_PRINCIPAL"]), help="""Request HTTP authentication scheme.""")
 @cli_util.option('--verify-response-codes', type=custom_types.CLI_COMPLEX_TYPE, help="""Expected HTTP response codes. For status code range, set values such as 2xx, 3xx.
 This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
@@ -435,6 +479,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def create_monitor_scripted_rest_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
 
     if 'req_authentication_scheme' in kwargs:
         kwargs['configuration_req_authentication_scheme'] = kwargs['req_authentication_scheme']
@@ -459,8 +507,9 @@ def create_monitor_scripted_rest_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.create_monitor_scripted_rest_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_scripted_rest_monitor_configuration, params_to_exclude=['configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_req_authentication_scheme', 'configuration_verify_response_codes'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_scripted_rest_monitor_configuration, params_to_exclude=['configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_req_authentication_scheme', 'configuration_verify_response_codes', 'is_i_pv6'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.update_monitor_scripted_rest_monitor_configuration.name, help=apmsynthetic_cli.update_monitor_scripted_rest_monitor_configuration.help)
+@cli_util.option('--is-ipv6', type=click.BOOL, help="""If enabled, domain name will resolve to an IPv6 address.""")
 @cli_util.option('--req-authentication-scheme', type=custom_types.CliCaseInsensitiveChoice(["NONE", "RESOURCE_PRINCIPAL"]), help="""Request HTTP authentication scheme.""")
 @cli_util.option('--verify-response-codes', type=custom_types.CLI_COMPLEX_TYPE, help="""Expected HTTP response codes. For status code range, set values such as 2xx, 3xx.
 This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
@@ -483,6 +532,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def update_monitor_scripted_rest_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
 
     if 'req_authentication_scheme' in kwargs:
         kwargs['configuration_req_authentication_scheme'] = kwargs['req_authentication_scheme']
@@ -507,8 +560,9 @@ def update_monitor_scripted_rest_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.update_monitor_scripted_rest_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_scripted_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_is_default_snapshot_enabled'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_scripted_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_is_default_snapshot_enabled', 'is_i_pv6'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.create_monitor_scripted_browser_monitor_configuration.name, help=apmsynthetic_cli.create_monitor_scripted_browser_monitor_configuration.help)
+@cli_util.option('--is-ipv6', type=click.BOOL, help="""If enabled, domain name will resolve to an IPv6 address.""")
 @cli_util.option('--is-default-snapshot-enabled', type=click.BOOL, help="""If disabled then auto snapshots are not collected.""")
 @cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Dns settings. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
@@ -526,6 +580,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def create_monitor_scripted_browser_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
 
     if 'is_default_snapshot_enabled' in kwargs:
         kwargs['configuration_is_default_snapshot_enabled'] = kwargs['is_default_snapshot_enabled']
@@ -550,8 +608,9 @@ def create_monitor_scripted_browser_monitor_configuration_extended(ctx, **kwargs
     ctx.invoke(apmsynthetic_cli.create_monitor_scripted_browser_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_scripted_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_is_default_snapshot_enabled'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_scripted_browser_monitor_configuration, params_to_exclude=['configuration_is_certificate_validation_enabled', 'configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_dns_configuration', 'configuration_is_default_snapshot_enabled', 'is_i_pv6'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.update_monitor_scripted_browser_monitor_configuration.name, help=apmsynthetic_cli.update_monitor_scripted_browser_monitor_configuration.help)
+@cli_util.option('--is-ipv6', type=click.BOOL, help="""If enabled, domain name will resolve to an IPv6 address.""")
 @cli_util.option('--is-default-snapshot-enabled', type=click.BOOL, help="""If disabled then auto snapshots are not collected.""")
 @cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help="""Dns settings. This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
@@ -569,6 +628,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def update_monitor_scripted_browser_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
 
     if 'is_default_snapshot_enabled' in kwargs:
         kwargs['configuration_is_default_snapshot_enabled'] = kwargs['is_default_snapshot_enabled']
@@ -631,12 +694,9 @@ def update_dedicated_vantage_point_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.update_dedicated_vantage_point, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_dedicated_vantage_point_oracle_rm_stack, params_to_exclude=['region_parameterconflict', 'dvp_stack_details_dvp_stack_id', 'dvp_stack_details_dvp_stream_id', 'dvp_stack_details_dvp_version'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_dedicated_vantage_point_oracle_rm_stack, params_to_exclude=['region_parameterconflict'])
 @apmsynthetic_cli.dedicated_vantage_point_group.command(name=apmsynthetic_cli.create_dedicated_vantage_point_oracle_rm_stack.name, help=apmsynthetic_cli.create_dedicated_vantage_point_oracle_rm_stack.help)
 @cli_util.option('--dvp-region', required=True, help=u"""Name of the region. [required]""")
-@cli_util.option('--dvp-stack-id', required=True, help=u"""Stack [OCID] of DVP RM stack. [required]""")
-@cli_util.option('--dvp-stream-id', required=True, help=u"""Stream [OCID] of DVP RM stack. [required]""")
-@cli_util.option('--dvp-version', required=True, help=u"""Version of DVP. [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'DedicatedVantagePoint'})
 @cli_util.wrap_exceptions
@@ -645,27 +705,12 @@ def create_dedicated_vantage_point_oracle_rm_stack_extended(ctx, **kwargs):
         kwargs['region_parameterconflict'] = kwargs['dvp_region']
         kwargs.pop('dvp_region')
 
-    if 'dvp_stack_id' in kwargs:
-        kwargs['dvp_stack_details_dvp_stack_id'] = kwargs['dvp_stack_id']
-        kwargs.pop('dvp_stack_id')
-
-    if 'dvp_stream_id' in kwargs:
-        kwargs['dvp_stack_details_dvp_stream_id'] = kwargs['dvp_stream_id']
-        kwargs.pop('dvp_stream_id')
-
-    if 'dvp_version' in kwargs:
-        kwargs['dvp_stack_details_dvp_version'] = kwargs['dvp_version']
-        kwargs.pop('dvp_version')
-
     ctx.invoke(apmsynthetic_cli.create_dedicated_vantage_point_oracle_rm_stack, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_dedicated_vantage_point_oracle_rm_stack, params_to_exclude=['region_parameterconflict', 'dvp_stack_details_dvp_stack_id', 'dvp_stack_details_dvp_stream_id', 'dvp_stack_details_dvp_version'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_dedicated_vantage_point_oracle_rm_stack, params_to_exclude=['region_parameterconflict'])
 @apmsynthetic_cli.dedicated_vantage_point_group.command(name=apmsynthetic_cli.update_dedicated_vantage_point_oracle_rm_stack.name, help=apmsynthetic_cli.update_dedicated_vantage_point_oracle_rm_stack.help)
 @cli_util.option('--dvp-region', help=u"""Name of the region.""")
-@cli_util.option('--dvp-stack-id', required=True, help=u"""Stack [OCID] of DVP RM stack. [required]""")
-@cli_util.option('--dvp-stream-id', required=True, help=u"""Stream [OCID] of DVP RM stack. [required]""")
-@cli_util.option('--dvp-version', required=True, help=u"""Version of DVP. [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apm_synthetics', 'class': 'DedicatedVantagePoint'})
 @cli_util.wrap_exceptions
@@ -673,18 +718,6 @@ def update_dedicated_vantage_point_oracle_rm_stack_extended(ctx, **kwargs):
     if 'dvp_region' in kwargs:
         kwargs['region_parameterconflict'] = kwargs['dvp_region']
         kwargs.pop('dvp_region')
-
-    if 'dvp_stack_id' in kwargs:
-        kwargs['dvp_stack_details_dvp_stack_id'] = kwargs['dvp_stack_id']
-        kwargs.pop('dvp_stack_id')
-
-    if 'dvp_stream_id' in kwargs:
-        kwargs['dvp_stack_details_dvp_stream_id'] = kwargs['dvp_stream_id']
-        kwargs.pop('dvp_stream_id')
-
-    if 'dvp_version' in kwargs:
-        kwargs['dvp_stack_details_dvp_version'] = kwargs['dvp_version']
-        kwargs.pop('dvp_version')
 
     ctx.invoke(apmsynthetic_cli.update_dedicated_vantage_point_oracle_rm_stack, **kwargs)
 
@@ -704,8 +737,9 @@ cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.monitor_group, apmsyn
 cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.monitor_group, apmsynthetic_cli.update_monitor_network_monitor_configuration, "update-network-monitor")
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_network_monitor_configuration, params_to_exclude=['configuration_network_configuration', 'configuration_dns_configuration', 'configuration_is_failure_retried'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_network_monitor_configuration, params_to_exclude=['configuration_network_configuration', 'configuration_dns_configuration', 'configuration_is_failure_retried', 'is_i_pv6'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.create_monitor_network_monitor_configuration.name, help=apmsynthetic_cli.create_monitor_network_monitor_configuration.help)
+@cli_util.option('--is-ipv6', type=click.BOOL, help="""If enabled, domain name will resolve to an IPv6 address.""")
 @cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -723,6 +757,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.wrap_exceptions
 def create_monitor_network_monitor_configuration_extended(ctx, **kwargs):
 
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
+
     if 'network_configuration' in kwargs:
         kwargs['configuration_network_configuration'] = kwargs['network_configuration']
         kwargs.pop('network_configuration')
@@ -738,8 +776,9 @@ def create_monitor_network_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.create_monitor_network_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_network_monitor_configuration, params_to_exclude=['configuration_network_configuration', 'configuration_dns_configuration', 'configuration_is_failure_retried'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_network_monitor_configuration, params_to_exclude=['configuration_network_configuration', 'configuration_dns_configuration', 'configuration_is_failure_retried', 'is_i_pv6'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.update_monitor_network_monitor_configuration.name, help=apmsynthetic_cli.update_monitor_network_monitor_configuration.help)
+@cli_util.option('--is-ipv6', type=click.BOOL, help="""If enabled, domain name will resolve to an IPv6 address.""")
 @cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -756,6 +795,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def update_monitor_network_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
 
     if 'network_configuration' in kwargs:
         kwargs['configuration_network_configuration'] = kwargs['network_configuration']
@@ -796,8 +839,9 @@ cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.monitor_group, apmsyn
 cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.monitor_group, apmsynthetic_cli.update_monitor_dns_trace_monitor_configuration, "update-dns-trace-monitor")
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_dns_sec_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_record_type', 'configuration_verify_response_content'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_dns_sec_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_record_type', 'configuration_verify_response_content', 'is_i_pv6'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.create_monitor_dns_sec_monitor_configuration.name, help=apmsynthetic_cli.create_monitor_dns_sec_monitor_configuration.help)
+@cli_util.option('--is-ipv6', type=click.BOOL, help="""If enabled, domain name will resolve to an IPv6 address.""")
 @cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -807,9 +851,13 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--record-type', type=custom_types.CliCaseInsensitiveChoice(["A", "AAAA", "ANY", "CNAME", "DNSKEY", "DS", "MX", "NS", "NSEC", "NULL_REC", "PTR", "RRSIG", "SOA", "TXT"]), help=u"""DNS record type.""")
 @cli_util.option('--verify-response-content', help=u"""Verify response content against regular expression based string. If response content does not match the verifyResponseContent value, then it will be considered a failure.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def create_monitor_dns_sec_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
 
     if 'dns_configuration' in kwargs:
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
@@ -830,8 +878,9 @@ def create_monitor_dns_sec_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.create_monitor_dns_sec_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_dns_server_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_is_query_recursive', 'configuration_name_server', 'configuration_network_configuration', 'configuration_protocol', 'configuration_record_type', 'configuration_verify_response_content'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_dns_server_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_is_query_recursive', 'configuration_name_server', 'configuration_network_configuration', 'configuration_protocol', 'configuration_record_type', 'configuration_verify_response_content', 'is_i_pv6'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.create_monitor_dns_server_monitor_configuration.name, help=apmsynthetic_cli.create_monitor_dns_server_monitor_configuration.help)
+@cli_util.option('--is-ipv6', type=click.BOOL, help="""If enabled, domain name will resolve to an IPv6 address.""")
 @cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -849,9 +898,13 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--record-type', type=custom_types.CliCaseInsensitiveChoice(["A", "AAAA", "ANY", "CNAME", "DNSKEY", "DS", "MX", "NS", "NSEC", "NULL_REC", "PTR", "RRSIG", "SOA", "TXT"]), help=u"""DNS record type.""")
 @cli_util.option('--verify-response-content', help=u"""Verify response content against regular expression based string. If response content does not match the verifyResponseContent value, then it will be considered a failure.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def create_monitor_dns_server_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
 
     if 'dns_configuration' in kwargs:
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
@@ -888,8 +941,9 @@ def create_monitor_dns_server_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.create_monitor_dns_server_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_dns_trace_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_protocol', 'configuration_record_type', 'configuration_verify_response_content'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_dns_trace_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_protocol', 'configuration_record_type', 'configuration_verify_response_content', 'is_i_pv6'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.create_monitor_dns_trace_monitor_configuration.name, help=apmsynthetic_cli.create_monitor_dns_trace_monitor_configuration.help)
+@cli_util.option('--is-ipv6', type=click.BOOL, help="""If enabled, domain name will resolve to an IPv6 address.""")
 @cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -900,9 +954,13 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--record-type', type=custom_types.CliCaseInsensitiveChoice(["A", "AAAA", "ANY", "CNAME", "DNSKEY", "DS", "MX", "NS", "NSEC", "NULL_REC", "PTR", "RRSIG", "SOA", "TXT"]), help=u"""DNS record type.""")
 @cli_util.option('--verify-response-content', help=u"""Verify response content against regular expression based string. If response content does not match the verifyResponseContent value, then it will be considered a failure.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def create_monitor_dns_trace_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
 
     if 'dns_configuration' in kwargs:
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
@@ -927,8 +985,9 @@ def create_monitor_dns_trace_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.create_monitor_dns_trace_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_dns_sec_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_record_type', 'configuration_verify_response_content'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_dns_sec_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_record_type', 'configuration_verify_response_content', 'is_i_pv6'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.update_monitor_dns_sec_monitor_configuration.name, help=apmsynthetic_cli.update_monitor_dns_sec_monitor_configuration.help)
+@cli_util.option('--is-ipv6', type=click.BOOL, help="""If enabled, domain name will resolve to an IPv6 address.""")
 @cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -938,9 +997,13 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--record-type', type=custom_types.CliCaseInsensitiveChoice(["A", "AAAA", "ANY", "CNAME", "DNSKEY", "DS", "MX", "NS", "NSEC", "NULL_REC", "PTR", "RRSIG", "SOA", "TXT"]), help=u"""DNS record type.""")
 @cli_util.option('--verify-response-content', help=u"""Verify response content against regular expression based string. If response content does not match the verifyResponseContent value, then it will be considered a failure.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def update_monitor_dns_sec_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
 
     if 'dns_configuration' in kwargs:
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
@@ -961,8 +1024,9 @@ def update_monitor_dns_sec_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.update_monitor_dns_sec_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_dns_server_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_is_query_recursive', 'configuration_name_server', 'configuration_network_configuration', 'configuration_protocol', 'configuration_record_type', 'configuration_verify_response_content'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_dns_server_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_is_query_recursive', 'configuration_name_server', 'configuration_network_configuration', 'configuration_protocol', 'configuration_record_type', 'configuration_verify_response_content', 'is_i_pv6'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.update_monitor_dns_server_monitor_configuration.name, help=apmsynthetic_cli.update_monitor_dns_server_monitor_configuration.help)
+@cli_util.option('--is-ipv6', type=click.BOOL, help="""If enabled, domain name will resolve to an IPv6 address.""")
 @cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -980,9 +1044,13 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--record-type', type=custom_types.CliCaseInsensitiveChoice(["A", "AAAA", "ANY", "CNAME", "DNSKEY", "DS", "MX", "NS", "NSEC", "NULL_REC", "PTR", "RRSIG", "SOA", "TXT"]), help=u"""DNS record type.""")
 @cli_util.option('--verify-response-content', help=u"""Verify response content against regular expression based string. If response content does not match the verifyResponseContent value, then it will be considered a failure.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'configuration-network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def update_monitor_dns_server_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
 
     if 'dns_configuration' in kwargs:
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
@@ -1019,8 +1087,9 @@ def update_monitor_dns_server_monitor_configuration_extended(ctx, **kwargs):
     ctx.invoke(apmsynthetic_cli.update_monitor_dns_server_monitor_configuration, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_dns_trace_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_protocol', 'configuration_record_type', 'configuration_verify_response_content'])
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_dns_trace_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_protocol', 'configuration_record_type', 'configuration_verify_response_content', 'is_i_pv6'])
 @apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.update_monitor_dns_trace_monitor_configuration.name, help=apmsynthetic_cli.update_monitor_dns_trace_monitor_configuration.help)
+@cli_util.option('--is-ipv6', type=click.BOOL, help="""If enabled, domain name will resolve to an IPv6 address.""")
 @cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
 
@@ -1031,9 +1100,13 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.option('--record-type', type=custom_types.CliCaseInsensitiveChoice(["A", "AAAA", "ANY", "CNAME", "DNSKEY", "DS", "MX", "NS", "NSEC", "NULL_REC", "PTR", "RRSIG", "SOA", "TXT"]), help=u"""DNS record type.""")
 @cli_util.option('--verify-response-content', help=u"""Verify response content against regular expression based string. If response content does not match the verifyResponseContent value, then it will be considered a failure.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'configuration-dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
 @cli_util.wrap_exceptions
 def update_monitor_dns_trace_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
 
     if 'dns_configuration' in kwargs:
         kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
@@ -1071,3 +1144,389 @@ def create_worker_extended(ctx, **kwargs):
         kwargs.pop('worker_version')
 
     ctx.invoke(apmsynthetic_cli.create_worker, **kwargs)
+
+
+# oci apm-synthetics monitor create-monitor-ftp-monitor-configuration -> oci apm-synthetics monitor create-ftp-monitor
+cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.monitor_group, apmsynthetic_cli.create_monitor_ftp_monitor_configuration, "create-ftp-monitor")
+
+
+# oci apm-synthetics monitor create-monitor-sql-monitor-configuration -> oci apm-synthetics monitor create-sql-monitor
+cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.monitor_group, apmsynthetic_cli.create_monitor_sql_monitor_configuration, "create-sql-monitor")
+
+
+# oci apm-synthetics monitor update-monitor-ftp-monitor-configuration -> oci apm-synthetics monitor update-ftp-monitor
+cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.monitor_group, apmsynthetic_cli.update_monitor_ftp_monitor_configuration, "update-ftp-monitor")
+
+
+# oci apm-synthetics monitor update-monitor-sql-monitor-configuration -> oci apm-synthetics monitor update-sql-monitor
+cli_util.rename_command(apmsynthetic_cli, apmsynthetic_cli.monitor_group, apmsynthetic_cli.update_monitor_sql_monitor_configuration, "update-sql-monitor")
+
+
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_ftp_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_download_size_limit_in_bytes', 'configuration_ftp_basic_authentication_details', 'configuration_ftp_protocol', 'configuration_ftp_request_type', 'configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_upload_file_size_in_bytes', 'configuration_verify_response_codes', 'configuration_verify_response_content', 'configuration_is_active_mode', 'is_i_pv6'])
+@apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.create_monitor_ftp_monitor_configuration.name, help=apmsynthetic_cli.create_monitor_ftp_monitor_configuration.help)
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--download-size-limit-in-bytes', type=click.INT, help=u"""Download size limit in Bytes, at which to stop the transfer. Maximum download size limit is 5 MiB.""")
+@cli_util.option('--ftp-basic-authentication-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ftp-protocol', type=custom_types.CliCaseInsensitiveChoice(["FTP", "FTPS", "SFTP"]), help=u"""FTP protocol type.""")
+@cli_util.option('--ftp-request-type', type=custom_types.CliCaseInsensitiveChoice(["LIST", "UPLOAD", "DOWNLOAD"]), help=u"""FTP monitor request type.""")
+@cli_util.option('--is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--upload-file-size-in-bytes', type=click.INT, help=u"""File upload size in Bytes, at which to stop the transfer. Maximum upload size is 5 MiB.""")
+@cli_util.option('--verify-response-codes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Expected FTP response codes. For status code range, set values such as 2xx, 3xx.
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--verify-response-content', help=u"""Verify response content against regular expression based string. If response content does not match the verifyResponseContent value, then it will be considered a failure.""")
+@cli_util.option('--is-active-mode', type=click.BOOL, help=u"""If enabled, Active mode will be used for the FTP connection.""")
+@cli_util.option('--is-ipv6', type=click.BOOL, help=u"""If enabled, domain name will resolve to an IPv6 address.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'ftp-basic-authentication-details': {'module': 'apm_synthetics', 'class': 'BasicAuthenticationDetails'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}, 'verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@cli_util.wrap_exceptions
+def create_monitor_ftp_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
+
+    if 'download_size_limit_in_bytes' in kwargs:
+        kwargs['configuration_download_size_limit_in_bytes'] = kwargs['download_size_limit_in_bytes']
+        kwargs.pop('download_size_limit_in_bytes')
+
+    if 'ftp_basic_authentication_details' in kwargs:
+        kwargs['configuration_ftp_basic_authentication_details'] = kwargs['ftp_basic_authentication_details']
+        kwargs.pop('ftp_basic_authentication_details')
+
+    if 'ftp_protocol' in kwargs:
+        kwargs['configuration_ftp_protocol'] = kwargs['ftp_protocol']
+        kwargs.pop('ftp_protocol')
+
+    if 'ftp_request_type' in kwargs:
+        kwargs['configuration_ftp_request_type'] = kwargs['ftp_request_type']
+        kwargs.pop('ftp_request_type')
+
+    if 'is_failure_retried' in kwargs:
+        kwargs['configuration_is_failure_retried'] = kwargs['is_failure_retried']
+        kwargs.pop('is_failure_retried')
+
+    if 'network_configuration' in kwargs:
+        kwargs['configuration_network_configuration'] = kwargs['network_configuration']
+        kwargs.pop('network_configuration')
+
+    if 'upload_file_size_in_bytes' in kwargs:
+        kwargs['configuration_upload_file_size_in_bytes'] = kwargs['upload_file_size_in_bytes']
+        kwargs.pop('upload_file_size_in_bytes')
+
+    if 'verify_response_codes' in kwargs:
+        kwargs['configuration_verify_response_codes'] = kwargs['verify_response_codes']
+        kwargs.pop('verify_response_codes')
+
+    if 'verify_response_content' in kwargs:
+        kwargs['configuration_verify_response_content'] = kwargs['verify_response_content']
+        kwargs.pop('verify_response_content')
+
+    if 'is_active_mode' in kwargs:
+        kwargs['configuration_is_active_mode'] = kwargs['is_active_mode']
+        kwargs.pop('is_active_mode')
+
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
+
+    ctx.invoke(apmsynthetic_cli.create_monitor_ftp_monitor_configuration, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.create_monitor_sql_monitor_configuration, params_to_exclude=['configuration_database_wallet_details', 'configuration_connection_string', 'configuration_database_authentication_details', 'configuration_database_connection_type', 'configuration_database_role', 'configuration_database_type', 'configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_query', 'is_i_pv6'])
+@apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.create_monitor_sql_monitor_configuration.name, help=apmsynthetic_cli.create_monitor_sql_monitor_configuration.help)
+@cli_util.option('--database-service-name', help="""Service name of the database. Required for database-connection-type CLOUD_WALLET""")
+@cli_util.option('--database-wallet', help="""The database wallet configuration zip file path. Required for database-connection-type CLOUD_WALLET""")
+@cli_util.option('--connection-string', help=u"""Database connection string. Required for database-connection-type CUSTOM_JDBC""")
+@cli_util.option('--database-authentication-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--database-connection-type', type=custom_types.CliCaseInsensitiveChoice(["CLOUD_WALLET", "CUSTOM_JDBC"]), help=u"""Database connection type.""")
+@cli_util.option('--database-role', type=custom_types.CliCaseInsensitiveChoice(["DEFAULT", "SYSDBA", "SYSOPER", "SYSBACKUP", "SYSDG", "SYSKM", "SYSASM"]), help=u"""Database role.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MYSQL"]), help=u"""Database type.""")
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--database-query', help=u"""SQL query to be executed.""")
+@cli_util.option('--is-ipv6', type=click.BOOL, help=u"""If enabled, domain name will resolve to an IPv6 address.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'database-authentication-details': {'module': 'apm_synthetics', 'class': 'BasicAuthenticationDetails'}, 'database-wallet-details': {'module': 'apm_synthetics', 'class': 'DatabaseWalletDetails'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@cli_util.wrap_exceptions
+def create_monitor_sql_monitor_configuration_extended(ctx, **kwargs):
+    database_wallet_details = {}
+    if 'database_service_name' in kwargs and kwargs['database_service_name'] is not None:
+        database_wallet_details['serviceName'] = kwargs['database_service_name']
+        kwargs.pop('database_service_name')
+
+    if 'database_wallet' in kwargs and kwargs['database_wallet'] is not None:
+        database_wallet = os.path.expandvars(os.path.expanduser(kwargs['database_wallet']))
+        if not os.path.exists(database_wallet):
+            click.echo('Config source does not exist', file=sys.stderr)
+            ctx.abort()
+
+        if not (database_wallet.endswith(".zip") and os.path.isfile(database_wallet) and zipfile.is_zipfile(database_wallet)):
+            click.echo('Database wallet must be a .zip file.', file=sys.stderr)
+            ctx.abort()
+
+        send_value = create_base64encoded_zip(database_wallet)
+        if not send_value:
+            click.echo('Internal error: Unable to generate encoded zip', file=sys.stderr)
+            ctx.abort()
+
+        database_wallet_details['databaseWallet'] = send_value
+        kwargs.pop('database_wallet')
+
+    if len(database_wallet_details) > 0:
+        kwargs['configuration_database_wallet_details'] = json.dumps(database_wallet_details)
+
+    if 'connection_string' in kwargs:
+        kwargs['configuration_connection_string'] = kwargs['connection_string']
+        kwargs.pop('connection_string')
+
+    if 'database_authentication_details' in kwargs:
+        kwargs['configuration_database_authentication_details'] = kwargs['database_authentication_details']
+        kwargs.pop('database_authentication_details')
+
+    if 'database_connection_type' in kwargs:
+        kwargs['configuration_database_connection_type'] = kwargs['database_connection_type']
+        kwargs.pop('database_connection_type')
+
+    if 'database_role' in kwargs:
+        kwargs['configuration_database_role'] = kwargs['database_role']
+        kwargs.pop('database_role')
+
+    if 'database_type' in kwargs:
+        kwargs['configuration_database_type'] = kwargs['database_type']
+        kwargs.pop('database_type')
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
+
+    if 'is_failure_retried' in kwargs:
+        kwargs['configuration_is_failure_retried'] = kwargs['is_failure_retried']
+        kwargs.pop('is_failure_retried')
+
+    if 'database_query' in kwargs:
+        kwargs['configuration_query'] = kwargs['database_query']
+        kwargs.pop('database_query')
+
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
+
+    if 'database_wallet' in kwargs:
+        kwargs.pop('database_wallet')
+
+    if 'database_service_name' in kwargs:
+        kwargs.pop('database_service_name')
+
+    ctx.invoke(apmsynthetic_cli.create_monitor_sql_monitor_configuration, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_ftp_monitor_configuration, params_to_exclude=['configuration_dns_configuration', 'configuration_download_size_limit_in_bytes', 'configuration_ftp_basic_authentication_details', 'configuration_ftp_protocol', 'configuration_ftp_request_type', 'configuration_is_failure_retried', 'configuration_network_configuration', 'configuration_upload_file_size_in_bytes', 'configuration_verify_response_codes', 'configuration_verify_response_content', 'configuration_is_active_mode', 'is_i_pv6'])
+@apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.update_monitor_ftp_monitor_configuration.name, help=apmsynthetic_cli.update_monitor_ftp_monitor_configuration.help)
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--download-size-limit-in-bytes', type=click.INT, help=u"""Download size limit in Bytes, at which to stop the transfer. Maximum download size limit is 5 MiB.""")
+@cli_util.option('--ftp-basic-authentication-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--ftp-request-type', type=custom_types.CliCaseInsensitiveChoice(["LIST", "UPLOAD", "DOWNLOAD"]), help=u"""FTP monitor request type.""")
+@cli_util.option('--is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--upload-file-size-in-bytes', type=click.INT, help=u"""File upload size in Bytes, at which to stop the transfer. Maximum upload size is 5 MiB.""")
+@cli_util.option('--verify-response-codes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Expected FTP response codes. For status code range, set values such as 2xx, 3xx.
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--verify-response-content', help=u"""Verify response content against regular expression based string. If response content does not match the verifyResponseContent value, then it will be considered a failure.""")
+@cli_util.option('--is-active-mode', type=click.BOOL, help=u"""If enabled, Active mode will be used for the FTP connection.""")
+@cli_util.option('--is-ipv6', type=click.BOOL, help=u"""If enabled, domain name will resolve to an IPv6 address.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'ftp-basic-authentication-details': {'module': 'apm_synthetics', 'class': 'BasicAuthenticationDetails'}, 'network-configuration': {'module': 'apm_synthetics', 'class': 'NetworkConfiguration'}, 'verify-response-codes': {'module': 'apm_synthetics', 'class': 'list[string]'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@cli_util.wrap_exceptions
+def update_monitor_ftp_monitor_configuration_extended(ctx, **kwargs):
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
+
+    if 'download_size_limit_in_bytes' in kwargs:
+        kwargs['configuration_download_size_limit_in_bytes'] = kwargs['download_size_limit_in_bytes']
+        kwargs.pop('download_size_limit_in_bytes')
+
+    if 'ftp_basic_authentication_details' in kwargs:
+        kwargs['configuration_ftp_basic_authentication_details'] = kwargs['ftp_basic_authentication_details']
+        kwargs.pop('ftp_basic_authentication_details')
+
+    if 'ftp_protocol' in kwargs:
+        kwargs.pop('ftp_protocol')
+
+    if 'ftp_request_type' in kwargs:
+        kwargs['configuration_ftp_request_type'] = kwargs['ftp_request_type']
+        kwargs.pop('ftp_request_type')
+
+    if 'is_failure_retried' in kwargs:
+        kwargs['configuration_is_failure_retried'] = kwargs['is_failure_retried']
+        kwargs.pop('is_failure_retried')
+
+    if 'network_configuration' in kwargs:
+        kwargs['configuration_network_configuration'] = kwargs['network_configuration']
+        kwargs.pop('network_configuration')
+
+    if 'upload_file_size_in_bytes' in kwargs:
+        kwargs['configuration_upload_file_size_in_bytes'] = kwargs['upload_file_size_in_bytes']
+        kwargs.pop('upload_file_size_in_bytes')
+
+    if 'verify_response_codes' in kwargs:
+        kwargs['configuration_verify_response_codes'] = kwargs['verify_response_codes']
+        kwargs.pop('verify_response_codes')
+
+    if 'verify_response_content' in kwargs:
+        kwargs['configuration_verify_response_content'] = kwargs['verify_response_content']
+        kwargs.pop('verify_response_content')
+
+    if 'is_active_mode' in kwargs:
+        kwargs['configuration_is_active_mode'] = kwargs['is_active_mode']
+        kwargs.pop('is_active_mode')
+
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
+
+    ctx.invoke(apmsynthetic_cli.update_monitor_ftp_monitor_configuration, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(apmsynthetic_cli.update_monitor_sql_monitor_configuration, params_to_exclude=['configuration_database_wallet_details', 'configuration_connection_string', 'configuration_database_authentication_details', 'configuration_database_connection_type', 'configuration_database_role', 'configuration_database_type', 'configuration_dns_configuration', 'configuration_is_failure_retried', 'configuration_query', 'is_i_pv6'])
+@apmsynthetic_cli.monitor_group.command(name=apmsynthetic_cli.update_monitor_sql_monitor_configuration.name, help=apmsynthetic_cli.update_monitor_sql_monitor_configuration.help)
+@cli_util.option('--database-service-name', help="""Service name of the database. Required for database-connection-type CLOUD_WALLET""")
+@cli_util.option('--database-wallet', help="""The database wallet configuration zip file path. Required for database-connection-type CLOUD_WALLET""")
+@cli_util.option('--connection-string', help=u"""Database connection string. Required for database-connection-type CUSTOM_JDBC""")
+@cli_util.option('--database-authentication-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--database-connection-type', type=custom_types.CliCaseInsensitiveChoice(["CLOUD_WALLET", "CUSTOM_JDBC"]), help=u"""Database connection type.""")
+@cli_util.option('--database-role', type=custom_types.CliCaseInsensitiveChoice(["DEFAULT", "SYSDBA", "SYSOPER", "SYSBACKUP", "SYSDG", "SYSKM", "SYSASM"]), help=u"""Database role.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MYSQL"]), help=u"""Database type.""")
+@cli_util.option('--dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--is-failure-retried', type=click.BOOL, help=u"""If isFailureRetried is enabled, then a failed call will be retried.""")
+@cli_util.option('--database-query', help=u"""SQL query to be executed.""")
+@cli_util.option('--is-ipv6', type=click.BOOL, help=u"""If enabled, domain name will resolve to an IPv6 address.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vantage-points': {'module': 'apm_synthetics', 'class': 'list[string]'}, 'script-parameters': {'module': 'apm_synthetics', 'class': 'list[MonitorScriptParameter]'}, 'availability-configuration': {'module': 'apm_synthetics', 'class': 'AvailabilityConfiguration'}, 'maintenance-window-schedule': {'module': 'apm_synthetics', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'apm_synthetics', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_synthetics', 'class': 'dict(str, dict(str, object))'}, 'dns-configuration': {'module': 'apm_synthetics', 'class': 'DnsConfiguration'}, 'database-authentication-details': {'module': 'apm_synthetics', 'class': 'BasicAuthenticationDetails'}, 'database-wallet-details': {'module': 'apm_synthetics', 'class': 'DatabaseWalletDetails'}}, output_type={'module': 'apm_synthetics', 'class': 'Monitor'})
+@cli_util.wrap_exceptions
+def update_monitor_sql_monitor_configuration_extended(ctx, **kwargs):
+    database_wallet_details = {}
+    if 'database_service_name' in kwargs and kwargs['database_service_name'] is not None:
+        database_wallet_details['serviceName'] = kwargs['database_service_name']
+        kwargs.pop('database_service_name')
+
+    if 'database_wallet' in kwargs and kwargs['database_wallet'] is not None:
+        database_wallet = os.path.expandvars(os.path.expanduser(kwargs['database_wallet']))
+        if not os.path.exists(database_wallet):
+            click.echo('Config source does not exist', file=sys.stderr)
+            ctx.abort()
+
+        if not (database_wallet.endswith(".zip") and os.path.isfile(database_wallet) and zipfile.is_zipfile(database_wallet)):
+            click.echo('Database wallet must be a .zip file.', file=sys.stderr)
+            ctx.abort()
+
+        send_value = create_base64encoded_zip(database_wallet)
+        if not send_value:
+            click.echo('Internal error: Unable to generate encoded zip', file=sys.stderr)
+            ctx.abort()
+
+        database_wallet_details['databaseWallet'] = send_value
+        kwargs.pop('database_wallet')
+
+    if len(database_wallet_details) > 0:
+        kwargs['configuration_database_wallet_details'] = json.dumps(database_wallet_details)
+
+    if 'connection_string' in kwargs:
+        kwargs['configuration_connection_string'] = kwargs['connection_string']
+        kwargs.pop('connection_string')
+
+    if 'database_authentication_details' in kwargs:
+        kwargs['configuration_database_authentication_details'] = kwargs['database_authentication_details']
+        kwargs.pop('database_authentication_details')
+
+    if 'database_connection_type' in kwargs:
+        kwargs['configuration_database_connection_type'] = kwargs['database_connection_type']
+        kwargs.pop('database_connection_type')
+
+    if 'database_role' in kwargs:
+        kwargs['configuration_database_role'] = kwargs['database_role']
+        kwargs.pop('database_role')
+
+    if 'database_type' in kwargs:
+        kwargs['configuration_database_type'] = kwargs['database_type']
+        kwargs.pop('database_type')
+
+    if 'dns_configuration' in kwargs:
+        kwargs['configuration_dns_configuration'] = kwargs['dns_configuration']
+        kwargs.pop('dns_configuration')
+
+    if 'is_failure_retried' in kwargs:
+        kwargs['configuration_is_failure_retried'] = kwargs['is_failure_retried']
+        kwargs.pop('is_failure_retried')
+
+    if 'database_query' in kwargs:
+        kwargs['configuration_query'] = kwargs['database_query']
+        kwargs.pop('database_query')
+
+    if 'is_ipv6' in kwargs:
+        kwargs['is_i_pv6'] = kwargs['is_ipv6']
+        kwargs.pop('is_ipv6')
+
+    if 'database_wallet' in kwargs:
+        kwargs.pop('database_wallet')
+
+    if 'database_service_name' in kwargs:
+        kwargs.pop('database_service_name')
+
+    ctx.invoke(apmsynthetic_cli.update_monitor_sql_monitor_configuration, **kwargs)
+
+
+def create_base64encoded_zip(database_wallet):
+    if database_wallet.endswith(".zip") and os.path.isfile(database_wallet) and zipfile.is_zipfile(database_wallet):
+        with open(database_wallet, mode='rb') as zip_file:
+            return base64.b64encode(zip_file.read()).decode('utf-8')
