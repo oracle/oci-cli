@@ -735,3 +735,15 @@ def put_awr_hub_object_extended(ctx, **kwargs):
     del kwargs['file']
 
     ctx.invoke(operationsinsights_cli.put_awr_hub_object, **kwargs)
+
+
+# oci opsi database-insights create-database-insight-create-mds-my-sql-database-insight-details -> oci opsi database-insights create-mds-my-sql-database
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.create_database_insight_create_mds_my_sql_database_insight_details, "create-mds-my-sql-database")
+
+
+# oci opsi database-insights enable-database-insight-enable-mds-my-sql-database-insight-details -> oci opsi database-insights enable-mds-my-sql-database
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.enable_database_insight_enable_mds_my_sql_database_insight_details, "enable-mds-my-sql-database")
+
+
+# oci opsi database-insights update-database-insight-update-mds-my-sql-database-insight -> oci opsi database-insights update-mds-my-sql-database
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.update_database_insight_update_mds_my_sql_database_insight, "update-mds-my-sql-database")
