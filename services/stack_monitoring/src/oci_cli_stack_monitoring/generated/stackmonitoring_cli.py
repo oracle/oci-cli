@@ -363,10 +363,11 @@ def change_process_set_compartment(ctx, from_json, process_set_id, compartment_i
 
 @baselineable_metric_group.command(name=cli_util.override('stack_monitoring.create_baselineable_metric.command_name', 'create'), help=u"""Creates the specified Baseline-able metric \n[Command Reference](createBaselineableMetric)""")
 @cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment""")
-@cli_util.option('--name', required=True, help=u"""name of the metric""")
 @cli_util.option('--column', required=True, help=u"""metric column name""")
 @cli_util.option('--namespace', required=True, help=u"""namespace of the metric""")
-@cli_util.option('--resource-group', required=True, help=u"""Resource group of the metric""")
+@cli_util.option('--name', help=u"""name of the metric""")
+@cli_util.option('--resource-group', help=u"""Resource group of the metric""")
+@cli_util.option('--resource-type', help=u"""Resource type of the metric""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -375,17 +376,24 @@ def change_process_set_compartment(ctx, from_json, process_set_id, compartment_i
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'stack_monitoring', 'class': 'BaselineableMetric'})
 @cli_util.wrap_exceptions
-def create_baselineable_metric(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, column, namespace, resource_group):
+def create_baselineable_metric(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, column, namespace, name, resource_group, resource_type):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['compartmentId'] = compartment_id
-    _details['name'] = name
     _details['column'] = column
     _details['namespace'] = namespace
-    _details['resourceGroup'] = resource_group
+
+    if name is not None:
+        _details['name'] = name
+
+    if resource_group is not None:
+        _details['resourceGroup'] = resource_group
+
+    if resource_type is not None:
+        _details['resourceType'] = resource_type
 
     client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
     result = client.create_baselineable_metric(
@@ -2983,6 +2991,8 @@ def get_work_request(ctx, from_json, work_request_id):
 
 @baselineable_metric_group.command(name=cli_util.override('stack_monitoring.list_baselineable_metrics.command_name', 'list'), help=u"""List of summary of baseline-able metrics for a given resource group if specified. \n[Command Reference](listBaselineableMetrics)""")
 @cli_util.option('--resource-group', help=u"""Resource Group""")
+@cli_util.option('--resource-type', help=u"""Resource Type""")
+@cli_util.option('--is-out-of-box', type=click.BOOL, help=u"""Is the baseline enabled metric defined out of box by Oracle or by end-user""")
 @cli_util.option('--name', help=u"""Metric Name""")
 @cli_util.option('--metric-namespace', help=u"""A filter to return monitored resource types that has the matching namespace.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -2998,7 +3008,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'stack_monitoring', 'class': 'BaselineableMetricSummaryCollection'})
 @cli_util.wrap_exceptions
-def list_baselineable_metrics(ctx, from_json, all_pages, page_size, resource_group, name, metric_namespace, limit, page, compartment_id, baselineable_metric_id, sort_order, sort_by):
+def list_baselineable_metrics(ctx, from_json, all_pages, page_size, resource_group, resource_type, is_out_of_box, name, metric_namespace, limit, page, compartment_id, baselineable_metric_id, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3006,6 +3016,10 @@ def list_baselineable_metrics(ctx, from_json, all_pages, page_size, resource_gro
     kwargs = {}
     if resource_group is not None:
         kwargs['resource_group'] = resource_group
+    if resource_type is not None:
+        kwargs['resource_type'] = resource_type
+    if is_out_of_box is not None:
+        kwargs['is_out_of_box'] = is_out_of_box
     if name is not None:
         kwargs['name'] = name
     if metric_namespace is not None:
@@ -4291,6 +4305,7 @@ def update_and_propagate_tags(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""The current lifecycle state of the metric extension""")
 @cli_util.option('--tenancy-id', help=u"""OCID of the tenancy""")
 @cli_util.option('--compartment-id', help=u"""OCID of the compartment""")
+@cli_util.option('--resource-type', help=u"""Resource type of the metric""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of system tag keys. These predefined keys are scoped to namespaces. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4304,7 +4319,7 @@ def update_and_propagate_tags(ctx, from_json, wait_for_state, max_wait_seconds, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'BaselineableMetric'})
 @cli_util.wrap_exceptions
-def update_baselineable_metric(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, id, name, column, namespace, resource_group, is_out_of_box, baselineable_metric_id, lifecycle_state, tenancy_id, compartment_id, freeform_tags, defined_tags, system_tags, if_match):
+def update_baselineable_metric(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, id, name, column, namespace, resource_group, is_out_of_box, baselineable_metric_id, lifecycle_state, tenancy_id, compartment_id, resource_type, freeform_tags, defined_tags, system_tags, if_match):
 
     if isinstance(baselineable_metric_id, six.string_types) and len(baselineable_metric_id.strip()) == 0:
         raise click.UsageError('Parameter --baselineable-metric-id cannot be whitespace or empty string')
@@ -4334,6 +4349,9 @@ def update_baselineable_metric(ctx, from_json, force, wait_for_state, max_wait_s
 
     if compartment_id is not None:
         _details['compartmentId'] = compartment_id
+
+    if resource_type is not None:
+        _details['resourceType'] = resource_type
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

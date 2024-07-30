@@ -23,6 +23,12 @@ def fleet_software_update_root_group():
     pass
 
 
+@click.command(cli_util.override('fleet_software_update.fsu_collection_target_group.command_name', 'fsu-collection-target'), cls=CommandGroupWithAlias, help="""Details of a target member of a Exadata Fleet Update Collection.""")
+@cli_util.help_option_group
+def fsu_collection_target_group():
+    pass
+
+
 @click.command(cli_util.override('fleet_software_update.fsu_job_summary_group.command_name', 'fsu-job-summary'), cls=CommandGroupWithAlias, help="""Exadata Fleet Update Job resource.""")
 @cli_util.help_option_group
 def fsu_job_summary_group():
@@ -113,6 +119,7 @@ def fsu_discovery_summary_group():
     pass
 
 
+fleet_software_update_root_group.add_command(fsu_collection_target_group)
 fleet_software_update_root_group.add_command(fsu_job_summary_group)
 fleet_software_update_root_group.add_command(target_summary_collection_group)
 fleet_software_update_root_group.add_command(fsu_cycle_group)
@@ -1199,17 +1206,18 @@ def create_fsu_collection_create_gi_fsu_collection_details(ctx, from_json, wait_
 @cli_util.option('--batching-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--stage-action-schedule', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--apply-action-schedule', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--diagnostics-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'CreateBatchingStrategyDetails'}, 'stage-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'apply-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'CreateBatchingStrategyDetails'}, 'stage-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'apply-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'CreateBatchingStrategyDetails'}, 'stage-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'apply-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_software_update', 'class': 'FsuCycle'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'CreateBatchingStrategyDetails'}, 'stage-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'apply-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_software_update', 'class': 'FsuCycle'})
 @cli_util.wrap_exceptions
-def create_fsu_cycle(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, fsu_collection_id, goal_version_details, display_name, batching_strategy, stage_action_schedule, apply_action_schedule, freeform_tags, defined_tags):
+def create_fsu_cycle(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, fsu_collection_id, goal_version_details, display_name, batching_strategy, stage_action_schedule, apply_action_schedule, diagnostics_collection, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1231,6 +1239,9 @@ def create_fsu_cycle(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if apply_action_schedule is not None:
         _details['applyActionSchedule'] = cli_util.parse_json_parameter("apply_action_schedule", apply_action_schedule)
+
+    if diagnostics_collection is not None:
+        _details['diagnosticsCollection'] = cli_util.parse_json_parameter("diagnostics_collection", diagnostics_collection)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -1281,6 +1292,7 @@ def create_fsu_cycle(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--batching-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--stage-action-schedule', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--apply-action-schedule', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--diagnostics-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-ignore-patches', type=click.BOOL, help=u"""Ignore all patches between the source and target homes during patching.""")
@@ -1290,12 +1302,12 @@ def create_fsu_cycle(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'CreateBatchingStrategyDetails'}, 'stage-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'apply-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}, 'is-ignore-missing-patches': {'module': 'fleet_software_update', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'CreateBatchingStrategyDetails'}, 'stage-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'apply-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}, 'is-ignore-missing-patches': {'module': 'fleet_software_update', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'CreateBatchingStrategyDetails'}, 'stage-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'apply-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}, 'is-ignore-missing-patches': {'module': 'fleet_software_update', 'class': 'list[string]'}}, output_type={'module': 'fleet_software_update', 'class': 'FsuCycle'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'CreateBatchingStrategyDetails'}, 'stage-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'apply-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}, 'is-ignore-missing-patches': {'module': 'fleet_software_update', 'class': 'list[string]'}}, output_type={'module': 'fleet_software_update', 'class': 'FsuCycle'})
 @cli_util.wrap_exceptions
-def create_fsu_cycle_create_patch_fsu_cycle(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, fsu_collection_id, goal_version_details, display_name, batching_strategy, stage_action_schedule, apply_action_schedule, freeform_tags, defined_tags, is_ignore_patches, is_ignore_missing_patches, max_drain_timeout_in_seconds, is_keep_placement):
+def create_fsu_cycle_create_patch_fsu_cycle(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, fsu_collection_id, goal_version_details, display_name, batching_strategy, stage_action_schedule, apply_action_schedule, diagnostics_collection, freeform_tags, defined_tags, is_ignore_patches, is_ignore_missing_patches, max_drain_timeout_in_seconds, is_keep_placement):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1316,6 +1328,9 @@ def create_fsu_cycle_create_patch_fsu_cycle(ctx, from_json, wait_for_state, max_
 
     if apply_action_schedule is not None:
         _details['applyActionSchedule'] = cli_util.parse_json_parameter("apply_action_schedule", apply_action_schedule)
+
+    if diagnostics_collection is not None:
+        _details['diagnosticsCollection'] = cli_util.parse_json_parameter("diagnostics_collection", diagnostics_collection)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -1699,6 +1714,67 @@ def delete_fsu_collection(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
+@fsu_collection_group.command(name=cli_util.override('fleet_software_update.delete_fsu_collection_target.command_name', 'delete-fsu-collection-target'), help=u"""Removes a target from an existing Exadata Fleet Update Collection. This operation can only be performed on Collections that do not have an Action executing under an active Fleet Software Update Cycle. Additionally, during an active Fleet Software Update Cycle, a target can be removed only prior to executing an Apply Action. \n[Command Reference](deleteFsuCollectionTarget)""")
+@cli_util.option('--fsu-collection-id', required=True, help=u"""Unique Exadata Fleet Update Collection identifier.""")
+@cli_util.option('--target-id', required=True, help=u"""Target resource OCID.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_fsu_collection_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_collection_id, target_id, if_match):
+
+    if isinstance(fsu_collection_id, six.string_types) and len(fsu_collection_id.strip()) == 0:
+        raise click.UsageError('Parameter --fsu-collection-id cannot be whitespace or empty string')
+
+    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+        raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_software_update', 'fleet_software_update', ctx)
+    result = client.delete_fsu_collection_target(
+        fsu_collection_id=fsu_collection_id,
+        target_id=target_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @fsu_cycle_group.command(name=cli_util.override('fleet_software_update.delete_fsu_cycle.command_name', 'delete'), help=u"""Deletes a Exadata Fleet Update Cycle resource by identifier. \n[Command Reference](deleteFsuCycle)""")
 @cli_util.option('--fsu-cycle-id', required=True, help=u"""Unique Exadata Fleet Update Cycle identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1959,6 +2035,33 @@ def get_fsu_collection(ctx, from_json, fsu_collection_id):
     client = cli_util.build_client('fleet_software_update', 'fleet_software_update', ctx)
     result = client.get_fsu_collection(
         fsu_collection_id=fsu_collection_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@fsu_collection_target_group.command(name=cli_util.override('fleet_software_update.get_fsu_collection_target.command_name', 'get'), help=u"""Gets a Exadata Fleet Update Collection Target by identifier. \n[Command Reference](getFsuCollectionTarget)""")
+@cli_util.option('--fsu-collection-id', required=True, help=u"""Unique Exadata Fleet Update Collection identifier.""")
+@cli_util.option('--target-id', required=True, help=u"""Target resource OCID.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_software_update', 'class': 'FsuCollectionTarget'})
+@cli_util.wrap_exceptions
+def get_fsu_collection_target(ctx, from_json, fsu_collection_id, target_id):
+
+    if isinstance(fsu_collection_id, six.string_types) and len(fsu_collection_id.strip()) == 0:
+        raise click.UsageError('Parameter --fsu-collection-id cannot be whitespace or empty string')
+
+    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+        raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_software_update', 'fleet_software_update', ctx)
+    result = client.get_fsu_collection_target(
+        fsu_collection_id=fsu_collection_id,
+        target_id=target_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3524,6 +3627,7 @@ def update_fsu_collection(ctx, from_json, force, wait_for_state, max_wait_second
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Cycle display name.""")
 @cli_util.option('--goal-version-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--batching-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--diagnostics-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -3531,18 +3635,18 @@ def update_fsu_collection(ctx, from_json, force, wait_for_state, max_wait_second
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_fsu_cycle(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, type, display_name, goal_version_details, batching_strategy, freeform_tags, defined_tags, if_match):
+def update_fsu_cycle(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, type, display_name, goal_version_details, batching_strategy, diagnostics_collection, freeform_tags, defined_tags, if_match):
 
     if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
     if not force:
-        if goal_version_details or batching_strategy or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to goal-version-details and batching-strategy and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if goal_version_details or batching_strategy or diagnostics_collection or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to goal-version-details and batching-strategy and diagnostics-collection and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -3561,6 +3665,9 @@ def update_fsu_cycle(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if batching_strategy is not None:
         _details['batchingStrategy'] = cli_util.parse_json_parameter("batching_strategy", batching_strategy)
+
+    if diagnostics_collection is not None:
+        _details['diagnosticsCollection'] = cli_util.parse_json_parameter("diagnostics_collection", diagnostics_collection)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -3609,6 +3716,7 @@ def update_fsu_cycle(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Cycle display name.""")
 @cli_util.option('--goal-version-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--batching-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--diagnostics-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-ignore-patches', type=click.BOOL, help=u"""Ignore all patches between the source and target homes during patching.""")
@@ -3620,18 +3728,18 @@ def update_fsu_cycle(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}, 'is-ignore-missing-patches': {'module': 'fleet_software_update', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}, 'is-ignore-missing-patches': {'module': 'fleet_software_update', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}, 'is-ignore-missing-patches': {'module': 'fleet_software_update', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}, 'is-ignore-missing-patches': {'module': 'fleet_software_update', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_fsu_cycle_update_patch_fsu_cycle(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, batching_strategy, freeform_tags, defined_tags, is_ignore_patches, is_ignore_missing_patches, max_drain_timeout_in_seconds, is_keep_placement, if_match):
+def update_fsu_cycle_update_patch_fsu_cycle(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, batching_strategy, diagnostics_collection, freeform_tags, defined_tags, is_ignore_patches, is_ignore_missing_patches, max_drain_timeout_in_seconds, is_keep_placement, if_match):
 
     if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
     if not force:
-        if goal_version_details or batching_strategy or freeform_tags or defined_tags or is_ignore_missing_patches:
-            if not click.confirm("WARNING: Updates to goal-version-details and batching-strategy and freeform-tags and defined-tags and is-ignore-missing-patches will replace any existing values. Are you sure you want to continue?"):
+        if goal_version_details or batching_strategy or diagnostics_collection or freeform_tags or defined_tags or is_ignore_missing_patches:
+            if not click.confirm("WARNING: Updates to goal-version-details and batching-strategy and diagnostics-collection and freeform-tags and defined-tags and is-ignore-missing-patches will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -3649,6 +3757,9 @@ def update_fsu_cycle_update_patch_fsu_cycle(ctx, from_json, force, wait_for_stat
 
     if batching_strategy is not None:
         _details['batchingStrategy'] = cli_util.parse_json_parameter("batching_strategy", batching_strategy)
+
+    if diagnostics_collection is not None:
+        _details['diagnosticsCollection'] = cli_util.parse_json_parameter("diagnostics_collection", diagnostics_collection)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -3711,6 +3822,7 @@ def update_fsu_cycle_update_patch_fsu_cycle(ctx, from_json, force, wait_for_stat
 @cli_util.option('--goal-version-details-version', required=True, help=u"""Target DB or GI version string for the Exadata Fleet Update Cycle.""")
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Cycle display name.""")
 @cli_util.option('--batching-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--diagnostics-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -3720,18 +3832,18 @@ def update_fsu_cycle_update_patch_fsu_cycle(ctx, from_json, force, wait_for_stat
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_fsu_cycle_version_fsu_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, goal_version_details_version, display_name, batching_strategy, freeform_tags, defined_tags, if_match, goal_version_details_home_policy, goal_version_details_new_home_prefix):
+def update_fsu_cycle_version_fsu_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, goal_version_details_version, display_name, batching_strategy, diagnostics_collection, freeform_tags, defined_tags, if_match, goal_version_details_home_policy, goal_version_details_new_home_prefix):
 
     if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
     if not force:
-        if batching_strategy or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to batching-strategy and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if batching_strategy or diagnostics_collection or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to batching-strategy and diagnostics-collection and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -3748,6 +3860,9 @@ def update_fsu_cycle_version_fsu_target_details(ctx, from_json, force, wait_for_
 
     if batching_strategy is not None:
         _details['batchingStrategy'] = cli_util.parse_json_parameter("batching_strategy", batching_strategy)
+
+    if diagnostics_collection is not None:
+        _details['diagnosticsCollection'] = cli_util.parse_json_parameter("diagnostics_collection", diagnostics_collection)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -3804,6 +3919,7 @@ def update_fsu_cycle_version_fsu_target_details(ctx, from_json, force, wait_for_
 @cli_util.option('--goal-version-details-software-image-id', required=True, help=u"""Target database software image OCID.""")
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Cycle display name.""")
 @cli_util.option('--batching-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--diagnostics-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -3813,18 +3929,18 @@ def update_fsu_cycle_version_fsu_target_details(ctx, from_json, force, wait_for_
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_fsu_cycle_image_id_fsu_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, goal_version_details_software_image_id, display_name, batching_strategy, freeform_tags, defined_tags, if_match, goal_version_details_home_policy, goal_version_details_new_home_prefix):
+def update_fsu_cycle_image_id_fsu_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, goal_version_details_software_image_id, display_name, batching_strategy, diagnostics_collection, freeform_tags, defined_tags, if_match, goal_version_details_home_policy, goal_version_details_new_home_prefix):
 
     if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
     if not force:
-        if batching_strategy or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to batching-strategy and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if batching_strategy or diagnostics_collection or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to batching-strategy and diagnostics-collection and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -3841,6 +3957,9 @@ def update_fsu_cycle_image_id_fsu_target_details(ctx, from_json, force, wait_for
 
     if batching_strategy is not None:
         _details['batchingStrategy'] = cli_util.parse_json_parameter("batching_strategy", batching_strategy)
+
+    if diagnostics_collection is not None:
+        _details['diagnosticsCollection'] = cli_util.parse_json_parameter("diagnostics_collection", diagnostics_collection)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -3896,6 +4015,7 @@ def update_fsu_cycle_image_id_fsu_target_details(ctx, from_json, force, wait_for
 @cli_util.option('--fsu-cycle-id', required=True, help=u"""Unique Exadata Fleet Update Cycle identifier.""")
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Cycle display name.""")
 @cli_util.option('--goal-version-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--diagnostics-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -3904,18 +4024,18 @@ def update_fsu_cycle_image_id_fsu_target_details(ctx, from_json, force, wait_for
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_fsu_cycle_update_sequential_batching_strategy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, freeform_tags, defined_tags, if_match, batching_strategy_is_force_rolling):
+def update_fsu_cycle_update_sequential_batching_strategy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, diagnostics_collection, freeform_tags, defined_tags, if_match, batching_strategy_is_force_rolling):
 
     if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
     if not force:
-        if goal_version_details or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to goal-version-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if goal_version_details or diagnostics_collection or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to goal-version-details and diagnostics-collection and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -3931,6 +4051,9 @@ def update_fsu_cycle_update_sequential_batching_strategy_details(ctx, from_json,
 
     if goal_version_details is not None:
         _details['goalVersionDetails'] = cli_util.parse_json_parameter("goal_version_details", goal_version_details)
+
+    if diagnostics_collection is not None:
+        _details['diagnosticsCollection'] = cli_util.parse_json_parameter("diagnostics_collection", diagnostics_collection)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -3983,6 +4106,7 @@ def update_fsu_cycle_update_sequential_batching_strategy_details(ctx, from_json,
 @cli_util.option('--fsu-cycle-id', required=True, help=u"""Unique Exadata Fleet Update Cycle identifier.""")
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Cycle display name.""")
 @cli_util.option('--goal-version-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--diagnostics-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -3990,18 +4114,18 @@ def update_fsu_cycle_update_sequential_batching_strategy_details(ctx, from_json,
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_fsu_cycle_update_non_rolling_batching_strategy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, freeform_tags, defined_tags, if_match):
+def update_fsu_cycle_update_non_rolling_batching_strategy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, diagnostics_collection, freeform_tags, defined_tags, if_match):
 
     if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
     if not force:
-        if goal_version_details or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to goal-version-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if goal_version_details or diagnostics_collection or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to goal-version-details and diagnostics-collection and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -4017,6 +4141,9 @@ def update_fsu_cycle_update_non_rolling_batching_strategy_details(ctx, from_json
 
     if goal_version_details is not None:
         _details['goalVersionDetails'] = cli_util.parse_json_parameter("goal_version_details", goal_version_details)
+
+    if diagnostics_collection is not None:
+        _details['diagnosticsCollection'] = cli_util.parse_json_parameter("diagnostics_collection", diagnostics_collection)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -4066,6 +4193,7 @@ def update_fsu_cycle_update_non_rolling_batching_strategy_details(ctx, from_json
 @cli_util.option('--fsu-cycle-id', required=True, help=u"""Unique Exadata Fleet Update Cycle identifier.""")
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Cycle display name.""")
 @cli_util.option('--goal-version-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--diagnostics-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -4075,18 +4203,18 @@ def update_fsu_cycle_update_non_rolling_batching_strategy_details(ctx, from_json
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_fsu_cycle_update_service_availability_factor_batching_strategy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, freeform_tags, defined_tags, if_match, batching_strategy_percentage, batching_strategy_is_force_rolling):
+def update_fsu_cycle_update_service_availability_factor_batching_strategy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, diagnostics_collection, freeform_tags, defined_tags, if_match, batching_strategy_percentage, batching_strategy_is_force_rolling):
 
     if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
     if not force:
-        if goal_version_details or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to goal-version-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if goal_version_details or diagnostics_collection or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to goal-version-details and diagnostics-collection and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -4102,6 +4230,9 @@ def update_fsu_cycle_update_service_availability_factor_batching_strategy_detail
 
     if goal_version_details is not None:
         _details['goalVersionDetails'] = cli_util.parse_json_parameter("goal_version_details", goal_version_details)
+
+    if diagnostics_collection is not None:
+        _details['diagnosticsCollection'] = cli_util.parse_json_parameter("diagnostics_collection", diagnostics_collection)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -4157,6 +4288,7 @@ def update_fsu_cycle_update_service_availability_factor_batching_strategy_detail
 @cli_util.option('--fsu-cycle-id', required=True, help=u"""Unique Exadata Fleet Update Cycle identifier.""")
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Cycle display name.""")
 @cli_util.option('--goal-version-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--diagnostics-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -4166,18 +4298,18 @@ def update_fsu_cycle_update_service_availability_factor_batching_strategy_detail
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_fsu_cycle_update_fifty_fifty_batching_strategy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, freeform_tags, defined_tags, if_match, batching_strategy_is_wait_for_batch_resume, batching_strategy_is_force_rolling):
+def update_fsu_cycle_update_fifty_fifty_batching_strategy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, diagnostics_collection, freeform_tags, defined_tags, if_match, batching_strategy_is_wait_for_batch_resume, batching_strategy_is_force_rolling):
 
     if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
     if not force:
-        if goal_version_details or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to goal-version-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if goal_version_details or diagnostics_collection or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to goal-version-details and diagnostics-collection and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -4193,6 +4325,9 @@ def update_fsu_cycle_update_fifty_fifty_batching_strategy_details(ctx, from_json
 
     if goal_version_details is not None:
         _details['goalVersionDetails'] = cli_util.parse_json_parameter("goal_version_details", goal_version_details)
+
+    if diagnostics_collection is not None:
+        _details['diagnosticsCollection'] = cli_util.parse_json_parameter("diagnostics_collection", diagnostics_collection)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -4248,6 +4383,7 @@ def update_fsu_cycle_update_fifty_fifty_batching_strategy_details(ctx, from_json
 @cli_util.option('--fsu-cycle-id', required=True, help=u"""Unique Exadata Fleet Update Cycle identifier.""")
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Cycle display name.""")
 @cli_util.option('--goal-version-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--diagnostics-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -4255,18 +4391,18 @@ def update_fsu_cycle_update_fifty_fifty_batching_strategy_details(ctx, from_json
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_fsu_cycle_none_batching_strategy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, freeform_tags, defined_tags, if_match):
+def update_fsu_cycle_none_batching_strategy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, diagnostics_collection, freeform_tags, defined_tags, if_match):
 
     if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
     if not force:
-        if goal_version_details or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to goal-version-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if goal_version_details or diagnostics_collection or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to goal-version-details and diagnostics-collection and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -4282,6 +4418,9 @@ def update_fsu_cycle_none_batching_strategy_details(ctx, from_json, force, wait_
 
     if goal_version_details is not None:
         _details['goalVersionDetails'] = cli_util.parse_json_parameter("goal_version_details", goal_version_details)
+
+    if diagnostics_collection is not None:
+        _details['diagnosticsCollection'] = cli_util.parse_json_parameter("diagnostics_collection", diagnostics_collection)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

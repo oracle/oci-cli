@@ -22,6 +22,18 @@ def speech_root_group():
     pass
 
 
+@click.command(cli_util.override('speech.customization_group.command_name', 'customization'), cls=CommandGroupWithAlias, help="""Description of a Customization.""")
+@cli_util.help_option_group
+def customization_group():
+    pass
+
+
+@click.command(cli_util.override('speech.realtime_session_token_group.command_name', 'realtime-session-token'), cls=CommandGroupWithAlias, help="""The response from the realtime session token endpoint that creates the auth token to be used with the realtime speech service.""")
+@cli_util.help_option_group
+def realtime_session_token_group():
+    pass
+
+
 @click.command(cli_util.override('speech.transcription_task_group.command_name', 'transcription-task'), cls=CommandGroupWithAlias, help="""Description of Transcription Task.""")
 @cli_util.help_option_group
 def transcription_task_group():
@@ -34,6 +46,8 @@ def transcription_job_group():
     pass
 
 
+speech_root_group.add_command(customization_group)
+speech_root_group.add_command(realtime_session_token_group)
 speech_root_group.add_command(transcription_task_group)
 speech_root_group.add_command(transcription_job_group)
 
@@ -93,6 +107,37 @@ def cancel_transcription_task(ctx, from_json, transcription_job_id, transcriptio
     cli_util.render_response(result, ctx)
 
 
+@customization_group.command(name=cli_util.override('speech.change_customization_compartment.command_name', 'change-compartment'), help=u"""Moves a Customization resource into a different compartment. \n[Command Reference](changeCustomizationCompartment)""")
+@cli_util.option('--customization-id', required=True, help=u"""Unique Customization training Job identifier.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_customization_compartment(ctx, from_json, customization_id, compartment_id, if_match):
+
+    if isinstance(customization_id, six.string_types) and len(customization_id.strip()) == 0:
+        raise click.UsageError('Parameter --customization-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('ai_speech', 'ai_service_speech', ctx)
+    result = client.change_customization_compartment(
+        customization_id=customization_id,
+        change_customization_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @transcription_job_group.command(name=cli_util.override('speech.change_transcription_job_compartment.command_name', 'change-compartment'), help=u"""Moves a transcription Job resource into a different compartment. \n[Command Reference](changeTranscriptionJobCompartment)""")
 @cli_util.option('--transcription-job-id', required=True, help=u"""Unique Transcription Job identifier.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
@@ -119,6 +164,274 @@ def change_transcription_job_compartment(ctx, from_json, transcription_job_id, c
     result = client.change_transcription_job_compartment(
         transcription_job_id=transcription_job_id,
         change_transcription_job_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@customization_group.command(name=cli_util.override('speech.create_customization.command_name', 'create'), help=u"""Creates a new Customization. \n[Command Reference](createCustomization)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--model-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--training-dataset', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--alias', help=u"""Customization Details Alias""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the job.""")
+@cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace-1\": {\"bar-key-1\": \"value-1\", \"bar-key-2\": \"value-2\"}, \"foo-namespace-2\": {\"bar-key-1\": \"value-1\", \"bar-key-2\": \"value-2\"}}`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["DELETING", "DELETED", "FAILED", "UPDATING", "ACTIVE", "CREATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'model-details': {'module': 'ai_speech', 'class': 'CustomizationModelDetails'}, 'training-dataset': {'module': 'ai_speech', 'class': 'CustomizationDatasetDetails'}, 'freeform-tags': {'module': 'ai_speech', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_speech', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'model-details': {'module': 'ai_speech', 'class': 'CustomizationModelDetails'}, 'training-dataset': {'module': 'ai_speech', 'class': 'CustomizationDatasetDetails'}, 'freeform-tags': {'module': 'ai_speech', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_speech', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_speech', 'class': 'Customization'})
+@cli_util.wrap_exceptions
+def create_customization(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, model_details, training_dataset, alias, display_name, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['modelDetails'] = cli_util.parse_json_parameter("model_details", model_details)
+    _details['trainingDataset'] = cli_util.parse_json_parameter("training_dataset", training_dataset)
+
+    if alias is not None:
+        _details['alias'] = alias
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('ai_speech', 'ai_service_speech', ctx)
+    result = client.create_customization(
+        create_customization_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_customization') and callable(getattr(client, 'get_customization')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_customization(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@customization_group.command(name=cli_util.override('speech.create_customization_object_storage_dataset.command_name', 'create-customization-object-storage-dataset'), help=u"""Creates a new Customization. \n[Command Reference](createCustomization)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--model-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--training-dataset-location-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--alias', help=u"""Customization Details Alias""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the job.""")
+@cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace-1\": {\"bar-key-1\": \"value-1\", \"bar-key-2\": \"value-2\"}, \"foo-namespace-2\": {\"bar-key-1\": \"value-1\", \"bar-key-2\": \"value-2\"}}`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--training-dataset-entity-type', help=u"""Entity Type categorizing the following list of words.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["DELETING", "DELETED", "FAILED", "UPDATING", "ACTIVE", "CREATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'model-details': {'module': 'ai_speech', 'class': 'CustomizationModelDetails'}, 'freeform-tags': {'module': 'ai_speech', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_speech', 'class': 'dict(str, dict(str, object))'}, 'training-dataset-location-details': {'module': 'ai_speech', 'class': 'LocationDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'model-details': {'module': 'ai_speech', 'class': 'CustomizationModelDetails'}, 'freeform-tags': {'module': 'ai_speech', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_speech', 'class': 'dict(str, dict(str, object))'}, 'training-dataset-location-details': {'module': 'ai_speech', 'class': 'LocationDetails'}}, output_type={'module': 'ai_speech', 'class': 'Customization'})
+@cli_util.wrap_exceptions
+def create_customization_object_storage_dataset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, model_details, training_dataset_location_details, alias, display_name, description, freeform_tags, defined_tags, training_dataset_entity_type):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['trainingDataset'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['modelDetails'] = cli_util.parse_json_parameter("model_details", model_details)
+    _details['trainingDataset']['locationDetails'] = cli_util.parse_json_parameter("training_dataset_location_details", training_dataset_location_details)
+
+    if alias is not None:
+        _details['alias'] = alias
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if training_dataset_entity_type is not None:
+        _details['trainingDataset']['entityType'] = training_dataset_entity_type
+
+    _details['trainingDataset']['datasetType'] = 'OBJECT_STORAGE'
+
+    client = cli_util.build_client('ai_speech', 'ai_service_speech', ctx)
+    result = client.create_customization(
+        create_customization_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_customization') and callable(getattr(client, 'get_customization')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_customization(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@customization_group.command(name=cli_util.override('speech.create_customization_entity_list_dataset.command_name', 'create-customization-entity-list-dataset'), help=u"""Creates a new Customization. \n[Command Reference](createCustomization)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--model-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--alias', help=u"""Customization Details Alias""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the job.""")
+@cli_util.option('--description', help=u"""A short description of the job.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace-1\": {\"bar-key-1\": \"value-1\", \"bar-key-2\": \"value-2\"}, \"foo-namespace-2\": {\"bar-key-1\": \"value-1\", \"bar-key-2\": \"value-2\"}}`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--training-dataset-reference-examples', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of sentences referencing 1 or more entityType matching those defined in the linked entityLists, used to improve accuracy by providing model training context of where/how an entity may appear in a sentence. EntityTypes referenced in sentences should be written in all caps surrounded by angled braces (i.e \"<PATIENT>\" if entityType=patient)""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--training-dataset-entity-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of entityLists
+
+This option is a JSON list with items of type EntityList.  For documentation on EntityList please see our API reference: https://docs.cloud.oracle.com/api/#/en/aiservicespeech/20220101/datatypes/EntityList.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["DELETING", "DELETED", "FAILED", "UPDATING", "ACTIVE", "CREATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'model-details': {'module': 'ai_speech', 'class': 'CustomizationModelDetails'}, 'freeform-tags': {'module': 'ai_speech', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_speech', 'class': 'dict(str, dict(str, object))'}, 'training-dataset-reference-examples': {'module': 'ai_speech', 'class': 'list[string]'}, 'training-dataset-entity-list': {'module': 'ai_speech', 'class': 'list[EntityList]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'model-details': {'module': 'ai_speech', 'class': 'CustomizationModelDetails'}, 'freeform-tags': {'module': 'ai_speech', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_speech', 'class': 'dict(str, dict(str, object))'}, 'training-dataset-reference-examples': {'module': 'ai_speech', 'class': 'list[string]'}, 'training-dataset-entity-list': {'module': 'ai_speech', 'class': 'list[EntityList]'}}, output_type={'module': 'ai_speech', 'class': 'Customization'})
+@cli_util.wrap_exceptions
+def create_customization_entity_list_dataset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, model_details, alias, display_name, description, freeform_tags, defined_tags, training_dataset_reference_examples, training_dataset_entity_list):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['trainingDataset'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['modelDetails'] = cli_util.parse_json_parameter("model_details", model_details)
+
+    if alias is not None:
+        _details['alias'] = alias
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if training_dataset_reference_examples is not None:
+        _details['trainingDataset']['referenceExamples'] = cli_util.parse_json_parameter("training_dataset_reference_examples", training_dataset_reference_examples)
+
+    if training_dataset_entity_list is not None:
+        _details['trainingDataset']['entityList'] = cli_util.parse_json_parameter("training_dataset_entity_list", training_dataset_entity_list)
+
+    _details['trainingDataset']['datasetType'] = 'ENTITY_LIST'
+
+    client = cli_util.build_client('ai_speech', 'ai_service_speech', ctx)
+    result = client.create_customization(
+        create_customization_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_customization') and callable(getattr(client, 'get_customization')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_customization(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@realtime_session_token_group.command(name=cli_util.override('speech.create_realtime_session_token.command_name', 'create'), help=u"""Returns an authentication token to the user. \n[Command Reference](createRealtimeSessionToken)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace-1\": {\"bar-key-1\": \"value-1\", \"bar-key-2\": \"value-2\"}, \"foo-namespace-2\": {\"bar-key-1\": \"value-1\", \"bar-key-2\": \"value-2\"}}`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'ai_speech', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_speech', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ai_speech', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_speech', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_speech', 'class': 'RealtimeSessionToken'})
+@cli_util.wrap_exceptions
+def create_realtime_session_token(ctx, from_json, compartment_id, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('ai_speech', 'ai_service_speech', ctx)
+    result = client.create_realtime_session_token(
+        create_realtime_session_token_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -373,6 +686,70 @@ def create_transcription_job_object_list_inline_input_location(ctx, from_json, w
     cli_util.render_response(result, ctx)
 
 
+@customization_group.command(name=cli_util.override('speech.delete_customization.command_name', 'delete'), help=u"""Delete Customization and its metadata from tenancy. \n[Command Reference](deleteCustomization)""")
+@cli_util.option('--customization-id', required=True, help=u"""Unique Customization training Job identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["DELETING", "DELETED", "FAILED", "UPDATING", "ACTIVE", "CREATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_customization(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, customization_id, if_match):
+
+    if isinstance(customization_id, six.string_types) and len(customization_id.strip()) == 0:
+        raise click.UsageError('Parameter --customization-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_speech', 'ai_service_speech', ctx)
+    result = client.delete_customization(
+        customization_id=customization_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_customization') and callable(getattr(client, 'get_customization')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_customization(customization_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @transcription_job_group.command(name=cli_util.override('speech.delete_transcription_job.command_name', 'delete'), help=u"""Delete API cleans job, tasks and the related metadata. However the generated transcriptions in customer tenancy will not be deleted. \n[Command Reference](deleteTranscriptionJob)""")
 @cli_util.option('--transcription-job-id', required=True, help=u"""Unique Transcription Job identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -437,6 +814,28 @@ def delete_transcription_job(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
+@customization_group.command(name=cli_util.override('speech.get_customization.command_name', 'get'), help=u"""Gets a Customization by identifier \n[Command Reference](getCustomization)""")
+@cli_util.option('--customization-id', required=True, help=u"""Unique Customization training Job identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_speech', 'class': 'Customization'})
+@cli_util.wrap_exceptions
+def get_customization(ctx, from_json, customization_id):
+
+    if isinstance(customization_id, six.string_types) and len(customization_id.strip()) == 0:
+        raise click.UsageError('Parameter --customization-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_speech', 'ai_service_speech', ctx)
+    result = client.get_customization(
+        customization_id=customization_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @transcription_job_group.command(name=cli_util.override('speech.get_transcription_job.command_name', 'get'), help=u"""Gets a Transcription Job by identifier \n[Command Reference](getTranscriptionJob)""")
 @cli_util.option('--transcription-job-id', required=True, help=u"""Unique Transcription Job identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -483,6 +882,68 @@ def get_transcription_task(ctx, from_json, transcription_job_id, transcription_t
         transcription_task_id=transcription_task_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@customization_group.command(name=cli_util.override('speech.list_customizations.command_name', 'list'), help=u"""Returns a list of Customizations. \n[Command Reference](listCustomizations)""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["DELETING", "DELETED", "FAILED", "UPDATING", "ACTIVE", "CREATING"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--id', help=u"""Unique identifier(OCID).""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_speech', 'class': 'CustomizationCollection'})
+@cli_util.wrap_exceptions
+def list_customizations(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_speech', 'ai_service_speech', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_customizations,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_customizations,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_customizations(
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -611,6 +1072,284 @@ def list_transcription_tasks(ctx, from_json, all_pages, page_size, transcription
             transcription_job_id=transcription_job_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@customization_group.command(name=cli_util.override('speech.update_customization.command_name', 'update'), help=u"""Updates a Customization by identifier \n[Command Reference](updateCustomization)""")
+@cli_util.option('--customization-id', required=True, help=u"""Unique Customization training Job identifier.""")
+@cli_util.option('--alias', help=u"""Customization Details Alias""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the customization.""")
+@cli_util.option('--description', help=u"""A short description of the customization.""")
+@cli_util.option('--model-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--training-dataset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace-1\": {\"bar-key-1\": \"value-1\", \"bar-key-2\": \"value-2\"}, \"foo-namespace-2\": {\"bar-key-1\": \"value-1\", \"bar-key-2\": \"value-2\"}}`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["DELETING", "DELETED", "FAILED", "UPDATING", "ACTIVE", "CREATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'model-details': {'module': 'ai_speech', 'class': 'CustomizationModelDetails'}, 'training-dataset': {'module': 'ai_speech', 'class': 'CustomizationDatasetDetails'}, 'freeform-tags': {'module': 'ai_speech', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_speech', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'model-details': {'module': 'ai_speech', 'class': 'CustomizationModelDetails'}, 'training-dataset': {'module': 'ai_speech', 'class': 'CustomizationDatasetDetails'}, 'freeform-tags': {'module': 'ai_speech', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_speech', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_speech', 'class': 'Customization'})
+@cli_util.wrap_exceptions
+def update_customization(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, customization_id, alias, display_name, description, model_details, training_dataset, freeform_tags, defined_tags, if_match):
+
+    if isinstance(customization_id, six.string_types) and len(customization_id.strip()) == 0:
+        raise click.UsageError('Parameter --customization-id cannot be whitespace or empty string')
+    if not force:
+        if model_details or training_dataset or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to model-details and training-dataset and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if alias is not None:
+        _details['alias'] = alias
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if model_details is not None:
+        _details['modelDetails'] = cli_util.parse_json_parameter("model_details", model_details)
+
+    if training_dataset is not None:
+        _details['trainingDataset'] = cli_util.parse_json_parameter("training_dataset", training_dataset)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('ai_speech', 'ai_service_speech', ctx)
+    result = client.update_customization(
+        customization_id=customization_id,
+        update_customization_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_customization') and callable(getattr(client, 'get_customization')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_customization(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@customization_group.command(name=cli_util.override('speech.update_customization_object_storage_dataset.command_name', 'update-customization-object-storage-dataset'), help=u"""Updates a Customization by identifier \n[Command Reference](updateCustomization)""")
+@cli_util.option('--customization-id', required=True, help=u"""Unique Customization training Job identifier.""")
+@cli_util.option('--training-dataset-location-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--alias', help=u"""Customization Details Alias""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the customization.""")
+@cli_util.option('--description', help=u"""A short description of the customization.""")
+@cli_util.option('--model-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace-1\": {\"bar-key-1\": \"value-1\", \"bar-key-2\": \"value-2\"}, \"foo-namespace-2\": {\"bar-key-1\": \"value-1\", \"bar-key-2\": \"value-2\"}}`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--training-dataset-entity-type', help=u"""Entity Type categorizing the following list of words.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["DELETING", "DELETED", "FAILED", "UPDATING", "ACTIVE", "CREATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'model-details': {'module': 'ai_speech', 'class': 'CustomizationModelDetails'}, 'freeform-tags': {'module': 'ai_speech', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_speech', 'class': 'dict(str, dict(str, object))'}, 'training-dataset-location-details': {'module': 'ai_speech', 'class': 'LocationDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'model-details': {'module': 'ai_speech', 'class': 'CustomizationModelDetails'}, 'freeform-tags': {'module': 'ai_speech', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_speech', 'class': 'dict(str, dict(str, object))'}, 'training-dataset-location-details': {'module': 'ai_speech', 'class': 'LocationDetails'}}, output_type={'module': 'ai_speech', 'class': 'Customization'})
+@cli_util.wrap_exceptions
+def update_customization_object_storage_dataset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, customization_id, training_dataset_location_details, alias, display_name, description, model_details, freeform_tags, defined_tags, if_match, training_dataset_entity_type):
+
+    if isinstance(customization_id, six.string_types) and len(customization_id.strip()) == 0:
+        raise click.UsageError('Parameter --customization-id cannot be whitespace or empty string')
+    if not force:
+        if model_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to model-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['trainingDataset'] = {}
+    _details['trainingDataset']['locationDetails'] = cli_util.parse_json_parameter("training_dataset_location_details", training_dataset_location_details)
+
+    if alias is not None:
+        _details['alias'] = alias
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if model_details is not None:
+        _details['modelDetails'] = cli_util.parse_json_parameter("model_details", model_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if training_dataset_entity_type is not None:
+        _details['trainingDataset']['entityType'] = training_dataset_entity_type
+
+    _details['trainingDataset']['datasetType'] = 'OBJECT_STORAGE'
+
+    client = cli_util.build_client('ai_speech', 'ai_service_speech', ctx)
+    result = client.update_customization(
+        customization_id=customization_id,
+        update_customization_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_customization') and callable(getattr(client, 'get_customization')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_customization(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@customization_group.command(name=cli_util.override('speech.update_customization_entity_list_dataset.command_name', 'update-customization-entity-list-dataset'), help=u"""Updates a Customization by identifier \n[Command Reference](updateCustomization)""")
+@cli_util.option('--customization-id', required=True, help=u"""Unique Customization training Job identifier.""")
+@cli_util.option('--alias', help=u"""Customization Details Alias""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the customization.""")
+@cli_util.option('--description', help=u"""A short description of the customization.""")
+@cli_util.option('--model-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace-1\": {\"bar-key-1\": \"value-1\", \"bar-key-2\": \"value-2\"}, \"foo-namespace-2\": {\"bar-key-1\": \"value-1\", \"bar-key-2\": \"value-2\"}}`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--training-dataset-reference-examples', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of sentences referencing 1 or more entityType matching those defined in the linked entityLists, used to improve accuracy by providing model training context of where/how an entity may appear in a sentence. EntityTypes referenced in sentences should be written in all caps surrounded by angled braces (i.e \"<PATIENT>\" if entityType=patient)""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--training-dataset-entity-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of entityLists
+
+This option is a JSON list with items of type EntityList.  For documentation on EntityList please see our API reference: https://docs.cloud.oracle.com/api/#/en/aiservicespeech/20220101/datatypes/EntityList.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["DELETING", "DELETED", "FAILED", "UPDATING", "ACTIVE", "CREATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'model-details': {'module': 'ai_speech', 'class': 'CustomizationModelDetails'}, 'freeform-tags': {'module': 'ai_speech', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_speech', 'class': 'dict(str, dict(str, object))'}, 'training-dataset-reference-examples': {'module': 'ai_speech', 'class': 'list[string]'}, 'training-dataset-entity-list': {'module': 'ai_speech', 'class': 'list[EntityList]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'model-details': {'module': 'ai_speech', 'class': 'CustomizationModelDetails'}, 'freeform-tags': {'module': 'ai_speech', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_speech', 'class': 'dict(str, dict(str, object))'}, 'training-dataset-reference-examples': {'module': 'ai_speech', 'class': 'list[string]'}, 'training-dataset-entity-list': {'module': 'ai_speech', 'class': 'list[EntityList]'}}, output_type={'module': 'ai_speech', 'class': 'Customization'})
+@cli_util.wrap_exceptions
+def update_customization_entity_list_dataset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, customization_id, alias, display_name, description, model_details, freeform_tags, defined_tags, if_match, training_dataset_reference_examples, training_dataset_entity_list):
+
+    if isinstance(customization_id, six.string_types) and len(customization_id.strip()) == 0:
+        raise click.UsageError('Parameter --customization-id cannot be whitespace or empty string')
+    if not force:
+        if model_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to model-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['trainingDataset'] = {}
+
+    if alias is not None:
+        _details['alias'] = alias
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if model_details is not None:
+        _details['modelDetails'] = cli_util.parse_json_parameter("model_details", model_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if training_dataset_reference_examples is not None:
+        _details['trainingDataset']['referenceExamples'] = cli_util.parse_json_parameter("training_dataset_reference_examples", training_dataset_reference_examples)
+
+    if training_dataset_entity_list is not None:
+        _details['trainingDataset']['entityList'] = cli_util.parse_json_parameter("training_dataset_entity_list", training_dataset_entity_list)
+
+    _details['trainingDataset']['datasetType'] = 'ENTITY_LIST'
+
+    client = cli_util.build_client('ai_speech', 'ai_service_speech', ctx)
+    result = client.update_customization(
+        customization_id=customization_id,
+        update_customization_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_customization') and callable(getattr(client, 'get_customization')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_customization(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

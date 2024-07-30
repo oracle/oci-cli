@@ -6,6 +6,107 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.45.0 - 2024-07-30
+--------------------
+Added
+~~~~~
+* Identity Domains Service
+
+  * Support for new commands
+
+    * ``oci identity-domains social-identity-provider create``
+    * ``oci identity-domains social-identity-provider delete``
+    * ``oci identity-domains social-identity-provider get``
+    * ``oci identity-domains social-identity-provider patch``
+    * ``oci identity-domains social-identity-provider put``
+    * ``oci identity-domains social-identity-providers list``
+    * ``oci identity-domains social-identity-providers search``
+
+* Stack Monitoring
+
+  * Support for baselineable metric for imported resources and metric extension
+
+    * ``oci stack-monitoring baselineable-metric update``
+    * ``oci stack-monitoring baselineable-metric list``
+    * ``oci stack-monitoring baselineable-metric create``
+
+* Database Migration
+
+  * Support GoldenGate Suspend Phase / Parameter File Update
+
+    * ``oci database-migration job create-parameter-file-version``
+    * ``oci database-migration job delete-parameter-file-version``
+    * ``oci database-migration job get-parameter-file-version``
+    * ``oci database-migration job list-parameter-file-versions``
+    * ``oci database-migration job make-current-parameter-file-version``
+    * ``oci database-migration job suspend``
+
+* Exadata Fleet Update Service
+
+  * Support for Diagnostics collection preferences and VMCluster and CloudVMCluster custom GI images
+
+    * ``oci fleet-software-update fsu-cycle create --diagnostics-collection``
+
+* Speech Service
+
+  * Support for Realtime Speech in the Speech Service
+
+    * ``oci speech realtime-session-token create``
+
+  * Support for Customization in the Speech Service
+
+    * ``oci speech customization``
+
+* Core Service
+
+  * Support for obtaining compute instance maintenance events in Core services
+
+    * ``oci compute instance-maintenance-event get``
+    * ``oci compute instance-maintenance-event list``
+    * ``oci compute instance-maintenance-event update``
+
+* Data Safe Service
+
+  * Support for creating custom alert policies
+
+    * ``oci data-safe alert-policy change-compartment``
+    * ``oci data-safe alert-policy create``
+    * ``oci data-safe alert-policy delete``
+    * ``oci data-safe alert-policy update``
+    * ``oci data-safe alert-policy-rule create``
+    * ``oci data-safe alert-policy-rule delete``
+    * ``oci data-safe alert-policy-rule get``
+    * ``oci data-safe alert-policy-rule update``
+
+Changed
+~~~~~~~
+* [BREAKING] Network Firewall Service
+
+  * The following commands from network-firewall service have been deprecated and unavailable to use
+
+    * ``oci network-firewall application create-application-create-icmp-application-details``
+    * ``oci network-firewall application create-application-create-icmp6-application-details``
+    * ``oci network-firewall application create-service-create-udp-service-details``
+    * ``oci network-firewall application create-service-create-tcp-service-details``
+    * ``oci network-firewall mapped-secret create-mapped-secret-create-vault-mapped-secret-details``
+    * ``oci network-firewall decryption-profile create-decryption-profile-create-ssl-inbound-inspection-profile-details``
+    * ``oci network-firewall decryption-profile create-decryption-profile-create-ssl-forward-proxy-profile-details``
+    * ``oci network-firewall application update-application-update-icmp-application-details``
+    * ``oci network-firewall application update-application-update-icmp6-application-details``
+    * ``oci network-firewall application update-service-update-udp-service-details``
+    * ``oci network-firewall application update-service-update-tcp-service-details``
+    * ``oci network-firewall mapped-secret update-mapped-secret-update-vault-mapped-secret-details``
+    * ``oci network-firewall decryption-profile update-decryption-profile-update-ssl-inbound-inspection-profile-details``
+    * ``oci network-firewall decryption-profile update-decryption-profile-update-ssl-forward-proxy-profile-details``
+
+* Data Safe Service
+
+  * Added additional attributes for existing APIs
+
+    * ``oci data-safe masking-policy``
+    * ``oci data-safe work-request list``
+    * ``oci data-safe target-alert-policy-association-summary list-target-alert-policy-associations``
+
 3.44.4 - 2024-07-23
 --------------------
 Added

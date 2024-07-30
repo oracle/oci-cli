@@ -78,6 +78,12 @@ def dedicated_vm_host_instance_group():
     pass
 
 
+@click.command(cli_util.override('compute.instance_maintenance_event_group.command_name', 'instance-maintenance-event'), cls=CommandGroupWithAlias, help="""It is the event in which the maintenance action will be be performed on the customer instance on the scheduled date and time.""")
+@cli_util.help_option_group
+def instance_maintenance_event_group():
+    pass
+
+
 @click.command(cli_util.override('compute.instance_console_connection_group.command_name', 'instance-console-connection'), cls=CommandGroupWithAlias, help="""The `InstanceConsoleConnection` API provides you with console access to Compute instances, enabling you to troubleshoot malfunctioning instances remotely.
 
 For more information about instance console connections, see [Troubleshooting Instances Using Instance Console Connections].""")
@@ -275,6 +281,7 @@ compute_root_group.add_command(volume_attachment_group)
 compute_root_group.add_command(compute_capacity_reservation_group)
 compute_root_group.add_command(compute_bare_metal_host_group)
 compute_root_group.add_command(dedicated_vm_host_instance_group)
+compute_root_group.add_command(instance_maintenance_event_group)
 compute_root_group.add_command(instance_console_connection_group)
 compute_root_group.add_command(compute_global_image_capability_schema_group)
 compute_root_group.add_command(instance_credentials_group)
@@ -3432,6 +3439,28 @@ def get_instance_console_connection(ctx, from_json, instance_console_connection_
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_instance_console_connection(
         instance_console_connection_id=instance_console_connection_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@instance_maintenance_event_group.command(name=cli_util.override('compute.get_instance_maintenance_event.command_name', 'get'), help=u"""Gets the maintenance event for the given instance. \n[Command Reference](getInstanceMaintenanceEvent)""")
+@cli_util.option('--instance-maintenance-event-id', required=True, help=u"""The OCID of the instance maintenance event.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstanceMaintenanceEvent'})
+@cli_util.wrap_exceptions
+def get_instance_maintenance_event(ctx, from_json, instance_maintenance_event_id):
+
+    if isinstance(instance_maintenance_event_id, six.string_types) and len(instance_maintenance_event_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-maintenance-event-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.get_instance_maintenance_event(
+        instance_maintenance_event_id=instance_maintenance_event_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -8623,6 +8652,82 @@ def list_instance_devices(ctx, from_json, all_pages, page_size, instance_id, is_
     cli_util.render_response(result, ctx)
 
 
+@instance_maintenance_event_group.command(name=cli_util.override('compute.list_instance_maintenance_events.command_name', 'list'), help=u"""Gets a list of all the maintenance events for the given instance. \n[Command Reference](listInstanceMaintenanceEvents)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--instance-id', help=u"""The OCID of the instance.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "STARTED", "PROCESSING", "SUCCEEDED", "FAILED", "CANCELED"]), help=u"""A filter to only return resources that match the given lifecycle state.""")
+@cli_util.option('--correlation-token', help=u"""A filter to only return resources that have a matching correlationToken.""")
+@cli_util.option('--instance-action', help=u"""A filter to only return resources that match the given instance action.""")
+@cli_util.option('--time-window-start-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Starting range to return the maintenances which are not completed (date-time is in [RFC3339] format).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-window-start-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Ending range to return the maintenances which are not completed (date-time is in [RFC3339] format).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[InstanceMaintenanceEventSummary]'})
+@cli_util.wrap_exceptions
+def list_instance_maintenance_events(ctx, from_json, all_pages, page_size, compartment_id, instance_id, lifecycle_state, correlation_token, instance_action, time_window_start_greater_than_or_equal_to, time_window_start_less_than_or_equal_to, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if instance_id is not None:
+        kwargs['instance_id'] = instance_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if correlation_token is not None:
+        kwargs['correlation_token'] = correlation_token
+    if instance_action is not None:
+        kwargs['instance_action'] = instance_action
+    if time_window_start_greater_than_or_equal_to is not None:
+        kwargs['time_window_start_greater_than_or_equal_to'] = time_window_start_greater_than_or_equal_to
+    if time_window_start_less_than_or_equal_to is not None:
+        kwargs['time_window_start_less_than_or_equal_to'] = time_window_start_less_than_or_equal_to
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_instance_maintenance_events,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_instance_maintenance_events,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_instance_maintenance_events(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @instance_group.command(name=cli_util.override('compute.list_instances.command_name', 'list'), help=u"""Lists the instances in the specified compartment and the specified availability domain. You can filter the results by specifying an instance name (the list will include all the identically-named instances in the compartment).
 
 **Note:** To retrieve public and private IP addresses for an instance, use the [ListVnicAttachments] operation to get the VNIC ID for the instance, and then call [GetVnic] with the VNIC ID. \n[Command Reference](listInstances)""")
@@ -10600,6 +10705,112 @@ def update_instance_console_connection(ctx, from_json, force, wait_for_state, ma
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@instance_maintenance_event_group.command(name=cli_util.override('compute.update_instance_maintenance_event.command_name', 'update'), help=u"""Updates the maintenance event for the given instance. \n[Command Reference](updateInstanceMaintenanceEvent)""")
+@cli_util.option('--instance-maintenance-event-id', required=True, help=u"""The OCID of the instance maintenance event.""")
+@cli_util.option('--time-window-start', type=custom_types.CLI_DATETIME, help=u"""The beginning of the time window when Maintenance is scheduled to begin. The Maintenance will not begin before this time.
+
+The timeWindowEnd is automatically calculated based on the maintenanceReason and the instanceAction.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--alternative-resolution-action', type=custom_types.CliCaseInsensitiveChoice(["REBOOT_MIGRATION", "TERMINATE"]), help=u"""One of the alternativeResolutionActions that was provided in the InstanceMaintenanceEvent.""")
+@cli_util.option('--can-delete-local-storage', type=click.BOOL, help=u"""This field is only applicable when setting the alternativeResolutionAction.
+
+For Instances that have local storage, this must be set to true to verify that the local storage will be deleted during the migration. For instances without, this parameter has no effect.
+
+In cases where the local storage will be lost, this parameter must be set or the request will fail.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.wrap_exceptions
+def update_instance_maintenance_event(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_maintenance_event_id, time_window_start, alternative_resolution_action, can_delete_local_storage, display_name, defined_tags, freeform_tags, if_match):
+
+    if isinstance(instance_maintenance_event_id, six.string_types) and len(instance_maintenance_event_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-maintenance-event-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if time_window_start is not None:
+        _details['timeWindowStart'] = time_window_start
+
+    if alternative_resolution_action is not None:
+        _details['alternativeResolutionAction'] = alternative_resolution_action
+
+    if can_delete_local_storage is not None:
+        _details['canDeleteLocalStorage'] = can_delete_local_storage
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.update_instance_maintenance_event(
+        instance_maintenance_event_id=instance_maintenance_event_id,
+        update_instance_maintenance_event_details=_details,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
