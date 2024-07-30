@@ -440,3 +440,15 @@ db, database-software-image, list
 database-management, managed-database, list
 fs, export-set, list
 db, key-store, confirm-key-store-details-are-correct
+fleet-software-update, fsu-cycle, update-version-target
+fleet-software-update, fsu-cycle, update-saf-batch
+fleet-software-update, fsu-cycle, update-sequential-batch
+fleet-software-update, fsu-cycle, update-patch
+fleet-software-update, fsu-cycle, update-fifty-batch
+fleet-software-update, fsu-cycle, update-image-id-target
+fleet-software-update' fsu-cycle, create-patch
+identity-domains, user-attributes-setting, search
+identity-domains, social-identity-providers, search
+identity-domains, social-identity-provider, put
+identity-domains, social-identity-provider, create
+fleet-software-update, fsu-cycle, create-patch

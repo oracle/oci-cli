@@ -130,6 +130,12 @@ def library_masking_format_summary_group():
     pass
 
 
+@click.command(cli_util.override('data_safe.alert_policy_rule_group.command_name', 'alert-policy-rule'), cls=CommandGroupWithAlias, help="""A rule associated with a alert policy.""")
+@cli_util.help_option_group
+def alert_policy_rule_group():
+    pass
+
+
 @click.command(cli_util.override('data_safe.alert_summary_group.command_name', 'alert-summary'), cls=CommandGroupWithAlias, help="""Summary of a Data Safe Alert.""")
 @cli_util.help_option_group
 def alert_summary_group():
@@ -480,6 +486,7 @@ data_safe_root_group.add_command(database_security_config_collection_group)
 data_safe_root_group.add_command(sql_collection_collection_group)
 data_safe_root_group.add_command(work_request_error_group)
 data_safe_root_group.add_command(library_masking_format_summary_group)
+data_safe_root_group.add_command(alert_policy_rule_group)
 data_safe_root_group.add_command(alert_summary_group)
 data_safe_root_group.add_command(database_view_access_entry_collection_group)
 data_safe_root_group.add_command(data_safe_private_endpoint_group)
@@ -1033,6 +1040,67 @@ def change_alert_compartment(ctx, from_json, alert_id, compartment_id, if_match)
         change_alert_compartment_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@alert_policy_group.command(name=cli_util.override('data_safe.change_alert_policy_compartment.command_name', 'change-compartment'), help=u"""Moves the specified alert policy into a different compartment. \n[Command Reference](changeAlertPolicyCompartment)""")
+@cli_util.option('--alert-policy-id', required=True, help=u"""The OCID of the alert policy.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the alert policy has to be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_alert_policy_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, alert_policy_id, compartment_id, if_match):
+
+    if isinstance(alert_policy_id, six.string_types) and len(alert_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --alert-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.change_alert_policy_compartment(
+        alert_policy_id=alert_policy_id,
+        change_alert_policy_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -2246,6 +2314,155 @@ def compare_user_assessment(ctx, from_json, wait_for_state, max_wait_seconds, wa
     result = client.compare_user_assessment(
         user_assessment_id=user_assessment_id,
         compare_user_assessment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@alert_policy_group.command(name=cli_util.override('data_safe.create_alert_policy.command_name', 'create'), help=u"""Creates a new user-defined alert policy. \n[Command Reference](createAlertPolicy)""")
+@cli_util.option('--alert-policy-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["AUDITING", "SECURITY_ASSESSMENT", "USER_ASSESSMENT"]), help=u"""Indicates the Data Safe feature the alert policy belongs to""")
+@cli_util.option('--severity', required=True, type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW", "EVALUATE"]), help=u"""Severity level of the alert raised by this policy.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to create the alert policy.""")
+@cli_util.option('--display-name', help=u"""The display name of the alert policy. The name does not have to be unique, and it's changeable.""")
+@cli_util.option('--description', help=u"""The description of the alert policy.""")
+@cli_util.option('--alert-policy-rule-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The details of the alert policy rule.
+
+This option is a JSON list with items of type CreateAlertPolicyRuleDetails.  For documentation on CreateAlertPolicyRuleDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datasafe/20181201/datatypes/CreateAlertPolicyRuleDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'alert-policy-rule-details': {'module': 'data_safe', 'class': 'list[CreateAlertPolicyRuleDetails]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'alert-policy-rule-details': {'module': 'data_safe', 'class': 'list[CreateAlertPolicyRuleDetails]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'AlertPolicy'})
+@cli_util.wrap_exceptions
+def create_alert_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, alert_policy_type, severity, compartment_id, display_name, description, alert_policy_rule_details, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['alertPolicyType'] = alert_policy_type
+    _details['severity'] = severity
+    _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if alert_policy_rule_details is not None:
+        _details['alertPolicyRuleDetails'] = cli_util.parse_json_parameter("alert_policy_rule_details", alert_policy_rule_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.create_alert_policy(
+        create_alert_policy_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@alert_policy_rule_group.command(name=cli_util.override('data_safe.create_alert_policy_rule.command_name', 'create'), help=u"""Creates a new rule for the alert policy. \n[Command Reference](createAlertPolicyRule)""")
+@cli_util.option('--expression', required=True, help=u"""The conditional expression of the alert policy rule which evaluates to boolean value.""")
+@cli_util.option('--alert-policy-id', required=True, help=u"""The OCID of the alert policy.""")
+@cli_util.option('--description', help=u"""Describes the alert policy rule.""")
+@cli_util.option('--display-name', help=u"""The display name of the alert policy rule.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'AlertPolicyRule'})
+@cli_util.wrap_exceptions
+def create_alert_policy_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, expression, alert_policy_id, description, display_name):
+
+    if isinstance(alert_policy_id, six.string_types) and len(alert_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --alert-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['expression'] = expression
+
+    if description is not None:
+        _details['description'] = description
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.create_alert_policy_rule(
+        alert_policy_id=alert_policy_id,
+        create_alert_policy_rule_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -5081,6 +5298,123 @@ def deactivate_target_database(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
+@alert_policy_group.command(name=cli_util.override('data_safe.delete_alert_policy.command_name', 'delete'), help=u"""Deletes the specified user-defined alert policy. \n[Command Reference](deleteAlertPolicy)""")
+@cli_util.option('--alert-policy-id', required=True, help=u"""The OCID of the alert policy.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_alert_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, alert_policy_id, if_match):
+
+    if isinstance(alert_policy_id, six.string_types) and len(alert_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --alert-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.delete_alert_policy(
+        alert_policy_id=alert_policy_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@alert_policy_rule_group.command(name=cli_util.override('data_safe.delete_alert_policy_rule.command_name', 'delete'), help=u"""Deletes the specified user-defined alert policy rule. \n[Command Reference](deleteAlertPolicyRule)""")
+@cli_util.option('--alert-policy-id', required=True, help=u"""The OCID of the alert policy.""")
+@cli_util.option('--rule-key', required=True, help=u"""The key of the alert policy rule.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_alert_policy_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, alert_policy_id, rule_key, if_match):
+
+    if isinstance(alert_policy_id, six.string_types) and len(alert_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --alert-policy-id cannot be whitespace or empty string')
+
+    if isinstance(rule_key, six.string_types) and len(rule_key.strip()) == 0:
+        raise click.UsageError('Parameter --rule-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.delete_alert_policy_rule(
+        alert_policy_id=alert_policy_id,
+        rule_key=rule_key,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @audit_archive_retrieval_group.command(name=cli_util.override('data_safe.delete_audit_archive_retrieval.command_name', 'delete'), help=u"""To unload retrieved archive data, call the operation ListAuditArchiveRetrieval first. This will return the auditArchiveRetrievalId. Then call this operation with auditArchiveRetrievalId. \n[Command Reference](deleteAuditArchiveRetrieval)""")
 @cli_util.option('--audit-archive-retrieval-id', required=True, help=u"""OCID of the archive retrieval.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -7488,6 +7822,33 @@ def get_alert_policy(ctx, from_json, alert_policy_id):
     cli_util.render_response(result, ctx)
 
 
+@alert_policy_rule_group.command(name=cli_util.override('data_safe.get_alert_policy_rule.command_name', 'get'), help=u"""Gets the details of a policy rule by its key. \n[Command Reference](getAlertPolicyRule)""")
+@cli_util.option('--alert-policy-id', required=True, help=u"""The OCID of the alert policy.""")
+@cli_util.option('--rule-key', required=True, help=u"""The key of the alert policy rule.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'AlertPolicyRule'})
+@cli_util.wrap_exceptions
+def get_alert_policy_rule(ctx, from_json, alert_policy_id, rule_key):
+
+    if isinstance(alert_policy_id, six.string_types) and len(alert_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --alert-policy-id cannot be whitespace or empty string')
+
+    if isinstance(rule_key, six.string_types) and len(rule_key.strip()) == 0:
+        raise click.UsageError('Parameter --rule-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.get_alert_policy_rule(
+        alert_policy_id=alert_policy_id,
+        rule_key=rule_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @audit_archive_retrieval_group.command(name=cli_util.override('data_safe.get_audit_archive_retrieval.command_name', 'get'), help=u"""Gets the details of the specified archive retreival. \n[Command Reference](getAuditArchiveRetrieval)""")
 @cli_util.option('--audit-archive-retrieval-id', required=True, help=u"""OCID of the archive retrieval.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -8518,8 +8879,8 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.option('--scim-query', help=u"""The scimQuery query parameter accepts filter expressions that use the syntax described in Section 3.2.2.2 of the System for Cross-Domain Identity Management (SCIM) specification, which is available at [RFC3339]. In SCIM filtering expressions, text, date, and time values must be enclosed in quotation marks, with date and time values using ISO-8601 format. (Numeric and boolean values should not be quoted.)
 
 **Example:** | query=(timeCreated ge '2021-06-04T01-00-26') and (targetNames eq 'target_1') query=(featureDetails.userName eq \"user\") and (targetNames eq \"target_1\") Supported fields: severity status alertType targetIds targetNames operationTime lifecycleState displayName timeCreated timeUpdated featureDetails.* (* can be any field in nestedStrMap in Feature Attributes in Alert Summary. For example - userName,object,clientHostname,osUserName,clientIPs,clientId,commandText,commandParam,clientProgram,objectType,targetOwner)""")
-@cli_util.option('--summary-field', type=custom_types.CliCaseInsensitiveChoice(["alertType", "targetIds", "targetNames", "alertSeverity", "alertStatus", "timeCreated", "policyId", "open", "closed", "critical", "high", "medium", "low", "alertcount"]), multiple=True, help=u"""Specifies a subset of summarized fields to be returned in the response.""")
-@cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["alertType", "targetIds", "targetNames", "alertSeverity", "alertStatus", "timeCreated", "policyId"]), multiple=True, help=u"""A groupBy can only be used in combination with summaryField parameter. A groupBy value has to be a subset of the values mentioned in summaryField parameter.""")
+@cli_util.option('--summary-field', type=custom_types.CliCaseInsensitiveChoice(["alertType", "targetIds", "targetNames", "alertSeverity", "alertStatus", "timeCreated", "policyId", "open", "closed", "critical", "high", "medium", "low", "alertcount", "alertPolicyRuleKey", "alertPolicyRuleName", "throttled"]), multiple=True, help=u"""Specifies a subset of summarized fields to be returned in the response.""")
+@cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["alertType", "targetIds", "targetNames", "alertSeverity", "alertStatus", "timeCreated", "policyId", "alertPolicyRuleKey", "alertPolicyRuleName"]), multiple=True, help=u"""A groupBy can only be used in combination with summaryField parameter. A groupBy value has to be a subset of the values mentioned in summaryField parameter.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -11651,7 +12012,7 @@ def list_profile_summaries(ctx, from_json, all_pages, page_size, user_assessment
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME", "DISPLAYORDER"]), help=u"""The field used for sorting. Only one sorting parameter order (sortOrder) can be specified. The default order for TIMECREATED is descending. The default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--is-seeded', type=click.BOOL, help=u"""A boolean flag indicating to list seeded report definitions. Set this parameter to get list of seeded report definitions.""")
 @cli_util.option('--data-source', type=custom_types.CliCaseInsensitiveChoice(["EVENTS", "ALERTS", "VIOLATIONS", "ALLOWED_SQL"]), help=u"""Specifies the name of a resource that provides data for the report. For example  alerts, events.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED"]), help=u"""An optional filter to return only resources that match the specified lifecycle state.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""An optional filter to return only resources that match the specified lifecycle state.""")
 @cli_util.option('--category', type=custom_types.CliCaseInsensitiveChoice(["CUSTOM_REPORTS", "SUMMARY", "ACTIVITY_AUDITING"]), help=u"""An optional filter to return only resources that match the specified category.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -11731,7 +12092,7 @@ def list_report_definitions(ctx, from_json, all_pages, page_size, compartment_id
 @cli_util.option('--time-generated-less-than', type=custom_types.CLI_DATETIME, help=u"""Search for resources that were generated before a specific date. Specifying this parameter corresponding `timeGeneratedLessThan` parameter will retrieve all resources generated before the specified generated date, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by RFC 3339.
 
 **Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["UPDATING", "ACTIVE"]), help=u"""An optional filter to return only resources that match the specified lifecycle state.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["UPDATING", "ACTIVE", "CREATING", "FAILED"]), help=u"""An optional filter to return only resources that match the specified lifecycle state.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["GENERATED", "SCHEDULED"]), help=u"""An optional filter to return only resources that match the specified type.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -16452,6 +16813,170 @@ def update_alert(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@alert_policy_group.command(name=cli_util.override('data_safe.update_alert_policy.command_name', 'update'), help=u"""Updates the specified alert policy . \n[Command Reference](updateAlertPolicy)""")
+@cli_util.option('--alert-policy-id', required=True, help=u"""The OCID of the alert policy.""")
+@cli_util.option('--display-name', help=u"""The display name of the alert policy. The name does not have to be unique, and it's changeable.""")
+@cli_util.option('--description', help=u"""The description of the alert policy.""")
+@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW", "EVALUATE"]), help=u"""Severity level of the alert raised by this policy.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_alert_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, alert_policy_id, display_name, description, severity, freeform_tags, defined_tags, if_match):
+
+    if isinstance(alert_policy_id, six.string_types) and len(alert_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --alert-policy-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if severity is not None:
+        _details['severity'] = severity
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_alert_policy(
+        alert_policy_id=alert_policy_id,
+        update_alert_policy_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@alert_policy_rule_group.command(name=cli_util.override('data_safe.update_alert_policy_rule.command_name', 'update'), help=u"""Updates the specified alert policy rule. \n[Command Reference](updateAlertPolicyRule)""")
+@cli_util.option('--alert-policy-id', required=True, help=u"""The OCID of the alert policy.""")
+@cli_util.option('--rule-key', required=True, help=u"""The key of the alert policy rule.""")
+@cli_util.option('--description', help=u"""Describes the alert policy rule.""")
+@cli_util.option('--expression', help=u"""The conditional expression of the alert policy rule which evaluates to boolean value.""")
+@cli_util.option('--display-name', help=u"""The display name of the alert policy rule.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_alert_policy_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, alert_policy_id, rule_key, description, expression, display_name, if_match):
+
+    if isinstance(alert_policy_id, six.string_types) and len(alert_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --alert-policy-id cannot be whitespace or empty string')
+
+    if isinstance(rule_key, six.string_types) and len(rule_key.strip()) == 0:
+        raise click.UsageError('Parameter --rule-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if expression is not None:
+        _details['expression'] = expression
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_alert_policy_rule(
+        alert_policy_id=alert_policy_id,
+        rule_key=rule_key,
+        update_alert_policy_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
