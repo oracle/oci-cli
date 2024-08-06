@@ -6,6 +6,89 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.45.1 - 2024-08-06
+--------------------
+Added
+~~~~~
+* Java Management Service Fleets
+
+  * Support for new commands
+
+    * ``oci jms agent-installer-summary``
+    * ``oci jms fleet request-deployed-application-migration-analyses``
+    * ``oci jms jms-plugin``
+
+  * Add new options to existing commands
+
+    * ``oci jms crypto-analysis-result list --finding-count, --finding-count-greater-than, --host-name, --non-compliant-finding-count, --non-compliant-finding-count-greater-than``
+    * ``oci jms fleet-agent-configuration update --is-collecting-managed-instance-metrics-enabled, --is-collecting-usernames-enabled``
+    * ``oci jms java-migration-analysis-result list --application-name, --host-name``
+    * ``oci jms library-usage summarize --cvss-score-greater-than, --cvss-score-less-than``
+    * ``oci jms performance-tuning-analysis-result list --host-name``
+    * ``oci jms work-request list --operation-type, --status``
+
+* Support for a new optional parameter "compartmentId" in  Java Management Service Downloads
+
+  * ``oci jms-java-downloads download-url generate-artifact --compartment-id``
+
+* Big Data Service
+
+  * Support for new commands
+
+    * ``oci bds instance create-resource-principal-configuration``
+    * ``oci bds instance force-refresh-resource-principal``
+    * ``oci bds instance get-resource-principal-configuration``
+    * ``oci bds instance list-resource-principal-configurations``
+    * ``oci bds instance update-resource-principal-configuration``
+    * ``oci bds resource-principal-configuration remove``
+    * ``oci bds instance install-patch-downtime-based-odh-patching-config``
+
+* Support for new optional parameters in the OS Management Hub service
+
+  * ``oci os-management-hub software-source create-custom-swsrc --is-latest-content-only``
+  * ``oci os-management-hub software-source create-versioned-custom-swsrc --is-latest-content-only``
+  * ``oci os-management-hub software-source update-custom-swsrc --is-latest-content-only``
+
+* Devops Service
+
+  * Support for pull requests and merge in Source Control Management Service
+
+    * ``oci devops pull-request-comment``
+    * ``oci devops pull-request``
+    * ``oci devops protected-branch``
+    * ``oci devops project get-notification-preference``
+    * ``oci devops project get-project-settings``
+    * ``oci devops project update-project-settings``
+    * ``oci devops project update-notification-preference``
+    * ``oci devops project delete-project-settings``
+    * ``oci devops project list-project-analytics-authors``
+    * ``oci devops project summarize-project-analytics``
+    * ``oci devops repository get-repository-notification-preference``
+    * ``oci devops repository get-repository-settings``
+    * ``oci devops repository update-repository-settings``
+    * ``oci devops repository update-repository-notification-preference``
+    * ``oci devops repository delete-repository-settings``
+    * ``oci devops repository create-or-update-git-tag-details``
+    * ``oci devops repository create-or-update-git-branch-details``
+    * ``oci devops repository delete-git-ref``
+    * ``oci devops repository list-pull-request-authors``
+    * ``oci devops repository list-repository-analytics-authors``
+    * ``oci devops repository summarize-repository-analytics``
+    * ``oci devops repository sync``
+    * ``oci devops repository list-fork-sync-statuses``
+    * ``oci devops deployment service``
+
+  * Support for new optional parameter/flag
+
+    * ``oci devops repository create --parent-repository-id``
+    * ``oci devops repository get-commit-diff --target-repository-id`
+    * ``oci devops repository list-commit-diffs --target-repository-id``
+
+* Support for new optional parameter --file-system-configuration-details in vm cluster in db service
+
+  * ``oci db vm-cluster create --file-system-configuration-details``
+  * ``oci db vm-cluster update --file-system-configuration-details``
+
 3.45.0 - 2024-07-30
 --------------------
 Added

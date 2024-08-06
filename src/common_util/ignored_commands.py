@@ -248,6 +248,7 @@ IGNORED_COMMANDS = [
     ['db', 'exadb-vm-cluster', 'list'],
     ['apm-synthetics', 'monitor', 'create-sql-monitor'],
     ['apm-synthetics', 'monitor', 'update-sql-monitor'],
+    ['bds', 'instance', 'install-patch'],
 ]
 
 IGNORED_COMMANDS_DOCS = [

@@ -34,6 +34,12 @@ def bds_instance_group():
     pass
 
 
+@click.command(cli_util.override('bds.resource_principal_configuration_group.command_name', 'resource-principal-configuration'), cls=CommandGroupWithAlias, help="""Resource Principal Session Token Details.""")
+@cli_util.help_option_group
+def resource_principal_configuration_group():
+    pass
+
+
 @click.command(cli_util.override('bds.bds_api_key_group.command_name', 'bds-api-key'), cls=CommandGroupWithAlias, help="""The API key information.""")
 @cli_util.help_option_group
 def bds_api_key_group():
@@ -78,6 +84,7 @@ def node_backup_configuration_group():
 
 bds_root_group.add_command(node_backup_group)
 bds_root_group.add_command(bds_instance_group)
+bds_root_group.add_command(resource_principal_configuration_group)
 bds_root_group.add_command(bds_api_key_group)
 bds_root_group.add_command(work_request_error_group)
 bds_root_group.add_command(work_request_log_entry_group)
@@ -2039,6 +2046,70 @@ def create_node_replace_configuration_node_level_details(ctx, from_json, wait_fo
     cli_util.render_response(result, ctx)
 
 
+@bds_instance_group.command(name=cli_util.override('bds.create_resource_principal_configuration.command_name', 'create-resource-principal-configuration'), help=u"""Create a resource principal session token configuration. \n[Command Reference](createResourcePrincipalConfiguration)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Only ASCII alphanumeric characters with no spaces allowed. The name does not have to be unique, and it may be changed. Avoid entering confidential information.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded Cluster Admin Password for cluster admin user.""")
+@cli_util.option('--session-token-life-span-duration-in-hours', type=click.INT, help=u"""Life span in hours for the resource principal session token.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def create_resource_principal_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, display_name, cluster_admin_password, session_token_life_span_duration_in_hours):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+    _details['clusterAdminPassword'] = cluster_admin_password
+
+    if session_token_life_span_duration_in_hours is not None:
+        _details['sessionTokenLifeSpanDurationInHours'] = session_token_life_span_duration_in_hours
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.create_resource_principal_configuration(
+        bds_instance_id=bds_instance_id,
+        create_resource_principal_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @bds_api_key_group.command(name=cli_util.override('bds.delete_bds_api_key.command_name', 'delete'), help=u"""Deletes the user's API key represented by the provided ID. \n[Command Reference](deleteBdsApiKey)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--api-key-id', required=True, help=u"""The API key identifier.""")
@@ -2544,6 +2615,72 @@ def execute_bootstrap_script(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
+@bds_instance_group.command(name=cli_util.override('bds.force_refresh_resource_principal.command_name', 'force-refresh-resource-principal'), help=u"""Force Refresh Resource Principal for the cluster. \n[Command Reference](forceRefreshResourcePrincipal)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--resource-principal-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the ResourcePrincipalConfiguration.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded Cluster Admin Password for cluster admin user.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def force_refresh_resource_principal(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, resource_principal_configuration_id, cluster_admin_password, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    if isinstance(resource_principal_configuration_id, six.string_types) and len(resource_principal_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --resource-principal-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['clusterAdminPassword'] = cluster_admin_password
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.force_refresh_resource_principal(
+        bds_instance_id=bds_instance_id,
+        resource_principal_configuration_id=resource_principal_configuration_id,
+        force_refresh_resource_principal_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @bds_instance_group.command(name=cli_util.override('bds.get_auto_scaling_configuration.command_name', 'get-auto-scaling-configuration'), help=u"""Returns details of the autoscale configuration identified by the given ID. \n[Command Reference](getAutoScalingConfiguration)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the autoscale configuration.""")
@@ -2750,6 +2887,33 @@ def get_os_patch_details(ctx, from_json, bds_instance_id, os_patch_version, if_m
     result = client.get_os_patch_details(
         bds_instance_id=bds_instance_id,
         os_patch_version=os_patch_version,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@bds_instance_group.command(name=cli_util.override('bds.get_resource_principal_configuration.command_name', 'get-resource-principal-configuration'), help=u"""Returns details of the resourcePrincipalConfiguration identified by the given ID. \n[Command Reference](getResourcePrincipalConfiguration)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--resource-principal-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the ResourcePrincipalConfiguration.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'bds', 'class': 'ResourcePrincipalConfiguration'})
+@cli_util.wrap_exceptions
+def get_resource_principal_configuration(ctx, from_json, bds_instance_id, resource_principal_configuration_id):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    if isinstance(resource_principal_configuration_id, six.string_types) and len(resource_principal_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --resource-principal-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.get_resource_principal_configuration(
+        bds_instance_id=bds_instance_id,
+        resource_principal_configuration_id=resource_principal_configuration_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2982,10 +3146,12 @@ def install_os_patch_downtime_based_patching_configs(ctx, from_json, wait_for_st
     cli_util.render_response(result, ctx)
 
 
-@bds_instance_group.command(name=cli_util.override('bds.install_patch.command_name', 'install-patch'), help=u"""Install the specified patch to this cluster. \n[Command Reference](installPatch)""")
+@bds_instance_group.command(name=cli_util.override('bds.install_os_patch_domain_based_patching_configs.command_name', 'install-os-patch-domain-based-patching-configs'), help=u"""Install an os patch on a cluster \n[Command Reference](installOsPatch)""")
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--version-parameterconflict', required=True, help=u"""The version of the patch to be installed.""")
+@cli_util.option('--os-patch-version', required=True, help=u"""The target os patch version.""")
 @cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--patching-configs-wait-time-between-domain-in-seconds', required=True, type=click.INT, help=u"""The wait time between AD/FD in seconds.""")
+@cli_util.option('--patching-configs-tolerance-threshold-per-domain', required=True, type=click.INT, help=u"""Acceptable number of failed-to-be-patched nodes in each domain. The maximum number of failed-to-patch nodes cannot exceed 20% of the number of nodes.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2995,7 +3161,76 @@ def install_os_patch_downtime_based_patching_configs(ctx, from_json, wait_for_st
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def install_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, version_parameterconflict, cluster_admin_password, if_match):
+def install_os_patch_domain_based_patching_configs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, cluster_admin_password, patching_configs_wait_time_between_domain_in_seconds, patching_configs_tolerance_threshold_per_domain, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['patchingConfigs'] = {}
+    _details['osPatchVersion'] = os_patch_version
+    _details['clusterAdminPassword'] = cluster_admin_password
+    _details['patchingConfigs']['waitTimeBetweenDomainInSeconds'] = patching_configs_wait_time_between_domain_in_seconds
+    _details['patchingConfigs']['toleranceThresholdPerDomain'] = patching_configs_tolerance_threshold_per_domain
+
+    _details['patchingConfigs']['patchingConfigStrategy'] = 'DOMAIN_BASED'
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.install_os_patch(
+        bds_instance_id=bds_instance_id,
+        install_os_patch_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@bds_instance_group.command(name=cli_util.override('bds.install_patch.command_name', 'install-patch'), help=u"""Install the specified patch to this cluster. \n[Command Reference](installPatch)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--version-parameterconflict', required=True, help=u"""The version of the patch to be installed.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--patching-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'patching-config': {'module': 'bds', 'class': 'OdhPatchingConfig'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'patching-config': {'module': 'bds', 'class': 'OdhPatchingConfig'}})
+@cli_util.wrap_exceptions
+def install_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, version_parameterconflict, cluster_admin_password, patching_config, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -3008,6 +3243,213 @@ def install_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     _details = {}
     _details['version'] = version_parameterconflict
     _details['clusterAdminPassword'] = cluster_admin_password
+
+    if patching_config is not None:
+        _details['patchingConfig'] = cli_util.parse_json_parameter("patching_config", patching_config)
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.install_patch(
+        bds_instance_id=bds_instance_id,
+        install_patch_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@bds_instance_group.command(name=cli_util.override('bds.install_patch_downtime_based_odh_patching_config.command_name', 'install-patch-downtime-based-odh-patching-config'), help=u"""Install the specified patch to this cluster. \n[Command Reference](installPatch)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--version-parameterconflict', required=True, help=u"""The version of the patch to be installed.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def install_patch_downtime_based_odh_patching_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, version_parameterconflict, cluster_admin_password, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['patchingConfig'] = {}
+    _details['version'] = version_parameterconflict
+    _details['clusterAdminPassword'] = cluster_admin_password
+
+    _details['patchingConfig']['patchingConfigStrategy'] = 'DOWNTIME_BASED'
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.install_patch(
+        bds_instance_id=bds_instance_id,
+        install_patch_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@bds_instance_group.command(name=cli_util.override('bds.install_patch_domain_based_odh_patching_config.command_name', 'install-patch-domain-based-odh-patching-config'), help=u"""Install the specified patch to this cluster. \n[Command Reference](installPatch)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--version-parameterconflict', required=True, help=u"""The version of the patch to be installed.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--patching-config-wait-time-between-domain-in-seconds', required=True, type=click.INT, help=u"""The wait time between AD/FD in seconds.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def install_patch_domain_based_odh_patching_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, version_parameterconflict, cluster_admin_password, patching_config_wait_time_between_domain_in_seconds, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['patchingConfig'] = {}
+    _details['version'] = version_parameterconflict
+    _details['clusterAdminPassword'] = cluster_admin_password
+    _details['patchingConfig']['waitTimeBetweenDomainInSeconds'] = patching_config_wait_time_between_domain_in_seconds
+
+    _details['patchingConfig']['patchingConfigStrategy'] = 'DOMAIN_BASED'
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.install_patch(
+        bds_instance_id=bds_instance_id,
+        install_patch_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@bds_instance_group.command(name=cli_util.override('bds.install_patch_batching_based_odh_patching_config.command_name', 'install-patch-batching-based-odh-patching-config'), help=u"""Install the specified patch to this cluster. \n[Command Reference](installPatch)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--version-parameterconflict', required=True, help=u"""The version of the patch to be installed.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--patching-config-batch-size', required=True, type=click.INT, help=u"""How many nodes to be patched in each iteration.""")
+@cli_util.option('--patching-config-wait-time-between-batch-in-seconds', required=True, type=click.INT, help=u"""The wait time between batches in seconds.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def install_patch_batching_based_odh_patching_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, version_parameterconflict, cluster_admin_password, patching_config_batch_size, patching_config_wait_time_between_batch_in_seconds, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['patchingConfig'] = {}
+    _details['version'] = version_parameterconflict
+    _details['clusterAdminPassword'] = cluster_admin_password
+    _details['patchingConfig']['batchSize'] = patching_config_batch_size
+    _details['patchingConfig']['waitTimeBetweenBatchInSeconds'] = patching_config_wait_time_between_batch_in_seconds
+
+    _details['patchingConfig']['patchingConfigStrategy'] = 'BATCHING_BASED'
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.install_patch(
@@ -3679,6 +4121,69 @@ def list_patches(ctx, from_json, all_pages, page_size, bds_instance_id, page, li
     cli_util.render_response(result, ctx)
 
 
+@bds_instance_group.command(name=cli_util.override('bds.list_resource_principal_configurations.command_name', 'list-resource-principal-configurations'), help=u"""Returns information about the ResourcePrincipalConfiguration. \n[Command Reference](listResourcePrincipalConfigurations)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The state of the ResourcePrincipalConfiguration.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'bds', 'class': 'list[ResourcePrincipalConfigurationSummary]'})
+@cli_util.wrap_exceptions
+def list_resource_principal_configurations(ctx, from_json, all_pages, page_size, bds_instance_id, page, limit, sort_by, sort_order, display_name, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('bds', 'bds', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_resource_principal_configurations,
+            bds_instance_id=bds_instance_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_resource_principal_configurations,
+            limit,
+            page_size,
+            bds_instance_id=bds_instance_id,
+            **kwargs
+        )
+    else:
+        result = client.list_resource_principal_configurations(
+            bds_instance_id=bds_instance_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @work_request_error_group.command(name=cli_util.override('bds.list_work_request_errors.command_name', 'list'), help=u"""Returns a paginated list of errors for a work request identified by the given ID. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -4139,6 +4644,72 @@ def remove_node_replace_configuration(ctx, from_json, wait_for_state, max_wait_s
         bds_instance_id=bds_instance_id,
         node_replace_configuration_id=node_replace_configuration_id,
         remove_node_replace_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@resource_principal_configuration_group.command(name=cli_util.override('bds.remove_resource_principal_configuration.command_name', 'remove'), help=u"""Delete the resource principal configuration for the cluster. \n[Command Reference](removeResourcePrincipalConfiguration)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--resource-principal-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the ResourcePrincipalConfiguration.""")
+@cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded Cluster Admin Password for cluster admin user.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def remove_resource_principal_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, resource_principal_configuration_id, cluster_admin_password, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    if isinstance(resource_principal_configuration_id, six.string_types) and len(resource_principal_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --resource-principal-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['clusterAdminPassword'] = cluster_admin_password
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.remove_resource_principal_configuration(
+        bds_instance_id=bds_instance_id,
+        resource_principal_configuration_id=resource_principal_configuration_id,
+        remove_resource_principal_configuration_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -5770,6 +6341,78 @@ def update_node_replace_configuration_node_level_details(ctx, from_json, wait_fo
         bds_instance_id=bds_instance_id,
         node_replace_configuration_id=node_replace_configuration_id,
         update_node_replace_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@bds_instance_group.command(name=cli_util.override('bds.update_resource_principal_configuration.command_name', 'update-resource-principal-configuration'), help=u"""Updates fields on resourcePrincipalConfiguration, including the name, the lifeSpanInHours of the token. \n[Command Reference](updateResourcePrincipalConfiguration)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--resource-principal-configuration-id', required=True, help=u"""Unique Oracle-assigned identifier of the ResourcePrincipalConfiguration.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Only ASCII alphanumeric characters with no spaces allowed. The name does not have to be unique, and it may be changed. Avoid entering confidential information.""")
+@cli_util.option('--session-token-life-span-duration-in-hours', type=click.INT, help=u"""Life span in hours for the resource principal session token.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_resource_principal_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, resource_principal_configuration_id, display_name, session_token_life_span_duration_in_hours, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    if isinstance(resource_principal_configuration_id, six.string_types) and len(resource_principal_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --resource-principal-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if session_token_life_span_duration_in_hours is not None:
+        _details['sessionTokenLifeSpanDurationInHours'] = session_token_life_span_duration_in_hours
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.update_resource_principal_configuration(
+        bds_instance_id=bds_instance_id,
+        resource_principal_configuration_id=resource_principal_configuration_id,
+        update_resource_principal_configuration_details=_details,
         **kwargs
     )
     if wait_for_state:

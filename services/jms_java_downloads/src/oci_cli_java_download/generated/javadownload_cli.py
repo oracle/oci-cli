@@ -511,22 +511,26 @@ def delete_java_license_acceptance_record(ctx, from_json, wait_for_state, max_wa
     cli_util.render_response(result, ctx)
 
 
-@download_url_group.command(name=cli_util.override('jms_java_downloads.generate_artifact_download_url.command_name', 'generate-artifact'), help=u"""Generates a short-lived download URL and returns it in the response payload. The returned URL can then be used for downloading the specific Java runtime artifact.
+@download_url_group.command(name=cli_util.override('jms_java_downloads.generate_artifact_download_url.command_name', 'generate-artifact'), help=u"""Generates a download URL and returns it in the response payload. The URL in the response can then be used for downloading the specific Java runtime artifact.
 
-Use the [GetJavaRelease] API to get information about available artifacts for a specific release. Each such artifact is uniquely identified by an `artifactId`. Refer [JavaArtifact] for more details. \n[Command Reference](generateArtifactDownloadUrl)""")
+Use the [GetJavaRelease] API to get information about available artifacts for a specific release. Each artifact is uniquely identified by an `artifactId`. Refer [JavaArtifact] for more details. \n[Command Reference](generateArtifactDownloadUrl)""")
 @cli_util.option('--artifact-id', required=True, type=click.INT, help=u"""Unique identifier for the Java runtime artifact.""")
+@cli_util.option('--compartment-id', help=u"""The tenancy [OCID] of the user initiating the download.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms_java_downloads', 'class': 'DownloadUrl'})
 @cli_util.wrap_exceptions
-def generate_artifact_download_url(ctx, from_json, artifact_id):
+def generate_artifact_download_url(ctx, from_json, artifact_id, compartment_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['artifactId'] = artifact_id
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
 
     client = cli_util.build_client('jms_java_downloads', 'java_download', ctx)
     result = client.generate_artifact_download_url(
@@ -836,7 +840,7 @@ def list_java_download_reports(ctx, from_json, all_pages, page_size, compartment
 @cli_util.option('--id', help=u"""Unique JavaDownloadToken identifier.""")
 @cli_util.option('--value', help=u"""Unique JavaDownloadToken value.""")
 @cli_util.option('--family-version', help=u"""Unique Java family version identifier.""")
-@cli_util.option('--search-by-user', help=u"""A filter to return only resources that match the user principal detail. The search string can be any of the property values from the [Principal] object. This object is used as response datatype for the `createdBy` and `lastUpdatedBy` fields in applicable resource.""")
+@cli_util.option('--search-by-user', help=u"""A filter to return only resources that match the user principal detail. The search string can be any of the property values from the [Principal] object. This object is used as a response datatype for the `createdBy` and `lastUpdatedBy` fields in applicable resource.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
@@ -903,7 +907,7 @@ def list_java_download_tokens(ctx, from_json, all_pages, page_size, compartment_
 
 @java_license_acceptance_record_group.command(name=cli_util.override('jms_java_downloads.list_java_license_acceptance_records.command_name', 'list'), help=u"""Returns a list of all the Java license acceptance records in a tenancy. \n[Command Reference](listJavaLicenseAcceptanceRecords)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the tenancy.""")
-@cli_util.option('--search-by-user', help=u"""A filter to return only resources that match the user principal detail. The search string can be any of the property values from the [Principal] object. This object is used as response datatype for the `createdBy` and `lastUpdatedBy` fields in applicable resource.""")
+@cli_util.option('--search-by-user', help=u"""A filter to return only resources that match the user principal detail. The search string can be any of the property values from the [Principal] object. This object is used as a response datatype for the `createdBy` and `lastUpdatedBy` fields in applicable resource.""")
 @cli_util.option('--id', help=u"""Unique Java license acceptance record identifier.""")
 @cli_util.option('--license-type', type=custom_types.CliCaseInsensitiveChoice(["OTN", "NFTC", "RESTRICTED"]), help=u"""Unique Java license type.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "REVOKED"]), help=u"""The status of license acceptance.""")

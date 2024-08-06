@@ -176,7 +176,7 @@ def change_software_source_compartment(ctx, from_json, software_source_id, compa
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('software_source.create_entitlement.command_name', 'create-entitlement'), help=u"""Registers the necessary entitlement credentials for OS vendor software sources. \n[Command Reference](createEntitlement)""")
+@software_source_group.command(name=cli_util.override('software_source.create_entitlement.command_name', 'create-entitlement'), help=u"""Registers the necessary entitlement credentials for OS vendor software sources for a tenancy. \n[Command Reference](createEntitlement)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the tenancy containing the entitlement.""")
 @cli_util.option('--csi', required=True, help=u"""The Customer Support Identifier (CSI) which unlocks the software sources. The CSI is is a unique key given to a customer and it uniquely identifies the entitlement.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -283,6 +283,7 @@ def create_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--is-automatically-updated', type=click.BOOL, help=u"""Indicates whether the service should automatically update the custom software source to use the latest package versions available. The service reviews packages levels once a day.""")
 @cli_util.option('--is-auto-resolve-dependencies', type=click.BOOL, help=u"""Indicates whether the service should automatically resolve package dependencies when including specific packages in the software source.""")
 @cli_util.option('--is-created-from-package-list', type=click.BOOL, help=u"""Indicates whether the service should create the software source from a list of packages provided by the user.""")
+@cli_util.option('--is-latest-content-only', type=click.BOOL, help=u"""Indicates whether the software source will include only the latest versions of content from vendor software sources, while accounting for other constraints set in the custom or versioned custom software source (such as a package list or filters). * For a module filter that does not specify a stream, this will include all available streams, and within each stream only the latest version of packages. * For a module filter that does specify a stream, this will include only the latest version of packages for the specified stream. * For a package filter that does not specify a version, this will include only the latest available version of the package. * For a package filter that does specify a version, this will include only the specified version of the package (the isLatestContentOnly attribute is ignored). * For a package list, this will include only the specified version of packages and modules in the list (the isLatestContentOnly attribute is ignored).""")
 @cli_util.option('--packages', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A property used for compatibility only. It doesn't provide a complete list of packages. See [AddPackagesToSoftwareSourceDetails] for providing the list of packages used to create the software source when isCreatedFromPackageList is set to true.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -292,7 +293,7 @@ def create_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'vendor-software-sources': {'module': 'os_management_hub', 'class': 'list[Id]'}, 'custom-software-source-filter': {'module': 'os_management_hub', 'class': 'CustomSoftwareSourceFilter'}, 'packages': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSource'})
 @cli_util.wrap_exceptions
-def create_software_source_create_custom_software_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vendor_software_sources, display_name, description, freeform_tags, defined_tags, custom_software_source_filter, is_automatically_updated, is_auto_resolve_dependencies, is_created_from_package_list, packages):
+def create_software_source_create_custom_software_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vendor_software_sources, display_name, description, freeform_tags, defined_tags, custom_software_source_filter, is_automatically_updated, is_auto_resolve_dependencies, is_created_from_package_list, is_latest_content_only, packages):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -324,6 +325,9 @@ def create_software_source_create_custom_software_source_details(ctx, from_json,
 
     if is_created_from_package_list is not None:
         _details['isCreatedFromPackageList'] = is_created_from_package_list
+
+    if is_latest_content_only is not None:
+        _details['isLatestContentOnly'] = is_latest_content_only
 
     if packages is not None:
         _details['packages'] = cli_util.parse_json_parameter("packages", packages)
@@ -449,6 +453,7 @@ def create_software_source_create_vendor_software_source_details(ctx, from_json,
 @cli_util.option('--custom-software-source-filter', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-auto-resolve-dependencies', type=click.BOOL, help=u"""Indicates whether the service should automatically resolve package dependencies when including specific packages in the software source.""")
 @cli_util.option('--is-created-from-package-list', type=click.BOOL, help=u"""Indicates whether the service should create the software source from a list of packages provided by the user.""")
+@cli_util.option('--is-latest-content-only', type=click.BOOL, help=u"""Indicates whether the software source will include only the latest versions of content from vendor software sources, while accounting for other constraints set in the custom or versioned custom software source (such as a package list or filters). * For a module filter that does not specify a stream, this will include all available streams, and within each stream only the latest version of packages. * For a module filter that does specify a stream, this will include only the latest version of packages for the specified stream. * For a package filter that does not specify a version, this will include only the latest available version of the package. * For a package filter that does specify a version, this will include only the specified version of the package (the isLatestContentOnly attribute is ignored). * For a package list, this will include only the specified version of packages and modules in the list (the isLatestContentOnly attribute is ignored).""")
 @cli_util.option('--packages', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A property used for compatibility only. It doesn't provide a complete list of packages. See [AddPackagesToSoftwareSourceDetails] for providing the list of packages used to create the software source when isCreatedFromPackageList is set to true.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -458,7 +463,7 @@ def create_software_source_create_vendor_software_source_details(ctx, from_json,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'vendor-software-sources': {'module': 'os_management_hub', 'class': 'list[Id]'}, 'custom-software-source-filter': {'module': 'os_management_hub', 'class': 'CustomSoftwareSourceFilter'}, 'packages': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSource'})
 @cli_util.wrap_exceptions
-def create_software_source_create_versioned_custom_software_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vendor_software_sources, software_source_version, display_name, description, freeform_tags, defined_tags, custom_software_source_filter, is_auto_resolve_dependencies, is_created_from_package_list, packages):
+def create_software_source_create_versioned_custom_software_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vendor_software_sources, software_source_version, display_name, description, freeform_tags, defined_tags, custom_software_source_filter, is_auto_resolve_dependencies, is_created_from_package_list, is_latest_content_only, packages):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -488,6 +493,9 @@ def create_software_source_create_versioned_custom_software_source_details(ctx, 
 
     if is_created_from_package_list is not None:
         _details['isCreatedFromPackageList'] = is_created_from_package_list
+
+    if is_latest_content_only is not None:
+        _details['isLatestContentOnly'] = is_latest_content_only
 
     if packages is not None:
         _details['packages'] = cli_util.parse_json_parameter("packages", packages)
@@ -1746,6 +1754,7 @@ This option is a JSON list with items of type Id.  For documentation on Id pleas
 @cli_util.option('--custom-software-source-filter', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-automatically-updated', type=click.BOOL, help=u"""Indicates whether the service should automatically update the custom software source to use the latest package versions available. The service reviews packages levels once a day.""")
 @cli_util.option('--is-auto-resolve-dependencies', type=click.BOOL, help=u"""Indicates whether the service should automatically resolve package dependencies when including specific packages in the software source.""")
+@cli_util.option('--is-latest-content-only', type=click.BOOL, help=u"""Indicates whether the software source will include only the latest versions of content from vendor software sources, while accounting for other constraints set in the custom or versioned custom software source (such as a package list or filters). * For a module filter that does not specify a stream, this will include all available streams, and within each stream only the latest version of packages. * For a module filter that does specify a stream, this will include only the latest version of packages for the specified stream. * For a package filter that does not specify a version, this will include only the latest available version of the package. * For a package filter that does specify a version, this will include only the specified version of the package (the isLatestContentOnly attribute is ignored). * For a package list, this will include only the specified version of packages and modules in the list (the isLatestContentOnly attribute is ignored).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1756,7 +1765,7 @@ This option is a JSON list with items of type Id.  For documentation on Id pleas
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'vendor-software-sources': {'module': 'os_management_hub', 'class': 'list[Id]'}, 'custom-software-source-filter': {'module': 'os_management_hub', 'class': 'CustomSoftwareSourceFilter'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSource'})
 @cli_util.wrap_exceptions
-def update_software_source_update_custom_software_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, compartment_id, display_name, description, freeform_tags, defined_tags, vendor_software_sources, custom_software_source_filter, is_automatically_updated, is_auto_resolve_dependencies, if_match):
+def update_software_source_update_custom_software_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, compartment_id, display_name, description, freeform_tags, defined_tags, vendor_software_sources, custom_software_source_filter, is_automatically_updated, is_auto_resolve_dependencies, is_latest_content_only, if_match):
 
     if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
@@ -1798,6 +1807,9 @@ def update_software_source_update_custom_software_source_details(ctx, from_json,
 
     if is_auto_resolve_dependencies is not None:
         _details['isAutoResolveDependencies'] = is_auto_resolve_dependencies
+
+    if is_latest_content_only is not None:
+        _details['isLatestContentOnly'] = is_latest_content_only
 
     _details['softwareSourceType'] = 'CUSTOM'
 
