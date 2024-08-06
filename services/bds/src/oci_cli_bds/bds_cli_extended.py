@@ -158,3 +158,48 @@ bds_cli.bds_instance_group.commands.pop(bds_cli.update_auto_scaling_configuratio
 
 # Remove update-auto-scaling-configuration-update-schedule-based-vertical-scaling-policy-details from oci bds instance
 bds_cli.bds_instance_group.commands.pop(bds_cli.update_auto_scaling_configuration_update_schedule_based_vertical_scaling_policy_details.name)
+
+
+@cli_util.copy_params_from_generated_command(bds_cli.install_patch_batching_based_odh_patching_config, params_to_exclude=['version_parameterconflict'])
+@bds_cli.bds_instance_group.command(name=bds_cli.install_patch_batching_based_odh_patching_config.name, help=bds_cli.install_patch_batching_based_odh_patching_config.help)
+@cli_util.option('--patch-version', required=True, help=u"""The version of the patch to be installed. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def install_patch_batching_based_odh_patching_config_extended(ctx, **kwargs):
+
+    if 'patch_version' in kwargs:
+        kwargs['version_parameterconflict'] = kwargs['patch_version']
+        kwargs.pop('patch_version')
+
+    ctx.invoke(bds_cli.install_patch_batching_based_odh_patching_config, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(bds_cli.install_patch_domain_based_odh_patching_config, params_to_exclude=['version_parameterconflict'])
+@bds_cli.bds_instance_group.command(name=bds_cli.install_patch_domain_based_odh_patching_config.name, help=bds_cli.install_patch_domain_based_odh_patching_config.help)
+@cli_util.option('--patch-version', required=True, help=u"""The version of the patch to be installed. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def install_patch_domain_based_odh_patching_config_extended(ctx, **kwargs):
+
+    if 'patch_version' in kwargs:
+        kwargs['version_parameterconflict'] = kwargs['patch_version']
+        kwargs.pop('patch_version')
+
+    ctx.invoke(bds_cli.install_patch_domain_based_odh_patching_config, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(bds_cli.install_patch_downtime_based_odh_patching_config, params_to_exclude=['version_parameterconflict'])
+@bds_cli.bds_instance_group.command(name=bds_cli.install_patch_downtime_based_odh_patching_config.name, help=bds_cli.install_patch_downtime_based_odh_patching_config.help)
+@cli_util.option('--patch-version', required=True, help=u"""The version of the patch to be installed. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def install_patch_downtime_based_odh_patching_config_extended(ctx, **kwargs):
+
+    if 'patch_version' in kwargs:
+        kwargs['version_parameterconflict'] = kwargs['patch_version']
+        kwargs.pop('patch_version')
+
+    ctx.invoke(bds_cli.install_patch_downtime_based_odh_patching_config, **kwargs)

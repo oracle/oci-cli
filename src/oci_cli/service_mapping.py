@@ -355,7 +355,7 @@ service_mapping = {
     ],
     "jms": [
         "jms",
-        "Java Management Service",
+        "Java Management Service Fleets",
         "Observability & Management"
     ],
     "jms-java-downloads": [

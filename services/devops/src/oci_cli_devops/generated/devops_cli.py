@@ -22,6 +22,18 @@ def devops_root_group():
     pass
 
 
+@click.command(cli_util.override('devops.repository_notification_preference_group.command_name', 'repository-notification-preference'), cls=CommandGroupWithAlias, help="""The notification preference of the repository.""")
+@cli_util.help_option_group
+def repository_notification_preference_group():
+    pass
+
+
+@click.command(cli_util.override('devops.pull_request_notification_preference_group.command_name', 'pull-request-notification-preference'), cls=CommandGroupWithAlias, help="""The notification preference of the pull request.""")
+@cli_util.help_option_group
+def pull_request_notification_preference_group():
+    pass
+
+
 @click.command(cli_util.override('devops.build_pipeline_collection_group.command_name', 'build-pipeline-collection'), cls=CommandGroupWithAlias, help="""Results of a pipeline search.""")
 @cli_util.help_option_group
 def build_pipeline_collection_group():
@@ -49,6 +61,18 @@ def work_request_group():
 @click.command(cli_util.override('devops.repository_group.command_name', 'repository'), cls=CommandGroupWithAlias, help="""Repositories containing the source code to build and deploy.""")
 @cli_util.help_option_group
 def repository_group():
+    pass
+
+
+@click.command(cli_util.override('devops.project_repository_settings_group.command_name', 'project-repository-settings'), cls=CommandGroupWithAlias, help="""User configured settings for project resources and their child repositories.""")
+@cli_util.help_option_group
+def project_repository_settings_group():
+    pass
+
+
+@click.command(cli_util.override('devops.protected_branch_collection_group.command_name', 'protected-branch-collection'), cls=CommandGroupWithAlias, help="""Collection of protected branches""")
+@cli_util.help_option_group
+def protected_branch_collection_group():
     pass
 
 
@@ -88,6 +112,12 @@ def repository_path_summary_group():
     pass
 
 
+@click.command(cli_util.override('devops.repository_settings_group.command_name', 'repository-settings'), cls=CommandGroupWithAlias, help="""User configured settings for repository resources""")
+@cli_util.help_option_group
+def repository_settings_group():
+    pass
+
+
 @click.command(cli_util.override('devops.connection_collection_group.command_name', 'connection-collection'), cls=CommandGroupWithAlias, help="""Collection of connections.""")
 @cli_util.help_option_group
 def connection_collection_group():
@@ -106,9 +136,27 @@ def deployment_group():
     pass
 
 
+@click.command(cli_util.override('devops.protected_branch_group.command_name', 'protected-branch'), cls=CommandGroupWithAlias, help="""Holds information used to restrict certain actions on branches""")
+@cli_util.help_option_group
+def protected_branch_group():
+    pass
+
+
+@click.command(cli_util.override('devops.pull_request_group.command_name', 'pull-request'), cls=CommandGroupWithAlias, help="""Pull Request containing the diff between a review branch and a destination branch""")
+@cli_util.help_option_group
+def pull_request_group():
+    pass
+
+
 @click.command(cli_util.override('devops.build_run_summary_group.command_name', 'build-run-summary'), cls=CommandGroupWithAlias, help="""Summary of the build run.""")
 @cli_util.help_option_group
 def build_run_summary_group():
+    pass
+
+
+@click.command(cli_util.override('devops.pull_request_collection_group.command_name', 'pull-request-collection'), cls=CommandGroupWithAlias, help="""Results of a Pull Request search. Contains both PullRequestSummary items and other information, such as metadata.""")
+@cli_util.help_option_group
+def pull_request_collection_group():
     pass
 
 
@@ -151,6 +199,18 @@ def repository_commit_group():
 @click.command(cli_util.override('devops.build_pipeline_stage_group.command_name', 'build-pipeline-stage'), cls=CommandGroupWithAlias, help="""A single node in a build pipeline. A stage takes a specific designated action. There are many types of stages such as 'BUILD' and 'DELIVER_ARTIFACT'.""")
 @cli_util.help_option_group
 def build_pipeline_stage_group():
+    pass
+
+
+@click.command(cli_util.override('devops.project_notification_preference_group.command_name', 'project-notification-preference'), cls=CommandGroupWithAlias, help="""The notification preference of the project.""")
+@cli_util.help_option_group
+def project_notification_preference_group():
+    pass
+
+
+@click.command(cli_util.override('devops.repository_metric_aggregation_group.command_name', 'repository-metric-aggregation'), cls=CommandGroupWithAlias, help="""The set of aggregated data returned for repository analytics.""")
+@cli_util.help_option_group
+def repository_metric_aggregation_group():
     pass
 
 
@@ -202,21 +262,29 @@ def repository_ref_group():
     pass
 
 
+devops_root_group.add_command(repository_notification_preference_group)
+devops_root_group.add_command(pull_request_notification_preference_group)
 devops_root_group.add_command(build_pipeline_collection_group)
 devops_root_group.add_command(deploy_artifact_summary_group)
 devops_root_group.add_command(project_group)
 devops_root_group.add_command(work_request_group)
 devops_root_group.add_command(repository_group)
+devops_root_group.add_command(project_repository_settings_group)
+devops_root_group.add_command(protected_branch_collection_group)
 devops_root_group.add_command(work_request_error_group)
 devops_root_group.add_command(deploy_stage_summary_group)
 devops_root_group.add_command(build_pipeline_group)
 devops_root_group.add_command(connection_group)
 devops_root_group.add_command(project_summary_group)
 devops_root_group.add_command(repository_path_summary_group)
+devops_root_group.add_command(repository_settings_group)
 devops_root_group.add_command(connection_collection_group)
 devops_root_group.add_command(deploy_stage_group)
 devops_root_group.add_command(deployment_group)
+devops_root_group.add_command(protected_branch_group)
+devops_root_group.add_command(pull_request_group)
 devops_root_group.add_command(build_run_summary_group)
+devops_root_group.add_command(pull_request_collection_group)
 devops_root_group.add_command(deploy_pipeline_group)
 devops_root_group.add_command(work_request_log_entry_group)
 devops_root_group.add_command(deploy_artifact_group)
@@ -224,6 +292,8 @@ devops_root_group.add_command(trigger_group)
 devops_root_group.add_command(deployment_summary_group)
 devops_root_group.add_command(repository_commit_group)
 devops_root_group.add_command(build_pipeline_stage_group)
+devops_root_group.add_command(project_notification_preference_group)
+devops_root_group.add_command(repository_metric_aggregation_group)
 devops_root_group.add_command(repository_object_group)
 devops_root_group.add_command(deploy_environment_group)
 devops_root_group.add_command(build_run_group)
@@ -4489,6 +4559,234 @@ def create_deployment_create_single_deploy_stage_redeployment_details(ctx, from_
     cli_util.render_response(result, ctx)
 
 
+@repository_group.command(name=cli_util.override('devops.create_or_update_git_ref.command_name', 'create-or-update-git-ref'), help=u"""Creates a new reference or updates an existing one. \n[Command Reference](createOrUpdateGitRef)""")
+@cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
+@cli_util.option('--ref-name', required=True, help=u"""The name of the reference to create or update.""")
+@cli_util.option('--ref-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BRANCH", "TAG"]), help=u"""The type of reference (BRANCH or TAG).""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryRef'})
+@cli_util.wrap_exceptions
+def create_or_update_git_ref(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, ref_name, ref_type, if_match):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['refName'] = ref_name
+    _details['refType'] = ref_type
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_or_update_git_ref(
+        repository_id=repository_id,
+        create_or_update_git_ref_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.create_or_update_git_ref_create_or_update_git_branch_details.command_name', 'create-or-update-git-ref-create-or-update-git-branch-details'), help=u"""Creates a new reference or updates an existing one. \n[Command Reference](createOrUpdateGitRef)""")
+@cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
+@cli_util.option('--ref-name', required=True, help=u"""The name of the reference to create or update.""")
+@cli_util.option('--commit-id', required=True, help=u"""Commit ID pointed to by the new branch.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryRef'})
+@cli_util.wrap_exceptions
+def create_or_update_git_ref_create_or_update_git_branch_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, ref_name, commit_id, if_match):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['refName'] = ref_name
+    _details['commitId'] = commit_id
+
+    _details['refType'] = 'BRANCH'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_or_update_git_ref(
+        repository_id=repository_id,
+        create_or_update_git_ref_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.create_or_update_git_ref_create_or_update_git_tag_details.command_name', 'create-or-update-git-ref-create-or-update-git-tag-details'), help=u"""Creates a new reference or updates an existing one. \n[Command Reference](createOrUpdateGitRef)""")
+@cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
+@cli_util.option('--ref-name', required=True, help=u"""The name of the reference to create or update.""")
+@cli_util.option('--object-id', required=True, help=u"""SHA-1 hash value of the object pointed to by the tag.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryRef'})
+@cli_util.wrap_exceptions
+def create_or_update_git_ref_create_or_update_git_tag_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, ref_name, object_id, if_match):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['refName'] = ref_name
+    _details['objectId'] = object_id
+
+    _details['refType'] = 'TAG'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_or_update_git_ref(
+        repository_id=repository_id,
+        create_or_update_git_ref_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@protected_branch_group.command(name=cli_util.override('devops.create_or_update_protected_branch.command_name', 'create-or-update'), help=u"""Creates a restriction on a branch that prevents certain actions on it. \n[Command Reference](createOrUpdateProtectedBranch)""")
+@cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
+@cli_util.option('--branch-name', required=True, help=u"""Name of a branch to protect.""")
+@cli_util.option('--protection-levels', type=custom_types.CliCaseInsensitiveChoice(["READ_ONLY", "PULL_REQUEST_MERGE_ONLY"]), help=u"""Level of protection to add on a branch.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'ProtectedBranch'})
+@cli_util.wrap_exceptions
+def create_or_update_protected_branch(ctx, from_json, repository_id, branch_name, protection_levels, if_match):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['branchName'] = branch_name
+
+    if protection_levels is not None:
+        _details['protectionLevels'] = cli_util.parse_json_parameter("protection_levels", protection_levels)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_or_update_protected_branch(
+        repository_id=repository_id,
+        create_or_update_protected_branch_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @project_group.command(name=cli_util.override('devops.create_project.command_name', 'create'), help=u"""Creates a new project. \n[Command Reference](createProject)""")
 @cli_util.option('--name', required=True, help=u"""Project name (case-sensitive).""")
 @cli_util.option('--notification-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4558,10 +4856,172 @@ def create_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
+@pull_request_group.command(name=cli_util.override('devops.create_pull_request.command_name', 'create'), help=u"""Creates a new PullRequest. \n[Command Reference](createPullRequest)""")
+@cli_util.option('--display-name', required=True, help=u"""Pull Request title""")
+@cli_util.option('--source-branch', required=True, help=u"""The source branch of the pull request.""")
+@cli_util.option('--repository-id', required=True, help=u"""The OCID of the repository.""")
+@cli_util.option('--destination-branch', help=u"""The destination branch of the pull request. If not provided, default branch will be used as the destination branch.""")
+@cli_util.option('--source-repository-id', help=u"""The OCID of the forked repository that will act as the source of the changes to be included in the pull request against the parent repository.""")
+@cli_util.option('--description', help=u"""Details of the pull request. Avoid entering confidential information.""")
+@cli_util.option('--reviewers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Reviewers for this pull request.
+
+This option is a JSON list with items of type CreateReviewerDetails.  For documentation on CreateReviewerDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/devops/20210630/datatypes/CreateReviewerDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'reviewers': {'module': 'devops', 'class': 'list[CreateReviewerDetails]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'reviewers': {'module': 'devops', 'class': 'list[CreateReviewerDetails]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'PullRequest'})
+@cli_util.wrap_exceptions
+def create_pull_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, source_branch, repository_id, destination_branch, source_repository_id, description, reviewers, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+    _details['sourceBranch'] = source_branch
+    _details['repositoryId'] = repository_id
+
+    if destination_branch is not None:
+        _details['destinationBranch'] = destination_branch
+
+    if source_repository_id is not None:
+        _details['sourceRepositoryId'] = source_repository_id
+
+    if description is not None:
+        _details['description'] = description
+
+    if reviewers is not None:
+        _details['reviewers'] = cli_util.parse_json_parameter("reviewers", reviewers)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_pull_request(
+        create_pull_request_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.create_pull_request_attachment.command_name', 'create-pull-request-attachment'), help=u"""Creates PullRequest attachment \n[Command Reference](createPullRequestAttachment)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--content-disposition', required=True, help=u"""The Content-Disposition response-header field has been proposed as a means for the origin server to suggest a default filename if the user requests that the content is saved to a file.""")
+@cli_util.option('--create-pull-request-attachment-body', required=True, help=u"""Uploads the content of the attachment.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequestAttachment'})
+@cli_util.wrap_exceptions
+def create_pull_request_attachment(ctx, from_json, pull_request_id, content_disposition, create_pull_request_attachment_body):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_pull_request_attachment(
+        pull_request_id=pull_request_id,
+        content_disposition=content_disposition,
+        create_pull_request_attachment_body=create_pull_request_attachment_body,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.create_pull_request_comment.command_name', 'create-pull-request-comment'), help=u"""Creates a new PullRequest comment. \n[Command Reference](createPullRequestComment)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--data', required=True, help=u"""Content of the Comment.""")
+@cli_util.option('--parent-id', help=u"""ID of parent Comment""")
+@cli_util.option('--file-path', help=u"""File path in the commit""")
+@cli_util.option('--commit-id', help=u"""Commit SHA""")
+@cli_util.option('--file-type', help=u"""File path in the target commit""")
+@cli_util.option('--line-number', type=click.INT, help=u"""Line number in the file""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequestComment'})
+@cli_util.wrap_exceptions
+def create_pull_request_comment(ctx, from_json, pull_request_id, data, parent_id, file_path, commit_id, file_type, line_number):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['data'] = data
+
+    if parent_id is not None:
+        _details['parentId'] = parent_id
+
+    if file_path is not None:
+        _details['filePath'] = file_path
+
+    if commit_id is not None:
+        _details['commitId'] = commit_id
+
+    if file_type is not None:
+        _details['fileType'] = file_type
+
+    if line_number is not None:
+        _details['lineNumber'] = line_number
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.create_pull_request_comment(
+        pull_request_id=pull_request_id,
+        create_pull_request_comment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @repository_group.command(name=cli_util.override('devops.create_repository.command_name', 'create'), help=u"""Creates a new repository. \n[Command Reference](createRepository)""")
 @cli_util.option('--name', required=True, help=u"""Name of the repository. Should be unique within the project.""")
 @cli_util.option('--project-id', required=True, help=u"""The OCID of the DevOps project containing the repository.""")
-@cli_util.option('--repository-type', required=True, help=u"""Type of repository. Allowed values: `MIRRORED` `HOSTED`""")
+@cli_util.option('--repository-type', required=True, help=u"""Type of repository. Allowed values: `MIRRORED` `HOSTED` `FORKED`""")
+@cli_util.option('--parent-repository-id', help=u"""The OCID of the parent repository.""")
 @cli_util.option('--default-branch', help=u"""The default branch of the repository.""")
 @cli_util.option('--mirror-repository-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Details of the repository. Avoid entering confidential information.""")
@@ -4575,7 +5035,7 @@ def create_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'mirror-repository-config': {'module': 'devops', 'class': 'MirrorRepositoryConfig'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'Repository'})
 @cli_util.wrap_exceptions
-def create_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, project_id, repository_type, default_branch, mirror_repository_config, description, freeform_tags, defined_tags):
+def create_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, project_id, repository_type, parent_repository_id, default_branch, mirror_repository_config, description, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -4584,6 +5044,9 @@ def create_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     _details['name'] = name
     _details['projectId'] = project_id
     _details['repositoryType'] = repository_type
+
+    if parent_repository_id is not None:
+        _details['parentRepositoryId'] = parent_repository_id
 
     if default_branch is not None:
         _details['defaultBranch'] = default_branch
@@ -5239,6 +5702,57 @@ def create_trigger_create_bitbucket_server_trigger_details(ctx, from_json, wait_
     cli_util.render_response(result, ctx)
 
 
+@pull_request_group.command(name=cli_util.override('devops.decline_pull_request.command_name', 'decline'), help=u"""Decline a PullRequest \n[Command Reference](declinePullRequest)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequest'})
+@cli_util.wrap_exceptions
+def decline_pull_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pull_request_id, if_match):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.decline_pull_request(
+        pull_request_id=pull_request_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pull_request') and callable(getattr(client, 'get_pull_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_pull_request(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @build_pipeline_group.command(name=cli_util.override('devops.delete_build_pipeline.command_name', 'delete'), help=u"""Deletes a build pipeline resource by identifier. \n[Command Reference](deleteBuildPipeline)""")
 @cli_util.option('--build-pipeline-id', required=True, help=u"""Unique build pipeline identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -5631,6 +6145,67 @@ def delete_deploy_stage(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
+@repository_group.command(name=cli_util.override('devops.delete_git_ref.command_name', 'delete-git-ref'), help=u"""Deletes a Repository's Ref by its name. Returns an error if the name is ambiguous. Can be disambiguated by using full names like \"heads/<name>\" or \"tags/<name>\". \n[Command Reference](deleteGitRef)""")
+@cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
+@cli_util.option('--ref-name', required=True, help=u"""A filter to return only resources that match the given reference name.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_git_ref(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, ref_name, if_match):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['refName'] = ref_name
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.delete_git_ref(
+        repository_id=repository_id,
+        delete_git_ref_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @project_group.command(name=cli_util.override('devops.delete_project.command_name', 'delete'), help=u"""Deletes a project resource by identifier \n[Command Reference](deleteProject)""")
 @cli_util.option('--project-id', required=True, help=u"""Unique project identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -5684,6 +6259,189 @@ def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@project_repository_settings_group.command(name=cli_util.override('devops.delete_project_repository_settings.command_name', 'delete'), help=u"""Removes the custom repository settings configured for a project. \n[Command Reference](deleteProjectRepositorySettings)""")
+@cli_util.option('--project-id', required=True, help=u"""Unique project identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_project_repository_settings(ctx, from_json, project_id, if_match):
+
+    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+        raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.delete_project_repository_settings(
+        project_id=project_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@protected_branch_group.command(name=cli_util.override('devops.delete_protected_branch.command_name', 'delete'), help=u"""Removes the protection from a branch \n[Command Reference](deleteProtectedBranch)""")
+@cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
+@cli_util.option('--branch-name', required=True, help=u"""Name of a protected branch.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_protected_branch(ctx, from_json, repository_id, branch_name, if_match):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['branchName'] = branch_name
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.delete_protected_branch(
+        repository_id=repository_id,
+        delete_protected_branch_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.delete_pull_request.command_name', 'delete'), help=u"""Deletes a PullRequest resource by identifier \n[Command Reference](deletePullRequest)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_pull_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pull_request_id, if_match):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.delete_pull_request(
+        pull_request_id=pull_request_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pull_request') and callable(getattr(client, 'get_pull_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_pull_request(pull_request_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.delete_pull_request_attachment.command_name', 'delete-pull-request-attachment'), help=u"""Deletes a PullRequest attachment metadata by identifier \n[Command Reference](deletePullRequestAttachment)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--attachment-id', required=True, help=u"""unique PullRequest attachment identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_pull_request_attachment(ctx, from_json, pull_request_id, attachment_id, if_match):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    if isinstance(attachment_id, six.string_types) and len(attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --attachment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.delete_pull_request_attachment(
+        pull_request_id=pull_request_id,
+        attachment_id=attachment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.delete_pull_request_comment.command_name', 'delete-pull-request-comment'), help=u"""Deletes a PullRequest comment by identifier \n[Command Reference](deletePullRequestComment)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--comment-id', required=True, help=u"""unique PullRequest Comment identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_pull_request_comment(ctx, from_json, pull_request_id, comment_id, if_match):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    if isinstance(comment_id, six.string_types) and len(comment_id.strip()) == 0:
+        raise click.UsageError('Parameter --comment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.delete_pull_request_comment(
+        pull_request_id=pull_request_id,
+        comment_id=comment_id,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -5801,6 +6559,32 @@ def delete_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@repository_settings_group.command(name=cli_util.override('devops.delete_repository_settings.command_name', 'delete'), help=u"""Removes the custom settings configured for a repository \n[Command Reference](deleteRepositorySettings)""")
+@cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_repository_settings(ctx, from_json, repository_id, if_match):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.delete_repository_settings(
+        repository_id=repository_id,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -5957,13 +6741,14 @@ def get_commit(ctx, from_json, repository_id, commit_id):
 @cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
 @cli_util.option('--target-version', required=True, help=u"""The commit or reference name that represents the newer changes against the base version.""")
 @cli_util.option('--base-version', help=u"""The commit or reference name to compare changes against. If base version is not provided, the difference goes against an empty tree.""")
+@cli_util.option('--target-repository-id', help=u"""The target repository identifier""")
 @cli_util.option('--is-comparison-from-merge-base', type=click.BOOL, help=u"""Boolean value to indicate whether to use merge base or most recent revision.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'DiffResponse'})
 @cli_util.wrap_exceptions
-def get_commit_diff(ctx, from_json, repository_id, target_version, base_version, is_comparison_from_merge_base):
+def get_commit_diff(ctx, from_json, repository_id, target_version, base_version, target_repository_id, is_comparison_from_merge_base):
 
     if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
@@ -5971,6 +6756,8 @@ def get_commit_diff(ctx, from_json, repository_id, target_version, base_version,
     kwargs = {}
     if base_version is not None:
         kwargs['base_version'] = base_version
+    if target_repository_id is not None:
+        kwargs['target_repository_id'] = target_repository_id
     if is_comparison_from_merge_base is not None:
         kwargs['is_comparison_from_merge_base'] = is_comparison_from_merge_base
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -6279,6 +7066,230 @@ def get_project(ctx, from_json, project_id):
     cli_util.render_response(result, ctx)
 
 
+@project_notification_preference_group.command(name=cli_util.override('devops.get_project_notification_preference.command_name', 'get'), help=u"""Get the project notification preference for the user passed as path param \n[Command Reference](getProjectNotificationPreference)""")
+@cli_util.option('--project-id', required=True, help=u"""Unique project identifier.""")
+@cli_util.option('--principal-id', required=True, help=u"""Unique principal identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'ProjectNotificationPreference'})
+@cli_util.wrap_exceptions
+def get_project_notification_preference(ctx, from_json, project_id, principal_id):
+
+    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+        raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
+
+    if isinstance(principal_id, six.string_types) and len(principal_id.strip()) == 0:
+        raise click.UsageError('Parameter --principal-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_project_notification_preference(
+        project_id=project_id,
+        principal_id=principal_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@project_repository_settings_group.command(name=cli_util.override('devops.get_project_repository_settings.command_name', 'get'), help=u"""Retrieves a project's repository settings details. \n[Command Reference](getProjectRepositorySettings)""")
+@cli_util.option('--project-id', required=True, help=u"""Unique project identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'ProjectRepositorySettings'})
+@cli_util.wrap_exceptions
+def get_project_repository_settings(ctx, from_json, project_id):
+
+    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+        raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_project_repository_settings(
+        project_id=project_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.get_pull_request.command_name', 'get'), help=u"""Gets a PullRequest by identifier \n[Command Reference](getPullRequest)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequest'})
+@cli_util.wrap_exceptions
+def get_pull_request(ctx, from_json, pull_request_id):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_pull_request(
+        pull_request_id=pull_request_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.get_pull_request_attachment.command_name', 'get-pull-request-attachment'), help=u"""Get PullRequest attachment metadata by identifier \n[Command Reference](getPullRequestAttachment)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--attachment-id', required=True, help=u"""unique PullRequest attachment identifier""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequestAttachment'})
+@cli_util.wrap_exceptions
+def get_pull_request_attachment(ctx, from_json, pull_request_id, attachment_id):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    if isinstance(attachment_id, six.string_types) and len(attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --attachment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_pull_request_attachment(
+        pull_request_id=pull_request_id,
+        attachment_id=attachment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.get_pull_request_attachment_content.command_name', 'get-pull-request-attachment-content'), help=u"""Gets the content of the attachment. \n[Command Reference](getPullRequestAttachmentContent)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--attachment-id', required=True, help=u"""unique PullRequest attachment identifier""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_pull_request_attachment_content(ctx, from_json, file, pull_request_id, attachment_id):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    if isinstance(attachment_id, six.string_types) and len(attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --attachment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_pull_request_attachment_content(
+        pull_request_id=pull_request_id,
+        attachment_id=attachment_id,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
+@pull_request_group.command(name=cli_util.override('devops.get_pull_request_change_summary_metrics.command_name', 'get-pull-request-change-summary-metrics'), help=u"""Get pull request diff summary metric \n[Command Reference](getPullRequestChangeSummaryMetrics)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequestChangeSummaryMetrics'})
+@cli_util.wrap_exceptions
+def get_pull_request_change_summary_metrics(ctx, from_json, pull_request_id):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_pull_request_change_summary_metrics(
+        pull_request_id=pull_request_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.get_pull_request_comment.command_name', 'get-pull-request-comment'), help=u"""Get PullRequest comment by identifier \n[Command Reference](getPullRequestComment)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--comment-id', required=True, help=u"""unique PullRequest Comment identifier""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequestComment'})
+@cli_util.wrap_exceptions
+def get_pull_request_comment(ctx, from_json, pull_request_id, comment_id):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    if isinstance(comment_id, six.string_types) and len(comment_id.strip()) == 0:
+        raise click.UsageError('Parameter --comment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_pull_request_comment(
+        pull_request_id=pull_request_id,
+        comment_id=comment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_notification_preference_group.command(name=cli_util.override('devops.get_pull_request_notification_preference.command_name', 'get'), help=u"""Get the pull request notification preference for the user passed as path param \n[Command Reference](getPullRequestNotificationPreference)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--principal-id', required=True, help=u"""Unique principal identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequestNotificationPreference'})
+@cli_util.wrap_exceptions
+def get_pull_request_notification_preference(ctx, from_json, pull_request_id, principal_id):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    if isinstance(principal_id, six.string_types) and len(principal_id.strip()) == 0:
+        raise click.UsageError('Parameter --principal-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_pull_request_notification_preference(
+        pull_request_id=pull_request_id,
+        principal_id=principal_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @repository_group.command(name=cli_util.override('devops.get_ref.command_name', 'get-ref'), help=u"""This API will be deprecated on Wed, 12 June 2024 01:00:00 GMT as it does not get recognized when refName has '/'. This will be replaced by \"/repositories/{repositoryId}/refs\". Retrieves a repository's reference by its name with preference for branches over tags if the name is ambiguous. This can be disambiguated by using full names like \"heads/<name>\" or \"tags/<name>\". \n[Command Reference](getRef)""")
 @cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
 @cli_util.option('--ref-name', required=True, help=u"""A filter to return only resources that match the given reference name.""")
@@ -6482,6 +7493,55 @@ def get_repository_file_lines(ctx, from_json, repository_id, file_path, revision
     cli_util.render_response(result, ctx)
 
 
+@repository_notification_preference_group.command(name=cli_util.override('devops.get_repository_notification_preference.command_name', 'get'), help=u"""Get the repository notification preference for the user passed as path param \n[Command Reference](getRepositoryNotificationPreference)""")
+@cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
+@cli_util.option('--principal-id', required=True, help=u"""Unique principal identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryNotificationPreference'})
+@cli_util.wrap_exceptions
+def get_repository_notification_preference(ctx, from_json, repository_id, principal_id):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    if isinstance(principal_id, six.string_types) and len(principal_id.strip()) == 0:
+        raise click.UsageError('Parameter --principal-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_repository_notification_preference(
+        repository_id=repository_id,
+        principal_id=principal_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@repository_settings_group.command(name=cli_util.override('devops.get_repository_settings.command_name', 'get'), help=u"""Retrieves a repository's settings details. \n[Command Reference](getRepositorySettings)""")
+@cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositorySettings'})
+@cli_util.wrap_exceptions
+def get_repository_settings(ctx, from_json, repository_id):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.get_repository_settings(
+        repository_id=repository_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @trigger_group.command(name=cli_util.override('devops.get_trigger.command_name', 'get'), help=u"""Retrieves a trigger by identifier. \n[Command Reference](getTrigger)""")
 @cli_util.option('--trigger-id', required=True, help=u"""Unique trigger identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -6521,6 +7581,36 @@ def get_work_request(ctx, from_json, work_request_id):
     client = cli_util.build_client('devops', 'devops', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.like_pull_request_comment.command_name', 'like-pull-request-comment'), help=u"""Like a PullRequest comment \n[Command Reference](likePullRequestComment)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--comment-id', required=True, help=u"""unique PullRequest Comment identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequestComment'})
+@cli_util.wrap_exceptions
+def like_pull_request_comment(ctx, from_json, pull_request_id, comment_id, if_match):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    if isinstance(comment_id, six.string_types) and len(comment_id.strip()) == 0:
+        raise click.UsageError('Parameter --comment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.like_pull_request_comment(
+        pull_request_id=pull_request_id,
+        comment_id=comment_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -6713,6 +7803,72 @@ def list_build_pipelines(ctx, from_json, all_pages, page_size, id, project_id, c
     cli_util.render_response(result, ctx)
 
 
+@repository_group.command(name=cli_util.override('devops.list_build_run_snapshots.command_name', 'list-build-run-snapshots'), help=u"""Returns a list of build run snapshots for a given commit or the latest commit on a pull request if no commit is provided. \n[Command Reference](listBuildRunSnapshots)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--pipeline-id', help=u"""Unique build pipeline identifier.""")
+@cli_util.option('--build-run-id', help=u"""Unique build run identifier.""")
+@cli_util.option('--commit-id', help=u"""Commit ID in a repository.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "name"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for time created is descending. Default order for name is ascending. If no value is specified time created is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'BuildRunSnapshotCollection'})
+@cli_util.wrap_exceptions
+def list_build_run_snapshots(ctx, from_json, all_pages, page_size, pull_request_id, pipeline_id, build_run_id, commit_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if pipeline_id is not None:
+        kwargs['pipeline_id'] = pipeline_id
+    if build_run_id is not None:
+        kwargs['build_run_id'] = build_run_id
+    if commit_id is not None:
+        kwargs['commit_id'] = commit_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_build_run_snapshots,
+            pull_request_id=pull_request_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_build_run_snapshots,
+            limit,
+            page_size,
+            pull_request_id=pull_request_id,
+            **kwargs
+        )
+    else:
+        result = client.list_build_run_snapshots(
+            pull_request_id=pull_request_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @build_run_summary_group.command(name=cli_util.override('devops.list_build_runs.command_name', 'list-build-runs'), help=u"""Returns a list of build run summary. \n[Command Reference](listBuildRuns)""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single resource by ID.""")
 @cli_util.option('--build-pipeline-id', help=u"""Unique build pipeline identifier.""")
@@ -6785,6 +7941,7 @@ def list_build_runs(ctx, from_json, all_pages, page_size, id, build_pipeline_id,
 @cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
 @cli_util.option('--base-version', required=True, help=u"""The commit or reference name to compare changes against.""")
 @cli_util.option('--target-version', required=True, help=u"""The commit or reference name where changes are coming from.""")
+@cli_util.option('--target-repository-id', help=u"""The target repository identifier""")
 @cli_util.option('--is-comparison-from-merge-base', type=click.BOOL, help=u"""Boolean value to indicate whether to use merge base or most recent revision.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -6795,7 +7952,7 @@ def list_build_runs(ctx, from_json, all_pages, page_size, id, build_pipeline_id,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'DiffCollection'})
 @cli_util.wrap_exceptions
-def list_commit_diffs(ctx, from_json, all_pages, page_size, repository_id, base_version, target_version, is_comparison_from_merge_base, limit, page):
+def list_commit_diffs(ctx, from_json, all_pages, page_size, repository_id, base_version, target_version, target_repository_id, is_comparison_from_merge_base, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -6804,6 +7961,8 @@ def list_commit_diffs(ctx, from_json, all_pages, page_size, repository_id, base_
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if target_repository_id is not None:
+        kwargs['target_repository_id'] = target_repository_id
     if is_comparison_from_merge_base is not None:
         kwargs['is_comparison_from_merge_base'] = is_comparison_from_merge_base
     if limit is not None:
@@ -7317,6 +8476,34 @@ def list_deployments(ctx, from_json, all_pages, page_size, deploy_pipeline_id, i
     cli_util.render_response(result, ctx)
 
 
+@repository_group.command(name=cli_util.override('devops.list_fork_sync_statuses.command_name', 'list-fork-sync-statuses'), help=u"""LIST operation that returns a collection of fork sync status objects. \n[Command Reference](listForkSyncStatuses)""")
+@cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
+@cli_util.option('--branch-name-query-param', required=True, help=u"""Specifies the branch for which the fork sync status will be checked.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'ForkSyncStatusCollection'})
+@cli_util.wrap_exceptions
+def list_fork_sync_statuses(ctx, from_json, all_pages, repository_id, branch_name_query_param, if_match):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.list_fork_sync_statuses(
+        repository_id=repository_id,
+        branch_name_query_param=branch_name_query_param,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @repository_group.command(name=cli_util.override('devops.list_mirror_records.command_name', 'list-mirror-records'), help=u"""Returns a list of mirror entry in history within 30 days. \n[Command Reference](listMirrorRecords)""")
 @cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -7440,6 +8627,63 @@ def list_paths(ctx, from_json, all_pages, page_size, repository_id, ref, paths_i
     cli_util.render_response(result, ctx)
 
 
+@repository_group.command(name=cli_util.override('devops.list_project_commit_analytics_authors.command_name', 'list-project-commit-analytics-authors'), help=u"""Retrieve a list of all the Commit Analytics authors. \n[Command Reference](listProjectCommitAnalyticsAuthors)""")
+@cli_util.option('--project-id', required=True, help=u"""Unique project identifier.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["authorName"]), help=u"""The field to sort by. Only one sort by value is supported for this parameter. Default order for author name is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'CommitAnalyticsAuthorCollection'})
+@cli_util.wrap_exceptions
+def list_project_commit_analytics_authors(ctx, from_json, all_pages, page_size, project_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+        raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_project_commit_analytics_authors,
+            project_id=project_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_project_commit_analytics_authors,
+            limit,
+            page_size,
+            project_id=project_id,
+            **kwargs
+        )
+    else:
+        result = client.list_project_commit_analytics_authors(
+            project_id=project_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @project_summary_group.command(name=cli_util.override('devops.list_projects.command_name', 'list-projects'), help=u"""Returns a list of projects. \n[Command Reference](listProjects)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single resource by ID.""")
@@ -7498,6 +8742,497 @@ def list_projects(ctx, from_json, all_pages, page_size, compartment_id, id, life
     else:
         result = client.list_projects(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@protected_branch_collection_group.command(name=cli_util.override('devops.list_protected_branches.command_name', 'list-protected-branches'), help=u"""Returns a list of Protected Branches. \n[Command Reference](listProtectedBranches)""")
+@cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
+@cli_util.option('--name', help=u"""A filter to return only resources that match the given branch name.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["branchName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for branch name is ascending. If no value is specified branch name is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'ProtectedBranchCollection'})
+@cli_util.wrap_exceptions
+def list_protected_branches(ctx, from_json, all_pages, page_size, repository_id, name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if name is not None:
+        kwargs['name'] = name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_protected_branches,
+            repository_id=repository_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_protected_branches,
+            limit,
+            page_size,
+            repository_id=repository_id,
+            **kwargs
+        )
+    else:
+        result = client.list_protected_branches(
+            repository_id=repository_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.list_pull_request_activities.command_name', 'list-pull-request-activities'), help=u"""List actions that have been taken on a pull request \n[Command Reference](listPullRequestActivities)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--activity-type', type=custom_types.CliCaseInsensitiveChoice(["LIFECYCLE", "APPROVAL", "COMMIT", "REVIEWER", "COMMENT"]), help=u"""An optional filter to list activities based on activity type. If no value is specified, all activity types will returned.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequestActivityCollection'})
+@cli_util.wrap_exceptions
+def list_pull_request_activities(ctx, from_json, all_pages, page_size, pull_request_id, activity_type, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if activity_type is not None:
+        kwargs['activity_type'] = activity_type
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_pull_request_activities,
+            pull_request_id=pull_request_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_pull_request_activities,
+            limit,
+            page_size,
+            pull_request_id=pull_request_id,
+            **kwargs
+        )
+    else:
+        result = client.list_pull_request_activities(
+            pull_request_id=pull_request_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.list_pull_request_attachments.command_name', 'list-pull-request-attachments'), help=u"""List PullRequest level attachments by identifier \n[Command Reference](listPullRequestAttachments)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["fileName", "timeCreated", "createdBy"]), help=u"""The field to sort by. Only one sort order may be provided. Default order is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--file-name', help=u"""A filter to return only resources that match the entire file name given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequestAttachmentCollection'})
+@cli_util.wrap_exceptions
+def list_pull_request_attachments(ctx, from_json, all_pages, page_size, pull_request_id, compartment_id, sort_order, sort_by, file_name, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if file_name is not None:
+        kwargs['file_name'] = file_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_pull_request_attachments,
+            pull_request_id=pull_request_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_pull_request_attachments,
+            limit,
+            page_size,
+            pull_request_id=pull_request_id,
+            **kwargs
+        )
+    else:
+        result = client.list_pull_request_attachments(
+            pull_request_id=pull_request_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.list_pull_request_authors.command_name', 'list-pull-request-authors'), help=u"""Retrieve a list of all the PR authors. \n[Command Reference](listPullRequestAuthors)""")
+@cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequestAuthorCollection'})
+@cli_util.wrap_exceptions
+def list_pull_request_authors(ctx, from_json, all_pages, page_size, repository_id, limit, page, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_pull_request_authors,
+            repository_id=repository_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_pull_request_authors,
+            limit,
+            page_size,
+            repository_id=repository_id,
+            **kwargs
+        )
+    else:
+        result = client.list_pull_request_authors(
+            repository_id=repository_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.list_pull_request_comments.command_name', 'list-pull-request-comments'), help=u"""List PullRequest level comments by identifier \n[Command Reference](listPullRequestComments)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "createdBy"]), help=u"""The field to sort by. Only one sort order may be provided. Default order is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--comment-id', help=u"""unique PullRequest Comment identifier""")
+@cli_util.option('--commit-id', help=u"""PullRequest Comment Commit SHA""")
+@cli_util.option('--file-path', help=u"""PullRequest File Path""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequestCommentCollection'})
+@cli_util.wrap_exceptions
+def list_pull_request_comments(ctx, from_json, all_pages, page_size, pull_request_id, compartment_id, sort_order, sort_by, comment_id, commit_id, file_path, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if comment_id is not None:
+        kwargs['comment_id'] = comment_id
+    if commit_id is not None:
+        kwargs['commit_id'] = commit_id
+    if file_path is not None:
+        kwargs['file_path'] = file_path
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_pull_request_comments,
+            pull_request_id=pull_request_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_pull_request_comments,
+            limit,
+            page_size,
+            pull_request_id=pull_request_id,
+            **kwargs
+        )
+    else:
+        result = client.list_pull_request_comments(
+            pull_request_id=pull_request_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.list_pull_request_commits.command_name', 'list-pull-request-commits'), help=u"""List pull request commits \n[Command Reference](listPullRequestCommits)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryCommitCollection'})
+@cli_util.wrap_exceptions
+def list_pull_request_commits(ctx, from_json, all_pages, page_size, pull_request_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_pull_request_commits,
+            pull_request_id=pull_request_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_pull_request_commits,
+            limit,
+            page_size,
+            pull_request_id=pull_request_id,
+            **kwargs
+        )
+    else:
+        result = client.list_pull_request_commits(
+            pull_request_id=pull_request_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.list_pull_request_file_changes.command_name', 'list-pull-request-file-changes'), help=u"""List pull request file changes \n[Command Reference](listPullRequestFileChanges)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--file-path', help=u"""PullRequest File Path""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequestFileChangeCollection'})
+@cli_util.wrap_exceptions
+def list_pull_request_file_changes(ctx, from_json, all_pages, page_size, pull_request_id, file_path, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if file_path is not None:
+        kwargs['file_path'] = file_path
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_pull_request_file_changes,
+            pull_request_id=pull_request_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_pull_request_file_changes,
+            limit,
+            page_size,
+            pull_request_id=pull_request_id,
+            **kwargs
+        )
+    else:
+        result = client.list_pull_request_file_changes(
+            pull_request_id=pull_request_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_collection_group.command(name=cli_util.override('devops.list_pull_requests.command_name', 'list-pull-requests'), help=u"""Returns a list of PullRequests. \n[Command Reference](listPullRequests)""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only pull requests that match the given lifecycle state.""")
+@cli_util.option('--lifecycle-details', type=custom_types.CliCaseInsensitiveChoice(["OPEN", "CONFLICT", "CLOSED", "MERGING", "MERGED"]), help=u"""A filter to return only pull requests that match the given lifecycle state.""")
+@cli_util.option('--repository-id', help=u"""The OCID of the repository in which to list resources.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single resource by ID.""")
+@cli_util.option('--created-by', help=u"""PullRequest Created By""")
+@cli_util.option('--destination-branch', help=u"""PullRequest Target Branch""")
+@cli_util.option('--source-branch', help=u"""PullRequest Source Branch.""")
+@cli_util.option('--reviewer-principal-id', help=u"""PullRequest Reviewer Id""")
+@cli_util.option('--source-repository-id', help=u"""PullRequest Source Repository Id""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for time created is descending. Default order for display name is ascending. If no value is specified, then the default time created value is considered.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequestCollection'})
+@cli_util.wrap_exceptions
+def list_pull_requests(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, lifecycle_details, repository_id, display_name, id, created_by, destination_branch, source_branch, reviewer_principal_id, source_repository_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if lifecycle_details is not None:
+        kwargs['lifecycle_details'] = lifecycle_details
+    if repository_id is not None:
+        kwargs['repository_id'] = repository_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if created_by is not None:
+        kwargs['created_by'] = created_by
+    if destination_branch is not None:
+        kwargs['destination_branch'] = destination_branch
+    if source_branch is not None:
+        kwargs['source_branch'] = source_branch
+    if reviewer_principal_id is not None:
+        kwargs['reviewer_principal_id'] = reviewer_principal_id
+    if source_repository_id is not None:
+        kwargs['source_repository_id'] = source_repository_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_pull_requests,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_pull_requests,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_pull_requests(
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -7573,7 +9308,7 @@ def list_refs(ctx, from_json, all_pages, page_size, repository_id, ref_type, com
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--project-id', help=u"""unique project identifier""")
 @cli_util.option('--repository-id', help=u"""Unique repository identifier.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING"]), help=u"""A filter to return only resources whose lifecycle state matches the given lifecycle state.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "FAILED", "DELETING"]), help=u"""A filter to return only resources whose lifecycle state matches the given lifecycle state.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -7629,6 +9364,63 @@ def list_repositories(ctx, from_json, all_pages, page_size, compartment_id, proj
         )
     else:
         result = client.list_repositories(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.list_repository_commit_analytics_authors.command_name', 'list-repository-commit-analytics-authors'), help=u"""Retrieve a list of all the Commit Analytics authors. \n[Command Reference](listRepositoryCommitAnalyticsAuthors)""")
+@cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use. Use either ascending or descending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["authorName"]), help=u"""The field to sort by. Only one sort by value is supported for this parameter. Default order for author name is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'CommitAnalyticsAuthorCollection'})
+@cli_util.wrap_exceptions
+def list_repository_commit_analytics_authors(ctx, from_json, all_pages, page_size, repository_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_repository_commit_analytics_authors,
+            repository_id=repository_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_repository_commit_analytics_authors,
+            limit,
+            page_size,
+            repository_id=repository_id,
+            **kwargs
+        )
+    else:
+        result = client.list_repository_commit_analytics_authors(
+            repository_id=repository_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -7879,6 +9671,197 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
     cli_util.render_response(result, ctx)
 
 
+@pull_request_group.command(name=cli_util.override('devops.merge_pull_request.command_name', 'merge'), help=u"""Merge the PullRequest \n[Command Reference](mergePullRequest)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--action-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXECUTE", "VALIDATE"]), help=u"""the type of action for this merge.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequest'})
+@cli_util.wrap_exceptions
+def merge_pull_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pull_request_id, action_type, if_match):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['actionType'] = action_type
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.merge_pull_request(
+        pull_request_id=pull_request_id,
+        merge_pull_request_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.merge_pull_request_execute_merge_pull_request_details.command_name', 'merge-pull-request-execute-merge-pull-request-details'), help=u"""Merge the PullRequest \n[Command Reference](mergePullRequest)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--commit-message', required=True, help=u"""The commit message to be shown for this pull request in the destination branch after merge is done.""")
+@cli_util.option('--merge-strategy', required=True, type=custom_types.CliCaseInsensitiveChoice(["MERGE_COMMIT", "FAST_FORWARD", "FAST_FORWARD_ONLY", "REBASE_AND_MERGE", "REBASE_AND_FAST_FORWARD", "SQUASH", "SQUASH_FAST_FORWARD_ONLY"]), help=u"""the strategy of merging.""")
+@cli_util.option('--post-merge-action', type=custom_types.CliCaseInsensitiveChoice(["DELETE_SOURCE_BRANCH", "KEEP_SOURCE_BRANCH"]), help=u"""What needs to happen after the merge is done successfully.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequest'})
+@cli_util.wrap_exceptions
+def merge_pull_request_execute_merge_pull_request_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pull_request_id, commit_message, merge_strategy, post_merge_action, if_match):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['commitMessage'] = commit_message
+    _details['mergeStrategy'] = merge_strategy
+
+    if post_merge_action is not None:
+        _details['postMergeAction'] = post_merge_action
+
+    _details['actionType'] = 'EXECUTE'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.merge_pull_request(
+        pull_request_id=pull_request_id,
+        merge_pull_request_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.merge_pull_request_validate_merge_pull_request_details.command_name', 'merge-pull-request-validate-merge-pull-request-details'), help=u"""Merge the PullRequest \n[Command Reference](mergePullRequest)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequest'})
+@cli_util.wrap_exceptions
+def merge_pull_request_validate_merge_pull_request_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pull_request_id, if_match):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    _details['actionType'] = 'VALIDATE'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.merge_pull_request(
+        pull_request_id=pull_request_id,
+        merge_pull_request_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @repository_group.command(name=cli_util.override('devops.mirror_repository.command_name', 'mirror'), help=u"""Synchronize a mirrored repository to the latest version from external providers. \n[Command Reference](mirrorRepository)""")
 @cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -7931,6 +9914,41 @@ def mirror_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.patch_pull_request.command_name', 'patch'), help=u"""Updates the reviewer list of a pull request \n[Command Reference](patchPullRequest)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of patch instructions
+
+This option is a JSON list with items of type PatchInstruction.  For documentation on PatchInstruction please see our API reference: https://docs.cloud.oracle.com/api/#/en/devops/20210630/datatypes/PatchInstruction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'devops', 'class': 'list[PatchInstruction]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'devops', 'class': 'list[PatchInstruction]'}}, output_type={'module': 'devops', 'class': 'PullRequest'})
+@cli_util.wrap_exceptions
+def patch_pull_request(ctx, from_json, pull_request_id, items, if_match):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if items is not None:
+        _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.patch_pull_request(
+        pull_request_id=pull_request_id,
+        patch_pull_request_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -8136,6 +10154,114 @@ def put_repository_ref_put_repository_branch_details(ctx, from_json, wait_for_st
     cli_util.render_response(result, ctx)
 
 
+@pull_request_group.command(name=cli_util.override('devops.reopen_pull_request.command_name', 'reopen'), help=u"""Reopen a PullRequest \n[Command Reference](reopenPullRequest)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequest'})
+@cli_util.wrap_exceptions
+def reopen_pull_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pull_request_id, if_match):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.reopen_pull_request(
+        pull_request_id=pull_request_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pull_request') and callable(getattr(client, 'get_pull_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_pull_request(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.review_pull_request.command_name', 'review'), help=u"""Review a PullRequest \n[Command Reference](reviewPullRequest)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["APPROVE", "UNAPPROVE"]), help=u"""The review action taken""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequest'})
+@cli_util.wrap_exceptions
+def review_pull_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pull_request_id, action, if_match):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['action'] = action
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.review_pull_request(
+        pull_request_id=pull_request_id,
+        review_pull_request_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pull_request') and callable(getattr(client, 'get_pull_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_pull_request(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @project_group.command(name=cli_util.override('devops.schedule_cascading_project_deletion.command_name', 'schedule-cascading-project-deletion'), help=u"""Cascading operation that marks Project and child DevOps resources in a DELETING state for a retention period \n[Command Reference](scheduleCascadingProjectDeletion)""")
 @cli_util.option('--project-id', required=True, help=u"""Unique project identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -8189,6 +10315,255 @@ def schedule_cascading_project_deletion(ctx, from_json, wait_for_state, max_wait
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
+
+
+@repository_group.command(name=cli_util.override('devops.sync_repository.command_name', 'sync'), help=u"""Synchronize a forked repository to the latest version \n[Command Reference](syncRepository)""")
+@cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
+@cli_util.option('--sync-merge-strategy', required=True, type=custom_types.CliCaseInsensitiveChoice(["FETCH_AND_MERGE", "DISCARD"]), help=u"""If fetch and merge is passed in, the changes from the upstream will be fetched and merged into the destination branch. If discard is passed in, the changes in the fork will be overwritten with the changes brought in from the upstream.""")
+@cli_util.option('--source-branch', required=True, help=u"""The branch in the upstream repository we want to sync from.""")
+@cli_util.option('--destination-branch', required=True, help=u"""The branch in the repository we want to be updated with changes from the upstream.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def sync_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, repository_id, sync_merge_strategy, source_branch, destination_branch, if_match):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['sourceBranch'] = source_branch
+    _details['destinationBranch'] = destination_branch
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.sync_repository(
+        repository_id=repository_id,
+        sync_merge_strategy=sync_merge_strategy,
+        sync_repository_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@repository_metric_aggregation_group.command(name=cli_util.override('devops.summarize_project_repository_analytics.command_name', 'summarize-project-repository-analytics'), help=u"""Retrieves repository analytics for a given project. \n[Command Reference](summarizeProjectRepositoryAnalytics)""")
+@cli_util.option('--project-id', required=True, help=u"""Unique project identifier.""")
+@cli_util.option('--repository-metrics', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMMITS", "LINES_ADDED", "LINES_DELETED", "PULL_REQUEST_CREATED", "PULL_REQUEST_MERGED", "PULL_REQUEST_DECLINED", "PULL_REQUEST_REVIEW_START_DURATION_IN_DAYS", "PULL_REQUEST_REVIEW_DURATION_IN_DAYS", "PULL_REQUEST_APPROVED", "PULL_REQUEST_REVIEWED", "PULL_REQUEST_COMMENTS"]), help=u"""The name of the metric to be filtered.""")
+@cli_util.option('--start-time', required=True, type=custom_types.CLI_DATETIME, help=u"""The beginning of the metric data query time range.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--author-email', help=u"""Email address of the author.""")
+@cli_util.option('--aggregation-duration', type=custom_types.CliCaseInsensitiveChoice(["DAILY", "WEEKLY", "MONTHLY", "YEARLY"]), help=u"""Metrics aggregated for the defined period.""")
+@cli_util.option('--end-time', type=custom_types.CLI_DATETIME, help=u"""The end of the metric data query time range.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["AUTHOR"]), help=u"""Attribute by which metric data has to be grouped""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryMetricAggregation'})
+@cli_util.wrap_exceptions
+def summarize_project_repository_analytics(ctx, from_json, project_id, repository_metrics, start_time, author_email, aggregation_duration, end_time, group_by, limit, page):
+
+    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+        raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['repositoryMetrics'] = cli_util.parse_json_parameter("repository_metrics", repository_metrics)
+    _details['startTime'] = start_time
+
+    if author_email is not None:
+        _details['authorEmail'] = author_email
+
+    if aggregation_duration is not None:
+        _details['aggregationDuration'] = aggregation_duration
+
+    if end_time is not None:
+        _details['endTime'] = end_time
+
+    if group_by is not None:
+        _details['groupBy'] = group_by
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.summarize_project_repository_analytics(
+        project_id=project_id,
+        summarize_project_repository_analytics_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@repository_metric_aggregation_group.command(name=cli_util.override('devops.summarize_repository_analytics.command_name', 'summarize-repository-analytics'), help=u"""Retrieves repository analytics for a given repository. \n[Command Reference](summarizeRepositoryAnalytics)""")
+@cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
+@cli_util.option('--repository-metrics', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMMITS", "LINES_ADDED", "LINES_DELETED", "PULL_REQUEST_CREATED", "PULL_REQUEST_MERGED", "PULL_REQUEST_DECLINED", "PULL_REQUEST_REVIEW_START_DURATION_IN_DAYS", "PULL_REQUEST_REVIEW_DURATION_IN_DAYS", "PULL_REQUEST_APPROVED", "PULL_REQUEST_REVIEWED", "PULL_REQUEST_COMMENTS"]), help=u"""The name of the metric to be filtered.""")
+@cli_util.option('--start-time', required=True, type=custom_types.CLI_DATETIME, help=u"""The beginning of the metric data query time range.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--author-email', help=u"""Email address of the author.""")
+@cli_util.option('--aggregation-duration', type=custom_types.CliCaseInsensitiveChoice(["DAILY", "WEEKLY", "MONTHLY", "YEARLY"]), help=u"""Metrics aggregated for the defined period.""")
+@cli_util.option('--end-time', type=custom_types.CLI_DATETIME, help=u"""The end of the metric data query time range.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["AUTHOR"]), help=u"""Attribute by which metric data has to be grouped""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryMetricAggregation'})
+@cli_util.wrap_exceptions
+def summarize_repository_analytics(ctx, from_json, repository_id, repository_metrics, start_time, author_email, aggregation_duration, end_time, group_by, limit, page):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['repositoryMetrics'] = cli_util.parse_json_parameter("repository_metrics", repository_metrics)
+    _details['startTime'] = start_time
+
+    if author_email is not None:
+        _details['authorEmail'] = author_email
+
+    if aggregation_duration is not None:
+        _details['aggregationDuration'] = aggregation_duration
+
+    if end_time is not None:
+        _details['endTime'] = end_time
+
+    if group_by is not None:
+        _details['groupBy'] = group_by
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.summarize_repository_analytics(
+        repository_id=repository_id,
+        summarize_repository_analytics_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.unlike_pull_request_comment.command_name', 'unlike-pull-request-comment'), help=u"""Unlike a PullRequest comment \n[Command Reference](unlikePullRequestComment)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--comment-id', required=True, help=u"""unique PullRequest Comment identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequestComment'})
+@cli_util.wrap_exceptions
+def unlike_pull_request_comment(ctx, from_json, pull_request_id, comment_id, if_match):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    if isinstance(comment_id, six.string_types) and len(comment_id.strip()) == 0:
+        raise click.UsageError('Parameter --comment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.unlike_pull_request_comment(
+        pull_request_id=pull_request_id,
+        comment_id=comment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.unsubscribe_pull_request.command_name', 'unsubscribe'), help=u"""unsubscribe the PullRequest \n[Command Reference](unsubscribePullRequest)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--token', required=True, help=u"""The unsubscription token.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def unsubscribe_pull_request(ctx, from_json, file, pull_request_id, token, if_match):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.unsubscribe_pull_request(
+        pull_request_id=pull_request_id,
+        token=token,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
 
 
 @build_pipeline_group.command(name=cli_util.override('devops.update_build_pipeline.command_name', 'update'), help=u"""Updates the build pipeline. \n[Command Reference](updateBuildPipeline)""")
@@ -12886,12 +15261,254 @@ def update_project(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
+@project_notification_preference_group.command(name=cli_util.override('devops.update_project_notification_preference.command_name', 'update'), help=u"""Update the project notification preference for the user passed as path param \n[Command Reference](updateProjectNotificationPreference)""")
+@cli_util.option('--notification-preference', required=True, help=u"""The override value of project notification preference.""")
+@cli_util.option('--project-id', required=True, help=u"""Unique project identifier.""")
+@cli_util.option('--principal-id', required=True, help=u"""Unique principal identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'ProjectNotificationPreference'})
+@cli_util.wrap_exceptions
+def update_project_notification_preference(ctx, from_json, notification_preference, project_id, principal_id, if_match):
+
+    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+        raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
+
+    if isinstance(principal_id, six.string_types) and len(principal_id.strip()) == 0:
+        raise click.UsageError('Parameter --principal-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['notificationPreference'] = notification_preference
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_project_notification_preference(
+        project_id=project_id,
+        principal_id=principal_id,
+        update_project_notification_preference_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@project_repository_settings_group.command(name=cli_util.override('devops.update_project_repository_settings.command_name', 'update'), help=u"""Updates the repository settings for a project. \n[Command Reference](updateProjectRepositorySettings)""")
+@cli_util.option('--project-id', required=True, help=u"""Unique project identifier.""")
+@cli_util.option('--merge-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--approval-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'merge-settings': {'module': 'devops', 'class': 'MergeSettings'}, 'approval-rules': {'module': 'devops', 'class': 'UpdateApprovalRuleDetailsCollection'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'merge-settings': {'module': 'devops', 'class': 'MergeSettings'}, 'approval-rules': {'module': 'devops', 'class': 'UpdateApprovalRuleDetailsCollection'}}, output_type={'module': 'devops', 'class': 'ProjectRepositorySettings'})
+@cli_util.wrap_exceptions
+def update_project_repository_settings(ctx, from_json, force, project_id, merge_settings, approval_rules, if_match):
+
+    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+        raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
+    if not force:
+        if merge_settings or approval_rules:
+            if not click.confirm("WARNING: Updates to merge-settings and approval-rules will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if merge_settings is not None:
+        _details['mergeSettings'] = cli_util.parse_json_parameter("merge_settings", merge_settings)
+
+    if approval_rules is not None:
+        _details['approvalRules'] = cli_util.parse_json_parameter("approval_rules", approval_rules)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_project_repository_settings(
+        project_id=project_id,
+        update_project_repository_settings_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.update_pull_request.command_name', 'update'), help=u"""Updates the PullRequest \n[Command Reference](updatePullRequest)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--display-name', help=u"""Pull Request title""")
+@cli_util.option('--description', help=u"""Details of the pull request. Avoid entering confidential information.""")
+@cli_util.option('--destination-branch', help=u"""The destination branch against which the changes are to be reviewed. Example: \"main\"""")
+@cli_util.option('--reviewers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Reviewers for this Review.
+
+This option is a JSON list with items of type UpdateReviewerDetails.  For documentation on UpdateReviewerDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/devops/20210630/datatypes/UpdateReviewerDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "WAITING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'reviewers': {'module': 'devops', 'class': 'list[UpdateReviewerDetails]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'reviewers': {'module': 'devops', 'class': 'list[UpdateReviewerDetails]'}, 'freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'PullRequest'})
+@cli_util.wrap_exceptions
+def update_pull_request(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pull_request_id, display_name, description, destination_branch, reviewers, freeform_tags, defined_tags, if_match):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+    if not force:
+        if reviewers or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to reviewers and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if destination_branch is not None:
+        _details['destinationBranch'] = destination_branch
+
+    if reviewers is not None:
+        _details['reviewers'] = cli_util.parse_json_parameter("reviewers", reviewers)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_pull_request(
+        pull_request_id=pull_request_id,
+        update_pull_request_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.update_pull_request_comment.command_name', 'update-pull-request-comment'), help=u"""Updates the PullRequest comment \n[Command Reference](updatePullRequestComment)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--comment-id', required=True, help=u"""unique PullRequest Comment identifier""")
+@cli_util.option('--data', help=u"""Pull Request comment content""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequestComment'})
+@cli_util.wrap_exceptions
+def update_pull_request_comment(ctx, from_json, pull_request_id, comment_id, data, if_match):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    if isinstance(comment_id, six.string_types) and len(comment_id.strip()) == 0:
+        raise click.UsageError('Parameter --comment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if data is not None:
+        _details['data'] = data
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_pull_request_comment(
+        pull_request_id=pull_request_id,
+        comment_id=comment_id,
+        update_pull_request_comment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_notification_preference_group.command(name=cli_util.override('devops.update_pull_request_notification_preference.command_name', 'update'), help=u"""Update the pull request notification preference for the user passed as path param \n[Command Reference](updatePullRequestNotificationPreference)""")
+@cli_util.option('--notification-preference', required=True, help=u"""The override value of pull request notification preference.""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--principal-id', required=True, help=u"""Unique principal identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequestNotificationPreference'})
+@cli_util.wrap_exceptions
+def update_pull_request_notification_preference(ctx, from_json, notification_preference, pull_request_id, principal_id, if_match):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    if isinstance(principal_id, six.string_types) and len(principal_id.strip()) == 0:
+        raise click.UsageError('Parameter --principal-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['notificationPreference'] = notification_preference
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_pull_request_notification_preference(
+        pull_request_id=pull_request_id,
+        principal_id=principal_id,
+        update_pull_request_notification_preference_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @repository_group.command(name=cli_util.override('devops.update_repository.command_name', 'update'), help=u"""Updates the repository. \n[Command Reference](updateRepository)""")
 @cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
 @cli_util.option('--name', help=u"""Name of the repository. Should be unique within the project.""")
 @cli_util.option('--description', help=u"""Details of the repository. Avoid entering confidential information.""")
 @cli_util.option('--default-branch', help=u"""The default branch of the repository.""")
-@cli_util.option('--repository-type', help=u"""Type of repository. Allowed values: `MIRRORED` `HOSTED`""")
+@cli_util.option('--repository-type', help=u"""Type of repository. Allowed values: `MIRRORED` `HOSTED` `FORKED`""")
 @cli_util.option('--mirror-repository-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -12975,6 +15592,88 @@ def update_repository(ctx, from_json, force, wait_for_state, max_wait_seconds, w
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@repository_notification_preference_group.command(name=cli_util.override('devops.update_repository_notification_preference.command_name', 'update'), help=u"""Update the repository notification preference for the user passed as path param \n[Command Reference](updateRepositoryNotificationPreference)""")
+@cli_util.option('--notification-preference', required=True, help=u"""The override value of repository notification preference.""")
+@cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
+@cli_util.option('--principal-id', required=True, help=u"""Unique principal identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'RepositoryNotificationPreference'})
+@cli_util.wrap_exceptions
+def update_repository_notification_preference(ctx, from_json, notification_preference, repository_id, principal_id, if_match):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    if isinstance(principal_id, six.string_types) and len(principal_id.strip()) == 0:
+        raise click.UsageError('Parameter --principal-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['notificationPreference'] = notification_preference
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_repository_notification_preference(
+        repository_id=repository_id,
+        principal_id=principal_id,
+        update_repository_notification_preference_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@repository_settings_group.command(name=cli_util.override('devops.update_repository_settings.command_name', 'update'), help=u"""Updates the settings for a repository. \n[Command Reference](updateRepositorySettings)""")
+@cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
+@cli_util.option('--merge-checks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--merge-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--approval-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'merge-checks': {'module': 'devops', 'class': 'MergeChecks'}, 'merge-settings': {'module': 'devops', 'class': 'MergeSettings'}, 'approval-rules': {'module': 'devops', 'class': 'UpdateApprovalRuleDetailsCollection'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'merge-checks': {'module': 'devops', 'class': 'MergeChecks'}, 'merge-settings': {'module': 'devops', 'class': 'MergeSettings'}, 'approval-rules': {'module': 'devops', 'class': 'UpdateApprovalRuleDetailsCollection'}}, output_type={'module': 'devops', 'class': 'RepositorySettings'})
+@cli_util.wrap_exceptions
+def update_repository_settings(ctx, from_json, force, repository_id, merge_checks, merge_settings, approval_rules, if_match):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+    if not force:
+        if merge_checks or merge_settings or approval_rules:
+            if not click.confirm("WARNING: Updates to merge-checks and merge-settings and approval-rules will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if merge_checks is not None:
+        _details['mergeChecks'] = cli_util.parse_json_parameter("merge_checks", merge_checks)
+
+    if merge_settings is not None:
+        _details['mergeSettings'] = cli_util.parse_json_parameter("merge_settings", merge_settings)
+
+    if approval_rules is not None:
+        _details['approvalRules'] = cli_util.parse_json_parameter("approval_rules", approval_rules)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.update_repository_settings(
+        repository_id=repository_id,
+        update_repository_settings_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

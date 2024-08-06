@@ -8,7 +8,8 @@ from services.devops.src.oci_cli_devops.generated import devops_cli
 from oci_cli import cli_util  # noqa: F401
 from oci_cli import custom_types  # noqa: F401
 from oci_cli import json_skeleton_utils  # noqa: F401
-
+from oci_cli.aliasing import CommandGroupWithAlias
+import six
 
 # oci devops deploy-artifact deploy-artifact-summary list-deploy-artifacts -> oci devops deploy-artifact deploy-artifact-summary list
 cli_util.rename_command(devops_cli, devops_cli.deploy_artifact_summary_group, devops_cli.list_deploy_artifacts, "list")
@@ -1272,3 +1273,250 @@ def update_deploy_stage_update_shell_deploy_stage_details_extended(ctx, **kwargs
         kwargs.pop('stage_predecessor_collection')
 
     ctx.invoke(devops_cli.update_deploy_stage_update_shell_deploy_stage_details, **kwargs)
+
+
+# oci devops pull-request merge-pull-request-execute-merge-pull-request-details -> oci devops pull-request execute-merge-pull-request
+cli_util.rename_command(devops_cli, devops_cli.pull_request_group, devops_cli.merge_pull_request_execute_merge_pull_request_details, "execute-merge-pull-request")
+
+
+# oci devops pull-request merge-pull-request-validate-merge-pull-request-details -> oci devops pull-request validate-merge-pull-request
+cli_util.rename_command(devops_cli, devops_cli.pull_request_group, devops_cli.merge_pull_request_validate_merge_pull_request_details, "validate-merge-pull-request")
+
+
+# oci devops repository create-or-update-git-ref-create-or-update-git-branch-details -> oci devops repository create-or-update-git-branch-details
+cli_util.rename_command(devops_cli, devops_cli.repository_group, devops_cli.create_or_update_git_ref_create_or_update_git_branch_details, "create-or-update-git-branch-details")
+
+
+# oci devops repository create-or-update-git-ref-create-or-update-git-tag-details -> oci devops repository create-or-update-git-tag-details
+cli_util.rename_command(devops_cli, devops_cli.repository_group, devops_cli.create_or_update_git_ref_create_or_update_git_tag_details, "create-or-update-git-tag-details")
+
+
+# Remove merge from oci devops pull-request
+devops_cli.pull_request_group.commands.pop(devops_cli.merge_pull_request.name)
+
+
+# Remove create-or-update-git-ref from oci devops repository
+devops_cli.repository_group.commands.pop(devops_cli.create_or_update_git_ref.name)
+
+
+# oci devops repository list-build-run-snapshots -> oci devops pull-request
+devops_cli.repository_group.commands.pop(devops_cli.list_build_run_snapshots.name)
+devops_cli.pull_request_group.add_command(devops_cli.list_build_run_snapshots)
+
+
+# Move commands under 'oci devops project-notification-preference' -> 'oci devops project'
+cli_util.rename_command(devops_cli, devops_cli.project_notification_preference_group, devops_cli.get_project_notification_preference, "get-notification-preference")
+cli_util.rename_command(devops_cli, devops_cli.project_notification_preference_group, devops_cli.update_project_notification_preference, "update-notification-preference")
+devops_cli.devops_root_group.commands.pop(devops_cli.project_notification_preference_group.name)
+devops_cli.project_group.add_command(devops_cli.get_project_notification_preference)
+devops_cli.project_group.add_command(devops_cli.update_project_notification_preference)
+
+
+# Move commands under 'oci devops project-repository-settings' -> 'oci devops project'
+cli_util.rename_command(devops_cli, devops_cli.project_repository_settings_group, devops_cli.delete_project_repository_settings, "delete-project-settings")
+cli_util.rename_command(devops_cli, devops_cli.project_repository_settings_group, devops_cli.get_project_repository_settings, "get-project-settings")
+cli_util.rename_command(devops_cli, devops_cli.project_repository_settings_group, devops_cli.update_project_repository_settings, "update-project-settings")
+devops_cli.devops_root_group.commands.pop(devops_cli.project_repository_settings_group.name)
+devops_cli.project_group.add_command(devops_cli.delete_project_repository_settings)
+devops_cli.project_group.add_command(devops_cli.get_project_repository_settings)
+devops_cli.project_group.add_command(devops_cli.update_project_repository_settings)
+
+
+# Move commands under 'oci devops pull-request-notification-preference' -> 'oci devops pull-request'
+cli_util.rename_command(devops_cli, devops_cli.pull_request_notification_preference_group, devops_cli.get_pull_request_notification_preference, "get-pull-request-notification-preference")
+cli_util.rename_command(devops_cli, devops_cli.pull_request_notification_preference_group, devops_cli.update_pull_request_notification_preference, "update-pull-request-notification-preference")
+devops_cli.devops_root_group.commands.pop(devops_cli.pull_request_notification_preference_group.name)
+devops_cli.pull_request_group.add_command(devops_cli.get_pull_request_notification_preference)
+devops_cli.pull_request_group.add_command(devops_cli.update_pull_request_notification_preference)
+
+
+# Move commands under 'oci devops repository-notification-preference' -> 'oci devops repository'
+cli_util.rename_command(devops_cli, devops_cli.repository_notification_preference_group, devops_cli.get_repository_notification_preference, "get-repository-notification-preference")
+cli_util.rename_command(devops_cli, devops_cli.repository_notification_preference_group, devops_cli.update_repository_notification_preference, "update-repository-notification-preference")
+devops_cli.devops_root_group.commands.pop(devops_cli.repository_notification_preference_group.name)
+devops_cli.repository_group.add_command(devops_cli.get_repository_notification_preference)
+devops_cli.repository_group.add_command(devops_cli.update_repository_notification_preference)
+
+
+# Move commands under 'oci devops repository-settings' -> 'oci devops repository'
+cli_util.rename_command(devops_cli, devops_cli.repository_settings_group, devops_cli.delete_repository_settings, "delete-repository-settings")
+cli_util.rename_command(devops_cli, devops_cli.repository_settings_group, devops_cli.get_repository_settings, "get-repository-settings")
+cli_util.rename_command(devops_cli, devops_cli.repository_settings_group, devops_cli.update_repository_settings, "update-repository-settings")
+devops_cli.devops_root_group.commands.pop(devops_cli.repository_settings_group.name)
+devops_cli.repository_group.add_command(devops_cli.delete_repository_settings)
+devops_cli.repository_group.add_command(devops_cli.get_repository_settings)
+devops_cli.repository_group.add_command(devops_cli.update_repository_settings)
+
+
+# Move commands under 'oci devops protected-branch-collection' -> 'oci devops protected-branch'
+cli_util.rename_command(devops_cli, devops_cli.protected_branch_collection_group, devops_cli.list_protected_branches, "list-protected-branches")
+devops_cli.devops_root_group.commands.pop(devops_cli.protected_branch_collection_group.name)
+devops_cli.protected_branch_group.add_command(devops_cli.list_protected_branches)
+
+
+# Move commands under 'oci devops pull-request-collection' -> 'oci devops pull-request'
+cli_util.rename_command(devops_cli, devops_cli.pull_request_collection_group, devops_cli.list_pull_requests, "list-pull-requests")
+devops_cli.devops_root_group.commands.pop(devops_cli.pull_request_collection_group.name)
+devops_cli.pull_request_group.add_command(devops_cli.list_pull_requests)
+
+
+# Create a new group under devops root group 'pull-request-comment'
+@click.command(cli_util.override('devops.pull_request_comment_group.command_name', 'pull-request-comment'), cls=CommandGroupWithAlias, help="""Pull Request Comment includes all the comment resources under a pull request""")
+@cli_util.help_option_group
+def pull_request_comment_group():
+    pass
+
+
+devops_cli.devops_root_group.add_command(pull_request_comment_group)
+
+
+# Move pull request comment related commands under 'oci devops pull-request' to 'oci devops pull-request-comment'
+devops_cli.pull_request_group.commands.pop(devops_cli.create_pull_request_comment.name)
+devops_cli.pull_request_group.commands.pop(devops_cli.delete_pull_request_comment.name)
+devops_cli.pull_request_group.commands.pop(devops_cli.get_pull_request_comment.name)
+devops_cli.pull_request_group.commands.pop(devops_cli.like_pull_request_comment.name)
+devops_cli.pull_request_group.commands.pop(devops_cli.list_pull_request_comments.name)
+devops_cli.pull_request_group.commands.pop(devops_cli.unlike_pull_request_comment.name)
+devops_cli.pull_request_group.commands.pop(devops_cli.update_pull_request_comment.name)
+pull_request_comment_group.add_command(devops_cli.create_pull_request_comment)
+pull_request_comment_group.add_command(devops_cli.delete_pull_request_comment)
+pull_request_comment_group.add_command(devops_cli.get_pull_request_comment)
+pull_request_comment_group.add_command(devops_cli.like_pull_request_comment)
+pull_request_comment_group.add_command(devops_cli.list_pull_request_comments)
+pull_request_comment_group.add_command(devops_cli.unlike_pull_request_comment)
+pull_request_comment_group.add_command(devops_cli.update_pull_request_comment)
+
+
+# oci devops repository list-project-commit-analytics-authors -> oci devops repository list-project-analytics-authors
+cli_util.rename_command(devops_cli, devops_cli.repository_group, devops_cli.list_project_commit_analytics_authors, "list-project-analytics-authors")
+
+
+# oci devops repository list-repository-commit-analytics-authors -> oci devops repository list-repository-analytics-authors
+cli_util.rename_command(devops_cli, devops_cli.repository_group, devops_cli.list_repository_commit_analytics_authors, "list-repository-analytics-authors")
+
+
+# oci devops repository-metric-aggregation summarize-project-repository-analytics -> oci devops repository-metric-aggregation summarize-project-analytics
+cli_util.rename_command(devops_cli, devops_cli.repository_metric_aggregation_group, devops_cli.summarize_project_repository_analytics, "summarize-project-analytics")
+
+
+# Remove repository-metric-aggregation from oci devops
+devops_cli.devops_root_group.commands.pop(devops_cli.repository_metric_aggregation_group.name)
+
+
+# oci devops repository list-project-commit-analytics-authors -> oci devops project
+devops_cli.repository_group.commands.pop(devops_cli.list_project_commit_analytics_authors.name)
+devops_cli.project_group.add_command(devops_cli.list_project_commit_analytics_authors)
+
+
+# oci devops repository-metric-aggregation summarize-project-repository-analytics -> oci devops project
+devops_cli.repository_metric_aggregation_group.commands.pop(devops_cli.summarize_project_repository_analytics.name)
+devops_cli.project_group.add_command(devops_cli.summarize_project_repository_analytics)
+
+
+# oci devops repository-metric-aggregation summarize-repository-analytics -> oci devops repository
+devops_cli.repository_metric_aggregation_group.commands.pop(devops_cli.summarize_repository_analytics.name)
+devops_cli.repository_group.add_command(devops_cli.summarize_repository_analytics)
+
+
+@devops_cli.repository_group.command(name=cli_util.override('devops.summarize_repository_analytics.command_name', 'summarize-repository-analytics'), help=u"""Retrieves repository analytics for a given repository. \n[Command Reference](summarizeRepositoryAnalytics)""")
+@cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
+@cli_util.option('--repository-metrics', required=True, multiple=True, type=custom_types.CliCaseInsensitiveChoice(["COMMITS", "LINES_ADDED", "LINES_DELETED", "PULL_REQUEST_CREATED", "PULL_REQUEST_MERGED", "PULL_REQUEST_DECLINED", "PULL_REQUEST_REVIEW_START_DURATION_IN_DAYS", "PULL_REQUEST_REVIEW_DURATION_IN_DAYS", "PULL_REQUEST_APPROVED", "PULL_REQUEST_REVIEWED", "PULL_REQUEST_COMMENTS"]), help=u"""The name of the metric to be filtered.""")
+@cli_util.option('--start-time', required=True, type=custom_types.CLI_DATETIME, help=u"""The beginning of the metric data query time range.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--author-email', help=u"""Email address of the author.""")
+@cli_util.option('--aggregation-duration', type=custom_types.CliCaseInsensitiveChoice(["DAILY", "WEEKLY", "MONTHLY", "YEARLY"]), help=u"""Metrics aggregated for the defined period.""")
+@cli_util.option('--end-time', type=custom_types.CLI_DATETIME, help=u"""The end of the metric data query time range.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["AUTHOR"]), help=u"""Attribute by which metric data has to be grouped""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'Repository'})
+@cli_util.wrap_exceptions
+def summarize_repository_analytics(ctx, from_json, repository_id, repository_metrics, start_time, author_email, aggregation_duration, end_time, group_by, limit, page):
+
+    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+        raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['repositoryMetrics'] = cli_util.parse_json_parameter("repository_metrics", repository_metrics)
+    _details['startTime'] = start_time
+
+    if author_email is not None:
+        _details['authorEmail'] = author_email
+
+    if aggregation_duration is not None:
+        _details['aggregationDuration'] = aggregation_duration
+
+    if end_time is not None:
+        _details['endTime'] = end_time
+
+    if group_by is not None:
+        _details['groupBy'] = group_by
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.summarize_repository_analytics(
+        repository_id=repository_id,
+        summarize_repository_analytics_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@devops_cli.project_group.command(name=cli_util.override('devops.summarize_project_analytics.command_name', 'summarize-project-analytics'), help=u"""Retrieves analytics for a given project. \n[Command Reference](summarizeProjectAnalytics)""")
+@cli_util.option('--project-id', required=True, help=u"""Unique project identifier.""")
+@cli_util.option('--repository-metrics', required=True, multiple=True, type=custom_types.CliCaseInsensitiveChoice(["COMMITS", "LINES_ADDED", "LINES_DELETED", "PULL_REQUEST_CREATED", "PULL_REQUEST_MERGED", "PULL_REQUEST_DECLINED", "PULL_REQUEST_REVIEW_START_DURATION_IN_DAYS", "PULL_REQUEST_REVIEW_DURATION_IN_DAYS", "PULL_REQUEST_APPROVED", "PULL_REQUEST_REVIEWED", "PULL_REQUEST_COMMENTS"]), help=u"""The name of the metric to be filtered.""")
+@cli_util.option('--start-time', required=True, type=custom_types.CLI_DATETIME, help=u"""The beginning of the metric data query time range.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--author-email', help=u"""Email address of the author.""")
+@cli_util.option('--aggregation-duration', type=custom_types.CliCaseInsensitiveChoice(["DAILY", "WEEKLY", "MONTHLY", "YEARLY"]), help=u"""Metrics aggregated for the defined period.""")
+@cli_util.option('--end-time', type=custom_types.CLI_DATETIME, help=u"""The end of the metric data query time range.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["AUTHOR"]), help=u"""Attribute by which metric data has to be grouped""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'Project'})
+@cli_util.wrap_exceptions
+def summarize_project_repository_analytics(ctx, from_json, project_id, repository_metrics, start_time, author_email, aggregation_duration, end_time, group_by, limit, page):
+
+    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+        raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['repositoryMetrics'] = cli_util.parse_json_parameter("repository_metrics", repository_metrics)
+    _details['startTime'] = start_time
+
+    if author_email is not None:
+        _details['authorEmail'] = author_email
+
+    if aggregation_duration is not None:
+        _details['aggregationDuration'] = aggregation_duration
+
+    if end_time is not None:
+        _details['endTime'] = end_time
+
+    if group_by is not None:
+        _details['groupBy'] = group_by
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.summarize_project_repository_analytics(
+        project_id=project_id,
+        summarize_project_repository_analytics_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)

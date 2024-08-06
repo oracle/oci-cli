@@ -345,12 +345,17 @@ def create_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @configuration_group.command(name=cli_util.override('psql.create_configuration.command_name', 'create'), help=u"""Creates a new configuration. \n[Command Reference](createConfiguration)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name for the configuration. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the configuration.""")
-@cli_util.option('--shape', required=True, help=u"""The name of the shape for the configuration. Example: `VM.Standard.E4.Flex`""")
 @cli_util.option('--db-version', required=True, help=u"""Version of the PostgreSQL database.""")
-@cli_util.option('--instance-ocpu-count', required=True, type=click.INT, help=u"""CPU core count.""")
-@cli_util.option('--instance-memory-size-in-gbs', required=True, type=click.INT, help=u"""Memory size in gigabytes with 1GB increment.""")
+@cli_util.option('--shape', required=True, help=u"""The name of the shape for the configuration. Example: `VM.Standard.E4.Flex`""")
 @cli_util.option('--db-configuration-overrides', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Details about the configuration set.""")
+@cli_util.option('--is-flexible', type=click.BOOL, help=u"""Whether the configuration supports flexible shapes.""")
+@cli_util.option('--instance-ocpu-count', type=click.INT, help=u"""CPU core count.
+
+Skip or set it's value to 0 if configuration is for a flexible shape.""")
+@cli_util.option('--instance-memory-size-in-gbs', type=click.INT, help=u"""Memory size in gigabytes with 1GB increment.
+
+Skip or set it's value to 0 if configuration is for a flexible shape.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""System tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -362,7 +367,7 @@ def create_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-configuration-overrides': {'module': 'psql', 'class': 'DbConfigurationOverrideCollection'}, 'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'psql', 'class': 'Configuration'})
 @cli_util.wrap_exceptions
-def create_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, shape, db_version, instance_ocpu_count, instance_memory_size_in_gbs, db_configuration_overrides, description, freeform_tags, defined_tags, system_tags):
+def create_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, db_version, shape, db_configuration_overrides, description, is_flexible, instance_ocpu_count, instance_memory_size_in_gbs, freeform_tags, defined_tags, system_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -370,14 +375,21 @@ def create_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     _details = {}
     _details['displayName'] = display_name
     _details['compartmentId'] = compartment_id
-    _details['shape'] = shape
     _details['dbVersion'] = db_version
-    _details['instanceOcpuCount'] = instance_ocpu_count
-    _details['instanceMemorySizeInGBs'] = instance_memory_size_in_gbs
+    _details['shape'] = shape
     _details['dbConfigurationOverrides'] = cli_util.parse_json_parameter("db_configuration_overrides", db_configuration_overrides)
 
     if description is not None:
         _details['description'] = description
+
+    if is_flexible is not None:
+        _details['isFlexible'] = is_flexible
+
+    if instance_ocpu_count is not None:
+        _details['instanceOcpuCount'] = instance_ocpu_count
+
+    if instance_memory_size_in_gbs is not None:
+        _details['instanceMemorySizeInGBs'] = instance_memory_size_in_gbs
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -425,6 +437,7 @@ def create_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.option('--db-version', required=True, help=u"""Version of database system software.""")
 @cli_util.option('--storage-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--shape', required=True, help=u"""The name of the shape for the database instance node. Use the /shapes API for accepted shapes. Example: `VM.Standard.E4.Flex`""")
+@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-provided description of a database system.""")
 @cli_util.option('--system-type', help=u"""Type of the database system.""")
@@ -435,7 +448,6 @@ def create_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.option('--instances-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of database instances nodes to be created. This parameter is optional. If specified, its size must match `instanceCount`.
 
 This option is a JSON list with items of type CreateDbInstanceDetails.  For documentation on CreateDbInstanceDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/postgresql/20220915/datatypes/CreateDbInstanceDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--management-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -448,7 +460,7 @@ This option is a JSON list with items of type CreateDbInstanceDetails.  For docu
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'storage-details': {'module': 'psql', 'class': 'StorageDetails'}, 'instances-details': {'module': 'psql', 'class': 'list[CreateDbInstanceDetails]'}, 'credentials': {'module': 'psql', 'class': 'Credentials'}, 'network-details': {'module': 'psql', 'class': 'NetworkDetails'}, 'management-policy': {'module': 'psql', 'class': 'ManagementPolicyDetails'}, 'source': {'module': 'psql', 'class': 'SourceDetails'}, 'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'psql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, db_version, storage_details, shape, network_details, description, system_type, config_id, instance_ocpu_count, instance_memory_size_in_gbs, instance_count, instances_details, credentials, management_policy, source, freeform_tags, defined_tags):
+def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, db_version, storage_details, shape, credentials, network_details, description, system_type, config_id, instance_ocpu_count, instance_memory_size_in_gbs, instance_count, instances_details, management_policy, source, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -459,6 +471,7 @@ def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     _details['dbVersion'] = db_version
     _details['storageDetails'] = cli_util.parse_json_parameter("storage_details", storage_details)
     _details['shape'] = shape
+    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
     _details['networkDetails'] = cli_util.parse_json_parameter("network_details", network_details)
 
     if description is not None:
@@ -481,9 +494,6 @@ def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if instances_details is not None:
         _details['instancesDetails'] = cli_util.parse_json_parameter("instances_details", instances_details)
-
-    if credentials is not None:
-        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
 
     if management_policy is not None:
         _details['managementPolicy'] = cli_util.parse_json_parameter("management_policy", management_policy)
@@ -537,6 +547,7 @@ def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the database system.""")
 @cli_util.option('--db-version', required=True, help=u"""Version of database system software.""")
 @cli_util.option('--shape', required=True, help=u"""The name of the shape for the database instance node. Use the /shapes API for accepted shapes. Example: `VM.Standard.E4.Flex`""")
+@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--storage-details-is-regionally-durable', required=True, type=click.BOOL, help=u"""Specifies if the block volume used for the database system is regional or AD-local. If not specified, it will be set to false. If `isRegionallyDurable` is set to true, `availabilityDomain` should not be specified. If `isRegionallyDurable` is set to false, `availabilityDomain` must be specified.""")
 @cli_util.option('--description', help=u"""A user-provided description of a database system.""")
@@ -548,7 +559,6 @@ def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--instances-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of database instances nodes to be created. This parameter is optional. If specified, its size must match `instanceCount`.
 
 This option is a JSON list with items of type CreateDbInstanceDetails.  For documentation on CreateDbInstanceDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/postgresql/20220915/datatypes/CreateDbInstanceDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--management-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -563,7 +573,7 @@ This option is a JSON list with items of type CreateDbInstanceDetails.  For docu
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'instances-details': {'module': 'psql', 'class': 'list[CreateDbInstanceDetails]'}, 'credentials': {'module': 'psql', 'class': 'Credentials'}, 'network-details': {'module': 'psql', 'class': 'NetworkDetails'}, 'management-policy': {'module': 'psql', 'class': 'ManagementPolicyDetails'}, 'source': {'module': 'psql', 'class': 'SourceDetails'}, 'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'psql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system_oci_optimized_storage_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, db_version, shape, network_details, storage_details_is_regionally_durable, description, system_type, config_id, instance_ocpu_count, instance_memory_size_in_gbs, instance_count, instances_details, credentials, management_policy, source, freeform_tags, defined_tags, storage_details_availability_domain, storage_details_iops):
+def create_db_system_oci_optimized_storage_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, db_version, shape, credentials, network_details, storage_details_is_regionally_durable, description, system_type, config_id, instance_ocpu_count, instance_memory_size_in_gbs, instance_count, instances_details, management_policy, source, freeform_tags, defined_tags, storage_details_availability_domain, storage_details_iops):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -574,6 +584,7 @@ def create_db_system_oci_optimized_storage_details(ctx, from_json, wait_for_stat
     _details['compartmentId'] = compartment_id
     _details['dbVersion'] = db_version
     _details['shape'] = shape
+    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
     _details['networkDetails'] = cli_util.parse_json_parameter("network_details", network_details)
     _details['storageDetails']['isRegionallyDurable'] = storage_details_is_regionally_durable
 
@@ -597,9 +608,6 @@ def create_db_system_oci_optimized_storage_details(ctx, from_json, wait_for_stat
 
     if instances_details is not None:
         _details['instancesDetails'] = cli_util.parse_json_parameter("instances_details", instances_details)
-
-    if credentials is not None:
-        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
 
     if management_policy is not None:
         _details['managementPolicy'] = cli_util.parse_json_parameter("management_policy", management_policy)
@@ -662,6 +670,7 @@ def create_db_system_oci_optimized_storage_details(ctx, from_json, wait_for_stat
 @cli_util.option('--db-version', required=True, help=u"""Version of database system software.""")
 @cli_util.option('--storage-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--shape', required=True, help=u"""The name of the shape for the database instance node. Use the /shapes API for accepted shapes. Example: `VM.Standard.E4.Flex`""")
+@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-backup-id', required=True, help=u"""The [OCID] of the database system backup.""")
 @cli_util.option('--description', help=u"""A user-provided description of a database system.""")
@@ -673,7 +682,6 @@ def create_db_system_oci_optimized_storage_details(ctx, from_json, wait_for_stat
 @cli_util.option('--instances-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of database instances nodes to be created. This parameter is optional. If specified, its size must match `instanceCount`.
 
 This option is a JSON list with items of type CreateDbInstanceDetails.  For documentation on CreateDbInstanceDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/postgresql/20220915/datatypes/CreateDbInstanceDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--management-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -686,7 +694,7 @@ This option is a JSON list with items of type CreateDbInstanceDetails.  For docu
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'storage-details': {'module': 'psql', 'class': 'StorageDetails'}, 'instances-details': {'module': 'psql', 'class': 'list[CreateDbInstanceDetails]'}, 'credentials': {'module': 'psql', 'class': 'Credentials'}, 'network-details': {'module': 'psql', 'class': 'NetworkDetails'}, 'management-policy': {'module': 'psql', 'class': 'ManagementPolicyDetails'}, 'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'psql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system_backup_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, db_version, storage_details, shape, network_details, source_backup_id, description, system_type, config_id, instance_ocpu_count, instance_memory_size_in_gbs, instance_count, instances_details, credentials, management_policy, freeform_tags, defined_tags, source_is_having_restore_config_overrides):
+def create_db_system_backup_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, db_version, storage_details, shape, credentials, network_details, source_backup_id, description, system_type, config_id, instance_ocpu_count, instance_memory_size_in_gbs, instance_count, instances_details, management_policy, freeform_tags, defined_tags, source_is_having_restore_config_overrides):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -698,6 +706,7 @@ def create_db_system_backup_source_details(ctx, from_json, wait_for_state, max_w
     _details['dbVersion'] = db_version
     _details['storageDetails'] = cli_util.parse_json_parameter("storage_details", storage_details)
     _details['shape'] = shape
+    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
     _details['networkDetails'] = cli_util.parse_json_parameter("network_details", network_details)
     _details['source']['backupId'] = source_backup_id
 
@@ -721,9 +730,6 @@ def create_db_system_backup_source_details(ctx, from_json, wait_for_state, max_w
 
     if instances_details is not None:
         _details['instancesDetails'] = cli_util.parse_json_parameter("instances_details", instances_details)
-
-    if credentials is not None:
-        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
 
     if management_policy is not None:
         _details['managementPolicy'] = cli_util.parse_json_parameter("management_policy", management_policy)
@@ -780,6 +786,7 @@ def create_db_system_backup_source_details(ctx, from_json, wait_for_state, max_w
 @cli_util.option('--db-version', required=True, help=u"""Version of database system software.""")
 @cli_util.option('--storage-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--shape', required=True, help=u"""The name of the shape for the database instance node. Use the /shapes API for accepted shapes. Example: `VM.Standard.E4.Flex`""")
+@cli_util.option('--credentials', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-provided description of a database system.""")
 @cli_util.option('--system-type', help=u"""Type of the database system.""")
@@ -790,7 +797,6 @@ def create_db_system_backup_source_details(ctx, from_json, wait_for_state, max_w
 @cli_util.option('--instances-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of database instances nodes to be created. This parameter is optional. If specified, its size must match `instanceCount`.
 
 This option is a JSON list with items of type CreateDbInstanceDetails.  For documentation on CreateDbInstanceDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/postgresql/20220915/datatypes/CreateDbInstanceDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--management-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -802,7 +808,7 @@ This option is a JSON list with items of type CreateDbInstanceDetails.  For docu
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'storage-details': {'module': 'psql', 'class': 'StorageDetails'}, 'instances-details': {'module': 'psql', 'class': 'list[CreateDbInstanceDetails]'}, 'credentials': {'module': 'psql', 'class': 'Credentials'}, 'network-details': {'module': 'psql', 'class': 'NetworkDetails'}, 'management-policy': {'module': 'psql', 'class': 'ManagementPolicyDetails'}, 'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'psql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system_none_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, db_version, storage_details, shape, network_details, description, system_type, config_id, instance_ocpu_count, instance_memory_size_in_gbs, instance_count, instances_details, credentials, management_policy, freeform_tags, defined_tags):
+def create_db_system_none_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, db_version, storage_details, shape, credentials, network_details, description, system_type, config_id, instance_ocpu_count, instance_memory_size_in_gbs, instance_count, instances_details, management_policy, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -814,6 +820,7 @@ def create_db_system_none_source_details(ctx, from_json, wait_for_state, max_wai
     _details['dbVersion'] = db_version
     _details['storageDetails'] = cli_util.parse_json_parameter("storage_details", storage_details)
     _details['shape'] = shape
+    _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
     _details['networkDetails'] = cli_util.parse_json_parameter("network_details", network_details)
 
     if description is not None:
@@ -836,9 +843,6 @@ def create_db_system_none_source_details(ctx, from_json, wait_for_state, max_wai
 
     if instances_details is not None:
         _details['instancesDetails'] = cli_util.parse_json_parameter("instances_details", instances_details)
-
-    if credentials is not None:
-        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
 
     if management_policy is not None:
         _details['managementPolicy'] = cli_util.parse_json_parameter("management_policy", management_policy)
@@ -1361,7 +1365,7 @@ def list_backups(ctx, from_json, all_pages, page_size, compartment_id, time_star
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources if their `lifecycleState` matches the given `lifecycleState`.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--db-version', help=u"""Verison of the PostgreSQL database, such as 14.9.""")
+@cli_util.option('--db-version', help=u"""Version of the PostgreSQL database, such as 14.9.""")
 @cli_util.option('--shape', help=u"""The name of the shape for the configuration. Example: `VM.Standard.E4.Flex`""")
 @cli_util.option('--configuration-id', help=u"""A unique identifier for the configuration.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -1490,7 +1494,7 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, lifecy
 @default_configuration_collection_group.command(name=cli_util.override('psql.list_default_configurations.command_name', 'list-default-configurations'), help=u"""Returns a list of default configurations. \n[Command Reference](listDefaultConfigurations)""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources if their `lifecycleState` matches the given `lifecycleState`.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--db-version', help=u"""Verison of the PostgreSQL database, such as 14.9.""")
+@cli_util.option('--db-version', help=u"""Version of the PostgreSQL database, such as 14.9.""")
 @cli_util.option('--shape', help=u"""The name of the shape for the configuration. Example: `VM.Standard.E4.Flex`""")
 @cli_util.option('--configuration-id', help=u"""A unique identifier for the configuration.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -2328,9 +2332,13 @@ def update_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds
 @cli_util.option('--db-system-id', required=True, help=u"""A unique identifier for the database system.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the database system. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A user-provided description of the database system.""")
+@cli_util.option('--shape', help=u"""The name of the shape for the database system nodes. Example: `VM.Standard.E4.Flex`""")
+@cli_util.option('--instance-ocpu-count', type=click.INT, help=u"""The total number of OCPUs available to each database system node.""")
+@cli_util.option('--instance-memory-size-in-gbs', type=click.INT, help=u"""The total amount of memory available to each database system node, in gigabytes.""")
 @cli_util.option('--db-configuration-params', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--management-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--storage-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2338,18 +2346,18 @@ def update_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'db-configuration-params': {'module': 'psql', 'class': 'UpdateDbConfigParams'}, 'management-policy': {'module': 'psql', 'class': 'ManagementPolicyDetails'}, 'storage-details': {'module': 'psql', 'class': 'UpdateStorageDetailsParams'}, 'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'db-configuration-params': {'module': 'psql', 'class': 'UpdateDbConfigParams'}, 'management-policy': {'module': 'psql', 'class': 'ManagementPolicyDetails'}, 'storage-details': {'module': 'psql', 'class': 'UpdateStorageDetailsParams'}, 'network-details': {'module': 'psql', 'class': 'UpdateNetworkDetails'}, 'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-configuration-params': {'module': 'psql', 'class': 'UpdateDbConfigParams'}, 'management-policy': {'module': 'psql', 'class': 'ManagementPolicyDetails'}, 'storage-details': {'module': 'psql', 'class': 'UpdateStorageDetailsParams'}, 'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-configuration-params': {'module': 'psql', 'class': 'UpdateDbConfigParams'}, 'management-policy': {'module': 'psql', 'class': 'ManagementPolicyDetails'}, 'storage-details': {'module': 'psql', 'class': 'UpdateStorageDetailsParams'}, 'network-details': {'module': 'psql', 'class': 'UpdateNetworkDetails'}, 'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, display_name, description, db_configuration_params, management_policy, storage_details, freeform_tags, defined_tags, if_match):
+def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, display_name, description, shape, instance_ocpu_count, instance_memory_size_in_gbs, db_configuration_params, management_policy, storage_details, network_details, freeform_tags, defined_tags, if_match):
 
     if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
     if not force:
-        if db_configuration_params or management_policy or storage_details or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to db-configuration-params and management-policy and storage-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if db_configuration_params or management_policy or storage_details or network_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to db-configuration-params and management-policy and storage-details and network-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -2365,6 +2373,15 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
     if description is not None:
         _details['description'] = description
 
+    if shape is not None:
+        _details['shape'] = shape
+
+    if instance_ocpu_count is not None:
+        _details['instanceOcpuCount'] = instance_ocpu_count
+
+    if instance_memory_size_in_gbs is not None:
+        _details['instanceMemorySizeInGBs'] = instance_memory_size_in_gbs
+
     if db_configuration_params is not None:
         _details['dbConfigurationParams'] = cli_util.parse_json_parameter("db_configuration_params", db_configuration_params)
 
@@ -2373,6 +2390,9 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if storage_details is not None:
         _details['storageDetails'] = cli_util.parse_json_parameter("storage_details", storage_details)
+
+    if network_details is not None:
+        _details['networkDetails'] = cli_util.parse_json_parameter("network_details", network_details)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

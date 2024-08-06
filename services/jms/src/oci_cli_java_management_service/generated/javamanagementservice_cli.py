@@ -16,7 +16,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('jms.jms_root_group.command_name', 'jms'), cls=CommandGroupWithAlias, help=cli_util.override('jms.jms_root_group.help', """API for the Java Management Service. Use this API to view, create, and manage Fleets."""), short_help=cli_util.override('jms.jms_root_group.short_help', """Java Management Service API"""))
+@cli.command(cli_util.override('jms.jms_root_group.command_name', 'jms'), cls=CommandGroupWithAlias, help=cli_util.override('jms.jms_root_group.help', """The APIs for the [Fleet Management] feature of Java Management Service to monitor and manage the usage of Java in your enterprise. Use these APIs to manage fleets, configure managed instances to report to fleets, and gain insights into the Java workloads running on these instances by carrying out basic and advanced features."""), short_help=cli_util.override('jms.jms_root_group.short_help', """Java Management Service Fleets API"""))
 @cli_util.help_option_group
 def jms_root_group():
     pass
@@ -88,7 +88,7 @@ def java_server_instance_usage_group():
     pass
 
 
-@click.command(cli_util.override('jms.deployed_application_installation_usage_summary_group.command_name', 'deployed-application-installation-usage-summary'), cls=CommandGroupWithAlias, help="""Summarize usage information about an application deployed on Java servers including installation information during a specified time period. The main difference between DeployedApplicationInstallationUsageSummary and DeployedApplicationUsage is the presence of the applicationSourcePath. DeployedApplicationUsage provides only an aggregated view to the deployed applications without installation information. It therefore doesn\u2019t distinguish between applications with the identical deployment information deployed to different paths. DeployedApplicationInstallationUsageSummary contains installation information, and it\u2019s therefore possible to target actions.""")
+@click.command(cli_util.override('jms.deployed_application_installation_usage_summary_group.command_name', 'deployed-application-installation-usage-summary'), cls=CommandGroupWithAlias, help="""Summarize usage information about an application deployed on Java servers including installation information during a specified time period. The main difference between DeployedApplicationInstallationUsageSummary and DeployedApplicationUsage is the presence of the applicationSourcePath. DeployedApplicationUsage provides only an aggregated view to the deployed applications without installation information. DeployedApplicationUsage does not distinguish between applications with the identical deployment information deployed to different paths. DeployedApplicationInstallationUsageSummary contains installation information used to select target actions.""")
 @cli_util.help_option_group
 def deployed_application_installation_usage_summary_group():
     pass
@@ -142,6 +142,12 @@ def announcement_collection_group():
     pass
 
 
+@click.command(cli_util.override('jms.jms_plugin_group.command_name', 'jms-plugin'), cls=CommandGroupWithAlias, help="""Information about a JmsPlugin that has been registered.""")
+@cli_util.help_option_group
+def jms_plugin_group():
+    pass
+
+
 @click.command(cli_util.override('jms.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from executing an operation that is tracked by a work request.""")
 @cli_util.help_option_group
 def work_request_log_entry_group():
@@ -151,6 +157,12 @@ def work_request_log_entry_group():
 @click.command(cli_util.override('jms.java_server_usage_group.command_name', 'java-server-usage'), cls=CommandGroupWithAlias, help="""Java Server usage during a specified time period.""")
 @cli_util.help_option_group
 def java_server_usage_group():
+    pass
+
+
+@click.command(cli_util.override('jms.agent_installer_summary_group.command_name', 'agent-installer-summary'), cls=CommandGroupWithAlias, help="""Supported agent installer downloads.""")
+@cli_util.help_option_group
+def agent_installer_summary_group():
     pass
 
 
@@ -196,7 +208,7 @@ def crypto_analysis_result_group():
     pass
 
 
-@click.command(cli_util.override('jms.export_setting_group.command_name', 'export-setting'), cls=CommandGroupWithAlias, help="""An export settings for JMS fleets.""")
+@click.command(cli_util.override('jms.export_setting_group.command_name', 'export-setting'), cls=CommandGroupWithAlias, help="""Export settings of a fleet.""")
 @cli_util.help_option_group
 def export_setting_group():
     pass
@@ -222,8 +234,10 @@ jms_root_group.add_command(performance_tuning_analysis_result_group)
 jms_root_group.add_command(fleet_advanced_feature_configuration_group)
 jms_root_group.add_command(java_release_group)
 jms_root_group.add_command(announcement_collection_group)
+jms_root_group.add_command(jms_plugin_group)
 jms_root_group.add_command(work_request_log_entry_group)
 jms_root_group.add_command(java_server_usage_group)
+jms_root_group.add_command(agent_installer_summary_group)
 jms_root_group.add_command(drs_file_collection_group)
 jms_root_group.add_command(fleet_diagnosis_summary_group)
 jms_root_group.add_command(library_usage_group)
@@ -422,7 +436,7 @@ def create_blocklist(ctx, from_json, fleet_id, target, operation, reason):
     cli_util.render_response(result, ctx)
 
 
-@fleet_group.command(name=cli_util.override('jms.create_drs_file.command_name', 'create-drs-file'), help=u"""Request to perform validaition of the DRS file and create the file to the Object Storage. \n[Command Reference](createDrsFile)""")
+@fleet_group.command(name=cli_util.override('jms.create_drs_file.command_name', 'create-drs-file'), help=u"""Request to perform validation of the DRS file and create the file to the Object Storage. \n[Command Reference](createDrsFile)""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The Object Storage bucket name where the DRS file is located.""")
 @cli_util.option('--namespace', required=True, help=u"""The namespace for Object Storage.""")
@@ -563,6 +577,69 @@ def create_fleet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@jms_plugin_group.command(name=cli_util.override('jms.create_jms_plugin.command_name', 'create'), help=u"""Registers an agent's JmsPlugin, optionally attaching to an existing fleet of the tenancy. JmsPlugins registered fleet-less are created with lifecycle state INACTIVE. For the operation to be authorized, the agent must exist, and the authorized user requires JMS_PLUGIN_CREATE permission for the agent's compartment. \n[Command Reference](createJmsPlugin)""")
+@cli_util.option('--agent-id', required=True, help=u"""The [OCID] of the Management Agent (OMA) or the Oracle Cloud Agent (OCA) instance where the JMS plugin is deployed.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OMA/OCA agent's compartment [OCID].""")
+@cli_util.option('--fleet-id', help=u"""The [OCID] of the fleet.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`. (See [Understanding Free-form Tags]).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`. (See [Managing Tags and Tag Namespaces].)""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'jms', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'jms', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'jms', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'jms', 'class': 'dict(str, string)'}}, output_type={'module': 'jms', 'class': 'JmsPlugin'})
+@cli_util.wrap_exceptions
+def create_jms_plugin(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, agent_id, compartment_id, fleet_id, defined_tags, freeform_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['agentId'] = agent_id
+    _details['compartmentId'] = compartment_id
+
+    if fleet_id is not None:
+        _details['fleetId'] = fleet_id
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.create_jms_plugin(
+        create_jms_plugin_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_jms_plugin') and callable(getattr(client, 'get_jms_plugin')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_jms_plugin(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -836,6 +913,70 @@ def delete_java_migration_analysis_result(ctx, from_json, wait_for_state, max_wa
     cli_util.render_response(result, ctx)
 
 
+@jms_plugin_group.command(name=cli_util.override('jms.delete_jms_plugin.command_name', 'delete'), help=u"""Deletes a JmsPlugin. The JmsPlugin may be visible for some time with state DELETED. Deleted plugins will not be able to communicate with the JMS service. \n[Command Reference](deleteJmsPlugin)""")
+@cli_util.option('--jms-plugin-id', required=True, help=u"""The [OCID] of the JmsPlugin.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_jms_plugin(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, jms_plugin_id, if_match):
+
+    if isinstance(jms_plugin_id, six.string_types) and len(jms_plugin_id.strip()) == 0:
+        raise click.UsageError('Parameter --jms-plugin-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.delete_jms_plugin(
+        jms_plugin_id=jms_plugin_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_jms_plugin') and callable(getattr(client, 'get_jms_plugin')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_jms_plugin(jms_plugin_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @performance_tuning_analysis_result_group.command(name=cli_util.override('jms.delete_performance_tuning_analysis_result.command_name', 'delete'), help=u"""Deletes only the metadata of the Performance Tuning Analysis result, but the file remains in the object storage. \n[Command Reference](deletePerformanceTuningAnalysisResult)""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @cli_util.option('--performance-tuning-analysis-result-id', required=True, help=u"""The OCID of the performance tuning analysis result.""")
@@ -1078,6 +1219,113 @@ def generate_agent_deploy_script(ctx, from_json, file, fleet_id, install_key_id,
         file.close()
 
 
+@agent_installer_summary_group.command(name=cli_util.override('jms.generate_agent_installer_configuration.command_name', 'generate-agent-installer-configuration'), help=u"""Generates the agent installer configuration using the information provided. \n[Command Reference](generateAgentInstallerConfiguration)""")
+@cli_util.option('--install-key-id', required=True, help=u"""The [OCID] of the install key for which to generate the configuration file.""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the fleet for which to generate the configuration file.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def generate_agent_installer_configuration(ctx, from_json, file, install_key_id, fleet_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['installKeyId'] = install_key_id
+    _details['fleetId'] = fleet_id
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.generate_agent_installer_configuration(
+        generate_agent_installer_configuration_details=_details,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
+@fleet_group.command(name=cli_util.override('jms.generate_load_pipeline_script.command_name', 'generate-load-pipeline-script'), help=u"""Generates Load Pipeline Script \n[Command Reference](generateLoadPipelineScript)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--target-bucket-name', required=True, help=u"""The name of the bucket where data will be exported.""")
+@cli_util.option('--target-bucket-namespace', required=True, help=u"""The namespace of the bucket where data will be exported.""")
+@cli_util.option('--target-bucket-region', required=True, help=u"""The id of the region of the target bucket.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--interval-minutes', type=click.INT, help=u"""The time internal in minutes between consecutive executions of scheduled pipeline job.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def generate_load_pipeline_script(ctx, from_json, file, fleet_id, target_bucket_name, target_bucket_namespace, target_bucket_region, interval_minutes):
+
+    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+        raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['targetBucketName'] = target_bucket_name
+    _details['targetBucketNamespace'] = target_bucket_namespace
+    _details['targetBucketRegion'] = target_bucket_region
+
+    if interval_minutes is not None:
+        _details['intervalMinutes'] = interval_minutes
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.generate_load_pipeline_script(
+        fleet_id=fleet_id,
+        generate_load_pipeline_script_details=_details,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
 @crypto_analysis_result_group.command(name=cli_util.override('jms.get_crypto_analysis_result.command_name', 'get'), help=u"""Retrieve the metadata for the result of a Crypto event analysis. \n[Command Reference](getCryptoAnalysisResult)""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @cli_util.option('--crypto-analysis-result-id', required=True, help=u"""The OCID of the analysis result.""")
@@ -1135,7 +1383,7 @@ def get_drs_file(ctx, from_json, fleet_id, drs_file_key, page):
     cli_util.render_response(result, ctx)
 
 
-@export_setting_group.command(name=cli_util.override('jms.get_export_setting.command_name', 'get'), help=u"""Returns export setting for the specified Fleet. \n[Command Reference](getExportSetting)""")
+@export_setting_group.command(name=cli_util.override('jms.get_export_setting.command_name', 'get'), help=u"""Returns export setting for the specified fleet. \n[Command Reference](getExportSetting)""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1157,7 +1405,7 @@ def get_export_setting(ctx, from_json, fleet_id):
     cli_util.render_response(result, ctx)
 
 
-@export_status_group.command(name=cli_util.override('jms.get_export_status.command_name', 'get'), help=u"""Returns last export status for the specified Fleet. \n[Command Reference](getExportStatus)""")
+@export_status_group.command(name=cli_util.override('jms.get_export_status.command_name', 'get'), help=u"""Returns last export status for the specified fleet. \n[Command Reference](getExportStatus)""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1319,6 +1567,28 @@ def get_java_release(ctx, from_json, release_version):
     cli_util.render_response(result, ctx)
 
 
+@jms_plugin_group.command(name=cli_util.override('jms.get_jms_plugin.command_name', 'get'), help=u"""Returns the JmsPlugin. \n[Command Reference](getJmsPlugin)""")
+@cli_util.option('--jms-plugin-id', required=True, help=u"""The [OCID] of the JmsPlugin.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'JmsPlugin'})
+@cli_util.wrap_exceptions
+def get_jms_plugin(ctx, from_json, jms_plugin_id):
+
+    if isinstance(jms_plugin_id, six.string_types) and len(jms_plugin_id.strip()) == 0:
+        raise click.UsageError('Parameter --jms-plugin-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.get_jms_plugin(
+        jms_plugin_id=jms_plugin_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @performance_tuning_analysis_result_group.command(name=cli_util.override('jms.get_performance_tuning_analysis_result.command_name', 'get'), help=u"""Retrieve metadata of the Performance Tuning Analysis result. \n[Command Reference](getPerformanceTuningAnalysisResult)""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @cli_util.option('--performance-tuning-analysis-result-id', required=True, help=u"""The OCID of the performance tuning analysis result.""")
@@ -1365,6 +1635,68 @@ def get_work_request(ctx, from_json, work_request_id):
         work_request_id=work_request_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@agent_installer_summary_group.command(name=cli_util.override('jms.list_agent_installers.command_name', 'list-agent-installers'), help=u"""Returns a list of the agent installer information. \n[Command Reference](listAgentInstallers)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--fleet-id', help=u"""The ID of the Fleet.""")
+@cli_util.option('--platform-architecture', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "X86", "AARCH64"]), help=u"""The platform architecture for the agent installer.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "MACOS", "UNKNOWN"]), help=u"""The OS family for the agent installer.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["agentInstallerId", "osFamily", "platformArchitecture"]), help=u"""The field to sort the agent installer. Only one sort order can be provided. Default order for _agentInstallerId_, _osFamily_, _platformArchitecture_ is **ascending**. If no value is specified _agentInstallerId_ is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'AgentInstallerCollection'})
+@cli_util.wrap_exceptions
+def list_agent_installers(ctx, from_json, all_pages, page_size, compartment_id, fleet_id, platform_architecture, os_family, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if fleet_id is not None:
+        kwargs['fleet_id'] = fleet_id
+    if platform_architecture is not None:
+        kwargs['platform_architecture'] = platform_architecture
+    if os_family is not None:
+        kwargs['os_family'] = os_family
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_agent_installers,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_agent_installers,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_agent_installers(
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -1494,12 +1826,17 @@ def list_blocklists(ctx, from_json, all_pages, page_size, fleet_id, operation, m
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @cli_util.option('--aggregation-mode', type=custom_types.CliCaseInsensitiveChoice(["JFR", "MANAGED_INSTANCE"]), help=u"""The aggregation mode of the crypto event analysis result.""")
 @cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the related managed instance.""")
+@cli_util.option('--host-name', help=u"""The host [OCID] of the managed instance.""")
+@cli_util.option('--non-compliant-finding-count', type=click.INT, help=u"""Non Compliant Finding Count of CryptoAnalysis Report.""")
+@cli_util.option('--non-compliant-finding-count-greater-than', type=click.INT, help=u"""Non Compliant Finding Count of CryptoAnalysis Report.""")
+@cli_util.option('--finding-count', type=click.INT, help=u"""FindingCount of CryptoAnalysis Report.""")
+@cli_util.option('--finding-count-greater-than', type=click.INT, help=u"""FindingCount of CryptoAnalysis Report.""")
+@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "managedInstanceId", "workRequestId"]), help=u"""The field to sort crypto event analysis results. Only one sort order can be provided. Default order for _timeCreated_, and _jreVersion_ is **descending**. Default order for _managedInstanceId_, _jreDistribution_, _jreVendor_ and _osName_ is **ascending**. If no value is specified _timeCreated_ is default.""")
-@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1507,7 +1844,7 @@ def list_blocklists(ctx, from_json, all_pages, page_size, fleet_id, operation, m
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'CryptoAnalysisResultCollection'})
 @cli_util.wrap_exceptions
-def list_crypto_analysis_results(ctx, from_json, all_pages, page_size, fleet_id, aggregation_mode, managed_instance_id, limit, page, sort_order, sort_by, time_start, time_end):
+def list_crypto_analysis_results(ctx, from_json, all_pages, page_size, fleet_id, aggregation_mode, managed_instance_id, host_name, non_compliant_finding_count, non_compliant_finding_count_greater_than, finding_count, finding_count_greater_than, time_start, time_end, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1520,6 +1857,20 @@ def list_crypto_analysis_results(ctx, from_json, all_pages, page_size, fleet_id,
         kwargs['aggregation_mode'] = aggregation_mode
     if managed_instance_id is not None:
         kwargs['managed_instance_id'] = managed_instance_id
+    if host_name is not None:
+        kwargs['host_name'] = host_name
+    if non_compliant_finding_count is not None:
+        kwargs['non_compliant_finding_count'] = non_compliant_finding_count
+    if non_compliant_finding_count_greater_than is not None:
+        kwargs['non_compliant_finding_count_greater_than'] = non_compliant_finding_count_greater_than
+    if finding_count is not None:
+        kwargs['finding_count'] = finding_count
+    if finding_count_greater_than is not None:
+        kwargs['finding_count_greater_than'] = finding_count_greater_than
+    if time_start is not None:
+        kwargs['time_start'] = time_start
+    if time_end is not None:
+        kwargs['time_end'] = time_end
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -1528,10 +1879,6 @@ def list_crypto_analysis_results(ctx, from_json, all_pages, page_size, fleet_id,
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
-    if time_start is not None:
-        kwargs['time_start'] = time_start
-    if time_end is not None:
-        kwargs['time_end'] = time_end
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('jms', 'java_management_service', ctx)
     if all_pages:
@@ -1669,7 +2016,7 @@ def list_fleet_diagnoses(ctx, from_json, all_pages, page_size, fleet_id, limit, 
 
 @fleet_group.command(name=cli_util.override('jms.list_fleets.command_name', 'list'), help=u"""Returns a list of all the Fleets contained by a compartment. The query parameter `compartmentId` is required unless the query parameter `id` is specified. \n[Command Reference](listFleets)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
-@cli_util.option('--id', help=u"""The ID of the Fleet.""")
+@cli_util.option('--id', help=u"""The ID.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "NEEDS_ATTENTION", "UPDATING"]), help=u"""The state of the lifecycle.""")
 @cli_util.option('--display-name', help=u"""The display name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -1884,12 +2231,14 @@ def list_java_families(ctx, from_json, all_pages, page_size, family_version, dis
 @java_migration_analysis_result_group.command(name=cli_util.override('jms.list_java_migration_analysis_results.command_name', 'list'), help=u"""Lists the results of a Java migration analysis. \n[Command Reference](listJavaMigrationAnalysisResults)""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the related managed instance.""")
+@cli_util.option('--host-name', help=u"""The host [OCID] of the managed instance.""")
+@cli_util.option('--application-name', help=u"""The name of the application.""")
+@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "managedInstanceId", "workRequestId"]), help=u"""The field that sorts the Java migration analysis results. Only one sort order can be provided. The default order for _timeCreated_, _managedInstanceId_ and _workRequestId_ is **descending**. If no value is specified, then _timeCreated_ is default.""")
-@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1897,7 +2246,7 @@ def list_java_families(ctx, from_json, all_pages, page_size, family_version, dis
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'JavaMigrationAnalysisResultCollection'})
 @cli_util.wrap_exceptions
-def list_java_migration_analysis_results(ctx, from_json, all_pages, page_size, fleet_id, managed_instance_id, limit, page, sort_order, sort_by, time_start, time_end):
+def list_java_migration_analysis_results(ctx, from_json, all_pages, page_size, fleet_id, managed_instance_id, host_name, application_name, time_start, time_end, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1908,6 +2257,14 @@ def list_java_migration_analysis_results(ctx, from_json, all_pages, page_size, f
     kwargs = {}
     if managed_instance_id is not None:
         kwargs['managed_instance_id'] = managed_instance_id
+    if host_name is not None:
+        kwargs['host_name'] = host_name
+    if application_name is not None:
+        kwargs['application_name'] = application_name
+    if time_start is not None:
+        kwargs['time_start'] = time_start
+    if time_end is not None:
+        kwargs['time_end'] = time_end
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -1916,10 +2273,6 @@ def list_java_migration_analysis_results(ctx, from_json, all_pages, page_size, f
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
-    if time_start is not None:
-        kwargs['time_start'] = time_start
-    if time_end is not None:
-        kwargs['time_end'] = time_end
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('jms', 'java_management_service', ctx)
     if all_pages:
@@ -2012,6 +2365,86 @@ def list_java_releases(ctx, from_json, all_pages, page_size, release_version, fa
     cli_util.render_response(result, ctx)
 
 
+@jms_plugin_group.command(name=cli_util.override('jms.list_jms_plugins.command_name', 'list'), help=u"""Lists the JmsPlugins. \n[Command Reference](listJmsPlugins)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Flag to determine whether the info should be gathered only in the compartment or in the compartment and its subcompartments.""")
+@cli_util.option('--id', help=u"""The [OCID] of the JmsPlugin.""")
+@cli_util.option('--fleet-id', help=u"""The ID of the Fleet.""")
+@cli_util.option('--agent-id', help=u"""The ManagementAgent (OMA) or Instance (OCA) [OCID] that identifies the Agent.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "NEEDS_ATTENTION", "DELETED"]), help=u"""Filter JmsPlugin with its lifecycle state.""")
+@cli_util.option('--availability-status', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "SILENT", "NOT_AVAILABLE"]), help=u"""Filter JmsPlugin with its availability status.""")
+@cli_util.option('--time-registered-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""If present, only plugins with a registration time before this parameter are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-last-seen-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""If present, only plugins with a last seen time before this parameter are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "timeLastSeen", "timeRegistered", "hostname", "agentId", "agentType", "lifecycleState", "availabilityStatus", "fleetId", "compartmentId", "osFamily", "osArchitecture", "osDistribution", "pluginVersion"]), help=u"""The field to sort JmsPlugin. Only one sort order may be provided. Default order is **descending**. If no value is specified _timeLastSeen_ is default.""")
+@cli_util.option('--hostname-contains', help=u"""Filter the list with hostname contains the given value.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'JmsPluginCollection'})
+@cli_util.wrap_exceptions
+def list_jms_plugins(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, id, fleet_id, agent_id, lifecycle_state, availability_status, time_registered_less_than_or_equal_to, time_last_seen_less_than_or_equal_to, limit, page, sort_order, sort_by, hostname_contains):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if id is not None:
+        kwargs['id'] = id
+    if fleet_id is not None:
+        kwargs['fleet_id'] = fleet_id
+    if agent_id is not None:
+        kwargs['agent_id'] = agent_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if availability_status is not None:
+        kwargs['availability_status'] = availability_status
+    if time_registered_less_than_or_equal_to is not None:
+        kwargs['time_registered_less_than_or_equal_to'] = time_registered_less_than_or_equal_to
+    if time_last_seen_less_than_or_equal_to is not None:
+        kwargs['time_last_seen_less_than_or_equal_to'] = time_last_seen_less_than_or_equal_to
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if hostname_contains is not None:
+        kwargs['hostname_contains'] = hostname_contains
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_jms_plugins,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_jms_plugins,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_jms_plugins(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @jre_usage_group.command(name=cli_util.override('jms.list_jre_usage.command_name', 'list'), help=u"""List Java Runtime usage in a specified host filtered by query parameters. \n[Command Reference](listJreUsage)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--host-id', help=u"""The host [OCID] of the managed instance.""")
@@ -2084,12 +2517,13 @@ def list_jre_usage(ctx, from_json, all_pages, page_size, compartment_id, host_id
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the related managed instance.""")
 @cli_util.option('--application-id', help=u"""The Fleet-unique identifier of the related application.""")
+@cli_util.option('--host-name', help=u"""The host [OCID] of the managed instance.""")
+@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "managedInstanceId", "workRequestId"]), help=u"""The field to sort performance tuning analysis results. Only one sort order may be provided. Default order for _timeCreated_, and _jreVersion_ is **descending**. Default order for _managedInstanceId_, _jreDistribution_, _jreVendor_ and _osName_ is **ascending**. If no value is specified _timeCreated_ is default.""")
-@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "managedInstanceId", "workRequestId", "warningCount"]), help=u"""The field to sort performance tuning analysis results. Only one sort order may be provided. Default order for _timeCreated_, and _jreVersion_ is **descending**. Default order for _managedInstanceId_, _jreDistribution_, _jreVendor_ and _osName_ is **ascending**. If no value is specified _timeCreated_ is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2097,7 +2531,7 @@ def list_jre_usage(ctx, from_json, all_pages, page_size, compartment_id, host_id
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'PerformanceTuningAnalysisResultCollection'})
 @cli_util.wrap_exceptions
-def list_performance_tuning_analysis_results(ctx, from_json, all_pages, page_size, fleet_id, managed_instance_id, application_id, limit, page, sort_order, sort_by, time_start, time_end):
+def list_performance_tuning_analysis_results(ctx, from_json, all_pages, page_size, fleet_id, managed_instance_id, application_id, host_name, time_start, time_end, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2110,6 +2544,12 @@ def list_performance_tuning_analysis_results(ctx, from_json, all_pages, page_siz
         kwargs['managed_instance_id'] = managed_instance_id
     if application_id is not None:
         kwargs['application_id'] = application_id
+    if host_name is not None:
+        kwargs['host_name'] = host_name
+    if time_start is not None:
+        kwargs['time_start'] = time_start
+    if time_end is not None:
+        kwargs['time_end'] = time_end
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -2118,10 +2558,6 @@ def list_performance_tuning_analysis_results(ctx, from_json, all_pages, page_siz
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
-    if time_start is not None:
-        kwargs['time_start'] = time_start
-    if time_end is not None:
-        kwargs['time_end'] = time_end
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('jms', 'java_management_service', ctx)
     if all_pages:
@@ -2309,6 +2745,8 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the managed instance.""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["CREATE_FLEET", "DELETE_FLEET", "MOVE_FLEET", "UPDATE_FLEET", "UPDATE_FLEET_AGENT_CONFIGURATION", "DELETE_JAVA_INSTALLATION", "CREATE_JAVA_INSTALLATION", "COLLECT_JFR", "REQUEST_CRYPTO_EVENT_ANALYSIS", "REQUEST_PERFORMANCE_TUNING_ANALYSIS", "REQUEST_JAVA_MIGRATION_ANALYSIS", "DELETE_JMS_REPORT", "SCAN_JAVA_SERVER_USAGE", "SCAN_LIBRARY_USAGE", "EXPORT_DATA_CSV", "CREATE_DRS_FILE", "UPDATE_DRS_FILE", "DELETE_DRS_FILE", "ENABLE_DRS", "DISABLE_DRS"]), help=u"""The operation type of the work request.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELED", "CANCELING", "FAILED", "IN_PROGRESS", "SUCCEEDED"]), multiple=True, help=u"""The status of the work request.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2316,7 +2754,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'WorkRequestCollection'})
 @cli_util.wrap_exceptions
-def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, id, fleet_id, page, limit, managed_instance_id):
+def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, id, fleet_id, page, limit, managed_instance_id, operation_type, status):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2334,6 +2772,10 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, id,
         kwargs['limit'] = limit
     if managed_instance_id is not None:
         kwargs['managed_instance_id'] = managed_instance_id
+    if operation_type is not None:
+        kwargs['operation_type'] = operation_type
+    if status is not None and len(status) > 0:
+        kwargs['status'] = status
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('jms', 'java_management_service', ctx)
     if all_pages:
@@ -2457,6 +2899,64 @@ def request_crypto_analyses(ctx, from_json, wait_for_state, max_wait_seconds, wa
     result = client.request_crypto_analyses(
         fleet_id=fleet_id,
         request_crypto_analyses_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@fleet_group.command(name=cli_util.override('jms.request_deployed_application_migration_analyses.command_name', 'request-deployed-application-migration-analyses'), help=u"""Request to perform a deployed Java migration analyses. The results of the deployed Java migration analyses will be uploaded to the Object Storage bucket that you designate when you enable the Java Migration Analyses feature. \n[Command Reference](requestDeployedApplicationMigrationAnalyses)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--targets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of migration analyses requests.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELED", "CANCELING", "FAILED", "IN_PROGRESS", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'targets': {'module': 'jms', 'class': 'list[DeployedApplicationMigrationAnalysesTarget]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'targets': {'module': 'jms', 'class': 'list[DeployedApplicationMigrationAnalysesTarget]'}})
+@cli_util.wrap_exceptions
+def request_deployed_application_migration_analyses(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, targets):
+
+    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+        raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['targets'] = cli_util.parse_json_parameter("targets", targets)
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.request_deployed_application_migration_analyses(
+        fleet_id=fleet_id,
+        request_deployed_application_migration_analyses_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -2845,7 +3345,7 @@ def scan_library_usage(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeFirstSeen", "timeLastSeen", "displayName", "installationPath", "osName", "approximateJreCount", "approximateInstallationCount", "approximateManagedInstanceCount"]), help=u"""The field to sort application installation views. Only one sort order may be provided. Default order for _timeFirstSeen_, _timeLastSeen_, _approximateJreCount_, _approximateInstallationCount_ and _approximateManagedInstanceCount_  is **descending**. Default order for _displayName_, _installationPath_ and _osName_ is **ascending**. If no value is specified _timeLastSeen_ is default.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeFirstSeen", "timeLastSeen", "displayName", "installationPath", "osName", "approximateJreCount", "approximateInstallationCount", "approximateManagedInstanceCount", "approximateLibraryCount"]), help=u"""The field to sort application installation views. Only one sort order may be provided. Default order for _timeFirstSeen_, _timeLastSeen_, _approximateJreCount_, _approximateInstallationCount_ and _approximateManagedInstanceCount_  is **descending**. Default order for _displayName_, _installationPath_ and _osName_ is **ascending**. If no value is specified _timeLastSeen_ is default.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2920,7 +3420,7 @@ def summarize_application_installation_usage(ctx, from_json, fleet_id, applicati
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeFirstSeen", "timeLastSeen", "displayName", "approximateJreCount", "approximateInstallationCount", "approximateManagedInstanceCount", "osName"]), help=u"""The field to sort application views. Only one sort order may be provided. Default order for _timeFirstSeen_, _timeLastSeen_, _approximateJreCount_, _approximateInstallationCount_ and _approximateManagedInstanceCount_  is **descending**. Default order for _displayName_ and _osName_ is **ascending**. If no value is specified _timeLastSeen_ is default.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeFirstSeen", "timeLastSeen", "displayName", "approximateJreCount", "approximateInstallationCount", "approximateManagedInstanceCount", "approximateLibraryCount", "osName"]), help=u"""The field to sort application views. Only one sort order may be provided. Default order for _timeFirstSeen_, _timeLastSeen_, _approximateJreCount_, _approximateInstallationCount_ and _approximateManagedInstanceCount_  is **descending**. Default order for _displayName_ and _osName_ is **ascending**. If no value is specified _timeLastSeen_ is default.""")
 @cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "MACOS", "UNKNOWN"]), multiple=True, help=u"""The operating system type.""")
 @cli_util.option('--display-name-contains', help=u"""Filter the list with displayName contains the given value.""")
 @cli_util.option('--library-key', help=u"""The library key.""")
@@ -2996,7 +3496,7 @@ def summarize_application_usage(ctx, from_json, fleet_id, application_id, displa
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["applicationName", "applicationType", "applicationSourcePath", "isClustered", "javaServerInstanceCount", "timeFirstSeen", "timeLastSeen"]), help=u"""The field to sort the deployed application installations. Only one sort order can be provided. If no value is specified _timeLastSeen_ is default.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["applicationName", "applicationType", "applicationSourcePath", "isClustered", "javaServerInstanceCount", "approximateJavaServerInstanceCount", "approximateLibraryCount", "timeFirstSeen", "timeLastSeen"]), help=u"""The field to sort the deployed application installations. Only one sort order can be provided. If no value is specified _timeLastSeen_ is default.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3061,7 +3561,7 @@ def summarize_deployed_application_installation_usage(ctx, from_json, fleet_id, 
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["applicationName", "applicationType", "isClustered", "javaServerInstanceCount", "timeFirstSeen", "timeLastSeen"]), help=u"""The field to sort the deployed applications. Only one sort order can be provided. If no value is specified _timeLastSeen_ is default.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["applicationName", "applicationType", "isClustered", "javaServerInstanceCount", "approximateJavaServerInstanceCount", "approximateLibraryCount", "timeFirstSeen", "timeLastSeen"]), help=u"""The field to sort the deployed applications. Only one sort order can be provided. If no value is specified _timeLastSeen_ is default.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3363,6 +3863,8 @@ def summarize_jre_usage(ctx, from_json, fleet_id, jre_id, jre_vendor, jre_distri
 @cli_util.option('--library-key', help=u"""The library key.""")
 @cli_util.option('--library-name-contains', help=u"""Filter the list with library name contains the given value.""")
 @cli_util.option('--library-name', help=u"""The library name.""")
+@cli_util.option('--cvss-score-greater-than', type=click.INT, help=u"""Total Common Vulnerability Scoring System (CVSS) Score reported by the analysis.""")
+@cli_util.option('--cvss-score-less-than', type=click.INT, help=u"""Total Common Vulnerability Scoring System (CVSS) Score reported by the analysis.""")
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -3374,7 +3876,7 @@ def summarize_jre_usage(ctx, from_json, fleet_id, jre_id, jre_vendor, jre_distri
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'LibraryUsageCollection'})
 @cli_util.wrap_exceptions
-def summarize_library_usage(ctx, from_json, fleet_id, server_instance_key, managed_instance_id, application_key, library_key, library_name_contains, library_name, time_start, time_end, limit, page, sort_order, sort_by):
+def summarize_library_usage(ctx, from_json, fleet_id, server_instance_key, managed_instance_id, application_key, library_key, library_name_contains, library_name, cvss_score_greater_than, cvss_score_less_than, time_start, time_end, limit, page, sort_order, sort_by):
 
     if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
@@ -3392,6 +3894,10 @@ def summarize_library_usage(ctx, from_json, fleet_id, server_instance_key, manag
         kwargs['library_name_contains'] = library_name_contains
     if library_name is not None:
         kwargs['library_name'] = library_name
+    if cvss_score_greater_than is not None:
+        kwargs['cvss_score_greater_than'] = cvss_score_greater_than
+    if cvss_score_less_than is not None:
+        kwargs['cvss_score_less_than'] = cvss_score_less_than
     if time_start is not None:
         kwargs['time_start'] = time_start
     if time_end is not None:
@@ -3416,7 +3922,7 @@ def summarize_library_usage(ctx, from_json, fleet_id, server_instance_key, manag
 @managed_instance_usage_group.command(name=cli_util.override('jms.summarize_managed_instance_usage.command_name', 'summarize'), help=u"""List managed instance usage in a Fleet filtered by query parameters. \n[Command Reference](summarizeManagedInstanceUsage)""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the managed instance.""")
-@cli_util.option('--managed-instance-type', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_MANAGEMENT_AGENT"]), help=u"""The type of the managed instance.""")
+@cli_util.option('--managed-instance-type', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_MANAGEMENT_AGENT", "ORACLE_CLOUD_AGENT"]), help=u"""The type of the managed instance.""")
 @cli_util.option('--jre-vendor', help=u"""The vendor of the related Java Runtime.""")
 @cli_util.option('--jre-distribution', help=u"""The distribution of the related Java Runtime.""")
 @cli_util.option('--jre-version', help=u"""The version of the related Java Runtime.""")
@@ -3512,7 +4018,7 @@ def summarize_resource_inventory(ctx, from_json, compartment_id, time_start, tim
     cli_util.render_response(result, ctx)
 
 
-@fleet_group.command(name=cli_util.override('jms.update_drs_file.command_name', 'update-drs-file'), help=u"""Request to perform validaition of the DRS file and update the existing file in the Object Storage. \n[Command Reference](updateDrsFile)""")
+@fleet_group.command(name=cli_util.override('jms.update_drs_file.command_name', 'update-drs-file'), help=u"""Request to perform validation of the DRS file and update the existing file in the Object Storage. \n[Command Reference](updateDrsFile)""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The Object Storage bucket name where the DRS file is located.""")
 @cli_util.option('--namespace', required=True, help=u"""The namespace for Object Storage.""")
@@ -3582,7 +4088,7 @@ def update_drs_file(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@export_setting_group.command(name=cli_util.override('jms.update_export_setting.command_name', 'update'), help=u"""Updates existing export setting for the specified Fleet. \n[Command Reference](updateExportSetting)""")
+@export_setting_group.command(name=cli_util.override('jms.update_export_setting.command_name', 'update'), help=u"""Updates existing export setting for the specified fleet. \n[Command Reference](updateExportSetting)""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""ExportSetting flag to store enabled or disabled status.""")
 @cli_util.option('--export-duration', type=custom_types.CliCaseInsensitiveChoice(["LAST_30_DAYS", "LAST_60_DAYS", "LAST_90_DAYS"]), help=u"""The duration of data to be exported for fleets.""")
@@ -3590,7 +4096,7 @@ def update_drs_file(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--is-cross-region-acknowledged', type=click.BOOL, help=u"""Acknowledgement for cross region target bucket configuration.""")
 @cli_util.option('--target-bucket-name', help=u"""The name of the bucket where data will be exported.""")
 @cli_util.option('--target-bucket-namespace', help=u"""The namespace of the bucket where data will be exported.""")
-@cli_util.option('--target-bucket-region', help=u"""The namespace of the bucket where data will be exported.""")
+@cli_util.option('--target-bucket-region', help=u"""The id of the region of the target bucket.""")
 @cli_util.option('--export-frequency', type=custom_types.CliCaseInsensitiveChoice(["DAILY", "WEEKLY", "MONTHLY"]), help=u"""Schedule at which data will be exported.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3805,6 +4311,8 @@ def update_fleet_advanced_feature_configuration(ctx, from_json, force, fleet_id,
 @cli_util.option('--java-usage-tracker-processing-frequency-in-minutes', type=click.INT, help=u"""The frequency (in minutes) of Java Usage Tracker processing. (That is, how often should JMS process data from the Java Usage Tracker.)""")
 @cli_util.option('--work-request-validity-period-in-days', type=click.INT, help=u"""The validity period in days for work requests.""")
 @cli_util.option('--agent-polling-interval-in-minutes', type=click.INT, help=u"""Agent polling interval in minutes""")
+@cli_util.option('--is-collecting-managed-instance-metrics-enabled', type=click.BOOL, help=u"""Collect JMS agent metrics on all managed instances in the fleet.""")
+@cli_util.option('--is-collecting-usernames-enabled', type=click.BOOL, help=u"""Collect username for application invocations for all managed instances in the fleet.""")
 @cli_util.option('--linux-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--windows-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--mac-os-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3818,7 +4326,7 @@ def update_fleet_advanced_feature_configuration(ctx, from_json, force, fleet_id,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'linux-configuration': {'module': 'jms', 'class': 'FleetAgentOsConfiguration'}, 'windows-configuration': {'module': 'jms', 'class': 'FleetAgentOsConfiguration'}, 'mac-os-configuration': {'module': 'jms', 'class': 'FleetAgentOsConfiguration'}})
 @cli_util.wrap_exceptions
-def update_fleet_agent_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, jre_scan_frequency_in_minutes, java_usage_tracker_processing_frequency_in_minutes, work_request_validity_period_in_days, agent_polling_interval_in_minutes, linux_configuration, windows_configuration, mac_os_configuration, if_match):
+def update_fleet_agent_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, jre_scan_frequency_in_minutes, java_usage_tracker_processing_frequency_in_minutes, work_request_validity_period_in_days, agent_polling_interval_in_minutes, is_collecting_managed_instance_metrics_enabled, is_collecting_usernames_enabled, linux_configuration, windows_configuration, mac_os_configuration, if_match):
 
     if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
@@ -3845,6 +4353,12 @@ def update_fleet_agent_configuration(ctx, from_json, force, wait_for_state, max_
 
     if agent_polling_interval_in_minutes is not None:
         _details['agentPollingIntervalInMinutes'] = agent_polling_interval_in_minutes
+
+    if is_collecting_managed_instance_metrics_enabled is not None:
+        _details['isCollectingManagedInstanceMetricsEnabled'] = is_collecting_managed_instance_metrics_enabled
+
+    if is_collecting_usernames_enabled is not None:
+        _details['isCollectingUsernamesEnabled'] = is_collecting_usernames_enabled
 
     if linux_configuration is not None:
         _details['linuxConfiguration'] = cli_util.parse_json_parameter("linux_configuration", linux_configuration)
@@ -3888,4 +4402,76 @@ def update_fleet_agent_configuration(ctx, from_json, force, wait_for_state, max_
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@jms_plugin_group.command(name=cli_util.override('jms.update_jms_plugin.command_name', 'update'), help=u"""Updates the Fleet of a JmsPlugin. \n[Command Reference](updateJmsPlugin)""")
+@cli_util.option('--jms-plugin-id', required=True, help=u"""The [OCID] of the JmsPlugin.""")
+@cli_util.option('--fleet-id', help=u"""The [OCID] of the fleet.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`. (See [Understanding Free-form Tags]).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`. (See [Managing Tags and Tag Namespaces].)""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "NEEDS_ATTENTION", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'jms', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'jms', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'jms', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'jms', 'class': 'dict(str, string)'}}, output_type={'module': 'jms', 'class': 'JmsPlugin'})
+@cli_util.wrap_exceptions
+def update_jms_plugin(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, jms_plugin_id, fleet_id, defined_tags, freeform_tags, if_match):
+
+    if isinstance(jms_plugin_id, six.string_types) and len(jms_plugin_id.strip()) == 0:
+        raise click.UsageError('Parameter --jms-plugin-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if fleet_id is not None:
+        _details['fleetId'] = fleet_id
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.update_jms_plugin(
+        jms_plugin_id=jms_plugin_id,
+        update_jms_plugin_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_jms_plugin') and callable(getattr(client, 'get_jms_plugin')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_jms_plugin(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
