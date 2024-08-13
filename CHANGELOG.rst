@@ -6,6 +6,26 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.45.2 - 2024-08-13
+--------------------
+Added
+~~~~~
+* Support for idle timeout feature for Network Load Balancer Service
+
+  * ``oci nlb listener create --tcp-idle-timeout, --udp-idle-timeout``
+  * ``oci nlb listener update --tcp-idle-timeout, --udp-idle-timeout``
+
+* Support for viewing subscription level limits in Limits Service
+
+  * ``oci limits definition list --subscription-id``
+  * ``oci limits resource-availability get --subscription-id``
+  * ``oci limits service list --subscription-id``
+  * ``oci limits value list --subscription-id``
+
+* Support for OIC Instance Creation for Healthcare Feature in Oracle Integration Service
+
+  * ``oci integration integration-instance create --integration-instance-type healthcare``
+
 3.45.1 - 2024-08-06
 --------------------
 Added

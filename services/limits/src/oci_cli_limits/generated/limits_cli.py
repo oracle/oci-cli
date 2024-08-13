@@ -59,17 +59,18 @@ limits_service_cli.limits_service_group.add_command(limit_definition_group)
 limits_service_cli.limits_service_group.add_command(resource_availability_group)
 
 
-@resource_availability_group.command(name=cli_util.override('limits.get_resource_availability.command_name', 'get'), help=u"""For a given compartmentId, resource limit name, and scope, returns the following:   * The number of available resources associated with the given limit.   * The usage in the selected compartment for the given limit.   Note that not all resource limits support this API. If the value is not available, the API returns a 404 response. \n[Command Reference](getResourceAvailability)""")
+@resource_availability_group.command(name=cli_util.override('limits.get_resource_availability.command_name', 'get'), help=u"""For a given compartmentId, resource limit name, and scope, returns the following:   * The number of available resources associated with the given limit.   * The usage in the selected compartment for the given limit. If Subscription Id is provided, then usage for resource created in that subscription will be returned Note that not all resource limits support this API. If the value is not available, the API returns a 404 response. \n[Command Reference](getResourceAvailability)""")
 @cli_util.option('--service-name', required=True, help=u"""The service name of the target quota.""")
 @cli_util.option('--limit-name', required=True, help=u"""The limit name for which to fetch the data.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment for which data is being fetched.""")
 @cli_util.option('--availability-domain', help=u"""This field is mandatory if the scopeType of the target resource limit is AD. Otherwise, this field should be omitted. If the above requirements are not met, the API returns a 400 - InvalidParameter response.""")
+@cli_util.option('--subscription-id', help=u"""The OCID of the subscription assigned to tenant""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'limits', 'class': 'ResourceAvailability'})
 @cli_util.wrap_exceptions
-def get_resource_availability(ctx, from_json, service_name, limit_name, compartment_id, availability_domain):
+def get_resource_availability(ctx, from_json, service_name, limit_name, compartment_id, availability_domain, subscription_id):
 
     if isinstance(service_name, six.string_types) and len(service_name.strip()) == 0:
         raise click.UsageError('Parameter --service-name cannot be whitespace or empty string')
@@ -80,6 +81,8 @@ def get_resource_availability(ctx, from_json, service_name, limit_name, compartm
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
+    if subscription_id is not None:
+        kwargs['subscription_id'] = subscription_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('limits', 'limits', ctx)
     result = client.get_resource_availability(
@@ -91,8 +94,9 @@ def get_resource_availability(ctx, from_json, service_name, limit_name, compartm
     cli_util.render_response(result, ctx)
 
 
-@limit_definition_group.command(name=cli_util.override('limits.list_limit_definitions.command_name', 'list'), help=u"""Includes a list of resource limits that are currently supported. If the 'areQuotasSupported' property is true, you can create quota policies on top of this limit at the compartment level. \n[Command Reference](listLimitDefinitions)""")
+@limit_definition_group.command(name=cli_util.override('limits.list_limit_definitions.command_name', 'list'), help=u"""Includes a list of resource limits that are currently supported. If subscription Id is provided, then only resource limits supported by subscription will be returned If the 'areQuotasSupported' property is true, you can create quota policies on top of this limit at the compartment level. \n[Command Reference](listLimitDefinitions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--subscription-id', help=u"""The OCID of the subscription assigned to tenant""")
 @cli_util.option('--service-name', help=u"""The target service name.""")
 @cli_util.option('--name', help=u"""Optional field, filter for a specific resource limit.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "description"]), help=u"""The field to sort by.""")
@@ -106,12 +110,14 @@ def get_resource_availability(ctx, from_json, service_name, limit_name, compartm
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'limits', 'class': 'list[LimitDefinitionSummary]'})
 @cli_util.wrap_exceptions
-def list_limit_definitions(ctx, from_json, all_pages, page_size, compartment_id, service_name, name, sort_by, sort_order, limit, page):
+def list_limit_definitions(ctx, from_json, all_pages, page_size, compartment_id, subscription_id, service_name, name, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if subscription_id is not None:
+        kwargs['subscription_id'] = subscription_id
     if service_name is not None:
         kwargs['service_name'] = service_name
     if name is not None:
@@ -151,9 +157,10 @@ def list_limit_definitions(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@limit_value_group.command(name=cli_util.override('limits.list_limit_values.command_name', 'list'), help=u"""Includes a full list of resource limits belonging to a given service. \n[Command Reference](listLimitValues)""")
+@limit_value_group.command(name=cli_util.override('limits.list_limit_values.command_name', 'list'), help=u"""Includes a full list of resource limits belonging to a given service. If subscription Id is provided, limit value for subscription will be returned. \n[Command Reference](listLimitValues)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--service-name', required=True, help=u"""The target service name.""")
+@cli_util.option('--subscription-id', help=u"""The OCID of the subscription assigned to tenant""")
 @cli_util.option('--scope-type', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "REGION", "AD"]), help=u"""Filter entries by scope type.""")
 @cli_util.option('--availability-domain', help=u"""Filter entries by availability domain. This implies that only AD-specific values are returned.""")
 @cli_util.option('--name', help=u"""Optional field, can be used to see a specific resource limit value.""")
@@ -168,7 +175,7 @@ def list_limit_definitions(ctx, from_json, all_pages, page_size, compartment_id,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'limits', 'class': 'list[LimitValueSummary]'})
 @cli_util.wrap_exceptions
-def list_limit_values(ctx, from_json, all_pages, page_size, compartment_id, service_name, scope_type, availability_domain, name, sort_by, sort_order, limit, page):
+def list_limit_values(ctx, from_json, all_pages, page_size, compartment_id, service_name, subscription_id, scope_type, availability_domain, name, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -176,6 +183,8 @@ def list_limit_values(ctx, from_json, all_pages, page_size, compartment_id, serv
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
 
     kwargs = {}
+    if subscription_id is not None:
+        kwargs['subscription_id'] = subscription_id
     if scope_type is not None:
         kwargs['scope_type'] = scope_type
     if availability_domain is not None:
@@ -220,12 +229,13 @@ def list_limit_values(ctx, from_json, all_pages, page_size, compartment_id, serv
     cli_util.render_response(result, ctx)
 
 
-@service_group.command(name=cli_util.override('limits.list_services.command_name', 'list'), help=u"""Returns the list of supported services. This includes the programmatic service name, along with the friendly service name. \n[Command Reference](listServices)""")
+@service_group.command(name=cli_util.override('limits.list_services.command_name', 'list'), help=u"""Returns the list of supported services. If subscription ID is provided then only services supported by subscription will be returned. This includes the programmatic service name, along with the friendly service name. \n[Command Reference](listServices)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "description"]), help=u"""The field to sort by.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'. By default, it is ascending.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--subscription-id', help=u"""The OCID of the subscription assigned to tenant""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -233,7 +243,7 @@ def list_limit_values(ctx, from_json, all_pages, page_size, compartment_id, serv
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'limits', 'class': 'list[ServiceSummary]'})
 @cli_util.wrap_exceptions
-def list_services(ctx, from_json, all_pages, page_size, compartment_id, sort_by, sort_order, limit, page):
+def list_services(ctx, from_json, all_pages, page_size, compartment_id, sort_by, sort_order, limit, page, subscription_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -247,6 +257,8 @@ def list_services(ctx, from_json, all_pages, page_size, compartment_id, sort_by,
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if subscription_id is not None:
+        kwargs['subscription_id'] = subscription_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('limits', 'limits', ctx)
     if all_pages:
