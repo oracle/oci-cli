@@ -19,6 +19,7 @@ SDK_client_map = {
     "analytics.list_work_request_logs": "oci.analytics.AnalyticsClient.list_work_request_logs",
     "analytics.list_work_requests": "oci.analytics.AnalyticsClient.list_work_requests",
     "analytics.scale_analytics_instance": "oci.analytics.AnalyticsClient.scale_analytics_instance",
+    "analytics.set_feature_bundle": "oci.analytics.AnalyticsClient.set_feature_bundle",
     "analytics.set_kms_key": "oci.analytics.AnalyticsClient.set_kms_key",
     "analytics.start_analytics_instance": "oci.analytics.AnalyticsClient.start_analytics_instance",
     "analytics.stop_analytics_instance": "oci.analytics.AnalyticsClient.stop_analytics_instance",

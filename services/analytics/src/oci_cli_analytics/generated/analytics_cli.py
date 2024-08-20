@@ -336,7 +336,10 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--kms-key-id', help=u"""The [OCID] of the OCI Vault Key encrypting the customer data stored in this Analytics instance. A null value indicates Oracle managed default encryption.""")
+@cli_util.option('--kms-key-id', help=u"""OCID of the OCI Vault Key encrypting the customer data stored in this Analytics instance. A null value indicates Oracle managed default encryption.""")
+@cli_util.option('--domain-id', help=u"""domain id for which the user is authorized.""")
+@cli_util.option('--admin-user', help=u"""user name of the authorized user.""")
+@cli_util.option('--feature-bundle', type=custom_types.CliCaseInsensitiveChoice(["FAW_PAID", "FAW_FREE", "EE_EMBEDDED", "SE_EMBEDDED"]), help=u"""The feature set of an Analytics instance.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -345,7 +348,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capacity': {'module': 'analytics', 'class': 'Capacity'}, 'network-endpoint-details': {'module': 'analytics', 'class': 'NetworkEndpointDetails'}, 'defined-tags': {'module': 'analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'analytics', 'class': 'dict(str, string)'}}, output_type={'module': 'analytics', 'class': 'AnalyticsInstance'})
 @cli_util.wrap_exceptions
-def create_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, feature_set, capacity, license_type, description, email_notification, network_endpoint_details, idcs_access_token, defined_tags, freeform_tags, kms_key_id):
+def create_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, feature_set, capacity, license_type, description, email_notification, network_endpoint_details, idcs_access_token, defined_tags, freeform_tags, kms_key_id, domain_id, admin_user, feature_bundle):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -377,6 +380,15 @@ def create_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if kms_key_id is not None:
         _details['kmsKeyId'] = kms_key_id
+
+    if domain_id is not None:
+        _details['domainId'] = domain_id
+
+    if admin_user is not None:
+        _details['adminUser'] = admin_user
+
+    if feature_bundle is not None:
+        _details['featureBundle'] = feature_bundle
 
     client = cli_util.build_client('analytics', 'analytics', ctx)
     result = client.create_analytics_instance(
@@ -430,7 +442,10 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--kms-key-id', help=u"""The [OCID] of the OCI Vault Key encrypting the customer data stored in this Analytics instance. A null value indicates Oracle managed default encryption.""")
+@cli_util.option('--kms-key-id', help=u"""OCID of the OCI Vault Key encrypting the customer data stored in this Analytics instance. A null value indicates Oracle managed default encryption.""")
+@cli_util.option('--domain-id', help=u"""domain id for which the user is authorized.""")
+@cli_util.option('--admin-user', help=u"""user name of the authorized user.""")
+@cli_util.option('--feature-bundle', type=custom_types.CliCaseInsensitiveChoice(["FAW_PAID", "FAW_FREE", "EE_EMBEDDED", "SE_EMBEDDED"]), help=u"""The feature set of an Analytics instance.""")
 @cli_util.option('--network-endpoint-details-network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Network Security Group OCIDs for an Analytics instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -440,7 +455,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capacity': {'module': 'analytics', 'class': 'Capacity'}, 'defined-tags': {'module': 'analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'analytics', 'class': 'dict(str, string)'}, 'network-endpoint-details-network-security-group-ids': {'module': 'analytics', 'class': 'list[string]'}}, output_type={'module': 'analytics', 'class': 'AnalyticsInstance'})
 @cli_util.wrap_exceptions
-def create_analytics_instance_private_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, feature_set, capacity, license_type, network_endpoint_details_vcn_id, network_endpoint_details_subnet_id, description, email_notification, idcs_access_token, defined_tags, freeform_tags, kms_key_id, network_endpoint_details_network_security_group_ids):
+def create_analytics_instance_private_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, feature_set, capacity, license_type, network_endpoint_details_vcn_id, network_endpoint_details_subnet_id, description, email_notification, idcs_access_token, defined_tags, freeform_tags, kms_key_id, domain_id, admin_user, feature_bundle, network_endpoint_details_network_security_group_ids):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -472,6 +487,15 @@ def create_analytics_instance_private_endpoint_details(ctx, from_json, wait_for_
 
     if kms_key_id is not None:
         _details['kmsKeyId'] = kms_key_id
+
+    if domain_id is not None:
+        _details['domainId'] = domain_id
+
+    if admin_user is not None:
+        _details['adminUser'] = admin_user
+
+    if feature_bundle is not None:
+        _details['featureBundle'] = feature_bundle
 
     if network_endpoint_details_network_security_group_ids is not None:
         _details['networkEndpointDetails']['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_endpoint_details_network_security_group_ids", network_endpoint_details_network_security_group_ids)
@@ -528,7 +552,10 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--kms-key-id', help=u"""The [OCID] of the OCI Vault Key encrypting the customer data stored in this Analytics instance. A null value indicates Oracle managed default encryption.""")
+@cli_util.option('--kms-key-id', help=u"""OCID of the OCI Vault Key encrypting the customer data stored in this Analytics instance. A null value indicates Oracle managed default encryption.""")
+@cli_util.option('--domain-id', help=u"""domain id for which the user is authorized.""")
+@cli_util.option('--admin-user', help=u"""user name of the authorized user.""")
+@cli_util.option('--feature-bundle', type=custom_types.CliCaseInsensitiveChoice(["FAW_PAID", "FAW_FREE", "EE_EMBEDDED", "SE_EMBEDDED"]), help=u"""The feature set of an Analytics instance.""")
 @cli_util.option('--network-endpoint-details-whitelisted-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Source IP addresses or IP address ranges in ingress rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-endpoint-details-whitelisted-vcns', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Virtual Cloud Networks allowed to access this network endpoint.
 
@@ -542,7 +569,7 @@ This option is a JSON list with items of type VirtualCloudNetwork.  For document
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capacity': {'module': 'analytics', 'class': 'Capacity'}, 'defined-tags': {'module': 'analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'analytics', 'class': 'dict(str, string)'}, 'network-endpoint-details-whitelisted-ips': {'module': 'analytics', 'class': 'list[string]'}, 'network-endpoint-details-whitelisted-vcns': {'module': 'analytics', 'class': 'list[VirtualCloudNetwork]'}}, output_type={'module': 'analytics', 'class': 'AnalyticsInstance'})
 @cli_util.wrap_exceptions
-def create_analytics_instance_public_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, feature_set, capacity, license_type, description, email_notification, idcs_access_token, defined_tags, freeform_tags, kms_key_id, network_endpoint_details_whitelisted_ips, network_endpoint_details_whitelisted_vcns, network_endpoint_details_whitelisted_services):
+def create_analytics_instance_public_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, feature_set, capacity, license_type, description, email_notification, idcs_access_token, defined_tags, freeform_tags, kms_key_id, domain_id, admin_user, feature_bundle, network_endpoint_details_whitelisted_ips, network_endpoint_details_whitelisted_vcns, network_endpoint_details_whitelisted_services):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -572,6 +599,15 @@ def create_analytics_instance_public_endpoint_details(ctx, from_json, wait_for_s
 
     if kms_key_id is not None:
         _details['kmsKeyId'] = kms_key_id
+
+    if domain_id is not None:
+        _details['domainId'] = domain_id
+
+    if admin_user is not None:
+        _details['adminUser'] = admin_user
+
+    if feature_bundle is not None:
+        _details['featureBundle'] = feature_bundle
 
     if network_endpoint_details_whitelisted_ips is not None:
         _details['networkEndpointDetails']['whitelistedIps'] = cli_util.parse_json_parameter("network_endpoint_details_whitelisted_ips", network_endpoint_details_whitelisted_ips)
@@ -1308,6 +1344,69 @@ def scale_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, w
     result = client.scale_analytics_instance(
         analytics_instance_id=analytics_instance_id,
         scale_analytics_instance_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@analytics_instance_group.command(name=cli_util.override('analytics.set_feature_bundle.command_name', 'set-feature-bundle'), help=u"""Set the external service properties of an Analytics instance. \n[Command Reference](setFeatureBundle)""")
+@cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
+@cli_util.option('--feature-bundle', type=custom_types.CliCaseInsensitiveChoice(["FAW_PAID", "FAW_FREE", "EE_EMBEDDED", "SE_EMBEDDED"]), help=u"""The feature set of an Analytics instance.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def set_feature_bundle(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, feature_bundle, if_match):
+
+    if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if feature_bundle is not None:
+        _details['featureBundle'] = feature_bundle
+
+    client = cli_util.build_client('analytics', 'analytics', ctx)
+    result = client.set_feature_bundle(
+        analytics_instance_id=analytics_instance_id,
+        set_feature_bundle_details=_details,
         **kwargs
     )
     if wait_for_state:

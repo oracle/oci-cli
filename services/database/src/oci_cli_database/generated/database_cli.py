@@ -9641,12 +9641,13 @@ def create_key_store_key_store_type_from_oracle_key_vault_details(ctx, from_json
 @maintenance_run_group.command(name=cli_util.override('db.create_maintenance_run.command_name', 'create'), help=u"""Creates a maintenance run with one of the following: 1. The latest available release update patch (RUP) for the Autonomous Container Database. 2. The latest available RUP and DST time-zone (TZ) file updates for the Autonomous Container Database. 3. The DST TZ file updates for the Autonomous Container Database. \n[Command Reference](createMaintenanceRun)""")
 @cli_util.option('--target-resource-id', required=True, help=u"""The ID of the target resource for which the maintenance run should be created.""")
 @cli_util.option('--time-scheduled', required=True, type=custom_types.CLI_DATETIME, help=u"""The date and time that update should be scheduled.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--patch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["QUARTERLY", "TIMEZONE"]), help=u"""Patch type, either \"QUARTERLY\" or \"TIMEZONE\".""")
+@cli_util.option('--patch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["QUARTERLY", "TIMEZONE", "CUSTOM_DATABASE_SOFTWARE_IMAGE"]), help=u"""Patch type, either \"QUARTERLY\", \"TIMEZONE\" or \"CUSTOM_DATABASE_SOFTWARE_IMAGE\".""")
 @cli_util.option('--is-dst-file-update-enabled', type=click.BOOL, help=u"""Indicates if an automatic DST Time Zone file update is enabled for the Autonomous Container Database. If enabled along with Release Update, patching will be done in a Non-Rolling manner.""")
 @cli_util.option('--patching-mode', type=custom_types.CliCaseInsensitiveChoice(["ROLLING", "NONROLLING"]), help=u"""Cloud Exadata infrastructure node patching method, either \"ROLLING\" or \"NONROLLING\". Default value is ROLLING.
 
 *IMPORTANT*: Non-rolling infrastructure patching involves system down time. See [Oracle-Managed Infrastructure Maintenance Updates] for more information.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment containing the Maintenance Run.""")
+@cli_util.option('--database-software-image-id', help=u"""The Autonomous Database Software Image [OCID]""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IN_PROGRESS", "SUCCEEDED", "SKIPPED", "FAILED", "UPDATING", "DELETING", "DELETED", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -9655,7 +9656,7 @@ def create_key_store_key_store_type_from_oracle_key_vault_details(ctx, from_json
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'MaintenanceRun'})
 @cli_util.wrap_exceptions
-def create_maintenance_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_resource_id, time_scheduled, patch_type, is_dst_file_update_enabled, patching_mode, compartment_id):
+def create_maintenance_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_resource_id, time_scheduled, patch_type, is_dst_file_update_enabled, patching_mode, compartment_id, database_software_image_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -9673,6 +9674,9 @@ def create_maintenance_run(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if compartment_id is not None:
         _details['compartmentId'] = compartment_id
+
+    if database_software_image_id is not None:
+        _details['databaseSoftwareImageId'] = database_software_image_id
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_maintenance_run(
@@ -20173,7 +20177,7 @@ def list_key_stores(ctx, from_json, all_pages, page_size, compartment_id, limit,
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IN_PROGRESS", "SUCCEEDED", "SKIPPED", "FAILED", "UPDATING", "DELETING", "DELETED", "CANCELED"]), help=u"""The state of the maintenance run history.""")
 @cli_util.option('--availability-domain', help=u"""A filter to return only resources that match the given availability domain exactly.""")
-@cli_util.option('--maintenance-subtype', type=custom_types.CliCaseInsensitiveChoice(["QUARTERLY", "HARDWARE", "CRITICAL", "INFRASTRUCTURE", "DATABASE", "ONEOFF", "SECURITY_MONTHLY", "TIMEZONE"]), help=u"""The sub-type of the maintenance run.""")
+@cli_util.option('--maintenance-subtype', type=custom_types.CliCaseInsensitiveChoice(["QUARTERLY", "HARDWARE", "CRITICAL", "INFRASTRUCTURE", "DATABASE", "ONEOFF", "SECURITY_MONTHLY", "TIMEZONE", "CUSTOM_DATABASE_SOFTWARE_IMAGE"]), help=u"""The sub-type of the maintenance run.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -20248,7 +20252,7 @@ def list_maintenance_run_history(ctx, from_json, all_pages, page_size, compartme
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IN_PROGRESS", "SUCCEEDED", "SKIPPED", "FAILED", "UPDATING", "DELETING", "DELETED", "CANCELED"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
 @cli_util.option('--availability-domain', help=u"""A filter to return only resources that match the given availability domain exactly.""")
-@cli_util.option('--maintenance-subtype', type=custom_types.CliCaseInsensitiveChoice(["QUARTERLY", "HARDWARE", "CRITICAL", "INFRASTRUCTURE", "DATABASE", "ONEOFF", "SECURITY_MONTHLY", "TIMEZONE"]), help=u"""The sub-type of the maintenance run.""")
+@cli_util.option('--maintenance-subtype', type=custom_types.CliCaseInsensitiveChoice(["QUARTERLY", "HARDWARE", "CRITICAL", "INFRASTRUCTURE", "DATABASE", "ONEOFF", "SECURITY_MONTHLY", "TIMEZONE", "CUSTOM_DATABASE_SOFTWARE_IMAGE"]), help=u"""The sub-type of the maintenance run.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
