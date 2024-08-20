@@ -29,7 +29,7 @@ pytest-cov==2.5.1
 python-dateutil>=2.5.3,<3.0.0
 pytz>=2016.10
 requests==2.21.0; python_version == '3.6'
-requests==2.31.0; python_version == '3.7'
+requests==2.32.2; python_version == '3.7'
 requests>=2.32.0; python_version > '3.7'
 six>=1.15.0
 sphinx==3.3.0
