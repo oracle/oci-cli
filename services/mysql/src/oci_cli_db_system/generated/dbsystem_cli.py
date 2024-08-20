@@ -139,6 +139,7 @@ For a standalone DB System, this defines the fault domain in which the DB System
 @cli_util.option('--admin-username', help=u"""The username for the administrative user.""")
 @cli_util.option('--admin-password', help=u"""The password for the administrative user. The password must be between 8 and 32 characters long, and must contain at least 1 numeric character, 1 lowercase character, 1 uppercase character, and 1 special (nonalphanumeric) character.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Initial size of the data volume in GBs that will be created and attached. Keep in mind that this only specifies the size of the database data volume, the log volume for the database will be scaled appropriately with its shape.""")
+@cli_util.option('--data-storage', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--hostname-label', help=u"""The hostname for the primary endpoint of the DB System. Used for DNS.
 
 The value is the hostname portion of the primary private IP's fully qualified domain name (FQDN) (for example, \"dbsystem-1\" in FQDN \"dbsystem-1.subnet123.vcn1.oraclevcn.com\").
@@ -159,12 +160,12 @@ Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 11
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'source': {'module': 'mysql', 'class': 'CreateDbSystemSourceDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'source': {'module': 'mysql', 'class': 'CreateDbSystemSourceDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'source': {'module': 'mysql', 'class': 'CreateDbSystemSourceDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'source': {'module': 'mysql', 'class': 'CreateDbSystemSourceDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, source, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections):
+def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, data_storage, hostname_label, ip_address, port, port_x, backup_policy, source, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -203,6 +204,9 @@ def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if data_storage_size_in_gbs is not None:
         _details['dataStorageSizeInGBs'] = data_storage_size_in_gbs
+
+    if data_storage is not None:
+        _details['dataStorage'] = cli_util.parse_json_parameter("data_storage", data_storage)
 
     if hostname_label is not None:
         _details['hostnameLabel'] = hostname_label
@@ -305,6 +309,7 @@ For a standalone DB System, this defines the fault domain in which the DB System
 @cli_util.option('--admin-username', help=u"""The username for the administrative user.""")
 @cli_util.option('--admin-password', help=u"""The password for the administrative user. The password must be between 8 and 32 characters long, and must contain at least 1 numeric character, 1 lowercase character, 1 uppercase character, and 1 special (nonalphanumeric) character.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Initial size of the data volume in GBs that will be created and attached. Keep in mind that this only specifies the size of the database data volume, the log volume for the database will be scaled appropriately with its shape.""")
+@cli_util.option('--data-storage', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--hostname-label', help=u"""The hostname for the primary endpoint of the DB System. Used for DNS.
 
 The value is the hostname portion of the primary private IP's fully qualified domain name (FQDN) (for example, \"dbsystem-1\" in FQDN \"dbsystem-1.subnet123.vcn1.oraclevcn.com\").
@@ -324,12 +329,12 @@ Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 11
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system_create_db_system_source_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, source_backup_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections):
+def create_db_system_create_db_system_source_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, source_backup_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, data_storage, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -370,6 +375,9 @@ def create_db_system_create_db_system_source_from_backup_details(ctx, from_json,
 
     if data_storage_size_in_gbs is not None:
         _details['dataStorageSizeInGBs'] = data_storage_size_in_gbs
+
+    if data_storage is not None:
+        _details['dataStorage'] = cli_util.parse_json_parameter("data_storage", data_storage)
 
     if hostname_label is not None:
         _details['hostnameLabel'] = hostname_label
@@ -470,6 +478,7 @@ For a standalone DB System, this defines the fault domain in which the DB System
 @cli_util.option('--admin-username', help=u"""The username for the administrative user.""")
 @cli_util.option('--admin-password', help=u"""The password for the administrative user. The password must be between 8 and 32 characters long, and must contain at least 1 numeric character, 1 lowercase character, 1 uppercase character, and 1 special (nonalphanumeric) character.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Initial size of the data volume in GBs that will be created and attached. Keep in mind that this only specifies the size of the database data volume, the log volume for the database will be scaled appropriately with its shape.""")
+@cli_util.option('--data-storage', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--hostname-label', help=u"""The hostname for the primary endpoint of the DB System. Used for DNS.
 
 The value is the hostname portion of the primary private IP's fully qualified domain name (FQDN) (for example, \"dbsystem-1\" in FQDN \"dbsystem-1.subnet123.vcn1.oraclevcn.com\").
@@ -489,12 +498,12 @@ Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 11
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system_create_db_system_source_from_none_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections):
+def create_db_system_create_db_system_source_from_none_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, data_storage, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -534,6 +543,9 @@ def create_db_system_create_db_system_source_from_none_details(ctx, from_json, w
 
     if data_storage_size_in_gbs is not None:
         _details['dataStorageSizeInGBs'] = data_storage_size_in_gbs
+
+    if data_storage is not None:
+        _details['dataStorage'] = cli_util.parse_json_parameter("data_storage", data_storage)
 
     if hostname_label is not None:
         _details['hostnameLabel'] = hostname_label
@@ -635,6 +647,7 @@ For a standalone DB System, this defines the fault domain in which the DB System
 @cli_util.option('--admin-username', help=u"""The username for the administrative user.""")
 @cli_util.option('--admin-password', help=u"""The password for the administrative user. The password must be between 8 and 32 characters long, and must contain at least 1 numeric character, 1 lowercase character, 1 uppercase character, and 1 special (nonalphanumeric) character.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Initial size of the data volume in GBs that will be created and attached. Keep in mind that this only specifies the size of the database data volume, the log volume for the database will be scaled appropriately with its shape.""")
+@cli_util.option('--data-storage', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--hostname-label', help=u"""The hostname for the primary endpoint of the DB System. Used for DNS.
 
 The value is the hostname portion of the primary private IP's fully qualified domain name (FQDN) (for example, \"dbsystem-1\" in FQDN \"dbsystem-1.subnet123.vcn1.oraclevcn.com\").
@@ -654,12 +667,12 @@ Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 11
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system_create_db_system_source_import_from_url_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, source_source_url, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections):
+def create_db_system_create_db_system_source_import_from_url_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, source_source_url, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, data_storage, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -700,6 +713,9 @@ def create_db_system_create_db_system_source_import_from_url_details(ctx, from_j
 
     if data_storage_size_in_gbs is not None:
         _details['dataStorageSizeInGBs'] = data_storage_size_in_gbs
+
+    if data_storage is not None:
+        _details['dataStorage'] = cli_util.parse_json_parameter("data_storage", data_storage)
 
     if hostname_label is not None:
         _details['hostnameLabel'] = hostname_label
@@ -801,6 +817,7 @@ For a standalone DB System, this defines the fault domain in which the DB System
 @cli_util.option('--admin-username', help=u"""The username for the administrative user.""")
 @cli_util.option('--admin-password', help=u"""The password for the administrative user. The password must be between 8 and 32 characters long, and must contain at least 1 numeric character, 1 lowercase character, 1 uppercase character, and 1 special (nonalphanumeric) character.""")
 @cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Initial size of the data volume in GBs that will be created and attached. Keep in mind that this only specifies the size of the database data volume, the log volume for the database will be scaled appropriately with its shape.""")
+@cli_util.option('--data-storage', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--hostname-label', help=u"""The hostname for the primary endpoint of the DB System. Used for DNS.
 
 The value is the hostname portion of the primary private IP's fully qualified domain name (FQDN) (for example, \"dbsystem-1\" in FQDN \"dbsystem-1.subnet123.vcn1.oraclevcn.com\").
@@ -821,12 +838,12 @@ Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 11
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system_create_db_system_source_from_pitr_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, source_db_system_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections, source_recovery_point):
+def create_db_system_create_db_system_source_from_pitr_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, source_db_system_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, data_storage, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections, source_recovery_point):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -867,6 +884,9 @@ def create_db_system_create_db_system_source_from_pitr_details(ctx, from_json, w
 
     if data_storage_size_in_gbs is not None:
         _details['dataStorageSizeInGBs'] = data_storage_size_in_gbs
+
+    if data_storage is not None:
+        _details['dataStorage'] = cli_util.parse_json_parameter("data_storage", data_storage)
 
     if hostname_label is not None:
         _details['hostnameLabel'] = hostname_label
@@ -1651,6 +1671,7 @@ Changes in Shape will result in a downtime as the MySQL DB System is migrated to
 DB Systems with an initial storage size of 400 GB or less can be expanded up to 32 TB. DB Systems with an initial storage size between 401-800 GB can be expanded up to 64 TB. DB Systems with an initial storage size between 801-1200 GB can be expanded up to 96 TB. DB Systems with an initial storage size of 1201 GB or more can be expanded up to 128 TB.
 
 It is not possible to decrease data storage size.""")
+@cli_util.option('--data-storage', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--hostname-label', help=u"""The hostname for the primary endpoint of the DB System. Used for DNS. The value is the hostname portion of the primary private IP's fully qualified domain name (FQDN) (for example, \"dbsystem-1\" in FQDN \"dbsystem-1.subnet123.vcn1.oraclevcn.com\"). Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 1123.""")
 @cli_util.option('--ip-address', help=u"""The IP address the DB System should be configured to listen on the provided subnet. It must be a free private IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet. This should be a \"dotted-quad\" style IPv4 address.""")
 @cli_util.option('--port', type=click.INT, help=u"""The port for primary endpoint of the DB System to listen on.""")
@@ -1668,18 +1689,18 @@ It is not possible to decrease data storage size.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'backup-policy': {'module': 'mysql', 'class': 'UpdateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'UpdateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'UpdateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'UpdateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'UpdateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'UpdateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-policy': {'module': 'mysql', 'class': 'UpdateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'UpdateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'UpdateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'UpdateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'UpdateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'UpdateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}})
 @cli_util.wrap_exceptions
-def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, display_name, description, subnet_id, is_highly_available, availability_domain, fault_domain, shape_name, mysql_version, configuration_id, admin_username, admin_password, data_storage_size_in_gbs, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections, if_match):
+def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, display_name, description, subnet_id, is_highly_available, availability_domain, fault_domain, shape_name, mysql_version, configuration_id, admin_username, admin_password, data_storage_size_in_gbs, data_storage, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections, if_match):
 
     if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
     if not force:
-        if backup_policy or maintenance or freeform_tags or defined_tags or deletion_policy or secure_connections:
-            if not click.confirm("WARNING: Updates to backup-policy and maintenance and freeform-tags and defined-tags and deletion-policy and secure-connections will replace any existing values. Are you sure you want to continue?"):
+        if data_storage or backup_policy or maintenance or freeform_tags or defined_tags or deletion_policy or secure_connections:
+            if not click.confirm("WARNING: Updates to data-storage and backup-policy and maintenance and freeform-tags and defined-tags and deletion-policy and secure-connections will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1724,6 +1745,9 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if data_storage_size_in_gbs is not None:
         _details['dataStorageSizeInGBs'] = data_storage_size_in_gbs
+
+    if data_storage is not None:
+        _details['dataStorage'] = cli_util.parse_json_parameter("data_storage", data_storage)
 
     if hostname_label is not None:
         _details['hostnameLabel'] = hostname_label

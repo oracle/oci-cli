@@ -8,6 +8,7 @@ SDK_client_map = {
     "integration.create_integration_instance": "oci.integration.IntegrationInstanceClient.create_integration_instance",
     "integration.delete_integration_instance": "oci.integration.IntegrationInstanceClient.delete_integration_instance",
     "integration.enable_process_automation": "oci.integration.IntegrationInstanceClient.enable_process_automation",
+    "integration.extend_data_retention": "oci.integration.IntegrationInstanceClient.extend_data_retention",
     "integration.get_integration_instance": "oci.integration.IntegrationInstanceClient.get_integration_instance",
     "integration.get_work_request": "oci.integration.IntegrationInstanceClient.get_work_request",
     "integration.list_integration_instances": "oci.integration.IntegrationInstanceClient.list_integration_instances",

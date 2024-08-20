@@ -10,11 +10,12 @@ click==8.0.4
 coverage==4.5.2
 cryptography>=3.2.1,<43.0.0
 httpsig-cffi==15.0.0
-Jinja2==3.0.3
+Jinja2==3.0.3; python_version == '3.6'
+Jinja2>=3.1.4; python_version >= '3.7'
 jmespath==0.10.0
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.131.1
+oci==2.132.0
 packaging==20.2
 pluggy==0.13.0
 py==1.11.0
@@ -28,7 +29,8 @@ pytest-cov==2.5.1
 python-dateutil>=2.5.3,<3.0.0
 pytz>=2016.10
 requests==2.21.0; python_version == '3.6'
-requests==2.31.0; python_version > '3.6'
+requests==2.31.0; python_version == '3.7'
+requests>=2.32.0; python_version > '3.7'
 six>=1.15.0
 sphinx==3.3.0
 sphinx-rtd-theme==0.4.3
@@ -43,7 +45,8 @@ PyYAML>=5.4,<=6.0.1
 docutils==0.15.2
 prompt-toolkit==3.0.29; python_version == '3.6'
 prompt-toolkit>=3.0.38,<=3.0.43; python_version > '3.6'
-setuptools>65.5.1; python_version > '3.6'
+setuptools>70.0.0; python_version > '3.7'
+setuptools==68.0.0; python_version == '3.7'
 setuptools==59.6.0; python_version == '3.6'
 # this is required because of python 3.6 requests dependency version bound
 urllib3<=1.26.15

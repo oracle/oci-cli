@@ -8,6 +8,7 @@ SDK_client_map = {
     "redis.delete_redis_cluster": "oci.redis.RedisClusterClient.delete_redis_cluster",
     "redis.get_redis_cluster": "oci.redis.RedisClusterClient.get_redis_cluster",
     "redis.get_work_request": "oci.redis.RedisClusterClient.get_work_request",
+    "redis.list_redis_cluster_nodes": "oci.redis.RedisClusterClient.list_redis_cluster_nodes",
     "redis.list_redis_clusters": "oci.redis.RedisClusterClient.list_redis_clusters",
     "redis.list_work_request_errors": "oci.redis.RedisClusterClient.list_work_request_errors",
     "redis.list_work_request_logs": "oci.redis.RedisClusterClient.list_work_request_logs",

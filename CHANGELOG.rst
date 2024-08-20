@@ -6,6 +6,76 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.46.0 - 2024-08-20
+--------------------
+Removed
+~~~~~
+* [BREAKING] Disaster Recovery service
+
+  * Removed optional parameter --dr-plan-execution-type from list command
+
+    * ``oci disaster-recovery dr-plan-execution list``
+
+Added
+~~~~~
+* Database Service
+
+  * Support for creating Maintenance Run Using Autonomous Database Software Image in the Database service
+
+    * ``oci db maintenance-run create --database-software-image-id``
+
+* Fleet Application Management Service
+
+  * Support for the Fleet Application Management service
+
+    * ``oci fleet-apps-management``
+
+* Redis Service
+
+  * Support for list cluster nodes command in the OCI Cache service
+
+    * ``oci redis node-summary list-redis-cluster-nodes``
+
+  * Support new parameters cluster-mode and shard-count for sharding
+
+    * ``oci redis redis-cluster create --cluster-mode, --shard-count``
+    * ``oci redis redis-cluster update --shard-count``
+
+* Integration Service
+
+  * Support for Extend Data Retention Period for OIC Instance
+
+    * ``oci integration integration-instance extend-data-retention --data-retention-period, --integration-instance-id``
+
+* Analytics Service
+
+  * Support for Identity Domains
+
+    * ``oci analytics analytics-instance create --domain-id ocid --admin-user user``
+
+  * Support for feature set in analytics-instance
+
+    * ``oci analytics analytics-instance create --feature-bundle feature_set``
+
+* Database Management Service
+
+  * Support for SQL Watch and DB Lifecycle Management
+
+    * ``oci database-management managed-database enable-external-container-database-management-feature``
+    * ``oci database-management managed-database enable-external-pluggable-database-management-feature``
+    * ``oci database-management managed-database enable-external-non-container-database-management-feature``
+    * ``oci database-management managed-database modify-database-management-feature``
+    * ``oci database-management managed-database modify-pluggable-database-management-feature``
+
+* Mysql Database Service
+
+  * Support for automatically increasing storage in the MySQL Database service
+
+    * ``oci mysql db-system clone --is-auto-expand-storage-enabled --max-storage-size-in-gbs``
+    * ``oci mysql db-system create --is-auto-expand-storage-enabled --max-storage-size-in-gbs``
+    * ``oci mysql db-system import --is-auto-expand-storage-enabled --max-storage-size-in-gbs``
+    * ``oci mysql db-system update --is-auto-expand-storage-enabled --max-storage-size-in-gbs``
+
 3.45.2 - 2024-08-13
 --------------------
 Added

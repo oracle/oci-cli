@@ -1698,7 +1698,6 @@ Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
 @cli_util.option('--dr-plan-execution-id', help=u"""The OCID of the DR plan execution.
 
 Example: `ocid1.drplanexecution.oc1..uniqueID`""")
-@cli_util.option('--dr-plan-execution-type', type=custom_types.CliCaseInsensitiveChoice(["SWITCHOVER", "SWITCHOVER_PRECHECK", "FAILOVER", "FAILOVER_PRECHECK", "START_DRILL", "START_DRILL_PRECHECK", "STOP_DRILL", "STOP_DRILL_PRECHECK"]), help=u"""The DR plan execution type.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name.
 
 Example: `MyResourceDisplayName`""")
@@ -1721,7 +1720,7 @@ Example: `MyResourceDisplayName`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'disaster_recovery', 'class': 'DrPlanExecutionCollection'})
 @cli_util.wrap_exceptions
-def list_dr_plan_executions(ctx, from_json, all_pages, page_size, dr_protection_group_id, lifecycle_state, dr_plan_execution_id, dr_plan_execution_type, display_name, limit, page, sort_order, sort_by):
+def list_dr_plan_executions(ctx, from_json, all_pages, page_size, dr_protection_group_id, lifecycle_state, dr_plan_execution_id, display_name, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1731,8 +1730,6 @@ def list_dr_plan_executions(ctx, from_json, all_pages, page_size, dr_protection_
         kwargs['lifecycle_state'] = lifecycle_state
     if dr_plan_execution_id is not None:
         kwargs['dr_plan_execution_id'] = dr_plan_execution_id
-    if dr_plan_execution_type is not None:
-        kwargs['dr_plan_execution_type'] = dr_plan_execution_type
     if display_name is not None:
         kwargs['display_name'] = display_name
     if limit is not None:

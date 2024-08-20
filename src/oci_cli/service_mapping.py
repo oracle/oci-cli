@@ -283,6 +283,11 @@ service_mapping = {
         "Events",
         "Observability & Management"
     ],
+    "fleet-apps-management": [
+        "fleet_apps_management",
+        "Fleet Application Management Service",
+        "Others"
+    ],
     "fleet-software-update": [
         "fleet_software_update",
         "Exadata Fleet Update service",
@@ -585,7 +590,7 @@ service_mapping = {
     ],
     "redis": [
         "redis",
-        "Redis Service",
+        "OCI Cache",
         "Others"
     ],
     "resource-manager": [
