@@ -2304,6 +2304,7 @@ def configure_automatic_spm_evolve_advisor_task_database_password_credential_det
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet.""")
 @cli_util.option('--is-cluster', type=click.BOOL, help=u"""Specifies whether the Database Management private endpoint will be used for Oracle Databases in a cluster.""")
+@cli_util.option('--is-dns-resolution-enabled', type=click.BOOL, help=u"""Specifies whether the Database Management private endpoint has DNS proxy server enabled to resolve private host name.""")
 @cli_util.option('--description', help=u"""The description of the private endpoint.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the Network Security Groups to which the Database Management private endpoint belongs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2316,7 +2317,7 @@ def configure_automatic_spm_evolve_advisor_task_database_password_credential_det
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'database_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'DbManagementPrivateEndpoint'})
 @cli_util.wrap_exceptions
-def create_db_management_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, subnet_id, is_cluster, description, nsg_ids, freeform_tags, defined_tags):
+def create_db_management_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, subnet_id, is_cluster, is_dns_resolution_enabled, description, nsg_ids, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2328,6 +2329,9 @@ def create_db_management_private_endpoint(ctx, from_json, wait_for_state, max_wa
 
     if is_cluster is not None:
         _details['isCluster'] = is_cluster
+
+    if is_dns_resolution_enabled is not None:
+        _details['isDnsResolutionEnabled'] = is_dns_resolution_enabled
 
     if description is not None:
         _details['description'] = description
@@ -4468,6 +4472,67 @@ def disable_automatic_spm_evolve_advisor_task_database_password_credential_detai
     cli_util.render_response(result, ctx)
 
 
+@managed_database_group.command(name=cli_util.override('db_management.disable_autonomous_database_management_feature.command_name', 'disable-autonomous-database-management-feature'), help=u"""Disables a Database Management feature for the specified Autonomous Database. \n[Command Reference](disableAutonomousDatabaseManagementFeature)""")
+@cli_util.option('--autonomous-database-id', required=True, help=u"""The [OCID] of the Autonomous Database.""")
+@cli_util.option('--feature', required=True, type=custom_types.CliCaseInsensitiveChoice(["DIAGNOSTICS_AND_MANAGEMENT", "DB_LIFECYCLE_MANAGEMENT", "SQLWATCH"]), help=u"""The name of the Database Management feature.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_autonomous_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, feature, if_match):
+
+    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['feature'] = feature
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.disable_autonomous_database_management_feature(
+        autonomous_database_id=autonomous_database_id,
+        disable_autonomous_database_management_feature_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @managed_database_group.command(name=cli_util.override('db_management.disable_database_management_feature.command_name', 'disable-database-management-feature'), help=u"""Disables a Database Management feature for the specified Oracle cloud database. \n[Command Reference](disableDatabaseManagementFeature)""")
 @cli_util.option('--database-id', required=True, help=u"""The [OCID] of the Database.""")
 @cli_util.option('--feature', required=True, type=custom_types.CliCaseInsensitiveChoice(["DIAGNOSTICS_AND_MANAGEMENT", "DB_LIFECYCLE_MANAGEMENT", "SQLWATCH"]), help=u"""The name of the Database Management feature.""")
@@ -6601,6 +6666,203 @@ def enable_automatic_spm_evolve_advisor_task_database_password_credential_detail
         enable_automatic_spm_evolve_advisor_task_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.enable_autonomous_database_management_feature.command_name', 'enable-autonomous-database-management-feature'), help=u"""Enables a Database Management feature for the specified Autonomous Database. \n[Command Reference](enableAutonomousDatabaseManagementFeature)""")
+@cli_util.option('--autonomous-database-id', required=True, help=u"""The [OCID] of the Autonomous Database.""")
+@cli_util.option('--feature-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'feature-details': {'module': 'database_management', 'class': 'AutonomousDatabaseFeatureDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details': {'module': 'database_management', 'class': 'AutonomousDatabaseFeatureDetails'}})
+@cli_util.wrap_exceptions
+def enable_autonomous_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, feature_details, if_match):
+
+    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['featureDetails'] = cli_util.parse_json_parameter("feature_details", feature_details)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.enable_autonomous_database_management_feature(
+        autonomous_database_id=autonomous_database_id,
+        enable_autonomous_database_management_feature_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.enable_autonomous_database_management_feature_autonomous_database_sql_watch_feature_details.command_name', 'enable-autonomous-database-management-feature-autonomous-database-sql-watch-feature-details'), help=u"""Enables a Database Management feature for the specified Autonomous Database. \n[Command Reference](enableAutonomousDatabaseManagementFeature)""")
+@cli_util.option('--autonomous-database-id', required=True, help=u"""The [OCID] of the Autonomous Database.""")
+@cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--feature-details-connector-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'feature-details-database-connection-details': {'module': 'database_management', 'class': 'DatabaseConnectionDetails'}, 'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details-database-connection-details': {'module': 'database_management', 'class': 'DatabaseConnectionDetails'}, 'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
+@cli_util.wrap_exceptions
+def enable_autonomous_database_management_feature_autonomous_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, feature_details_database_connection_details, if_match, feature_details_connector_details):
+
+    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['featureDetails'] = {}
+    _details['featureDetails']['databaseConnectionDetails'] = cli_util.parse_json_parameter("feature_details_database_connection_details", feature_details_database_connection_details)
+
+    if feature_details_connector_details is not None:
+        _details['featureDetails']['connectorDetails'] = cli_util.parse_json_parameter("feature_details_connector_details", feature_details_connector_details)
+
+    _details['featureDetails']['feature'] = 'SQLWATCH'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.enable_autonomous_database_management_feature(
+        autonomous_database_id=autonomous_database_id,
+        enable_autonomous_database_management_feature_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.enable_autonomous_database_management_feature_autonomous_database_diagnostics_and_management_feature_details.command_name', 'enable-autonomous-database-management-feature-autonomous-database-diagnostics-and-management-feature-details'), help=u"""Enables a Database Management feature for the specified Autonomous Database. \n[Command Reference](enableAutonomousDatabaseManagementFeature)""")
+@cli_util.option('--autonomous-database-id', required=True, help=u"""The [OCID] of the Autonomous Database.""")
+@cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--feature-details-connector-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'feature-details-database-connection-details': {'module': 'database_management', 'class': 'DatabaseConnectionDetails'}, 'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details-database-connection-details': {'module': 'database_management', 'class': 'DatabaseConnectionDetails'}, 'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
+@cli_util.wrap_exceptions
+def enable_autonomous_database_management_feature_autonomous_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, feature_details_database_connection_details, if_match, feature_details_connector_details):
+
+    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['featureDetails'] = {}
+    _details['featureDetails']['databaseConnectionDetails'] = cli_util.parse_json_parameter("feature_details_database_connection_details", feature_details_database_connection_details)
+
+    if feature_details_connector_details is not None:
+        _details['featureDetails']['connectorDetails'] = cli_util.parse_json_parameter("feature_details_connector_details", feature_details_connector_details)
+
+    _details['featureDetails']['feature'] = 'DIAGNOSTICS_AND_MANAGEMENT'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.enable_autonomous_database_management_feature(
+        autonomous_database_id=autonomous_database_id,
+        enable_autonomous_database_management_feature_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -10314,6 +10576,7 @@ def list_database_parameters(ctx, from_json, all_pages, managed_database_id, sou
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name.""")
 @cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--is-cluster', type=click.BOOL, help=u"""The option to filter Database Management private endpoints that can used for Oracle Databases in a cluster. This should be used along with the vcnId query parameter.""")
+@cli_util.option('--is-dns-resolution-enabled', type=click.BOOL, help=u"""The option to filter Database Management private endpoints which are endbled with DNS proxy server. This should be used along with the vcnId query parameter. Only one of this parameter and IsClusterDbManagementPrivateEndpointQueryParam should be set to true at one time.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The lifecycle state of a resource.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -10326,7 +10589,7 @@ def list_database_parameters(ctx, from_json, all_pages, managed_database_id, sou
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'DbManagementPrivateEndpointCollection'})
 @cli_util.wrap_exceptions
-def list_db_management_private_endpoints(ctx, from_json, all_pages, page_size, compartment_id, name, vcn_id, is_cluster, lifecycle_state, limit, page, sort_order, sort_by):
+def list_db_management_private_endpoints(ctx, from_json, all_pages, page_size, compartment_id, name, vcn_id, is_cluster, is_dns_resolution_enabled, lifecycle_state, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -10338,6 +10601,8 @@ def list_db_management_private_endpoints(ctx, from_json, all_pages, page_size, c
         kwargs['vcn_id'] = vcn_id
     if is_cluster is not None:
         kwargs['is_cluster'] = is_cluster
+    if is_dns_resolution_enabled is not None:
+        kwargs['is_dns_resolution_enabled'] = is_dns_resolution_enabled
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     if limit is not None:
@@ -13670,6 +13935,203 @@ def load_sql_plan_baselines_from_cursor_cache_database_password_credential_detai
         load_sql_plan_baselines_from_cursor_cache_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.modify_autonomous_database_management_feature.command_name', 'modify-autonomous-database-management-feature'), help=u"""Modifies the Database Management feature for the specified Autonomous Database. \n[Command Reference](modifyAutonomousDatabaseManagementFeature)""")
+@cli_util.option('--autonomous-database-id', required=True, help=u"""The [OCID] of the Autonomous Database.""")
+@cli_util.option('--feature-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'feature-details': {'module': 'database_management', 'class': 'AutonomousDatabaseFeatureDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details': {'module': 'database_management', 'class': 'AutonomousDatabaseFeatureDetails'}})
+@cli_util.wrap_exceptions
+def modify_autonomous_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, feature_details, if_match):
+
+    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['featureDetails'] = cli_util.parse_json_parameter("feature_details", feature_details)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.modify_autonomous_database_management_feature(
+        autonomous_database_id=autonomous_database_id,
+        modify_autonomous_database_management_feature_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.modify_autonomous_database_management_feature_autonomous_database_sql_watch_feature_details.command_name', 'modify-autonomous-database-management-feature-autonomous-database-sql-watch-feature-details'), help=u"""Modifies the Database Management feature for the specified Autonomous Database. \n[Command Reference](modifyAutonomousDatabaseManagementFeature)""")
+@cli_util.option('--autonomous-database-id', required=True, help=u"""The [OCID] of the Autonomous Database.""")
+@cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--feature-details-connector-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'feature-details-database-connection-details': {'module': 'database_management', 'class': 'DatabaseConnectionDetails'}, 'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details-database-connection-details': {'module': 'database_management', 'class': 'DatabaseConnectionDetails'}, 'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
+@cli_util.wrap_exceptions
+def modify_autonomous_database_management_feature_autonomous_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, feature_details_database_connection_details, if_match, feature_details_connector_details):
+
+    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['featureDetails'] = {}
+    _details['featureDetails']['databaseConnectionDetails'] = cli_util.parse_json_parameter("feature_details_database_connection_details", feature_details_database_connection_details)
+
+    if feature_details_connector_details is not None:
+        _details['featureDetails']['connectorDetails'] = cli_util.parse_json_parameter("feature_details_connector_details", feature_details_connector_details)
+
+    _details['featureDetails']['feature'] = 'SQLWATCH'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.modify_autonomous_database_management_feature(
+        autonomous_database_id=autonomous_database_id,
+        modify_autonomous_database_management_feature_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.modify_autonomous_database_management_feature_autonomous_database_diagnostics_and_management_feature_details.command_name', 'modify-autonomous-database-management-feature-autonomous-database-diagnostics-and-management-feature-details'), help=u"""Modifies the Database Management feature for the specified Autonomous Database. \n[Command Reference](modifyAutonomousDatabaseManagementFeature)""")
+@cli_util.option('--autonomous-database-id', required=True, help=u"""The [OCID] of the Autonomous Database.""")
+@cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--feature-details-connector-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'feature-details-database-connection-details': {'module': 'database_management', 'class': 'DatabaseConnectionDetails'}, 'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details-database-connection-details': {'module': 'database_management', 'class': 'DatabaseConnectionDetails'}, 'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
+@cli_util.wrap_exceptions
+def modify_autonomous_database_management_feature_autonomous_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, feature_details_database_connection_details, if_match, feature_details_connector_details):
+
+    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['featureDetails'] = {}
+    _details['featureDetails']['databaseConnectionDetails'] = cli_util.parse_json_parameter("feature_details_database_connection_details", feature_details_database_connection_details)
+
+    if feature_details_connector_details is not None:
+        _details['featureDetails']['connectorDetails'] = cli_util.parse_json_parameter("feature_details_connector_details", feature_details_connector_details)
+
+    _details['featureDetails']['feature'] = 'DIAGNOSTICS_AND_MANAGEMENT'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.modify_autonomous_database_management_feature(
+        autonomous_database_id=autonomous_database_id,
+        modify_autonomous_database_management_feature_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

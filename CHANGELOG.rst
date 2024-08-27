@@ -6,6 +6,220 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.47.0 - 2024-08-27
+--------------------
+
+Changed
+~~~~~~~
+* [BREAKING] Document Understanding Service
+
+  * Support for the accepted value INSURANCE_CLAIM is removed and HEALTH_INSURANCE_ID is added in the documentType parameter
+
+     * ``oci ai-document analyze-document-result analyze-document --document-type health_insurance_id``
+
+   * The field tenancyId of a complex type parameter is removed in the following commands
+
+     * ``oci ai-document analyze-document-result analyze-document``
+     * ``oci ai-document analyze-document-result analyze-document-inline-document-details``
+     * ``oci ai-document analyze-document-result analyze-document-object-storage-document-details``
+     * ``oci ai-document processor-job create``
+     * ``oci ai-document processor-job create-processor-job-general-processor-config``
+     * ``oci ai-document processor-job create-processor-job-inline-document-content``
+     * ``oci ai-document processor-job create-processor-job-object-storage-locations``
+  
+* Vault Key Management Service
+
+  * Support for Cross-Region Replication for Virtual Vaults in Key Management Service
+ 
+    * ``oci kms management vault get`` 
+
+* Oracle Database Autonomous Recovery Service
+
+  * Support for new optional parameter in ZRCV cloud service
+
+    * ``oci recovery protected-database create --subscription-id``
+    * ``oci recovery protection-policy create --must-enforce-cloud-locality``
+
+* Oracle Cloud Vmware Solution Service
+
+  * Support for VMware Major and Minor Version Upgrade in Oracle Cloud VMware Solution
+
+    * ``oci ocvs sddc vmware-versions --version-to-upgrade ``
+
+* Database Service
+
+  * Support for provisioning Developer Autonomous Database.
+
+    * ``oci db autonomous-database create --is-dev-tier <boolean>``
+
+  * Support for specifying and upgrading a Developer Autonomous Database to Paid Autonomous Database
+
+    * ``oci db autonomous-database update --is-dev-tier <boolean>``
+
+* Load Balancing Service
+  
+  * Support for new optional parameter enabling inclusion of the Request Id of a request to the load balancer in a header attached to the request forwarded by the load balancer to one of its servers and in the response from the load balancer.
+
+    * ``oci lb load-balancer create --is-request-id-enabled``
+    * ``oci lb load-balancer update --is-request-id-enabled``
+
+  * Support for new optional parameter specifying the name of the header used to contain the Request Id.
+
+    * ``oci lb load-balancer create --request-id-header``
+    * ``oci lb load-balancer update --request-id-header``
+
+Added
+~~~~~~~
+
+* Delegate Access Control Service
+
+  * Support for the Delegate Access Control service
+
+    * ``oci delegate-access-control delegated-resource-access-request``
+    * ``oci delegate-access-control delegation-control``
+    * ``oci delegate-access-control delegation-subscription``
+    * ``oci delegate-access-control service-provider``
+    * ``oci delegate-access-control service-provider-action``
+    * ``oci delegate-access-control work-request``
+
+* Object Storage Service
+
+  * Support for Object Storage Private Endpoints
+
+    * ``oci os private-endpoint`` 
+
+* Database Management Service
+
+  * Support for SQL Watch
+
+    * ``oci database-management managed-database enable-external-container-database-management-feature``
+    * ``oci database-management managed-database enable-external-pluggable-database-management-feature``
+    * ``oci database-management managed-database enable-external-non-container-database-management-feature``
+    * ``oci database-management managed-database modify-database-management-feature``
+    * ``oci database-management managed-database modify-pluggable-database-management-feature``
+
+  * Support for advanced Database Management features for ADB
+
+    * ``oci database-management managed-database enable-autonomous-database-management-feature-autonomous-database-diagnostics-and-management-feature-details``
+
+* MySQL Database Service
+
+  * Support for Customer Email Notification in HeatWave Service
+
+    * ``oci mysql db-system clone --customer-contacts``
+    * ``oci mysql db-system create --customer-contacts``
+    * ``oci mysql db-system import --customer-contacts``
+    * ``oci mysql db-system update --customer-contacts``
+
+* File Storage Service
+
+  * Support for upgrade and downgrade shapes of High Performance Mount Targets
+
+    * ``oci fs mount-target upgrade-shape``
+    * ``oci fs mount-target schedule-downgrade-shape``
+    * ``oci fs mount-target cancel-downgrade-shape``
+
+* Database Service
+
+  * Support to change compartment of scheduling policy
+
+    * ``oci db scheduling-policy change-compartment --compartment-id | -c, --scheduling-policy-id, -? | -h | --help``
+
+  * Support to create a new scheduling policy
+
+    * ``oci db scheduling-policy create --cadence, --compartment-id | -c, --display-name, --cadence-start-month, --defined-tags, --freeform-tags, -? | -h | --help ``
+
+  * Support to delete a scheduling policy
+
+    * ``oci db scheduling-policy delete --scheduling-policy-id, --force, -? | -h | --help``
+
+  * Support to get a scheduling policy
+
+    * ``oci db scheduling-policy get --scheduling-policy-id, -? | -h | --help``
+
+  * Support to list scheduling policy
+
+    * ``oci db scheduling-policy list --compartment-id | -c, --all, --display-name, -? | -h | --help``
+
+  * Support to update a scheduling policy
+
+    * ``oci db scheduling-policy update --scheduling-policy-id, --cadence, --cadence-start-month, --display-name, --defined-tags, --force, --freeform-tags, -? | -h | --help``
+
+  * Support to create a scheduling window based on scheduling policy
+
+    * ``oci db scheduling-window create --scheduling-policy-id, --window-preference, --compartment-id | -c, --defined-tags, --freeform-tags, -? | -h | --help``
+
+  * Support to delete a scheduling window
+
+    * ``oci db scheduling-window delete --scheduling-policy-id, --scheduling-window-id, --force, -? | -h | --help``
+
+  * Support to get a scheduling window
+
+    * ``oci db scheduling-window get --scheduling-policy-id, --scheduling-window-id, -? | -h | --help``
+
+  * Support to list scheduling window
+
+    * ``oci db scheduling-window list --scheduling-policy-id, --all, --compartment-id | -c, --display-name, -? | -h | --help``
+
+  * Support to update a scheduling window
+
+    * ``oci db scheduling-window update --scheduling-policy-id, --scheduling-window-id, --defined-tags, --force, --freeform-tags, -? | -h | --help, --window-preference``
+
+  * Support for the Domain parameter in BaseDB Create DataGuard CLI 
+
+    * ``oci db data-guard-association create with-new-db-system``
+
+  * Support for scheduling plan, scheduled action, execution window and execution action as part of granular maintenance scheduling support for Exadata Infrastructure Components
+
+    * ``oci db action-param-values-summary list-params-for-action-type``
+    * ``oci db execution-action create``
+    * ``oci db execution-action delete``
+    * ``oci db execution-action get``
+    * ``oci db execution-action list``
+    * ``oci db execution-action move-execution-action-member``
+    * ``oci db execution-action update``
+    * ``oci db execution-window create``
+    * ``oci db execution-window delete``
+    * ``oci db execution-window get``
+    * ``oci db execution-window list``
+    * ``oci db execution-window reorder-execution-actions``
+    * ``oci db execution-window update``
+    * ``oci db execution-window cancel``
+    * ``oci db maintenance-run cancel``
+    * ``oci db recommended-scheduled-action-summary list-recommended-scheduled-actions``
+    * ``oci db scheduled-action create``
+    * ``oci db scheduled-action delete``
+    * ``oci db scheduled-action get``
+    * ``oci db scheduled-action list``
+    * ``oci db scheduled-action update``
+    * ``oci db scheduled-action update``
+    * ``oci db scheduling-plan change-compartment``
+    * ``oci db scheduling-plan create``
+    * ``oci db scheduling-plan delete``
+    * ``oci db scheduling-plan cascading-delete``
+    * ``oci db scheduling-plan get``
+    * ``oci db scheduling-plan list``
+    * ``oci db scheduling-plan reorder-scheduled-actions``
+
+* Oracle Database Autonomous Recovery Service
+
+  * Support for changing Protected Database Subscription in ZRCV cloud service
+
+    * ``oci recovery protected-database change-protected-database-subscription --protected-database-id, -? | -h | --help, --is-default, --subscription-id``
+
+* Web Application Firewall service
+
+  * Support for the DYNAMIC body variant in a RETURN_HTTP_RESPONSE action.
+
+    * ``oci waf web-app-firewall-policy create --actions [complex type]``
+    * ``oci waf web-app-firewall-policy update --actions [complex type]``
+
+* Announcements Service
+
+  * Support for listing all active service summary in OCI
+
+    * ``oci announce service list --compartment-id <root_compartment_id>``
+
 3.46.0 - 2024-08-20
 --------------------
 Removed

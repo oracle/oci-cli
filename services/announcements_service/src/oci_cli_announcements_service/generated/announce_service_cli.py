@@ -8,7 +8,7 @@ from oci_cli import cli_util
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('announcements_preferences.announce_service_group.command_name', 'announce'), cls=CommandGroupWithAlias, help=cli_util.override('announcements_preferences.announce_service_group.help', """Manage Oracle Cloud Infrastructure console announcements."""), short_help=cli_util.override('announcements_preferences.announce_service_group.short_help', """Announcements Service API"""))
+@cli.command(cli_util.override('service.announce_service_group.command_name', 'announce'), cls=CommandGroupWithAlias, help=cli_util.override('service.announce_service_group.help', """Manage Oracle Cloud Infrastructure console announcements."""), short_help=cli_util.override('service.announce_service_group.short_help', """Announcements Service API"""))
 @cli_util.help_option_group
 def announce_service_group():
     pass

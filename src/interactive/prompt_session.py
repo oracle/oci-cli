@@ -15,7 +15,7 @@ from interactive.utils import (
 )
 
 
-def create_oci_prompt_session(colors_enabled=True, bottom_toolbar=None):
+def create_oci_prompt_session(top_level_invoke_name='oci', colors_enabled=True, bottom_toolbar=None):
     """
     Setup resources and create Oci Prompt Session
     """
@@ -27,7 +27,8 @@ def create_oci_prompt_session(colors_enabled=True, bottom_toolbar=None):
 
     # Setup Style
     style = Style.from_dict(styles_dict)
-    cli_command = [("class:oci", "> oci ")]
+    msg_str = (f"class:{top_level_invoke_name}", f"> {top_level_invoke_name} ")
+    cli_command = [msg_str]
 
     # Create Session
     session = OciPromptSession(

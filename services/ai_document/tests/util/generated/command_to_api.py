@@ -2,6 +2,8 @@
 # Copyright (c) 2016, 2024, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
+    "ai_document.add_model_lock": "oci.ai_document.AIServiceDocumentClient.add_model_lock",
+    "ai_document.add_project_lock": "oci.ai_document.AIServiceDocumentClient.add_project_lock",
     "ai_document.analyze_document": "oci.ai_document.AIServiceDocumentClient.analyze_document",
     "ai_document.cancel_processor_job": "oci.ai_document.AIServiceDocumentClient.cancel_processor_job",
     "ai_document.cancel_work_request": "oci.ai_document.AIServiceDocumentClient.cancel_work_request",
@@ -22,6 +24,8 @@ SDK_client_map = {
     "ai_document.list_work_request_logs": "oci.ai_document.AIServiceDocumentClient.list_work_request_logs",
     "ai_document.list_work_requests": "oci.ai_document.AIServiceDocumentClient.list_work_requests",
     "ai_document.patch_model": "oci.ai_document.AIServiceDocumentClient.patch_model",
+    "ai_document.remove_model_lock": "oci.ai_document.AIServiceDocumentClient.remove_model_lock",
+    "ai_document.remove_project_lock": "oci.ai_document.AIServiceDocumentClient.remove_project_lock",
     "ai_document.update_model": "oci.ai_document.AIServiceDocumentClient.update_model",
     "ai_document.update_project": "oci.ai_document.AIServiceDocumentClient.update_project",
 }

@@ -40,7 +40,7 @@ kms_hsm_cluster_root_group.add_command(hsm_partition_group)
 
 
 @hsm_cluster_group.command(name=cli_util.override('kms_hsm_cluster.cancel_hsm_cluster_deletion.command_name', 'cancel-hsm-cluster-deletion'), help=u"""Cancels deletion of specified HSM Cluster, restores it and associated HSM partitions to pre-deletion states. \n[Command Reference](cancelHsmClusterDeletion)""")
-@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster.""")
+@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster. This is a unique identifier assigned to each hsmCluster.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "INITIALIZATION_REQUIRED", "INITIALIZING", "ACTIVATION_REQUIRED", "ACTIVATING", "ACTIVE", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -91,8 +91,8 @@ def cancel_hsm_cluster_deletion(ctx, from_json, wait_for_state, max_wait_seconds
 
 
 @hsm_cluster_group.command(name=cli_util.override('kms_hsm_cluster.change_hsm_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a HSM Cluster resource to a different compartment within the same tenancy. \n[Command Reference](changeHsmClusterCompartment)""")
-@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the hsm to.""")
+@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster. This is a unique identifier assigned to each hsmCluster.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the hsm cluster to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -122,8 +122,8 @@ def change_hsm_cluster_compartment(ctx, from_json, hsm_cluster_id, compartment_i
 
 
 @hsm_cluster_group.command(name=cli_util.override('kms_hsm_cluster.create_hsm_cluster.command_name', 'create'), help=u"""Creates a new HSM cluster resource. \n[Command Reference](createHsmCluster)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to create this HSM resource.""")
-@cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the HSM resource. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to create this HSM cluster resource.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly display name for the HSM cluster resource. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "INITIALIZATION_REQUIRED", "INITIALIZING", "ACTIVATION_REQUIRED", "ACTIVATING", "ACTIVE", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -181,7 +181,7 @@ def create_hsm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @hsm_cluster_group.command(name=cli_util.override('kms_hsm_cluster.download_certificate_signing_request.command_name', 'download-certificate-signing-request'), help=u"""Retrieves the certificate signing request for the designated HSM Cluster resource. \n[Command Reference](downloadCertificateSigningRequest)""")
-@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster.""")
+@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster. This is a unique identifier assigned to each hsmCluster.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -208,7 +208,7 @@ def download_certificate_signing_request(ctx, from_json, hsm_cluster_id, if_matc
 @hsm_cluster_group.command(name=cli_util.override('kms_hsm_cluster.get_hsm_cluster.command_name', 'get'), help=u"""Retrieves configuration details for the specified HSM Cluster resource.
 
 As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning read operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning read operations exceeds 10 requests per second for a given tenancy. \n[Command Reference](getHsmCluster)""")
-@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster.""")
+@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster. This is a unique identifier assigned to each hsmCluster.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -230,8 +230,8 @@ def get_hsm_cluster(ctx, from_json, hsm_cluster_id):
 
 
 @hsm_partition_group.command(name=cli_util.override('kms_hsm_cluster.get_hsm_partition.command_name', 'get'), help=u"""Retrieves HSM partition details for the specified HSM cluster. \n[Command Reference](getHsmPartition)""")
-@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster.""")
-@cli_util.option('--hsm-partition-id', required=True, help=u"""The OCID of the HSM Partition.""")
+@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster. This is a unique identifier assigned to each hsmCluster.""")
+@cli_util.option('--hsm-partition-id', required=True, help=u"""The OCID of the HSM Partition. This is a unique identifier which each hsmPartition will have.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -257,7 +257,7 @@ def get_hsm_partition(ctx, from_json, hsm_cluster_id, hsm_partition_id):
 
 
 @hsm_cluster_group.command(name=cli_util.override('kms_hsm_cluster.get_pre_co_user_credentials.command_name', 'get-pre-co-user-credentials'), help=u"""Retrieves Pre Crypto Officer user credentials for the specified HSM cluster. \n[Command Reference](getPreCoUserCredentials)""")
-@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster.""")
+@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster. This is a unique identifier assigned to each hsmCluster.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -335,12 +335,12 @@ def list_hsm_clusters(ctx, from_json, all_pages, page_size, compartment_id, limi
 
 
 @hsm_partition_group.command(name=cli_util.override('kms_hsm_cluster.list_hsm_partitions.command_name', 'list'), help=u"""Lists all HSM partitions within the specified HSM Cluster resource. \n[Command Reference](listHsmPartitions)""")
-@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster.""")
+@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster. This is a unique identifier assigned to each hsmCluster.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can specify only one sort order. The default order for `TIMECREATED` is descending. The default order for `DISPLAYNAME` is ascending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "ACTIVATING", "ACTIVATION_REQUIRED"]), help=u"""A filter that returns only resources that match the specified lifecycle state. The state value is case-insensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "ACTIVATING", "ACTIVATION_REQUIRED", "SCHEDULING_DELETION", "PENDING_DELETION", "DELETING", "DELETED"]), help=u"""A filter that returns only resources that match the specified lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -395,7 +395,7 @@ def list_hsm_partitions(ctx, from_json, all_pages, page_size, hsm_cluster_id, li
 
 
 @hsm_cluster_group.command(name=cli_util.override('kms_hsm_cluster.schedule_hsm_cluster_deletion.command_name', 'schedule-hsm-cluster-deletion'), help=u"""Schedules HSM cluster for deletion, update its lifecycle state to 'PENDING_DELETION' and deletes it after the retention period. \n[Command Reference](scheduleHsmClusterDeletion)""")
-@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster.""")
+@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster. This is a unique identifier assigned to each hsmCluster.""")
 @cli_util.option('--time-of-deletion', type=custom_types.CLI_DATETIME, help=u"""An optional property indicating when to delete the HsmCluster resource, expressed in [RFC 3339] timestamp format. The specified time must be between 7 and 30 days from the time when the request is received. If this property is missing, it will be set to 30 days from the time of the request by default.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "INITIALIZATION_REQUIRED", "INITIALIZING", "ACTIVATION_REQUIRED", "ACTIVATING", "ACTIVE", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -456,7 +456,7 @@ def schedule_hsm_cluster_deletion(ctx, from_json, wait_for_state, max_wait_secon
 @hsm_cluster_group.command(name=cli_util.override('kms_hsm_cluster.update_hsm_cluster.command_name', 'update'), help=u"""Modifies properties of an HSM cluster resource, including `displayName`, `freeformTags` and `definedTags`.
 
 As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy. \n[Command Reference](updateHsmCluster)""")
-@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster.""")
+@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster. This is a unique identifier assigned to each hsmCluster.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name for the HSM resource. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -528,9 +528,9 @@ def update_hsm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
 
 @hsm_cluster_group.command(name=cli_util.override('kms_hsm_cluster.upload_partition_certificates.command_name', 'upload-partition-certificates'), help=u"""Uploads the partition owner certificates to the HSM Cluster resource. \n[Command Reference](uploadPartitionCertificates)""")
-@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster.""")
-@cli_util.option('--partition-certificate', required=True, help=u"""Base64 encoded (StandardCharsets.UTF_8) Partition Certificate.""")
-@cli_util.option('--partition-owner-certificate', required=True, help=u"""Base64 encoded (StandardCharsets.UTF_8) Partition Owner Certificate.""")
+@cli_util.option('--hsm-cluster-id', required=True, help=u"""The OCID of the HSM Cluster. This is a unique identifier assigned to each hsmCluster.""")
+@cli_util.option('--partition-certificate', required=True, help=u"""Base64 encoded (StandardCharsets.UTF_8) Partition Certificate, which gets created when the CSR is signed.""")
+@cli_util.option('--partition-owner-certificate', required=True, help=u"""Base64 encoded (StandardCharsets.UTF_8) Partition Owner Certificate, which is used to help sign the CSR.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option

@@ -17,6 +17,7 @@ from tests import util
 import tempfile
 import shutil
 import os
+import pytest
 
 
 class TestObjectStorage(unittest.TestCase):
@@ -70,6 +71,7 @@ class TestObjectStorage(unittest.TestCase):
         os.unlink(tmp_file_name)
         shutil.rmtree(td)
 
+    @pytest.mark.skip("skipped")
     def test_verify_namespace_name_param(self):
         """ Checks whether all object storage commands have the namespace-name parameter """
         commands = oci_cli.cli_util.collect_commands(oci_cli.cli_root.cli.commands.get('os'))

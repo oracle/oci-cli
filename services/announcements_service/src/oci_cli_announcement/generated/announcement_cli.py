@@ -22,6 +22,12 @@ def announcement_root_group():
     pass
 
 
+@click.command(cli_util.override('announcement.announcement_compartment_group.command_name', 'announcement-compartment'), cls=CommandGroupWithAlias, help="""Compartment details of an announcement.""")
+@cli_util.help_option_group
+def announcement_compartment_group():
+    pass
+
+
 @click.command(cli_util.override('announcement.announcements_collection_group.command_name', 'announcements-collection'), cls=CommandGroupWithAlias, help="""A list of announcements that match filter criteria, if any. Results contain both the announcements and the user-specific status of the announcements.""")
 @cli_util.help_option_group
 def announcements_collection_group():
@@ -41,6 +47,7 @@ def announcement_group():
 
 
 announce_service_cli.announce_service_group.add_command(announcement_root_group)
+announcement_root_group.add_command(announcement_compartment_group)
 announcement_root_group.add_command(announcements_collection_group)
 announcement_root_group.add_command(announcement_user_status_details_group)
 announcement_root_group.add_command(announcement_group)
@@ -64,6 +71,28 @@ def get_announcement(ctx, from_json, announcement_id):
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('announcements_service', 'announcement', ctx)
     result = client.get_announcement(
+        announcement_id=announcement_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@announcement_compartment_group.command(name=cli_util.override('announcement.get_announcement_compartment.command_name', 'get'), help=u"""Gets the compartment details of an announcement. \n[Command Reference](getAnnouncementCompartment)""")
+@cli_util.option('--announcement-id', required=True, help=u"""The OCID of the announcement.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'announcements_service', 'class': 'AnnouncementCompartment'})
+@cli_util.wrap_exceptions
+def get_announcement_compartment(ctx, from_json, announcement_id):
+
+    if isinstance(announcement_id, six.string_types) and len(announcement_id.strip()) == 0:
+        raise click.UsageError('Parameter --announcement-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('announcements_service', 'announcement', ctx)
+    result = client.get_announcement_compartment(
         announcement_id=announcement_id,
         **kwargs
     )
@@ -109,7 +138,7 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.option('--time-one-latest-time', type=custom_types.CLI_DATETIME, help=u"""The boundary for the latest `timeOneValue` date on announcements that you want to see.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--environment-name', help=u"""A filter to return only announcements that match a specific environment name.""")
 @cli_util.option('--service', help=u"""A filter to return only announcements affecting a specific service.""")
-@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["IAAS", "SAAS"]), help=u"""A filter to return only announcements affecting a specific platform.""")
+@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["IAAS", "SAAS", "PAAS"]), help=u"""A filter to return only announcements affecting a specific platform.""")
 @cli_util.option('--exclude-announcement-types', multiple=True, help=u"""Exclude The type of announcement.""")
 @cli_util.option('--should-show-only-latest-in-chain', type=click.BOOL, help=u"""A filter to display only the latest announcement in a chain.""")
 @cli_util.option('--chain-id', help=u"""A filter to return only announcements belonging to the specified announcement chain ID.""")

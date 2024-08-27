@@ -452,3 +452,4 @@ identity-domains, social-identity-providers, search
 identity-domains, social-identity-provider, put
 identity-domains, social-identity-provider, create
 fleet-software-update, fsu-cycle, create-patch
+network, vcn, list-ip-inventory

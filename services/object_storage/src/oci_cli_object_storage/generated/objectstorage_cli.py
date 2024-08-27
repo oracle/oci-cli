@@ -52,6 +52,12 @@ def work_request_error_group():
     pass
 
 
+@click.command(cli_util.override('os.private_endpoint_group.command_name', 'private-endpoint'), cls=CommandGroupWithAlias, help="""A private endpoint makes your service accessible through a private IP in the customer's private network. A private endpoint has a name and is associated with a namespace and a single compartment.""")
+@cli_util.help_option_group
+def private_endpoint_group():
+    pass
+
+
 @click.command(cli_util.override('os.retention_rule_group.command_name', 'retention-rule'), cls=CommandGroupWithAlias, help="""The details of a retention rule.""")
 @cli_util.help_option_group
 def retention_rule_group():
@@ -100,6 +106,7 @@ os_root_group.add_command(bucket_group)
 os_root_group.add_command(object_lifecycle_policy_group)
 os_root_group.add_command(multipart_upload_group)
 os_root_group.add_command(work_request_error_group)
+os_root_group.add_command(private_endpoint_group)
 os_root_group.add_command(retention_rule_group)
 os_root_group.add_command(work_request_log_entry_group)
 os_root_group.add_command(work_request_group)
@@ -527,6 +534,94 @@ def create_preauthenticated_request(ctx, from_json, namespace_name, bucket_name,
     cli_util.render_response(result, ctx)
 
 
+@private_endpoint_group.command(name=cli_util.override('os.create_private_endpoint.command_name', 'create'), help=u"""Create a PrivateEndpoint. \n[Command Reference](createPrivateEndpoint)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
+@cli_util.option('--name', required=True, help=u"""This name associated with the endpoint. Valid characters are uppercase or lowercase letters, numbers, hyphens,  underscores, and periods. Example: my-new-private-endpoint1""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to create the Private Endpoint.""")
+@cli_util.option('--subnet-id', required=True, help=u"""The OCID of the customer's subnet where the private endpoint VNIC will reside.""")
+@cli_util.option('--prefix', required=True, help=u"""A prefix to use for the private endpoint. The customer VCN's DNS records are updated with this prefix. The prefix input from the customer will be the first sub-domain in the endpointFqdn. Example: If the prefix chosen is \"abc\", then the endpointFqdn will be 'abc.private.objectstorage.<region>.oraclecloud.com'""")
+@cli_util.option('--access-targets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of targets that can be accessed by the private endpoint.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-prefixes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of additional prefix that you can provide along with any other prefix. These resulting endpointFqdn's are added to the customer VCN's DNS record.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--private-endpoint-ip', help=u"""The private IP address to assign to this private endpoint. If you provide a value, it must be an available IP address in the customer's subnet. If it's not available, an error is returned.
+
+If you do not provide a value, an available IP address in the subnet is automatically chosen.""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the OCIDs of the network security groups (NSGs) to add the private endpoint's VNIC to. For more information about NSGs, see [NetworkSecurityGroup].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "COMPLETED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'additional-prefixes': {'module': 'object_storage', 'class': 'list[string]'}, 'nsg-ids': {'module': 'object_storage', 'class': 'list[string]'}, 'access-targets': {'module': 'object_storage', 'class': 'list[AccessTargetDetails]'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'additional-prefixes': {'module': 'object_storage', 'class': 'list[string]'}, 'nsg-ids': {'module': 'object_storage', 'class': 'list[string]'}, 'access-targets': {'module': 'object_storage', 'class': 'list[AccessTargetDetails]'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def create_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, name, compartment_id, subnet_id, prefix, access_targets, additional_prefixes, private_endpoint_ip, nsg_ids, freeform_tags, defined_tags):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['compartmentId'] = compartment_id
+    _details['subnetId'] = subnet_id
+    _details['prefix'] = prefix
+    _details['accessTargets'] = cli_util.parse_json_parameter("access_targets", access_targets)
+
+    if additional_prefixes is not None:
+        _details['additionalPrefixes'] = cli_util.parse_json_parameter("additional_prefixes", additional_prefixes)
+
+    if private_endpoint_ip is not None:
+        _details['privateEndpointIp'] = private_endpoint_ip
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
+    result = client.create_private_endpoint(
+        namespace_name=namespace_name,
+        create_private_endpoint_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @replication_group.command(name=cli_util.override('os.create_replication_policy.command_name', 'create-replication-policy'), help=u"""Creates a replication policy for the specified bucket. \n[Command Reference](createReplicationPolicy)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
@@ -738,6 +833,67 @@ def delete_preauthenticated_request(ctx, from_json, namespace_name, bucket_name,
         par_id=par_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@private_endpoint_group.command(name=cli_util.override('os.delete_private_endpoint.command_name', 'delete'), help=u"""Deletes a Private Endpoint if it exists in the given namespace. \n[Command Reference](deletePrivateEndpoint)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
+@cli_util.option('--pe-name', required=True, help=u"""The name of the private endpoint. Avoid entering confidential information. Example: `my-new-pe-1`""")
+@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "COMPLETED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, pe_name, if_match):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(pe_name, six.string_types) and len(pe_name.strip()) == 0:
+        raise click.UsageError('Parameter --pe-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
+    result = client.delete_private_endpoint(
+        namespace_name=namespace_name,
+        pe_name=pe_name,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1040,6 +1196,39 @@ def get_preauthenticated_request(ctx, from_json, namespace_name, bucket_name, pa
         namespace_name=namespace_name,
         bucket_name=bucket_name,
         par_id=par_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@private_endpoint_group.command(name=cli_util.override('os.get_private_endpoint.command_name', 'get'), help=u"""Gets the current representation of the given Private Endpoint in the given Object Storage namespace. \n[Command Reference](getPrivateEndpoint)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
+@cli_util.option('--pe-name', required=True, help=u"""The name of the private endpoint. Avoid entering confidential information. Example: `my-new-pe-1`""")
+@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
+@cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. Wildcards ('*') are not allowed. If the specified ETag does not match the ETag of the existing resource, the request returns the expected response. If the ETag matches the ETag of the existing resource, the request returns an HTTP 304 status without a response body.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'object_storage', 'class': 'PrivateEndpoint'})
+@cli_util.wrap_exceptions
+def get_private_endpoint(ctx, from_json, namespace_name, pe_name, if_match, if_none_match):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(pe_name, six.string_types) and len(pe_name.strip()) == 0:
+        raise click.UsageError('Parameter --pe-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if if_none_match is not None:
+        kwargs['if_none_match'] = if_none_match
+    kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
+    result = client.get_private_endpoint(
+        namespace_name=namespace_name,
+        pe_name=pe_name,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1411,12 +1600,12 @@ To use this and other API operations, you must be authorized in an IAM policy. I
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--prefix', help=u"""The string to use for matching against the start of object names in a list query.""")
-@cli_util.option('--start', help=u"""Object names returned by a list query must be greater or equal to this parameter.""")
-@cli_util.option('--end', help=u"""Object names returned by a list query must be strictly less than this parameter.""")
+@cli_util.option('--start', help=u"""Returns object names which are lexicographically greater than or equal to this parameter.""")
+@cli_util.option('--end', help=u"""Returns object names which are lexicographically strictly less than this parameter.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--delimiter', help=u"""When this parameter is set, only objects whose names do not contain the delimiter character (after an optionally specified prefix) are returned in the objects key of the response body. Scanned objects whose names contain the delimiter have the part of their name up to the first occurrence of the delimiter (including the optional prefix) returned as a set of prefixes. Note that only '/' is a supported delimiter character at this time.""")
 @cli_util.option('--fields', help=u"""Object summary by default includes only the 'name' field. Use this parameter to also include 'size' (object size in bytes), 'etag', 'md5', 'timeCreated' (object creation date and time), 'timeModified' (object modification date and time), 'storageTier' and 'archivalState' fields. Specify the value of this parameter as a comma-separated, case-insensitive list of those field names. For example 'name,etag,timeCreated,md5,timeModified,storageTier,archivalState'. Allowed values are: name, size, etag, timeCreated, md5, timeModified, storageTier, archivalState""")
-@cli_util.option('--start-after', help=u"""Object names returned by a list query must be greater than this parameter.""")
+@cli_util.option('--start-after', help=u"""Returns object names which are lexicographically strictly greater than this parameter.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -1491,12 +1680,12 @@ To use this and other API operations, you must be authorized in an IAM policy. I
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--prefix', help=u"""The string to use for matching against the start of object names in a list query.""")
-@cli_util.option('--start', help=u"""Object names returned by a list query must be greater or equal to this parameter.""")
-@cli_util.option('--end', help=u"""Object names returned by a list query must be strictly less than this parameter.""")
+@cli_util.option('--start', help=u"""Returns object names which are lexicographically greater than or equal to this parameter.""")
+@cli_util.option('--end', help=u"""Returns object names which are lexicographically strictly less than this parameter.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--delimiter', help=u"""When this parameter is set, only objects whose names do not contain the delimiter character (after an optionally specified prefix) are returned in the objects key of the response body. Scanned objects whose names contain the delimiter have the part of their name up to the first occurrence of the delimiter (including the optional prefix) returned as a set of prefixes. Note that only '/' is a supported delimiter character at this time.""")
 @cli_util.option('--fields', help=u"""Object summary by default includes only the 'name' field. Use this parameter to also include 'size' (object size in bytes), 'etag', 'md5', 'timeCreated' (object creation date and time), 'timeModified' (object modification date and time), 'storageTier' and 'archivalState' fields. Specify the value of this parameter as a comma-separated, case-insensitive list of those field names. For example 'name,etag,timeCreated,md5,timeModified,storageTier,archivalState'. Allowed values are: name, size, etag, timeCreated, md5, timeModified, storageTier, archivalState""")
-@cli_util.option('--start-after', help=u"""Object names returned by a list query must be greater than this parameter.""")
+@cli_util.option('--start-after', help=u"""Returns object names which are lexicographically strictly greater than this parameter.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1592,6 +1781,67 @@ def list_preauthenticated_requests(ctx, from_json, all_pages, page_size, namespa
         result = client.list_preauthenticated_requests(
             namespace_name=namespace_name,
             bucket_name=bucket_name,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@private_endpoint_group.command(name=cli_util.override('os.list_private_endpoints.command_name', 'list'), help=u"""Gets a list of all PrivateEndpointSummary in a compartment associated with a namespace. To use this and other API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies]. \n[Command Reference](listPrivateEndpoints)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list buckets.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["tags"]), multiple=True, help=u"""PrivateEndpoint summary in list of PrivateEndpoints includes the 'namespace', 'name', 'compartmentId', 'createdBy', 'timeCreated', 'timeModified' and 'etag' fields. This parameter can also include 'tags' (freeformTags and definedTags). The only supported value of this parameter is 'tags' for now. Example 'tags'.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""The lifecycle state of the Private Endpoint""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'object_storage', 'class': 'list[PrivateEndpointSummary]'})
+@cli_util.wrap_exceptions
+def list_private_endpoints(ctx, from_json, all_pages, page_size, namespace_name, compartment_id, limit, page, fields, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if fields is not None and len(fields) > 0:
+        kwargs['fields'] = fields
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_private_endpoints,
+            namespace_name=namespace_name,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_private_endpoints,
+            limit,
+            page_size,
+            namespace_name=namespace_name,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_private_endpoints(
+            namespace_name=namespace_name,
+            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -1855,6 +2105,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 @work_request_group.command(name=cli_util.override('os.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list buckets.""")
+@cli_util.option('--private-endpoint-name', help=u"""The name of the privateEndpoint for which to list work requests.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1864,12 +2115,14 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'object_storage', 'class': 'list[WorkRequestSummary]'})
 @cli_util.wrap_exceptions
-def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, page, limit):
+def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, private_endpoint_name, page, limit):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if private_endpoint_name is not None:
+        kwargs['private_endpoint_name'] = private_endpoint_name
     if page is not None:
         kwargs['page'] = page
     if limit is not None:
@@ -1941,7 +2194,7 @@ See [Special Instructions for Object Storage PUT] for request signature requirem
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
 @cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the resource already exists.""")
 @cli_util.option('--expect', help=u"""A value of `100-continue` requests preliminary verification of the request method, path, and headers before the request body is sent. If no error results from such verification, the server will send a 100 (Continue) interim response to indicate readiness for the request body. The only allowed value for this parameter is \"100-Continue\" (case-insensitive).""")
-@cli_util.option('--content-md5', help=u"""The optional base-64 header that defines the encoded MD5 hash of the body. If the optional Content-MD5 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the MD5 hash for the body and comparing it to the MD5 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content MD5 error is returned with the message:
+@cli_util.option('--content-md5', help=u"""The optional header that defines the base64-encoded MD5 hash of the body. If the optional Content-MD5 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the MD5 hash for the body and comparing it to the MD5 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content MD5 error is returned with the message:
 
 \"The computed MD5 of the request body (ACTUAL_MD5) does not match the Content-MD5 header (HEADER_MD5)\"""")
 @cli_util.option('--content-type', help=u"""The optional Content-Type header that defines the standard MIME type format of the object. Content type defaults to 'application/octet-stream' if not specified in the PutObject call. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to identify and perform special operations on text only objects.""")
@@ -2233,7 +2486,7 @@ def rename_object(ctx, from_json, namespace_name, bucket_name, source_name, new_
     cli_util.render_response(result, ctx)
 
 
-@object_group.command(name=cli_util.override('os.restore_objects.command_name', 'restore'), help=u"""Restores one or more objects specified by the objectName parameter. By default objects will be restored for 24 hours. Duration can be configured using the hours parameter. \n[Command Reference](restoreObjects)""")
+@object_group.command(name=cli_util.override('os.restore_objects.command_name', 'restore'), help=u"""Restores the object specified by the objectName parameter. By default object will be restored for 24 hours. Duration can be configured using the hours parameter. \n[Command Reference](restoreObjects)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help=u"""An object that is in an archive storage tier and needs to be restored.""")
@@ -2424,6 +2677,96 @@ def update_object_storage_tier(ctx, from_json, namespace_name, bucket_name, obje
     cli_util.render_response(result, ctx)
 
 
+@private_endpoint_group.command(name=cli_util.override('os.update_private_endpoint.command_name', 'update'), help=u"""Performs a partial or full update of a user-defined data associated with the Private Endpoint.
+
+Use UpdatePrivateEndpoint to move a Private Endpoint from one compartment to another within the same tenancy. Supply the compartmentID of the compartment that you want to move the Private Endpoint to. Or use it to update the name, subnetId, endpointFqdn or privateEndpointIp or accessTargets of the Private Endpoint. For more information about moving resources between compartments, see [Moving Resources to a Different Compartment].
+
+This API follows replace semantics (rather than merge semantics). That means if the body provides values for parameters and the resource has exisiting ones, this operation will replace those existing values. \n[Command Reference](updatePrivateEndpoint)""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
+@cli_util.option('--pe-name', required=True, help=u"""The name of the private endpoint. Avoid entering confidential information. Example: `my-new-pe-1`""")
+@cli_util.option('--name', help=u"""This name associated with the endpoint. Valid characters are uppercase or lowercase letters, numbers, hyphens,  underscores, and periods. Example: my-new-private-endpoint1""")
+@cli_util.option('--namespace', help=u"""The Object Storage namespace which will associated with the private endpoint.""")
+@cli_util.option('--access-targets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of targets that can be accessed by the private endpoint.
+
+This option is a JSON list with items of type AccessTargetDetails.  For documentation on AccessTargetDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/objectstorage/20160918/datatypes/AccessTargetDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "COMPLETED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'access-targets': {'module': 'object_storage', 'class': 'list[AccessTargetDetails]'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'access-targets': {'module': 'object_storage', 'class': 'list[AccessTargetDetails]'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, pe_name, name, namespace, access_targets, freeform_tags, defined_tags, if_match):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(pe_name, six.string_types) and len(pe_name.strip()) == 0:
+        raise click.UsageError('Parameter --pe-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if name is not None:
+        _details['name'] = name
+
+    if namespace is not None:
+        _details['namespace'] = namespace
+
+    if access_targets is not None:
+        _details['accessTargets'] = cli_util.parse_json_parameter("access_targets", access_targets)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
+    result = client.update_private_endpoint(
+        namespace_name=namespace_name,
+        pe_name=pe_name,
+        update_private_endpoint_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @retention_rule_group.command(name=cli_util.override('os.update_retention_rule.command_name', 'update'), help=u"""Updates the specified retention rule. Rule changes take effect typically within 30 seconds. \n[Command Reference](updateRetentionRule)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
@@ -2491,7 +2834,7 @@ def update_retention_rule(ctx, from_json, force, namespace_name, bucket_name, re
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match with the ETag of an existing resource. If the specified ETag matches the ETag of the existing resource, GET and HEAD requests will return the resource and PUT and POST requests will upload the resource.""")
 @cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the resource already exists.""")
 @cli_util.option('--expect', help=u"""A value of `100-continue` requests preliminary verification of the request method, path, and headers before the request body is sent. If no error results from such verification, the server will send a 100 (Continue) interim response to indicate readiness for the request body. The only allowed value for this parameter is \"100-Continue\" (case-insensitive).""")
-@cli_util.option('--content-md5', help=u"""The optional base-64 header that defines the encoded MD5 hash of the body. If the optional Content-MD5 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the MD5 hash for the body and comparing it to the MD5 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content MD5 error is returned with the message:
+@cli_util.option('--content-md5', help=u"""The optional header that defines the base64-encoded MD5 hash of the body. If the optional Content-MD5 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the MD5 hash for the body and comparing it to the MD5 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content MD5 error is returned with the message:
 
 \"The computed MD5 of the request body (ACTUAL_MD5) does not match the Content-MD5 header (HEADER_MD5)\"""")
 @cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")

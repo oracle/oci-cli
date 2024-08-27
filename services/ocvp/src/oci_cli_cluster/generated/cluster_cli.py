@@ -170,7 +170,7 @@ def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cluster_group.command(name=cli_util.override('cluster.delete_cluster.command_name', 'delete'), help=u"""Deletes the specified Cluster, along with the other resources that were created with the Cluster. For example: the Compute instances, DNS records, and so on.
 
 Use the [WorkRequest] operations to track the deletion of the Cluster. \n[Command Reference](deleteCluster)""")
-@cli_util.option('--cluster-id', required=True, help=u"""The [OCID] of the Cluster.""")
+@cli_util.option('--cluster-id', required=True, help=u"""The [OCID] of the SDDC Cluster.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -226,7 +226,7 @@ def delete_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 
 @cluster_group.command(name=cli_util.override('cluster.get_cluster.command_name', 'get'), help=u"""Gets the specified Cluster's information. \n[Command Reference](getCluster)""")
-@cli_util.option('--cluster-id', required=True, help=u"""The [OCID] of the Cluster.""")
+@cli_util.option('--cluster-id', required=True, help=u"""The [OCID] of the SDDC Cluster.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -314,7 +314,7 @@ def list_clusters(ctx, from_json, all_pages, page_size, sddc_id, display_name, l
 @cluster_group.command(name=cli_util.override('cluster.update_cluster.command_name', 'update'), help=u"""Updates the specified Cluster.
 
 **Important:** Updating a Cluster affects only certain attributes in the `Cluster` object and does not affect the VMware environment currently running in the Cluster. \n[Command Reference](updateCluster)""")
-@cli_util.option('--cluster-id', required=True, help=u"""The [OCID] of the Cluster.""")
+@cli_util.option('--cluster-id', required=True, help=u"""The [OCID] of the SDDC Cluster.""")
 @cli_util.option('--display-name', help=u"""The [OCID] of the Cluster. Cluster name requirements are 1-16 character length limit, Must start with a letter, Must be English letters, numbers, - only, No repeating hyphens, Must be unique within the region.""")
 @cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vmware-software-version', help=u"""The version of bundled VMware software that the Oracle Cloud VMware Solution will install on any new ESXi hosts that you add to this Cluster in the future. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")

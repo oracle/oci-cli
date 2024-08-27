@@ -9,7 +9,8 @@ from oci_cli.cli_root import cli
 from . import utils
 from prompt_toolkit.document import Document
 from prompt_toolkit.completion import CompleteEvent
-import pytest
+from oci_cli.service_mapping import service_mapping
+from oci_cli import dynamic_loader
 
 
 class TestAutoPrompt(unittest.TestCase):
@@ -27,11 +28,10 @@ class TestAutoPrompt(unittest.TestCase):
         except Exception:
             self.fail('Failed to run cli with interactive parameters')
 
-    @pytest.mark.skip('Skipped to allow master build')
     def test_root_command_suggestion(self):
         # This function is to test the commands suggestions on the root level
         ctx = utils.set_up_context(cli)
-        completer = OciShellCompleter(ctx)
+        completer = OciShellCompleter(ctx, service_mapping, dynamic_loader)
         document = Document('', 0)
         completions = completer.get_completions(document, CompleteEvent())
         expected_list = utils.get_expected_commands_list(cli, cli)
@@ -50,7 +50,7 @@ class TestAutoPrompt(unittest.TestCase):
 
         subcommands = getattr(current_command, "commands", {})
         for subcommand_name, subcommand_obj in subcommands.items():
-            completer = OciShellCompleter(ctx)
+            completer = OciShellCompleter(ctx, service_mapping, dynamic_loader)
             document = Document(previous_document_text + subcommand_name + ' ',
                                 previous_curser_position + len(subcommand_name) + 1)
             completions = completer.get_completions(document, CompleteEvent())
@@ -72,11 +72,12 @@ class TestAutoPrompt(unittest.TestCase):
         subcommands = getattr(command, "commands", {})
         if not subcommands:  # The base case is here, no subcommands means we are at the parameters level
             expected_parameters_list = utils.get_expected_commands_list(root_command, command)
+            expected_parameters_list = list(set(expected_parameters_list))
             # Now the expected_parameters_list has the parameters list for the command
             # let's test if taking out one parameter from this list and adding it to the document along with a fake
             # value, it should return the same parameters list excluding the parameter which was provided
 
-            completer = OciShellCompleter(ctx)
+            completer = OciShellCompleter(ctx, service_mapping, dynamic_loader)
             if expected_parameters_list:
                 first_parameter = expected_parameters_list[0]
                 multiple_dict = {x.name: x.multiple for x in command.params}
@@ -87,12 +88,7 @@ class TestAutoPrompt(unittest.TestCase):
                                     previous_curser_position + len(first_parameter) + 3)
                 completions = completer.get_completions(document, CompleteEvent())
                 actual_parameters_list = [completion.text for completion in completions]
-                if len(actual_parameters_list) != len(expected_parameters_list):
-                    print(first_parameter)
-                    print(vars(command))
-                    print(actual_parameters_list)
-                    print(expected_parameters_list)
-
+                actual_parameters_list = list(set(actual_parameters_list))
                 self.assertCountEqual(actual_parameters_list, expected_parameters_list)
 
         for subcommand_name, subcommand_obj in subcommands.items():
@@ -100,3 +96,32 @@ class TestAutoPrompt(unittest.TestCase):
                                 previous_curser_position + len(subcommand_name) + 1)
             self._recursively_test_parameters_exclusion_suggestion(root_command, ctx, subcommand_obj, document.text,
                                                                    document.cursor_position)
+
+    options = {
+        '--config-file': '~/.oci/config',
+        '--auth': 'api_key',
+        '--region': 'us-phoenix-1',
+        '--auth-purpose': 'dummy-text',
+        '--cert-bundle': 'dummy-text',
+        '--profile': 'DEFAULT'
+    }
+
+    def test_cli_authentication_in_interactive_mode(self):
+        # Test if --config-file option works in interactive-cli-mode
+        for option, value in self.options.items():
+            with self.subTest(option=option, value=value):
+                try:
+                    runner1 = CliRunner()
+                    runner2 = CliRunner()
+                    # run the command in non-interactive mode
+                    result_non_interactive = runner1.invoke(cli, [option, value])
+                    # run the same cli command in interactive mode
+                    runner2.invoke(cli, ['-i'])
+                    result_interactive = runner2.invoke(cli, [option, value])
+                    # assertions to compare the results of interactive mode and non-interactive mode
+                    self.assertEqual(result_interactive.exit_code, result_non_interactive.exit_code)
+                    # Exit code is non zero because of promt for creating config
+                    # self.assertEqual(result_interactive.exit_code, 0)
+                    self.assertEqual(result_interactive.output, result_non_interactive.output)
+                except Exception:
+                    self.fail(f'Failed to run interactive CLI with {option} option')

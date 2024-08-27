@@ -312,7 +312,7 @@ Example: `example_backend_set`""")
 @cli_util.option('--weight', type=click.INT, help=u"""The load balancing policy weight assigned to the server. Backend servers with a higher weight receive a larger proportion of incoming traffic. For example, a server weighted '3' receives 3 times the number of new connections as a server weighted '1'. For more information on load balancing policies, see [How Load Balancing Policies Work].
 
 Example: `3`""")
-@cli_util.option('--max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to the backend.
+@cli_util.option('--max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to the backend. If this is not set then number of simultaneous connections the load balancer can make to the backend is unlimited.
 
 Example: `300`""")
 @cli_util.option('--backup', type=click.BOOL, help=u"""Whether the load balancer should treat this server as a backup unit. If `true`, the load balancer forwards no ingress traffic to this backend server unless all other backend servers not marked as \"backup\" fail the health check policy.
@@ -424,7 +424,7 @@ Example: `LEAST_CONNECTIONS`""")
 @cli_util.option('--backends', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON list with items of type BackendDetails.  For documentation on BackendDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/BackendDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--backend-max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to any backend in the backend set unless the backend has its own maxConnections setting.
+@cli_util.option('--backend-max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to any backend in the backend set unless the backend has its own maxConnections setting. If this is not set then the number of simultaneous connections the load balancer can make to any backend in the backend set unless the backend has its own maxConnections setting is unlimited.
 
 Example: `300`""")
 @cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -839,6 +839,24 @@ If \"IPV4\", the service assigns an IPv4 address and the load balancer supports 
 If \"IPV6\", the service assigns an IPv6 address and the load balancer supports IPv6 traffic.
 
 Example: \"ipMode\":\"IPV6\"""")
+@cli_util.option('--is-request-id-enabled', type=click.BOOL, help=u"""Whether or not the load balancer has the Request Id feature enabled for HTTP listeners.
+
+If \"true\", the load balancer will attach a unique request id header to every request passed through from the load balancer to load balancer backends. This same request id header also will be added to the response the lb received from the backend handling the request before the load balancer returns the response to the requestor. The name of the unique request id header is set the by value of requestIdHeader.
+
+If \"false\", the loadbalancer not add this unique request id header to either the request passed through to the load balancer backends nor to the reponse returned to the user.
+
+New load balancers have the Request Id feature disabled unless isRequestIdEnabled is set to true.
+
+Example: `true`""")
+@cli_util.option('--request-id-header', help=u"""If isRequestIdEnabled is true then this field contains the name of the header field that contains the unique request id that is attached to every request from the load balancer to the load balancer backends and to every response from the load balancer.
+
+If a request to the load balancer already contains a header with same name as specified in requestIdHeader then the load balancer will not change the value of that field.
+
+If isRequestIdEnabled is false then this field is ignored.
+
+If this field is not set or is set to \"\" then this field defaults to X-Request-Id
+
+**Notes:** * Unless the header name is \"\" it must start with \"X-\" prefix. * Setting the header name to \"\" will set it to the default: X-Request-Id.""")
 @cli_util.option('--reserved-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of reserved Ips.
 
 This option is a JSON list with items of type ReservedIP.  For documentation on ReservedIP please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/ReservedIP.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -888,7 +906,7 @@ This option is a JSON dictionary of type dict(str, RuleSetDetails).  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-details': {'module': 'load_balancer', 'class': 'ShapeDetails'}, 'reserved-ips': {'module': 'load_balancer', 'class': 'list[ReservedIP]'}, 'listeners': {'module': 'load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'hostnames': {'module': 'load_balancer', 'class': 'dict(str, HostnameDetails)'}, 'backend-sets': {'module': 'load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'network-security-group-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'subnet-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'certificates': {'module': 'load_balancer', 'class': 'dict(str, CertificateDetails)'}, 'ssl-cipher-suites': {'module': 'load_balancer', 'class': 'dict(str, SSLCipherSuiteDetails)'}, 'path-route-sets': {'module': 'load_balancer', 'class': 'dict(str, PathRouteSetDetails)'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'rule-sets': {'module': 'load_balancer', 'class': 'dict(str, RuleSetDetails)'}})
 @cli_util.wrap_exceptions
-def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape_name, subnet_ids, shape_details, is_private, is_delete_protection_enabled, ip_mode, reserved_ips, listeners, hostnames, backend_sets, network_security_group_ids, certificates, ssl_cipher_suites, path_route_sets, freeform_tags, defined_tags, rule_sets):
+def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape_name, subnet_ids, shape_details, is_private, is_delete_protection_enabled, ip_mode, is_request_id_enabled, request_id_header, reserved_ips, listeners, hostnames, backend_sets, network_security_group_ids, certificates, ssl_cipher_suites, path_route_sets, freeform_tags, defined_tags, rule_sets):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -910,6 +928,12 @@ def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if ip_mode is not None:
         _details['ipMode'] = ip_mode
+
+    if is_request_id_enabled is not None:
+        _details['isRequestIdEnabled'] = is_request_id_enabled
+
+    if request_id_header is not None:
+        _details['requestIdHeader'] = request_id_header
 
     if reserved_ips is not None:
         _details['reservedIps'] = cli_util.parse_json_parameter("reserved_ips", reserved_ips)
@@ -3155,7 +3179,7 @@ Example: `example_backend_set`""")
 @cli_util.option('--backend-name', required=True, help=u"""The IP address and port of the backend server to update.
 
 Example: `10.0.0.3:8080`""")
-@cli_util.option('--max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to the backend.
+@cli_util.option('--max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to the backend. If this is not set then the maximum number of simultaneous connections the load balancer can make to the backend is unlimited.
 
 Example: `300`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
@@ -3246,7 +3270,7 @@ Example: `LEAST_CONNECTIONS`""")
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set to update.
 
 Example: `example_backend_set`""")
-@cli_util.option('--backend-max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to any backend in the backend set unless the backend has its own maxConnections setting.
+@cli_util.option('--backend-max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to any backend in the backend set unless the backend has its own maxConnections setting. If this is not set then the number of simultaneous connections the load balancer can make to any backend in the backend set unless the backend has its own maxConnections setting is unlimited.
 
 Example: `300`""")
 @cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3668,6 +3692,22 @@ If \"false\", the loadbalancer will not be protected against deletion.
 If null or unset, the value for delete protection will not be changed.
 
 Example: `true`""")
+@cli_util.option('--is-request-id-enabled', type=click.BOOL, help=u"""Whether or not the load balancer has the Request Id feature enabled for HTTP listeners.
+
+If \"true\", the load balancer will attach a unique request id header to every request passed through from the load balancer to load balancer backends. This same request id header also will be added to the response the lb received from the backend handling the request before the load balancer returns the response to the requestor. The name of the unique request id header is set the by value of requestIdHeader.
+
+If \"false\", the loadbalancer not add this unique request id header to either the request passed through to the load balancer backends nor to the reponse returned to the user.
+
+New load balancers have the Request Id feature enabled unless isRequestIdEnabled is set to False.
+
+Example: `true`""")
+@cli_util.option('--request-id-header', help=u"""If isRequestIdEnabled is true then this field contains the name of the header field that contains the unique request id that is attached to every request from the load balancer to the load balancer backends and to every response from the load balancer.
+
+If a request to the load balancer already contains a header with same name as specified in requestIdHeader then the load balancer will not change the value of that field.
+
+If isRequestIdEnabled is false then this field is ignored.
+
+**Notes:** * Unless the header name is \"\" it must start with \"X-\" prefix. * Setting the header name to \"\" will set it to the default: X-Request-Id.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3690,7 +3730,7 @@ Example: `example-etag`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, display_name, is_delete_protection_enabled, freeform_tags, defined_tags, if_match):
+def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, display_name, is_delete_protection_enabled, is_request_id_enabled, request_id_header, freeform_tags, defined_tags, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -3711,6 +3751,12 @@ def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     if is_delete_protection_enabled is not None:
         _details['isDeleteProtectionEnabled'] = is_delete_protection_enabled
+
+    if is_request_id_enabled is not None:
+        _details['isRequestIdEnabled'] = is_request_id_enabled
+
+    if request_id_header is not None:
+        _details['requestIdHeader'] = request_id_header
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

@@ -7,10 +7,9 @@ from alloy import alloy_util
 from interactive.oci_resources_completions import get_oci_resources
 import collections
 import shlex
-from oci_cli import dynamic_loader
-from oci_cli.service_mapping import service_mapping
 from interactive.utils import parameters_to_exclude, styles_dict
 from interactive.error_messages import get_error_message
+import os
 
 
 # This function looks for matching closing quotes when there is a space in parameter value such as --display-name.
@@ -26,8 +25,10 @@ def is_matching_quotes(s):
 
 
 class OciShellCompleter(Completer):
-    def __init__(self, ctx, colors_enabled=True, bottom_toolbar=None):
+    def __init__(self, ctx, service_mapping, dynamic_loader, colors_enabled=True, bottom_toolbar=None):
         self.ctx = ctx
+        self.service_mapping = service_mapping
+        self.dynamic_loader = dynamic_loader
         self.top_level_params = ctx.command.params
         self.top_level_params.sort(key=lambda param: param.name)
         self.top_level_commands = self.get_top_level_commands()
@@ -46,7 +47,7 @@ class OciShellCompleter(Completer):
             top_level_commands[cmd_name] = cmd_object.help
 
         # Updated service mapping for an alloy user
-        service_map = service_mapping
+        service_map = self.service_mapping
         if alloy_util.get_service_config_path(self.ctx) is not None:
             service_map = alloy_util.read_subscribed_services(self.ctx)
 
@@ -212,6 +213,7 @@ class OciShellCompleter(Completer):
         parameter = None
         param_value = ""  # this will save parameter value between quotes ( " " or ' ' ) with space
         # Parse Input Buffer
+
         for token_index, token in enumerate(token_check):
             # add parameters to the list so they will be excluded from the list given to the user
             if token.startswith("-"):
@@ -227,14 +229,19 @@ class OciShellCompleter(Completer):
                 continue
 
             elif token_index == 0 and token in top_level_commands:
-                # Load the service and all its subcommands. for example "oci compute instance", load the compute service
-                dynamic_loader.load_service(token)
+                # Load the service and all its subcommands. for example "oci compute instance", load to compute service
+
+                if "OCI_OPS_CLI_TOOLS_IMPORT" in os.environ:
+                    self.dynamic_loader.load_tool(token)
+                else:
+                    self.dynamic_loader.load_service(token)
                 oci_subcommands = getattr(self.ctx.command, "commands", {})
                 command = oci_subcommands[token]
                 service_subcommands = getattr(command, "commands", {})
                 service_subcommands = collections.OrderedDict(
                     sorted(service_subcommands.items())
                 )
+
                 only_at_top_level = False
 
             elif service_subcommands and token in service_subcommands:
@@ -299,14 +306,27 @@ class OciShellCompleter(Completer):
             )
 
         else:
-            completions = get_oci_resources(
-                self.ctx,
-                parameter,
-                word_before_cursor,
-                self.bottom_toolbar,
-                remaing_sub_string,
-            )
-            validate = False
+            if "OCI_OPS_CLI_TOOLS_IMPORT" not in os.environ:
+                completions = get_oci_resources(
+                    self.ctx,
+                    parameter,
+                    word_before_cursor,
+                    self.bottom_toolbar,
+                    remaing_sub_string,
+                )
+                validate = False
+            else:
+                # when using from oci-ops cli, "OCI_OPS_CLI_TOOLS_IMPORT" will be set. However use a different function
+                # defined at oci_ops for resource completion.
+                get_oci_ops_resources_function_name = self.ctx.obj['oci_ops_resources_completion_function_name']
+                completions = get_oci_ops_resources_function_name(
+                    self.ctx,
+                    parameter,
+                    word_before_cursor,
+                    self.bottom_toolbar,
+                    remaing_sub_string,
+                )
+                validate = False
 
         if validate:
             validate_incorrect_input(

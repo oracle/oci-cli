@@ -25,6 +25,7 @@ from oci_cli.cli_root import cli  # noqa: F401,E402
 from oci_cli.custom_types import cli_datetime  # noqa: F401,E402
 from oci_cli.custom_types import cli_from_json  # noqa: F401,E402
 from oci_cli import dynamic_loader as dl  # noqa: F401,E402
+from interactive import cli_interactive  # noqa: F401,E402
 
 dl.load_required_services_for_invocation()
 

@@ -2,6 +2,7 @@
 # Copyright (c) 2016, 2024, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
+    "fs.cancel_downgrade_shape_mount_target": "oci.file_storage.FileStorageClient.cancel_downgrade_shape_mount_target",
     "fs.change_file_system_compartment": "oci.file_storage.FileStorageClient.change_file_system_compartment",
     "fs.change_filesystem_snapshot_policy_compartment": "oci.file_storage.FileStorageClient.change_filesystem_snapshot_policy_compartment",
     "fs.change_mount_target_compartment": "oci.file_storage.FileStorageClient.change_mount_target_compartment",
@@ -43,6 +44,7 @@ SDK_client_map = {
     "fs.list_replications": "oci.file_storage.FileStorageClient.list_replications",
     "fs.list_snapshots": "oci.file_storage.FileStorageClient.list_snapshots",
     "fs.pause_filesystem_snapshot_policy": "oci.file_storage.FileStorageClient.pause_filesystem_snapshot_policy",
+    "fs.schedule_downgrade_shape_mount_target": "oci.file_storage.FileStorageClient.schedule_downgrade_shape_mount_target",
     "fs.unpause_filesystem_snapshot_policy": "oci.file_storage.FileStorageClient.unpause_filesystem_snapshot_policy",
     "fs.update_export": "oci.file_storage.FileStorageClient.update_export",
     "fs.update_export_set": "oci.file_storage.FileStorageClient.update_export_set",
@@ -52,5 +54,6 @@ SDK_client_map = {
     "fs.update_outbound_connector": "oci.file_storage.FileStorageClient.update_outbound_connector",
     "fs.update_replication": "oci.file_storage.FileStorageClient.update_replication",
     "fs.update_snapshot": "oci.file_storage.FileStorageClient.update_snapshot",
+    "fs.upgrade_shape_mount_target": "oci.file_storage.FileStorageClient.upgrade_shape_mount_target",
     "fs.validate_key_tabs": "oci.file_storage.FileStorageClient.validate_key_tabs",
 }

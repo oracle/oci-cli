@@ -560,6 +560,7 @@ def list_supported_host_shapes(ctx, from_json, all_pages, page_size, compartment
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--version-parameterconflict', help=u"""A filter to return only resources that match the given VMware software version exactly.""")
 @cli_util.option('--host-shape-name', help=u"""A filter to return only resources that match or support the given ESXi host shape.""")
+@cli_util.option('--version-to-upgrade', help=u"""A filter to return only VMware software versions that the given VMware software version can be upgraded to.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -567,7 +568,7 @@ def list_supported_host_shapes(ctx, from_json, all_pages, page_size, compartment
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ocvp', 'class': 'SupportedVmwareSoftwareVersionCollection'})
 @cli_util.wrap_exceptions
-def list_supported_vmware_software_versions(ctx, from_json, all_pages, page_size, compartment_id, limit, page, version_parameterconflict, host_shape_name):
+def list_supported_vmware_software_versions(ctx, from_json, all_pages, page_size, compartment_id, limit, page, version_parameterconflict, host_shape_name, version_to_upgrade):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -581,6 +582,8 @@ def list_supported_vmware_software_versions(ctx, from_json, all_pages, page_size
         kwargs['version'] = version_parameterconflict
     if host_shape_name is not None:
         kwargs['host_shape_name'] = host_shape_name
+    if version_to_upgrade is not None:
+        kwargs['version_to_upgrade'] = version_to_upgrade
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('ocvp', 'sddc', ctx)
     if all_pages:
