@@ -110,6 +110,57 @@ fs_root_group.add_command(export_group)
 fs_root_group.add_command(snapshot_group)
 
 
+@mount_target_group.command(name=cli_util.override('fs.cancel_downgrade_shape_mount_target.command_name', 'cancel-downgrade-shape'), help=u"""Cancel scheduled downgrade shape request for mount target. \n[Command Reference](cancelDowngradeShapeMountTarget)""")
+@cli_util.option('--mount-target-id', required=True, help=u"""The [OCID] of the mount target.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
+@cli_util.wrap_exceptions
+def cancel_downgrade_shape_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mount_target_id, if_match):
+
+    if isinstance(mount_target_id, six.string_types) and len(mount_target_id.strip()) == 0:
+        raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.cancel_downgrade_shape_mount_target(
+        mount_target_id=mount_target_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_mount_target') and callable(getattr(client, 'get_mount_target')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_mount_target(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @file_system_group.command(name=cli_util.override('fs.change_file_system_compartment.command_name', 'change-compartment'), help=u"""Moves a file system and its associated snapshots into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment] \n[Command Reference](changeFileSystemCompartment)""")
 @cli_util.option('--file-system-id', required=True, help=u"""The [OCID] of the file system.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the file system to.""")
@@ -546,8 +597,6 @@ For more information, see [DNS in Your Virtual Cloud Network].
 Example: `files-1`""")
 @cli_util.option('--ip-address', help=u"""A private IP address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet.
 
-Note: This attribute value is stored in the [PrivateIp] resource, not in the `mountTarget` resource. To update the `ipAddress`, use `GetMountTarget` to obtain the [OCIDs] of the mount target's private IPs (`privateIpIds`). Then, you can use [UpdatePrivateIp] to update the `ipAddress` value.
-
 Example: `10.0.3.3`""")
 @cli_util.option('--idmap-type', help=u"""The method used to map a Unix UID to secondary groups, if any.""")
 @cli_util.option('--ldap-idmap', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -555,7 +604,8 @@ Example: `10.0.3.3`""")
 @cli_util.option('--kerberos', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--requested-throughput', type=click.INT, help=u"""Throughput for mount target in Gbps. Currently only 1 Gbps of requestedThroughput is supported during create MountTarget. Available shapes and corresponding throughput are listed at [Mount Target Performance].""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'ldap-idmap': {'module': 'file_storage', 'class': 'CreateLdapIdmapDetails'}, 'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'kerberos': {'module': 'file_storage', 'class': 'CreateKerberosDetails'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
@@ -563,7 +613,7 @@ Example: `10.0.3.3`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ldap-idmap': {'module': 'file_storage', 'class': 'CreateLdapIdmapDetails'}, 'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'kerberos': {'module': 'file_storage', 'class': 'CreateKerberosDetails'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
 @cli_util.wrap_exceptions
-def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, subnet_id, display_name, hostname_label, ip_address, idmap_type, ldap_idmap, nsg_ids, kerberos, freeform_tags, defined_tags):
+def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, subnet_id, display_name, hostname_label, ip_address, idmap_type, ldap_idmap, nsg_ids, kerberos, freeform_tags, defined_tags, requested_throughput):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -599,6 +649,9 @@ def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if requested_throughput is not None:
+        _details['requestedThroughput'] = requested_throughput
 
     client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.create_mount_target(
@@ -1134,7 +1187,7 @@ def delete_filesystem_snapshot_policy(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.option('--mount-target-id', required=True, help=u"""The [OCID] of the mount target.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1709,7 +1762,7 @@ def get_snapshot(ctx, from_json, snapshot_id):
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 4096 is the maximum.
 
 For important details about how pagination works, see [List Pagination].
 
@@ -1785,7 +1838,7 @@ def list_export_sets(ctx, from_json, all_pages, page_size, compartment_id, avail
 
 @export_group.command(name=cli_util.override('fs.list_exports.command_name', 'list'), help=u"""Lists export resources by compartment, file system, or export set. You must specify an export set ID, a file system ID, and / or a compartment ID. \n[Command Reference](listExports)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 4096 is the maximum.
 
 For important details about how pagination works, see [List Pagination].
 
@@ -1859,7 +1912,7 @@ def list_exports(ctx, from_json, all_pages, page_size, compartment_id, limit, pa
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 4096 is the maximum.
 
 For important details about how pagination works, see [List Pagination].
 
@@ -1947,7 +2000,7 @@ def list_file_systems(ctx, from_json, all_pages, page_size, compartment_id, avai
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 4096 is the maximum.
 
 For important details about how pagination works, see [List Pagination].
 
@@ -2026,7 +2079,7 @@ def list_filesystem_snapshot_policies(ctx, from_json, all_pages, page_size, comp
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 4096 is the maximum.
 
 For important details about how pagination works, see [List Pagination].
 
@@ -2108,7 +2161,7 @@ def list_mount_targets(ctx, from_json, all_pages, page_size, compartment_id, ava
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 4096 is the maximum.
 
 For important details about how pagination works, see [List Pagination].
 
@@ -2187,7 +2240,7 @@ def list_outbound_connectors(ctx, from_json, all_pages, page_size, compartment_i
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 4096 is the maximum.
 
 For important details about how pagination works, see [List Pagination].
 
@@ -2266,7 +2319,7 @@ def list_replication_targets(ctx, from_json, all_pages, page_size, compartment_i
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 4096 is the maximum.
 
 For important details about how pagination works, see [List Pagination].
 
@@ -2454,6 +2507,65 @@ def pause_filesystem_snapshot_policy(ctx, from_json, wait_for_state, max_wait_se
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_filesystem_snapshot_policy(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@mount_target_group.command(name=cli_util.override('fs.schedule_downgrade_shape_mount_target.command_name', 'schedule-downgrade-shape'), help=u"""Schedule a downgrade shape of the mount target. \n[Command Reference](scheduleDowngradeShapeMountTarget)""")
+@cli_util.option('--mount-target-id', required=True, help=u"""The [OCID] of the mount target.""")
+@cli_util.option('--requested-throughput', type=click.INT, help=u"""New throughput for mount target in Gbps. Available shapes and corresponding throughput are listed at [Mount Target Performance].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
+@cli_util.wrap_exceptions
+def schedule_downgrade_shape_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mount_target_id, requested_throughput, if_match):
+
+    if isinstance(mount_target_id, six.string_types) and len(mount_target_id.strip()) == 0:
+        raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if requested_throughput is not None:
+        _details['requestedThroughput'] = requested_throughput
+
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.schedule_downgrade_shape_mount_target(
+        mount_target_id=mount_target_id,
+        schedule_downgrade_shape_mount_target_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_mount_target') and callable(getattr(client, 'get_mount_target')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_mount_target(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -2851,7 +2963,7 @@ Example: `My mount target`""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'ldap-idmap': {'module': 'file_storage', 'class': 'UpdateLdapIdmapDetails'}, 'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'kerberos': {'module': 'file_storage', 'class': 'UpdateKerberosDetails'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
@@ -3138,6 +3250,65 @@ def update_snapshot(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_snapshot(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@mount_target_group.command(name=cli_util.override('fs.upgrade_shape_mount_target.command_name', 'upgrade-shape'), help=u"""Upgrade shape request for mount target. \n[Command Reference](upgradeShapeMountTarget)""")
+@cli_util.option('--mount-target-id', required=True, help=u"""The [OCID] of the mount target.""")
+@cli_util.option('--requested-throughput', type=click.INT, help=u"""New throughput for mount target in Gbps. Available shapes and corresponding throughput are listed at [Mount Target Performance].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
+@cli_util.wrap_exceptions
+def upgrade_shape_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mount_target_id, requested_throughput, if_match):
+
+    if isinstance(mount_target_id, six.string_types) and len(mount_target_id.strip()) == 0:
+        raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if requested_throughput is not None:
+        _details['requestedThroughput'] = requested_throughput
+
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.upgrade_shape_mount_target(
+        mount_target_id=mount_target_id,
+        upgrade_shape_mount_target_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_mount_target') and callable(getattr(client, 'get_mount_target')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_mount_target(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

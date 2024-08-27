@@ -15,7 +15,7 @@ Jinja2>=3.1.4; python_version >= '3.7'
 jmespath==0.10.0
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.132.0
+oci==2.133.0
 packaging==20.2
 pluggy==0.13.0
 py==1.11.0

@@ -1473,10 +1473,11 @@ These subnets are used by the Oracle Clusterware private interconnect on the dat
 @cli_util.option('--is-diagnostics-events-enabled', required=False, type=click.BOOL, help="""Enables customer to receive Events service notifications for guest VM issues""")
 @cli_util.option('--is-health-monitoring-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive diagnostic data and share it with its operations and support personnel""")
 @cli_util.option('--is-incident-logs-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive Events service notifications for guest VM issues, collect incident logs and traces""")
+@cli_util.option('--domain', help=u"""A domain name used for the DB system. If the Oracle-provided Internet and VCN Resolver is enabled for the specified subnet, the domain name for the subnet is used (do not provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'db-system-freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'db-system-defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'database-freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'database-defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_with_new_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, availability_domain, display_name, hostname, shape, subnet_id, database_software_image_id, is_active_data_guard_enabled, storage_performance, cpu_core_count, node_count, time_zone, fault_domains, private_ip, license_model, db_system_freeform_tags, db_system_defined_tags, database_freeform_tags, database_defined_tags, is_diagnostics_events_enabled, is_health_monitoring_enabled, is_incident_logs_enabled, **kwargs):
+def create_data_guard_association_with_new_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, availability_domain, display_name, hostname, shape, subnet_id, database_software_image_id, is_active_data_guard_enabled, storage_performance, cpu_core_count, node_count, time_zone, fault_domains, private_ip, license_model, db_system_freeform_tags, db_system_defined_tags, database_freeform_tags, database_defined_tags, is_diagnostics_events_enabled, is_health_monitoring_enabled, is_incident_logs_enabled, domain, **kwargs):
     kwargs = {}
 
     details = {}
@@ -1531,6 +1532,8 @@ def create_data_guard_association_with_new_db_system(ctx, from_json, database_id
         data_collection_options['isIncidentLogsEnabled'] = is_incident_logs_enabled
     if len(data_collection_options) > 0:
         details['dataCollectionOptions'] = cli_util.parse_json_parameter("data_collection_options", data_collection_options)
+    if domain is not None:
+        details['domain'] = domain
 
     details['creationType'] = 'NewDbSystem'
 

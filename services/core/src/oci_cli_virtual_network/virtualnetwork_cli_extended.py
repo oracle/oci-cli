@@ -801,7 +801,7 @@ cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.virtual_network_r
 
 
 # oci network vcn list-ip-inventory -> oci network ip-inventory-cidr-utilization-collection
-virtualnetwork_cli.vcn_group.commands.pop(virtualnetwork_cli.list_ip_inventory.name)
+# virtualnetwork_cli.vcn_group.commands.pop(virtualnetwork_cli.list_ip_inventory.name)
 virtualnetwork_cli.ip_inventory_cidr_utilization_collection_group.add_command(virtualnetwork_cli.list_ip_inventory)
 
 

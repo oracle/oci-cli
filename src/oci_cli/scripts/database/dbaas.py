@@ -77,6 +77,7 @@ def create_backup_from_onprem(ctx, config_file, profile, **kwargs):
         'settings': {'proxy': None},
         'parameter_aliases': {},
         'region': None,
+        'realm_specific_endpoint': None
     }
 
     ctx.obj = initial_dict

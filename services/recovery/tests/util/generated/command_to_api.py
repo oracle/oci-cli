@@ -4,6 +4,7 @@
 SDK_client_map = {
     "recovery.cancel_protected_database_deletion": "oci.recovery.DatabaseRecoveryClient.cancel_protected_database_deletion",
     "recovery.change_protected_database_compartment": "oci.recovery.DatabaseRecoveryClient.change_protected_database_compartment",
+    "recovery.change_protected_database_subscription": "oci.recovery.DatabaseRecoveryClient.change_protected_database_subscription",
     "recovery.change_protection_policy_compartment": "oci.recovery.DatabaseRecoveryClient.change_protection_policy_compartment",
     "recovery.change_recovery_service_subnet_compartment": "oci.recovery.DatabaseRecoveryClient.change_recovery_service_subnet_compartment",
     "recovery.create_protected_database": "oci.recovery.DatabaseRecoveryClient.create_protected_database",

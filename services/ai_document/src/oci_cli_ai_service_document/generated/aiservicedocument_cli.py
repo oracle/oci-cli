@@ -73,13 +73,149 @@ ai_document_root_group.add_command(work_request_group)
 ai_document_root_group.add_command(processor_job_group)
 
 
+@model_group.command(name=cli_util.override('ai_document.add_model_lock.command_name', 'add'), help=u"""Adds a lock to a resource. \n[Command Reference](addModelLock)""")
+@cli_util.option('--model-id', required=True, help=u"""A unique model identifier.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_document', 'class': 'Model'})
+@cli_util.wrap_exceptions
+def add_model_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, type, related_resource_id, message, if_match, is_lock_override):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    client = cli_util.build_client('ai_document', 'ai_service_document', ctx)
+    result = client.add_model_lock(
+        model_id=model_id,
+        add_model_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_model') and callable(getattr(client, 'get_model')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_model(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@project_group.command(name=cli_util.override('ai_document.add_project_lock.command_name', 'add'), help=u"""Adds a lock to a resource. \n[Command Reference](addProjectLock)""")
+@cli_util.option('--project-id', required=True, help=u"""A unique project identifier.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_document', 'class': 'Project'})
+@cli_util.wrap_exceptions
+def add_project_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, type, related_resource_id, message, if_match, is_lock_override):
+
+    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+        raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    client = cli_util.build_client('ai_document', 'ai_service_document', ctx)
+    result = client.add_project_lock(
+        project_id=project_id,
+        add_project_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_project') and callable(getattr(client, 'get_project')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_project(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @analyze_document_result_group.command(name=cli_util.override('ai_document.analyze_document.command_name', 'analyze-document'), help=u"""Perform different types of document analysis. \n[Command Reference](analyzeDocument)""")
 @cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of document analysis requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--document', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', help=u"""The compartment identifier.""")
 @cli_util.option('--output-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--language', help=u"""The document language, abbreviated according to the BCP 47 syntax.""")
-@cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS", "INSURANCE_CLAIM"]), help=u"""The document type.""")
+@cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS", "HEALTH_INSURANCE_ID"]), help=u"""The document type.""")
 @cli_util.option('--ocr-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_document', 'class': 'list[DocumentFeature]'}, 'document': {'module': 'ai_document', 'class': 'DocumentDetails'}, 'output-location': {'module': 'ai_document', 'class': 'OutputLocation'}, 'ocr-data': {'module': 'ai_document', 'class': 'AnalyzeDocumentResult'}})
@@ -129,7 +265,7 @@ def analyze_document(ctx, from_json, features, document, compartment_id, output_
 @cli_util.option('--compartment-id', help=u"""The compartment identifier.""")
 @cli_util.option('--output-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--language', help=u"""The document language, abbreviated according to the BCP 47 syntax.""")
-@cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS", "INSURANCE_CLAIM"]), help=u"""The document type.""")
+@cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS", "HEALTH_INSURANCE_ID"]), help=u"""The document type.""")
 @cli_util.option('--ocr-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_document', 'class': 'list[DocumentFeature]'}, 'output-location': {'module': 'ai_document', 'class': 'OutputLocation'}, 'ocr-data': {'module': 'ai_document', 'class': 'AnalyzeDocumentResult'}})
@@ -182,7 +318,7 @@ def analyze_document_object_storage_document_details(ctx, from_json, features, d
 @cli_util.option('--compartment-id', help=u"""The compartment identifier.""")
 @cli_util.option('--output-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--language', help=u"""The document language, abbreviated according to the BCP 47 syntax.""")
-@cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS", "INSURANCE_CLAIM"]), help=u"""The document type.""")
+@cli_util.option('--document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS", "HEALTH_INSURANCE_ID"]), help=u"""The document type.""")
 @cli_util.option('--ocr-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_document', 'class': 'list[DocumentFeature]'}, 'output-location': {'module': 'ai_document', 'class': 'OutputLocation'}, 'ocr-data': {'module': 'ai_document', 'class': 'AnalyzeDocumentResult'}})
@@ -282,12 +418,13 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.option('--model-id', required=True, help=u"""A unique model identifier.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match):
+def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match, is_lock_override):
 
     if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
@@ -295,6 +432,8 @@ def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match)
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -313,12 +452,13 @@ def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match)
 @cli_util.option('--project-id', required=True, help=u"""A unique project identifier.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_project_compartment(ctx, from_json, project_id, compartment_id, if_match):
+def change_project_compartment(ctx, from_json, project_id, compartment_id, if_match, is_lock_override):
 
     if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
@@ -326,6 +466,8 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -636,7 +778,7 @@ def create_processor_job_object_storage_locations(ctx, from_json, wait_for_state
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment identifier.""")
 @cli_util.option('--processor-config-features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The types of document analysis requested.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The display name of the processor job.""")
-@cli_util.option('--processor-config-document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS", "INSURANCE_CLAIM"]), help=u"""The document type.""")
+@cli_util.option('--processor-config-document-type', type=custom_types.CliCaseInsensitiveChoice(["INVOICE", "RECEIPT", "RESUME", "TAX_FORM", "DRIVER_LICENSE", "PASSPORT", "BANK_STATEMENT", "CHECK", "PAYSLIP", "OTHERS", "HEALTH_INSURANCE_ID"]), help=u"""The document type.""")
 @cli_util.option('--processor-config-is-zip-output-enabled', type=click.BOOL, help=u"""Whether or not to generate a ZIP file containing the results.""")
 @cli_util.option('--processor-config-language', help=u"""The document language, abbreviated according to the BCP 47 Language-Tag syntax.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "FAILED", "ACCEPTED", "CANCELED", "IN_PROGRESS", "CANCELING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -776,6 +918,7 @@ def create_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @model_group.command(name=cli_util.override('ai_document.delete_model.command_name', 'delete'), help=u"""Delete a model by identifier. \n[Command Reference](deleteModel)""")
 @cli_util.option('--model-id', required=True, help=u"""A unique model identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -785,7 +928,7 @@ def create_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, if_match):
+def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, if_match, is_lock_override):
 
     if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
@@ -793,6 +936,8 @@ def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('ai_document', 'ai_service_document', ctx)
     result = client.delete_model(
@@ -832,6 +977,7 @@ def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @project_group.command(name=cli_util.override('ai_document.delete_project.command_name', 'delete'), help=u"""Delete a project by identifier. \n[Command Reference](deleteProject)""")
 @cli_util.option('--project-id', required=True, help=u"""A unique project identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -841,7 +987,7 @@ def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, if_match):
+def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, if_match, is_lock_override):
 
     if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
@@ -849,6 +995,8 @@ def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('ai_document', 'ai_service_document', ctx)
     result = client.delete_project(
@@ -1341,6 +1489,126 @@ def patch_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
+@model_group.command(name=cli_util.override('ai_document.remove_model_lock.command_name', 'remove'), help=u"""Remove a lock from a resource. \n[Command Reference](removeModelLock)""")
+@cli_util.option('--model-id', required=True, help=u"""A unique model identifier.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_document', 'class': 'Model'})
+@cli_util.wrap_exceptions
+def remove_model_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, type, if_match, is_lock_override):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('ai_document', 'ai_service_document', ctx)
+    result = client.remove_model_lock(
+        model_id=model_id,
+        remove_model_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_model') and callable(getattr(client, 'get_model')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_model(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@project_group.command(name=cli_util.override('ai_document.remove_project_lock.command_name', 'remove'), help=u"""Remove a lock from a resource. \n[Command Reference](removeProjectLock)""")
+@cli_util.option('--project-id', required=True, help=u"""A unique project identifier.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_document', 'class': 'Project'})
+@cli_util.wrap_exceptions
+def remove_project_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, type, if_match, is_lock_override):
+
+    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+        raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('ai_document', 'ai_service_document', ctx)
+    result = client.remove_project_lock(
+        project_id=project_id,
+        remove_project_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_project') and callable(getattr(client, 'get_project')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_project(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @model_group.command(name=cli_util.override('ai_document.update_model.command_name', 'update'), help=u"""Updates the model metadata. \n[Command Reference](updateModel)""")
 @cli_util.option('--model-id', required=True, help=u"""A unique model identifier.""")
 @cli_util.option('--display-name', help=u"""A human-friendly name of the model, which can be changed.""")
@@ -1348,6 +1616,7 @@ def patch_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1357,7 +1626,7 @@ def patch_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ai_document', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_document', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, display_name, description, freeform_tags, defined_tags, if_match):
+def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, display_name, description, freeform_tags, defined_tags, if_match, is_lock_override):
 
     if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
@@ -1369,6 +1638,8 @@ def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -1428,6 +1699,7 @@ def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1437,7 +1709,7 @@ def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ai_document', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_document', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_project(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, display_name, description, freeform_tags, defined_tags, if_match):
+def update_project(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, display_name, description, freeform_tags, defined_tags, if_match, is_lock_override):
 
     if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
@@ -1449,6 +1721,8 @@ def update_project(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}

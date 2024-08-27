@@ -180,6 +180,73 @@ def change_protected_database_compartment(ctx, from_json, wait_for_state, max_wa
     cli_util.render_response(result, ctx)
 
 
+@protected_database_group.command(name=cli_util.override('recovery.change_protected_database_subscription.command_name', 'change-protected-database-subscription'), help=u"""Associates the protected database with a new cloud service environment, such as Microsoft Azure. \n[Command Reference](changeProtectedDatabaseSubscription)""")
+@cli_util.option('--protected-database-id', required=True, help=u"""The protected database OCID.""")
+@cli_util.option('--subscription-id', help=u"""The OCID of the new cloud service subscription to which you want to link the protected database.""")
+@cli_util.option('--is-default', type=click.BOOL, help=u"""Indicates whether it is a Universal Credit Model (UCM) subscription.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "WAITING", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_protected_database_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, protected_database_id, subscription_id, is_default, if_match):
+
+    if isinstance(protected_database_id, six.string_types) and len(protected_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --protected-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if subscription_id is not None:
+        _details['subscriptionId'] = subscription_id
+
+    if is_default is not None:
+        _details['isDefault'] = is_default
+
+    client = cli_util.build_client('recovery', 'database_recovery', ctx)
+    result = client.change_protected_database_subscription(
+        protected_database_id=protected_database_id,
+        change_protected_database_subscription_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @protection_policy_group.command(name=cli_util.override('recovery.change_protection_policy_compartment.command_name', 'change-compartment'), help=u"""Moves a protection policy resource from the existing compartment to the specified compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeProtectionPolicyCompartment)""")
 @cli_util.option('--protection-policy-id', required=True, help=u"""The protection policy OCID.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the Protection Policy should be moved.""")
@@ -315,6 +382,7 @@ def change_recovery_service_subnet_compartment(ctx, from_json, wait_for_state, m
 @cli_util.option('--change-rate', help=u"""The percentage of data changes that exist in the database between successive incremental backups.""")
 @cli_util.option('--compression-ratio', help=u"""The compression ratio of the protected database. The compression ratio represents the ratio of compressed block size to expanded block size.""")
 @cli_util.option('--is-redo-logs-shipped', type=click.BOOL, help=u"""The value TRUE indicates that the protected database is configured to use Real-time data protection, and redo-data is sent from the protected database to Recovery Service. Real-time data protection substantially reduces the window of potential data loss that exists between successive archived redo log backups.""")
+@cli_util.option('--subscription-id', help=u"""The OCID of the cloud service subscription to which you want to link the protected database. For example, specify the Microsoft Azure subscription ID if you want to provision the protected database in Azure.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`. For more information, see [Resource Tags]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates if the request is to test the preparedness for creating a protected database, without actually creating a protected database.
@@ -336,7 +404,7 @@ See, [Prerequisites for Using Recovery Service] for more information.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'recovery-service-subnets': {'module': 'recovery', 'class': 'list[RecoveryServiceSubnetInput]'}, 'freeform-tags': {'module': 'recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'recovery', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'recovery', 'class': 'ProtectedDatabase'})
 @cli_util.wrap_exceptions
-def create_protected_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, db_unique_name, password, protection_policy_id, recovery_service_subnets, compartment_id, database_size, database_id, database_size_in_gbs, change_rate, compression_ratio, is_redo_logs_shipped, freeform_tags, defined_tags, opc_dry_run):
+def create_protected_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, db_unique_name, password, protection_policy_id, recovery_service_subnets, compartment_id, database_size, database_id, database_size_in_gbs, change_rate, compression_ratio, is_redo_logs_shipped, subscription_id, freeform_tags, defined_tags, opc_dry_run):
 
     kwargs = {}
     if opc_dry_run is not None:
@@ -368,6 +436,9 @@ def create_protected_database(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if is_redo_logs_shipped is not None:
         _details['isRedoLogsShipped'] = is_redo_logs_shipped
+
+    if subscription_id is not None:
+        _details['subscriptionId'] = subscription_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -414,6 +485,7 @@ def create_protected_database(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--display-name', required=True, help=u"""A user provided name for the protection policy. The 'displayName' does not have to be unique, and it can be modified. Avoid entering confidential information.""")
 @cli_util.option('--backup-retention-period-in-days', required=True, type=click.INT, help=u"""The maximum number of days to retain backups for a protected database.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
+@cli_util.option('--must-enforce-cloud-locality', type=click.BOOL, help=u"""Indicates whether the protection policy enforces Recovery Service to retain backups in the same cloud service environment where your Oracle Database is provisioned. This parameter is applicable if your Oracle Database runs in a different cloud service environment, such as Microsoft Azure. If you set the mustEnforceCloudLocality parameter to TRUE, then Recovery Service stores the database backups locally in the same cloud service environment where the database resides. For example, if your Oracle Database is provisioned on Microsoft Azure, then Recovery Service stores the database backups in Azure. Note: You cannot change the mustEnforceCloudLocality setting for a protection policy after you create it.""")
 @cli_util.option('--policy-locked-date-time', help=u"""An RFC3339 formatted datetime string that specifies the exact date and time for the retention lock to take effect and permanently lock the retention period defined in the policy.
 
 * The retention lock feature controls whether Recovery Service strictly preserves backups for the duration defined in a policy. Retention lock is useful to enforce recovery window compliance and to prevent unintentional modifications to protected database backups. * Recovery Service enforces a 14-day delay before the retention lock set for a policy can take effect. Therefore, you must set policyLockedDateTime  to a date that occurs 14 days after the current date. * For example, assuming that the current date is Aug 1, 2023 9 pm, you can set policyLockedDateTime  to '2023-08-15T21:00:00.600Z' (Aug 15, 2023, 9:00 pm), or greater. * During the 14-day delay period, you can either increase or decrease the retention period in the policy. * However, you are only allowed to increase the retention period on or after the retention lock date. * You cannot change the value of policyLockedDateTime if the retention lock is already in effect.""")
@@ -427,7 +499,7 @@ def create_protected_database(ctx, from_json, wait_for_state, max_wait_seconds, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'recovery', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'recovery', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'recovery', 'class': 'ProtectionPolicy'})
 @cli_util.wrap_exceptions
-def create_protection_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, backup_retention_period_in_days, compartment_id, policy_locked_date_time, freeform_tags, defined_tags):
+def create_protection_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, backup_retention_period_in_days, compartment_id, must_enforce_cloud_locality, policy_locked_date_time, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -436,6 +508,9 @@ def create_protection_policy(ctx, from_json, wait_for_state, max_wait_seconds, w
     _details['displayName'] = display_name
     _details['backupRetentionPeriodInDays'] = backup_retention_period_in_days
     _details['compartmentId'] = compartment_id
+
+    if must_enforce_cloud_locality is not None:
+        _details['mustEnforceCloudLocality'] = must_enforce_cloud_locality
 
     if policy_locked_date_time is not None:
         _details['policyLockedDateTime'] = policy_locked_date_time

@@ -76,6 +76,12 @@ def autonomous_container_database_version_group():
     pass
 
 
+@click.command(cli_util.override('db.scheduling_policy_group.command_name', 'scheduling-policy'), cls=CommandGroupWithAlias, help="""Details of a Scheduling Policy.""")
+@cli_util.help_option_group
+def scheduling_policy_group():
+    pass
+
+
 @click.command(cli_util.override('db.patch_group.command_name', 'patch'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def patch_group():
@@ -110,6 +116,18 @@ def pluggable_database_group():
     pass
 
 
+@click.command(cli_util.override('db.scheduling_plan_group.command_name', 'scheduling-plan'), cls=CommandGroupWithAlias, help="""Details of a Scheduling Plan.""")
+@cli_util.help_option_group
+def scheduling_plan_group():
+    pass
+
+
+@click.command(cli_util.override('db.recommended_scheduled_action_summary_group.command_name', 'recommended-scheduled-action-summary'), cls=CommandGroupWithAlias, help="""Details of the scheduled action that is used in getRecommendedScheduledActions.""")
+@cli_util.help_option_group
+def recommended_scheduled_action_summary_group():
+    pass
+
+
 @click.command(cli_util.override('db.vm_cluster_update_history_entry_group.command_name', 'vm-cluster-update-history-entry'), cls=CommandGroupWithAlias, help="""The record of a maintenance update action performed on a specified VM cluster. Applies to Exadata Cloud@Customer instances only.""")
 @cli_util.help_option_group
 def vm_cluster_update_history_entry_group():
@@ -139,6 +157,12 @@ def db_home_group():
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def autonomous_exadata_infrastructure_shape_group():
+    pass
+
+
+@click.command(cli_util.override('db.execution_window_group.command_name', 'execution-window'), cls=CommandGroupWithAlias, help="""Details of an execution window.""")
+@cli_util.help_option_group
+def execution_window_group():
     pass
 
 
@@ -180,6 +204,12 @@ def maintenance_run_group():
     pass
 
 
+@click.command(cli_util.override('db.scheduling_window_group.command_name', 'scheduling-window'), cls=CommandGroupWithAlias, help="""Details of a Scheduling Window.""")
+@cli_util.help_option_group
+def scheduling_window_group():
+    pass
+
+
 @click.command(cli_util.override('db.cloud_exadata_infrastructure_unallocated_resources_group.command_name', 'cloud-exadata-infrastructure-unallocated-resources'), cls=CommandGroupWithAlias, help="""Details of unallocated resources of the Cloud Exadata infrastructure. Applies to Cloud Exadata infrastructure instances only.""")
 @cli_util.help_option_group
 def cloud_exadata_infrastructure_unallocated_resources_group():
@@ -198,6 +228,12 @@ def autonomous_database_dataguard_association_group():
     pass
 
 
+@click.command(cli_util.override('db.execution_action_group.command_name', 'execution-action'), cls=CommandGroupWithAlias, help="""Details of an execution action.""")
+@cli_util.help_option_group
+def execution_action_group():
+    pass
+
+
 @click.command(cli_util.override('db.autonomous_patch_group.command_name', 'autonomous-patch'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def autonomous_patch_group():
@@ -207,6 +243,12 @@ def autonomous_patch_group():
 @click.command(cli_util.override('db.autonomous_database_software_image_group.command_name', 'autonomous-database-software-image'), cls=CommandGroupWithAlias, help="""Autonomous Database Software Images created from Autonomous Container Database""")
 @cli_util.help_option_group
 def autonomous_database_software_image_group():
+    pass
+
+
+@click.command(cli_util.override('db.scheduled_action_group.command_name', 'scheduled-action'), cls=CommandGroupWithAlias, help="""Details of a Scheduled Action.""")
+@cli_util.help_option_group
+def scheduled_action_group():
     pass
 
 
@@ -273,6 +315,12 @@ def console_history_group():
 @click.command(cli_util.override('db.db_server_group.command_name', 'db-server'), cls=CommandGroupWithAlias, help="""Details of the Db server resource.""")
 @cli_util.help_option_group
 def db_server_group():
+    pass
+
+
+@click.command(cli_util.override('db.action_param_values_summary_group.command_name', 'action-param-values-summary'), cls=CommandGroupWithAlias, help="""Details of the action parameter and its possible values that is used in listParamsForActionType.""")
+@cli_util.help_option_group
+def action_param_values_summary_group():
     pass
 
 
@@ -469,27 +517,34 @@ db_root_group.add_command(exadb_vm_cluster_update_history_entry_group)
 db_root_group.add_command(external_pluggable_database_group)
 db_root_group.add_command(oneoff_patch_group)
 db_root_group.add_command(autonomous_container_database_version_group)
+db_root_group.add_command(scheduling_policy_group)
 db_root_group.add_command(patch_group)
 db_root_group.add_command(flex_component_collection_group)
 db_root_group.add_command(exadata_infrastructure_group)
 db_root_group.add_command(db_system_shape_group)
 db_root_group.add_command(pluggable_database_group)
+db_root_group.add_command(scheduling_plan_group)
+db_root_group.add_command(recommended_scheduled_action_summary_group)
 db_root_group.add_command(vm_cluster_update_history_entry_group)
 db_root_group.add_command(database_software_image_group)
 db_root_group.add_command(data_guard_association_group)
 db_root_group.add_command(db_home_group)
 db_root_group.add_command(autonomous_exadata_infrastructure_shape_group)
+db_root_group.add_command(execution_window_group)
 db_root_group.add_command(gi_minor_version_summary_group)
 db_root_group.add_command(autonomous_exadata_infrastructure_group)
 db_root_group.add_command(pdb_conversion_history_entry_group)
 db_root_group.add_command(cloud_exadata_infrastructure_group)
 db_root_group.add_command(backup_destination_group)
 db_root_group.add_command(maintenance_run_group)
+db_root_group.add_command(scheduling_window_group)
 db_root_group.add_command(cloud_exadata_infrastructure_unallocated_resources_group)
 db_root_group.add_command(autonomous_database_group)
 db_root_group.add_command(autonomous_database_dataguard_association_group)
+db_root_group.add_command(execution_action_group)
 db_root_group.add_command(autonomous_patch_group)
 db_root_group.add_command(autonomous_database_software_image_group)
+db_root_group.add_command(scheduled_action_group)
 db_root_group.add_command(ocp_us_group)
 db_root_group.add_command(patch_history_entry_group)
 db_root_group.add_command(vm_cluster_network_group)
@@ -501,6 +556,7 @@ db_root_group.add_command(console_connection_group)
 db_root_group.add_command(external_database_connector_group)
 db_root_group.add_command(console_history_group)
 db_root_group.add_command(db_server_group)
+db_root_group.add_command(action_param_values_summary_group)
 db_root_group.add_command(db_system_upgrade_history_entry_group)
 db_root_group.add_command(update_group)
 db_root_group.add_command(external_container_database_group)
@@ -883,6 +939,132 @@ def cancel_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     client = cli_util.build_client('database', 'database', ctx)
     result = client.cancel_backup(
         backup_id=backup_id,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@execution_window_group.command(name=cli_util.override('db.cancel_execution_window.command_name', 'cancel'), help=u"""Cancels the in progress maintenance activity under this execution window. \n[Command Reference](cancelExecutionWindow)""")
+@cli_util.option('--execution-window-id', required=True, help=u"""The execution window [OCID].""")
+@cli_util.option('--time-scheduled-of-new-window', required=True, type=custom_types.CLI_DATETIME, help=u"""New scheduled date and time of the execution window.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--window-duration-in-mins-of-new-window', required=True, type=click.INT, help=u"""Duration window allows user to set a duration they plan to allocate for Scheduling window. The duration is in minutes.""")
+@cli_util.option('--is-enforced-duration-of-new-window', type=click.BOOL, help=u"""Indicates if duration the user plans to allocate for scheduling window is strictly enforced. The default value is `FALSE`.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "SCHEDULED", "IN_PROGRESS", "FAILED", "CANCELED", "UPDATING", "DELETED", "SUCCEEDED", "PARTIAL_SUCCESS", "CREATING", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ExecutionWindow'})
+@cli_util.wrap_exceptions
+def cancel_execution_window(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, execution_window_id, time_scheduled_of_new_window, window_duration_in_mins_of_new_window, is_enforced_duration_of_new_window, if_match):
+
+    if isinstance(execution_window_id, six.string_types) and len(execution_window_id.strip()) == 0:
+        raise click.UsageError('Parameter --execution-window-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['timeScheduledOfNewWindow'] = time_scheduled_of_new_window
+    _details['windowDurationInMinsOfNewWindow'] = window_duration_in_mins_of_new_window
+
+    if is_enforced_duration_of_new_window is not None:
+        _details['isEnforcedDurationOfNewWindow'] = is_enforced_duration_of_new_window
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.cancel_execution_window(
+        execution_window_id=execution_window_id,
+        cancel_execution_window_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_execution_window') and callable(getattr(client, 'get_execution_window')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_execution_window(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@scheduling_plan_group.command(name=cli_util.override('db.cascading_delete_scheduling_plan.command_name', 'cascading-delete'), help=u"""Delete the scheduling plan resource along with all the scheduled actions associated with this resource. \n[Command Reference](cascadingDeleteSchedulingPlan)""")
+@cli_util.option('--scheduling-plan-id', required=True, help=u"""The Schedule Plan [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def cascading_delete_scheduling_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduling_plan_id, if_match):
+
+    if isinstance(scheduling_plan_id, six.string_types) and len(scheduling_plan_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduling-plan-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.cascading_delete_scheduling_plan(
+        scheduling_plan_id=scheduling_plan_id,
         **kwargs
     )
     work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
@@ -2662,6 +2844,144 @@ def change_oneoff_patch_compartment(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
+@scheduling_plan_group.command(name=cli_util.override('db.change_scheduling_plan_compartment.command_name', 'change-compartment'), help=u"""Moves an scheduling plan resource to another compartment. \n[Command Reference](changeSchedulingPlanCompartment)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--scheduling-plan-id', required=True, help=u"""The Schedule Plan [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_scheduling_plan_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, scheduling_plan_id, if_match):
+
+    if isinstance(scheduling_plan_id, six.string_types) and len(scheduling_plan_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduling-plan-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.change_scheduling_plan_compartment(
+        scheduling_plan_id=scheduling_plan_id,
+        change_scheduling_plan_compartment_details=_details,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@scheduling_policy_group.command(name=cli_util.override('db.change_scheduling_policy_compartment.command_name', 'change-compartment'), help=u"""Moves an scheduling policy resource to another compartment. \n[Command Reference](changeSchedulingPolicyCompartment)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--scheduling-policy-id', required=True, help=u"""The Scheduling Policy [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_scheduling_policy_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, scheduling_policy_id, if_match):
+
+    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.change_scheduling_policy_compartment(
+        scheduling_policy_id=scheduling_policy_id,
+        change_scheduling_policy_compartment_details=_details,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @vm_cluster_group.command(name=cli_util.override('db.change_vm_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a VM cluster and its dependent resources to another compartment. Applies to Exadata Cloud@Customer instances only. To move a cloud VM cluster in an Exadata Cloud Service instance to another compartment, use the [ChangeCloudVmClusterCompartment ] operation. \n[Command Reference](changeVmClusterCompartment)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the VM cluster to.""")
 @cli_util.option('--vm-cluster-id', required=True, help=u"""The VM cluster [OCID].""")
@@ -3666,7 +3986,7 @@ This cannot be updated in parallel with any of the following: cpuCoreCount, comp
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database CPU core count. The default value is `TRUE`.""")
-@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are free Autonomous Databases that developers can use to build and test new applications.With Autonomous these database instancess instances, you can try new Autonomous Database features for free and apply them to ongoing or new development projects. Developer database comes with limited resources and is, therefore, not suitable for large-scale testing and production deployments. When you need more compute or storage resources, you can transition to a paid database licensing by cloning your developer database into a regular Autonomous Database. See [Autonomous Database documentation] for more details.""")
+@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are fixed-shape Autonomous Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous Database on Dedicated Exadata Infrastructure.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous Database. This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
@@ -3983,7 +4303,7 @@ This cannot be updated in parallel with any of the following: cpuCoreCount, comp
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database CPU core count. The default value is `TRUE`.""")
-@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are free Autonomous Databases that developers can use to build and test new applications.With Autonomous these database instancess instances, you can try new Autonomous Database features for free and apply them to ongoing or new development projects. Developer database comes with limited resources and is, therefore, not suitable for large-scale testing and production deployments. When you need more compute or storage resources, you can transition to a paid database licensing by cloning your developer database into a regular Autonomous Database. See [Autonomous Database documentation] for more details.""")
+@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are fixed-shape Autonomous Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous Database on Dedicated Exadata Infrastructure.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous Database. This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
@@ -4297,7 +4617,7 @@ This cannot be updated in parallel with any of the following: cpuCoreCount, comp
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database CPU core count. The default value is `TRUE`.""")
-@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are free Autonomous Databases that developers can use to build and test new applications.With Autonomous these database instancess instances, you can try new Autonomous Database features for free and apply them to ongoing or new development projects. Developer database comes with limited resources and is, therefore, not suitable for large-scale testing and production deployments. When you need more compute or storage resources, you can transition to a paid database licensing by cloning your developer database into a regular Autonomous Database. See [Autonomous Database documentation] for more details.""")
+@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are fixed-shape Autonomous Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous Database on Dedicated Exadata Infrastructure.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous Database. This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
@@ -4633,7 +4953,7 @@ This cannot be updated in parallel with any of the following: cpuCoreCount, comp
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database CPU core count. The default value is `TRUE`.""")
-@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are free Autonomous Databases that developers can use to build and test new applications.With Autonomous these database instancess instances, you can try new Autonomous Database features for free and apply them to ongoing or new development projects. Developer database comes with limited resources and is, therefore, not suitable for large-scale testing and production deployments. When you need more compute or storage resources, you can transition to a paid database licensing by cloning your developer database into a regular Autonomous Database. See [Autonomous Database documentation] for more details.""")
+@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are fixed-shape Autonomous Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous Database on Dedicated Exadata Infrastructure.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous Database. This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
@@ -4948,7 +5268,7 @@ This cannot be updated in parallel with any of the following: cpuCoreCount, comp
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database CPU core count. The default value is `TRUE`.""")
-@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are free Autonomous Databases that developers can use to build and test new applications.With Autonomous these database instancess instances, you can try new Autonomous Database features for free and apply them to ongoing or new development projects. Developer database comes with limited resources and is, therefore, not suitable for large-scale testing and production deployments. When you need more compute or storage resources, you can transition to a paid database licensing by cloning your developer database into a regular Autonomous Database. See [Autonomous Database documentation] for more details.""")
+@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are fixed-shape Autonomous Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous Database on Dedicated Exadata Infrastructure.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous Database. This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
@@ -5267,7 +5587,7 @@ This cannot be updated in parallel with any of the following: cpuCoreCount, comp
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database CPU core count. The default value is `TRUE`.""")
-@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are free Autonomous Databases that developers can use to build and test new applications.With Autonomous these database instancess instances, you can try new Autonomous Database features for free and apply them to ongoing or new development projects. Developer database comes with limited resources and is, therefore, not suitable for large-scale testing and production deployments. When you need more compute or storage resources, you can transition to a paid database licensing by cloning your developer database into a regular Autonomous Database. See [Autonomous Database documentation] for more details.""")
+@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are fixed-shape Autonomous Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous Database on Dedicated Exadata Infrastructure.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous Database. This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
@@ -5590,7 +5910,7 @@ This cannot be updated in parallel with any of the following: cpuCoreCount, comp
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database CPU core count. The default value is `TRUE`.""")
-@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are free Autonomous Databases that developers can use to build and test new applications.With Autonomous these database instancess instances, you can try new Autonomous Database features for free and apply them to ongoing or new development projects. Developer database comes with limited resources and is, therefore, not suitable for large-scale testing and production deployments. When you need more compute or storage resources, you can transition to a paid database licensing by cloning your developer database into a regular Autonomous Database. See [Autonomous Database documentation] for more details.""")
+@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are fixed-shape Autonomous Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous Database on Dedicated Exadata Infrastructure.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous Database. This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
@@ -5908,7 +6228,7 @@ This cannot be updated in parallel with any of the following: cpuCoreCount, comp
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database CPU core count. The default value is `TRUE`.""")
-@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are free Autonomous Databases that developers can use to build and test new applications.With Autonomous these database instancess instances, you can try new Autonomous Database features for free and apply them to ongoing or new development projects. Developer database comes with limited resources and is, therefore, not suitable for large-scale testing and production deployments. When you need more compute or storage resources, you can transition to a paid database licensing by cloning your developer database into a regular Autonomous Database. See [Autonomous Database documentation] for more details.""")
+@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are fixed-shape Autonomous Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous Database on Dedicated Exadata Infrastructure.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous Database. This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
@@ -6220,7 +6540,7 @@ This cannot be updated in parallel with any of the following: cpuCoreCount, comp
 @cli_util.option('--byol-compute-count-limit', type=click.FLOAT, help=u"""The maximum number of CPUs allowed with a Bring Your Own License (BYOL), including those used for auto-scaling, disaster recovery, tools, etc. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--is-preview-version-with-service-terms-accepted', type=click.BOOL, help=u"""If set to `TRUE`, indicates that an Autonomous Database preview version is being provisioned, and that the preview version's terms of service have been accepted. Note that preview version software is only available for Autonomous Database Serverless instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Autonomous Database CPU core count. The default value is `TRUE`.""")
-@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are free Autonomous Databases that developers can use to build and test new applications.With Autonomous these database instancess instances, you can try new Autonomous Database features for free and apply them to ongoing or new development projects. Developer database comes with limited resources and is, therefore, not suitable for large-scale testing and production deployments. When you need more compute or storage resources, you can transition to a paid database licensing by cloning your developer database into a regular Autonomous Database. See [Autonomous Database documentation] for more details.""")
+@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are fixed-shape Autonomous Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--is-dedicated', type=click.BOOL, help=u"""True if the database is on [dedicated Exadata infrastructure].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID]. Used only by Autonomous Database on Dedicated Exadata Infrastructure.""")
 @cli_util.option('--in-memory-percentage', type=click.INT, help=u"""The percentage of the System Global Area(SGA) assigned to In-Memory tables in Autonomous Database. This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
@@ -7630,6 +7950,7 @@ These subnets are used by the Oracle Clusterware private interconnect on the dat
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of [OCIDs] for the network security groups (NSGs) to which this resource belongs. Setting this to an empty list removes all resources from all NSGs. For more information about NSGs, see [Security Rules]. **NsgIds restrictions:** - A network security group (NSG) is optional for Autonomous Databases with private access. The nsgIds list can be empty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--backup-network-nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the [OCIDs] of the network security groups (NSGs) that the backup network of this DB system belongs to. Setting this to an empty array after the list is created removes the resource from all NSGs. For more information about NSGs, see [Security Rules]. Applicable only to Exadata systems.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--hostname', help=u"""The hostname for the DB node.""")
+@cli_util.option('--domain', help=u"""A domain name used for the DB system. If the Oracle-provided Internet and VCN Resolver is enabled for the specified subnet, the domain name for the subnet is used (do not provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted.""")
 @cli_util.option('--time-zone', help=u"""The time zone of the dataguard standby DB system. For details, see [DB System Time Zones].""")
 @cli_util.option('--fault-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A Fault Domain is a grouping of hardware and infrastructure within an availability domain. Fault Domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or maintenance that affects one Fault Domain does not affect DB systems in other Fault Domains.
 
@@ -7659,7 +7980,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'db-system-freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'db-system-defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'database-freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'database-defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_create_data_guard_association_with_new_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix, display_name, availability_domain, shape, cpu_core_count, storage_volume_performance_mode, node_count, subnet_id, nsg_ids, backup_network_nsg_ids, hostname, time_zone, fault_domains, private_ip, license_model, db_system_freeform_tags, db_system_defined_tags, database_freeform_tags, database_defined_tags, data_collection_options):
+def create_data_guard_association_create_data_guard_association_with_new_db_system_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix, display_name, availability_domain, shape, cpu_core_count, storage_volume_performance_mode, node_count, subnet_id, nsg_ids, backup_network_nsg_ids, hostname, domain, time_zone, fault_domains, private_ip, license_model, db_system_freeform_tags, db_system_defined_tags, database_freeform_tags, database_defined_tags, data_collection_options):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -7712,6 +8033,9 @@ def create_data_guard_association_create_data_guard_association_with_new_db_syst
 
     if hostname is not None:
         _details['hostname'] = hostname
+
+    if domain is not None:
+        _details['domain'] = domain
 
     if time_zone is not None:
         _details['timeZone'] = time_zone
@@ -8938,7 +9262,9 @@ The maximum length of the combined hostname and domain is 63 characters.
 @cli_util.option('--enabled-e-cpu-count', required=True, type=click.INT, help=u"""The number of ECPUs to enable for an Exadata VM cluster on Exascale Infrastructure.""")
 @cli_util.option('--vm-file-system-storage', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--exascale-db-storage-vault-id', required=True, help=u"""The [OCID] of the Exadata Database Storage Vault.""")
-@cli_util.option('--grid-image-id', required=True, help=u"""Grid Setup will be done using this grid image id""")
+@cli_util.option('--grid-image-id', required=True, help=u"""Grid Setup will be done using this grid image id.
+
+The grid image id can be extracted from 1. Obtain the supported major versions using API /20160918/giVersions?compartmentId=<compartmentId>&shape=EXADB_XS&availabilityDomain=<AD name> 2. Replace {version} with one of the supported major versions and obtain the supported minor versions using API /20160918/giVersions/{version}/minorVersions?compartmentId=<compartmentId>&shapeFamily=EXADB_XS&availabilityDomain=<AD name>""")
 @cli_util.option('--cluster-name', help=u"""The cluster name for Exadata VM cluster on Exascale Infrastructure. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.""")
 @cli_util.option('--domain', help=u"""A domain name used for the Exadata VM cluster on Exascale Infrastructure. If the Oracle-provided internet and VCN resolver is enabled for the specified subnet, then the domain name for the subnet is used (do not provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted. Applies to Exadata Database Service on Exascale Infrastructure only.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the Exadata VM cluster on Exascale Infrastructure. The default is BRING_YOUR_OWN_LICENSE.""")
@@ -9116,6 +9442,150 @@ def create_exascale_db_storage_vault(ctx, from_json, wait_for_state, max_wait_se
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_exascale_db_storage_vault(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@execution_action_group.command(name=cli_util.override('db.create_execution_action.command_name', 'create'), help=u"""Creates an execution action resource. \n[Command Reference](createExecutionAction)""")
+@cli_util.option('--execution-window-id', required=True, help=u"""The [OCID] of the execution window resource the execution action belongs to.""")
+@cli_util.option('--action-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DB_SERVER_FULL_SOFTWARE_UPDATE", "STORAGE_SERVER_FULL_SOFTWARE_UPDATE", "NETWORK_SWITCH_FULL_SOFTWARE_UPDATE"]), help=u"""The action type of the execution action being performed""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--action-params', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<ParamName, ParamValue> where a key value pair describes the specific action parameter. Example: `{\"count\": \"3\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--action-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of action members of this execution action.
+
+This option is a JSON list with items of type ExecutionActionMember.  For documentation on ExecutionActionMember please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ExecutionActionMember.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IN_PROGRESS", "FAILED", "CANCELED", "UPDATING", "DELETED", "SUCCEEDED", "PARTIAL_SUCCESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'action-params': {'module': 'database', 'class': 'dict(str, string)'}, 'action-members': {'module': 'database', 'class': 'list[ExecutionActionMember]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'action-params': {'module': 'database', 'class': 'dict(str, string)'}, 'action-members': {'module': 'database', 'class': 'list[ExecutionActionMember]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExecutionAction'})
+@cli_util.wrap_exceptions
+def create_execution_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, execution_window_id, action_type, compartment_id, action_params, action_members, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['executionWindowId'] = execution_window_id
+    _details['actionType'] = action_type
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if action_params is not None:
+        _details['actionParams'] = cli_util.parse_json_parameter("action_params", action_params)
+
+    if action_members is not None:
+        _details['actionMembers'] = cli_util.parse_json_parameter("action_members", action_members)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_execution_action(
+        create_execution_action_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_execution_action') and callable(getattr(client, 'get_execution_action')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_execution_action(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@execution_window_group.command(name=cli_util.override('db.create_execution_window.command_name', 'create'), help=u"""Creates an execution window resource. \n[Command Reference](createExecutionWindow)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--execution-resource-id', required=True, help=u"""The [OCID] of the execution resource the execution window belongs to.""")
+@cli_util.option('--time-scheduled', required=True, type=custom_types.CLI_DATETIME, help=u"""The scheduled start date and time of the execution window.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--window-duration-in-mins', required=True, type=click.INT, help=u"""Duration window allows user to set a duration they plan to allocate for Scheduling window. The duration is in minutes.""")
+@cli_util.option('--is-enforced-duration', type=click.BOOL, help=u"""Indicates if duration the user plans to allocate for scheduling window is strictly enforced. The default value is `FALSE`.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "SCHEDULED", "IN_PROGRESS", "FAILED", "CANCELED", "UPDATING", "DELETED", "SUCCEEDED", "PARTIAL_SUCCESS", "CREATING", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExecutionWindow'})
+@cli_util.wrap_exceptions
+def create_execution_window(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, execution_resource_id, time_scheduled, window_duration_in_mins, is_enforced_duration, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['executionResourceId'] = execution_resource_id
+    _details['timeScheduled'] = time_scheduled
+    _details['windowDurationInMins'] = window_duration_in_mins
+
+    if is_enforced_duration is not None:
+        _details['isEnforcedDuration'] = is_enforced_duration
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_execution_window(
+        create_execution_window_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_execution_window') and callable(getattr(client, 'get_execution_window')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_execution_window(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -10141,6 +10611,285 @@ def create_pluggable_database_create_pluggable_database_from_local_clone_details
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_pluggable_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@scheduled_action_group.command(name=cli_util.override('db.create_scheduled_action.command_name', 'create'), help=u"""Creates a Scheduled Action resource. \n[Command Reference](createScheduledAction)""")
+@cli_util.option('--action-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DB_SERVER_FULL_SOFTWARE_UPDATE", "STORAGE_SERVER_FULL_SOFTWARE_UPDATE", "NETWORK_SWITCH_FULL_SOFTWARE_UPDATE"]), help=u"""The type of the scheduled action being performed""")
+@cli_util.option('--scheduling-plan-id', required=True, help=u"""The [OCID] of the Scheduling Plan.""")
+@cli_util.option('--scheduling-window-id', required=True, help=u"""The [OCID] of the Scheduling Window.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--action-params', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<ParamName, ParamValue> where a key value pair describes the specific action parameter. Example: `{\"count\": \"3\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--action-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of action members in a scheduled action.
+
+This option is a JSON list with items of type ActionMember.  For documentation on ActionMember please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ActionMember.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NEEDS_ATTENTION", "AVAILABLE", "UPDATING", "FAILED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'action-params': {'module': 'database', 'class': 'dict(str, string)'}, 'action-members': {'module': 'database', 'class': 'list[ActionMember]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'action-params': {'module': 'database', 'class': 'dict(str, string)'}, 'action-members': {'module': 'database', 'class': 'list[ActionMember]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ScheduledAction'})
+@cli_util.wrap_exceptions
+def create_scheduled_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, action_type, scheduling_plan_id, scheduling_window_id, compartment_id, action_params, action_members, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['actionType'] = action_type
+    _details['schedulingPlanId'] = scheduling_plan_id
+    _details['schedulingWindowId'] = scheduling_window_id
+    _details['compartmentId'] = compartment_id
+
+    if action_params is not None:
+        _details['actionParams'] = cli_util.parse_json_parameter("action_params", action_params)
+
+    if action_members is not None:
+        _details['actionMembers'] = cli_util.parse_json_parameter("action_members", action_members)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_scheduled_action(
+        create_scheduled_action_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_scheduled_action') and callable(getattr(client, 'get_scheduled_action')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_scheduled_action(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@scheduling_plan_group.command(name=cli_util.override('db.create_scheduling_plan.command_name', 'create'), help=u"""Creates a Scheduling Plan resource. \n[Command Reference](createSchedulingPlan)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--scheduling-policy-id', required=True, help=u"""The [OCID] of the Scheduling Policy.""")
+@cli_util.option('--resource-id', required=True, help=u"""The [OCID] of the resource.""")
+@cli_util.option('--service-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACC", "EXACS", "FPPPCS"]), help=u"""The service type of the Scheduling Plan.""")
+@cli_util.option('--is-using-recommended-scheduled-actions', type=click.BOOL, help=u"""If true, recommended scheduled actions will be generated for the scheduling plan.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NEEDS_ATTENTION", "AVAILABLE", "UPDATING", "FAILED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'SchedulingPlan'})
+@cli_util.wrap_exceptions
+def create_scheduling_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, scheduling_policy_id, resource_id, service_type, is_using_recommended_scheduled_actions, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['schedulingPolicyId'] = scheduling_policy_id
+    _details['resourceId'] = resource_id
+    _details['serviceType'] = service_type
+
+    if is_using_recommended_scheduled_actions is not None:
+        _details['isUsingRecommendedScheduledActions'] = is_using_recommended_scheduled_actions
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_scheduling_plan(
+        create_scheduling_plan_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_scheduling_plan') and callable(getattr(client, 'get_scheduling_plan')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_scheduling_plan(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@scheduling_policy_group.command(name=cli_util.override('db.create_scheduling_policy.command_name', 'create'), help=u"""Creates a Scheduling Policy resource. \n[Command Reference](createSchedulingPolicy)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the Scheduling Policy. The name does not need to be unique.""")
+@cli_util.option('--cadence', required=True, type=custom_types.CliCaseInsensitiveChoice(["HALFYEARLY", "QUARTERLY", "MONTHLY"]), help=u"""The cadence period.""")
+@cli_util.option('--cadence-start-month', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Start of the month to be followed during the cadence period.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NEEDS_ATTENTION", "AVAILABLE", "UPDATING", "FAILED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'cadence-start-month': {'module': 'database', 'class': 'Month'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cadence-start-month': {'module': 'database', 'class': 'Month'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'SchedulingPolicy'})
+@cli_util.wrap_exceptions
+def create_scheduling_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, cadence, cadence_start_month, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['cadence'] = cadence
+
+    if cadence_start_month is not None:
+        _details['cadenceStartMonth'] = cli_util.parse_json_parameter("cadence_start_month", cadence_start_month)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_scheduling_policy(
+        create_scheduling_policy_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_scheduling_policy') and callable(getattr(client, 'get_scheduling_policy')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_scheduling_policy(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@scheduling_window_group.command(name=cli_util.override('db.create_scheduling_window.command_name', 'create'), help=u"""Creates a Scheduling Window resource. \n[Command Reference](createSchedulingWindow)""")
+@cli_util.option('--scheduling-policy-id', required=True, help=u"""The Scheduling Policy [OCID].""")
+@cli_util.option('--window-preference', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "UPDATING", "FAILED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'window-preference': {'module': 'database', 'class': 'WindowPreferenceDetail'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'window-preference': {'module': 'database', 'class': 'WindowPreferenceDetail'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'SchedulingWindow'})
+@cli_util.wrap_exceptions
+def create_scheduling_window(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduling_policy_id, window_preference, compartment_id, freeform_tags, defined_tags):
+
+    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['windowPreference'] = cli_util.parse_json_parameter("window_preference", window_preference)
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_scheduling_window(
+        scheduling_policy_id=scheduling_policy_id,
+        create_scheduling_window_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_scheduling_window') and callable(getattr(client, 'get_scheduling_window')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_scheduling_window(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -11478,6 +12227,127 @@ def delete_exascale_db_storage_vault(ctx, from_json, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
+@execution_action_group.command(name=cli_util.override('db.delete_execution_action.command_name', 'delete'), help=u"""Deletes the execution action. \n[Command Reference](deleteExecutionAction)""")
+@cli_util.option('--execution-action-id', required=True, help=u"""The execution action [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_execution_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, execution_action_id, if_match):
+
+    if isinstance(execution_action_id, six.string_types) and len(execution_action_id.strip()) == 0:
+        raise click.UsageError('Parameter --execution-action-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.delete_execution_action(
+        execution_action_id=execution_action_id,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@execution_window_group.command(name=cli_util.override('db.delete_execution_window.command_name', 'delete'), help=u"""Deletes the execution window. \n[Command Reference](deleteExecutionWindow)""")
+@cli_util.option('--execution-window-id', required=True, help=u"""The execution window [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "SCHEDULED", "IN_PROGRESS", "FAILED", "CANCELED", "UPDATING", "DELETED", "SUCCEEDED", "PARTIAL_SUCCESS", "CREATING", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_execution_window(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, execution_window_id, if_match):
+
+    if isinstance(execution_window_id, six.string_types) and len(execution_window_id.strip()) == 0:
+        raise click.UsageError('Parameter --execution-window-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.delete_execution_window(
+        execution_window_id=execution_window_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_execution_window') and callable(getattr(client, 'get_execution_window')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_execution_window(execution_window_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @external_container_database_group.command(name=cli_util.override('db.delete_external_container_database.command_name', 'delete'), help=u"""Deletes the [external container database] resource. Any external pluggable databases registered under this container database must be deleted in your Oracle Cloud Infrastructure tenancy prior to this operation. \n[Command Reference](deleteExternalContainerDatabase)""")
 @cli_util.option('--external-container-database-id', required=True, help=u"""The ExternalContainerDatabase [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -11881,6 +12751,215 @@ def delete_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, 
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@scheduled_action_group.command(name=cli_util.override('db.delete_scheduled_action.command_name', 'delete'), help=u"""Deletes the scheduled action. \n[Command Reference](deleteScheduledAction)""")
+@cli_util.option('--scheduled-action-id', required=True, help=u"""The Scheduled Action [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_scheduled_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduled_action_id, if_match):
+
+    if isinstance(scheduled_action_id, six.string_types) and len(scheduled_action_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduled-action-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.delete_scheduled_action(
+        scheduled_action_id=scheduled_action_id,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@scheduling_plan_group.command(name=cli_util.override('db.delete_scheduling_plan.command_name', 'delete'), help=u"""Deletes the scheduling plan. \n[Command Reference](deleteSchedulingPlan)""")
+@cli_util.option('--scheduling-plan-id', required=True, help=u"""The Schedule Plan [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_scheduling_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduling_plan_id, if_match):
+
+    if isinstance(scheduling_plan_id, six.string_types) and len(scheduling_plan_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduling-plan-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.delete_scheduling_plan(
+        scheduling_plan_id=scheduling_plan_id,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@scheduling_policy_group.command(name=cli_util.override('db.delete_scheduling_policy.command_name', 'delete'), help=u"""Deletes the scheduling policy. \n[Command Reference](deleteSchedulingPolicy)""")
+@cli_util.option('--scheduling-policy-id', required=True, help=u"""The Scheduling Policy [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NEEDS_ATTENTION", "AVAILABLE", "UPDATING", "FAILED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_scheduling_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduling_policy_id, if_match):
+
+    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.delete_scheduling_policy(
+        scheduling_policy_id=scheduling_policy_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_scheduling_policy') and callable(getattr(client, 'get_scheduling_policy')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_scheduling_policy(scheduling_policy_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@scheduling_window_group.command(name=cli_util.override('db.delete_scheduling_window.command_name', 'delete'), help=u"""Deletes the scheduling window. \n[Command Reference](deleteSchedulingWindow)""")
+@cli_util.option('--scheduling-policy-id', required=True, help=u"""The Scheduling Policy [OCID].""")
+@cli_util.option('--scheduling-window-id', required=True, help=u"""The Scheduling Window [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_scheduling_window(ctx, from_json, scheduling_policy_id, scheduling_window_id, if_match):
+
+    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
+
+    if isinstance(scheduling_window_id, six.string_types) and len(scheduling_window_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduling-window-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.delete_scheduling_window(
+        scheduling_policy_id=scheduling_policy_id,
+        scheduling_window_id=scheduling_window_id,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -15283,6 +16362,50 @@ def get_exascale_db_storage_vault(ctx, from_json, exascale_db_storage_vault_id):
     cli_util.render_response(result, ctx)
 
 
+@execution_action_group.command(name=cli_util.override('db.get_execution_action.command_name', 'get'), help=u"""Gets information about the specified execution action. \n[Command Reference](getExecutionAction)""")
+@cli_util.option('--execution-action-id', required=True, help=u"""The execution action [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ExecutionAction'})
+@cli_util.wrap_exceptions
+def get_execution_action(ctx, from_json, execution_action_id):
+
+    if isinstance(execution_action_id, six.string_types) and len(execution_action_id.strip()) == 0:
+        raise click.UsageError('Parameter --execution-action-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_execution_action(
+        execution_action_id=execution_action_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@execution_window_group.command(name=cli_util.override('db.get_execution_window.command_name', 'get'), help=u"""Gets information about the specified execution window. \n[Command Reference](getExecutionWindow)""")
+@cli_util.option('--execution-window-id', required=True, help=u"""The execution window [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ExecutionWindow'})
+@cli_util.wrap_exceptions
+def get_execution_window(ctx, from_json, execution_window_id):
+
+    if isinstance(execution_window_id, six.string_types) and len(execution_window_id.strip()) == 0:
+        raise click.UsageError('Parameter --execution-window-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_execution_window(
+        execution_window_id=execution_window_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @external_backup_job_group.command(name=cli_util.override('db.get_external_backup_job.command_name', 'get'), help=u"""Gets information about the specified external backup job.
 
 **Note:** This API is used by an Oracle Cloud Infrastructure Python script that is packaged with the Oracle Cloud Infrastructure CLI. Oracle recommends that you use the script instead using the API directly. See [Migrating an On-Premises Database to Oracle Cloud Infrastructure by Creating a Backup in the Cloud] for more information. \n[Command Reference](getExternalBackupJob)""")
@@ -15548,6 +16671,99 @@ def get_pluggable_database(ctx, from_json, pluggable_database_id):
     client = cli_util.build_client('database', 'database', ctx)
     result = client.get_pluggable_database(
         pluggable_database_id=pluggable_database_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@scheduled_action_group.command(name=cli_util.override('db.get_scheduled_action.command_name', 'get'), help=u"""Gets information about the specified Scheduled Action. \n[Command Reference](getScheduledAction)""")
+@cli_util.option('--scheduled-action-id', required=True, help=u"""The Scheduled Action [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ScheduledAction'})
+@cli_util.wrap_exceptions
+def get_scheduled_action(ctx, from_json, scheduled_action_id):
+
+    if isinstance(scheduled_action_id, six.string_types) and len(scheduled_action_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduled-action-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_scheduled_action(
+        scheduled_action_id=scheduled_action_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@scheduling_plan_group.command(name=cli_util.override('db.get_scheduling_plan.command_name', 'get'), help=u"""Gets information about the specified Scheduling Plan. \n[Command Reference](getSchedulingPlan)""")
+@cli_util.option('--scheduling-plan-id', required=True, help=u"""The Schedule Plan [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'SchedulingPlan'})
+@cli_util.wrap_exceptions
+def get_scheduling_plan(ctx, from_json, scheduling_plan_id):
+
+    if isinstance(scheduling_plan_id, six.string_types) and len(scheduling_plan_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduling-plan-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_scheduling_plan(
+        scheduling_plan_id=scheduling_plan_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@scheduling_policy_group.command(name=cli_util.override('db.get_scheduling_policy.command_name', 'get'), help=u"""Gets information about the specified Scheduling Policy. \n[Command Reference](getSchedulingPolicy)""")
+@cli_util.option('--scheduling-policy-id', required=True, help=u"""The Scheduling Policy [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'SchedulingPolicy'})
+@cli_util.wrap_exceptions
+def get_scheduling_policy(ctx, from_json, scheduling_policy_id):
+
+    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_scheduling_policy(
+        scheduling_policy_id=scheduling_policy_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@scheduling_window_group.command(name=cli_util.override('db.get_scheduling_window.command_name', 'get'), help=u"""Gets information about the specified Scheduling Window. \n[Command Reference](getSchedulingWindow)""")
+@cli_util.option('--scheduling-policy-id', required=True, help=u"""The Scheduling Policy [OCID].""")
+@cli_util.option('--scheduling-window-id', required=True, help=u"""The Scheduling Window [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'SchedulingWindow'})
+@cli_util.wrap_exceptions
+def get_scheduling_window(ctx, from_json, scheduling_policy_id, scheduling_window_id):
+
+    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
+
+    if isinstance(scheduling_window_id, six.string_types) and len(scheduling_window_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduling-window-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_scheduling_window(
+        scheduling_policy_id=scheduling_policy_id,
+        scheduling_window_id=scheduling_window_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -19683,6 +20899,132 @@ def list_exascale_db_storage_vaults(ctx, from_json, all_pages, page_size, compar
     cli_util.render_response(result, ctx)
 
 
+@execution_action_group.command(name=cli_util.override('db.list_execution_actions.command_name', 'list'), help=u"""Lists the execution action resources in the specified compartment. \n[Command Reference](listExecutionActions)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IN_PROGRESS", "FAILED", "CANCELED", "UPDATING", "DELETED", "SUCCEEDED", "PARTIAL_SUCCESS"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--execution-window-id', help=u"""A filter to return only resources that match the given execution wondow id.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[ExecutionActionSummary]'})
+@cli_util.wrap_exceptions
+def list_execution_actions(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, execution_window_id, display_name):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if execution_window_id is not None:
+        kwargs['execution_window_id'] = execution_window_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_execution_actions,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_execution_actions,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_execution_actions(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@execution_window_group.command(name=cli_util.override('db.list_execution_windows.command_name', 'list'), help=u"""Lists the execution window resources in the specified compartment. \n[Command Reference](listExecutionWindows)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--execution-resource-id', help=u"""A filter to return only resources that match the given resource id exactly.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "SCHEDULED", "IN_PROGRESS", "FAILED", "CANCELED", "UPDATING", "DELETED", "SUCCEEDED", "PARTIAL_SUCCESS", "CREATING", "DELETING"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[ExecutionWindowSummary]'})
+@cli_util.wrap_exceptions
+def list_execution_windows(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, execution_resource_id, sort_order, lifecycle_state, display_name):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if execution_resource_id is not None:
+        kwargs['execution_resource_id'] = execution_resource_id
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_execution_windows,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_execution_windows,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_execution_windows(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @external_container_database_group.command(name=cli_util.override('db.list_external_container_databases.command_name', 'list'), help=u"""Gets a list of the external container databases in the specified compartment. \n[Command Reference](listExternalContainerDatabases)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
@@ -20374,6 +21716,54 @@ def list_oneoff_patches(ctx, from_json, all_pages, page_size, compartment_id, li
     cli_util.render_response(result, ctx)
 
 
+@action_param_values_summary_group.command(name=cli_util.override('db.list_params_for_action_type.command_name', 'list-params-for-action-type'), help=u"""List all the action params and their possible values for a given action type \n[Command Reference](listParamsForActionType)""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DB_SERVER_FULL_SOFTWARE_UPDATE", "STORAGE_SERVER_FULL_SOFTWARE_UPDATE", "NETWORK_SWITCH_FULL_SOFTWARE_UPDATE"]), help=u"""The type of the scheduled action""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ActionParamValuesCollection'})
+@cli_util.wrap_exceptions
+def list_params_for_action_type(ctx, from_json, all_pages, page_size, type, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_params_for_action_type,
+            type=type,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_params_for_action_type,
+            limit,
+            page_size,
+            type=type,
+            **kwargs
+        )
+    else:
+        result = client.list_params_for_action_type(
+            type=type,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @database_group.command(name=cli_util.override('db.list_pdb_conversion_history_entries.command_name', 'list-pdb-conversion-history-entries'), help=u"""Gets the pluggable database conversion history for a specified database in a bare metal or virtual machine DB system. \n[Command Reference](listPdbConversionHistoryEntries)""")
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--pdb-conversion-action', type=custom_types.CliCaseInsensitiveChoice(["PRECHECK", "CONVERT", "SYNC", "SYNC_ROLLBACK"]), help=u"""A filter to return only the pluggable database conversion history entries that match the specified conversion action. For example, you can use this filter to return only entries for the precheck operation.""")
@@ -20493,6 +21883,329 @@ def list_pluggable_databases(ctx, from_json, all_pages, page_size, compartment_i
         )
     else:
         result = client.list_pluggable_databases(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@recommended_scheduled_action_summary_group.command(name=cli_util.override('db.list_recommended_scheduled_actions.command_name', 'list-recommended-scheduled-actions'), help=u"""Returns a recommended Scheduled Actions configuration for a given resource, plan intent and scheduling policy. \n[Command Reference](listRecommendedScheduledActions)""")
+@cli_util.option('--scheduling-policy-id', required=True, help=u"""The Scheduling Policy [OCID].""")
+@cli_util.option('--scheduling-policy-target-resource-id', required=True, help=u"""The target resource [OCID] the scheduled actions will be for.""")
+@cli_util.option('--plan-intent', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXADATA_INFRASTRUCTURE_FULL_SOFTWARE_UPDATE"]), help=u"""The scheduling plan intent the scheduled actions will be for.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'RecommendedScheduledActionsCollection'})
+@cli_util.wrap_exceptions
+def list_recommended_scheduled_actions(ctx, from_json, all_pages, page_size, scheduling_policy_id, scheduling_policy_target_resource_id, plan_intent, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_recommended_scheduled_actions,
+            scheduling_policy_id=scheduling_policy_id,
+            scheduling_policy_target_resource_id=scheduling_policy_target_resource_id,
+            plan_intent=plan_intent,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_recommended_scheduled_actions,
+            limit,
+            page_size,
+            scheduling_policy_id=scheduling_policy_id,
+            scheduling_policy_target_resource_id=scheduling_policy_target_resource_id,
+            plan_intent=plan_intent,
+            **kwargs
+        )
+    else:
+        result = client.list_recommended_scheduled_actions(
+            scheduling_policy_id=scheduling_policy_id,
+            scheduling_policy_target_resource_id=scheduling_policy_target_resource_id,
+            plan_intent=plan_intent,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@scheduled_action_group.command(name=cli_util.override('db.list_scheduled_actions.command_name', 'list'), help=u"""Lists the Scheduled Action resources in the specified compartment. \n[Command Reference](listScheduledActions)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--service-type', help=u"""A filter to return only resources that match the given service type exactly.""")
+@cli_util.option('--scheduling-plan-id', help=u"""A filter to return only resources that match the given scheduling policy id exactly.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.""")
+@cli_util.option('--id', help=u"""A filter to return only resources that match the given Scheduled Action id exactly.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NEEDS_ATTENTION", "AVAILABLE", "UPDATING", "FAILED", "DELETING", "DELETED"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ScheduledActionCollection'})
+@cli_util.wrap_exceptions
+def list_scheduled_actions(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_order, service_type, scheduling_plan_id, display_name, sort_by, id, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if service_type is not None:
+        kwargs['service_type'] = service_type
+    if scheduling_plan_id is not None:
+        kwargs['scheduling_plan_id'] = scheduling_plan_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if id is not None:
+        kwargs['id'] = id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_scheduled_actions,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_scheduled_actions,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_scheduled_actions(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@scheduling_plan_group.command(name=cli_util.override('db.list_scheduling_plans.command_name', 'list'), help=u"""Lists the Scheduling Plan resources in the specified compartment. \n[Command Reference](listSchedulingPlans)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NEEDS_ATTENTION", "AVAILABLE", "UPDATING", "FAILED", "DELETING", "DELETED"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--scheduling-policy-id', help=u"""A filter to return only resources that match the given scheduling policy id exactly.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--resource-id', help=u"""A filter to return only resources that match the given resource id exactly.""")
+@cli_util.option('--id', help=u"""A filter to return only resources that match the given Schedule Plan id exactly.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'SchedulingPlanCollection'})
+@cli_util.wrap_exceptions
+def list_scheduling_plans(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, scheduling_policy_id, display_name, resource_id, id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if scheduling_policy_id is not None:
+        kwargs['scheduling_policy_id'] = scheduling_policy_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if resource_id is not None:
+        kwargs['resource_id'] = resource_id
+    if id is not None:
+        kwargs['id'] = id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_scheduling_plans,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_scheduling_plans,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_scheduling_plans(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@scheduling_policy_group.command(name=cli_util.override('db.list_scheduling_policies.command_name', 'list'), help=u"""Lists the Scheduling Policy resources in the specified compartment. \n[Command Reference](listSchedulingPolicies)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NEEDS_ATTENTION", "AVAILABLE", "UPDATING", "FAILED", "DELETING", "DELETED"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[SchedulingPolicySummary]'})
+@cli_util.wrap_exceptions
+def list_scheduling_policies(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, display_name):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_scheduling_policies,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_scheduling_policies,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_scheduling_policies(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@scheduling_window_group.command(name=cli_util.override('db.list_scheduling_windows.command_name', 'list'), help=u"""Lists the Scheduling Window resources in the specified compartment. \n[Command Reference](listSchedulingWindows)""")
+@cli_util.option('--scheduling-policy-id', required=True, help=u"""The Scheduling Policy [OCID].""")
+@cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "UPDATING", "FAILED", "DELETING", "DELETED"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[SchedulingWindowSummary]'})
+@cli_util.wrap_exceptions
+def list_scheduling_windows(ctx, from_json, all_pages, page_size, scheduling_policy_id, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, display_name):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_scheduling_windows,
+            scheduling_policy_id=scheduling_policy_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_scheduling_windows,
+            limit,
+            page_size,
+            scheduling_policy_id=scheduling_policy_id,
+            **kwargs
+        )
+    else:
+        result = client.list_scheduling_windows(
+            scheduling_policy_id=scheduling_policy_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -21238,6 +22951,83 @@ def modify_pluggable_database_management(ctx, from_json, wait_for_state, max_wai
     cli_util.render_response(result, ctx)
 
 
+@execution_action_group.command(name=cli_util.override('db.move_execution_action_member.command_name', 'move-execution-action-member'), help=u"""Moves an execution action member to this execution action resource from another. \n[Command Reference](moveExecutionActionMember)""")
+@cli_util.option('--execution-action-id', required=True, help=u"""The execution action [OCID].""")
+@cli_util.option('--source-execution-action-id', help=u"""The [OCID] of the source execution action resource.""")
+@cli_util.option('--execution-action-member-id', help=u"""The [OCID] of the execution action member to be moved.""")
+@cli_util.option('--execution-action-member-count', type=click.INT, help=u"""The number of execution action member without ocids to be moved.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IN_PROGRESS", "FAILED", "CANCELED", "UPDATING", "DELETED", "SUCCEEDED", "PARTIAL_SUCCESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExecutionAction'})
+@cli_util.wrap_exceptions
+def move_execution_action_member(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, execution_action_id, source_execution_action_id, execution_action_member_id, execution_action_member_count, freeform_tags, defined_tags, if_match):
+
+    if isinstance(execution_action_id, six.string_types) and len(execution_action_id.strip()) == 0:
+        raise click.UsageError('Parameter --execution-action-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if source_execution_action_id is not None:
+        _details['sourceExecutionActionId'] = source_execution_action_id
+
+    if execution_action_member_id is not None:
+        _details['executionActionMemberId'] = execution_action_member_id
+
+    if execution_action_member_count is not None:
+        _details['executionActionMemberCount'] = execution_action_member_count
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.move_execution_action_member(
+        execution_action_id=execution_action_id,
+        move_execution_action_member_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_execution_action') and callable(getattr(client, 'get_execution_action')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_execution_action(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @pluggable_database_group.command(name=cli_util.override('db.refresh_pluggable_database.command_name', 'refresh'), help=u"""Refreshes a pluggable database (PDB) Refreshable clone. \n[Command Reference](refreshPluggableDatabase)""")
 @cli_util.option('--pluggable-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -21701,6 +23491,136 @@ def remove_virtual_machine_from_vm_cluster(ctx, from_json, wait_for_state, max_w
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_vm_cluster(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@execution_window_group.command(name=cli_util.override('db.reorder_execution_actions.command_name', 'reorder-execution-actions'), help=u"""Reorders the execution actions under this execution window resource. \n[Command Reference](reorderExecutionActions)""")
+@cli_util.option('--execution-window-id', required=True, help=u"""The execution window [OCID].""")
+@cli_util.option('--execution-action-order-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of action resources in a specific order. Example: [{actionOrder: 1, actionResourceId: \"resourceId1\"}, {actionOrder: 2, actionResourceId: \"resourceId2\"}]
+
+This option is a JSON list with items of type ActionOrderDetails.  For documentation on ActionOrderDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ActionOrderDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "SCHEDULED", "IN_PROGRESS", "FAILED", "CANCELED", "UPDATING", "DELETED", "SUCCEEDED", "PARTIAL_SUCCESS", "CREATING", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'execution-action-order-list': {'module': 'database', 'class': 'list[ActionOrderDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'execution-action-order-list': {'module': 'database', 'class': 'list[ActionOrderDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExecutionWindow'})
+@cli_util.wrap_exceptions
+def reorder_execution_actions(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, execution_window_id, execution_action_order_list, freeform_tags, defined_tags, if_match):
+
+    if isinstance(execution_window_id, six.string_types) and len(execution_window_id.strip()) == 0:
+        raise click.UsageError('Parameter --execution-window-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if execution_action_order_list is not None:
+        _details['executionActionOrderList'] = cli_util.parse_json_parameter("execution_action_order_list", execution_action_order_list)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.reorder_execution_actions(
+        execution_window_id=execution_window_id,
+        reorder_execution_action_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_execution_window') and callable(getattr(client, 'get_execution_window')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_execution_window(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@scheduling_plan_group.command(name=cli_util.override('db.reorder_scheduled_actions.command_name', 'reorder-scheduled-actions'), help=u"""Re-order the scheduled actions under this scheduling plan resource. \n[Command Reference](reorderScheduledActions)""")
+@cli_util.option('--scheduling-window-id', required=True, help=u"""The [OCID] of the Scheduling Window.""")
+@cli_util.option('--scheduled-action-id-orders', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of action resources in a specific order. Example: [{actionOrder: 1, actionResourceId: \"resourceId1\"}, {actionOrder: 2, actionResourceId: \"resourceId2\"}]""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--scheduling-plan-id', required=True, help=u"""The Schedule Plan [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NEEDS_ATTENTION", "AVAILABLE", "UPDATING", "FAILED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scheduled-action-id-orders': {'module': 'database', 'class': 'list[ActionOrderDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scheduled-action-id-orders': {'module': 'database', 'class': 'list[ActionOrderDetails]'}}, output_type={'module': 'database', 'class': 'SchedulingPlan'})
+@cli_util.wrap_exceptions
+def reorder_scheduled_actions(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduling_window_id, scheduled_action_id_orders, scheduling_plan_id, if_match):
+
+    if isinstance(scheduling_plan_id, six.string_types) and len(scheduling_plan_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduling-plan-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['schedulingWindowId'] = scheduling_window_id
+    _details['scheduledActionIdOrders'] = cli_util.parse_json_parameter("scheduled_action_id_orders", scheduled_action_id_orders)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.reorder_scheduled_actions(
+        scheduling_plan_id=scheduling_plan_id,
+        reorder_scheduled_actions_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_scheduling_plan') and callable(getattr(client, 'get_scheduling_plan')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_scheduling_plan(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -23570,7 +25490,7 @@ def update_autonomous_container_database_dataguard_association(ctx, from_json, w
 
 This cannot be updated in parallel with any of the following: licenseModel, databaseEdition, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
 @cli_util.option('--long-term-backup-schedule', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are free Autonomous Databases that developers can use to build and test new applications.With Autonomous these database instancess instances, you can try new Autonomous Database features for free and apply them to ongoing or new development projects. Developer database comes with limited resources and is, therefore, not suitable for large-scale testing and production deployments. When you need more compute or storage resources, you can transition to a paid database licensing by cloning your developer database into a regular Autonomous Database. See [Autonomous Database documentation] for more details.""")
+@cli_util.option('--is-dev-tier', type=click.BOOL, help=u"""Autonomous Database for Developers are fixed-shape Autonomous Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.""")
 @cli_util.option('--compute-count', type=click.FLOAT, help=u"""The compute amount (CPUs) available to the database. Minimum and maximum values depend on the compute model and whether the database is an Autonomous Database Serverless instance or an Autonomous Database on Dedicated Exadata Infrastructure. For an Autonomous Database Serverless instance, the 'ECPU' compute model requires a minimum value of one, for databases in the elastic resource pool and minimum value of two, otherwise. Required when using the `computeModel` parameter. When using `cpuCoreCount` parameter, it is an error to specify computeCount to a non-null value. Providing `computeModel` and `computeCount` is the preferred method for both OCPU and ECPU.
 
 This cannot be updated in parallel with any of the following: licenseModel, databaseEdition, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isFreeTier.""")
@@ -25730,7 +27650,9 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--data-collection-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-version', help=u"""Operating system version of the image.""")
-@cli_util.option('--grid-image-id', help=u"""Grid Setup will be done using this grid image id""")
+@cli_util.option('--grid-image-id', help=u"""Grid Setup will be done using this grid image id.
+
+The grid image id can be extracted from 1. Obtain the supported major versions using API /20160918/giVersions?compartmentId=<compartmentId>&shape=EXADB_XS&availabilityDomain=<AD name> 2. Replace {version} with one of the supported major versions and obtain the supported minor versions using API /20160918/giVersions/{version}/minorVersions?compartmentId=<compartmentId>&shapeFamily=EXADB_XS&availabilityDomain=<AD name>""")
 @cli_util.option('--update-action', type=custom_types.CliCaseInsensitiveChoice(["ROLLING_APPLY", "NON_ROLLING_APPLY", "PRECHECK", "ROLLBACK"]), help=u"""The update action.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -25907,6 +27829,172 @@ def update_exascale_db_storage_vault(ctx, from_json, force, wait_for_state, max_
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_exascale_db_storage_vault(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@execution_action_group.command(name=cli_util.override('db.update_execution_action.command_name', 'update'), help=u"""Updates the execution action resource. \n[Command Reference](updateExecutionAction)""")
+@cli_util.option('--execution-action-id', required=True, help=u"""The execution action [OCID].""")
+@cli_util.option('--execution-window-id', help=u"""The [OCID] of the execution window resource the execution action belongs to.""")
+@cli_util.option('--action-params', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<ParamName, ParamValue> where a key value pair describes the specific action parameter. Example: `{\"count\": \"3\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--action-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of action members of this execution action.
+
+This option is a JSON list with items of type ExecutionActionMember.  For documentation on ExecutionActionMember please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ExecutionActionMember.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IN_PROGRESS", "FAILED", "CANCELED", "UPDATING", "DELETED", "SUCCEEDED", "PARTIAL_SUCCESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'action-params': {'module': 'database', 'class': 'dict(str, string)'}, 'action-members': {'module': 'database', 'class': 'list[ExecutionActionMember]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'action-params': {'module': 'database', 'class': 'dict(str, string)'}, 'action-members': {'module': 'database', 'class': 'list[ExecutionActionMember]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExecutionAction'})
+@cli_util.wrap_exceptions
+def update_execution_action(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, execution_action_id, execution_window_id, action_params, action_members, freeform_tags, defined_tags, if_match):
+
+    if isinstance(execution_action_id, six.string_types) and len(execution_action_id.strip()) == 0:
+        raise click.UsageError('Parameter --execution-action-id cannot be whitespace or empty string')
+    if not force:
+        if action_params or action_members or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to action-params and action-members and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if execution_window_id is not None:
+        _details['executionWindowId'] = execution_window_id
+
+    if action_params is not None:
+        _details['actionParams'] = cli_util.parse_json_parameter("action_params", action_params)
+
+    if action_members is not None:
+        _details['actionMembers'] = cli_util.parse_json_parameter("action_members", action_members)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.update_execution_action(
+        execution_action_id=execution_action_id,
+        update_execution_action_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_execution_action') and callable(getattr(client, 'get_execution_action')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_execution_action(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@execution_window_group.command(name=cli_util.override('db.update_execution_window.command_name', 'update'), help=u"""Updates the execution window resource. \n[Command Reference](updateExecutionWindow)""")
+@cli_util.option('--execution-window-id', required=True, help=u"""The execution window [OCID].""")
+@cli_util.option('--time-scheduled', type=custom_types.CLI_DATETIME, help=u"""The scheduled start date and time of the execution window.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--window-duration-in-mins', type=click.INT, help=u"""Duration window allows user to set a duration they plan to allocate for Scheduling window. The duration is in minutes.""")
+@cli_util.option('--is-enforced-duration', type=click.BOOL, help=u"""Indicates if duration the user plans to allocate for scheduling window is strictly enforced. The default value is `FALSE`.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "SCHEDULED", "IN_PROGRESS", "FAILED", "CANCELED", "UPDATING", "DELETED", "SUCCEEDED", "PARTIAL_SUCCESS", "CREATING", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExecutionWindow'})
+@cli_util.wrap_exceptions
+def update_execution_window(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, execution_window_id, time_scheduled, window_duration_in_mins, is_enforced_duration, freeform_tags, defined_tags, if_match):
+
+    if isinstance(execution_window_id, six.string_types) and len(execution_window_id.strip()) == 0:
+        raise click.UsageError('Parameter --execution-window-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if time_scheduled is not None:
+        _details['timeScheduled'] = time_scheduled
+
+    if window_duration_in_mins is not None:
+        _details['windowDurationInMins'] = window_duration_in_mins
+
+    if is_enforced_duration is not None:
+        _details['isEnforcedDuration'] = is_enforced_duration
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.update_execution_window(
+        execution_window_id=execution_window_id,
+        update_execution_window_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_execution_window') and callable(getattr(client, 'get_execution_window')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_execution_window(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -26679,6 +28767,241 @@ def update_pluggable_database(ctx, from_json, force, wait_for_state, max_wait_se
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_pluggable_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@scheduled_action_group.command(name=cli_util.override('db.update_scheduled_action.command_name', 'update'), help=u"""Updates the Scheduled Action resource. \n[Command Reference](updateScheduledAction)""")
+@cli_util.option('--scheduled-action-id', required=True, help=u"""The Scheduled Action [OCID].""")
+@cli_util.option('--action-params', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Map<ParamName, ParamValue> where a key value pair describes the specific action parameter. Example: `{\"count\": \"3\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--action-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of action members in a scheduled action.
+
+This option is a JSON list with items of type ActionMember.  For documentation on ActionMember please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ActionMember.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--scheduling-window-id', help=u"""The [OCID] of the Scheduling Window.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NEEDS_ATTENTION", "AVAILABLE", "UPDATING", "FAILED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'action-params': {'module': 'database', 'class': 'dict(str, string)'}, 'action-members': {'module': 'database', 'class': 'list[ActionMember]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'action-params': {'module': 'database', 'class': 'dict(str, string)'}, 'action-members': {'module': 'database', 'class': 'list[ActionMember]'}}, output_type={'module': 'database', 'class': 'ScheduledAction'})
+@cli_util.wrap_exceptions
+def update_scheduled_action(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduled_action_id, action_params, action_members, scheduling_window_id, if_match):
+
+    if isinstance(scheduled_action_id, six.string_types) and len(scheduled_action_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduled-action-id cannot be whitespace or empty string')
+    if not force:
+        if action_params or action_members:
+            if not click.confirm("WARNING: Updates to action-params and action-members will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if action_params is not None:
+        _details['actionParams'] = cli_util.parse_json_parameter("action_params", action_params)
+
+    if action_members is not None:
+        _details['actionMembers'] = cli_util.parse_json_parameter("action_members", action_members)
+
+    if scheduling_window_id is not None:
+        _details['schedulingWindowId'] = scheduling_window_id
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.update_scheduled_action(
+        scheduled_action_id=scheduled_action_id,
+        update_scheduled_action_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_scheduled_action') and callable(getattr(client, 'get_scheduled_action')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_scheduled_action(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@scheduling_policy_group.command(name=cli_util.override('db.update_scheduling_policy.command_name', 'update'), help=u"""Updates the Scheduling Policy resource. \n[Command Reference](updateSchedulingPolicy)""")
+@cli_util.option('--scheduling-policy-id', required=True, help=u"""The Scheduling Policy [OCID].""")
+@cli_util.option('--display-name', help=u"""The user-friendly name for the Scheduling Policy. The name does not need to be unique.""")
+@cli_util.option('--cadence', type=custom_types.CliCaseInsensitiveChoice(["HALFYEARLY", "QUARTERLY", "MONTHLY"]), help=u"""The cadence period.""")
+@cli_util.option('--cadence-start-month', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Start of the month to be followed during the cadence period.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NEEDS_ATTENTION", "AVAILABLE", "UPDATING", "FAILED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'cadence-start-month': {'module': 'database', 'class': 'Month'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cadence-start-month': {'module': 'database', 'class': 'Month'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'SchedulingPolicy'})
+@cli_util.wrap_exceptions
+def update_scheduling_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduling_policy_id, display_name, cadence, cadence_start_month, freeform_tags, defined_tags, if_match):
+
+    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
+    if not force:
+        if cadence_start_month or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to cadence-start-month and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if cadence is not None:
+        _details['cadence'] = cadence
+
+    if cadence_start_month is not None:
+        _details['cadenceStartMonth'] = cli_util.parse_json_parameter("cadence_start_month", cadence_start_month)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.update_scheduling_policy(
+        scheduling_policy_id=scheduling_policy_id,
+        update_scheduling_policy_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_scheduling_policy') and callable(getattr(client, 'get_scheduling_policy')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_scheduling_policy(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@scheduling_window_group.command(name=cli_util.override('db.update_scheduling_window.command_name', 'update'), help=u"""Updates the Scheduling Window resource. \n[Command Reference](updateSchedulingWindow)""")
+@cli_util.option('--scheduling-policy-id', required=True, help=u"""The Scheduling Policy [OCID].""")
+@cli_util.option('--scheduling-window-id', required=True, help=u"""The Scheduling Window [OCID].""")
+@cli_util.option('--window-preference', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "UPDATING", "FAILED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'window-preference': {'module': 'database', 'class': 'WindowPreferenceDetail'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'window-preference': {'module': 'database', 'class': 'WindowPreferenceDetail'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'SchedulingWindow'})
+@cli_util.wrap_exceptions
+def update_scheduling_window(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduling_policy_id, scheduling_window_id, window_preference, freeform_tags, defined_tags, if_match):
+
+    if isinstance(scheduling_policy_id, six.string_types) and len(scheduling_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduling-policy-id cannot be whitespace or empty string')
+
+    if isinstance(scheduling_window_id, six.string_types) and len(scheduling_window_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduling-window-id cannot be whitespace or empty string')
+    if not force:
+        if window_preference or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to window-preference and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if window_preference is not None:
+        _details['windowPreference'] = cli_util.parse_json_parameter("window_preference", window_preference)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.update_scheduling_window(
+        scheduling_policy_id=scheduling_policy_id,
+        scheduling_window_id=scheduling_window_id,
+        update_scheduling_window_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_scheduling_window') and callable(getattr(client, 'get_scheduling_window')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_scheduling_window(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

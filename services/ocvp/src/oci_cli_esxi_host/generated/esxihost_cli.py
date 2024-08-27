@@ -294,7 +294,7 @@ def inplace_upgrade(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 Remember that in terms of implementation, an ESXi host is a Compute instance that is configured with the chosen bundle of VMware software. Each `EsxiHost` object has its own OCID (`id`), and a separate attribute for the OCID of the Compute instance (`computeInstanceId`). When filtering the list of ESXi hosts, you can specify the OCID of the Compute instance, not the ESXi host OCID. \n[Command Reference](listEsxiHosts)""")
 @cli_util.option('--sddc-id', help=u"""The [OCID] of the SDDC.""")
-@cli_util.option('--cluster-id', help=u"""The [OCID] of the Cluster.""")
+@cli_util.option('--cluster-id', help=u"""The [OCID] of the SDDC Cluster.""")
 @cli_util.option('--compute-instance-id', help=u"""The [OCID] of the Compute instance.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")

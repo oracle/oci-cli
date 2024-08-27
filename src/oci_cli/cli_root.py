@@ -19,8 +19,7 @@ import re   # noqa: E402
 from oci_cli.version import __version__    # noqa: E402
 from oci_cli.aliasing import parameter_alias, CommandGroupWithAlias    # noqa: E402
 from oci_cli import help_text_producer    # noqa: E402
-from oci_cli import cli_util  # noqa: E402
-
+from oci_cli import cli_util, dynamic_loader   # noqa: E402
 from oci_cli import cli_constants     # noqa: E402
 from alloy import alloy_util   # noqa: E402
 from collections import OrderedDict     # noqa: E402
@@ -533,7 +532,7 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, re
         # do not show auto prompt if customer is trying to access a service that they have not subscribed
         if ctx.invoked_subcommand and not cli_util.is_service_accessible(ctx, ctx.invoked_subcommand):
             ctx.exit()
-        cli_interactive.start_interactive_shell(ctx)
+        cli_interactive.start_interactive_shell(ctx, "oci", service_mapping, dynamic_loader)
         ctx.exit()
 
     if ctx.obj['debug']:

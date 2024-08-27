@@ -233,6 +233,11 @@ service_mapping = {
         "Database Tools",
         "Developer Services"
     ],
+    "delegate-access-control": [
+        "delegate_access_control",
+        "Oracle Delegate Access Control",
+        "Others"
+    ],
     "demand-signal": [
         "demand_signal",
         "OCI Control Center Demand Signal",

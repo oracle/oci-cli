@@ -23,7 +23,7 @@ import sys
 PROFILE_PARAM = '--profile'
 
 
-def start_interactive_shell(ctx):
+def start_interactive_shell(ctx, top_level_invoke_name, service_mapping, dynamic_loader):
     # print help message like you tube vedios for first time
     print_suggestion_message()
     # Getting the commands before --cli-auto-prompt, for example if the user execute oci --profile X compute instance --cli-auto-prompt,
@@ -55,7 +55,8 @@ def start_interactive_shell(ctx):
     # Initialize the document with the initial commands typed by the user
     document = Document(command_before_prompt, len(command_before_prompt))
     # Build the config before invoking the prompt session to raise any errors due to incorrect config
-    cli_util.create_config_and_signer_based_on_click_context(ctx)
+    if "OCI_OPS_CLI_TOOLS_IMPORT" not in os.environ:
+        cli_util.create_config_and_signer_based_on_click_context(ctx)
 
     colors_enabled = True
     if OCI_CLI_DISABLE_COLORS_ENV_VAR in os.environ:
@@ -63,8 +64,8 @@ def start_interactive_shell(ctx):
 
     # Build Prompt
     toolbar = BottomToolbar()
-    session = create_oci_prompt_session(colors_enabled, toolbar)
-    completer = OciShellCompleter(ctx, colors_enabled, bottom_toolbar=toolbar)
+    session = create_oci_prompt_session(top_level_invoke_name, colors_enabled, toolbar)
+    completer = OciShellCompleter(ctx, service_mapping, dynamic_loader, colors_enabled, bottom_toolbar=toolbar)
     kb = override_key_binding(completer=completer, toolbar=toolbar)
     multithread_completer = ThreadedCompleter(
         completer
@@ -77,7 +78,7 @@ def start_interactive_shell(ctx):
     endpoint_str = " --endpoint " + endpoint if endpoint else ""
     os.environ[cli_util.OCI_CLI_IN_INTERACTIVE_MODE] = "True"  # This is needed so that the API request adds new user agent for the CLI Interactive
     command = (
-        "oci "
+        top_level_invoke_name + " "
         + " ".join(auth_params)
         + " "
         + " ".join(debug_params)
