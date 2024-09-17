@@ -281,7 +281,7 @@ def create_dedicated_ai_cluster(ctx, from_json, wait_for_state, max_wait_seconds
 
 The header contains an opc-work-request-id, which is the id for the WorkRequest that tracks the endpoint creation progress. \n[Command Reference](createEndpoint)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID to create the endpoint in.""")
-@cli_util.option('--model-id', required=True, help=u"""The ID of the model that's used to create this endpoint.""")
+@cli_util.option('--model-id', required=True, help=u"""The OCID of the model that's used to create this endpoint.""")
 @cli_util.option('--dedicated-ai-cluster-id', required=True, help=u"""The OCID of the dedicated AI cluster on which a model will be deployed to.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--description', help=u"""An optional description of the endpoint.""")

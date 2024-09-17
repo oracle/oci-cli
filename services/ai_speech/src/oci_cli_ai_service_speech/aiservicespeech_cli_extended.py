@@ -7,3 +7,16 @@ from services.ai_speech.src.oci_cli_ai_service_speech.generated import aiservice
 
 aiservicespeech_cli.transcription_job_group.commands.pop(aiservicespeech_cli.create_transcription_job_object_list_file_input_location.name)
 aiservicespeech_cli.transcription_job_group.commands.pop(aiservicespeech_cli.create_transcription_job_object_list_inline_input_location.name)
+
+
+# Remove synthesize-speech-tts-base-audio-config from oci speech synthesize-speech
+aiservicespeech_cli.synthesize_speech_group.commands.pop(aiservicespeech_cli.synthesize_speech_tts_base_audio_config.name)
+
+
+# Remove synthesize-speech-tts-oracle-configuration from oci speech synthesize-speech
+aiservicespeech_cli.synthesize_speech_group.commands.pop(aiservicespeech_cli.synthesize_speech_tts_oracle_configuration.name)
+
+
+# Move oci speech synthesize-speech synthesize-speech -> oci speech synthesize-speech
+aiservicespeech_cli.synthesize_speech_group.commands.pop(aiservicespeech_cli.synthesize_speech.name)
+aiservicespeech_cli.speech_root_group.add_command(aiservicespeech_cli.synthesize_speech)

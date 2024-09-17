@@ -46,10 +46,24 @@ def transcription_job_group():
     pass
 
 
+@click.command(cli_util.override('speech.voice_group.command_name', 'voice'), cls=CommandGroupWithAlias, help="""""")
+@cli_util.help_option_group
+def voice_group():
+    pass
+
+
+@click.command(cli_util.override('speech.synthesize_speech_group.command_name', 'synthesize-speech'), cls=CommandGroupWithAlias, help="""""")
+@cli_util.help_option_group
+def synthesize_speech_group():
+    pass
+
+
 speech_root_group.add_command(customization_group)
 speech_root_group.add_command(realtime_session_token_group)
 speech_root_group.add_command(transcription_task_group)
 speech_root_group.add_command(transcription_job_group)
+speech_root_group.add_command(voice_group)
+speech_root_group.add_command(synthesize_speech_group)
 
 
 @transcription_job_group.command(name=cli_util.override('speech.cancel_transcription_job.command_name', 'cancel'), help=u"""Canceling the job cancels all the tasks under it. \n[Command Reference](cancelTranscriptionJob)""")
@@ -1073,6 +1087,227 @@ def list_transcription_tasks(ctx, from_json, all_pages, page_size, transcription
             **kwargs
         )
     cli_util.render_response(result, ctx)
+
+
+@voice_group.command(name=cli_util.override('speech.list_voices.command_name', 'list'), help=u"""Returns a list of speakers available to the user to choose from based on language code and voice type provided. \n[Command Reference](listVoices)""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--model-name', type=custom_types.CliCaseInsensitiveChoice(["TTS_1_STANDARD", "TTS_2_NATURAL"]), help=u"""The model the user wants to run the inference on.""")
+@cli_util.option('--display-name', help=u"""The name of the speaker voice in which the user wants tts inference to be.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_speech', 'class': 'VoiceCollection'})
+@cli_util.wrap_exceptions
+def list_voices(ctx, from_json, all_pages, compartment_id, model_name, display_name):
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if model_name is not None:
+        kwargs['model_name'] = model_name
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_speech', 'ai_service_speech', ctx)
+    result = client.list_voices(
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@synthesize_speech_group.command(name=cli_util.override('speech.synthesize_speech.command_name', 'synthesize-speech'), help=u"""Creates an audio for the given input text based on other input parameters like language, voice type, etc. \n[Command Reference](synthesizeSpeech)""")
+@cli_util.option('--text', required=True, help=u"""The text input to get the inference audio from TTS Service.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--is-stream-enabled', type=click.BOOL, help=u"""If set to true, response will be sent in the chunked transfer-encoding and audio chunks are sent back as and when they are ready. If set to false, response will be sent only once the entire audio is generated.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment where the user has access to call `SpeechSynthesize` api. But default user access will be checked at tenancy level.""")
+@cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--audio-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'configuration': {'module': 'ai_speech', 'class': 'TtsConfiguration'}, 'audio-config': {'module': 'ai_speech', 'class': 'TtsAudioConfig'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration': {'module': 'ai_speech', 'class': 'TtsConfiguration'}, 'audio-config': {'module': 'ai_speech', 'class': 'TtsAudioConfig'}})
+@cli_util.wrap_exceptions
+def synthesize_speech(ctx, from_json, file, text, is_stream_enabled, compartment_id, configuration, audio_config):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['text'] = text
+
+    if is_stream_enabled is not None:
+        _details['isStreamEnabled'] = is_stream_enabled
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if configuration is not None:
+        _details['configuration'] = cli_util.parse_json_parameter("configuration", configuration)
+
+    if audio_config is not None:
+        _details['audioConfig'] = cli_util.parse_json_parameter("audio_config", audio_config)
+
+    client = cli_util.build_client('ai_speech', 'ai_service_speech', ctx)
+    result = client.synthesize_speech(
+        synthesize_speech_details=_details,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
+@synthesize_speech_group.command(name=cli_util.override('speech.synthesize_speech_tts_oracle_configuration.command_name', 'synthesize-speech-tts-oracle-configuration'), help=u"""Creates an audio for the given input text based on other input parameters like language, voice type, etc. \n[Command Reference](synthesizeSpeech)""")
+@cli_util.option('--text', required=True, help=u"""The text input to get the inference audio from TTS Service.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--is-stream-enabled', type=click.BOOL, help=u"""If set to true, response will be sent in the chunked transfer-encoding and audio chunks are sent back as and when they are ready. If set to false, response will be sent only once the entire audio is generated.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment where the user has access to call `SpeechSynthesize` api. But default user access will be checked at tenancy level.""")
+@cli_util.option('--audio-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--configuration-model-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--configuration-speech-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'audio-config': {'module': 'ai_speech', 'class': 'TtsAudioConfig'}, 'configuration-model-details': {'module': 'ai_speech', 'class': 'TtsOracleModelDetails'}, 'configuration-speech-settings': {'module': 'ai_speech', 'class': 'TtsOracleSpeechSettings'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'audio-config': {'module': 'ai_speech', 'class': 'TtsAudioConfig'}, 'configuration-model-details': {'module': 'ai_speech', 'class': 'TtsOracleModelDetails'}, 'configuration-speech-settings': {'module': 'ai_speech', 'class': 'TtsOracleSpeechSettings'}})
+@cli_util.wrap_exceptions
+def synthesize_speech_tts_oracle_configuration(ctx, from_json, file, text, is_stream_enabled, compartment_id, audio_config, configuration_model_details, configuration_speech_settings):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configuration'] = {}
+    _details['text'] = text
+
+    if is_stream_enabled is not None:
+        _details['isStreamEnabled'] = is_stream_enabled
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if audio_config is not None:
+        _details['audioConfig'] = cli_util.parse_json_parameter("audio_config", audio_config)
+
+    if configuration_model_details is not None:
+        _details['configuration']['modelDetails'] = cli_util.parse_json_parameter("configuration_model_details", configuration_model_details)
+
+    if configuration_speech_settings is not None:
+        _details['configuration']['speechSettings'] = cli_util.parse_json_parameter("configuration_speech_settings", configuration_speech_settings)
+
+    _details['configuration']['modelFamily'] = 'ORACLE'
+
+    client = cli_util.build_client('ai_speech', 'ai_service_speech', ctx)
+    result = client.synthesize_speech(
+        synthesize_speech_details=_details,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
+@synthesize_speech_group.command(name=cli_util.override('speech.synthesize_speech_tts_base_audio_config.command_name', 'synthesize-speech-tts-base-audio-config'), help=u"""Creates an audio for the given input text based on other input parameters like language, voice type, etc. \n[Command Reference](synthesizeSpeech)""")
+@cli_util.option('--text', required=True, help=u"""The text input to get the inference audio from TTS Service.""")
+@cli_util.option('--audio-config-save-path', required=True, help=u"""Specify the path where you want to save the audio response.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--is-stream-enabled', type=click.BOOL, help=u"""If set to true, response will be sent in the chunked transfer-encoding and audio chunks are sent back as and when they are ready. If set to false, response will be sent only once the entire audio is generated.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment where the user has access to call `SpeechSynthesize` api. But default user access will be checked at tenancy level.""")
+@cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'configuration': {'module': 'ai_speech', 'class': 'TtsConfiguration'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration': {'module': 'ai_speech', 'class': 'TtsConfiguration'}})
+@cli_util.wrap_exceptions
+def synthesize_speech_tts_base_audio_config(ctx, from_json, file, text, audio_config_save_path, is_stream_enabled, compartment_id, configuration):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['audioConfig'] = {}
+    _details['text'] = text
+    _details['audioConfig']['savePath'] = audio_config_save_path
+
+    if is_stream_enabled is not None:
+        _details['isStreamEnabled'] = is_stream_enabled
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if configuration is not None:
+        _details['configuration'] = cli_util.parse_json_parameter("configuration", configuration)
+
+    _details['audioConfig']['configType'] = 'BASE_AUDIO_CONFIG'
+
+    client = cli_util.build_client('ai_speech', 'ai_service_speech', ctx)
+    result = client.synthesize_speech(
+        synthesize_speech_details=_details,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
 
 
 @customization_group.command(name=cli_util.override('speech.update_customization.command_name', 'update'), help=u"""Updates a Customization by identifier \n[Command Reference](updateCustomization)""")

@@ -46,15 +46,33 @@ def occ_capacity_request_collection_group():
     pass
 
 
+@click.command(cli_util.override('capacity_management.occ_handover_resource_block_collection_group.command_name', 'occ-handover-resource-block-collection'), cls=CommandGroupWithAlias, help="""A list of occ handover resource blocks.""")
+@cli_util.help_option_group
+def occ_handover_resource_block_collection_group():
+    pass
+
+
 @click.command(cli_util.override('capacity_management.occ_availability_catalog_collection_group.command_name', 'occ-availability-catalog-collection'), cls=CommandGroupWithAlias, help="""A list of availability catalogs.""")
 @cli_util.help_option_group
 def occ_availability_catalog_collection_group():
     pass
 
 
+@click.command(cli_util.override('capacity_management.occ_customer_group.command_name', 'occ-customer'), cls=CommandGroupWithAlias, help="""The details about the customer.""")
+@cli_util.help_option_group
+def occ_customer_group():
+    pass
+
+
 @click.command(cli_util.override('capacity_management.occ_customer_group_group.command_name', 'occ-customer-group'), cls=CommandGroupWithAlias, help="""Details of the customer group resource.""")
 @cli_util.help_option_group
 def occ_customer_group_group():
+    pass
+
+
+@click.command(cli_util.override('capacity_management.occ_handover_resource_block_detail_collection_group.command_name', 'occ-handover-resource-block-detail-collection'), cls=CommandGroupWithAlias, help="""A list of occResourceHandoverDetails.""")
+@cli_util.help_option_group
+def occ_handover_resource_block_detail_collection_group():
     pass
 
 
@@ -74,8 +92,11 @@ capacity_management_root_group.add_command(occ_customer_group_collection_group)
 capacity_management_root_group.add_command(occ_capacity_request_group)
 capacity_management_root_group.add_command(occ_availability_catalog_group)
 capacity_management_root_group.add_command(occ_capacity_request_collection_group)
+capacity_management_root_group.add_command(occ_handover_resource_block_collection_group)
 capacity_management_root_group.add_command(occ_availability_catalog_collection_group)
+capacity_management_root_group.add_command(occ_customer_group)
 capacity_management_root_group.add_command(occ_customer_group_group)
+capacity_management_root_group.add_command(occ_handover_resource_block_detail_collection_group)
 capacity_management_root_group.add_command(occ_overview_collection_group)
 capacity_management_root_group.add_command(occ_availability_collection_group)
 
@@ -158,7 +179,6 @@ def create_occ_availability_catalog(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.option('--namespace', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMPUTE"]), help=u"""The name of the OCI service in consideration. For example, Compute, Exadata, and so on.""")
 @cli_util.option('--region-parameterconflict', required=True, help=u"""The name of the region for which the capacity request is made.""")
 @cli_util.option('--display-name', required=True, help=u"""An user-friendly name for the capacity request. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--availability-domain', required=True, help=u"""The availability domain (AD) for which the capacity request is made. If this is specified then the capacity will be validated and fulfilled within the scope of this AD.""")
 @cli_util.option('--date-expected-capacity-handover', required=True, type=custom_types.CLI_DATETIME, help=u"""The date by which the capacity requested by customers before dateFinalCustomerOrder needs to be fulfilled.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of different resources requested by the user.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--occ-availability-catalog-id', help=u"""The OCID of the availability catalog against which capacity request is made.""")
@@ -167,6 +187,7 @@ def create_occ_availability_catalog(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--lifecycle-details', help=u"""A message describing the current state in more detail. For example, can be used to provide actionable information for a resource in a Failed State.""")
+@cli_util.option('--availability-domain', help=u"""The availability domain (AD) in which the new resource is to be placed. If this is specified then the capacity will be validated and fulfilled within the scope of this AD. Note that this field is NOT required for Capacity request Transfer requests.""")
 @cli_util.option('--request-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "SUBMITTED"]), help=u"""The subset of request states available for creating the capacity request.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -176,7 +197,7 @@ def create_occ_availability_catalog(ctx, from_json, wait_for_state, max_wait_sec
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'capacity_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'capacity_management', 'class': 'dict(str, dict(str, object))'}, 'details': {'module': 'capacity_management', 'class': 'list[OccCapacityRequestBaseDetails]'}}, output_type={'module': 'capacity_management', 'class': 'OccCapacityRequest'})
 @cli_util.wrap_exceptions
-def create_occ_capacity_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, namespace, region_parameterconflict, display_name, availability_domain, date_expected_capacity_handover, details, occ_availability_catalog_id, request_type, description, freeform_tags, defined_tags, lifecycle_details, request_state):
+def create_occ_capacity_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, namespace, region_parameterconflict, display_name, date_expected_capacity_handover, details, occ_availability_catalog_id, request_type, description, freeform_tags, defined_tags, lifecycle_details, availability_domain, request_state):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -186,7 +207,6 @@ def create_occ_capacity_request(ctx, from_json, wait_for_state, max_wait_seconds
     _details['namespace'] = namespace
     _details['region'] = region_parameterconflict
     _details['displayName'] = display_name
-    _details['availabilityDomain'] = availability_domain
     _details['dateExpectedCapacityHandover'] = date_expected_capacity_handover
     _details['details'] = cli_util.parse_json_parameter("details", details)
 
@@ -208,6 +228,9 @@ def create_occ_capacity_request(ctx, from_json, wait_for_state, max_wait_seconds
     if lifecycle_details is not None:
         _details['lifecycleDetails'] = lifecycle_details
 
+    if availability_domain is not None:
+        _details['availabilityDomain'] = availability_domain
+
     if request_state is not None:
         _details['requestState'] = request_state
 
@@ -228,6 +251,121 @@ def create_occ_capacity_request(ctx, from_json, wait_for_state, max_wait_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_occ_capacity_request(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@occ_customer_group.command(name=cli_util.override('capacity_management.create_occ_customer.command_name', 'create'), help=u"""Create customer. \n[Command Reference](createOccCustomer)""")
+@cli_util.option('--tenancy-id', required=True, help=u"""The OCID of the tenancy belonging to the customer.""")
+@cli_util.option('--display-name', required=True, help=u"""The display name for the customer.""")
+@cli_util.option('--occ-customer-group-id', required=True, help=u"""The OCID of the customer group.""")
+@cli_util.option('--description', help=u"""The description about the customer group.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""To determine whether the customer is enabled/disabled.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'capacity_management', 'class': 'OccCustomer'})
+@cli_util.wrap_exceptions
+def create_occ_customer(ctx, from_json, tenancy_id, display_name, occ_customer_group_id, description, status):
+
+    if isinstance(occ_customer_group_id, six.string_types) and len(occ_customer_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --occ-customer-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['tenancyId'] = tenancy_id
+    _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if status is not None:
+        _details['status'] = status
+
+    client = cli_util.build_client('capacity_management', 'capacity_management', ctx)
+    result = client.create_occ_customer(
+        occ_customer_group_id=occ_customer_group_id,
+        create_occ_customer_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@occ_customer_group_group.command(name=cli_util.override('capacity_management.create_occ_customer_group.command_name', 'create'), help=u"""Create customer group. \n[Command Reference](createOccCustomerGroup)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Since all resources are at tenancy level hence this will be the ocid of the tenancy where operation is to be performed.""")
+@cli_util.option('--display-name', required=True, help=u"""The name of the customer group.""")
+@cli_util.option('--description', help=u"""A description about the customer group.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--lifecycle-details', help=u"""A message describing the current state in more detail. For example, can be used to provide actionable information for a resource in a Failed State.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""To determine whether the customer group is enabled/disabled.""")
+@cli_util.option('--customers-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list containing all the customers that belong to this customer group.
+
+This option is a JSON list with items of type CreateOccCustomerDetails.  For documentation on CreateOccCustomerDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/capacitymanagement/20231107/datatypes/CreateOccCustomerDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'capacity_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'capacity_management', 'class': 'dict(str, dict(str, object))'}, 'customers-list': {'module': 'capacity_management', 'class': 'list[CreateOccCustomerDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'capacity_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'capacity_management', 'class': 'dict(str, dict(str, object))'}, 'customers-list': {'module': 'capacity_management', 'class': 'list[CreateOccCustomerDetails]'}}, output_type={'module': 'capacity_management', 'class': 'OccCustomerGroup'})
+@cli_util.wrap_exceptions
+def create_occ_customer_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description, freeform_tags, defined_tags, lifecycle_details, status, customers_list):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if lifecycle_details is not None:
+        _details['lifecycleDetails'] = lifecycle_details
+
+    if status is not None:
+        _details['status'] = status
+
+    if customers_list is not None:
+        _details['customersList'] = cli_util.parse_json_parameter("customers_list", customers_list)
+
+    client = cli_util.build_client('capacity_management', 'capacity_management', ctx)
+    result = client.create_occ_customer_group(
+        create_occ_customer_group_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_occ_customer_group') and callable(getattr(client, 'get_occ_customer_group')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_occ_customer_group(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -344,6 +482,101 @@ def delete_occ_capacity_request(ctx, from_json, wait_for_state, max_wait_seconds
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, client.get_occ_capacity_request(occ_capacity_request_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@occ_customer_group.command(name=cli_util.override('capacity_management.delete_occ_customer.command_name', 'delete'), help=u"""Deletes the customer resource. \n[Command Reference](deleteOccCustomer)""")
+@cli_util.option('--occ-customer-group-id', required=True, help=u"""The OCID of the customer group.""")
+@cli_util.option('--occ-customer-id', required=True, help=u"""The tenancy id of the customer.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_occ_customer(ctx, from_json, occ_customer_group_id, occ_customer_id, if_match):
+
+    if isinstance(occ_customer_group_id, six.string_types) and len(occ_customer_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --occ-customer-group-id cannot be whitespace or empty string')
+
+    if isinstance(occ_customer_id, six.string_types) and len(occ_customer_id.strip()) == 0:
+        raise click.UsageError('Parameter --occ-customer-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('capacity_management', 'capacity_management', ctx)
+    result = client.delete_occ_customer(
+        occ_customer_group_id=occ_customer_group_id,
+        occ_customer_id=occ_customer_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@occ_customer_group_group.command(name=cli_util.override('capacity_management.delete_occ_customer_group.command_name', 'delete'), help=u"""Deletes the customer group resource. \n[Command Reference](deleteOccCustomerGroup)""")
+@cli_util.option('--occ-customer-group-id', required=True, help=u"""The OCID of the customer group.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_occ_customer_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, occ_customer_group_id, if_match):
+
+    if isinstance(occ_customer_group_id, six.string_types) and len(occ_customer_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --occ-customer-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('capacity_management', 'capacity_management', ctx)
+    result = client.delete_occ_customer_group(
+        occ_customer_group_id=occ_customer_group_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_occ_customer_group') and callable(getattr(client, 'get_occ_customer_group')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_occ_customer_group(occ_customer_group_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -487,7 +720,7 @@ def get_occ_customer_group(ctx, from_json, occ_customer_group_id):
 @occ_overview_collection_group.command(name=cli_util.override('capacity_management.list_internal_namespace_occ_overviews.command_name', 'list-internal-namespace-occ-overviews'), help=u"""Lists an overview of all resources in that namespace in a given time interval. \n[Command Reference](listInternalNamespaceOccOverviews)""")
 @cli_util.option('--namespace', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMPUTE"]), help=u"""The namespace by which we would filter the list.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
-@cli_util.option('--occ-customer-group-id', help=u"""The customer group ocid by which we would filter the list.""")
+@cli_util.option('--occ-customer-group-id', required=True, help=u"""The customer group ocid by which we would filter the list.""")
 @cli_util.option('--workload-type', help=u"""Workload type using the resources in an availability catalog can be filtered.""")
 @cli_util.option('---from', type=custom_types.CLI_DATETIME, help=u"""The month corresponding to this date would be considered as the starting point of the time period against which we would like to perform an aggregation.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--to', type=custom_types.CLI_DATETIME, help=u"""The month corresponding to this date would be considered as the ending point of the time period against which we would like to perform an aggregation.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -511,8 +744,6 @@ def list_internal_namespace_occ_overviews(ctx, from_json, all_pages, page_size, 
         raise click.UsageError('Parameter --namespace cannot be whitespace or empty string')
 
     kwargs = {}
-    if occ_customer_group_id is not None:
-        kwargs['occ_customer_group_id'] = occ_customer_group_id
     if workload_type is not None:
         kwargs['workload_type'] = workload_type
     if _from is not None:
@@ -537,6 +768,7 @@ def list_internal_namespace_occ_overviews(ctx, from_json, all_pages, page_size, 
             client.list_internal_namespace_occ_overviews,
             namespace=namespace,
             compartment_id=compartment_id,
+            occ_customer_group_id=occ_customer_group_id,
             **kwargs
         )
     elif limit is not None:
@@ -546,12 +778,145 @@ def list_internal_namespace_occ_overviews(ctx, from_json, all_pages, page_size, 
             page_size,
             namespace=namespace,
             compartment_id=compartment_id,
+            occ_customer_group_id=occ_customer_group_id,
             **kwargs
         )
     else:
         result = client.list_internal_namespace_occ_overviews(
             namespace=namespace,
             compartment_id=compartment_id,
+            occ_customer_group_id=occ_customer_group_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@occ_handover_resource_block_detail_collection_group.command(name=cli_util.override('capacity_management.list_internal_occ_handover_resource_block_details.command_name', 'list-internal'), help=u"""List details about a given occHandoverResourceBlock. \n[Command Reference](listInternalOccHandoverResourceBlockDetails)""")
+@cli_util.option('--occ-handover-resource-block-id', required=True, help=u"""The OCID of the OccHandoverResource which is a required query parameter for listing OccHandoverResourceDetails.""")
+@cli_util.option('--host-id', help=u"""This fiter is applicable only for COMPUTE namespace. It helps in fetching of all resource block details for which the hostId is equal to the one provided in this query param.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["handoverDate"]), help=u"""The field to sort by. Only one sort order may be provided. The default order for handoverDate is chronological order(latest date item at the end).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'capacity_management', 'class': 'OccHandoverResourceBlockDetailCollection'})
+@cli_util.wrap_exceptions
+def list_internal_occ_handover_resource_block_details(ctx, from_json, all_pages, page_size, occ_handover_resource_block_id, host_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if host_id is not None:
+        kwargs['host_id'] = host_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('capacity_management', 'capacity_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_internal_occ_handover_resource_block_details,
+            occ_handover_resource_block_id=occ_handover_resource_block_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_internal_occ_handover_resource_block_details,
+            limit,
+            page_size,
+            occ_handover_resource_block_id=occ_handover_resource_block_id,
+            **kwargs
+        )
+    else:
+        result = client.list_internal_occ_handover_resource_block_details(
+            occ_handover_resource_block_id=occ_handover_resource_block_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@occ_handover_resource_block_collection_group.command(name=cli_util.override('capacity_management.list_internal_occ_handover_resource_blocks.command_name', 'list-internal'), help=u"""List Occ Handover Resource blocks. \n[Command Reference](listInternalOccHandoverResourceBlocks)""")
+@cli_util.option('--namespace', required=True, type=custom_types.CliCaseInsensitiveChoice(["COMPUTE"]), help=u"""The namespace enum value that needs to be passed as a required query parameter.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
+@cli_util.option('--occ-customer-group-id', required=True, help=u"""The customer group ocid by which we would filter the list.""")
+@cli_util.option('--handover-resource-name', help=u"""A filter to return only the list of resources that match the name provided in this filter.""")
+@cli_util.option('--handover-date-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""This filter helps in fetching all handed over resources for which the recordDate is greater than or equal to the startDate.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--handover-date-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""This filter helps in fetching all handed over resources for which the recordDate is less than or equal to the endDate.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--occ-handover-resource-block-id', help=u"""This filter helps in fetching the handed over resource for which the occHandoverResourceId is equal to the one provided here.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["handoverDate"]), help=u"""The field to sort by. Only one sort order may be provided. The default order for handoverDate is chronological order(latest date item at the end).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'capacity_management', 'class': 'OccHandoverResourceBlockCollection'})
+@cli_util.wrap_exceptions
+def list_internal_occ_handover_resource_blocks(ctx, from_json, all_pages, page_size, namespace, compartment_id, occ_customer_group_id, handover_resource_name, handover_date_greater_than_or_equal_to, handover_date_less_than_or_equal_to, occ_handover_resource_block_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if handover_resource_name is not None:
+        kwargs['handover_resource_name'] = handover_resource_name
+    if handover_date_greater_than_or_equal_to is not None:
+        kwargs['handover_date_greater_than_or_equal_to'] = handover_date_greater_than_or_equal_to
+    if handover_date_less_than_or_equal_to is not None:
+        kwargs['handover_date_less_than_or_equal_to'] = handover_date_less_than_or_equal_to
+    if occ_handover_resource_block_id is not None:
+        kwargs['occ_handover_resource_block_id'] = occ_handover_resource_block_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('capacity_management', 'capacity_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_internal_occ_handover_resource_blocks,
+            namespace=namespace,
+            compartment_id=compartment_id,
+            occ_customer_group_id=occ_customer_group_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_internal_occ_handover_resource_blocks,
+            limit,
+            page_size,
+            namespace=namespace,
+            compartment_id=compartment_id,
+            occ_customer_group_id=occ_customer_group_id,
+            **kwargs
+        )
+    else:
+        result = client.list_internal_occ_handover_resource_blocks(
+            namespace=namespace,
+            compartment_id=compartment_id,
+            occ_customer_group_id=occ_customer_group_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -694,11 +1059,11 @@ def list_occ_availability_catalogs(ctx, from_json, all_pages, page_size, compart
 
 @occ_availability_catalog_collection_group.command(name=cli_util.override('capacity_management.list_occ_availability_catalogs_internal.command_name', 'list-occ-availability-catalogs-internal'), help=u"""An internal api to list availability catalogs. \n[Command Reference](listOccAvailabilityCatalogsInternal)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
+@cli_util.option('--occ-customer-group-id', required=True, help=u"""The customer group ocid by which we would filter the list.""")
 @cli_util.option('--namespace', type=custom_types.CliCaseInsensitiveChoice(["COMPUTE"]), help=u"""The namespace by which we would filter the list.""")
 @cli_util.option('--id', help=u"""The OCID of the availability catalog to filter the list of availability catalogs.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire display name. The match is not case sensitive.""")
 @cli_util.option('--catalog-state', type=custom_types.CliCaseInsensitiveChoice(["NOT_UPLOADED", "UPLOAD_FAILED", "STAGED", "PUBLISHED", "OUTDATED", "DELETED"]), help=u"""Filter the list of availability catalogs based on the catalog state.""")
-@cli_util.option('--occ-customer-group-id', help=u"""The customer group ocid by which we would filter the list.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -710,7 +1075,7 @@ def list_occ_availability_catalogs(ctx, from_json, all_pages, page_size, compart
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'capacity_management', 'class': 'OccAvailabilityCatalogCollection'})
 @cli_util.wrap_exceptions
-def list_occ_availability_catalogs_internal(ctx, from_json, all_pages, page_size, compartment_id, namespace, id, display_name, catalog_state, occ_customer_group_id, limit, page, sort_order, sort_by):
+def list_occ_availability_catalogs_internal(ctx, from_json, all_pages, page_size, compartment_id, occ_customer_group_id, namespace, id, display_name, catalog_state, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -724,8 +1089,6 @@ def list_occ_availability_catalogs_internal(ctx, from_json, all_pages, page_size
         kwargs['display_name'] = display_name
     if catalog_state is not None:
         kwargs['catalog_state'] = catalog_state
-    if occ_customer_group_id is not None:
-        kwargs['occ_customer_group_id'] = occ_customer_group_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -743,6 +1106,7 @@ def list_occ_availability_catalogs_internal(ctx, from_json, all_pages, page_size
         result = cli_util.list_call_get_all_results(
             client.list_occ_availability_catalogs_internal,
             compartment_id=compartment_id,
+            occ_customer_group_id=occ_customer_group_id,
             **kwargs
         )
     elif limit is not None:
@@ -751,11 +1115,13 @@ def list_occ_availability_catalogs_internal(ctx, from_json, all_pages, page_size
             limit,
             page_size,
             compartment_id=compartment_id,
+            occ_customer_group_id=occ_customer_group_id,
             **kwargs
         )
     else:
         result = client.list_occ_availability_catalogs_internal(
             compartment_id=compartment_id,
+            occ_customer_group_id=occ_customer_group_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -832,7 +1198,7 @@ def list_occ_capacity_requests(ctx, from_json, all_pages, page_size, compartment
 
 @occ_capacity_request_collection_group.command(name=cli_util.override('capacity_management.list_occ_capacity_requests_internal.command_name', 'list-occ-capacity-requests-internal'), help=u"""An internal api to list all capacity requests. \n[Command Reference](listOccCapacityRequestsInternal)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment or tenancy in which resources are to be listed. This will also be used for authorization purposes.""")
-@cli_util.option('--occ-customer-group-id', help=u"""The customer group ocid by which we would filter the list.""")
+@cli_util.option('--occ-customer-group-id', required=True, help=u"""The customer group ocid by which we would filter the list.""")
 @cli_util.option('--occ-availability-catalog-id', help=u"""A filter to return the list of capacity requests based on the OCID of the availability catalog against which they were created.""")
 @cli_util.option('--namespace', type=custom_types.CliCaseInsensitiveChoice(["COMPUTE"]), help=u"""The namespace by which we would filter the list.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire display name. The match is not case sensitive.""")
@@ -855,8 +1221,6 @@ def list_occ_capacity_requests_internal(ctx, from_json, all_pages, page_size, co
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
-    if occ_customer_group_id is not None:
-        kwargs['occ_customer_group_id'] = occ_customer_group_id
     if occ_availability_catalog_id is not None:
         kwargs['occ_availability_catalog_id'] = occ_availability_catalog_id
     if namespace is not None:
@@ -884,6 +1248,7 @@ def list_occ_capacity_requests_internal(ctx, from_json, all_pages, page_size, co
         result = cli_util.list_call_get_all_results(
             client.list_occ_capacity_requests_internal,
             compartment_id=compartment_id,
+            occ_customer_group_id=occ_customer_group_id,
             **kwargs
         )
     elif limit is not None:
@@ -892,11 +1257,13 @@ def list_occ_capacity_requests_internal(ctx, from_json, all_pages, page_size, co
             limit,
             page_size,
             compartment_id=compartment_id,
+            occ_customer_group_id=occ_customer_group_id,
             **kwargs
         )
     else:
         result = client.list_occ_capacity_requests_internal(
             compartment_id=compartment_id,
+            occ_customer_group_id=occ_customer_group_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -960,6 +1327,131 @@ def list_occ_customer_groups(ctx, from_json, all_pages, page_size, compartment_i
     else:
         result = client.list_occ_customer_groups(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@occ_handover_resource_block_detail_collection_group.command(name=cli_util.override('capacity_management.list_occ_handover_resource_block_details.command_name', 'list'), help=u"""List details about a given occHandoverResourceBlock. \n[Command Reference](listOccHandoverResourceBlockDetails)""")
+@cli_util.option('--occ-handover-resource-block-id', required=True, help=u"""The OCID of the OccHandoverResource which is a required query parameter for listing OccHandoverResourceDetails.""")
+@cli_util.option('--host-id', help=u"""This fiter is applicable only for COMPUTE namespace. It helps in fetching of all resource block details for which the hostId is equal to the one provided in this query param.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["handoverDate"]), help=u"""The field to sort by. Only one sort order may be provided. The default order for handoverDate is chronological order(latest date item at the end).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'capacity_management', 'class': 'OccHandoverResourceBlockDetailCollection'})
+@cli_util.wrap_exceptions
+def list_occ_handover_resource_block_details(ctx, from_json, all_pages, page_size, occ_handover_resource_block_id, host_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if host_id is not None:
+        kwargs['host_id'] = host_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('capacity_management', 'capacity_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_occ_handover_resource_block_details,
+            occ_handover_resource_block_id=occ_handover_resource_block_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_occ_handover_resource_block_details,
+            limit,
+            page_size,
+            occ_handover_resource_block_id=occ_handover_resource_block_id,
+            **kwargs
+        )
+    else:
+        result = client.list_occ_handover_resource_block_details(
+            occ_handover_resource_block_id=occ_handover_resource_block_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@occ_handover_resource_block_collection_group.command(name=cli_util.override('capacity_management.list_occ_handover_resource_blocks.command_name', 'list'), help=u"""List Occ Handover Resource blocks. \n[Command Reference](listOccHandoverResourceBlocks)""")
+@cli_util.option('--namespace', type=custom_types.CliCaseInsensitiveChoice(["COMPUTE"]), help=u"""The namespace by which we would filter the list.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment or tenancy in which resources are to be listed.""")
+@cli_util.option('--handover-resource-name', help=u"""A filter to return only the list of resources that match the name provided in this filter.""")
+@cli_util.option('--handover-date-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""This filter helps in fetching all handed over resources for which the recordDate is greater than or equal to the startDate.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--handover-date-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""This filter helps in fetching all handed over resources for which the recordDate is less than or equal to the endDate.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--occ-handover-resource-block-id', help=u"""This filter helps in fetching the handed over resource for which the occHandoverResourceId is equal to the one provided here.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["handoverDate"]), help=u"""The field to sort by. Only one sort order may be provided. The default order for handoverDate is chronological order(latest date item at the end).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'capacity_management', 'class': 'OccHandoverResourceBlockCollection'})
+@cli_util.wrap_exceptions
+def list_occ_handover_resource_blocks(ctx, from_json, all_pages, page_size, namespace, compartment_id, handover_resource_name, handover_date_greater_than_or_equal_to, handover_date_less_than_or_equal_to, occ_handover_resource_block_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if namespace is not None:
+        kwargs['namespace'] = namespace
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if handover_resource_name is not None:
+        kwargs['handover_resource_name'] = handover_resource_name
+    if handover_date_greater_than_or_equal_to is not None:
+        kwargs['handover_date_greater_than_or_equal_to'] = handover_date_greater_than_or_equal_to
+    if handover_date_less_than_or_equal_to is not None:
+        kwargs['handover_date_less_than_or_equal_to'] = handover_date_less_than_or_equal_to
+    if occ_handover_resource_block_id is not None:
+        kwargs['occ_handover_resource_block_id'] = occ_handover_resource_block_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('capacity_management', 'capacity_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_occ_handover_resource_blocks,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_occ_handover_resource_blocks,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_occ_handover_resource_blocks(
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -1305,6 +1797,132 @@ def update_occ_capacity_request(ctx, from_json, force, wait_for_state, max_wait_
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_occ_capacity_request(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@occ_customer_group.command(name=cli_util.override('capacity_management.update_occ_customer.command_name', 'update'), help=u"""The request to update the customer. \n[Command Reference](updateOccCustomer)""")
+@cli_util.option('--occ-customer-group-id', required=True, help=u"""The OCID of the customer group.""")
+@cli_util.option('--occ-customer-id', required=True, help=u"""The tenancy id of the customer.""")
+@cli_util.option('--display-name', help=u"""The display name of the customer.""")
+@cli_util.option('--description', help=u"""Additional information about the customer.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""To determine whether the customer group is enabled/disabled.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'capacity_management', 'class': 'OccCustomer'})
+@cli_util.wrap_exceptions
+def update_occ_customer(ctx, from_json, occ_customer_group_id, occ_customer_id, display_name, description, status, if_match):
+
+    if isinstance(occ_customer_group_id, six.string_types) and len(occ_customer_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --occ-customer-group-id cannot be whitespace or empty string')
+
+    if isinstance(occ_customer_id, six.string_types) and len(occ_customer_id.strip()) == 0:
+        raise click.UsageError('Parameter --occ-customer-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if status is not None:
+        _details['status'] = status
+
+    client = cli_util.build_client('capacity_management', 'capacity_management', ctx)
+    result = client.update_occ_customer(
+        occ_customer_group_id=occ_customer_group_id,
+        occ_customer_id=occ_customer_id,
+        update_occ_customer_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@occ_customer_group_group.command(name=cli_util.override('capacity_management.update_occ_customer_group.command_name', 'update'), help=u"""The request to update the customer group. \n[Command Reference](updateOccCustomerGroup)""")
+@cli_util.option('--occ-customer-group-id', required=True, help=u"""The OCID of the customer group.""")
+@cli_util.option('--display-name', help=u"""The display name of the customer group.""")
+@cli_util.option('--description', help=u"""Additional information about the customer group.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""To determine whether the customer group is enabled/disabled.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'capacity_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'capacity_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'capacity_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'capacity_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'capacity_management', 'class': 'OccCustomerGroup'})
+@cli_util.wrap_exceptions
+def update_occ_customer_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, occ_customer_group_id, display_name, description, freeform_tags, defined_tags, status, if_match):
+
+    if isinstance(occ_customer_group_id, six.string_types) and len(occ_customer_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --occ-customer-group-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if status is not None:
+        _details['status'] = status
+
+    client = cli_util.build_client('capacity_management', 'capacity_management', ctx)
+    result = client.update_occ_customer_group(
+        occ_customer_group_id=occ_customer_group_id,
+        update_occ_customer_group_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_occ_customer_group') and callable(getattr(client, 'get_occ_customer_group')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_occ_customer_group(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
