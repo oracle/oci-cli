@@ -6,6 +6,49 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.48.0 - 2024-09-17
+--------------------
+Added
+~~~~~
+* Support Dedicated AI Cluster Unit Shape LARGE_GENERIC_4 in the Generative AI Service Management
+
+  * ``oci generative-ai dedicated-ai-cluster``
+
+* Support for allowing the operator to provide a ticket number when creating access request in the Lockbox service
+
+  * ``oci oma access-request create --ticket-number``
+
+* Support for release 3.1 of Capacity Management Service
+
+  * ``oci capacity-management occ-handover-resource-block-collection``
+  * ``oci capacity-management occ-customer``
+  * ``oci capacity-management occ-customer-group``
+
+* Support for Text to Speech in Speech service
+
+  * ``oci speech synthesize-speech``
+  * ``oci speech voice list``
+
+* Fleet Software Update service
+
+  * Support to create DB and GI Collections major version 23.
+
+    * ``oci fleet-software-update fsu-collection create-db --source-major-version DB_23``
+    * ``oci fleet-software-update fsu-collection create-gi --source-major-version GI_23``
+
+  * Support to create DB and GI Collections major version 23.
+
+    * ``oci fleet-software-update fsu-cycle create-patch --goal-version-details { "version" : "23.4.0.0" }``
+
+Changed
+~~~~~~~
+* Capacity Management Service
+
+  * [BREAKING] Optional parameter ``--occ-customer-group-id`` has now been made required in the following commands
+
+    * ``oci capacity-management occ-overview-collection list-internal-namespace-occ-overviews``
+    * ``oci capacity-management occ-availability-catalog-collection list-internal``
+
 3.47.0 - 2024-08-27
 --------------------
 

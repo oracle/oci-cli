@@ -17,6 +17,8 @@ SDK_client_map = {
     "speech.list_customizations": "oci.ai_speech.AIServiceSpeechClient.list_customizations",
     "speech.list_transcription_jobs": "oci.ai_speech.AIServiceSpeechClient.list_transcription_jobs",
     "speech.list_transcription_tasks": "oci.ai_speech.AIServiceSpeechClient.list_transcription_tasks",
+    "speech.list_voices": "oci.ai_speech.AIServiceSpeechClient.list_voices",
+    "speech.synthesize_speech": "oci.ai_speech.AIServiceSpeechClient.synthesize_speech",
     "speech.update_customization": "oci.ai_speech.AIServiceSpeechClient.update_customization",
     "speech.update_transcription_job": "oci.ai_speech.AIServiceSpeechClient.update_transcription_job",
 }

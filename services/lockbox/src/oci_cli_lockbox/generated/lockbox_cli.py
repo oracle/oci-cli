@@ -197,6 +197,7 @@ def change_lockbox_compartment(ctx, from_json, lockbox_id, compartment_id, if_ma
 @cli_util.option('--access-duration', required=True, help=u"""The maximum amount of time operator has access to associated resources.""")
 @cli_util.option('--display-name', help=u"""The name of the access request.""")
 @cli_util.option('--context', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The context object containing the access request specific details.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ticket-number', help=u"""The ticket number raised by external customers Example: `3-37509643121`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -205,7 +206,7 @@ def change_lockbox_compartment(ctx, from_json, lockbox_id, compartment_id, if_ma
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'context': {'module': 'lockbox', 'class': 'dict(str, string)'}}, output_type={'module': 'lockbox', 'class': 'AccessRequest'})
 @cli_util.wrap_exceptions
-def create_access_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, lockbox_id, description, access_duration, display_name, context):
+def create_access_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, lockbox_id, description, access_duration, display_name, context, ticket_number):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -220,6 +221,9 @@ def create_access_request(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
     if context is not None:
         _details['context'] = cli_util.parse_json_parameter("context", context)
+
+    if ticket_number is not None:
+        _details['ticketNumber'] = ticket_number
 
     client = cli_util.build_client('lockbox', 'lockbox', ctx)
     result = client.create_access_request(
