@@ -3723,3 +3723,15 @@ database_cli.exadb_vm_cluster_group.add_command(database_cli.get_exadb_vm_cluste
 database_cli.exadb_vm_cluster_group.add_command(database_cli.list_exadb_vm_cluster_update_history_entries)
 database_cli.db_root_group.commands.pop(database_cli.exadb_vm_cluster_update_group.name)
 database_cli.db_root_group.commands.pop(database_cli.exadb_vm_cluster_update_history_entry_group.name)
+
+# oci db database set-db-key-version-oci-provider-set-key-version-details -> oci db database set-oci-db-key-version
+cli_util.rename_command(database_cli, database_cli.database_group, database_cli.set_db_key_version_oci_provider_set_key_version_details, "set-oci-db-key-version")
+
+# oci db pluggable-database set-pdb-key-version-oci-provider-set-key-version-details -> oci db pluggable-database set-oci-pdb-key-version
+cli_util.rename_command(database_cli, database_cli.pluggable_database_group, database_cli.set_pdb_key_version_oci_provider_set_key_version_details, "set-oci-pdb-key-version")
+
+# Remove set-db-key-version from oci db database
+database_cli.database_group.commands.pop(database_cli.set_db_key_version.name)
+
+# Remove set-pdb-key-version from oci db pluggable-database
+database_cli.pluggable_database_group.commands.pop(database_cli.set_pdb_key_version.name)

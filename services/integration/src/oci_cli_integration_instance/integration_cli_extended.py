@@ -136,3 +136,7 @@ def create_integration_instance_extended(ctx, **kwargs):
         kwargs['integration_instance_type'] = kwargs['type']
         kwargs.pop('type')
     ctx.invoke(integrationinstance_cli.create_integration_instance, **kwargs)
+
+
+# oci integration integration-instance add -> oci integration integration-instance add-oracle-managed-custom-endpoint
+cli_util.rename_command(integrationinstance_cli, integrationinstance_cli.integration_instance_group, integrationinstance_cli.add_oracle_managed_custom_endpoint, "add-oracle-managed-custom-endpoint")

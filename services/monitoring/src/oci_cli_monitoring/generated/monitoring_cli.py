@@ -43,7 +43,7 @@ def metric_data_group():
     pass
 
 
-@click.command(cli_util.override('monitoring.alarm_suppression_collection_group.command_name', 'alarm-suppression-collection'), cls=CommandGroupWithAlias, help="""Collection of property summaries for dimension-specific alarm suppressions.""")
+@click.command(cli_util.override('monitoring.alarm_suppression_collection_group.command_name', 'alarm-suppression-collection'), cls=CommandGroupWithAlias, help="""Collection of property summaries for alarm suppressions.""")
 @cli_util.help_option_group
 def alarm_suppression_collection_group():
     pass
@@ -81,13 +81,15 @@ def alarm_group():
     pass
 
 
-@click.command(cli_util.override('monitoring.suppression_group.command_name', 'suppression'), cls=CommandGroupWithAlias, help="""The configuration details for an alarm-wide suppression. For dimension-specific suppressions, see [AlarmSuppression]. For information about alarms, see [Alarms Overview].""")
+@click.command(cli_util.override('monitoring.suppression_group.command_name', 'suppression'), cls=CommandGroupWithAlias, help="""The configuration details for an alarm-wide suppression. For dimension-specific suppressions, see [AlarmSuppression].
+
+For information about alarms, see [Alarms Overview].""")
 @cli_util.help_option_group
 def suppression_group():
     pass
 
 
-@click.command(cli_util.override('monitoring.alarm_suppression_group.command_name', 'alarm-suppression'), cls=CommandGroupWithAlias, help="""The configuration details for a dimension-specific alarm suppression.""")
+@click.command(cli_util.override('monitoring.alarm_suppression_group.command_name', 'alarm-suppression'), cls=CommandGroupWithAlias, help="""The configuration details for an alarm suppression.""")
 @cli_util.help_option_group
 def alarm_suppression_group():
     pass
@@ -322,38 +324,44 @@ def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@alarm_suppression_group.command(name=cli_util.override('monitoring.create_alarm_suppression.command_name', 'create'), help=u"""Creates a dimension-specific suppression for an alarm.
+@alarm_suppression_group.command(name=cli_util.override('monitoring.create_alarm_suppression.command_name', 'create'), help=u"""Creates a new alarm suppression at the specified level (alarm-wide or dimension-specific). For more information, see [Adding an Alarm-wide Suppression] and [Adding a Dimension-Specific Alarm Suppression].
 
 For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy. \n[Command Reference](createAlarmSuppression)""")
 @cli_util.option('--alarm-suppression-target', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the alarm suppression. It does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--dimensions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A filter to suppress only alarm state entries that include the set of specified dimension key-value pairs. If you specify {\"availabilityDomain\": \"phx-ad-1\"} and the alarm state entry corresponds to the set {\"availabilityDomain\": \"phx-ad-1\" and \"resourceId\": \"ocid1.instance.region1.phx.exampleuniqueID\"}, then this alarm will be included for suppression.
-
-The value cannot be an empty object. Only a single value is allowed per key. No grouping of multiple values is allowed under the same key. Maximum characters (after serialization): 4000. This maximum satisfies typical use cases. The response for an exceeded maximum is `HTTP 400` with an \"dimensions values are too long\" message.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--time-suppress-from', required=True, type=custom_types.CLI_DATETIME, help=u"""The start date and time for the suppression to take place, inclusive. Format defined by RFC3339.
 
 Example: `2023-02-01T01:02:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-suppress-until', required=True, type=custom_types.CLI_DATETIME, help=u"""The end date and time for the suppression to take place, inclusive. Format defined by RFC3339.
 
 Example: `2023-02-01T02:02:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--level', help=u"""The level of this alarm suppression. `ALARM` indicates a suppression of the entire alarm, regardless of dimension. `DIMENSION` indicates a suppression configured for specified dimensions.
+
+Defaut: `DIMENSION`""")
 @cli_util.option('--description', help=u"""Human-readable reason for this alarm suppression. It does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Oracle recommends including tracking information for the event or associated work, such as a ticket number.
 
 Example: `Planned outage due to change IT-1234.`""")
+@cli_util.option('--dimensions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A filter to suppress only alarm state entries that include the set of specified dimension key-value pairs. If you specify {\"availabilityDomain\": \"phx-ad-1\"} and the alarm state entry corresponds to the set {\"availabilityDomain\": \"phx-ad-1\" and \"resourceId\": \"ocid1.instance.region1.phx.exampleuniqueID\"}, then this alarm will be included for suppression.
+
+This is required only when the value of level is `DIMENSION`. If required, the value cannot be an empty object. Only a single value is allowed per key. No grouping of multiple values is allowed under the same key. Maximum characters (after serialization): 4000. This maximum satisfies typical use cases. The response for an exceeded maximum is `HTTP 400` with an \"dimensions values are too long\" message.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--suppression-conditions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of all preconditions for alarm suppression. Example: `[{   conditionType: \"RECURRENCE\",   suppressionRecurrence: \"FRQ=DAILY;BYHOUR=10\",   suppressionDuration: \"PT1H\" }]`
+
+This option is a JSON list with items of type SuppressionCondition.  For documentation on SuppressionCondition please see our API reference: https://docs.cloud.oracle.com/api/#/en/monitoring/20180401/datatypes/SuppressionCondition.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'alarm-suppression-target': {'module': 'monitoring', 'class': 'AlarmSuppressionTarget'}, 'dimensions': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'alarm-suppression-target': {'module': 'monitoring', 'class': 'AlarmSuppressionTarget'}, 'dimensions': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}, 'suppression-conditions': {'module': 'monitoring', 'class': 'list[SuppressionCondition]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'alarm-suppression-target': {'module': 'monitoring', 'class': 'AlarmSuppressionTarget'}, 'dimensions': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'monitoring', 'class': 'AlarmSuppression'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'alarm-suppression-target': {'module': 'monitoring', 'class': 'AlarmSuppressionTarget'}, 'dimensions': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}, 'suppression-conditions': {'module': 'monitoring', 'class': 'list[SuppressionCondition]'}}, output_type={'module': 'monitoring', 'class': 'AlarmSuppression'})
 @cli_util.wrap_exceptions
-def create_alarm_suppression(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, alarm_suppression_target, display_name, dimensions, time_suppress_from, time_suppress_until, description, freeform_tags, defined_tags):
+def create_alarm_suppression(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, alarm_suppression_target, display_name, time_suppress_from, time_suppress_until, level, description, dimensions, freeform_tags, defined_tags, suppression_conditions):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -361,18 +369,26 @@ def create_alarm_suppression(ctx, from_json, wait_for_state, max_wait_seconds, w
     _details = {}
     _details['alarmSuppressionTarget'] = cli_util.parse_json_parameter("alarm_suppression_target", alarm_suppression_target)
     _details['displayName'] = display_name
-    _details['dimensions'] = cli_util.parse_json_parameter("dimensions", dimensions)
     _details['timeSuppressFrom'] = time_suppress_from
     _details['timeSuppressUntil'] = time_suppress_until
 
+    if level is not None:
+        _details['level'] = level
+
     if description is not None:
         _details['description'] = description
+
+    if dimensions is not None:
+        _details['dimensions'] = cli_util.parse_json_parameter("dimensions", dimensions)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if suppression_conditions is not None:
+        _details['suppressionConditions'] = cli_util.parse_json_parameter("suppression_conditions", suppression_conditions)
 
     client = cli_util.build_client('monitoring', 'monitoring', ctx)
     result = client.create_alarm_suppression(
@@ -405,15 +421,12 @@ def create_alarm_suppression(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@alarm_suppression_group.command(name=cli_util.override('monitoring.create_alarm_suppression_alarm_suppression_alarm_target.command_name', 'create-alarm-suppression-alarm-suppression-alarm-target'), help=u"""Creates a dimension-specific suppression for an alarm.
+@alarm_suppression_group.command(name=cli_util.override('monitoring.create_alarm_suppression_alarm_suppression_alarm_target.command_name', 'create-alarm-suppression-alarm-suppression-alarm-target'), help=u"""Creates a new alarm suppression at the specified level (alarm-wide or dimension-specific). For more information, see [Adding an Alarm-wide Suppression] and [Adding a Dimension-Specific Alarm Suppression].
 
 For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy. \n[Command Reference](createAlarmSuppression)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the alarm suppression. It does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--dimensions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A filter to suppress only alarm state entries that include the set of specified dimension key-value pairs. If you specify {\"availabilityDomain\": \"phx-ad-1\"} and the alarm state entry corresponds to the set {\"availabilityDomain\": \"phx-ad-1\" and \"resourceId\": \"ocid1.instance.region1.phx.exampleuniqueID\"}, then this alarm will be included for suppression.
-
-The value cannot be an empty object. Only a single value is allowed per key. No grouping of multiple values is allowed under the same key. Maximum characters (after serialization): 4000. This maximum satisfies typical use cases. The response for an exceeded maximum is `HTTP 400` with an \"dimensions values are too long\" message.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--time-suppress-from', required=True, type=custom_types.CLI_DATETIME, help=u"""The start date and time for the suppression to take place, inclusive. Format defined by RFC3339.
 
 Example: `2023-02-01T01:02:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -421,22 +434,31 @@ Example: `2023-02-01T01:02:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIM
 
 Example: `2023-02-01T02:02:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--alarm-suppression-target-alarm-id', required=True, help=u"""The [OCID] of the alarm that is the target of the alarm suppression.""")
+@cli_util.option('--level', help=u"""The level of this alarm suppression. `ALARM` indicates a suppression of the entire alarm, regardless of dimension. `DIMENSION` indicates a suppression configured for specified dimensions.
+
+Defaut: `DIMENSION`""")
 @cli_util.option('--description', help=u"""Human-readable reason for this alarm suppression. It does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Oracle recommends including tracking information for the event or associated work, such as a ticket number.
 
 Example: `Planned outage due to change IT-1234.`""")
+@cli_util.option('--dimensions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A filter to suppress only alarm state entries that include the set of specified dimension key-value pairs. If you specify {\"availabilityDomain\": \"phx-ad-1\"} and the alarm state entry corresponds to the set {\"availabilityDomain\": \"phx-ad-1\" and \"resourceId\": \"ocid1.instance.region1.phx.exampleuniqueID\"}, then this alarm will be included for suppression.
+
+This is required only when the value of level is `DIMENSION`. If required, the value cannot be an empty object. Only a single value is allowed per key. No grouping of multiple values is allowed under the same key. Maximum characters (after serialization): 4000. This maximum satisfies typical use cases. The response for an exceeded maximum is `HTTP 400` with an \"dimensions values are too long\" message.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--suppression-conditions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of all preconditions for alarm suppression. Example: `[{   conditionType: \"RECURRENCE\",   suppressionRecurrence: \"FRQ=DAILY;BYHOUR=10\",   suppressionDuration: \"PT1H\" }]`
+
+This option is a JSON list with items of type SuppressionCondition.  For documentation on SuppressionCondition please see our API reference: https://docs.cloud.oracle.com/api/#/en/monitoring/20180401/datatypes/SuppressionCondition.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'dimensions': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'dimensions': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}, 'suppression-conditions': {'module': 'monitoring', 'class': 'list[SuppressionCondition]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dimensions': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'monitoring', 'class': 'AlarmSuppression'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dimensions': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}, 'suppression-conditions': {'module': 'monitoring', 'class': 'list[SuppressionCondition]'}}, output_type={'module': 'monitoring', 'class': 'AlarmSuppression'})
 @cli_util.wrap_exceptions
-def create_alarm_suppression_alarm_suppression_alarm_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, dimensions, time_suppress_from, time_suppress_until, alarm_suppression_target_alarm_id, description, freeform_tags, defined_tags):
+def create_alarm_suppression_alarm_suppression_alarm_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, time_suppress_from, time_suppress_until, alarm_suppression_target_alarm_id, level, description, dimensions, freeform_tags, defined_tags, suppression_conditions):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -444,13 +466,18 @@ def create_alarm_suppression_alarm_suppression_alarm_target(ctx, from_json, wait
     _details = {}
     _details['alarmSuppressionTarget'] = {}
     _details['displayName'] = display_name
-    _details['dimensions'] = cli_util.parse_json_parameter("dimensions", dimensions)
     _details['timeSuppressFrom'] = time_suppress_from
     _details['timeSuppressUntil'] = time_suppress_until
     _details['alarmSuppressionTarget']['alarmId'] = alarm_suppression_target_alarm_id
 
+    if level is not None:
+        _details['level'] = level
+
     if description is not None:
         _details['description'] = description
+
+    if dimensions is not None:
+        _details['dimensions'] = cli_util.parse_json_parameter("dimensions", dimensions)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -458,7 +485,114 @@ def create_alarm_suppression_alarm_suppression_alarm_target(ctx, from_json, wait
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
+    if suppression_conditions is not None:
+        _details['suppressionConditions'] = cli_util.parse_json_parameter("suppression_conditions", suppression_conditions)
+
     _details['alarmSuppressionTarget']['targetType'] = 'ALARM'
+
+    client = cli_util.build_client('monitoring', 'monitoring', ctx)
+    result = client.create_alarm_suppression(
+        create_alarm_suppression_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_alarm_suppression') and callable(getattr(client, 'get_alarm_suppression')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_alarm_suppression(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@alarm_suppression_group.command(name=cli_util.override('monitoring.create_alarm_suppression_alarm_suppression_compartment_target.command_name', 'create-alarm-suppression-alarm-suppression-compartment-target'), help=u"""Creates a new alarm suppression at the specified level (alarm-wide or dimension-specific). For more information, see [Adding an Alarm-wide Suppression] and [Adding a Dimension-Specific Alarm Suppression].
+
+For important limits information, see [Limits on Monitoring].
+
+This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy. \n[Command Reference](createAlarmSuppression)""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the alarm suppression. It does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--time-suppress-from', required=True, type=custom_types.CLI_DATETIME, help=u"""The start date and time for the suppression to take place, inclusive. Format defined by RFC3339.
+
+Example: `2023-02-01T01:02:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-suppress-until', required=True, type=custom_types.CLI_DATETIME, help=u"""The end date and time for the suppression to take place, inclusive. Format defined by RFC3339.
+
+Example: `2023-02-01T02:02:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--alarm-suppression-target-compartment-id', required=True, help=u"""The [OCID] of the compartment or tenancy that is the target of the alarm suppression. Example: `ocid1.compartment.oc1..exampleuniqueID`""")
+@cli_util.option('--level', help=u"""The level of this alarm suppression. `ALARM` indicates a suppression of the entire alarm, regardless of dimension. `DIMENSION` indicates a suppression configured for specified dimensions.
+
+Defaut: `DIMENSION`""")
+@cli_util.option('--description', help=u"""Human-readable reason for this alarm suppression. It does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Oracle recommends including tracking information for the event or associated work, such as a ticket number.
+
+Example: `Planned outage due to change IT-1234.`""")
+@cli_util.option('--dimensions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A filter to suppress only alarm state entries that include the set of specified dimension key-value pairs. If you specify {\"availabilityDomain\": \"phx-ad-1\"} and the alarm state entry corresponds to the set {\"availabilityDomain\": \"phx-ad-1\" and \"resourceId\": \"ocid1.instance.region1.phx.exampleuniqueID\"}, then this alarm will be included for suppression.
+
+This is required only when the value of level is `DIMENSION`. If required, the value cannot be an empty object. Only a single value is allowed per key. No grouping of multiple values is allowed under the same key. Maximum characters (after serialization): 4000. This maximum satisfies typical use cases. The response for an exceeded maximum is `HTTP 400` with an \"dimensions values are too long\" message.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--suppression-conditions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of all preconditions for alarm suppression. Example: `[{   conditionType: \"RECURRENCE\",   suppressionRecurrence: \"FRQ=DAILY;BYHOUR=10\",   suppressionDuration: \"PT1H\" }]`
+
+This option is a JSON list with items of type SuppressionCondition.  For documentation on SuppressionCondition please see our API reference: https://docs.cloud.oracle.com/api/#/en/monitoring/20180401/datatypes/SuppressionCondition.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--alarm-suppression-target-compartment-id-in-subtree', type=click.BOOL, help=u"""When true, the alarm suppression targets all alarms under all compartments and subcompartments of the tenancy specified. The parameter can only be set to true when compartmentId is the tenancy OCID (the tenancy is the root compartment). When false, the alarm suppression targets only the alarms under the specified compartment.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'dimensions': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}, 'suppression-conditions': {'module': 'monitoring', 'class': 'list[SuppressionCondition]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dimensions': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}, 'suppression-conditions': {'module': 'monitoring', 'class': 'list[SuppressionCondition]'}}, output_type={'module': 'monitoring', 'class': 'AlarmSuppression'})
+@cli_util.wrap_exceptions
+def create_alarm_suppression_alarm_suppression_compartment_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, time_suppress_from, time_suppress_until, alarm_suppression_target_compartment_id, level, description, dimensions, freeform_tags, defined_tags, suppression_conditions, alarm_suppression_target_compartment_id_in_subtree):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['alarmSuppressionTarget'] = {}
+    _details['displayName'] = display_name
+    _details['timeSuppressFrom'] = time_suppress_from
+    _details['timeSuppressUntil'] = time_suppress_until
+    _details['alarmSuppressionTarget']['compartmentId'] = alarm_suppression_target_compartment_id
+
+    if level is not None:
+        _details['level'] = level
+
+    if description is not None:
+        _details['description'] = description
+
+    if dimensions is not None:
+        _details['dimensions'] = cli_util.parse_json_parameter("dimensions", dimensions)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if suppression_conditions is not None:
+        _details['suppressionConditions'] = cli_util.parse_json_parameter("suppression_conditions", suppression_conditions)
+
+    if alarm_suppression_target_compartment_id_in_subtree is not None:
+        _details['alarmSuppressionTarget']['compartmentIdInSubtree'] = alarm_suppression_target_compartment_id_in_subtree
+
+    _details['alarmSuppressionTarget']['targetType'] = 'COMPARTMENT'
 
     client = cli_util.build_client('monitoring', 'monitoring', ctx)
     result = client.create_alarm_suppression(
@@ -557,7 +691,7 @@ def delete_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@alarm_suppression_group.command(name=cli_util.override('monitoring.delete_alarm_suppression.command_name', 'delete'), help=u"""Deletes the specified alarm suppression.
+@alarm_suppression_group.command(name=cli_util.override('monitoring.delete_alarm_suppression.command_name', 'delete'), help=u"""Deletes the specified alarm suppression. For more information, see [Removing an Alarm-wide Suppression] and [Removing a Dimension-Specific Alarm Suppression].
 
 For important limits information, see [Limits on Monitoring].
 
@@ -698,7 +832,7 @@ def get_alarm_history(ctx, from_json, alarm_id, alarm_historytype, page, limit, 
     cli_util.render_response(result, ctx)
 
 
-@alarm_suppression_group.command(name=cli_util.override('monitoring.get_alarm_suppression.command_name', 'get'), help=u"""Gets the specified alarm suppression.
+@alarm_suppression_group.command(name=cli_util.override('monitoring.get_alarm_suppression.command_name', 'get'), help=u"""Gets the specified alarm suppression. For more information, see [Getting an Alarm-wide Suppression].
 
 For important limits information, see [Limits on Monitoring].
 
@@ -724,14 +858,27 @@ def get_alarm_suppression(ctx, from_json, alarm_suppression_id):
     cli_util.render_response(result, ctx)
 
 
-@alarm_suppression_collection_group.command(name=cli_util.override('monitoring.list_alarm_suppressions.command_name', 'list-alarm-suppressions'), help=u"""Lists alarm suppressions for the specified alarm. Only dimension-level suppressions are listed. Alarm-level suppressions are not listed.
+@alarm_suppression_collection_group.command(name=cli_util.override('monitoring.list_alarm_suppressions.command_name', 'list-alarm-suppressions'), help=u"""Lists alarm suppressions for the specified alarm. For more information, see [Listing Alarm Suppressions].
 
 For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy. \n[Command Reference](listAlarmSuppressions)""")
-@cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of the alarm that is the target of the alarm suppression.""")
-@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly. Use this filter to list a alarm suppression by name. Alternatively, when you know the alarm suppression OCID, use the GetAlarmSuppression operation.""")
+@cli_util.option('--alarm-id', help=u"""The [OCID] of the alarm that is the target of the alarm suppression.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly. Use this filter to list an alarm suppression by name. Alternatively, when you know the alarm suppression OCID, use the GetAlarmSuppression operation.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""A filter to return only resources that match the given lifecycle state exactly. When not specified, only resources in the ACTIVE lifecycle state are listed.""")
+@cli_util.option('--level', type=custom_types.CliCaseInsensitiveChoice(["ALARM", "DIMENSION"]), help=u"""The level of this alarm suppression. `ALARM` indicates a suppression of the entire alarm, regardless of dimension. `DIMENSION` indicates a suppression configured for specified dimensions.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment for searching. Use the tenancy OCID to search in the root compartment.
+
+If targetType is not specified, searches all suppressions defined under the compartment. If targetType is `COMPARTMENT`, searches suppressions in the specified compartment only.
+
+Example: `ocid1.compartment.oc1..exampleuniqueID`""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""When true, returns resources from all compartments and subcompartments. The parameter can only be set to true when compartmentId is the tenancy OCID (the tenancy is the root compartment). A true value requires the user to have tenancy-level permissions. If this requirement is not met, then the call is rejected. When false, returns resources from only the compartment specified in compartmentId. Default is false.""")
+@cli_util.option('--target-type', type=custom_types.CliCaseInsensitiveChoice(["ALARM", "COMPARTMENT"]), help=u"""The target type to use when listing alarm suppressions. `ALARM` lists all suppression records for the specified alarm. `COMPARTMENT` lists all suppression records for the specified compartment or tenancy.""")
+@cli_util.option('--is-all-suppressions', type=click.BOOL, help=u"""Setting this parameter to true requires the query to specify the alarm (`alarmId`).
+
+When true, lists all alarm suppressions that affect the specified alarm, including suppressions that target the corresponding compartment or tenancy. When false, lists only the alarm suppressions that target the specified alarm.
+
+Default is false.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "timeCreated", "timeSuppressFrom"]), help=u"""The field to use when sorting returned alarm suppressions. Only one sorting level is provided.
 
 Example: `timeCreated`""")
@@ -751,16 +898,28 @@ Example: 500""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'monitoring', 'class': 'AlarmSuppressionCollection'})
 @cli_util.wrap_exceptions
-def list_alarm_suppressions(ctx, from_json, all_pages, page_size, alarm_id, display_name, lifecycle_state, sort_by, sort_order, page, limit):
+def list_alarm_suppressions(ctx, from_json, all_pages, page_size, alarm_id, display_name, lifecycle_state, level, compartment_id, compartment_id_in_subtree, target_type, is_all_suppressions, sort_by, sort_order, page, limit):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if alarm_id is not None:
+        kwargs['alarm_id'] = alarm_id
     if display_name is not None:
         kwargs['display_name'] = display_name
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
+    if level is not None:
+        kwargs['level'] = level
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if target_type is not None:
+        kwargs['target_type'] = target_type
+    if is_all_suppressions is not None:
+        kwargs['is_all_suppressions'] = is_all_suppressions
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
@@ -777,7 +936,6 @@ def list_alarm_suppressions(ctx, from_json, all_pages, page_size, alarm_id, disp
 
         result = cli_util.list_call_get_all_results(
             client.list_alarm_suppressions,
-            alarm_id=alarm_id,
             **kwargs
         )
     elif limit is not None:
@@ -785,12 +943,10 @@ def list_alarm_suppressions(ctx, from_json, all_pages, page_size, alarm_id, disp
             client.list_alarm_suppressions,
             limit,
             page_size,
-            alarm_id=alarm_id,
             **kwargs
         )
     else:
         result = client.list_alarm_suppressions(
-            alarm_id=alarm_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -871,7 +1027,9 @@ def list_alarms(ctx, from_json, all_pages, page_size, compartment_id, page, limi
     cli_util.render_response(result, ctx)
 
 
-@alarm_status_group.command(name=cli_util.override('monitoring.list_alarms_status.command_name', 'list-alarms-status'), help=u"""List the status of each alarm in the specified compartment. Status is collective, across all metric streams in the alarm. To list alarm status for each metric stream, use [RetrieveDimensionStates]. Optionally filter by resource or status value. For more information, see [Listing Alarm Statuses]. For important limits information, see [Limits on Monitoring].
+@alarm_status_group.command(name=cli_util.override('monitoring.list_alarms_status.command_name', 'list-alarms-status'), help=u"""List the status of each alarm in the specified compartment. Status is collective, across all metric streams in the alarm. To list alarm status for each metric stream, use [RetrieveDimensionStates]. Optionally filter by resource or status value.
+
+For more information, see [Listing Alarm Statuses]. For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy. \n[Command Reference](listAlarmsStatus)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.
@@ -1141,7 +1299,9 @@ def remove_alarm_suppression(ctx, from_json, alarm_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@alarm_dimension_states_collection_group.command(name=cli_util.override('monitoring.retrieve_dimension_states.command_name', 'retrieve-dimension-states'), help=u"""Lists the current alarm status of each metric stream, where status is derived from the metric stream's last associated transition. Optionally filter by status value and one or more dimension key-value pairs. For more information, see [Listing Metric Stream Status in an Alarm].
+@alarm_dimension_states_collection_group.command(name=cli_util.override('monitoring.retrieve_dimension_states.command_name', 'retrieve-dimension-states'), help=u"""Lists the current alarm status of each metric stream, where status is derived from the metric stream's last associated transition. Optionally filter by status value and one or more dimension key-value pairs.
+
+For more information, see [Listing Metric Stream Status in an Alarm].
 
 For important limits information, see [Limits on Monitoring].
 
@@ -1189,7 +1349,7 @@ def retrieve_dimension_states(ctx, from_json, alarm_id, page, limit, dimension_f
     cli_util.render_response(result, ctx)
 
 
-@alarm_suppression_group.command(name=cli_util.override('monitoring.summarize_alarm_suppression_history.command_name', 'summarize-alarm-suppression-history'), help=u"""Returns history of suppressions for the specified alarm, including both dimension-specific and and alarm-wide suppressions.
+@alarm_suppression_group.command(name=cli_util.override('monitoring.summarize_alarm_suppression_history.command_name', 'summarize-alarm-suppression-history'), help=u"""Returns history of suppressions for the specified alarm, including both dimension-specific and and alarm-wide suppressions. For more information, see [Getting Suppression History for an Alarm].
 
 For important limits information, see [Limits on Monitoring].
 

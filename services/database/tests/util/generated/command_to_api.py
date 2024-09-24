@@ -341,6 +341,8 @@ SDK_client_map = {
     "db.rotate_vault_key": "oci.database.DatabaseClient.rotate_vault_key",
     "db.saas_admin_user_status": "oci.database.DatabaseClient.saas_admin_user_status",
     "db.scan_external_container_database_pluggable_databases": "oci.database.DatabaseClient.scan_external_container_database_pluggable_databases",
+    "db.set_db_key_version": "oci.database.DatabaseClient.set_db_key_version",
+    "db.set_pdb_key_version": "oci.database.DatabaseClient.set_pdb_key_version",
     "db.shrink_autonomous_database": "oci.database.DatabaseClient.shrink_autonomous_database",
     "db.start_autonomous_database": "oci.database.DatabaseClient.start_autonomous_database",
     "db.start_pluggable_database": "oci.database.DatabaseClient.start_pluggable_database",

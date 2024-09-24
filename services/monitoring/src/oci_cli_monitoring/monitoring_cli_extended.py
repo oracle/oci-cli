@@ -73,3 +73,11 @@ Example of absence alarm:
 def update_alarm(ctx, query_text, **kwargs):
     kwargs['query_parameterconflict'] = query_text
     ctx.invoke(monitoring_cli.update_alarm, **kwargs)
+
+
+# Remove create-alarm-suppression-alarm-suppression-alarm-target from oci monitoring alarm-suppression
+monitoring_cli.alarm_suppression_group.commands.pop(monitoring_cli.create_alarm_suppression_alarm_suppression_alarm_target.name)
+
+
+# Remove create-alarm-suppression-alarm-suppression-compartment-target from oci monitoring alarm-suppression
+monitoring_cli.alarm_suppression_group.commands.pop(monitoring_cli.create_alarm_suppression_alarm_suppression_compartment_target.name)

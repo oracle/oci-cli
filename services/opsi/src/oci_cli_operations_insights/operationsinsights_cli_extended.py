@@ -747,3 +747,121 @@ cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_
 
 # oci opsi database-insights update-database-insight-update-mds-my-sql-database-insight -> oci opsi database-insights update-mds-my-sql-database
 cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.update_database_insight_update_mds_my_sql_database_insight, "update-mds-my-sql-database")
+
+
+# oci opsi database-insights create-database-insight-create-macs-managed-cloud-database-insight-details -> oci opsi database-insights create-macs-managed-cloud-database-insight
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.create_database_insight_create_macs_managed_cloud_database_insight_details, "create-macs-managed-cloud-database-insight")
+
+
+# oci opsi database-insights enable-database-insight-enable-macs-managed-cloud-database-insight-details -> oci opsi database-insights enable-macs-managed-cloud-database-insight
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.enable_database_insight_enable_macs_managed_cloud_database_insight_details, "enable-macs-managed-cloud-database-insight")
+
+
+# oci opsi database-insights update-database-insight-update-macs-managed-cloud-database-insight-details -> oci opsi database-insights update-macs-managed-cloud-database-insight
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.update_database_insight_update_macs_managed_cloud_database_insight_details, "update-macs-managed-cloud-database-insight")
+
+
+# oci opsi exadata-insights add-exadata-insight-members-add-macs-managed-cloud-exadata-insight-members-details -> oci opsi exadata-insights add-macs-managed-cloud-exadata-insight-members
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.exadata_insights_group, operationsinsights_cli.add_exadata_insight_members_add_macs_managed_cloud_exadata_insight_members_details, "add-macs-managed-cloud-exadata-insight-members")
+
+
+# oci opsi exadata-insights create-exadata-insight-create-macs-managed-cloud-exadata-insight-details -> oci opsi exadata-insights create-macs-managed-cloud-exadata-insight
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.exadata_insights_group, operationsinsights_cli.create_exadata_insight_create_macs_managed_cloud_exadata_insight_details, "create-macs-managed-cloud-exadata-insight")
+
+
+# oci opsi exadata-insights enable-exadata-insight-enable-macs-managed-cloud-exadata-insight-details -> oci opsi exadata-insights enable-macs-managed-cloud-exadata-insight
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.exadata_insights_group, operationsinsights_cli.enable_exadata_insight_enable_macs_managed_cloud_exadata_insight_details, "enable-macs-managed-cloud-exadata-insight")
+
+
+# oci opsi exadata-insights update-exadata-insight-update-macs-managed-cloud-exadata-insight-details -> oci opsi exadata-insights update-macs-managed-cloud-exadata-insight
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.exadata_insights_group, operationsinsights_cli.update_exadata_insight_update_macs_managed_cloud_exadata_insight_details, "update-macs-managed-cloud-exadata-insight")
+
+
+# oci opsi host-insights update-host-insight-update-macs-managed-cloud-database-host-insight-details -> oci opsi host-insights update-macs-managed-database-host-insight
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.host_insights_group, operationsinsights_cli.update_host_insight_update_macs_managed_cloud_database_host_insight_details, "update-macs-managed-database-host-insight")
+
+
+# Remove change-macs-managed-cloud from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.change_macs_managed_cloud_database_insight_connection.name)
+
+
+# Remove change-macs-managed-cloud-database-insight-connection-credentials-by-source from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.change_macs_managed_cloud_database_insight_connection_credentials_by_source.name)
+
+
+# Remove test-macs-managed-cloud from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.test_macs_managed_cloud_database_insight_connection.name)
+
+
+# Remove test-macs-managed-cloud-database-insight-connection-credentials-by-source from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.test_macs_managed_cloud_database_insight_connection_credentials_by_source.name)
+
+
+@cli_util.copy_params_from_generated_command(operationsinsights_cli.change_macs_managed_cloud_database_insight_connection_credential_by_vault, params_to_exclude=['connection_credential_details_credential_source_name', 'connection_credential_details_password_secret_id', 'connection_credential_details_role', 'connection_credential_details_user_name', 'connection_credential_details_wallet_secret_id'])
+@operationsinsights_cli.database_insights_group.command(name=operationsinsights_cli.change_macs_managed_cloud_database_insight_connection_credential_by_vault.name, help=operationsinsights_cli.change_macs_managed_cloud_database_insight_connection_credential_by_vault.help)
+@cli_util.option('--credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service. [required]""")
+@cli_util.option('--password-secret-id', help=u"""The secret [OCID] mapping to the database credentials.""")
+@cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL"]), help=u"""database user role.""")
+@cli_util.option('--user-name', help=u"""database user name.""")
+@cli_util.option('--wallet-secret-id', help=u"""The [OCID] of the Secret where the database keystore contents are stored. This is used for TCPS support in BM/VM/ExaCS cases.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.wrap_exceptions
+def change_macs_managed_cloud_database_insight_connection_credential_by_vault_extended(ctx, **kwargs):
+
+    if 'credential_source_name' in kwargs:
+        kwargs['connection_credential_details_credential_source_name'] = kwargs['credential_source_name']
+        kwargs.pop('credential_source_name')
+
+    if 'password_secret_id' in kwargs:
+        kwargs['connection_credential_details_password_secret_id'] = kwargs['password_secret_id']
+        kwargs.pop('password_secret_id')
+
+    if 'role' in kwargs:
+        kwargs['connection_credential_details_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'user_name' in kwargs:
+        kwargs['connection_credential_details_user_name'] = kwargs['user_name']
+        kwargs.pop('user_name')
+
+    if 'wallet_secret_id' in kwargs:
+        kwargs['connection_credential_details_wallet_secret_id'] = kwargs['wallet_secret_id']
+        kwargs.pop('wallet_secret_id')
+
+    ctx.invoke(operationsinsights_cli.change_macs_managed_cloud_database_insight_connection_credential_by_vault, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(operationsinsights_cli.test_macs_managed_cloud_database_insight_connection_credential_by_vault, params_to_exclude=['connection_credential_details_credential_source_name', 'connection_credential_details_password_secret_id', 'connection_credential_details_role', 'connection_credential_details_user_name', 'connection_credential_details_wallet_secret_id'])
+@operationsinsights_cli.database_insights_group.command(name=operationsinsights_cli.test_macs_managed_cloud_database_insight_connection_credential_by_vault.name, help=operationsinsights_cli.test_macs_managed_cloud_database_insight_connection_credential_by_vault.help)
+@cli_util.option('--credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service. [required]""")
+@cli_util.option('--password-secret-id', help=u"""The secret [OCID] mapping to the database credentials.""")
+@cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL"]), help=u"""database user role.""")
+@cli_util.option('--user-name', help=u"""database user name.""")
+@cli_util.option('--wallet-secret-id', help=u"""The [OCID] of the Secret where the database keystore contents are stored. This is used for TCPS support in BM/VM/ExaCS cases.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.wrap_exceptions
+def test_macs_managed_cloud_database_insight_connection_credential_by_vault_extended(ctx, **kwargs):
+
+    if 'credential_source_name' in kwargs:
+        kwargs['connection_credential_details_credential_source_name'] = kwargs['credential_source_name']
+        kwargs.pop('credential_source_name')
+
+    if 'password_secret_id' in kwargs:
+        kwargs['connection_credential_details_password_secret_id'] = kwargs['password_secret_id']
+        kwargs.pop('password_secret_id')
+
+    if 'role' in kwargs:
+        kwargs['connection_credential_details_role'] = kwargs['role']
+        kwargs.pop('role')
+
+    if 'user_name' in kwargs:
+        kwargs['connection_credential_details_user_name'] = kwargs['user_name']
+        kwargs.pop('user_name')
+
+    if 'wallet_secret_id' in kwargs:
+        kwargs['connection_credential_details_wallet_secret_id'] = kwargs['wallet_secret_id']
+        kwargs.pop('wallet_secret_id')
+
+    ctx.invoke(operationsinsights_cli.test_macs_managed_cloud_database_insight_connection_credential_by_vault, **kwargs)

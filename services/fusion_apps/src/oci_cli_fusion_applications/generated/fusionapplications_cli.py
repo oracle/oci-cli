@@ -533,6 +533,7 @@ def create_fusion_environment_family(ctx, from_json, wait_for_state, max_wait_se
 @create_refresh_activity_details_group.command(name=cli_util.override('fusion_apps.create_refresh_activity.command_name', 'create-refresh-activity'), help=u"""Creates a new RefreshActivity. \n[Command Reference](createRefreshActivity)""")
 @cli_util.option('--fusion-environment-id', required=True, help=u"""unique FusionEnvironment identifier""")
 @cli_util.option('--source-fusion-environment-id', required=True, help=u"""The [OCID] of the source environment""")
+@cli_util.option('--is-data-masking-opted', type=click.BOOL, help=u"""Represents if the customer opted for Data Masking or not during refreshActivity.""")
 @cli_util.option('--time-scheduled-start', type=custom_types.CLI_DATETIME, help=u"""Current time the refresh activity is scheduled to start. An RFC3339 formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -542,7 +543,7 @@ def create_fusion_environment_family(ctx, from_json, wait_for_state, max_wait_se
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_refresh_activity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, source_fusion_environment_id, time_scheduled_start):
+def create_refresh_activity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, source_fusion_environment_id, is_data_masking_opted, time_scheduled_start):
 
     if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
@@ -552,6 +553,9 @@ def create_refresh_activity(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     _details = {}
     _details['sourceFusionEnvironmentId'] = source_fusion_environment_id
+
+    if is_data_masking_opted is not None:
+        _details['isDataMaskingOpted'] = is_data_masking_opted
 
     if time_scheduled_start is not None:
         _details['timeScheduledStart'] = time_scheduled_start

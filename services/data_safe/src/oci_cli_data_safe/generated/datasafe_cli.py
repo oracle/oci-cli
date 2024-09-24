@@ -288,6 +288,12 @@ def masking_report_group():
     pass
 
 
+@click.command(cli_util.override('data_safe.sql_firewall_allowed_sql_group.command_name', 'sql-firewall-allowed-sql'), cls=CommandGroupWithAlias, help="""The resource represents a SQL Firewall allowed SQL in Data Safe.""")
+@cli_util.help_option_group
+def sql_firewall_allowed_sql_group():
+    pass
+
+
 @click.command(cli_util.override('data_safe.alert_policy_group.command_name', 'alert-policy'), cls=CommandGroupWithAlias, help="""An Alert Policy is a set of alerting rules evaluated against a target. The alert policy is said to be satisfied when all rules in the policy evaulate to true. If there are three rules: rule1,rule2 and rule3, the policy is satisfied if rule1 AND rule2 AND rule3 is True.""")
 @cli_util.help_option_group
 def alert_policy_group():
@@ -512,6 +518,7 @@ data_safe_root_group.add_command(audit_policy_analytic_collection_group)
 data_safe_root_group.add_command(audit_event_summary_group)
 data_safe_root_group.add_command(library_masking_format_group)
 data_safe_root_group.add_command(masking_report_group)
+data_safe_root_group.add_command(sql_firewall_allowed_sql_group)
 data_safe_root_group.add_command(alert_policy_group)
 data_safe_root_group.add_command(user_assessment_group)
 data_safe_root_group.add_command(sql_collection_group)
@@ -818,6 +825,358 @@ def apply_sdm_masking_policy_difference(ctx, from_json, wait_for_state, max_wait
     result = client.apply_sdm_masking_policy_difference(
         masking_policy_id=masking_policy_id,
         apply_sdm_masking_policy_difference_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@sql_firewall_allowed_sql_group.command(name=cli_util.override('data_safe.bulk_create_sql_firewall_allowed_sqls.command_name', 'bulk-create'), help=u"""Appends the allowedSqls with entries from the logs. \n[Command Reference](bulkCreateSqlFirewallAllowedSqls)""")
+@cli_util.option('--sql-firewall-policy-id', required=True, help=u"""The OCID of the SQL firewall policy where new allowed SQLs needs to be added.""")
+@cli_util.option('--log-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VIOLATION_LOG"]), help=u"""The type of log to be added as an allowed sql.""")
+@cli_util.option('--selection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'selection': {'module': 'data_safe', 'class': 'SelectionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'selection': {'module': 'data_safe', 'class': 'SelectionDetails'}})
+@cli_util.wrap_exceptions
+def bulk_create_sql_firewall_allowed_sqls(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_firewall_policy_id, log_type, selection):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['sqlFirewallPolicyId'] = sql_firewall_policy_id
+    _details['logType'] = log_type
+    _details['selection'] = cli_util.parse_json_parameter("selection", selection)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.bulk_create_sql_firewall_allowed_sqls(
+        bulk_create_sql_firewall_allowed_sqls_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@sql_firewall_allowed_sql_group.command(name=cli_util.override('data_safe.bulk_create_sql_firewall_allowed_sqls_list_selection_mode.command_name', 'bulk-create-sql-firewall-allowed-sqls-list-selection-mode'), help=u"""Appends the allowedSqls with entries from the logs. \n[Command Reference](bulkCreateSqlFirewallAllowedSqls)""")
+@cli_util.option('--sql-firewall-policy-id', required=True, help=u"""The OCID of the SQL firewall policy where new allowed SQLs needs to be added.""")
+@cli_util.option('--log-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VIOLATION_LOG"]), help=u"""The type of log to be added as an allowed sql.""")
+@cli_util.option('--selection-items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""* Array of the violation log ocids to be selected in case of allowed SQLs bulk create. * Array of the allowed SQL ocids to be selected in case of allowed SQLs bulk delete.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'selection-items': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'selection-items': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def bulk_create_sql_firewall_allowed_sqls_list_selection_mode(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_firewall_policy_id, log_type, selection_items):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['selection'] = {}
+    _details['sqlFirewallPolicyId'] = sql_firewall_policy_id
+    _details['logType'] = log_type
+    _details['selection']['items'] = cli_util.parse_json_parameter("selection_items", selection_items)
+
+    _details['selection']['selectionMode'] = 'LIST'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.bulk_create_sql_firewall_allowed_sqls(
+        bulk_create_sql_firewall_allowed_sqls_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@sql_firewall_allowed_sql_group.command(name=cli_util.override('data_safe.bulk_create_sql_firewall_allowed_sqls_scim_query_selection_mode.command_name', 'bulk-create-sql-firewall-allowed-sqls-scim-query-selection-mode'), help=u"""Appends the allowedSqls with entries from the logs. \n[Command Reference](bulkCreateSqlFirewallAllowedSqls)""")
+@cli_util.option('--sql-firewall-policy-id', required=True, help=u"""The OCID of the SQL firewall policy where new allowed SQLs needs to be added.""")
+@cli_util.option('--log-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VIOLATION_LOG"]), help=u"""The type of log to be added as an allowed sql.""")
+@cli_util.option('--selection-scim-query', required=True, help=u"""The scimQuery query parameter accepts filter expressions that use the syntax described in Section 3.2.2.2 of the System for Cross-Domain Identity Management (SCIM) specification, which is available at [RFC3339]. In SCIM filtering expressions, text, date, and time values must be enclosed in quotation marks, with date and time values using ISO-8601 format. (Numeric and boolean values should not be quoted.)
+
+**Example:** query=(dbUserName eq \"PAY_APP\")""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def bulk_create_sql_firewall_allowed_sqls_scim_query_selection_mode(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_firewall_policy_id, log_type, selection_scim_query):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['selection'] = {}
+    _details['sqlFirewallPolicyId'] = sql_firewall_policy_id
+    _details['logType'] = log_type
+    _details['selection']['scimQuery'] = selection_scim_query
+
+    _details['selection']['selectionMode'] = 'SCIM_QUERY'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.bulk_create_sql_firewall_allowed_sqls(
+        bulk_create_sql_firewall_allowed_sqls_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@sql_firewall_allowed_sql_group.command(name=cli_util.override('data_safe.bulk_delete_sql_firewall_allowed_sqls.command_name', 'bulk-delete'), help=u"""Delete multiple allowed sqls from the SQL firewall policy. \n[Command Reference](bulkDeleteSqlFirewallAllowedSqls)""")
+@cli_util.option('--sql-firewall-policy-id', required=True, help=u"""The OCID of the SQL firewall policy whose allowed SQLs needs to be deleted.""")
+@cli_util.option('--selection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'selection': {'module': 'data_safe', 'class': 'SelectionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'selection': {'module': 'data_safe', 'class': 'SelectionDetails'}})
+@cli_util.wrap_exceptions
+def bulk_delete_sql_firewall_allowed_sqls(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_firewall_policy_id, selection):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['sqlFirewallPolicyId'] = sql_firewall_policy_id
+    _details['selection'] = cli_util.parse_json_parameter("selection", selection)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.bulk_delete_sql_firewall_allowed_sqls(
+        bulk_delete_sql_firewall_allowed_sqls_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@sql_firewall_allowed_sql_group.command(name=cli_util.override('data_safe.bulk_delete_sql_firewall_allowed_sqls_list_selection_mode.command_name', 'bulk-delete-sql-firewall-allowed-sqls-list-selection-mode'), help=u"""Delete multiple allowed sqls from the SQL firewall policy. \n[Command Reference](bulkDeleteSqlFirewallAllowedSqls)""")
+@cli_util.option('--sql-firewall-policy-id', required=True, help=u"""The OCID of the SQL firewall policy whose allowed SQLs needs to be deleted.""")
+@cli_util.option('--selection-items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""* Array of the violation log ocids to be selected in case of allowed SQLs bulk create. * Array of the allowed SQL ocids to be selected in case of allowed SQLs bulk delete.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'selection-items': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'selection-items': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def bulk_delete_sql_firewall_allowed_sqls_list_selection_mode(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_firewall_policy_id, selection_items):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['selection'] = {}
+    _details['sqlFirewallPolicyId'] = sql_firewall_policy_id
+    _details['selection']['items'] = cli_util.parse_json_parameter("selection_items", selection_items)
+
+    _details['selection']['selectionMode'] = 'LIST'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.bulk_delete_sql_firewall_allowed_sqls(
+        bulk_delete_sql_firewall_allowed_sqls_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@sql_firewall_allowed_sql_group.command(name=cli_util.override('data_safe.bulk_delete_sql_firewall_allowed_sqls_scim_query_selection_mode.command_name', 'bulk-delete-sql-firewall-allowed-sqls-scim-query-selection-mode'), help=u"""Delete multiple allowed sqls from the SQL firewall policy. \n[Command Reference](bulkDeleteSqlFirewallAllowedSqls)""")
+@cli_util.option('--sql-firewall-policy-id', required=True, help=u"""The OCID of the SQL firewall policy whose allowed SQLs needs to be deleted.""")
+@cli_util.option('--selection-scim-query', required=True, help=u"""The scimQuery query parameter accepts filter expressions that use the syntax described in Section 3.2.2.2 of the System for Cross-Domain Identity Management (SCIM) specification, which is available at [RFC3339]. In SCIM filtering expressions, text, date, and time values must be enclosed in quotation marks, with date and time values using ISO-8601 format. (Numeric and boolean values should not be quoted.)
+
+**Example:** query=(dbUserName eq \"PAY_APP\")""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def bulk_delete_sql_firewall_allowed_sqls_scim_query_selection_mode(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_firewall_policy_id, selection_scim_query):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['selection'] = {}
+    _details['sqlFirewallPolicyId'] = sql_firewall_policy_id
+    _details['selection']['scimQuery'] = selection_scim_query
+
+    _details['selection']['selectionMode'] = 'SCIM_QUERY'
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.bulk_delete_sql_firewall_allowed_sqls(
+        bulk_delete_sql_firewall_allowed_sqls_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -6369,6 +6728,62 @@ def delete_sql_collection(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
+@sql_firewall_allowed_sql_group.command(name=cli_util.override('data_safe.delete_sql_firewall_allowed_sql.command_name', 'delete'), help=u"""Deletes the specified allowed sql. \n[Command Reference](deleteSqlFirewallAllowedSql)""")
+@cli_util.option('--sql-firewall-allowed-sql-id', required=True, help=u"""The OCID of the sqlFirewallAllowedSql resource.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_sql_firewall_allowed_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_firewall_allowed_sql_id, if_match):
+
+    if isinstance(sql_firewall_allowed_sql_id, six.string_types) and len(sql_firewall_allowed_sql_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-firewall-allowed-sql-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.delete_sql_firewall_allowed_sql(
+        sql_firewall_allowed_sql_id=sql_firewall_allowed_sql_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @sql_firewall_policy_group.command(name=cli_util.override('data_safe.delete_sql_firewall_policy.command_name', 'delete'), help=u"""Deletes the SQL Firewall policy resource. \n[Command Reference](deleteSqlFirewallPolicy)""")
 @cli_util.option('--sql-firewall-policy-id', required=True, help=u"""The OCID of the SQL Firewall policy resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -7455,7 +7870,7 @@ def generate_on_prem_connector_configuration(ctx, from_json, file, password, on_
 @cli_util.option('--report-definition-id', required=True, help=u"""Unique report definition identifier""")
 @cli_util.option('--display-name', required=True, help=u"""The name of the report to be generated""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
-@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Specifies the format of report to be .xls or .pdf or .json""")
+@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS", "JSON"]), help=u"""Specifies the format of report to be .xls or .pdf or .json""")
 @cli_util.option('--target-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of database target OCIDs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""The description of the report to be generated""")
 @cli_util.option('--time-less-than', type=custom_types.CLI_DATETIME, help=u"""Specifies the time until which the data needs to be reported.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -8722,6 +9137,28 @@ def get_sql_collection(ctx, from_json, sql_collection_id):
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.get_sql_collection(
         sql_collection_id=sql_collection_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@sql_firewall_allowed_sql_group.command(name=cli_util.override('data_safe.get_sql_firewall_allowed_sql.command_name', 'get'), help=u"""Gets a SQL firewall allowed SQL by identifier. \n[Command Reference](getSqlFirewallAllowedSql)""")
+@cli_util.option('--sql-firewall-allowed-sql-id', required=True, help=u"""The OCID of the sqlFirewallAllowedSql resource.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SqlFirewallAllowedSql'})
+@cli_util.wrap_exceptions
+def get_sql_firewall_allowed_sql(ctx, from_json, sql_firewall_allowed_sql_id):
+
+    if isinstance(sql_firewall_allowed_sql_id, six.string_types) and len(sql_firewall_allowed_sql_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-firewall-allowed-sql-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.get_sql_firewall_allowed_sql(
+        sql_firewall_allowed_sql_id=sql_firewall_allowed_sql_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -12085,6 +12522,7 @@ def list_report_definitions(ctx, from_json, all_pages, page_size, compartment_id
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeGenerated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeGenerated is descending. Default order for displayName is ascending. If no value is specified timeGenerated is default.""")
+@cli_util.option('--mime-type', type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS", "JSON"]), help=u"""An optional filter to return only resources that match the specified mime type.""")
 @cli_util.option('--report-definition-id', help=u"""The ID of the report definition to filter the list of reports""")
 @cli_util.option('--time-generated-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return only the resources that were generated after the specified date and time, as defined by [RFC3339]. Using TimeGeneratedGreaterThanOrEqualToQueryParam parameter retrieves all resources generated after that date.
 
@@ -12101,7 +12539,7 @@ def list_report_definitions(ctx, from_json, all_pages, page_size, compartment_id
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'ReportCollection'})
 @cli_util.wrap_exceptions
-def list_reports(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, display_name, limit, page, sort_order, sort_by, report_definition_id, time_generated_greater_than_or_equal_to, time_generated_less_than, lifecycle_state, type):
+def list_reports(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, display_name, limit, page, sort_order, sort_by, mime_type, report_definition_id, time_generated_greater_than_or_equal_to, time_generated_less_than, lifecycle_state, type):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -12121,6 +12559,8 @@ def list_reports(ctx, from_json, all_pages, page_size, compartment_id, compartme
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if mime_type is not None:
+        kwargs['mime_type'] = mime_type
     if report_definition_id is not None:
         kwargs['report_definition_id'] = report_definition_id
     if time_generated_greater_than_or_equal_to is not None:
@@ -15381,6 +15821,64 @@ def patch_sensitive_columns(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
+@sql_firewall_allowed_sql_group.command(name=cli_util.override('data_safe.patch_sql_firewall_allowed_sql.command_name', 'patch'), help=u"""Delete multiple allowed sqls. You can use this operation to delete one or more allowed sqls. Create and update of multiple allowed sqls is not supported. \n[Command Reference](patchSqlFirewallAllowedSql)""")
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of patch instructions.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--sql-firewall-policy-id', required=True, help=u"""The OCID of the SQL firewall policy whose allowed SQL needs to be deleted.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'data_safe', 'class': 'list[PatchInstruction]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'data_safe', 'class': 'list[PatchInstruction]'}})
+@cli_util.wrap_exceptions
+def patch_sql_firewall_allowed_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, items, sql_firewall_policy_id, if_match):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['items'] = cli_util.parse_json_parameter("items", items)
+    _details['sqlFirewallPolicyId'] = sql_firewall_policy_id
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.patch_sql_firewall_allowed_sql(
+        patch_sql_firewall_allowed_sql_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @target_alert_policy_association_group.command(name=cli_util.override('data_safe.patch_target_alert_policy_association.command_name', 'patch'), help=u"""Creates new target-alert policy associations that will be applied on the target database. \n[Command Reference](patchTargetAlertPolicyAssociation)""")
 @cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of patch instructions.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the alerts.""")
@@ -16081,7 +16579,7 @@ def retrieve_audit_policies(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--schedule', required=True, help=u"""The schedule to generate the report periodically in the specified format: <version-string>;<version-specific-schedule>
 
 Allowed version strings - \"v1\" v1's version specific schedule -<ss> <mm> <hh> <day-of-week> <day-of-month> Each of the above fields potentially introduce constraints. A workrequest is created only when clock time satisfies all the constraints. Constraints introduced: 1. seconds = <ss> (So, the allowed range for <ss> is [0, 59]) 2. minutes = <mm> (So, the allowed range for <mm> is [0, 59]) 3. hours = <hh> (So, the allowed range for <hh> is [0, 23]) 4. <day-of-week> can be either '*' (without quotes or a number between 1(Monday) and 7(Sunday)) No constraint introduced when it is '*'. When not, day of week must equal the given value 5. <day-of-month> can be either '*' (without quotes or a number between 1 and 28) No constraint introduced when it is '*'. When not, day of month must equal the given value""")
-@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Specifies if the report will be in .xls or .pdf or .json format""")
+@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS", "JSON"]), help=u"""Specifies if the report will be in .xls or .pdf or .json format""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which the resource should be created.""")
 @cli_util.option('--report-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The name of the report to be scheduled""")
@@ -16154,7 +16652,7 @@ def schedule_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--schedule', required=True, help=u"""The schedule to generate the report periodically in the specified format: <version-string>;<version-specific-schedule>
 
 Allowed version strings - \"v1\" v1's version specific schedule -<ss> <mm> <hh> <day-of-week> <day-of-month> Each of the above fields potentially introduce constraints. A workrequest is created only when clock time satisfies all the constraints. Constraints introduced: 1. seconds = <ss> (So, the allowed range for <ss> is [0, 59]) 2. minutes = <mm> (So, the allowed range for <mm> is [0, 59]) 3. hours = <hh> (So, the allowed range for <hh> is [0, 23]) 4. <day-of-week> can be either '*' (without quotes or a number between 1(Monday) and 7(Sunday)) No constraint introduced when it is '*'. When not, day of week must equal the given value 5. <day-of-month> can be either '*' (without quotes or a number between 1 and 28) No constraint introduced when it is '*'. When not, day of month must equal the given value""")
-@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS"]), help=u"""Specifies if the report will be in .xls or .pdf or .json format""")
+@cli_util.option('--mime-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PDF", "XLS", "JSON"]), help=u"""Specifies if the report will be in .xls or .pdf or .json format""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which the resource should be created.""")
 @cli_util.option('--report-details-record-time-span', required=True, help=u"""The time span of records in report to be scheduled. <period-value><period> Allowed period strings - \"H\",\"D\",\"M\",\"Y\" Each of the above fields potentially introduce constraints. A workRequest is created only when period-value satisfies all the constraints. Constraints introduced: 1. period = H (The allowed range for period-value is [1, 23]) 2. period = D (The allowed range for period-value is [1, 30]) 3. period = M (The allowed range for period-value is [1, 11]) 4. period = Y (The minimum period-value is 1)""")
 @cli_util.option('--display-name', help=u"""The name of the report to be scheduled""")
