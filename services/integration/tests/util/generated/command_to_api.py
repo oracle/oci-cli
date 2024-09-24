@@ -2,6 +2,7 @@
 # Copyright (c) 2016, 2024, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
+    "integration.add_oracle_managed_custom_endpoint": "oci.integration.IntegrationInstanceClient.add_oracle_managed_custom_endpoint",
     "integration.change_integration_instance_compartment": "oci.integration.IntegrationInstanceClient.change_integration_instance_compartment",
     "integration.change_integration_instance_network_endpoint": "oci.integration.IntegrationInstanceClient.change_integration_instance_network_endpoint",
     "integration.change_private_endpoint_outbound_connection": "oci.integration.IntegrationInstanceClient.change_private_endpoint_outbound_connection",
@@ -15,6 +16,7 @@ SDK_client_map = {
     "integration.list_work_request_errors": "oci.integration.IntegrationInstanceClient.list_work_request_errors",
     "integration.list_work_request_logs": "oci.integration.IntegrationInstanceClient.list_work_request_logs",
     "integration.list_work_requests": "oci.integration.IntegrationInstanceClient.list_work_requests",
+    "integration.remove_oracle_managed_custom_endpoint": "oci.integration.IntegrationInstanceClient.remove_oracle_managed_custom_endpoint",
     "integration.start_integration_instance": "oci.integration.IntegrationInstanceClient.start_integration_instance",
     "integration.stop_integration_instance": "oci.integration.IntegrationInstanceClient.stop_integration_instance",
     "integration.update_integration_instance": "oci.integration.IntegrationInstanceClient.update_integration_instance",

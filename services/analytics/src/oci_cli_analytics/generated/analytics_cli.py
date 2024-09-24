@@ -336,6 +336,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--update-channel', type=custom_types.CliCaseInsensitiveChoice(["REGULAR", "EARLY", "PHASE_2", "PHASE_1"]), help=u"""Analytics instance update channel.""")
 @cli_util.option('--kms-key-id', help=u"""OCID of the OCI Vault Key encrypting the customer data stored in this Analytics instance. A null value indicates Oracle managed default encryption.""")
 @cli_util.option('--domain-id', help=u"""domain id for which the user is authorized.""")
 @cli_util.option('--admin-user', help=u"""user name of the authorized user.""")
@@ -348,7 +349,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capacity': {'module': 'analytics', 'class': 'Capacity'}, 'network-endpoint-details': {'module': 'analytics', 'class': 'NetworkEndpointDetails'}, 'defined-tags': {'module': 'analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'analytics', 'class': 'dict(str, string)'}}, output_type={'module': 'analytics', 'class': 'AnalyticsInstance'})
 @cli_util.wrap_exceptions
-def create_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, feature_set, capacity, license_type, description, email_notification, network_endpoint_details, idcs_access_token, defined_tags, freeform_tags, kms_key_id, domain_id, admin_user, feature_bundle):
+def create_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, feature_set, capacity, license_type, description, email_notification, network_endpoint_details, idcs_access_token, defined_tags, freeform_tags, update_channel, kms_key_id, domain_id, admin_user, feature_bundle):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -377,6 +378,9 @@ def create_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if update_channel is not None:
+        _details['updateChannel'] = update_channel
 
     if kms_key_id is not None:
         _details['kmsKeyId'] = kms_key_id
@@ -442,6 +446,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--update-channel', type=custom_types.CliCaseInsensitiveChoice(["REGULAR", "EARLY", "PHASE_2", "PHASE_1"]), help=u"""Analytics instance update channel.""")
 @cli_util.option('--kms-key-id', help=u"""OCID of the OCI Vault Key encrypting the customer data stored in this Analytics instance. A null value indicates Oracle managed default encryption.""")
 @cli_util.option('--domain-id', help=u"""domain id for which the user is authorized.""")
 @cli_util.option('--admin-user', help=u"""user name of the authorized user.""")
@@ -455,7 +460,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capacity': {'module': 'analytics', 'class': 'Capacity'}, 'defined-tags': {'module': 'analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'analytics', 'class': 'dict(str, string)'}, 'network-endpoint-details-network-security-group-ids': {'module': 'analytics', 'class': 'list[string]'}}, output_type={'module': 'analytics', 'class': 'AnalyticsInstance'})
 @cli_util.wrap_exceptions
-def create_analytics_instance_private_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, feature_set, capacity, license_type, network_endpoint_details_vcn_id, network_endpoint_details_subnet_id, description, email_notification, idcs_access_token, defined_tags, freeform_tags, kms_key_id, domain_id, admin_user, feature_bundle, network_endpoint_details_network_security_group_ids):
+def create_analytics_instance_private_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, feature_set, capacity, license_type, network_endpoint_details_vcn_id, network_endpoint_details_subnet_id, description, email_notification, idcs_access_token, defined_tags, freeform_tags, update_channel, kms_key_id, domain_id, admin_user, feature_bundle, network_endpoint_details_network_security_group_ids):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -484,6 +489,9 @@ def create_analytics_instance_private_endpoint_details(ctx, from_json, wait_for_
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if update_channel is not None:
+        _details['updateChannel'] = update_channel
 
     if kms_key_id is not None:
         _details['kmsKeyId'] = kms_key_id
@@ -552,6 +560,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--update-channel', type=custom_types.CliCaseInsensitiveChoice(["REGULAR", "EARLY", "PHASE_2", "PHASE_1"]), help=u"""Analytics instance update channel.""")
 @cli_util.option('--kms-key-id', help=u"""OCID of the OCI Vault Key encrypting the customer data stored in this Analytics instance. A null value indicates Oracle managed default encryption.""")
 @cli_util.option('--domain-id', help=u"""domain id for which the user is authorized.""")
 @cli_util.option('--admin-user', help=u"""user name of the authorized user.""")
@@ -569,7 +578,7 @@ This option is a JSON list with items of type VirtualCloudNetwork.  For document
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'capacity': {'module': 'analytics', 'class': 'Capacity'}, 'defined-tags': {'module': 'analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'analytics', 'class': 'dict(str, string)'}, 'network-endpoint-details-whitelisted-ips': {'module': 'analytics', 'class': 'list[string]'}, 'network-endpoint-details-whitelisted-vcns': {'module': 'analytics', 'class': 'list[VirtualCloudNetwork]'}}, output_type={'module': 'analytics', 'class': 'AnalyticsInstance'})
 @cli_util.wrap_exceptions
-def create_analytics_instance_public_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, feature_set, capacity, license_type, description, email_notification, idcs_access_token, defined_tags, freeform_tags, kms_key_id, domain_id, admin_user, feature_bundle, network_endpoint_details_whitelisted_ips, network_endpoint_details_whitelisted_vcns, network_endpoint_details_whitelisted_services):
+def create_analytics_instance_public_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, feature_set, capacity, license_type, description, email_notification, idcs_access_token, defined_tags, freeform_tags, update_channel, kms_key_id, domain_id, admin_user, feature_bundle, network_endpoint_details_whitelisted_ips, network_endpoint_details_whitelisted_vcns, network_endpoint_details_whitelisted_services):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -596,6 +605,9 @@ def create_analytics_instance_public_endpoint_details(ctx, from_json, wait_for_s
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if update_channel is not None:
+        _details['updateChannel'] = update_channel
 
     if kms_key_id is not None:
         _details['kmsKeyId'] = kms_key_id
@@ -1621,6 +1633,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--update-channel', type=custom_types.CliCaseInsensitiveChoice(["REGULAR", "EARLY", "PHASE_2", "PHASE_1"]), help=u"""Analytics instance update channel.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "INACTIVE", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1631,7 +1644,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'analytics', 'class': 'dict(str, string)'}}, output_type={'module': 'analytics', 'class': 'AnalyticsInstance'})
 @cli_util.wrap_exceptions
-def update_analytics_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, description, email_notification, license_type, defined_tags, freeform_tags, if_match):
+def update_analytics_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, analytics_instance_id, description, email_notification, license_type, defined_tags, freeform_tags, update_channel, if_match):
 
     if isinstance(analytics_instance_id, six.string_types) and len(analytics_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --analytics-instance-id cannot be whitespace or empty string')
@@ -1661,6 +1674,9 @@ def update_analytics_instance(ctx, from_json, force, wait_for_state, max_wait_se
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if update_channel is not None:
+        _details['updateChannel'] = update_channel
 
     client = cli_util.build_client('analytics', 'analytics', ctx)
     result = client.update_analytics_instance(

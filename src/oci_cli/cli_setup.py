@@ -797,7 +797,7 @@ def validate_ocid(ocid, pattern):
 def validate_resource_ocid(ocid):
     # the link provided in the error message in the validate_ocid function is not applicable for general resource OCIDs
     # so, the validate_ocid function should not be used to validate general resource OCIDs since the link in the error message could be misleading
-    pattern = re.compile("^(ocid1.)([0-9a-zA-Z-_]+.)(oc[1-3].)([0-9a-zA-Z-_]*.)([0-9a-zA-Z-_]+)$")
+    pattern = re.compile("^(ocid1.)([0-9a-zA-Z-_]+.)(oc[1-9][0-9]?.)([0-9a-zA-Z-_]*.)([0-9a-zA-Z-_]+)$")
     if not pattern.match(ocid):
         raise click.BadParameter("Invalid OCID format. OCID syntax can be found here: https://docs.oracle.com/en-us/iaas/Content/General/Concepts/identifiers.htm#Oracle")
 

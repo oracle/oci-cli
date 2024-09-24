@@ -6,6 +6,134 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.48.1 - 2024-09-24
+--------------------
+Added
+~~~~~
+* Generative AI Agent service
+
+  * Generative AI Agent Service Public Release in OCI CLI
+
+    * ``oci generative-ai-agent agent change-compartment``
+    * ``oci generative-ai-agent agent create``
+    * ``oci generative-ai-agent agent delete``
+    * ``oci generative-ai-agent agent get``
+    * ``oci generative-ai-agent agent list``
+    * ``oci generative-ai-agent agent update``
+    * ``oci generative-ai-agent agent-endpoint change-compartment``
+    * ``oci generative-ai-agent agent-endpoint create``
+    * ``oci generative-ai-agent agent-endpoint delete``
+    * ``oci generative-ai-agent agent-endpoint get``
+    * ``oci generative-ai-agent agent-endpoint list``
+    * ``oci generative-ai-agent agent-endpoint update``
+    * ``oci generative-ai-agent data-ingestion-job create``
+    * ``oci generative-ai-agent data-ingestion-job delete``
+    * ``oci generative-ai-agent data-ingestion-job get``
+    * ``oci generative-ai-agent data-ingestion-job get-data-ingestion-job-log-content``
+    * ``oci generative-ai-agent data-ingestion-job list``
+    * ``oci generative-ai-agent data-source create``
+    * ``oci generative-ai-agent data-source create-data-source-oci-object-storage-data-source-config``
+    * ``oci generative-ai-agent data-source delete``
+    * ``oci generative-ai-agent data-source get``
+    * ``oci generative-ai-agent data-source list``
+    * ``oci generative-ai-agent data-source update``
+    * ``oci generative-ai-agent data-source update-data-source-oci-object-storage-data-source-config``
+    * ``oci generative-ai-agent knowledge-base change-compartment``
+    * ``oci generative-ai-agent knowledge-base create``
+    * ``oci generative-ai-agent knowledge-base create-knowledge-base-default-index-config``
+    * ``oci generative-ai-agent knowledge-base create-knowledge-base-oci-database-config``
+    * ``oci generative-ai-agent knowledge-base create-knowledge-base-oci-open-search-index-config``
+    * ``oci generative-ai-agent knowledge-base delete``
+    * ``oci generative-ai-agent knowledge-base get``
+    * ``oci generative-ai-agent knowledge-base list``
+    * ``oci generative-ai-agent knowledge-base update``
+    * ``oci generative-ai-agent knowledge-base update-knowledge-base-default-index-config``
+    * ``oci generative-ai-agent knowledge-base update-knowledge-base-oci-database-config``
+    * ``oci generative-ai-agent knowledge-base update-knowledge-base-oci-open-search-index-config``
+    * ``oci generative-ai-agent work-request cancel``
+    * ``oci generative-ai-agent work-request get``
+    * ``oci generative-ai-agent work-request list``
+    * ``oci generative-ai-agent work-request-error list``
+    * ``oci generative-ai-agent work-request-log-entry list-work-request-logs``
+
+* Generative AI Agent Client service
+
+  * Generative AI Agent Client Service Public Release in OCI CLI
+
+    * ``oci generative-ai-agent-runtime session chat``
+    * ``oci generative-ai-agent-runtime session create``
+    * ``oci generative-ai-agent-runtime session delete``
+    * ``oci generative-ai-agent-runtime session get``
+    * ``oci generative-ai-agent-runtime session update``
+
+* Monitoring service
+
+  * Support for new optional parameters in the alarm-suppression and alarm-suppression-collection commands
+
+    * ``oci monitoring alarm-suppression create --level --suppression-conditions``
+    * ``oci monitoring alarm-suppression-collection list-alarm-suppressions --compartment-id --compartment-id-in-subtree --level --target-type --is-all-suppressions``
+
+* Ops Insights service
+
+  * Support for ExaCC via Management agent
+
+    * ``oci opsi database-insights change-macs-managed-cloud-database-insight-connection-credential-by-vault``
+    * ``oci opsi database-insights create-macs-managed-cloud-database-insight``
+    * ``oci opsi database-insights enable-macs-managed-cloud-database-insight``
+    * ``oci opsi database-insights test-macs-managed-cloud-database-insight-connection-credential-by-vault``
+    * ``oci opsi database-insights update-macs-managed-cloud-database-insight``
+    * ``oci opsi exadata-insights add-macs-managed-cloud-exadata-insight-members``
+    * ``oci opsi exadata-insights create-macs-managed-cloud-exadata-insight``
+    * ``oci opsi exadata-insights enable-macs-managed-cloud-exadata-insight``
+    * ``oci opsi exadata-insights update-macs-managed-cloud-exadata-insight``
+    * ``oci opsi host-insights update-macs-managed-database-host-insight``
+
+* Fusion service
+
+  * Support for optional parameter --is-data-masking-opted in create-refresh-activity
+
+    * ``oci fusion-apps create-refresh-activity-details create-refresh-activity --is-data-masking-opted``
+
+* Integration service
+
+  * Support for OIC Gen3 configure custom endpoint
+
+    * ``oci integration integration-instance --add-oracle-managed-custom-endpoint``
+    * ``oci integration integration-instance remove``
+
+* Database service
+
+  * Support for assigning key versions for the database and pluggable database
+
+    * ``oci db database set-oci-db-key-version --database-id --kms-key-version-id``
+    * ``oci db pluggable-database set-oci-pdb-key-version --pluggable-database-id --kms-key-version-id``
+
+  * Support for listing autonomous database with lifecyclestate
+
+    * ``oci db autonomous-database list --lifecycle-state-not-equal-to``
+
+  * Support for undelete autonomous database
+
+    * ``oci db autonomous-database create-autonomous-database-undelete-autonomous-database-details``
+
+* Analytics service
+
+  * Support for opting for different update channel schedules, "regular" or "early"
+
+    * ``oci analytics analytics-instance create --update-channel regular``
+    * ``oci analytics analytics-instance update --update-channel early``
+
+* Data Safe service
+
+  * Support for appending and deleting allowed SQLs from SQL Firewall policy
+
+    * ``oci data-safe sql-firewall-allowed-sql get--sql-firewall-allowed-sql-id``
+    * ``oci data-safe sql-firewall-allowed-sql delete --sql-firewall-allowed-sql-id``
+    * ``oci data-safe sql-firewall-allowed-sql bulk-create-sql-firewall-allowed-sqls-list-selection-mode--log-type``
+    * ``oci data-safe sql-firewall-allowed-sql bulk-create --log-type --selection —sql-firewall-policy-id``
+    * ``oci data-safe sql-firewall-allowed-sql bulk-create-sql-firewall-allowed-sqls-list-selection-mode --log-type, --selection-items, --sql-firewall-policy-id``
+    * ``oci data-safe sql-firewall-allowed-sql bulk-create-sql-firewall-allowed-sqls-scim-query-selection-mode --log-type, --selection-scim-query, --sql-firewall-policy-id``
+
 3.48.0 - 2024-09-17
 --------------------
 Added

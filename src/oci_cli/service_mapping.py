@@ -323,6 +323,16 @@ service_mapping = {
         "Generative AI Service Management",
         "Others"
     ],
+    "generative-ai-agent": [
+        "generative_ai_agent",
+        "Generative AI Agents Management",
+        "Others"
+    ],
+    "generative-ai-agent-runtime": [
+        "generative_ai_agent_runtime",
+        "Generative AI Agents Client",
+        "Others"
+    ],
     "generative-ai-inference": [
         "generative_ai_inference",
         "Generative AI Service Inference",
