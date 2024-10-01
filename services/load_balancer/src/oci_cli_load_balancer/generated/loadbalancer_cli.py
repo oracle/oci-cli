@@ -895,18 +895,21 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--zpr-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Extended Defined tags for ZPR for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\":\"42\",\"mode\":\"audit\", \"usagetype\" : \"zpr\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--rule-sets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON dictionary of type dict(str, RuleSetDetails).  For documentation on RuleSetDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/RuleSetDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'shape-details': {'module': 'load_balancer', 'class': 'ShapeDetails'}, 'reserved-ips': {'module': 'load_balancer', 'class': 'list[ReservedIP]'}, 'listeners': {'module': 'load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'hostnames': {'module': 'load_balancer', 'class': 'dict(str, HostnameDetails)'}, 'backend-sets': {'module': 'load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'network-security-group-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'subnet-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'certificates': {'module': 'load_balancer', 'class': 'dict(str, CertificateDetails)'}, 'ssl-cipher-suites': {'module': 'load_balancer', 'class': 'dict(str, SSLCipherSuiteDetails)'}, 'path-route-sets': {'module': 'load_balancer', 'class': 'dict(str, PathRouteSetDetails)'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'rule-sets': {'module': 'load_balancer', 'class': 'dict(str, RuleSetDetails)'}})
+@json_skeleton_utils.get_cli_json_input_option({'shape-details': {'module': 'load_balancer', 'class': 'ShapeDetails'}, 'reserved-ips': {'module': 'load_balancer', 'class': 'list[ReservedIP]'}, 'listeners': {'module': 'load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'hostnames': {'module': 'load_balancer', 'class': 'dict(str, HostnameDetails)'}, 'backend-sets': {'module': 'load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'network-security-group-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'subnet-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'certificates': {'module': 'load_balancer', 'class': 'dict(str, CertificateDetails)'}, 'ssl-cipher-suites': {'module': 'load_balancer', 'class': 'dict(str, SSLCipherSuiteDetails)'}, 'path-route-sets': {'module': 'load_balancer', 'class': 'dict(str, PathRouteSetDetails)'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'zpr-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'rule-sets': {'module': 'load_balancer', 'class': 'dict(str, RuleSetDetails)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-details': {'module': 'load_balancer', 'class': 'ShapeDetails'}, 'reserved-ips': {'module': 'load_balancer', 'class': 'list[ReservedIP]'}, 'listeners': {'module': 'load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'hostnames': {'module': 'load_balancer', 'class': 'dict(str, HostnameDetails)'}, 'backend-sets': {'module': 'load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'network-security-group-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'subnet-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'certificates': {'module': 'load_balancer', 'class': 'dict(str, CertificateDetails)'}, 'ssl-cipher-suites': {'module': 'load_balancer', 'class': 'dict(str, SSLCipherSuiteDetails)'}, 'path-route-sets': {'module': 'load_balancer', 'class': 'dict(str, PathRouteSetDetails)'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'rule-sets': {'module': 'load_balancer', 'class': 'dict(str, RuleSetDetails)'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-details': {'module': 'load_balancer', 'class': 'ShapeDetails'}, 'reserved-ips': {'module': 'load_balancer', 'class': 'list[ReservedIP]'}, 'listeners': {'module': 'load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'hostnames': {'module': 'load_balancer', 'class': 'dict(str, HostnameDetails)'}, 'backend-sets': {'module': 'load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'network-security-group-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'subnet-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'certificates': {'module': 'load_balancer', 'class': 'dict(str, CertificateDetails)'}, 'ssl-cipher-suites': {'module': 'load_balancer', 'class': 'dict(str, SSLCipherSuiteDetails)'}, 'path-route-sets': {'module': 'load_balancer', 'class': 'dict(str, PathRouteSetDetails)'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'zpr-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'rule-sets': {'module': 'load_balancer', 'class': 'dict(str, RuleSetDetails)'}})
 @cli_util.wrap_exceptions
-def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape_name, subnet_ids, shape_details, is_private, is_delete_protection_enabled, ip_mode, is_request_id_enabled, request_id_header, reserved_ips, listeners, hostnames, backend_sets, network_security_group_ids, certificates, ssl_cipher_suites, path_route_sets, freeform_tags, defined_tags, rule_sets):
+def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape_name, subnet_ids, shape_details, is_private, is_delete_protection_enabled, ip_mode, is_request_id_enabled, request_id_header, reserved_ips, listeners, hostnames, backend_sets, network_security_group_ids, certificates, ssl_cipher_suites, path_route_sets, freeform_tags, defined_tags, zpr_tags, rule_sets):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -964,6 +967,9 @@ def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if zpr_tags is not None:
+        _details['zprTags'] = cli_util.parse_json_parameter("zpr_tags", zpr_tags)
 
     if rule_sets is not None:
         _details['ruleSets'] = cli_util.parse_json_parameter("rule_sets", rule_sets)
@@ -3714,6 +3720,9 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--zpr-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Extended Defined tags for ZPR for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\":\"42\",\"mode\":\"audit\", \"usagetype\" : \"zpr\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
 
 For example, the eTag returned by getListener can be specified as the ifMatch for updateRuleSets.
@@ -3725,18 +3734,18 @@ Example: `example-etag`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'zpr-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'zpr-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, display_name, is_delete_protection_enabled, is_request_id_enabled, request_id_header, freeform_tags, defined_tags, if_match):
+def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, display_name, is_delete_protection_enabled, is_request_id_enabled, request_id_header, freeform_tags, defined_tags, zpr_tags, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or zpr_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and zpr-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -3763,6 +3772,9 @@ def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if zpr_tags is not None:
+        _details['zprTags'] = cli_util.parse_json_parameter("zpr_tags", zpr_tags)
 
     client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.update_load_balancer(

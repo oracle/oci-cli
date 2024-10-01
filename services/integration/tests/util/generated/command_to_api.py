@@ -8,6 +8,7 @@ SDK_client_map = {
     "integration.change_private_endpoint_outbound_connection": "oci.integration.IntegrationInstanceClient.change_private_endpoint_outbound_connection",
     "integration.create_integration_instance": "oci.integration.IntegrationInstanceClient.create_integration_instance",
     "integration.delete_integration_instance": "oci.integration.IntegrationInstanceClient.delete_integration_instance",
+    "integration.disaster_recovery_failover": "oci.integration.IntegrationInstanceClient.disaster_recovery_failover",
     "integration.enable_process_automation": "oci.integration.IntegrationInstanceClient.enable_process_automation",
     "integration.extend_data_retention": "oci.integration.IntegrationInstanceClient.extend_data_retention",
     "integration.get_integration_instance": "oci.integration.IntegrationInstanceClient.get_integration_instance",

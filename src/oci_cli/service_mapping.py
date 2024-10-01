@@ -638,6 +638,11 @@ service_mapping = {
         "Vault Secret Retrieval",
         "Others"
     ],
+    "security-attribute": [
+        "security_attribute",
+        "Security Attribute",
+        "Identity & Security"
+    ],
     "service-catalog": [
         "service_catalog",
         "Service Catalog",
@@ -732,5 +737,10 @@ service_mapping = {
         "work_requests",
         "Work Requests",
         "Governance & Administration"
+    ],
+    "zpr": [
+        "zpr",
+        "Zero Trust Packet Routing",
+        "Identity & Security"
     ]
 }

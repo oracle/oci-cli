@@ -6,6 +6,92 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.48.2 - 2024-10-01
+--------------------
+Added
+~~~~~
+* Support for Security Attribute Service
+
+  * ``oci security-attribute security-attribute bulk-delete``
+  * ``oci security-attribute security-attribute bulk-edit``
+  * ``oci security-attribute security-attribute create``
+  * ``oci security-attribute security-attribute delete``
+  * ``oci security-attribute security-attribute get``
+  * ``oci security-attribute security-attribute list``
+  * ``oci security-attribute security-attribute update``
+  * ``oci security-attribute security-attribute-namespace cascade-delete``
+  * ``oci security-attribute security-attribute-namespace change-compartment``
+  * ``oci security-attribute security-attribute-namespace create``
+  * ``oci security-attribute security-attribute-namespace delete``
+  * ``oci security-attribute security-attribute-namespace get``
+  * ``oci security-attribute security-attribute-namespace list``
+  * ``oci security-attribute security-attribute-namespace update``
+  * ``oci security-attribute work-request get``
+  * ``oci security-attribute work-request list``
+  * ``oci security-attribute work-request list-errors``
+  * ``oci security-attribute work-request list-logs``
+
+* Support for Zero Trust Packet Routing Service
+
+  * ``oci zpr configuration create``
+  * ``oci zpr configuration get``
+  * ``oci zpr work-request get-zpr-configuration``
+  * ``oci zpr work-request get-zpr-policy``
+  * ``oci zpr work-request list-zpr-configuration``
+  * ``oci zpr work-request list-zpr-configuration-errors``
+  * ``oci zpr work-request list-zpr-configuration-logs``
+  * ``oci zpr work-request list-zpr-policy``
+  * ``oci zpr work-request list-zpr-policy-errors``
+  * ``oci zpr work-request list-zpr-policy-logs``
+  * ``oci zpr zpr-policy create``
+  * ``oci zpr zpr-policy delete``
+  * ``oci zpr zpr-policy get``
+  * ``oci zpr zpr-policy list``
+  * ``oci zpr zpr-policy update``
+
+* Support for securityAttributes feature for Network Load Balancer Service
+
+  * ``oci nlb network-load-balancer create --security-attributes``
+  * ``oci nlb network-load-balancer update --security-attributes``
+
+* Support for OIC Gen3 Disaster Recovery for OIC Gen3 Disaster Recovery Service
+
+  * ``oci integration integration-instance create --is-disaster-recovery-enabled``
+  * ``oci integration integration-instance disaster-recovery-failover --integration-instance-id, -? | -h | --help``
+
+* Support for Zero-Trust Packet Routing v1 securityAttributes for Core Service
+
+  * ``oci network vcn update --security-attributes``
+  * ``oci network vcn create --security-attributes``
+  * ``oci network vnic update --security-attributes``
+
+* Support for Zero-Trust Packet Routing v1 securityAttributes for Database Service
+
+  * ``oci db autonomous-database create``
+  * ``oci db autonomous-database create-adb-cross-region-data-guard-details``
+  * ``oci db autonomous-database create-autonomous-database-create-cross-region-disaster-recovery-details``
+  * ``oci db autonomous-database create-cross-tenancy-disaster-recovery-details``
+  * ``oci db autonomous-database create-from-backup-id``
+  * ``oci db autonomous-database create-from-backup-timestamp``
+  * ``oci db autonomous-database create-from-clone``
+  * ``oci db autonomous-database create-refreshable-clone``
+  * ``oci db autonomous-database update``
+  * ``oci db cloud-autonomous-vm-cluster create``
+  * ``oci db cloud-autonomous-vm-cluster update``
+  * ``oci db cloud-vm-cluster create``
+  * ``oci db cloud-vm-cluster update``
+  * ``oci db exadb-vm-cluster create``
+  * ``oci db exadb-vm-cluster update``
+  * ``oci db system launch``
+  * ``oci db system launch-from-backup``
+  * ``oci db system launch-from-database``
+  * ``oci db system launch-from-db-system``
+  * ``oci db system update``
+
+* Support to read ssh-key from a file located on the local filesystem for database-migration create-oracle-connection command in the Database Migration Service
+
+  * ``oci database-migration connection create-oracle-connection --sshkey-file``
+
 3.48.1 - 2024-09-24
 --------------------
 Added
