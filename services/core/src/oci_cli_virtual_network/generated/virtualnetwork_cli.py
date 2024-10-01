@@ -516,7 +516,7 @@ def drg_route_distribution_group():
     pass
 
 
-@click.command(cli_util.override('virtual_network.service_gateway_group.command_name', 'service-gateway'), cls=CommandGroupWithAlias, help="""Represents a router that lets your VCN privately access specific Oracle services such as Object Storage without exposing the VCN to the public internet. Traffic leaving the VCN and destined for a supported Oracle service (see [ListServices]) is routed through the service gateway and does not traverse the internet. The instances in the VCN do not need to have public IP addresses nor be in a public subnet. The VCN does not need an internet gateway for this traffic. For more information, see [Access to Oracle Services: Service Gateway].
+@click.command(cli_util.override('virtual_network.service_gateway_group.command_name', 'service-gateway'), cls=CommandGroupWithAlias, help="""Represents a router that lets your VCN privately access specific Oracle services such as Object Storage without exposing the VCN to the public internet. Traffic leaving the VCN and destined for a supported Oracle service (use the [ListServices] operation to find available service CIDR labels) is routed through the service gateway and does not traverse the internet. The instances in the VCN do not need to have public IP addresses nor be in a public subnet. The VCN does not need an internet gateway for this traffic. For more information, see [Access to Oracle Services: Service Gateway].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -838,9 +838,9 @@ def add_ipv6_vcn_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@security_rule_group.command(name=cli_util.override('virtual_network.add_network_security_group_security_rules.command_name', 'add'), help=u"""Adds one or more security rules to the specified network security group. \n[Command Reference](addNetworkSecurityGroupSecurityRules)""")
+@security_rule_group.command(name=cli_util.override('virtual_network.add_network_security_group_security_rules.command_name', 'add'), help=u"""Adds up to 25 security rules to the specified network security group. Adding more than 25 rules requires multiple operations. \n[Command Reference](addNetworkSecurityGroupSecurityRules)""")
 @cli_util.option('--network-security-group-id', required=True, help=u"""The [OCID] of the network security group.""")
-@cli_util.option('--security-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The NSG security rules to add.
+@cli_util.option('--security-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of security rules to add to the NSG. You can add up to 25 rules in a single `AddNetworkSecurityGroupSecurityRules` operation. Adding more than 25 rules requires multiple operations.
 
 This option is a JSON list with items of type AddSecurityRuleDetails.  For documentation on AddSecurityRuleDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AddSecurityRuleDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'security-rules': {'module': 'core', 'class': 'list[AddSecurityRuleDetails]'}})
@@ -3862,8 +3862,10 @@ def create_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 For the purposes of access control, you must provide the [OCID] of the compartment where you want the service gateway to reside. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
-You may optionally specify a *display name* for the service gateway, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createServiceGateway)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  of the compartment to contain the service gateway.""")
+You may optionally specify a *display name* for the service gateway, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.
+
+Use the [ListServices] operation to find service CIDR labels available in the region. \n[Command Reference](createServiceGateway)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to contain the service gateway.""")
 @cli_util.option('--services', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of the OCIDs of the [Service] objects to enable for the service gateway. This list can be empty if you don't want to enable any `Service` objects when you create the gateway. You can enable a `Service` object later by using either [AttachServiceId] or [UpdateServiceGateway].
 
 For each enabled `Service`, make sure there's a route rule with the `Service` object's `cidrBlock` as the rule's destination and the service gateway as the rule's target. See [Route Table].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4129,18 +4131,21 @@ Example: `vcn1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. This is unique to ZPR, and helps identify which resources are allowed to be accessed by what permission controls.
+
+Example: `{\"Oracle-DataSecurity-ZPR\": {\"MaxEgressCount\": {\"value\":\"42\",\"mode\":\"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-ipv6-enabled', type=click.BOOL, help=u"""Whether IPv6 is enabled for the VCN. Default is `false`. If enabled, Oracle will assign the VCN a IPv6 /56 CIDR block. You may skip having Oracle allocate the VCN a IPv6 /56 CIDR block by setting isOracleGuaAllocationEnabled to `false`. For important details about IPv6 addressing in a VCN, see [IPv6 Addresses].
 
 Example: `true`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'cidr-blocks': {'module': 'core', 'class': 'list[string]'}, 'ipv6-private-cidr-blocks': {'module': 'core', 'class': 'list[string]'}, 'byoipv6-cidr-details': {'module': 'core', 'class': 'list[Byoipv6CidrDetails]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'cidr-blocks': {'module': 'core', 'class': 'list[string]'}, 'ipv6-private-cidr-blocks': {'module': 'core', 'class': 'list[string]'}, 'byoipv6-cidr-details': {'module': 'core', 'class': 'list[Byoipv6CidrDetails]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cidr-blocks': {'module': 'core', 'class': 'list[string]'}, 'ipv6-private-cidr-blocks': {'module': 'core', 'class': 'list[string]'}, 'byoipv6-cidr-details': {'module': 'core', 'class': 'list[Byoipv6CidrDetails]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Vcn'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cidr-blocks': {'module': 'core', 'class': 'list[string]'}, 'ipv6-private-cidr-blocks': {'module': 'core', 'class': 'list[string]'}, 'byoipv6-cidr-details': {'module': 'core', 'class': 'list[Byoipv6CidrDetails]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'core', 'class': 'Vcn'})
 @cli_util.wrap_exceptions
-def create_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cidr_block, cidr_blocks, ipv6_private_cidr_blocks, is_oracle_gua_allocation_enabled, byoipv6_cidr_details, defined_tags, display_name, dns_label, freeform_tags, is_ipv6_enabled):
+def create_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cidr_block, cidr_blocks, ipv6_private_cidr_blocks, is_oracle_gua_allocation_enabled, byoipv6_cidr_details, defined_tags, display_name, dns_label, freeform_tags, security_attributes, is_ipv6_enabled):
 
     kwargs = {}
 
@@ -4173,6 +4178,9 @@ def create_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     if is_ipv6_enabled is not None:
         _details['isIpv6Enabled'] = is_ipv6_enabled
@@ -8938,7 +8946,7 @@ def list_internet_gateways(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@vcn_group.command(name=cli_util.override('virtual_network.list_ip_inventory.command_name', 'list-ip-inventory'), help=u"""Lists the IP Inventory information in the selected compartments. \n[Command Reference](listIpInventory)""")
+@ip_inventory_collection_group.command(name=cli_util.override('virtual_network.list_ip_inventory.command_name', 'list-ip-inventory'), help=u"""Lists the IP Inventory information in the selected compartments. \n[Command Reference](listIpInventory)""")
 @cli_util.option('--region-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Lists the selected regions.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List the [OCID] of the compartments.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--override-filters', type=click.BOOL, help=u"""List of selected filters.""")
@@ -10274,7 +10282,7 @@ def list_virtual_circuit_associated_tunnels(ctx, from_json, all_pages, page_size
     cli_util.render_response(result, ctx)
 
 
-@virtual_circuit_bandwidth_shape_group.command(name=cli_util.override('virtual_network.list_virtual_circuit_bandwidth_shapes.command_name', 'list'), help=u"""The deprecated operation lists available bandwidth levels for virtual circuits. For the compartment ID, provide the [OCID] of your tenancy (the root compartment). \n[Command Reference](listVirtualCircuitBandwidthShapes)""")
+@virtual_circuit_bandwidth_shape_group.command(name=cli_util.override('virtual_network.list_virtual_circuit_bandwidth_shapes.command_name', 'list'), help=u"""The operation lists available bandwidth levels for virtual circuits. For the compartment ID, provide the [OCID] of your tenancy (the root compartment). \n[Command Reference](listVirtualCircuitBandwidthShapes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -13519,23 +13527,26 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. This is unique to ZPR, and helps identify which resources are allowed to be accessed by what permission controls.
+
+Example: `{\"Oracle-DataSecurity-ZPR\": {\"MaxEgressCount\": {\"value\":\"42\",\"mode\":\"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Vcn'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'core', 'class': 'Vcn'})
 @cli_util.wrap_exceptions
-def update_vcn(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vcn_id, defined_tags, display_name, freeform_tags, if_match):
+def update_vcn(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vcn_id, defined_tags, display_name, freeform_tags, security_attributes, if_match):
 
     if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or security_attributes:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and security-attributes will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -13552,6 +13563,9 @@ def update_vcn(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_vcn(
@@ -13833,6 +13847,9 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security Attributes for this resource. This is unique to ZPR, and helps identify which resources are allowed to be accessed by what permission controls.
+
+Example: `{\"Oracle-DataSecurity-ZPR\": {\"MaxEgressCount\": {\"value\":\"42\",\"mode\":\"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--hostname-label', help=u"""The hostname for the VNIC's primary private IP. Used for DNS. The value is the hostname portion of the primary private IP's fully qualified domain name (FQDN) (for example, `bminstance1` in FQDN `bminstance1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123]. The value appears in the `[Vnic]` object and also the [PrivateIp] object returned by [ListPrivateIps] and [GetPrivateIp].
 
 For more information, see [DNS in Your Virtual Cloud Network].""")
@@ -13849,18 +13866,18 @@ If the VNIC belongs to a VLAN as part of the Oracle Cloud VMware Solution (inste
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'Vnic'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'Vnic'})
 @cli_util.wrap_exceptions
-def update_vnic(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vnic_id, defined_tags, display_name, freeform_tags, hostname_label, nsg_ids, skip_source_dest_check, if_match):
+def update_vnic(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vnic_id, defined_tags, display_name, freeform_tags, security_attributes, hostname_label, nsg_ids, skip_source_dest_check, if_match):
 
     if isinstance(vnic_id, six.string_types) and len(vnic_id.strip()) == 0:
         raise click.UsageError('Parameter --vnic-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags or nsg_ids:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and nsg-ids will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or security_attributes or nsg_ids:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and security-attributes and nsg-ids will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -13877,6 +13894,9 @@ def update_vnic(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     if hostname_label is not None:
         _details['hostnameLabel'] = hostname_label

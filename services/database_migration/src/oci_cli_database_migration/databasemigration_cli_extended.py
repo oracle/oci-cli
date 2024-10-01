@@ -363,22 +363,22 @@ databasemigration_cli.connection_group.commands.pop(databasemigration_cli.update
 
 # oci database-migration connection create-oracle-connection --wallet --ssh-key
 @cli_util.copy_params_from_generated_command(databasemigration_cli.create_connection_create_oracle_connection_details, params_to_exclude=[])
-@databasemigration_cli.connection_group.command(name='create', help=databasemigration_cli.create_connection_create_oracle_connection_details.help)
+@databasemigration_cli.connection_group.command(name=cli_util.override('database_migration.create_connection_create_oracle_connection_details.command_name', 'create-connection-create-oracle-connection-details'), help=databasemigration_cli.create_connection_create_oracle_connection_details.help)
 @cli_util.option('--technology-type', type=custom_types.CliCaseInsensitiveChoice(["AMAZON_RDS_ORACLE", "OCI_AUTONOMOUS_DATABASE", "ORACLE_DATABASE", "ORACLE_EXADATA"]), help="""The Oracle technology type. This value can only be specified for manual connections.""")
 @cli_util.option('--wallet', type=click.File('r'), help=u"""cwallet.sso fle path containing containing the TCPS/SSL certificate; base64 encoded String. Not required for source container database connections.""")
 @cli_util.option('--sshkey-file', type=click.File('r'), help=u""" Private ssh key file.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_migration', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_oracle_connection(ctx, **kwargs):
+def create_connection_create_oracle_connection_details_extended(ctx, **kwargs):
 
     # create_oracle_connection read --ssh-key using --ssh-key-file
     if 'sshkey_file' in kwargs and kwargs['sshkey_file'] is not None:
-        if kwargs.get('sshkey') and kwargs.get('sshkey_file') is not None:
+        if kwargs.get('ssh_key') and kwargs.get('sshkey_file') is not None:
             raise cli_exceptions.RequiredValueNotInDefaultOrUserInputError('Cannot specify both --sshkey-file and --ssh-key.')
         sshkey_file = kwargs.get('sshkey_file')
         if sshkey_file:
-            kwargs['sshkey'] = sshkey_file.read()
+            kwargs['ssh_key'] = sshkey_file.read()
     kwargs.pop('sshkey_file')
 
     # create_connection read --tls-wallet using --tls-wallet-file
@@ -388,7 +388,6 @@ def create_oracle_connection(ctx, **kwargs):
     tls_wallet_file = kwargs.get('tls_wallet_file')
     if tls_wallet_file:
         kwargs['tls_wallet'] = tls_wallet_file.read()
+        kwargs.pop('tls_wallet_file')
 
-    kwargs.pop('tls_wallet_file')
-
-    ctx.invoke(databasemigration_cli.create_connection, **kwargs)
+    ctx.invoke(databasemigration_cli.create_connection_create_oracle_connection_details, **kwargs)
