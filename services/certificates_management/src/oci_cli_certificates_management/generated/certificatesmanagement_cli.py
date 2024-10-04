@@ -1722,13 +1722,14 @@ def schedule_certificate_authority_version_deletion(ctx, from_json, certificate_
 @certificate_group.command(name=cli_util.override('certs_mgmt.schedule_certificate_deletion.command_name', 'schedule-certificate-deletion'), help=u"""Schedules the deletion of the specified certificate. This sets the lifecycle state of the certificate to `PENDING_DELETION` and then deletes it after the specified retention period ends. You can subsequently use `GetCertificate` to determine the current deletion status. \n[Command Reference](scheduleCertificateDeletion)""")
 @cli_util.option('--certificate-id', required=True, help=u"""The OCID of the certificate.""")
 @cli_util.option('--time-of-deletion', type=custom_types.CLI_DATETIME, help=u"""An optional property indicating when to delete the certificate version, expressed in [RFC 3339] timestamp format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--asap', required=False, is_flag=True, help=u"""Requests deletion of the certificate as soon aa possible (ASAP)""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def schedule_certificate_deletion(ctx, from_json, certificate_id, time_of_deletion, if_match):
+def schedule_certificate_deletion(ctx, from_json, certificate_id, time_of_deletion, asap, if_match):
 
     if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
@@ -1742,6 +1743,12 @@ def schedule_certificate_deletion(ctx, from_json, certificate_id, time_of_deleti
 
     if time_of_deletion is not None:
         _details['timeOfDeletion'] = time_of_deletion
+
+    if asap is not None and asap == True:
+      from datetime import datetime, timedelta
+      at = datetime.now() + timedelta(days=7, minutes=5)
+      # _details['timeOfDeletion'] = at.isoformat() + "Z"
+      _details['timeOfDeletion'] = at.strftime('%Y-%m-%dT%H:%M:%S.000Z')
 
     client = cli_util.build_client('certificates_management', 'certificates_management', ctx)
     result = client.schedule_certificate_deletion(
