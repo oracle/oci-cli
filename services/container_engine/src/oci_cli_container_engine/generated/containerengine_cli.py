@@ -16,9 +16,9 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('ce.ce_root_group.command_name', 'ce'), cls=CommandGroupWithAlias, help=cli_util.override('ce.ce_root_group.help', """API for the Container Engine for Kubernetes service. Use this API to build, deploy,
+@cli.command(cli_util.override('ce.ce_root_group.command_name', 'ce'), cls=CommandGroupWithAlias, help=cli_util.override('ce.ce_root_group.help', """API for the Kubernetes Engine service (also known as the Container Engine for Kubernetes service). Use this API to build, deploy,
 and manage cloud-native applications. For more information, see
-[Overview of Container Engine for Kubernetes]."""), short_help=cli_util.override('ce.ce_root_group.short_help', """Container Engine for Kubernetes API"""))
+[Overview of Kubernetes Engine]."""), short_help=cli_util.override('ce.ce_root_group.short_help', """Kubernetes Engine API"""))
 @cli_util.help_option_group
 def ce_root_group():
     pass
@@ -72,12 +72,6 @@ def cluster_migrate_to_native_vcn_status_group():
     pass
 
 
-@click.command(cli_util.override('ce.workload_mapping_summary_group.command_name', 'workload-mapping-summary'), cls=CommandGroupWithAlias, help="""The properties that define an workloadMapping summary.""")
-@cli_util.help_option_group
-def workload_mapping_summary_group():
-    pass
-
-
 @click.command(cli_util.override('ce.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""Errors related to a specific work request.""")
 @cli_util.help_option_group
 def work_request_error_group():
@@ -116,7 +110,6 @@ ce_root_group.add_command(addon_option_group)
 ce_root_group.add_command(work_request_log_entry_group)
 ce_root_group.add_command(work_request_group)
 ce_root_group.add_command(cluster_migrate_to_native_vcn_status_group)
-ce_root_group.add_command(workload_mapping_summary_group)
 ce_root_group.add_command(work_request_error_group)
 ce_root_group.add_command(workload_mapping_group)
 ce_root_group.add_command(node_pool_options_group)
@@ -987,8 +980,8 @@ def delete_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @virtual_node_pool_group.command(name=cli_util.override('ce.delete_virtual_node_pool.command_name', 'delete'), help=u"""Delete a virtual node pool. \n[Command Reference](deleteVirtualNodePool)""")
 @cli_util.option('--virtual-node-pool-id', required=True, help=u"""The OCID of the virtual node pool.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--override-eviction-grace-duration-vnp', help=u"""Duration after which Sk8s will give up eviction of the pods on the node. PT0M will indicate you want to delete the virtual node without cordon and drain. Default PT60M, Min PT0M, Max: PT60M. Format ISO 8601 e.g PT30M""")
-@cli_util.option('--is-force-deletion-after-override-grace-duration-vnp', type=click.BOOL, help=u"""If the underlying compute instance should be deleted if you cannot evict all the pods in grace period""")
+@cli_util.option('--override-eviction-grace-duration-vnp', help=u"""Duration after which SKE will give up eviction of the pods on the node. PT0M will indicate you want to delete the virtual node without cordon and drain. Default PT60M, Min PT0M, Max: PT60M. Format ISO 8601 e.g PT30M""")
+@cli_util.option('--is-force-deletion-after-override-grace-duration-vnp', type=click.BOOL, help=u"""If the underlying virtual node should be force deleted if all the pods are not evicted in the evictionGraceDuration.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1616,7 +1609,7 @@ def list_addons(ctx, from_json, all_pages, page_size, cluster_id, limit, page, s
 
 @cluster_group.command(name=cli_util.override('ce.list_clusters.command_name', 'list'), help=u"""List all the cluster objects in a compartment. \n[Command Reference](listClusters)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "DELETING", "DELETED", "UPDATING"]), multiple=True, help=u"""A cluster lifecycle state to filter on. Can have multiple parameters of this name.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "DELETING", "DELETED", "UPDATING"]), multiple=True, help=u"""A cluster lifecycle state to filter on. Can have multiple parameters of this name. For more information, see [Monitoring Clusters]""")
 @cli_util.option('--name', help=u"""The name to filter on.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1682,7 +1675,7 @@ def list_clusters(ctx, from_json, all_pages, page_size, compartment_id, lifecycl
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The optional order in which to sort the results.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["ID", "NAME", "TIME_CREATED"]), help=u"""The optional field to sort the results by.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["DELETED", "CREATING", "ACTIVE", "UPDATING", "DELETING", "FAILED", "INACTIVE", "NEEDS_ATTENTION"]), multiple=True, help=u"""A list of nodepool lifecycle states on which to filter on, matching any of the list items (OR logic). eg. [ACTIVE, DELETING]""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["DELETED", "CREATING", "ACTIVE", "UPDATING", "DELETING", "FAILED", "INACTIVE", "NEEDS_ATTENTION"]), multiple=True, help=u"""A list of nodepool lifecycle states on which to filter on, matching any of the list items (OR logic). eg. [ACTIVE, DELETING]. For more information, see [Monitoring Clusters]""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2038,7 +2031,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, clu
     cli_util.render_response(result, ctx)
 
 
-@workload_mapping_summary_group.command(name=cli_util.override('ce.list_workload_mappings.command_name', 'list-workload-mappings'), help=u"""List workloadMappings for a provisioned cluster. \n[Command Reference](listWorkloadMappings)""")
+@workload_mapping_group.command(name=cli_util.override('ce.list_workload_mappings.command_name', 'list'), help=u"""List workloadMappings for a provisioned cluster. \n[Command Reference](listWorkloadMappings)""")
 @cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -2097,7 +2090,7 @@ def list_workload_mappings(ctx, from_json, all_pages, page_size, cluster_id, lim
 
 @cluster_group.command(name=cli_util.override('ce.start_credential_rotation.command_name', 'start-credential-rotation'), help=u"""Start cluster credential rotation by adding new credentials, old credentials will still work after this operation. \n[Command Reference](startCredentialRotation)""")
 @cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster.""")
-@cli_util.option('--auto-completion-delay-duration', required=True, help=u"""The duration in days(in ISO 8601 notation eg. P5D) after which the old credentials should be retired. Maximum delay duration is 14 days.""")
+@cli_util.option('--auto-completion-delay-duration', required=True, help=u"""The duration in days(in ISO 8601 notation eg. P5D) after which the old credentials should be retired. Maximum delay duration is 90 days.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")

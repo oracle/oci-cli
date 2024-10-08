@@ -6,6 +6,71 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.49.0 - 2024-10-08
+--------------------
+Added
+~~~~~
+* Support for cloud automation tooling update window preference on ExaCC and ExaCS VM Clusters in the Database Service.
+
+  * ``oci db cloud-vm-cluster create``
+  * ``oci db cloud-vm-cluster update``
+  * ``oci db vm-cluster create``
+  * ``oci db vm-cluster update``
+
+* Support for proxy-protocol v2 on oci load balancers in Load Balancing Service
+
+  * ``oci lb load-balancer create``
+
+* Secure Desktops Service
+
+  * Support to create desktop pools with private access to the desktops
+
+    * ``oci desktops desktop-pool create --private-access-details``
+
+  * Support for Shape Flexibility
+
+    * ``oci desktops desktop-pool create --shape-config``
+
+  * Support for using Dedicated VM Host
+
+    * ``oci desktops desktop-pool create --use-dedicated-vm-host``
+
+  * Support for extended control over the desktop lifecycle
+
+     * ``oci desktops desktop-pool create --session-lifecycle-actions``
+
+Changed
+~~~~~~~
+* [BREAKING] Kubernetes Engine Service
+
+  * Command ``oci ce workload-mapping-summary list-workload-mappings`` has changed to ``oci ce workload-mapping list`` in the Kubernetes Engine Service
+
+    * ``oci ce workload-mapping list``
+
+  * The OKE service is renamed from "OCI Container Engine for Kubernetes" to "OCI Kubernetes Engine."
+
+* Upgraded the cryptography version to (>=3.2.1,<46.0.0)
+
+Fixed
+~~~~~
+* Github Issue #849(https://github.com/oracle/oci-cli/issues/849) for incorrect endpoint in Zero Trust Packet Routing Service is fixed now
+
+  * ``oci zpr configuration create``
+  * ``oci zpr configuration get``
+  * ``oci zpr work-request get-zpr-configuration``
+  * ``oci zpr work-request get-zpr-policy``
+  * ``oci zpr work-request list-zpr-configuration``
+  * ``oci zpr work-request list-zpr-configuration-errors``
+  * ``oci zpr work-request list-zpr-configuration-logs``
+  * ``oci zpr work-request list-zpr-policy``
+  * ``oci zpr work-request list-zpr-policy-errors``
+  * ``oci zpr work-request list-zpr-policy-logs``
+  * ``oci zpr zpr-policy create``
+  * ``oci zpr zpr-policy delete``
+  * ``oci zpr zpr-policy get``
+  * ``oci zpr zpr-policy list``
+  * ``oci zpr zpr-policy update``
+
 3.48.2 - 2024-10-01
 --------------------
 Added

@@ -125,7 +125,7 @@ service_mapping = {
     ],
     "ce": [
         "container_engine",
-        "Container Engine for Kubernetes",
+        "Kubernetes Engine",
         "Developer Services"
     ],
     "certificates": [
@@ -740,7 +740,7 @@ service_mapping = {
     ],
     "zpr": [
         "zpr",
-        "Zero Trust Packet Routing",
+        "Zero Trust Packet Routing Control Plane",
         "Identity & Security"
     ]
 }
