@@ -16,9 +16,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('zpr.zpr_root_group.command_name', 'zpr'), cls=CommandGroupWithAlias, help=cli_util.override('zpr.zpr_root_group.help', """Use the Zero Trust Packet Routing (ZPR) API to manage ZPR configuration and policy. See the [Zero Trust Packet Routing] documentation for more information.
-
-**Note:** For Zero Trust Packet Routing, you can perform Create, Update, and Delete operations only from the reporting region of your tenancy."""), short_help=cli_util.override('zpr.zpr_root_group.short_help', """Zero Trust Packet Routing API"""))
+@cli.command(cli_util.override('zpr.zpr_root_group.command_name', 'zpr'), cls=CommandGroupWithAlias, help=cli_util.override('zpr.zpr_root_group.help', """Use the Zero Trust Packet Routing Control Plane API to manage ZPR configuration and policy. See the [Zero Trust Packet Routing] documentation for more information."""), short_help=cli_util.override('zpr.zpr_root_group.short_help', """Zero Trust Packet Routing Control Plane API"""))
 @cli_util.help_option_group
 def zpr_root_group():
     pass
