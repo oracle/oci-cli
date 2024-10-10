@@ -6,6 +6,34 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.49.1 - 2024-10-10
+--------------------
+Added
+~~~~~
+* Ops Insights service
+
+  * Support for IAM credentials for ADBs
+
+    * ``oci opsi database-insights change-autonomous-database-insight-advanced-features-credential-by-iam``
+    * ``oci opsi database-insights change-macs-managed-cloud-database-insight-connection-credential-by-iam``
+    * ``oci opsi database-insights enable-autonomous-database-insight-advanced-features-credential-by-iam``
+    * ``oci opsi database-insights test-macs-managed-cloud-database-insight-connection-credential-by-iam``
+
+  * Support for public facing enable/disable APIs for ADBs
+
+    * ``oci opsi database-insights enable-autonomous-database``
+    * ``oci opsi database-insights create-autonomous-database``
+
+* Support for Maintenance Windows in Stack Monitoring Service
+
+  * ``oci stack-monitoring maintenance-window``
+
+Changed
+~~~~~~~
+* The password parameter is now optional for below command in the Fusion Application Service
+
+  * ``oci fusion-apps fusion-environment create-fusion-environment-admin-user``
+
 3.49.0 - 2024-10-08
 --------------------
 Added

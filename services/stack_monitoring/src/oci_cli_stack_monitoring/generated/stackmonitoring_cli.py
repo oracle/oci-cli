@@ -58,6 +58,12 @@ def baselineable_metric_group():
     pass
 
 
+@click.command(cli_util.override('stack_monitoring.maintenance_window_group.command_name', 'maintenance-window'), cls=CommandGroupWithAlias, help="""Maintenance Window object. It contains all the information of the Maintenance window. Used in the Create and Get operations.""")
+@cli_util.help_option_group
+def maintenance_window_group():
+    pass
+
+
 @click.command(cli_util.override('stack_monitoring.monitored_resource_type_group.command_name', 'monitored-resource-type'), cls=CommandGroupWithAlias, help="""The response object for create monitored resource type and get monitored resource type operations.""")
 @cli_util.help_option_group
 def monitored_resource_type_group():
@@ -126,6 +132,7 @@ stack_monitoring_root_group.add_command(monitored_resource_group)
 stack_monitoring_root_group.add_command(process_set_group)
 stack_monitoring_root_group.add_command(work_request_summary_collection_group)
 stack_monitoring_root_group.add_command(baselineable_metric_group)
+stack_monitoring_root_group.add_command(maintenance_window_group)
 stack_monitoring_root_group.add_command(monitored_resource_type_group)
 stack_monitoring_root_group.add_command(work_request_group)
 stack_monitoring_root_group.add_command(process_set_collection_group)
@@ -762,6 +769,219 @@ def create_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@maintenance_window_group.command(name=cli_util.override('stack_monitoring.create_maintenance_window.command_name', 'create'), help=u"""Creates a new Maintenance Window for the given resources. It will create also the Alarms Suppression for each alarm that the resource migth trigger. \n[Command Reference](createMaintenanceWindow)""")
+@cli_util.option('--name', required=True, help=u"""Maintenance Window name.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--resources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of resource Ids which are part of the Maintenance Window""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--schedule', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""Maintenance Window description.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'schedule': {'module': 'stack_monitoring', 'class': 'MaintenanceWindowSchedule'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'schedule': {'module': 'stack_monitoring', 'class': 'MaintenanceWindowSchedule'}}, output_type={'module': 'stack_monitoring', 'class': 'MaintenanceWindow'})
+@cli_util.wrap_exceptions
+def create_maintenance_window(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, resources, schedule, description):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['compartmentId'] = compartment_id
+    _details['resources'] = cli_util.parse_json_parameter("resources", resources)
+    _details['schedule'] = cli_util.parse_json_parameter("schedule", schedule)
+
+    if description is not None:
+        _details['description'] = description
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.create_maintenance_window(
+        create_maintenance_window_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@maintenance_window_group.command(name=cli_util.override('stack_monitoring.create_maintenance_window_recurrent_maintenance_window_schedule.command_name', 'create-maintenance-window-recurrent-maintenance-window-schedule'), help=u"""Creates a new Maintenance Window for the given resources. It will create also the Alarms Suppression for each alarm that the resource migth trigger. \n[Command Reference](createMaintenanceWindow)""")
+@cli_util.option('--name', required=True, help=u"""Maintenance Window name.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--resources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of resource Ids which are part of the Maintenance Window""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--schedule-maintenance-window-recurrences', required=True, help=u"""A RFC5545 formatted recurrence string which represents the Maintenance Window Recurrence. Please refer this for details:https://datatracker.ietf.org/doc/html/rfc5545#section-3.3.10 FREQ: Frequency of the Maintenance Window. The supported values are: DAILY and WEEKLY. BYDAY: Comma separated days for Weekly Maintenance Window. BYHOUR: Specifies the start hour of each recurrence after `timeMaintenanceWindowStart` value. BYMINUTE: Specifies the start minute of each reccurrence after `timeMaintenanceWindowStart` value. The default value is 00 BYSECOND: Specifies the start second of each reccurrence after `timeMaintenanceWindowStart` value. The default value is 00 Other Rules are not supported.""")
+@cli_util.option('--description', help=u"""Maintenance Window description.""")
+@cli_util.option('--schedule-time-maintenance-window-start', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--schedule-time-maintenance-window-end', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--schedule-maintenance-window-duration', help=u"""Duration time of each recurrence of each Maintenance Window. It must be specified as a string in ISO 8601 extended format.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}}, output_type={'module': 'stack_monitoring', 'class': 'MaintenanceWindow'})
+@cli_util.wrap_exceptions
+def create_maintenance_window_recurrent_maintenance_window_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, resources, schedule_maintenance_window_recurrences, description, schedule_time_maintenance_window_start, schedule_time_maintenance_window_end, schedule_maintenance_window_duration):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['schedule'] = {}
+    _details['name'] = name
+    _details['compartmentId'] = compartment_id
+    _details['resources'] = cli_util.parse_json_parameter("resources", resources)
+    _details['schedule']['maintenanceWindowRecurrences'] = schedule_maintenance_window_recurrences
+
+    if description is not None:
+        _details['description'] = description
+
+    if schedule_time_maintenance_window_start is not None:
+        _details['schedule']['timeMaintenanceWindowStart'] = schedule_time_maintenance_window_start
+
+    if schedule_time_maintenance_window_end is not None:
+        _details['schedule']['timeMaintenanceWindowEnd'] = schedule_time_maintenance_window_end
+
+    if schedule_maintenance_window_duration is not None:
+        _details['schedule']['maintenanceWindowDuration'] = schedule_maintenance_window_duration
+
+    _details['schedule']['scheduleType'] = 'RECURRENT'
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.create_maintenance_window(
+        create_maintenance_window_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@maintenance_window_group.command(name=cli_util.override('stack_monitoring.create_maintenance_window_one_time_maintenance_window_schedule.command_name', 'create-maintenance-window-one-time-maintenance-window-schedule'), help=u"""Creates a new Maintenance Window for the given resources. It will create also the Alarms Suppression for each alarm that the resource migth trigger. \n[Command Reference](createMaintenanceWindow)""")
+@cli_util.option('--name', required=True, help=u"""Maintenance Window name.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
+@cli_util.option('--resources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of resource Ids which are part of the Maintenance Window""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""Maintenance Window description.""")
+@cli_util.option('--schedule-time-maintenance-window-start', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--schedule-time-maintenance-window-end', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}}, output_type={'module': 'stack_monitoring', 'class': 'MaintenanceWindow'})
+@cli_util.wrap_exceptions
+def create_maintenance_window_one_time_maintenance_window_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, resources, description, schedule_time_maintenance_window_start, schedule_time_maintenance_window_end):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['schedule'] = {}
+    _details['name'] = name
+    _details['compartmentId'] = compartment_id
+    _details['resources'] = cli_util.parse_json_parameter("resources", resources)
+
+    if description is not None:
+        _details['description'] = description
+
+    if schedule_time_maintenance_window_start is not None:
+        _details['schedule']['timeMaintenanceWindowStart'] = schedule_time_maintenance_window_start
+
+    if schedule_time_maintenance_window_end is not None:
+        _details['schedule']['timeMaintenanceWindowEnd'] = schedule_time_maintenance_window_end
+
+    _details['schedule']['scheduleType'] = 'ONE_TIME'
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.create_maintenance_window(
+        create_maintenance_window_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -2244,6 +2464,62 @@ def delete_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
+@maintenance_window_group.command(name=cli_util.override('stack_monitoring.delete_maintenance_window.command_name', 'delete'), help=u"""Deletes a maintenance window by identifier \n[Command Reference](deleteMaintenanceWindow)""")
+@cli_util.option('--maintenance-window-id', required=True, help=u"""The [OCID] of maintenance window.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_maintenance_window(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, if_match):
+
+    if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
+        raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.delete_maintenance_window(
+        maintenance_window_id=maintenance_window_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @metric_extension_group.command(name=cli_util.override('stack_monitoring.delete_metric_extension.command_name', 'delete'), help=u"""Deletes a metric extension by identifier \n[Command Reference](deleteMetricExtension)""")
 @cli_util.option('--metric-extension-id', required=True, help=u"""The [OCID] of the metric extension resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2857,6 +3133,28 @@ def get_discovery_job(ctx, from_json, discovery_job_id):
     cli_util.render_response(result, ctx)
 
 
+@maintenance_window_group.command(name=cli_util.override('stack_monitoring.get_maintenance_window.command_name', 'get'), help=u"""Get maintenance window for the given identifier [OCID]. \n[Command Reference](getMaintenanceWindow)""")
+@cli_util.option('--maintenance-window-id', required=True, help=u"""The [OCID] of maintenance window.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'stack_monitoring', 'class': 'MaintenanceWindow'})
+@cli_util.wrap_exceptions
+def get_maintenance_window(ctx, from_json, maintenance_window_id):
+
+    if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
+        raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.get_maintenance_window(
+        maintenance_window_id=maintenance_window_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @metric_extension_group.command(name=cli_util.override('stack_monitoring.get_metric_extension.command_name', 'get'), help=u"""Gets a Metric Extension by identifier \n[Command Reference](getMetricExtension)""")
 @cli_util.option('--metric-extension-id', required=True, help=u"""The [OCID] of the metric extension resource.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3234,6 +3532,69 @@ def list_discovery_jobs(ctx, from_json, all_pages, page_size, compartment_id, na
         )
     else:
         result = client.list_discovery_jobs(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@maintenance_window_group.command(name=cli_util.override('stack_monitoring.list_maintenance_windows.command_name', 'list'), help=u"""Returns a list of maintenance windows. \n[Command Reference](listMaintenanceWindows)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which data is listed.""")
+@cli_util.option('--name', help=u"""A filter to return maintenance windows that match exact resource name.""")
+@cli_util.option('--lifecycle-details', type=custom_types.CliCaseInsensitiveChoice(["IN_PROGRESS", "SCHEDULED", "COMPLETED"]), help=u"""A filter to return maintenance windows with matching lifecycleDetails.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "INACTIVE", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only maintenance windows with matching lifecycleState.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "START_TIME", "END_TIME", "TIME_CREATED", "TIME_UPDATED"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for mainteance window name is ascending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'stack_monitoring', 'class': 'MaintenanceWindowCollection'})
+@cli_util.wrap_exceptions
+def list_maintenance_windows(ctx, from_json, all_pages, page_size, compartment_id, name, lifecycle_details, status, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if name is not None:
+        kwargs['name'] = name
+    if lifecycle_details is not None:
+        kwargs['lifecycle_details'] = lifecycle_details
+    if status is not None:
+        kwargs['status'] = status
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_maintenance_windows,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_maintenance_windows,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_maintenance_windows(
             compartment_id=compartment_id,
             **kwargs
         )
@@ -3859,6 +4220,61 @@ def request_monitored_resources_summarized_count(ctx, from_json, compartment_id,
     cli_util.render_response(result, ctx)
 
 
+@maintenance_window_group.command(name=cli_util.override('stack_monitoring.retry_failed_maintenance_window_operation.command_name', 'retry-failed-maintenance-window-operation'), help=u"""Retry the last failed operation. The operation failed will be the most recent one. It won't apply for previous failed operations. \n[Command Reference](retryFailedMaintenanceWindowOperation)""")
+@cli_util.option('--maintenance-window-id', required=True, help=u"""The [OCID] of maintenance window.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def retry_failed_maintenance_window_operation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, if_match):
+
+    if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
+        raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.retry_failed_maintenance_window_operation(
+        maintenance_window_id=maintenance_window_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.search_associated_resources.command_name', 'search-associated-resources'), help=u"""List all associated resources recursively up-to a specified level, for the monitored resources of type specified. \n[Command Reference](searchAssociatedResources)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--resource-type', help=u"""A filter to return associated resources that match resources of type. Either resourceId or resourceType should be provided.""")
@@ -4159,6 +4575,61 @@ def search_monitored_resources(ctx, from_json, compartment_id, compartment_ids, 
         search_monitored_resources_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@maintenance_window_group.command(name=cli_util.override('stack_monitoring.stop_maintenance_window.command_name', 'stop'), help=u"""Stop a maintenance window before the end time is reached. \n[Command Reference](stopMaintenanceWindow)""")
+@cli_util.option('--maintenance-window-id', required=True, help=u"""The [OCID] of maintenance window.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def stop_maintenance_window(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, if_match):
+
+    if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
+        raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.stop_maintenance_window(
+        maintenance_window_id=maintenance_window_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -4701,6 +5172,260 @@ def update_config_update_license_auto_assign_config_details(ctx, from_json, forc
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@maintenance_window_group.command(name=cli_util.override('stack_monitoring.update_maintenance_window.command_name', 'update'), help=u"""Update maintenance window by the given identifier [OCID]. \n[Command Reference](updateMaintenanceWindow)""")
+@cli_util.option('--maintenance-window-id', required=True, help=u"""The [OCID] of maintenance window.""")
+@cli_util.option('--description', help=u"""Maintenance Window description.""")
+@cli_util.option('--resources', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of resource Ids which are part of the Maintenance Window
+
+This option is a JSON list with items of type CreateMaintenanceWindowResourceDetails.  For documentation on CreateMaintenanceWindowResourceDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/CreateMaintenanceWindowResourceDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--schedule', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'schedule': {'module': 'stack_monitoring', 'class': 'MaintenanceWindowSchedule'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'schedule': {'module': 'stack_monitoring', 'class': 'MaintenanceWindowSchedule'}})
+@cli_util.wrap_exceptions
+def update_maintenance_window(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, description, resources, schedule, if_match):
+
+    if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
+        raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
+    if not force:
+        if resources or schedule:
+            if not click.confirm("WARNING: Updates to resources and schedule will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if resources is not None:
+        _details['resources'] = cli_util.parse_json_parameter("resources", resources)
+
+    if schedule is not None:
+        _details['schedule'] = cli_util.parse_json_parameter("schedule", schedule)
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.update_maintenance_window(
+        maintenance_window_id=maintenance_window_id,
+        update_maintenance_window_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@maintenance_window_group.command(name=cli_util.override('stack_monitoring.update_maintenance_window_recurrent_maintenance_window_schedule.command_name', 'update-maintenance-window-recurrent-maintenance-window-schedule'), help=u"""Update maintenance window by the given identifier [OCID]. \n[Command Reference](updateMaintenanceWindow)""")
+@cli_util.option('--maintenance-window-id', required=True, help=u"""The [OCID] of maintenance window.""")
+@cli_util.option('--schedule-maintenance-window-recurrences', required=True, help=u"""A RFC5545 formatted recurrence string which represents the Maintenance Window Recurrence. Please refer this for details:https://datatracker.ietf.org/doc/html/rfc5545#section-3.3.10 FREQ: Frequency of the Maintenance Window. The supported values are: DAILY and WEEKLY. BYDAY: Comma separated days for Weekly Maintenance Window. BYHOUR: Specifies the start hour of each recurrence after `timeMaintenanceWindowStart` value. BYMINUTE: Specifies the start minute of each reccurrence after `timeMaintenanceWindowStart` value. The default value is 00 BYSECOND: Specifies the start second of each reccurrence after `timeMaintenanceWindowStart` value. The default value is 00 Other Rules are not supported.""")
+@cli_util.option('--description', help=u"""Maintenance Window description.""")
+@cli_util.option('--resources', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of resource Ids which are part of the Maintenance Window
+
+This option is a JSON list with items of type CreateMaintenanceWindowResourceDetails.  For documentation on CreateMaintenanceWindowResourceDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/CreateMaintenanceWindowResourceDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--schedule-time-maintenance-window-start', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--schedule-time-maintenance-window-end', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--schedule-maintenance-window-duration', help=u"""Duration time of each recurrence of each Maintenance Window. It must be specified as a string in ISO 8601 extended format.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}})
+@cli_util.wrap_exceptions
+def update_maintenance_window_recurrent_maintenance_window_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, schedule_maintenance_window_recurrences, description, resources, if_match, schedule_time_maintenance_window_start, schedule_time_maintenance_window_end, schedule_maintenance_window_duration):
+
+    if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
+        raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
+    if not force:
+        if resources:
+            if not click.confirm("WARNING: Updates to resources will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['schedule'] = {}
+    _details['schedule']['maintenanceWindowRecurrences'] = schedule_maintenance_window_recurrences
+
+    if description is not None:
+        _details['description'] = description
+
+    if resources is not None:
+        _details['resources'] = cli_util.parse_json_parameter("resources", resources)
+
+    if schedule_time_maintenance_window_start is not None:
+        _details['schedule']['timeMaintenanceWindowStart'] = schedule_time_maintenance_window_start
+
+    if schedule_time_maintenance_window_end is not None:
+        _details['schedule']['timeMaintenanceWindowEnd'] = schedule_time_maintenance_window_end
+
+    if schedule_maintenance_window_duration is not None:
+        _details['schedule']['maintenanceWindowDuration'] = schedule_maintenance_window_duration
+
+    _details['schedule']['scheduleType'] = 'RECURRENT'
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.update_maintenance_window(
+        maintenance_window_id=maintenance_window_id,
+        update_maintenance_window_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@maintenance_window_group.command(name=cli_util.override('stack_monitoring.update_maintenance_window_one_time_maintenance_window_schedule.command_name', 'update-maintenance-window-one-time-maintenance-window-schedule'), help=u"""Update maintenance window by the given identifier [OCID]. \n[Command Reference](updateMaintenanceWindow)""")
+@cli_util.option('--maintenance-window-id', required=True, help=u"""The [OCID] of maintenance window.""")
+@cli_util.option('--description', help=u"""Maintenance Window description.""")
+@cli_util.option('--resources', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of resource Ids which are part of the Maintenance Window
+
+This option is a JSON list with items of type CreateMaintenanceWindowResourceDetails.  For documentation on CreateMaintenanceWindowResourceDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/CreateMaintenanceWindowResourceDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--schedule-time-maintenance-window-start', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--schedule-time-maintenance-window-end', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}})
+@cli_util.wrap_exceptions
+def update_maintenance_window_one_time_maintenance_window_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, description, resources, if_match, schedule_time_maintenance_window_start, schedule_time_maintenance_window_end):
+
+    if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
+        raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
+    if not force:
+        if resources:
+            if not click.confirm("WARNING: Updates to resources will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['schedule'] = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if resources is not None:
+        _details['resources'] = cli_util.parse_json_parameter("resources", resources)
+
+    if schedule_time_maintenance_window_start is not None:
+        _details['schedule']['timeMaintenanceWindowStart'] = schedule_time_maintenance_window_start
+
+    if schedule_time_maintenance_window_end is not None:
+        _details['schedule']['timeMaintenanceWindowEnd'] = schedule_time_maintenance_window_end
+
+    _details['schedule']['scheduleType'] = 'ONE_TIME'
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.update_maintenance_window(
+        maintenance_window_id=maintenance_window_id,
+        update_maintenance_window_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
