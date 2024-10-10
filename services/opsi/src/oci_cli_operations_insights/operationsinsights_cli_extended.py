@@ -865,3 +865,15 @@ def test_macs_managed_cloud_database_insight_connection_credential_by_vault_exte
         kwargs.pop('wallet_secret_id')
 
     ctx.invoke(operationsinsights_cli.test_macs_managed_cloud_database_insight_connection_credential_by_vault, **kwargs)
+
+
+# oci opsi database-insights create-database-insight-create-autonomous-database-insight-details -> oci opsi database-insights create-autonomous-database
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.create_database_insight_create_autonomous_database_insight_details, "create-autonomous-database")
+
+
+# oci opsi database-insights enable-database-insight-enable-autonomous-database-insight-details -> oci opsi database-insights enable-autonomous-database
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.enable_database_insight_enable_autonomous_database_insight_details, "enable-autonomous-database")
+
+
+# Remove change-pe-comanaged-database-insight-credential-by-iam from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.change_pe_comanaged_database_insight_credential_by_iam.name)

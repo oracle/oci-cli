@@ -397,11 +397,11 @@ def create_fusion_environment(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 @fusion_environment_group.command(name=cli_util.override('fusion_apps.create_fusion_environment_admin_user.command_name', 'create-fusion-environment-admin-user'), help=u"""Create a FusionEnvironment admin user \n[Command Reference](createFusionEnvironmentAdminUser)""")
 @cli_util.option('--username', required=True, help=u"""The username for the administrator.""")
-@cli_util.option('--password', required=True, help=u"""The password for the administrator.""")
 @cli_util.option('--email-address', required=True, help=u"""The email address for the administrator.""")
 @cli_util.option('--first-name', required=True, help=u"""The administrator's first name.""")
 @cli_util.option('--last-name', required=True, help=u"""The administrator's last name.""")
 @cli_util.option('--fusion-environment-id', required=True, help=u"""unique FusionEnvironment identifier""")
+@cli_util.option('--password', help=u"""The password for the administrator.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -410,7 +410,7 @@ def create_fusion_environment(ctx, from_json, wait_for_state, max_wait_seconds, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_fusion_environment_admin_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, username, password, email_address, first_name, last_name, fusion_environment_id):
+def create_fusion_environment_admin_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, username, email_address, first_name, last_name, fusion_environment_id, password):
 
     if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
@@ -420,10 +420,12 @@ def create_fusion_environment_admin_user(ctx, from_json, wait_for_state, max_wai
 
     _details = {}
     _details['username'] = username
-    _details['password'] = password
     _details['emailAddress'] = email_address
     _details['firstName'] = first_name
     _details['lastName'] = last_name
+
+    if password is not None:
+        _details['password'] = password
 
     client = cli_util.build_client('fusion_apps', 'fusion_applications', ctx)
     result = client.create_fusion_environment_admin_user(
@@ -1918,7 +1920,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, sta
     cli_util.render_response(result, ctx)
 
 
-@fusion_environment_group.command(name=cli_util.override('fusion_apps.reset_fusion_environment_password.command_name', 'reset-fusion-environment-password'), help=u"""Resets the password of the Fusion Environment Administrator. \n[Command Reference](resetFusionEnvironmentPassword)""")
+@fusion_environment_group.command(name=cli_util.override('fusion_apps.reset_fusion_environment_password.command_name', 'reset-fusion-environment-password'), help=u"""Reset FusionEnvironment admin password. This API will be deprecated on Mon, 15 Jan 2024 01:00:00 GMT. Users can reset password themselves, FAaaS will no longer provide an API for this. \n[Command Reference](resetFusionEnvironmentPassword)""")
 @cli_util.option('--password', required=True, help=u"""Admin password""")
 @cli_util.option('--fusion-environment-id', required=True, help=u"""unique FusionEnvironment identifier""")
 @cli_util.option('--admin-username', required=True, help=u"""The admin user name for the fusion environment.""")

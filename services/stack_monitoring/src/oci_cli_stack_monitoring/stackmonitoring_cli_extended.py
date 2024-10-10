@@ -1209,3 +1209,19 @@ def list_baselineable_metrics_extended(ctx, **kwargs):
         kwargs.pop('metric_id')
 
     ctx.invoke(stackmonitoring_cli.list_baselineable_metrics, **kwargs)
+
+
+# Remove create-maintenance-window-one-time-maintenance-window-schedule from oci stack-monitoring maintenance-window
+stackmonitoring_cli.maintenance_window_group.commands.pop(stackmonitoring_cli.create_maintenance_window_one_time_maintenance_window_schedule.name)
+
+
+# Remove create-maintenance-window-recurrent-maintenance-window-schedule from oci stack-monitoring maintenance-window
+stackmonitoring_cli.maintenance_window_group.commands.pop(stackmonitoring_cli.create_maintenance_window_recurrent_maintenance_window_schedule.name)
+
+
+# Remove update-maintenance-window-one-time-maintenance-window-schedule from oci stack-monitoring maintenance-window
+stackmonitoring_cli.maintenance_window_group.commands.pop(stackmonitoring_cli.update_maintenance_window_one_time_maintenance_window_schedule.name)
+
+
+# Remove update-maintenance-window-recurrent-maintenance-window-schedule from oci stack-monitoring maintenance-window
+stackmonitoring_cli.maintenance_window_group.commands.pop(stackmonitoring_cli.update_maintenance_window_recurrent_maintenance_window_schedule.name)
