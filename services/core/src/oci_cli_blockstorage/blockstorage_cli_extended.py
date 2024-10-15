@@ -311,3 +311,11 @@ def copy_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 # Remove create-volume-group-volume-group-source-from-volume-group-replica-details from oci bv volume-group
 blockstorage_cli.volume_group_group.commands.pop(blockstorage_cli.create_volume_group_volume_group_source_from_volume_group_replica_details.name)
+
+
+# oci bv boot-volume create-boot-volume-boot-volume-source-from-boot-volume-backup-delta-details -> oci bv boot-volume create-boot-volume-source-from-boot-volume-backup-delta
+cli_util.rename_command(blockstorage_cli, blockstorage_cli.boot_volume_group, blockstorage_cli.create_boot_volume_boot_volume_source_from_boot_volume_backup_delta_details, "create-boot-volume-source-from-boot-volume-backup-delta")
+
+
+# oci bv volume create-volume-volume-source-from-volume-backup-delta-details -> oci bv volume create-volume-source-from-volume-backup-delta
+cli_util.rename_command(blockstorage_cli, blockstorage_cli.volume_group, blockstorage_cli.create_volume_volume_source_from_volume_backup_delta_details, "create-volume-source-from-volume-backup-delta")

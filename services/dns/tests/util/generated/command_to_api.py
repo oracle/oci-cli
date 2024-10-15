@@ -44,6 +44,8 @@ SDK_client_map = {
     "dns.patch_domain_records": "oci.dns.DnsClient.patch_domain_records",
     "dns.patch_rr_set": "oci.dns.DnsClient.patch_rr_set",
     "dns.patch_zone_records": "oci.dns.DnsClient.patch_zone_records",
+    "dns.promote_zone_dnssec_key_version": "oci.dns.DnsClient.promote_zone_dnssec_key_version",
+    "dns.stage_zone_dnssec_key_version": "oci.dns.DnsClient.stage_zone_dnssec_key_version",
     "dns.update_domain_records": "oci.dns.DnsClient.update_domain_records",
     "dns.update_resolver": "oci.dns.DnsClient.update_resolver",
     "dns.update_resolver_endpoint": "oci.dns.DnsClient.update_resolver_endpoint",
