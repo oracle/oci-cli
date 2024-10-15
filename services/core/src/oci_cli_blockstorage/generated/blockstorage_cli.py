@@ -555,6 +555,7 @@ This option is a JSON list with items of type BootVolumeReplicaDetails.  For doc
 @cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
 
 This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the boot volume cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -563,7 +564,7 @@ This option is a JSON list with items of type AutotunePolicy.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'BootVolumeSourceDetails'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, cluster_placement_group_id, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas, autotune_policies):
+def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, cluster_placement_group_id, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas, autotune_policies, xrc_kms_key_id):
 
     kwargs = {}
 
@@ -606,6 +607,9 @@ def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if autotune_policies is not None:
         _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
+
+    if xrc_kms_key_id is not None:
+        _details['xrcKmsKeyId'] = xrc_kms_key_id
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_boot_volume(
@@ -673,6 +677,7 @@ This option is a JSON list with items of type BootVolumeReplicaDetails.  For doc
 @cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
 
 This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the boot volume cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -681,7 +686,7 @@ This option is a JSON list with items of type AutotunePolicy.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume_boot_volume_source_from_boot_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, cluster_placement_group_id, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas, autotune_policies):
+def create_boot_volume_boot_volume_source_from_boot_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, cluster_placement_group_id, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas, autotune_policies, xrc_kms_key_id):
 
     kwargs = {}
 
@@ -725,6 +730,9 @@ def create_boot_volume_boot_volume_source_from_boot_volume_backup_details(ctx, f
 
     if autotune_policies is not None:
         _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
+
+    if xrc_kms_key_id is not None:
+        _details['xrcKmsKeyId'] = xrc_kms_key_id
 
     _details['sourceDetails']['type'] = 'bootVolumeBackup'
 
@@ -794,6 +802,7 @@ This option is a JSON list with items of type BootVolumeReplicaDetails.  For doc
 @cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
 
 This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the boot volume cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -802,7 +811,7 @@ This option is a JSON list with items of type AutotunePolicy.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume_boot_volume_source_from_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, cluster_placement_group_id, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas, autotune_policies):
+def create_boot_volume_boot_volume_source_from_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, cluster_placement_group_id, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas, autotune_policies, xrc_kms_key_id):
 
     kwargs = {}
 
@@ -846,6 +855,9 @@ def create_boot_volume_boot_volume_source_from_boot_volume_details(ctx, from_jso
 
     if autotune_policies is not None:
         _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
+
+    if xrc_kms_key_id is not None:
+        _details['xrcKmsKeyId'] = xrc_kms_key_id
 
     _details['sourceDetails']['type'] = 'bootVolume'
 
@@ -915,6 +927,7 @@ This option is a JSON list with items of type BootVolumeReplicaDetails.  For doc
 @cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
 
 This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the boot volume cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -923,7 +936,7 @@ This option is a JSON list with items of type AutotunePolicy.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume_boot_volume_source_from_boot_volume_replica_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, cluster_placement_group_id, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas, autotune_policies):
+def create_boot_volume_boot_volume_source_from_boot_volume_replica_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, cluster_placement_group_id, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas, autotune_policies, xrc_kms_key_id):
 
     kwargs = {}
 
@@ -968,7 +981,137 @@ def create_boot_volume_boot_volume_source_from_boot_volume_replica_details(ctx, 
     if autotune_policies is not None:
         _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
 
+    if xrc_kms_key_id is not None:
+        _details['xrcKmsKeyId'] = xrc_kms_key_id
+
     _details['sourceDetails']['type'] = 'bootVolumeReplica'
+
+    client = cli_util.build_client('core', 'blockstorage', ctx)
+    result = client.create_boot_volume(
+        create_boot_volume_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_boot_volume') and callable(getattr(client, 'get_boot_volume')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_boot_volume(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@boot_volume_group.command(name=cli_util.override('blockstorage.create_boot_volume_boot_volume_source_from_boot_volume_backup_delta_details.command_name', 'create-boot-volume-boot-volume-source-from-boot-volume-backup-delta-details'), help=u"""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createBootVolume)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the boot volume.""")
+@cli_util.option('--source-details-first-backup-id', required=True, help=u"""The OCID of the first boot volume backup.""")
+@cli_util.option('--source-details-second-backup-id', required=True, help=u"""The OCID of the second boot volume backup.""")
+@cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the boot volume backup policy to assign to the newly created boot volume. If omitted, no policy will be assigned.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key to assign as the master encryption key for the boot volume.""")
+@cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
+@cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
+
+Allowed values:
+
+  * `10`: Represents the Balanced option.
+
+  * `20`: Represents the Higher Performance option.
+
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For performance autotune enabled volumes, it would be the Default(Minimum) VPUs/GB.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
+@cli_util.option('--boot-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of boot volume replicas to be enabled for this boot volume in the specified destination availability domains.
+
+This option is a JSON list with items of type BootVolumeReplicaDetails.  For documentation on BootVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BootVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
+
+This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-details-change-block-size-in-bytes', type=click.INT, help=u"""Block size in bytes to be considered while performing volume restore. The value must be a power of 2; ranging from 4KB (4096 bytes) to 1MB (1048576 bytes). If omitted, defaults to 4,096 bytes (4 KiB).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
+@cli_util.wrap_exceptions
+def create_boot_volume_boot_volume_source_from_boot_volume_backup_delta_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_first_backup_id, source_details_second_backup_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, cluster_placement_group_id, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas, autotune_policies, source_details_change_block_size_in_bytes):
+
+    kwargs = {}
+
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails']['firstBackupId'] = source_details_first_backup_id
+    _details['sourceDetails']['secondBackupId'] = source_details_second_backup_id
+
+    if availability_domain is not None:
+        _details['availabilityDomain'] = availability_domain
+
+    if backup_policy_id is not None:
+        _details['backupPolicyId'] = backup_policy_id
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if kms_key_id is not None:
+        _details['kmsKeyId'] = kms_key_id
+
+    if size_in_gbs is not None:
+        _details['sizeInGBs'] = size_in_gbs
+
+    if cluster_placement_group_id is not None:
+        _details['clusterPlacementGroupId'] = cluster_placement_group_id
+
+    if vpus_per_gb is not None:
+        _details['vpusPerGB'] = vpus_per_gb
+
+    if is_auto_tune_enabled is not None:
+        _details['isAutoTuneEnabled'] = is_auto_tune_enabled
+
+    if boot_volume_replicas is not None:
+        _details['bootVolumeReplicas'] = cli_util.parse_json_parameter("boot_volume_replicas", boot_volume_replicas)
+
+    if autotune_policies is not None:
+        _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
+
+    if source_details_change_block_size_in_bytes is not None:
+        _details['sourceDetails']['changeBlockSizeInBytes'] = source_details_change_block_size_in_bytes
+
+    _details['sourceDetails']['type'] = 'bootVolumeBackupDelta'
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_boot_volume(
@@ -1118,6 +1261,7 @@ This option is a JSON list with items of type BlockVolumeReplicaDetails.  For do
 @cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
 
 This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the block volume cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1126,7 +1270,7 @@ This option is a JSON list with items of type AutotunePolicy.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeSourceDetails'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, cluster_placement_group_id, size_in_gbs, size_in_mbs, source_details, volume_backup_id, is_auto_tune_enabled, block_volume_replicas, autotune_policies):
+def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, cluster_placement_group_id, size_in_gbs, size_in_mbs, source_details, volume_backup_id, is_auto_tune_enabled, block_volume_replicas, autotune_policies, xrc_kms_key_id):
 
     kwargs = {}
 
@@ -1177,6 +1321,9 @@ def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if autotune_policies is not None:
         _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
+
+    if xrc_kms_key_id is not None:
+        _details['xrcKmsKeyId'] = xrc_kms_key_id
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_volume(
@@ -1252,6 +1399,7 @@ This option is a JSON list with items of type BlockVolumeReplicaDetails.  For do
 @cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
 
 This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the block volume cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1260,7 +1408,7 @@ This option is a JSON list with items of type AutotunePolicy.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume_volume_source_from_block_volume_replica_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, cluster_placement_group_id, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas, autotune_policies):
+def create_volume_volume_source_from_block_volume_replica_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, cluster_placement_group_id, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas, autotune_policies, xrc_kms_key_id):
 
     kwargs = {}
 
@@ -1310,6 +1458,9 @@ def create_volume_volume_source_from_block_volume_replica_details(ctx, from_json
 
     if autotune_policies is not None:
         _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
+
+    if xrc_kms_key_id is not None:
+        _details['xrcKmsKeyId'] = xrc_kms_key_id
 
     _details['sourceDetails']['type'] = 'blockVolumeReplica'
 
@@ -1387,6 +1538,7 @@ This option is a JSON list with items of type BlockVolumeReplicaDetails.  For do
 @cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
 
 This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the block volume cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1395,7 +1547,7 @@ This option is a JSON list with items of type AutotunePolicy.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume_volume_source_from_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, cluster_placement_group_id, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas, autotune_policies):
+def create_volume_volume_source_from_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, cluster_placement_group_id, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas, autotune_policies, xrc_kms_key_id):
 
     kwargs = {}
 
@@ -1445,6 +1597,9 @@ def create_volume_volume_source_from_volume_details(ctx, from_json, wait_for_sta
 
     if autotune_policies is not None:
         _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
+
+    if xrc_kms_key_id is not None:
+        _details['xrcKmsKeyId'] = xrc_kms_key_id
 
     _details['sourceDetails']['type'] = 'volume'
 
@@ -1522,6 +1677,7 @@ This option is a JSON list with items of type BlockVolumeReplicaDetails.  For do
 @cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
 
 This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the block volume cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1530,7 +1686,7 @@ This option is a JSON list with items of type AutotunePolicy.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume_volume_source_from_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, cluster_placement_group_id, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas, autotune_policies):
+def create_volume_volume_source_from_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, cluster_placement_group_id, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas, autotune_policies, xrc_kms_key_id):
 
     kwargs = {}
 
@@ -1581,7 +1737,151 @@ def create_volume_volume_source_from_volume_backup_details(ctx, from_json, wait_
     if autotune_policies is not None:
         _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
 
+    if xrc_kms_key_id is not None:
+        _details['xrcKmsKeyId'] = xrc_kms_key_id
+
     _details['sourceDetails']['type'] = 'volumeBackup'
+
+    client = cli_util.build_client('core', 'blockstorage', ctx)
+    result = client.create_volume(
+        create_volume_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_volume') and callable(getattr(client, 'get_volume')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_volume(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@volume_group.command(name=cli_util.override('blockstorage.create_volume_volume_source_from_volume_backup_delta_details.command_name', 'create-volume-volume-source-from-volume-backup-delta-details'), help=u"""Creates a new volume in the specified compartment. Volumes can be created in sizes ranging from 50 GB (51200 MB) to 32 TB (33554432 MB), in 1 GB (1024 MB) increments. By default, volumes are 1 TB (1048576 MB). For general information about block volumes, see [Overview of Block Volume Service].
+
+A volume and instance can be in separate compartments but must be in the same availability domain. For information about access control and compartments, see [Overview of the IAM Service]. For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
+
+You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createVolume)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the volume.""")
+@cli_util.option('--source-details-first-backup-id', required=True, help=u"""The OCID of the first volume backup.""")
+@cli_util.option('--source-details-second-backup-id', required=True, help=u"""The OCID of the second volume backup.""")
+@cli_util.option('--availability-domain', help=u"""The availability domain of the volume. Omissible for cloning a volume. The new volume will be created in the availability domain of the source volume.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--backup-policy-id', help=u"""If provided, specifies the ID of the volume backup policy to assign to the newly created volume. If omitted, no policy will be assigned.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Vault service key to assign as the master encryption key for the volume.""")
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Performance Levels] for more information.
+
+Allowed values:
+
+  * `0`: Represents Lower Cost option.
+
+  * `10`: Represents Balanced option.
+
+  * `20`: Represents Higher Performance option.
+
+  * `30`-`120`: Represents the Ultra High Performance option.
+
+For performance autotune enabled volumes, it would be the Default(Minimum) VPUs/GB.""")
+@cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume for volume placement.""")
+@cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
+@cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
+@cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume. This field is deprecated. Use the `DetachedVolumeAutotunePolicy` instead to enable the volume for detached autotune.""")
+@cli_util.option('--block-volume-replicas', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of block volume replicas to be enabled for this volume in the specified destination availability domains.
+
+This option is a JSON list with items of type BlockVolumeReplicaDetails.  For documentation on BlockVolumeReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/BlockVolumeReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
+
+This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-details-change-block-size-in-bytes', type=click.INT, help=u"""Block size in bytes to be considered while performing volume restore. The value must be a power of 2; ranging from 4KB (4096 bytes) to 1MB (1048576 bytes). If omitted, defaults to 4,096 bytes (4 KiB).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'Volume'})
+@cli_util.wrap_exceptions
+def create_volume_volume_source_from_volume_backup_delta_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_first_backup_id, source_details_second_backup_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, cluster_placement_group_id, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas, autotune_policies, source_details_change_block_size_in_bytes):
+
+    kwargs = {}
+
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails']['firstBackupId'] = source_details_first_backup_id
+    _details['sourceDetails']['secondBackupId'] = source_details_second_backup_id
+
+    if availability_domain is not None:
+        _details['availabilityDomain'] = availability_domain
+
+    if backup_policy_id is not None:
+        _details['backupPolicyId'] = backup_policy_id
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if kms_key_id is not None:
+        _details['kmsKeyId'] = kms_key_id
+
+    if vpus_per_gb is not None:
+        _details['vpusPerGB'] = vpus_per_gb
+
+    if cluster_placement_group_id is not None:
+        _details['clusterPlacementGroupId'] = cluster_placement_group_id
+
+    if size_in_gbs is not None:
+        _details['sizeInGBs'] = size_in_gbs
+
+    if size_in_mbs is not None:
+        _details['sizeInMBs'] = size_in_mbs
+
+    if volume_backup_id is not None:
+        _details['volumeBackupId'] = volume_backup_id
+
+    if is_auto_tune_enabled is not None:
+        _details['isAutoTuneEnabled'] = is_auto_tune_enabled
+
+    if block_volume_replicas is not None:
+        _details['blockVolumeReplicas'] = cli_util.parse_json_parameter("block_volume_replicas", block_volume_replicas)
+
+    if autotune_policies is not None:
+        _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
+
+    if source_details_change_block_size_in_bytes is not None:
+        _details['sourceDetails']['changeBlockSizeInBytes'] = source_details_change_block_size_in_bytes
+
+    _details['sourceDetails']['type'] = 'volumeBackupDelta'
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_volume(
@@ -1742,18 +2042,22 @@ def create_volume_backup_policy(ctx, from_json, compartment_id, display_name, de
 @volume_backup_policy_assignment_group.command(name=cli_util.override('blockstorage.create_volume_backup_policy_assignment.command_name', 'create'), help=u"""Assigns a volume backup policy to the specified volume. Note that a given volume can only have one backup policy assigned to it. If this operation is used for a volume that already has a different backup policy assigned, the prior backup policy will be silently unassigned. \n[Command Reference](createVolumeBackupPolicyAssignment)""")
 @cli_util.option('--asset-id', required=True, help=u"""The OCID of the volume to assign the policy to.""")
 @cli_util.option('--policy-id', required=True, help=u"""The OCID of the volume backup policy to assign to the volume.""")
+@cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the block / boot volume cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeBackupPolicyAssignment'})
 @cli_util.wrap_exceptions
-def create_volume_backup_policy_assignment(ctx, from_json, asset_id, policy_id):
+def create_volume_backup_policy_assignment(ctx, from_json, asset_id, policy_id, xrc_kms_key_id):
 
     kwargs = {}
 
     _details = {}
     _details['assetId'] = asset_id
     _details['policyId'] = policy_id
+
+    if xrc_kms_key_id is not None:
+        _details['xrcKmsKeyId'] = xrc_kms_key_id
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_volume_backup_policy_assignment(
@@ -1781,6 +2085,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume group for volume group placement.""")
+@cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the volume's cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "UPDATE_PENDING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1789,7 +2094,7 @@ This option is a JSON list with items of type VolumeGroupReplicaDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeGroupSourceDetails'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
 @cli_util.wrap_exceptions
-def create_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details, backup_policy_id, defined_tags, display_name, freeform_tags, volume_group_replicas, cluster_placement_group_id):
+def create_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details, backup_policy_id, defined_tags, display_name, freeform_tags, volume_group_replicas, cluster_placement_group_id, xrc_kms_key_id):
 
     kwargs = {}
 
@@ -1815,6 +2120,9 @@ def create_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if cluster_placement_group_id is not None:
         _details['clusterPlacementGroupId'] = cluster_placement_group_id
+
+    if xrc_kms_key_id is not None:
+        _details['xrcKmsKeyId'] = xrc_kms_key_id
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_volume_group(
@@ -1865,6 +2173,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume group for volume group placement.""")
+@cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the volume's cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "UPDATE_PENDING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1873,7 +2182,7 @@ This option is a JSON list with items of type VolumeGroupReplicaDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
 @cli_util.wrap_exceptions
-def create_volume_group_volume_group_source_from_volume_group_replica_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_group_replica_id, backup_policy_id, defined_tags, display_name, freeform_tags, volume_group_replicas, cluster_placement_group_id):
+def create_volume_group_volume_group_source_from_volume_group_replica_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_group_replica_id, backup_policy_id, defined_tags, display_name, freeform_tags, volume_group_replicas, cluster_placement_group_id, xrc_kms_key_id):
 
     kwargs = {}
 
@@ -1900,6 +2209,9 @@ def create_volume_group_volume_group_source_from_volume_group_replica_details(ct
 
     if cluster_placement_group_id is not None:
         _details['clusterPlacementGroupId'] = cluster_placement_group_id
+
+    if xrc_kms_key_id is not None:
+        _details['xrcKmsKeyId'] = xrc_kms_key_id
 
     _details['sourceDetails']['type'] = 'volumeGroupReplicaId'
 
@@ -1952,6 +2264,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume group for volume group placement.""")
+@cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the volume's cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "UPDATE_PENDING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1960,7 +2273,7 @@ This option is a JSON list with items of type VolumeGroupReplicaDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
 @cli_util.wrap_exceptions
-def create_volume_group_volume_group_source_from_volume_group_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_group_id, backup_policy_id, defined_tags, display_name, freeform_tags, volume_group_replicas, cluster_placement_group_id):
+def create_volume_group_volume_group_source_from_volume_group_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_group_id, backup_policy_id, defined_tags, display_name, freeform_tags, volume_group_replicas, cluster_placement_group_id, xrc_kms_key_id):
 
     kwargs = {}
 
@@ -1987,6 +2300,9 @@ def create_volume_group_volume_group_source_from_volume_group_details(ctx, from_
 
     if cluster_placement_group_id is not None:
         _details['clusterPlacementGroupId'] = cluster_placement_group_id
+
+    if xrc_kms_key_id is not None:
+        _details['xrcKmsKeyId'] = xrc_kms_key_id
 
     _details['sourceDetails']['type'] = 'volumeGroupId'
 
@@ -2039,6 +2355,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume group for volume group placement.""")
+@cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the volume's cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "UPDATE_PENDING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2047,7 +2364,7 @@ This option is a JSON list with items of type VolumeGroupReplicaDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}, 'source-details-volume-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
 @cli_util.wrap_exceptions
-def create_volume_group_volume_group_source_from_volumes_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_ids, backup_policy_id, defined_tags, display_name, freeform_tags, volume_group_replicas, cluster_placement_group_id):
+def create_volume_group_volume_group_source_from_volumes_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_ids, backup_policy_id, defined_tags, display_name, freeform_tags, volume_group_replicas, cluster_placement_group_id, xrc_kms_key_id):
 
     kwargs = {}
 
@@ -2074,6 +2391,9 @@ def create_volume_group_volume_group_source_from_volumes_details(ctx, from_json,
 
     if cluster_placement_group_id is not None:
         _details['clusterPlacementGroupId'] = cluster_placement_group_id
+
+    if xrc_kms_key_id is not None:
+        _details['xrcKmsKeyId'] = xrc_kms_key_id
 
     _details['sourceDetails']['type'] = 'volumeIds'
 
@@ -2126,6 +2446,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 This option is a JSON list with items of type VolumeGroupReplicaDetails.  For documentation on VolumeGroupReplicaDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeGroupReplicaDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cluster-placement-group-id', help=u"""The clusterPlacementGroup Id of the volume group for volume group placement.""")
+@cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the volume's cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "UPDATE_PENDING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2134,7 +2455,7 @@ This option is a JSON list with items of type VolumeGroupReplicaDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'volume-group-replicas': {'module': 'core', 'class': 'list[VolumeGroupReplicaDetails]'}}, output_type={'module': 'core', 'class': 'VolumeGroup'})
 @cli_util.wrap_exceptions
-def create_volume_group_volume_group_source_from_volume_group_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_group_backup_id, backup_policy_id, defined_tags, display_name, freeform_tags, volume_group_replicas, cluster_placement_group_id):
+def create_volume_group_volume_group_source_from_volume_group_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_volume_group_backup_id, backup_policy_id, defined_tags, display_name, freeform_tags, volume_group_replicas, cluster_placement_group_id, xrc_kms_key_id):
 
     kwargs = {}
 
@@ -2161,6 +2482,9 @@ def create_volume_group_volume_group_source_from_volume_group_backup_details(ctx
 
     if cluster_placement_group_id is not None:
         _details['clusterPlacementGroupId'] = cluster_placement_group_id
+
+    if xrc_kms_key_id is not None:
+        _details['xrcKmsKeyId'] = xrc_kms_key_id
 
     _details['sourceDetails']['type'] = 'volumeGroupBackupId'
 

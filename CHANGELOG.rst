@@ -6,6 +6,69 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.49.2 - 2024-10-15
+--------------------
+Added
+~~~~~
+* Container Engine For Kubernetes
+
+  * Support for new Open Id Connect Discovery feature in the OKE Control Plane service
+
+    * ``oci ce cluster create --open-id-connect-discovery-enabled``
+
+  * Support for new Open Id Connect Authentication commands in the OKE Control Plane service
+
+    * ``oci ce cluster create --oidc-ca-certificate``
+    * ``oci ce cluster create --oidc-client-id``
+    * ``oci ce cluster create --oidc-groups-claim``
+    * ``oci ce cluster create --oidc-groups-prefix``
+    * ``oci ce cluster create --oidc-issuer-url``
+    * ``oci ce cluster create --oidc-required-claims``
+    * ``oci ce cluster create --oidc-signing-algorithms``
+    * ``oci ce cluster create --oidc-username-claim``
+    * ``oci ce cluster create --oidc-username-prefix``
+    * ``oci ce cluster create --open-id-connect-auth-enabled``
+
+* DNS Service
+
+  * Support for new DNS security extensions (DNSSEC) parameters in the DNS service.
+
+    * ``oci dns zone create --dnssec-state``
+    * ``oci dns zone update --dnssec-state``
+    * ``oci dns zone list --dnssec-state``
+
+  * Support for new DNS security extensions (DNSSEC) commands in the DNS service.
+
+    * ``oci dns zone promote-zone-dnssec-key-version``
+    * ``oci dns zone stage-zone-dnssec-key-version``
+
+* BlockStorage service
+
+  * Support for new xrc-kms-key-id parameter in Core Service
+
+    * ``oci bv boot-volume create --xrc-kms-key-id``
+    * ``oci bv boot-volume create-boot-volume-boot-volume-source-from-boot-volume-replica-details --xrc-kms-key-id``
+    * ``oci bv volume create --xrc-kms-key-id``
+    * ``oci bv volume create-volume-volume-source-from-block-volume-replica-details --xrc-kms-key-id``
+    * ``oci bv volume-backup-policy-assignment create --xrc-kms-key-id``
+    * ``oci bv volume-group creat --xrc-kms-key-id``
+
+  * Support for Direct API feature in BlockStorage service
+
+    * ``oci bv volume create-volume-source-from-volume-backup-delta``
+    * ``oci bv boot-volume create-boot-volume-source-from-boot-volume-backup-delta``
+
+* Goldengate Service
+
+  * Add support for list deployment environments
+
+    * ``oci goldengate deployment-environment list``
+
+  * Support for defining environment type for deployments in GoldenGate service
+
+    * ``oci goldengate deployment create --environment-type``
+    * ``oci goldengate deployment update --environment-type`
+
 3.49.1 - 2024-10-10
 --------------------
 Added

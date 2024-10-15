@@ -43,6 +43,7 @@ SDK_client_map = {
     "goldengate.list_connections": "oci.golden_gate.GoldenGateClient.list_connections",
     "goldengate.list_database_registrations": "oci.golden_gate.GoldenGateClient.list_database_registrations",
     "goldengate.list_deployment_backups": "oci.golden_gate.GoldenGateClient.list_deployment_backups",
+    "goldengate.list_deployment_environments": "oci.golden_gate.GoldenGateClient.list_deployment_environments",
     "goldengate.list_deployment_types": "oci.golden_gate.GoldenGateClient.list_deployment_types",
     "goldengate.list_deployment_upgrades": "oci.golden_gate.GoldenGateClient.list_deployment_upgrades",
     "goldengate.list_deployment_versions": "oci.golden_gate.GoldenGateClient.list_deployment_versions",
