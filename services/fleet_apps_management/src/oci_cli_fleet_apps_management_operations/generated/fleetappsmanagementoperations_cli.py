@@ -16,10 +16,39 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.fleet_apps_management.src.oci_cli_fleet_apps_management.generated import fleet_apps_management_service_cli
 
 
-@click.command(cli_util.override('fleet_apps_management_operations.fleet_apps_management_operations_root_group.command_name', 'fleet-apps-management-operations'), cls=CommandGroupWithAlias, help=cli_util.override('fleet_apps_management_operations.fleet_apps_management_operations_root_group.help', """Fleet Application Management Service API. Use this API to for all FAMS related activities.
-To manage fleets,view complaince report for the Fleet,scedule patches and other lifecycle activities"""), short_help=cli_util.override('fleet_apps_management_operations.fleet_apps_management_operations_root_group.short_help', """Fleet Application Management Service API"""))
+@click.command(cli_util.override('fleet_apps_management_operations.fleet_apps_management_operations_root_group.command_name', 'fleet-apps-management-operations'), cls=CommandGroupWithAlias, help=cli_util.override('fleet_apps_management_operations.fleet_apps_management_operations_root_group.help', """Fleet Application Management provides a centralized platform to help you automate resource management tasks, validate patch compliance, and enhance operational efficiency across an enterprise."""), short_help=cli_util.override('fleet_apps_management_operations.fleet_apps_management_operations_root_group.short_help', """Fleet Application Management Service API"""))
 @cli_util.help_option_group
 def fleet_apps_management_operations_root_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_operations.execution_group.command_name', 'execution'), cls=CommandGroupWithAlias, help="""Task Execution associated with the Job.""")
+@cli_util.help_option_group
+def execution_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_operations.scheduler_job_aggregation_collection_group.command_name', 'scheduler-job-aggregation-collection'), cls=CommandGroupWithAlias, help="""An array of SchedulerJob objects.""")
+@cli_util.help_option_group
+def scheduler_job_aggregation_collection_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_operations.patch_collection_group.command_name', 'patch-collection'), cls=CommandGroupWithAlias, help="""Results of a patch search. Contains both PatchSummary items and other information, such as metadata.""")
+@cli_util.help_option_group
+def patch_collection_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_operations.compliance_record_collection_group.command_name', 'compliance-record-collection'), cls=CommandGroupWithAlias, help="""Results of a compliancePolicy search. Contains both CompliancePolicySummary items and other information, such as metadata.""")
+@cli_util.help_option_group
+def compliance_record_collection_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_operations.patch_group.command_name', 'patch'), cls=CommandGroupWithAlias, help="""Patch metadata for Custom and Oracle patches.""")
+@cli_util.help_option_group
+def patch_group():
     pass
 
 
@@ -35,27 +64,45 @@ def scheduler_definition_collection_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management_operations.execution_group.command_name', 'execution'), cls=CommandGroupWithAlias, help="""Task Execution associated with the Job.""")
+@click.command(cli_util.override('fleet_apps_management_operations.managed_entity_aggregation_collection_group.command_name', 'managed-entity-aggregation-collection'), cls=CommandGroupWithAlias, help="""An array of Managed Entity objects""")
 @cli_util.help_option_group
-def execution_group():
+def managed_entity_aggregation_collection_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management_operations.scheduler_job_collection_group.command_name', 'scheduler-job-collection'), cls=CommandGroupWithAlias, help="""Results of a schedulerJob search. Contains boh SchedulerJobSummary items and other information, such as metadata.""")
+@click.command(cli_util.override('fleet_apps_management_operations.resource_collection_group.command_name', 'resource-collection'), cls=CommandGroupWithAlias, help="""Results of a ResourceSummary Search.""")
+@cli_util.help_option_group
+def resource_collection_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_operations.scheduler_job_collection_group.command_name', 'scheduler-job-collection'), cls=CommandGroupWithAlias, help="""Results of a schedulerJob search. Contains SchedulerJobSummary items and other information, such as metadata.""")
 @cli_util.help_option_group
 def scheduler_job_collection_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management_operations.job_activity_group.command_name', 'job-activity'), cls=CommandGroupWithAlias, help="""Description of JobActivity.""")
+@click.command(cli_util.override('fleet_apps_management_operations.compliance_record_group.command_name', 'compliance-record'), cls=CommandGroupWithAlias, help="""The compliance status reports.""")
+@cli_util.help_option_group
+def compliance_record_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_operations.job_activity_group.command_name', 'job-activity'), cls=CommandGroupWithAlias, help="""Activity details including status corresponding to an Action Group.""")
 @cli_util.help_option_group
 def job_activity_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management_operations.execution_collection_group.command_name', 'execution-collection'), cls=CommandGroupWithAlias, help="""Results of a""")
+@click.command(cli_util.override('fleet_apps_management_operations.execution_collection_group.command_name', 'execution-collection'), cls=CommandGroupWithAlias, help="""A collection of ExecutionSummary.""")
 @cli_util.help_option_group
 def execution_collection_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_operations.compliance_record_aggregation_collection_group.command_name', 'compliance-record-aggregation-collection'), cls=CommandGroupWithAlias, help="""An array of ComplianceRecord objects""")
+@cli_util.help_option_group
+def compliance_record_aggregation_collection_group():
     pass
 
 
@@ -71,18 +118,276 @@ def scheduled_fleet_collection_group():
     pass
 
 
+@click.command(cli_util.override('fleet_apps_management_operations.step_collection_group.command_name', 'step-collection'), cls=CommandGroupWithAlias, help="""Results of a StepSummary search.""")
+@cli_util.help_option_group
+def step_collection_group():
+    pass
+
+
 fleet_apps_management_service_cli.fleet_apps_management_service_group.add_command(fleet_apps_management_operations_root_group)
+fleet_apps_management_operations_root_group.add_command(execution_group)
+fleet_apps_management_operations_root_group.add_command(scheduler_job_aggregation_collection_group)
+fleet_apps_management_operations_root_group.add_command(patch_collection_group)
+fleet_apps_management_operations_root_group.add_command(compliance_record_collection_group)
+fleet_apps_management_operations_root_group.add_command(patch_group)
 fleet_apps_management_operations_root_group.add_command(scheduler_definition_group)
 fleet_apps_management_operations_root_group.add_command(scheduler_definition_collection_group)
-fleet_apps_management_operations_root_group.add_command(execution_group)
+fleet_apps_management_operations_root_group.add_command(managed_entity_aggregation_collection_group)
+fleet_apps_management_operations_root_group.add_command(resource_collection_group)
 fleet_apps_management_operations_root_group.add_command(scheduler_job_collection_group)
+fleet_apps_management_operations_root_group.add_command(compliance_record_group)
 fleet_apps_management_operations_root_group.add_command(job_activity_group)
 fleet_apps_management_operations_root_group.add_command(execution_collection_group)
+fleet_apps_management_operations_root_group.add_command(compliance_record_aggregation_collection_group)
 fleet_apps_management_operations_root_group.add_command(scheduler_job_group)
 fleet_apps_management_operations_root_group.add_command(scheduled_fleet_collection_group)
+fleet_apps_management_operations_root_group.add_command(step_collection_group)
 
 
-@scheduler_definition_group.command(name=cli_util.override('fleet_apps_management_operations.create_scheduler_definition.command_name', 'create'), help=u"""Creates a new SchedulerDefinition. \n[Command Reference](createSchedulerDefinition)""")
+@patch_group.command(name=cli_util.override('fleet_apps_management_operations.create_patch.command_name', 'create'), help=u"""Creates a new Patch. \n[Command Reference](createPatch)""")
+@cli_util.option('--name', required=True, help=u"""A user-friendly name. Should be unique within the tenancy, and cannot be changed after creation. Avoid entering confidential information.""")
+@cli_util.option('--patch-type', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--severity', required=True, type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Patch Severity.""")
+@cli_util.option('--time-released', required=True, type=custom_types.CLI_DATETIME, help=u"""Date when the patch was released.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--artifact-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--product', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--dependent-patches', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Dependent Patches for this patch.
+
+This option is a JSON list with items of type DependentPatchDetails.  For documentation on DependentPatchDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagementoperations/20230831/datatypes/DependentPatchDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'patch-type': {'module': 'fleet_apps_management', 'class': 'PatchType'}, 'artifact-details': {'module': 'fleet_apps_management', 'class': 'ArtifactDetails'}, 'product': {'module': 'fleet_apps_management', 'class': 'PatchProduct'}, 'dependent-patches': {'module': 'fleet_apps_management', 'class': 'list[DependentPatchDetails]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'patch-type': {'module': 'fleet_apps_management', 'class': 'PatchType'}, 'artifact-details': {'module': 'fleet_apps_management', 'class': 'ArtifactDetails'}, 'product': {'module': 'fleet_apps_management', 'class': 'PatchProduct'}, 'dependent-patches': {'module': 'fleet_apps_management', 'class': 'list[DependentPatchDetails]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'Patch'})
+@cli_util.wrap_exceptions
+def create_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, patch_type, severity, time_released, artifact_details, product, compartment_id, description, dependent_patches, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['patchType'] = cli_util.parse_json_parameter("patch_type", patch_type)
+    _details['severity'] = severity
+    _details['timeReleased'] = time_released
+    _details['artifactDetails'] = cli_util.parse_json_parameter("artifact_details", artifact_details)
+    _details['product'] = cli_util.parse_json_parameter("product", product)
+    _details['compartmentId'] = compartment_id
+
+    if description is not None:
+        _details['description'] = description
+
+    if dependent_patches is not None:
+        _details['dependentPatches'] = cli_util.parse_json_parameter("dependent_patches", dependent_patches)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    result = client.create_patch(
+        create_patch_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_patch') and callable(getattr(client, 'get_patch')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_patch(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@patch_group.command(name=cli_util.override('fleet_apps_management_operations.create_patch_platform_specific_artifact_details.command_name', 'create-patch-platform-specific-artifact-details'), help=u"""Creates a new Patch. \n[Command Reference](createPatch)""")
+@cli_util.option('--name', required=True, help=u"""A user-friendly name. Should be unique within the tenancy, and cannot be changed after creation. Avoid entering confidential information.""")
+@cli_util.option('--patch-type', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--severity', required=True, type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Patch Severity.""")
+@cli_util.option('--time-released', required=True, type=custom_types.CLI_DATETIME, help=u"""Date when the patch was released.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--product', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--artifact-details-artifacts', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Artifacts.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--dependent-patches', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Dependent Patches for this patch.
+
+This option is a JSON list with items of type DependentPatchDetails.  For documentation on DependentPatchDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagementoperations/20230831/datatypes/DependentPatchDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'patch-type': {'module': 'fleet_apps_management', 'class': 'PatchType'}, 'product': {'module': 'fleet_apps_management', 'class': 'PatchProduct'}, 'dependent-patches': {'module': 'fleet_apps_management', 'class': 'list[DependentPatchDetails]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}, 'artifact-details-artifacts': {'module': 'fleet_apps_management', 'class': 'list[PlatformSpecificArtifact]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'patch-type': {'module': 'fleet_apps_management', 'class': 'PatchType'}, 'product': {'module': 'fleet_apps_management', 'class': 'PatchProduct'}, 'dependent-patches': {'module': 'fleet_apps_management', 'class': 'list[DependentPatchDetails]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}, 'artifact-details-artifacts': {'module': 'fleet_apps_management', 'class': 'list[PlatformSpecificArtifact]'}}, output_type={'module': 'fleet_apps_management', 'class': 'Patch'})
+@cli_util.wrap_exceptions
+def create_patch_platform_specific_artifact_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, patch_type, severity, time_released, product, compartment_id, artifact_details_artifacts, description, dependent_patches, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['artifactDetails'] = {}
+    _details['name'] = name
+    _details['patchType'] = cli_util.parse_json_parameter("patch_type", patch_type)
+    _details['severity'] = severity
+    _details['timeReleased'] = time_released
+    _details['product'] = cli_util.parse_json_parameter("product", product)
+    _details['compartmentId'] = compartment_id
+    _details['artifactDetails']['artifacts'] = cli_util.parse_json_parameter("artifact_details_artifacts", artifact_details_artifacts)
+
+    if description is not None:
+        _details['description'] = description
+
+    if dependent_patches is not None:
+        _details['dependentPatches'] = cli_util.parse_json_parameter("dependent_patches", dependent_patches)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['artifactDetails']['category'] = 'PLATFORM_SPECIFIC'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    result = client.create_patch(
+        create_patch_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_patch') and callable(getattr(client, 'get_patch')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_patch(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@patch_group.command(name=cli_util.override('fleet_apps_management_operations.create_patch_generic_artifact_details.command_name', 'create-patch-generic-artifact-details'), help=u"""Creates a new Patch. \n[Command Reference](createPatch)""")
+@cli_util.option('--name', required=True, help=u"""A user-friendly name. Should be unique within the tenancy, and cannot be changed after creation. Avoid entering confidential information.""")
+@cli_util.option('--patch-type', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--severity', required=True, type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Patch Severity.""")
+@cli_util.option('--time-released', required=True, type=custom_types.CLI_DATETIME, help=u"""Date when the patch was released.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--product', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--artifact-details-artifact', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--dependent-patches', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Dependent Patches for this patch.
+
+This option is a JSON list with items of type DependentPatchDetails.  For documentation on DependentPatchDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagementoperations/20230831/datatypes/DependentPatchDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'patch-type': {'module': 'fleet_apps_management', 'class': 'PatchType'}, 'product': {'module': 'fleet_apps_management', 'class': 'PatchProduct'}, 'dependent-patches': {'module': 'fleet_apps_management', 'class': 'list[DependentPatchDetails]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}, 'artifact-details-artifact': {'module': 'fleet_apps_management', 'class': 'GenericArtifact'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'patch-type': {'module': 'fleet_apps_management', 'class': 'PatchType'}, 'product': {'module': 'fleet_apps_management', 'class': 'PatchProduct'}, 'dependent-patches': {'module': 'fleet_apps_management', 'class': 'list[DependentPatchDetails]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}, 'artifact-details-artifact': {'module': 'fleet_apps_management', 'class': 'GenericArtifact'}}, output_type={'module': 'fleet_apps_management', 'class': 'Patch'})
+@cli_util.wrap_exceptions
+def create_patch_generic_artifact_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, patch_type, severity, time_released, product, compartment_id, artifact_details_artifact, description, dependent_patches, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['artifactDetails'] = {}
+    _details['name'] = name
+    _details['patchType'] = cli_util.parse_json_parameter("patch_type", patch_type)
+    _details['severity'] = severity
+    _details['timeReleased'] = time_released
+    _details['product'] = cli_util.parse_json_parameter("product", product)
+    _details['compartmentId'] = compartment_id
+    _details['artifactDetails']['artifact'] = cli_util.parse_json_parameter("artifact_details_artifact", artifact_details_artifact)
+
+    if description is not None:
+        _details['description'] = description
+
+    if dependent_patches is not None:
+        _details['dependentPatches'] = cli_util.parse_json_parameter("dependent_patches", dependent_patches)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['artifactDetails']['category'] = 'GENERIC'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    result = client.create_patch(
+        create_patch_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_patch') and callable(getattr(client, 'get_patch')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_patch(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@scheduler_definition_group.command(name=cli_util.override('fleet_apps_management_operations.create_scheduler_definition.command_name', 'create'), help=u"""Create a SchedulerDefinition to perform lifecycle operations. \n[Command Reference](createSchedulerDefinition)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Tenancy OCID""")
 @cli_util.option('--schedule', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--action-groups', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Action Groups associated with the Schedule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -167,6 +472,62 @@ def create_scheduler_definition(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
+@patch_group.command(name=cli_util.override('fleet_apps_management_operations.delete_patch.command_name', 'delete'), help=u"""Deletes a Patch resource by identifier \n[Command Reference](deletePatch)""")
+@cli_util.option('--patch-id', required=True, help=u"""unique Patch identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, patch_id, if_match):
+
+    if isinstance(patch_id, six.string_types) and len(patch_id.strip()) == 0:
+        raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    result = client.delete_patch(
+        patch_id=patch_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @scheduler_definition_group.command(name=cli_util.override('fleet_apps_management_operations.delete_scheduler_definition.command_name', 'delete'), help=u"""Deletes a SchedulerDefinition resource by identifier \n[Command Reference](deleteSchedulerDefinition)""")
 @cli_util.option('--scheduler-definition-id', required=True, help=u"""unique SchedulerDefinition identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -231,7 +592,7 @@ def delete_scheduler_definition(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@scheduler_job_group.command(name=cli_util.override('fleet_apps_management_operations.delete_scheduler_job.command_name', 'delete'), help=u"""Deletes a SchedulerJob resource by identifier \n[Command Reference](deleteSchedulerJob)""")
+@scheduler_job_group.command(name=cli_util.override('fleet_apps_management_operations.delete_scheduler_job.command_name', 'delete'), help=u"""Delete a lifecycle operation schedule in Fleet Application Management. \n[Command Reference](deleteSchedulerJob)""")
 @cli_util.option('--scheduler-job-id', required=True, help=u"""unique SchedulerJob identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -295,7 +656,76 @@ def delete_scheduler_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@execution_group.command(name=cli_util.override('fleet_apps_management_operations.get_execution.command_name', 'get'), help=u"""Gets a JobActivity by identifier \n[Command Reference](getExecution)""")
+@compliance_record_group.command(name=cli_util.override('fleet_apps_management_operations.export_compliance_report.command_name', 'export-compliance-report'), help=u"""Generate Compliance Report \n[Command Reference](exportComplianceReport)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--entity-id', help=u"""The OCID of the entity for which the compliance is calculated.Ex.FleetId""")
+@cli_util.option('--resource-id', help=u"""The OCID to identify the resource.""")
+@cli_util.option('--product-stack', help=u"""Product Stack.""")
+@cli_util.option('--product-name', help=u"""Product Name.""")
+@cli_util.option('--compliance-state', type=custom_types.CliCaseInsensitiveChoice(["UNKNOWN", "COMPLIANT", "NON_COMPLIANT", "WARNING"]), help=u"""Last known compliance state of target.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def export_compliance_report(ctx, from_json, file, compartment_id, entity_id, resource_id, product_stack, product_name, compliance_state, if_match):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    if entity_id is not None:
+        _details['entityId'] = entity_id
+
+    if resource_id is not None:
+        _details['resourceId'] = resource_id
+
+    if product_stack is not None:
+        _details['productStack'] = product_stack
+
+    if product_name is not None:
+        _details['productName'] = product_name
+
+    if compliance_state is not None:
+        _details['complianceState'] = compliance_state
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    result = client.export_compliance_report(
+        export_compliance_report_details=_details,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
+@execution_group.command(name=cli_util.override('fleet_apps_management_operations.get_execution.command_name', 'get'), help=u"""Get Task Execution by Identifier for a Resource within an action group. \n[Command Reference](getExecution)""")
 @cli_util.option('--scheduler-job-id', required=True, help=u"""unique SchedulerJob identifier""")
 @cli_util.option('--job-activity-id', required=True, help=u"""unique jobActivity identifier""")
 @cli_util.option('--resource-id', required=True, help=u"""unique Resource identifier""")
@@ -332,7 +762,7 @@ def get_execution(ctx, from_json, scheduler_job_id, job_activity_id, resource_id
     cli_util.render_response(result, ctx)
 
 
-@job_activity_group.command(name=cli_util.override('fleet_apps_management_operations.get_job_activity.command_name', 'get'), help=u"""Gets a JobActivity by identifier \n[Command Reference](getJobActivity)""")
+@job_activity_group.command(name=cli_util.override('fleet_apps_management_operations.get_job_activity.command_name', 'get'), help=u"""Gets activity details by identifier for a job. \n[Command Reference](getJobActivity)""")
 @cli_util.option('--scheduler-job-id', required=True, help=u"""unique SchedulerJob identifier""")
 @cli_util.option('--job-activity-id', required=True, help=u"""unique jobActivity identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -359,7 +789,29 @@ def get_job_activity(ctx, from_json, scheduler_job_id, job_activity_id):
     cli_util.render_response(result, ctx)
 
 
-@scheduler_definition_group.command(name=cli_util.override('fleet_apps_management_operations.get_scheduler_definition.command_name', 'get'), help=u"""Gets a SchedulerDefinition by identifier \n[Command Reference](getSchedulerDefinition)""")
+@patch_group.command(name=cli_util.override('fleet_apps_management_operations.get_patch.command_name', 'get'), help=u"""Gets a Patch by identifier \n[Command Reference](getPatch)""")
+@cli_util.option('--patch-id', required=True, help=u"""unique Patch identifier""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'Patch'})
+@cli_util.wrap_exceptions
+def get_patch(ctx, from_json, patch_id):
+
+    if isinstance(patch_id, six.string_types) and len(patch_id.strip()) == 0:
+        raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    result = client.get_patch(
+        patch_id=patch_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@scheduler_definition_group.command(name=cli_util.override('fleet_apps_management_operations.get_scheduler_definition.command_name', 'get'), help=u"""Get the details of a SchedulerDefinition that performs lifecycle management operations. \n[Command Reference](getSchedulerDefinition)""")
 @cli_util.option('--scheduler-definition-id', required=True, help=u"""unique SchedulerDefinition identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -381,7 +833,7 @@ def get_scheduler_definition(ctx, from_json, scheduler_definition_id):
     cli_util.render_response(result, ctx)
 
 
-@scheduler_job_group.command(name=cli_util.override('fleet_apps_management_operations.get_scheduler_job.command_name', 'get'), help=u"""Gets a SchedulerJob by identifier \n[Command Reference](getSchedulerJob)""")
+@scheduler_job_group.command(name=cli_util.override('fleet_apps_management_operations.get_scheduler_job.command_name', 'get'), help=u"""Get the details of a lifecycle management operations job in Fleet Application Management. \n[Command Reference](getSchedulerJob)""")
 @cli_util.option('--scheduler-job-id', required=True, help=u"""unique SchedulerJob identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -400,6 +852,77 @@ def get_scheduler_job(ctx, from_json, scheduler_job_id):
         scheduler_job_id=scheduler_job_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@compliance_record_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_compliance_records.command_name', 'list-compliance-records'), help=u"""Gets a list of complianceDetails. \n[Command Reference](listComplianceRecords)""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--resource-id', help=u"""Resource identifier.""")
+@cli_util.option('--entity-id', help=u"""Entity identifier.Ex:FleetId""")
+@cli_util.option('--product-name', help=u"""Product Name.""")
+@cli_util.option('--product-stack', help=u"""ProductStack name.""")
+@cli_util.option('--target-name', help=u"""Unique target name""")
+@cli_util.option('--compliance-state', help=u"""Target Compliance State.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'ComplianceRecordCollection'})
+@cli_util.wrap_exceptions
+def list_compliance_records(ctx, from_json, all_pages, page_size, compartment_id, resource_id, entity_id, product_name, product_stack, target_name, compliance_state, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if resource_id is not None:
+        kwargs['resource_id'] = resource_id
+    if entity_id is not None:
+        kwargs['entity_id'] = entity_id
+    if product_name is not None:
+        kwargs['product_name'] = product_name
+    if product_stack is not None:
+        kwargs['product_stack'] = product_stack
+    if target_name is not None:
+        kwargs['target_name'] = target_name
+    if compliance_state is not None:
+        kwargs['compliance_state'] = compliance_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compliance_records,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compliance_records,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_compliance_records(
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -486,7 +1009,166 @@ def list_executions(ctx, from_json, all_pages, page_size, scheduler_job_id, job_
     cli_util.render_response(result, ctx)
 
 
-@scheduled_fleet_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_scheduled_fleets.command_name', 'list-scheduled-fleets'), help=u"""Returns a list of ScheduledFleets \n[Command Reference](listScheduledFleets)""")
+@patch_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_patches.command_name', 'list-patches'), help=u"""Returns a list of Patches. \n[Command Reference](listPatches)""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--product-id', help=u"""Product platformConfigurationId associated with the Patch.""")
+@cli_util.option('--version-parameterconflict', help=u"""Product version""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["USER_DEFINED", "ORACLE_DEFINED"]), help=u"""DefinedBy type.""")
+@cli_util.option('--patch-type-id', help=u"""Patch Type platformConfigurationId associated with the Patch.""")
+@cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given.""")
+@cli_util.option('--id', help=u"""unique Patch identifier""")
+@cli_util.option('--time-released-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Patch Released Date""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-released-less-than', type=custom_types.CLI_DATETIME, help=u"""Patch Released Date""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--should-compliance-policy-rules-be-applied', type=click.BOOL, help=u"""Filter patch based on compliance policy rules for the Product""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETED", "DELETING", "FAILED", "UPDATING"]), help=u"""The current state of the Patch.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'PatchCollection'})
+@cli_util.wrap_exceptions
+def list_patches(ctx, from_json, all_pages, page_size, compartment_id, product_id, version_parameterconflict, type, patch_type_id, name, id, time_released_greater_than_or_equal_to, time_released_less_than, should_compliance_policy_rules_be_applied, limit, page, lifecycle_state, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if product_id is not None:
+        kwargs['product_id'] = product_id
+    if version_parameterconflict is not None:
+        kwargs['version'] = version_parameterconflict
+    if type is not None:
+        kwargs['type'] = type
+    if patch_type_id is not None:
+        kwargs['patch_type_id'] = patch_type_id
+    if name is not None:
+        kwargs['name'] = name
+    if id is not None:
+        kwargs['id'] = id
+    if time_released_greater_than_or_equal_to is not None:
+        kwargs['time_released_greater_than_or_equal_to'] = time_released_greater_than_or_equal_to
+    if time_released_less_than is not None:
+        kwargs['time_released_less_than'] = time_released_less_than
+    if should_compliance_policy_rules_be_applied is not None:
+        kwargs['should_compliance_policy_rules_be_applied'] = should_compliance_policy_rules_be_applied
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_patches,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_patches,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_patches(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@resource_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_resources.command_name', 'list-resources'), help=u"""Returns a list of resources for an Activity Execution. \n[Command Reference](listResources)""")
+@cli_util.option('--scheduler-job-id', required=True, help=u"""unique SchedulerJob identifier""")
+@cli_util.option('--job-activity-id', required=True, help=u"""unique jobActivity identifier""")
+@cli_util.option('--resource-task-id', help=u"""Task Id""")
+@cli_util.option('--step-name', help=u"""Unique step name""")
+@cli_util.option('--target-name', help=u"""Unique target name""")
+@cli_util.option('--sequence', help=u"""Task Order Sequence""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeStarted"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeStarted is descending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'ResourceCollection'})
+@cli_util.wrap_exceptions
+def list_resources(ctx, from_json, all_pages, page_size, scheduler_job_id, job_activity_id, resource_task_id, step_name, target_name, sequence, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(scheduler_job_id, six.string_types) and len(scheduler_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduler-job-id cannot be whitespace or empty string')
+
+    if isinstance(job_activity_id, six.string_types) and len(job_activity_id.strip()) == 0:
+        raise click.UsageError('Parameter --job-activity-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if resource_task_id is not None:
+        kwargs['resource_task_id'] = resource_task_id
+    if step_name is not None:
+        kwargs['step_name'] = step_name
+    if target_name is not None:
+        kwargs['target_name'] = target_name
+    if sequence is not None:
+        kwargs['sequence'] = sequence
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_resources,
+            scheduler_job_id=scheduler_job_id,
+            job_activity_id=job_activity_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_resources,
+            limit,
+            page_size,
+            scheduler_job_id=scheduler_job_id,
+            job_activity_id=job_activity_id,
+            **kwargs
+        )
+    else:
+        result = client.list_resources(
+            scheduler_job_id=scheduler_job_id,
+            job_activity_id=job_activity_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@scheduled_fleet_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_scheduled_fleets.command_name', 'list-scheduled-fleets'), help=u"""Returns a list of ScheduledFleets. \n[Command Reference](listScheduledFleets)""")
 @cli_util.option('--scheduler-definition-id', required=True, help=u"""unique SchedulerDefinition identifier""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
@@ -549,13 +1231,14 @@ def list_scheduled_fleets(ctx, from_json, all_pages, page_size, scheduler_defini
     cli_util.render_response(result, ctx)
 
 
-@scheduler_definition_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_scheduler_definitions.command_name', 'list-scheduler-definitions'), help=u"""Returns a list of SchedulerDefinitions. \n[Command Reference](listSchedulerDefinitions)""")
+@scheduler_definition_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_scheduler_definitions.command_name', 'list-scheduler-definitions'), help=u"""List all lifecycle management schedules in Fleet Application Management. \n[Command Reference](listSchedulerDefinitions)""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "INACTIVE"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "INACTIVE"]), help=u"""A filter to return only scheduleDefinitions whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--product', help=u"""A filter to return only Scheduler Definitions whose assocaited product matches the given product""")
-@cli_util.option('--id', help=u"""unique SchedulerDefinition identifier""")
-@cli_util.option('--maintenance-window-id', help=u"""unique MaintenanceWindow identifier""")
+@cli_util.option('--product', help=u"""A filter to return only dchedule definitions whose assocaited product matches the given product""")
+@cli_util.option('--id', help=u"""A filter to return only schedule definitions whose identifier matches the given identifier.""")
+@cli_util.option('--maintenance-window-id', help=u"""A filter to return only schedule definitions whose associated maintenanceWindowId matches the given maintenanceWindowId.""")
+@cli_util.option('--runbook-id', help=u"""A filter to return only schedule definitions whose associated runbookId matches the given runbookId.""")
 @cli_util.option('--fleet-id', help=u"""unique Fleet identifier""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -568,7 +1251,7 @@ def list_scheduled_fleets(ctx, from_json, all_pages, page_size, scheduler_defini
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'SchedulerDefinitionCollection'})
 @cli_util.wrap_exceptions
-def list_scheduler_definitions(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, product, id, maintenance_window_id, fleet_id, limit, page, sort_order, sort_by):
+def list_scheduler_definitions(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, product, id, maintenance_window_id, runbook_id, fleet_id, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -586,6 +1269,8 @@ def list_scheduler_definitions(ctx, from_json, all_pages, page_size, compartment
         kwargs['id'] = id
     if maintenance_window_id is not None:
         kwargs['maintenance_window_id'] = maintenance_window_id
+    if runbook_id is not None:
+        kwargs['runbook_id'] = runbook_id
     if fleet_id is not None:
         kwargs['fleet_id'] = fleet_id
     if limit is not None:
@@ -620,13 +1305,14 @@ def list_scheduler_definitions(ctx, from_json, all_pages, page_size, compartment
     cli_util.render_response(result, ctx)
 
 
-@scheduler_job_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_scheduler_jobs.command_name', 'list-scheduler-jobs'), help=u"""Returns a list of SchedulerJobs. \n[Command Reference](listSchedulerJobs)""")
+@scheduler_job_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_scheduler_jobs.command_name', 'list-scheduler-jobs'), help=u"""List scheduled lifecycle operation jobs in Fleet Application Management. \n[Command Reference](listSchedulerJobs)""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--fleet-id', help=u"""unique Fleet identifier""")
 @cli_util.option('--time-scheduled-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Scheduled Time""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-scheduled-less-than', type=custom_types.CLI_DATETIME, help=u"""Scheduled Time""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--is-remediation-job-needed', type=click.BOOL, help=u"""Fetch next remediation Job""")
+@cli_util.option('--sub-state', help=u"""A filter to return only resources their subState matches the given subState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""unique SchedulerJob identifier""")
 @cli_util.option('--defintion-id', help=u"""SchedulerJob Definition identifier""")
@@ -641,7 +1327,7 @@ def list_scheduler_definitions(ctx, from_json, all_pages, page_size, compartment
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'SchedulerJobCollection'})
 @cli_util.wrap_exceptions
-def list_scheduler_jobs(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, fleet_id, time_scheduled_greater_than_or_equal_to, time_scheduled_less_than, is_remediation_job_needed, display_name, id, defintion_id, limit, page, sort_order, sort_by):
+def list_scheduler_jobs(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, fleet_id, time_scheduled_greater_than_or_equal_to, time_scheduled_less_than, is_remediation_job_needed, sub_state, display_name, id, defintion_id, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -659,6 +1345,8 @@ def list_scheduler_jobs(ctx, from_json, all_pages, page_size, compartment_id, li
         kwargs['time_scheduled_less_than'] = time_scheduled_less_than
     if is_remediation_job_needed is not None:
         kwargs['is_remediation_job_needed'] = is_remediation_job_needed
+    if sub_state is not None:
+        kwargs['sub_state'] = sub_state
     if display_name is not None:
         kwargs['display_name'] = display_name
     if id is not None:
@@ -697,7 +1385,691 @@ def list_scheduler_jobs(ctx, from_json, all_pages, page_size, compartment_id, li
     cli_util.render_response(result, ctx)
 
 
-@scheduler_definition_group.command(name=cli_util.override('fleet_apps_management_operations.update_scheduler_definition.command_name', 'update'), help=u"""Updates the SchedulerDefinition \n[Command Reference](updateSchedulerDefinition)""")
+@step_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_steps.command_name', 'list-steps'), help=u"""Returns a list of Steps for an Activity Execution. \n[Command Reference](listSteps)""")
+@cli_util.option('--scheduler-job-id', required=True, help=u"""unique SchedulerJob identifier""")
+@cli_util.option('--job-activity-id', required=True, help=u"""unique jobActivity identifier""")
+@cli_util.option('--resource-task-id', help=u"""Task Id""")
+@cli_util.option('--step-name', help=u"""Unique step name""")
+@cli_util.option('--target-name', help=u"""Unique target name""")
+@cli_util.option('--sequence', help=u"""Task Order Sequence""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeStarted"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeStarted is descending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'StepCollection'})
+@cli_util.wrap_exceptions
+def list_steps(ctx, from_json, all_pages, page_size, scheduler_job_id, job_activity_id, resource_task_id, step_name, target_name, sequence, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(scheduler_job_id, six.string_types) and len(scheduler_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduler-job-id cannot be whitespace or empty string')
+
+    if isinstance(job_activity_id, six.string_types) and len(job_activity_id.strip()) == 0:
+        raise click.UsageError('Parameter --job-activity-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if resource_task_id is not None:
+        kwargs['resource_task_id'] = resource_task_id
+    if step_name is not None:
+        kwargs['step_name'] = step_name
+    if target_name is not None:
+        kwargs['target_name'] = target_name
+    if sequence is not None:
+        kwargs['sequence'] = sequence
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_steps,
+            scheduler_job_id=scheduler_job_id,
+            job_activity_id=job_activity_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_steps,
+            limit,
+            page_size,
+            scheduler_job_id=scheduler_job_id,
+            job_activity_id=job_activity_id,
+            **kwargs
+        )
+    else:
+        result = client.list_steps(
+            scheduler_job_id=scheduler_job_id,
+            job_activity_id=job_activity_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@scheduler_job_group.command(name=cli_util.override('fleet_apps_management_operations.manage_job_execution.command_name', 'manage-job-execution'), help=u"""Manage execution actions for a Job like retrying or pausing a task. \n[Command Reference](manageJobExecution)""")
+@cli_util.option('--action-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--scheduler-job-id', required=True, help=u"""unique SchedulerJob identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'action-details': {'module': 'fleet_apps_management', 'class': 'UserActionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'action-details': {'module': 'fleet_apps_management', 'class': 'UserActionDetails'}})
+@cli_util.wrap_exceptions
+def manage_job_execution(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, action_details, scheduler_job_id, if_match):
+
+    if isinstance(scheduler_job_id, six.string_types) and len(scheduler_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduler-job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['actionDetails'] = cli_util.parse_json_parameter("action_details", action_details)
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    result = client.manage_job_execution(
+        scheduler_job_id=scheduler_job_id,
+        manage_job_execution_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@scheduler_job_group.command(name=cli_util.override('fleet_apps_management_operations.manage_job_execution_step_based_user_action_details.command_name', 'manage-job-execution-step-based-user-action-details'), help=u"""Manage execution actions for a Job like retrying or pausing a task. \n[Command Reference](manageJobExecution)""")
+@cli_util.option('--scheduler-job-id', required=True, help=u"""unique SchedulerJob identifier""")
+@cli_util.option('--action-details-action', required=True, type=custom_types.CliCaseInsensitiveChoice(["RETRY", "RESUME"]), help=u"""Action to be Performed.""")
+@cli_util.option('--action-details-action-group-id', required=True, help=u"""Unique identifier for the action group.""")
+@cli_util.option('--action-details-resource-id', required=True, help=u"""Resource OCID""")
+@cli_util.option('--action-details-step-name', required=True, help=u"""Name of the step on which user action needs to be performed.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--action-details-target-id', help=u"""Target associated with the execution.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def manage_job_execution_step_based_user_action_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduler_job_id, action_details_action, action_details_action_group_id, action_details_resource_id, action_details_step_name, if_match, action_details_target_id):
+
+    if isinstance(scheduler_job_id, six.string_types) and len(scheduler_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduler-job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['actionDetails'] = {}
+    _details['actionDetails']['action'] = action_details_action
+    _details['actionDetails']['actionGroupId'] = action_details_action_group_id
+    _details['actionDetails']['resourceId'] = action_details_resource_id
+    _details['actionDetails']['stepName'] = action_details_step_name
+
+    if action_details_target_id is not None:
+        _details['actionDetails']['targetId'] = action_details_target_id
+
+    _details['actionDetails']['level'] = 'STEP_NAME'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    result = client.manage_job_execution(
+        scheduler_job_id=scheduler_job_id,
+        manage_job_execution_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@scheduler_job_group.command(name=cli_util.override('fleet_apps_management_operations.manage_job_execution_action_group_based_user_action_details.command_name', 'manage-job-execution-action-group-based-user-action-details'), help=u"""Manage execution actions for a Job like retrying or pausing a task. \n[Command Reference](manageJobExecution)""")
+@cli_util.option('--scheduler-job-id', required=True, help=u"""unique SchedulerJob identifier""")
+@cli_util.option('--action-details-action', required=True, type=custom_types.CliCaseInsensitiveChoice(["RETRY", "RESUME"]), help=u"""Action to be Performed.""")
+@cli_util.option('--action-details-action-group-id', required=True, help=u"""Unique identifier for the action group.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def manage_job_execution_action_group_based_user_action_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduler_job_id, action_details_action, action_details_action_group_id, if_match):
+
+    if isinstance(scheduler_job_id, six.string_types) and len(scheduler_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --scheduler-job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['actionDetails'] = {}
+    _details['actionDetails']['action'] = action_details_action
+    _details['actionDetails']['actionGroupId'] = action_details_action_group_id
+
+    _details['actionDetails']['level'] = 'ACTION_GROUP'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    result = client.manage_job_execution(
+        scheduler_job_id=scheduler_job_id,
+        manage_job_execution_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compliance_record_aggregation_collection_group.command(name=cli_util.override('fleet_apps_management_operations.summarize_compliance_record_counts.command_name', 'summarize-compliance-record-counts'), help=u"""Retrieve  aggregated summary information of ComplianceRecords within a Tenancy. \n[Command Reference](summarizeComplianceRecordCounts)""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'ComplianceRecordAggregationCollection'})
+@cli_util.wrap_exceptions
+def summarize_compliance_record_counts(ctx, from_json, compartment_id, limit, page, sort_order):
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    result = client.summarize_compliance_record_counts(
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@managed_entity_aggregation_collection_group.command(name=cli_util.override('fleet_apps_management_operations.summarize_managed_entity_counts.command_name', 'summarize-managed-entity-counts'), help=u"""Retrieve  aggregated summary information of Managed Entities within a Tenancy. \n[Command Reference](summarizeManagedEntityCounts)""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'ManagedEntityAggregationCollection'})
+@cli_util.wrap_exceptions
+def summarize_managed_entity_counts(ctx, from_json, compartment_id, limit, page, sort_order):
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    result = client.summarize_managed_entity_counts(
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@scheduler_job_aggregation_collection_group.command(name=cli_util.override('fleet_apps_management_operations.summarize_scheduler_job_counts.command_name', 'summarize-scheduler-job-counts'), help=u"""Retrieve aggregated summary information of Scheduler Jobs within a Tenancy. \n[Command Reference](summarizeSchedulerJobCounts)""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'SchedulerJobAggregationCollection'})
+@cli_util.wrap_exceptions
+def summarize_scheduler_job_counts(ctx, from_json, compartment_id, limit, page, sort_order):
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    result = client.summarize_scheduler_job_counts(
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@patch_group.command(name=cli_util.override('fleet_apps_management_operations.update_patch.command_name', 'update'), help=u"""Updates the Patch \n[Command Reference](updatePatch)""")
+@cli_util.option('--patch-id', required=True, help=u"""unique Patch identifier""")
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--patch-type', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Patch Severity.""")
+@cli_util.option('--time-released', type=custom_types.CLI_DATETIME, help=u"""Date when the patch was released.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--artifact-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--product', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dependent-patches', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Dependent Patches.
+
+This option is a JSON list with items of type DependentPatchDetails.  For documentation on DependentPatchDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagementoperations/20230831/datatypes/DependentPatchDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'patch-type': {'module': 'fleet_apps_management', 'class': 'PatchType'}, 'artifact-details': {'module': 'fleet_apps_management', 'class': 'ArtifactDetails'}, 'product': {'module': 'fleet_apps_management', 'class': 'PatchProduct'}, 'dependent-patches': {'module': 'fleet_apps_management', 'class': 'list[DependentPatchDetails]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'patch-type': {'module': 'fleet_apps_management', 'class': 'PatchType'}, 'artifact-details': {'module': 'fleet_apps_management', 'class': 'ArtifactDetails'}, 'product': {'module': 'fleet_apps_management', 'class': 'PatchProduct'}, 'dependent-patches': {'module': 'fleet_apps_management', 'class': 'list[DependentPatchDetails]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_patch(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, patch_id, description, patch_type, severity, time_released, artifact_details, product, dependent_patches, compartment_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(patch_id, six.string_types) and len(patch_id.strip()) == 0:
+        raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
+    if not force:
+        if patch_type or artifact_details or product or dependent_patches or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to patch-type and artifact-details and product and dependent-patches and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if patch_type is not None:
+        _details['patchType'] = cli_util.parse_json_parameter("patch_type", patch_type)
+
+    if severity is not None:
+        _details['severity'] = severity
+
+    if time_released is not None:
+        _details['timeReleased'] = time_released
+
+    if artifact_details is not None:
+        _details['artifactDetails'] = cli_util.parse_json_parameter("artifact_details", artifact_details)
+
+    if product is not None:
+        _details['product'] = cli_util.parse_json_parameter("product", product)
+
+    if dependent_patches is not None:
+        _details['dependentPatches'] = cli_util.parse_json_parameter("dependent_patches", dependent_patches)
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    result = client.update_patch(
+        patch_id=patch_id,
+        update_patch_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@patch_group.command(name=cli_util.override('fleet_apps_management_operations.update_patch_platform_specific_artifact_details.command_name', 'update-patch-platform-specific-artifact-details'), help=u"""Updates the Patch \n[Command Reference](updatePatch)""")
+@cli_util.option('--patch-id', required=True, help=u"""unique Patch identifier""")
+@cli_util.option('--artifact-details-artifacts', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Artifacts.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--patch-type', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Patch Severity.""")
+@cli_util.option('--time-released', type=custom_types.CLI_DATETIME, help=u"""Date when the patch was released.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--product', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dependent-patches', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Dependent Patches.
+
+This option is a JSON list with items of type DependentPatchDetails.  For documentation on DependentPatchDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagementoperations/20230831/datatypes/DependentPatchDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'patch-type': {'module': 'fleet_apps_management', 'class': 'PatchType'}, 'product': {'module': 'fleet_apps_management', 'class': 'PatchProduct'}, 'dependent-patches': {'module': 'fleet_apps_management', 'class': 'list[DependentPatchDetails]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}, 'artifact-details-artifacts': {'module': 'fleet_apps_management', 'class': 'list[PlatformSpecificArtifact]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'patch-type': {'module': 'fleet_apps_management', 'class': 'PatchType'}, 'product': {'module': 'fleet_apps_management', 'class': 'PatchProduct'}, 'dependent-patches': {'module': 'fleet_apps_management', 'class': 'list[DependentPatchDetails]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}, 'artifact-details-artifacts': {'module': 'fleet_apps_management', 'class': 'list[PlatformSpecificArtifact]'}})
+@cli_util.wrap_exceptions
+def update_patch_platform_specific_artifact_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, patch_id, artifact_details_artifacts, description, patch_type, severity, time_released, product, dependent_patches, compartment_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(patch_id, six.string_types) and len(patch_id.strip()) == 0:
+        raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
+    if not force:
+        if patch_type or product or dependent_patches or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to patch-type and product and dependent-patches and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['artifactDetails'] = {}
+    _details['artifactDetails']['artifacts'] = cli_util.parse_json_parameter("artifact_details_artifacts", artifact_details_artifacts)
+
+    if description is not None:
+        _details['description'] = description
+
+    if patch_type is not None:
+        _details['patchType'] = cli_util.parse_json_parameter("patch_type", patch_type)
+
+    if severity is not None:
+        _details['severity'] = severity
+
+    if time_released is not None:
+        _details['timeReleased'] = time_released
+
+    if product is not None:
+        _details['product'] = cli_util.parse_json_parameter("product", product)
+
+    if dependent_patches is not None:
+        _details['dependentPatches'] = cli_util.parse_json_parameter("dependent_patches", dependent_patches)
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['artifactDetails']['category'] = 'PLATFORM_SPECIFIC'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    result = client.update_patch(
+        patch_id=patch_id,
+        update_patch_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@patch_group.command(name=cli_util.override('fleet_apps_management_operations.update_patch_generic_artifact_details.command_name', 'update-patch-generic-artifact-details'), help=u"""Updates the Patch \n[Command Reference](updatePatch)""")
+@cli_util.option('--patch-id', required=True, help=u"""unique Patch identifier""")
+@cli_util.option('--artifact-details-artifact', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--patch-type', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Patch Severity.""")
+@cli_util.option('--time-released', type=custom_types.CLI_DATETIME, help=u"""Date when the patch was released.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--product', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dependent-patches', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Dependent Patches.
+
+This option is a JSON list with items of type DependentPatchDetails.  For documentation on DependentPatchDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagementoperations/20230831/datatypes/DependentPatchDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'patch-type': {'module': 'fleet_apps_management', 'class': 'PatchType'}, 'product': {'module': 'fleet_apps_management', 'class': 'PatchProduct'}, 'dependent-patches': {'module': 'fleet_apps_management', 'class': 'list[DependentPatchDetails]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}, 'artifact-details-artifact': {'module': 'fleet_apps_management', 'class': 'GenericArtifact'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'patch-type': {'module': 'fleet_apps_management', 'class': 'PatchType'}, 'product': {'module': 'fleet_apps_management', 'class': 'PatchProduct'}, 'dependent-patches': {'module': 'fleet_apps_management', 'class': 'list[DependentPatchDetails]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}, 'artifact-details-artifact': {'module': 'fleet_apps_management', 'class': 'GenericArtifact'}})
+@cli_util.wrap_exceptions
+def update_patch_generic_artifact_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, patch_id, artifact_details_artifact, description, patch_type, severity, time_released, product, dependent_patches, compartment_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(patch_id, six.string_types) and len(patch_id.strip()) == 0:
+        raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
+    if not force:
+        if patch_type or product or dependent_patches or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to patch-type and product and dependent-patches and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['artifactDetails'] = {}
+    _details['artifactDetails']['artifact'] = cli_util.parse_json_parameter("artifact_details_artifact", artifact_details_artifact)
+
+    if description is not None:
+        _details['description'] = description
+
+    if patch_type is not None:
+        _details['patchType'] = cli_util.parse_json_parameter("patch_type", patch_type)
+
+    if severity is not None:
+        _details['severity'] = severity
+
+    if time_released is not None:
+        _details['timeReleased'] = time_released
+
+    if product is not None:
+        _details['product'] = cli_util.parse_json_parameter("product", product)
+
+    if dependent_patches is not None:
+        _details['dependentPatches'] = cli_util.parse_json_parameter("dependent_patches", dependent_patches)
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['artifactDetails']['category'] = 'GENERIC'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    result = client.update_patch(
+        patch_id=patch_id,
+        update_patch_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@scheduler_definition_group.command(name=cli_util.override('fleet_apps_management_operations.update_scheduler_definition.command_name', 'update'), help=u"""Update the details of a SchedulerDefinition that performs lifecycle management operations. \n[Command Reference](updateSchedulerDefinition)""")
 @cli_util.option('--scheduler-definition-id', required=True, help=u"""unique SchedulerDefinition identifier""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
@@ -799,9 +2171,9 @@ def update_scheduler_definition(ctx, from_json, force, wait_for_state, max_wait_
     cli_util.render_response(result, ctx)
 
 
-@scheduler_job_group.command(name=cli_util.override('fleet_apps_management_operations.update_scheduler_job.command_name', 'update'), help=u"""Updates the SchedulerJob \n[Command Reference](updateSchedulerJob)""")
+@scheduler_job_group.command(name=cli_util.override('fleet_apps_management_operations.update_scheduler_job.command_name', 'update'), help=u"""Update a lifecycle operation job schedule in Fleet Application Management. \n[Command Reference](updateSchedulerJob)""")
 @cli_util.option('--scheduler-job-id', required=True, help=u"""unique SchedulerJob identifier""")
-@cli_util.option('--time-scheduled', type=custom_types.CLI_DATETIME, help=u"""Scheduled date for the Job.Provide only the date""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-scheduled', type=custom_types.CLI_DATETIME, help=u"""The scheduled date and time for the Job.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

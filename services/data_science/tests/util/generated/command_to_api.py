@@ -82,6 +82,7 @@ SDK_client_map = {
     "data_science.list_work_request_errors": "oci.data_science.DataScienceClient.list_work_request_errors",
     "data_science.list_work_request_logs": "oci.data_science.DataScienceClient.list_work_request_logs",
     "data_science.list_work_requests": "oci.data_science.DataScienceClient.list_work_requests",
+    "data_science.restore_archived_model_artifact": "oci.data_science.DataScienceClient.restore_archived_model_artifact",
     "data_science.update_data_science_private_endpoint": "oci.data_science.DataScienceClient.update_data_science_private_endpoint",
     "data_science.update_job": "oci.data_science.DataScienceClient.update_job",
     "data_science.update_job_run": "oci.data_science.DataScienceClient.update_job_run",

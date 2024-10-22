@@ -152,6 +152,7 @@ SDK_client_map = {
     "opsi.summarize_exadata_members": "oci.opsi.OperationsInsightsClient.summarize_exadata_members",
     "opsi.summarize_host_insight_disk_statistics": "oci.opsi.OperationsInsightsClient.summarize_host_insight_disk_statistics",
     "opsi.summarize_host_insight_host_recommendation": "oci.opsi.OperationsInsightsClient.summarize_host_insight_host_recommendation",
+    "opsi.summarize_host_insight_io_usage_trend": "oci.opsi.OperationsInsightsClient.summarize_host_insight_io_usage_trend",
     "opsi.summarize_host_insight_network_usage_trend": "oci.opsi.OperationsInsightsClient.summarize_host_insight_network_usage_trend",
     "opsi.summarize_host_insight_resource_capacity_trend": "oci.opsi.OperationsInsightsClient.summarize_host_insight_resource_capacity_trend",
     "opsi.summarize_host_insight_resource_forecast_trend": "oci.opsi.OperationsInsightsClient.summarize_host_insight_resource_forecast_trend",

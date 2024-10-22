@@ -68,7 +68,7 @@ inventory_root_group.add_command(historical_metric_group)
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""A filter to return only assets whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--source-key', help=u"""Source key from where the assets originate.""")
 @cli_util.option('--external-asset-key', help=u"""External asset key.""")
-@cli_util.option('--asset-type', type=custom_types.CliCaseInsensitiveChoice(["VMWARE_VM", "VM"]), help=u"""The type of asset.""")
+@cli_util.option('--asset-type', type=custom_types.CliCaseInsensitiveChoice(["VMWARE_VM", "VM", "AWS_EC2", "AWS_EBS"]), help=u"""The type of asset.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--group-by', multiple=True, help=u"""The dimensions in which to group the aggregations.""")
 @cli_util.option('--inventory-id', help=u"""Unique Inventory identifier.""")
@@ -207,7 +207,7 @@ def change_asset_tags(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that the asset belongs to.""")
 @cli_util.option('--source-key', required=True, help=u"""The source key to which the asset belongs.""")
 @cli_util.option('--external-asset-key', required=True, help=u"""The key of the asset from the external environment.""")
-@cli_util.option('--asset-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VMWARE_VM", "VM"]), help=u"""The type of asset.""")
+@cli_util.option('--asset-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VMWARE_VM", "VM", "AWS_EC2", "AWS_EBS"]), help=u"""The type of asset.""")
 @cli_util.option('--display-name', help=u"""Asset display name.""")
 @cli_util.option('--asset-source-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of asset source OCID.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace/scope. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -275,28 +275,25 @@ def create_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@asset_group.command(name=cli_util.override('inventory.create_asset_create_vmware_vm_asset_details.command_name', 'create-asset-create-vmware-vm-asset-details'), help=u"""Creates an asset. \n[Command Reference](createAsset)""")
+@asset_group.command(name=cli_util.override('inventory.create_asset_create_aws_ebs_asset_details.command_name', 'create-asset-create-aws-ebs-asset-details'), help=u"""Creates an asset. \n[Command Reference](createAsset)""")
 @cli_util.option('--inventory-id', required=True, help=u"""Inventory ID to which an asset belongs.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that the asset belongs to.""")
 @cli_util.option('--source-key', required=True, help=u"""The source key to which the asset belongs.""")
 @cli_util.option('--external-asset-key', required=True, help=u"""The key of the asset from the external environment.""")
+@cli_util.option('--aws-ebs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Asset display name.""")
 @cli_util.option('--asset-source-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of asset source OCID.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace/scope. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags associated with this resource, if any. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vm', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vmware-vm', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vmware-v-center', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'asset-source-ids': {'module': 'cloud_bridge', 'class': 'list[string]'}, 'freeform-tags': {'module': 'cloud_bridge', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_bridge', 'class': 'dict(str, dict(str, object))'}, 'compute': {'module': 'cloud_bridge', 'class': 'ComputeProperties'}, 'vm': {'module': 'cloud_bridge', 'class': 'VmProperties'}, 'vmware-vm': {'module': 'cloud_bridge', 'class': 'VmwareVmProperties'}, 'vmware-v-center': {'module': 'cloud_bridge', 'class': 'VmwareVCenterProperties'}})
+@json_skeleton_utils.get_cli_json_input_option({'asset-source-ids': {'module': 'cloud_bridge', 'class': 'list[string]'}, 'freeform-tags': {'module': 'cloud_bridge', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_bridge', 'class': 'dict(str, dict(str, object))'}, 'aws-ebs': {'module': 'cloud_bridge', 'class': 'AwsEbsProperties'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-source-ids': {'module': 'cloud_bridge', 'class': 'list[string]'}, 'freeform-tags': {'module': 'cloud_bridge', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_bridge', 'class': 'dict(str, dict(str, object))'}, 'compute': {'module': 'cloud_bridge', 'class': 'ComputeProperties'}, 'vm': {'module': 'cloud_bridge', 'class': 'VmProperties'}, 'vmware-vm': {'module': 'cloud_bridge', 'class': 'VmwareVmProperties'}, 'vmware-v-center': {'module': 'cloud_bridge', 'class': 'VmwareVCenterProperties'}}, output_type={'module': 'cloud_bridge', 'class': 'Asset'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-source-ids': {'module': 'cloud_bridge', 'class': 'list[string]'}, 'freeform-tags': {'module': 'cloud_bridge', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_bridge', 'class': 'dict(str, dict(str, object))'}, 'aws-ebs': {'module': 'cloud_bridge', 'class': 'AwsEbsProperties'}}, output_type={'module': 'cloud_bridge', 'class': 'Asset'})
 @cli_util.wrap_exceptions
-def create_asset_create_vmware_vm_asset_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, inventory_id, compartment_id, source_key, external_asset_key, display_name, asset_source_ids, freeform_tags, defined_tags, compute, vm, vmware_vm, vmware_v_center):
+def create_asset_create_aws_ebs_asset_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, inventory_id, compartment_id, source_key, external_asset_key, aws_ebs, display_name, asset_source_ids, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -306,6 +303,7 @@ def create_asset_create_vmware_vm_asset_details(ctx, from_json, wait_for_state, 
     _details['compartmentId'] = compartment_id
     _details['sourceKey'] = source_key
     _details['externalAssetKey'] = external_asset_key
+    _details['awsEbs'] = cli_util.parse_json_parameter("aws_ebs", aws_ebs)
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -319,19 +317,175 @@ def create_asset_create_vmware_vm_asset_details(ctx, from_json, wait_for_state, 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    if compute is not None:
-        _details['compute'] = cli_util.parse_json_parameter("compute", compute)
+    _details['assetType'] = 'AWS_EBS'
 
-    if vm is not None:
-        _details['vm'] = cli_util.parse_json_parameter("vm", vm)
+    client = cli_util.build_client('cloud_bridge', 'inventory', ctx)
+    result = client.create_asset(
+        create_asset_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
 
-    if vmware_vm is not None:
-        _details['vmwareVm'] = cli_util.parse_json_parameter("vmware_vm", vmware_vm)
+        if hasattr(client, 'get_asset') and callable(getattr(client, 'get_asset')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
-    if vmware_v_center is not None:
-        _details['vmwareVCenter'] = cli_util.parse_json_parameter("vmware_v_center", vmware_v_center)
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_asset(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@asset_group.command(name=cli_util.override('inventory.create_asset_create_vmware_vm_asset_details.command_name', 'create-asset-create-vmware-vm-asset-details'), help=u"""Creates an asset. \n[Command Reference](createAsset)""")
+@cli_util.option('--inventory-id', required=True, help=u"""Inventory ID to which an asset belongs.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that the asset belongs to.""")
+@cli_util.option('--source-key', required=True, help=u"""The source key to which the asset belongs.""")
+@cli_util.option('--external-asset-key', required=True, help=u"""The key of the asset from the external environment.""")
+@cli_util.option('--compute', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vm', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vmware-vm', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vmware-v-center', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""Asset display name.""")
+@cli_util.option('--asset-source-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of asset source OCID.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace/scope. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags associated with this resource, if any. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'asset-source-ids': {'module': 'cloud_bridge', 'class': 'list[string]'}, 'freeform-tags': {'module': 'cloud_bridge', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_bridge', 'class': 'dict(str, dict(str, object))'}, 'compute': {'module': 'cloud_bridge', 'class': 'ComputeProperties'}, 'vm': {'module': 'cloud_bridge', 'class': 'VmProperties'}, 'vmware-vm': {'module': 'cloud_bridge', 'class': 'VmwareVmProperties'}, 'vmware-v-center': {'module': 'cloud_bridge', 'class': 'VmwareVCenterProperties'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-source-ids': {'module': 'cloud_bridge', 'class': 'list[string]'}, 'freeform-tags': {'module': 'cloud_bridge', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_bridge', 'class': 'dict(str, dict(str, object))'}, 'compute': {'module': 'cloud_bridge', 'class': 'ComputeProperties'}, 'vm': {'module': 'cloud_bridge', 'class': 'VmProperties'}, 'vmware-vm': {'module': 'cloud_bridge', 'class': 'VmwareVmProperties'}, 'vmware-v-center': {'module': 'cloud_bridge', 'class': 'VmwareVCenterProperties'}}, output_type={'module': 'cloud_bridge', 'class': 'Asset'})
+@cli_util.wrap_exceptions
+def create_asset_create_vmware_vm_asset_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, inventory_id, compartment_id, source_key, external_asset_key, compute, vm, vmware_vm, vmware_v_center, display_name, asset_source_ids, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['inventoryId'] = inventory_id
+    _details['compartmentId'] = compartment_id
+    _details['sourceKey'] = source_key
+    _details['externalAssetKey'] = external_asset_key
+    _details['compute'] = cli_util.parse_json_parameter("compute", compute)
+    _details['vm'] = cli_util.parse_json_parameter("vm", vm)
+    _details['vmwareVm'] = cli_util.parse_json_parameter("vmware_vm", vmware_vm)
+    _details['vmwareVCenter'] = cli_util.parse_json_parameter("vmware_v_center", vmware_v_center)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if asset_source_ids is not None:
+        _details['assetSourceIds'] = cli_util.parse_json_parameter("asset_source_ids", asset_source_ids)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['assetType'] = 'VMWARE_VM'
+
+    client = cli_util.build_client('cloud_bridge', 'inventory', ctx)
+    result = client.create_asset(
+        create_asset_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_asset') and callable(getattr(client, 'get_asset')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_asset(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@asset_group.command(name=cli_util.override('inventory.create_asset_create_aws_ec2_asset_details.command_name', 'create-asset-create-aws-ec2-asset-details'), help=u"""Creates an asset. \n[Command Reference](createAsset)""")
+@cli_util.option('--inventory-id', required=True, help=u"""Inventory ID to which an asset belongs.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that the asset belongs to.""")
+@cli_util.option('--source-key', required=True, help=u"""The source key to which the asset belongs.""")
+@cli_util.option('--external-asset-key', required=True, help=u"""The key of the asset from the external environment.""")
+@cli_util.option('--compute', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vm', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--aws-ec2', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""Asset display name.""")
+@cli_util.option('--asset-source-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of asset source OCID.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace/scope. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags associated with this resource, if any. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--aws-ec2-cost', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attached-ebs-volumes-cost', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'asset-source-ids': {'module': 'cloud_bridge', 'class': 'list[string]'}, 'freeform-tags': {'module': 'cloud_bridge', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_bridge', 'class': 'dict(str, dict(str, object))'}, 'compute': {'module': 'cloud_bridge', 'class': 'ComputeProperties'}, 'vm': {'module': 'cloud_bridge', 'class': 'VmProperties'}, 'aws-ec2': {'module': 'cloud_bridge', 'class': 'AwsEc2Properties'}, 'aws-ec2-cost': {'module': 'cloud_bridge', 'class': 'MonthlyCostSummary'}, 'attached-ebs-volumes-cost': {'module': 'cloud_bridge', 'class': 'MonthlyCostSummary'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-source-ids': {'module': 'cloud_bridge', 'class': 'list[string]'}, 'freeform-tags': {'module': 'cloud_bridge', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_bridge', 'class': 'dict(str, dict(str, object))'}, 'compute': {'module': 'cloud_bridge', 'class': 'ComputeProperties'}, 'vm': {'module': 'cloud_bridge', 'class': 'VmProperties'}, 'aws-ec2': {'module': 'cloud_bridge', 'class': 'AwsEc2Properties'}, 'aws-ec2-cost': {'module': 'cloud_bridge', 'class': 'MonthlyCostSummary'}, 'attached-ebs-volumes-cost': {'module': 'cloud_bridge', 'class': 'MonthlyCostSummary'}}, output_type={'module': 'cloud_bridge', 'class': 'Asset'})
+@cli_util.wrap_exceptions
+def create_asset_create_aws_ec2_asset_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, inventory_id, compartment_id, source_key, external_asset_key, compute, vm, aws_ec2, display_name, asset_source_ids, freeform_tags, defined_tags, aws_ec2_cost, attached_ebs_volumes_cost):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['inventoryId'] = inventory_id
+    _details['compartmentId'] = compartment_id
+    _details['sourceKey'] = source_key
+    _details['externalAssetKey'] = external_asset_key
+    _details['compute'] = cli_util.parse_json_parameter("compute", compute)
+    _details['vm'] = cli_util.parse_json_parameter("vm", vm)
+    _details['awsEc2'] = cli_util.parse_json_parameter("aws_ec2", aws_ec2)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if asset_source_ids is not None:
+        _details['assetSourceIds'] = cli_util.parse_json_parameter("asset_source_ids", asset_source_ids)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if aws_ec2_cost is not None:
+        _details['awsEc2Cost'] = cli_util.parse_json_parameter("aws_ec2_cost", aws_ec2_cost)
+
+    if attached_ebs_volumes_cost is not None:
+        _details['attachedEbsVolumesCost'] = cli_util.parse_json_parameter("attached_ebs_volumes_cost", attached_ebs_volumes_cost)
+
+    _details['assetType'] = 'AWS_EC2'
 
     client = cli_util.build_client('cloud_bridge', 'inventory', ctx)
     result = client.create_asset(
@@ -693,11 +847,11 @@ def import_inventory(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
 @inventory_group.command(name=cli_util.override('inventory.import_inventory_import_inventory_via_assets_details.command_name', 'import-inventory-import-inventory-via-assets-details'), help=u"""Import resources in inventory. \n[Command Reference](importInventory)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartmentId that resources import.""")
+@cli_util.option('--data', required=True, help=u"""The file body to be sent in the request.""")
+@cli_util.option('--asset-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VMWARE_VM", "VM", "AWS_EC2", "AWS_EBS"]), help=u"""The type of asset.""")
 @cli_util.option('--inventory-id', required=True, help=u"""Inventory OCID.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace/scope. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags associated with this resource, if any. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--data', help=u"""The file body to be sent in the request.""")
-@cli_util.option('--asset-type', type=custom_types.CliCaseInsensitiveChoice(["VMWARE_VM", "VM"]), help=u"""The type of asset.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -706,7 +860,7 @@ def import_inventory(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'cloud_bridge', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_bridge', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def import_inventory_import_inventory_via_assets_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, inventory_id, freeform_tags, defined_tags, data, asset_type):
+def import_inventory_import_inventory_via_assets_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, data, asset_type, inventory_id, freeform_tags, defined_tags):
 
     if isinstance(inventory_id, six.string_types) and len(inventory_id.strip()) == 0:
         raise click.UsageError('Parameter --inventory-id cannot be whitespace or empty string')
@@ -716,18 +870,14 @@ def import_inventory_import_inventory_via_assets_details(ctx, from_json, wait_fo
 
     _details = {}
     _details['compartmentId'] = compartment_id
+    _details['data'] = data
+    _details['assetType'] = asset_type
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    if data is not None:
-        _details['data'] = data
-
-    if asset_type is not None:
-        _details['assetType'] = asset_type
 
     _details['resourceType'] = 'ASSET'
 
@@ -774,7 +924,7 @@ def import_inventory_import_inventory_via_assets_details(ctx, from_json, wait_fo
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""A filter to return only assets whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--source-key', help=u"""Source key from where the assets originate.""")
 @cli_util.option('--external-asset-key', help=u"""External asset key.""")
-@cli_util.option('--asset-type', type=custom_types.CliCaseInsensitiveChoice(["VMWARE_VM", "VM"]), help=u"""The type of asset.""")
+@cli_util.option('--asset-type', type=custom_types.CliCaseInsensitiveChoice(["VMWARE_VM", "VM", "AWS_EC2", "AWS_EBS"]), help=u"""The type of asset.""")
 @cli_util.option('--asset-id', help=u"""Unique asset identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -989,7 +1139,7 @@ def submit_historical_metrics(ctx, from_json, historical_metrics, asset_id, if_m
 
 @asset_group.command(name=cli_util.override('inventory.update_asset.command_name', 'update'), help=u"""Updates the asset. \n[Command Reference](updateAsset)""")
 @cli_util.option('--asset-id', required=True, help=u"""Unique asset identifier.""")
-@cli_util.option('--asset-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VMWARE_VM", "VM"]), help=u"""Asset type""")
+@cli_util.option('--asset-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VMWARE_VM", "VM", "AWS_EC2", "AWS_EBS"]), help=u"""Asset type""")
 @cli_util.option('--display-name', help=u"""Asset display name.""")
 @cli_util.option('--asset-source-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of asset source OCID.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace/scope. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1143,6 +1293,88 @@ def update_asset_update_vm_asset_details(ctx, from_json, force, wait_for_state, 
     cli_util.render_response(result, ctx)
 
 
+@asset_group.command(name=cli_util.override('inventory.update_asset_update_aws_ebs_asset_details.command_name', 'update-asset-update-aws-ebs-asset-details'), help=u"""Updates the asset. \n[Command Reference](updateAsset)""")
+@cli_util.option('--asset-id', required=True, help=u"""Unique asset identifier.""")
+@cli_util.option('--display-name', help=u"""Asset display name.""")
+@cli_util.option('--asset-source-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of asset source OCID.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace/scope. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags associated with this resource, if any. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--aws-ebs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'asset-source-ids': {'module': 'cloud_bridge', 'class': 'list[string]'}, 'freeform-tags': {'module': 'cloud_bridge', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_bridge', 'class': 'dict(str, dict(str, object))'}, 'aws-ebs': {'module': 'cloud_bridge', 'class': 'AwsEbsProperties'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-source-ids': {'module': 'cloud_bridge', 'class': 'list[string]'}, 'freeform-tags': {'module': 'cloud_bridge', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_bridge', 'class': 'dict(str, dict(str, object))'}, 'aws-ebs': {'module': 'cloud_bridge', 'class': 'AwsEbsProperties'}}, output_type={'module': 'cloud_bridge', 'class': 'Asset'})
+@cli_util.wrap_exceptions
+def update_asset_update_aws_ebs_asset_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, asset_id, display_name, asset_source_ids, freeform_tags, defined_tags, aws_ebs, if_match):
+
+    if isinstance(asset_id, six.string_types) and len(asset_id.strip()) == 0:
+        raise click.UsageError('Parameter --asset-id cannot be whitespace or empty string')
+    if not force:
+        if asset_source_ids or freeform_tags or defined_tags or aws_ebs:
+            if not click.confirm("WARNING: Updates to asset-source-ids and freeform-tags and defined-tags and aws-ebs will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if asset_source_ids is not None:
+        _details['assetSourceIds'] = cli_util.parse_json_parameter("asset_source_ids", asset_source_ids)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if aws_ebs is not None:
+        _details['awsEbs'] = cli_util.parse_json_parameter("aws_ebs", aws_ebs)
+
+    _details['assetType'] = 'AWS_EBS'
+
+    client = cli_util.build_client('cloud_bridge', 'inventory', ctx)
+    result = client.update_asset(
+        asset_id=asset_id,
+        update_asset_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_asset') and callable(getattr(client, 'get_asset')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_asset(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @asset_group.command(name=cli_util.override('inventory.update_asset_update_vmware_vm_asset_details.command_name', 'update-asset-update-vmware-vm-asset-details'), help=u"""Updates the asset. \n[Command Reference](updateAsset)""")
 @cli_util.option('--asset-id', required=True, help=u"""Unique asset identifier.""")
 @cli_util.option('--display-name', help=u"""Asset display name.""")
@@ -1204,6 +1436,104 @@ def update_asset_update_vmware_vm_asset_details(ctx, from_json, force, wait_for_
         _details['vmwareVCenter'] = cli_util.parse_json_parameter("vmware_v_center", vmware_v_center)
 
     _details['assetType'] = 'VMWARE_VM'
+
+    client = cli_util.build_client('cloud_bridge', 'inventory', ctx)
+    result = client.update_asset(
+        asset_id=asset_id,
+        update_asset_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_asset') and callable(getattr(client, 'get_asset')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_asset(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@asset_group.command(name=cli_util.override('inventory.update_asset_update_aws_ec2_asset_details.command_name', 'update-asset-update-aws-ec2-asset-details'), help=u"""Updates the asset. \n[Command Reference](updateAsset)""")
+@cli_util.option('--asset-id', required=True, help=u"""Unique asset identifier.""")
+@cli_util.option('--display-name', help=u"""Asset display name.""")
+@cli_util.option('--asset-source-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of asset source OCID.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The freeform tags associated with this resource, if any. Each tag is a simple key-value pair with no predefined name, type, or namespace/scope. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags associated with this resource, if any. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compute', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vm', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--aws-ec2', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--aws-ec2-cost', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attached-ebs-volumes-cost', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'asset-source-ids': {'module': 'cloud_bridge', 'class': 'list[string]'}, 'freeform-tags': {'module': 'cloud_bridge', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_bridge', 'class': 'dict(str, dict(str, object))'}, 'compute': {'module': 'cloud_bridge', 'class': 'ComputeProperties'}, 'vm': {'module': 'cloud_bridge', 'class': 'VmProperties'}, 'aws-ec2': {'module': 'cloud_bridge', 'class': 'AwsEc2Properties'}, 'aws-ec2-cost': {'module': 'cloud_bridge', 'class': 'MonthlyCostSummary'}, 'attached-ebs-volumes-cost': {'module': 'cloud_bridge', 'class': 'MonthlyCostSummary'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-source-ids': {'module': 'cloud_bridge', 'class': 'list[string]'}, 'freeform-tags': {'module': 'cloud_bridge', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_bridge', 'class': 'dict(str, dict(str, object))'}, 'compute': {'module': 'cloud_bridge', 'class': 'ComputeProperties'}, 'vm': {'module': 'cloud_bridge', 'class': 'VmProperties'}, 'aws-ec2': {'module': 'cloud_bridge', 'class': 'AwsEc2Properties'}, 'aws-ec2-cost': {'module': 'cloud_bridge', 'class': 'MonthlyCostSummary'}, 'attached-ebs-volumes-cost': {'module': 'cloud_bridge', 'class': 'MonthlyCostSummary'}}, output_type={'module': 'cloud_bridge', 'class': 'Asset'})
+@cli_util.wrap_exceptions
+def update_asset_update_aws_ec2_asset_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, asset_id, display_name, asset_source_ids, freeform_tags, defined_tags, compute, vm, aws_ec2, aws_ec2_cost, attached_ebs_volumes_cost, if_match):
+
+    if isinstance(asset_id, six.string_types) and len(asset_id.strip()) == 0:
+        raise click.UsageError('Parameter --asset-id cannot be whitespace or empty string')
+    if not force:
+        if asset_source_ids or freeform_tags or defined_tags or compute or vm or aws_ec2 or aws_ec2_cost or attached_ebs_volumes_cost:
+            if not click.confirm("WARNING: Updates to asset-source-ids and freeform-tags and defined-tags and compute and vm and aws-ec2 and aws-ec2-cost and attached-ebs-volumes-cost will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if asset_source_ids is not None:
+        _details['assetSourceIds'] = cli_util.parse_json_parameter("asset_source_ids", asset_source_ids)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if compute is not None:
+        _details['compute'] = cli_util.parse_json_parameter("compute", compute)
+
+    if vm is not None:
+        _details['vm'] = cli_util.parse_json_parameter("vm", vm)
+
+    if aws_ec2 is not None:
+        _details['awsEc2'] = cli_util.parse_json_parameter("aws_ec2", aws_ec2)
+
+    if aws_ec2_cost is not None:
+        _details['awsEc2Cost'] = cli_util.parse_json_parameter("aws_ec2_cost", aws_ec2_cost)
+
+    if attached_ebs_volumes_cost is not None:
+        _details['attachedEbsVolumesCost'] = cli_util.parse_json_parameter("attached_ebs_volumes_cost", attached_ebs_volumes_cost)
+
+    _details['assetType'] = 'AWS_EC2'
 
     client = cli_util.build_client('cloud_bridge', 'inventory', ctx)
     result = client.update_asset(

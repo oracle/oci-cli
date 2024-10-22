@@ -16,8 +16,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.fleet_apps_management.src.oci_cli_fleet_apps_management.generated import fleet_apps_management_service_cli
 
 
-@click.command(cli_util.override('fleet_apps_management_runbooks.fleet_apps_management_runbooks_root_group.command_name', 'fleet-apps-management-runbooks'), cls=CommandGroupWithAlias, help=cli_util.override('fleet_apps_management_runbooks.fleet_apps_management_runbooks_root_group.help', """Fleet Application Management Service API. Use this API to for all FAMS related activities.
-To manage fleets,view complaince report for the Fleet,scedule patches and other lifecycle activities"""), short_help=cli_util.override('fleet_apps_management_runbooks.fleet_apps_management_runbooks_root_group.short_help', """Fleet Application Management Service API"""))
+@click.command(cli_util.override('fleet_apps_management_runbooks.fleet_apps_management_runbooks_root_group.command_name', 'fleet-apps-management-runbooks'), cls=CommandGroupWithAlias, help=cli_util.override('fleet_apps_management_runbooks.fleet_apps_management_runbooks_root_group.help', """Fleet Application Management provides a centralized platform to help you automate resource management tasks, validate patch compliance, and enhance operational efficiency across an enterprise."""), short_help=cli_util.override('fleet_apps_management_runbooks.fleet_apps_management_runbooks_root_group.short_help', """Fleet Application Management Service API"""))
 @cli_util.help_option_group
 def fleet_apps_management_runbooks_root_group():
     pass
@@ -29,19 +28,19 @@ def task_record_collection_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management_runbooks.runbook_collection_group.command_name', 'runbook-collection'), cls=CommandGroupWithAlias, help="""Results of a runbook search. Contains boh RunbookSummary items and other information, such as metadata.""")
+@click.command(cli_util.override('fleet_apps_management_runbooks.runbook_collection_group.command_name', 'runbook-collection'), cls=CommandGroupWithAlias, help="""Results of a runbook search. Contains RunbookSummary items and other information, such as metadata.""")
 @cli_util.help_option_group
 def runbook_collection_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management_runbooks.runbook_group.command_name', 'runbook'), cls=CommandGroupWithAlias, help="""Runbook definition.""")
+@click.command(cli_util.override('fleet_apps_management_runbooks.runbook_group.command_name', 'runbook'), cls=CommandGroupWithAlias, help="""Runbook definition. Runbooks allow you to capture procedural tasks for handling a workflow.""")
 @cli_util.help_option_group
 def runbook_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management_runbooks.task_record_group.command_name', 'task-record'), cls=CommandGroupWithAlias, help="""Description of TaskRecord.""")
+@click.command(cli_util.override('fleet_apps_management_runbooks.task_record_group.command_name', 'task-record'), cls=CommandGroupWithAlias, help="""Details of a task.""")
 @cli_util.help_option_group
 def task_record_group():
     pass
@@ -54,7 +53,279 @@ fleet_apps_management_runbooks_root_group.add_command(runbook_group)
 fleet_apps_management_runbooks_root_group.add_command(task_record_group)
 
 
-@runbook_group.command(name=cli_util.override('fleet_apps_management_runbooks.get_runbook.command_name', 'get'), help=u"""Gets a Runbook by identifier \n[Command Reference](getRunbook)""")
+@runbook_group.command(name=cli_util.override('fleet_apps_management_runbooks.create_runbook.command_name', 'create'), help=u"""Creates a new Runbook. \n[Command Reference](createRunbook)""")
+@cli_util.option('--runbook-relevance', required=True, help=u"""Type of runbook structure.""")
+@cli_util.option('--operation', required=True, help=u"""The lifecycle operation performed by the task.""")
+@cli_util.option('--os-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["WINDOWS", "LINUX", "GENERIC"]), help=u"""The OS type for the runbook.""")
+@cli_util.option('--associations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--platform', help=u"""The platform of the runbook.""")
+@cli_util.option('--is-default', type=click.BOOL, help=u"""Is the runbook default?""")
+@cli_util.option('--estimated-time', help=u"""Estimated time to successfully complete the runbook execution""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'associations': {'module': 'fleet_apps_management', 'class': 'Associations'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'associations': {'module': 'fleet_apps_management', 'class': 'Associations'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'Runbook'})
+@cli_util.wrap_exceptions
+def create_runbook(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, runbook_relevance, operation, os_type, associations, compartment_id, display_name, description, platform, is_default, estimated_time, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['runbookRelevance'] = runbook_relevance
+    _details['operation'] = operation
+    _details['osType'] = os_type
+    _details['associations'] = cli_util.parse_json_parameter("associations", associations)
+    _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if platform is not None:
+        _details['platform'] = platform
+
+    if is_default is not None:
+        _details['isDefault'] = is_default
+
+    if estimated_time is not None:
+        _details['estimatedTime'] = estimated_time
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_runbooks', ctx)
+    result = client.create_runbook(
+        create_runbook_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_record_group.command(name=cli_util.override('fleet_apps_management_runbooks.create_task_record.command_name', 'create'), help=u"""Creates a new Task. \n[Command Reference](createTaskRecord)""")
+@cli_util.option('--details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the resource belongs to.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'details': {'module': 'fleet_apps_management', 'class': 'Details'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'details': {'module': 'fleet_apps_management', 'class': 'Details'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'TaskRecord'})
+@cli_util.wrap_exceptions
+def create_task_record(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, details, compartment_id, display_name, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['details'] = cli_util.parse_json_parameter("details", details)
+    _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_runbooks', ctx)
+    result = client.create_task_record(
+        create_task_record_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_record') and callable(getattr(client, 'get_task_record')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_record(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@runbook_group.command(name=cli_util.override('fleet_apps_management_runbooks.delete_runbook.command_name', 'delete'), help=u"""Deletes a Runbook resource by identifier \n[Command Reference](deleteRunbook)""")
+@cli_util.option('--runbook-id', required=True, help=u"""Unique Runbook identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_runbook(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, runbook_id, if_match):
+
+    if isinstance(runbook_id, six.string_types) and len(runbook_id.strip()) == 0:
+        raise click.UsageError('Parameter --runbook-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_runbooks', ctx)
+    result = client.delete_runbook(
+        runbook_id=runbook_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_record_group.command(name=cli_util.override('fleet_apps_management_runbooks.delete_task_record.command_name', 'delete'), help=u"""Deletes a Task Record resource by identifier \n[Command Reference](deleteTaskRecord)""")
+@cli_util.option('--task-record-id', required=True, help=u"""unique TaskDetail identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_task_record(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, task_record_id, if_match):
+
+    if isinstance(task_record_id, six.string_types) and len(task_record_id.strip()) == 0:
+        raise click.UsageError('Parameter --task-record-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_runbooks', ctx)
+    result = client.delete_task_record(
+        task_record_id=task_record_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@runbook_group.command(name=cli_util.override('fleet_apps_management_runbooks.get_runbook.command_name', 'get'), help=u"""Get the details of a runbook in Fleet Application Management. \n[Command Reference](getRunbook)""")
 @cli_util.option('--runbook-id', required=True, help=u"""Unique Runbook identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -76,7 +347,7 @@ def get_runbook(ctx, from_json, runbook_id):
     cli_util.render_response(result, ctx)
 
 
-@task_record_group.command(name=cli_util.override('fleet_apps_management_runbooks.get_task_record.command_name', 'get'), help=u"""Gets a TaskRecord by identifier \n[Command Reference](getTaskRecord)""")
+@task_record_group.command(name=cli_util.override('fleet_apps_management_runbooks.get_task_record.command_name', 'get'), help=u"""Gets a Task by identifier \n[Command Reference](getTaskRecord)""")
 @cli_util.option('--task-record-id', required=True, help=u"""unique TaskDetail identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -98,15 +369,15 @@ def get_task_record(ctx, from_json, task_record_id):
     cli_util.render_response(result, ctx)
 
 
-@runbook_collection_group.command(name=cli_util.override('fleet_apps_management_runbooks.list_runbooks.command_name', 'list-runbooks'), help=u"""Returns a list of Runbooks. \n[Command Reference](listRunbooks)""")
+@runbook_collection_group.command(name=cli_util.override('fleet_apps_management_runbooks.list_runbooks.command_name', 'list-runbooks'), help=u"""List runbooks in Fleet Application Management. \n[Command Reference](listRunbooks)""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "INACTIVE", "CREATING", "DELETING", "UPDATING"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--id', help=u"""unique Runbook identifier""")
-@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["USER_DEFINED", "ORACLE_DEFINED", "SYSTEM_DEFINED"]), help=u"""The ID of the runbook type.""")
-@cli_util.option('--runbook-relevance', type=custom_types.CliCaseInsensitiveChoice(["PRODUCT_GROUP", "PRODUCT"]), help=u"""The runbook relevance of product or full-stack.""")
-@cli_util.option('--platform', help=u"""The ID of the runbook platform.""")
-@cli_util.option('--operation', help=u"""The runbook lifecycle.""")
+@cli_util.option('--id', help=u"""A filter to return runbooks whose identifier matches the given identifier.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["USER_DEFINED", "ORACLE_DEFINED", "SYSTEM_DEFINED"]), help=u"""A filter to return runbooks whose type matches the given type.""")
+@cli_util.option('--runbook-relevance', type=custom_types.CliCaseInsensitiveChoice(["PRODUCT_GROUP", "PRODUCT"]), help=u"""A filter to return runbooks whose runbookRelevance matches the given runbookRelevance.""")
+@cli_util.option('--platform', help=u"""A filter to return runbooks whose platform matches the given platform.""")
+@cli_util.option('--operation', help=u"""A filter to return runbooks whose operation matches the given lifecycle operation.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -237,4 +508,282 @@ def list_task_records(ctx, from_json, all_pages, page_size, compartment_id, plat
         result = client.list_task_records(
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@runbook_group.command(name=cli_util.override('fleet_apps_management_runbooks.publish_runbook.command_name', 'publish'), help=u"""Publish a Runbook. \n[Command Reference](publishRunbook)""")
+@cli_util.option('--runbook-id', required=True, help=u"""The OCID of the resource.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def publish_runbook(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, runbook_id, if_match):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['runbookId'] = runbook_id
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_runbooks', ctx)
+    result = client.publish_runbook(
+        publish_runbook_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@runbook_group.command(name=cli_util.override('fleet_apps_management_runbooks.set_default_runbook.command_name', 'set-default'), help=u"""Publish a Runbook. \n[Command Reference](setDefaultRunbook)""")
+@cli_util.option('--runbook-id', required=True, help=u"""The OCID of the resource.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'Runbook'})
+@cli_util.wrap_exceptions
+def set_default_runbook(ctx, from_json, runbook_id, if_match):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['runbookId'] = runbook_id
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_runbooks', ctx)
+    result = client.set_default_runbook(
+        set_default_runbook_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@runbook_group.command(name=cli_util.override('fleet_apps_management_runbooks.update_runbook.command_name', 'update'), help=u"""Updates the Ronbook \n[Command Reference](updateRunbook)""")
+@cli_util.option('--runbook-id', required=True, help=u"""Unique Runbook identifier""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--runbook-relevance', help=u"""Type of runbook structure.""")
+@cli_util.option('--operation', help=u"""The lifecycle operation performed by the task.""")
+@cli_util.option('--os-type', type=custom_types.CliCaseInsensitiveChoice(["WINDOWS", "LINUX", "GENERIC"]), help=u"""The OS type for the runbook.""")
+@cli_util.option('--platform', help=u"""The platform of the runbook.""")
+@cli_util.option('--is-default', type=click.BOOL, help=u"""Is the runbook default?""")
+@cli_util.option('--estimated-time', help=u"""Estimated time to successfully complete the runbook execution""")
+@cli_util.option('--associations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'associations': {'module': 'fleet_apps_management', 'class': 'Associations'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'associations': {'module': 'fleet_apps_management', 'class': 'Associations'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_runbook(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, runbook_id, display_name, description, runbook_relevance, operation, os_type, platform, is_default, estimated_time, associations, freeform_tags, defined_tags, if_match):
+
+    if isinstance(runbook_id, six.string_types) and len(runbook_id.strip()) == 0:
+        raise click.UsageError('Parameter --runbook-id cannot be whitespace or empty string')
+    if not force:
+        if associations or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to associations and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if runbook_relevance is not None:
+        _details['runbookRelevance'] = runbook_relevance
+
+    if operation is not None:
+        _details['operation'] = operation
+
+    if os_type is not None:
+        _details['osType'] = os_type
+
+    if platform is not None:
+        _details['platform'] = platform
+
+    if is_default is not None:
+        _details['isDefault'] = is_default
+
+    if estimated_time is not None:
+        _details['estimatedTime'] = estimated_time
+
+    if associations is not None:
+        _details['associations'] = cli_util.parse_json_parameter("associations", associations)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_runbooks', ctx)
+    result = client.update_runbook(
+        runbook_id=runbook_id,
+        update_runbook_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_record_group.command(name=cli_util.override('fleet_apps_management_runbooks.update_task_record.command_name', 'update'), help=u"""Updates the Task \n[Command Reference](updateTaskRecord)""")
+@cli_util.option('--task-record-id', required=True, help=u"""unique TaskDetail identifier""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'details': {'module': 'fleet_apps_management', 'class': 'Details'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'details': {'module': 'fleet_apps_management', 'class': 'Details'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_task_record(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, task_record_id, display_name, description, details, freeform_tags, defined_tags, if_match):
+
+    if isinstance(task_record_id, six.string_types) and len(task_record_id.strip()) == 0:
+        raise click.UsageError('Parameter --task-record-id cannot be whitespace or empty string')
+    if not force:
+        if details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if details is not None:
+        _details['details'] = cli_util.parse_json_parameter("details", details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_runbooks', ctx)
+    result = client.update_task_record(
+        task_record_id=task_record_id,
+        update_task_record_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)

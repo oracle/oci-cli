@@ -16,20 +16,19 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.fleet_apps_management.src.oci_cli_fleet_apps_management.generated import fleet_apps_management_service_cli
 
 
-@click.command(cli_util.override('fleet_apps_management_maintenance_window.fleet_apps_management_maintenance_window_root_group.command_name', 'fleet-apps-management-maintenance-window'), cls=CommandGroupWithAlias, help=cli_util.override('fleet_apps_management_maintenance_window.fleet_apps_management_maintenance_window_root_group.help', """Fleet Application Management Service API. Use this API to for all FAMS related activities.
-To manage fleets,view complaince report for the Fleet,scedule patches and other lifecycle activities"""), short_help=cli_util.override('fleet_apps_management_maintenance_window.fleet_apps_management_maintenance_window_root_group.short_help', """Fleet Application Management Service API"""))
+@click.command(cli_util.override('fleet_apps_management_maintenance_window.fleet_apps_management_maintenance_window_root_group.command_name', 'fleet-apps-management-maintenance-window'), cls=CommandGroupWithAlias, help=cli_util.override('fleet_apps_management_maintenance_window.fleet_apps_management_maintenance_window_root_group.help', """Fleet Application Management provides a centralized platform to help you automate resource management tasks, validate patch compliance, and enhance operational efficiency across an enterprise."""), short_help=cli_util.override('fleet_apps_management_maintenance_window.fleet_apps_management_maintenance_window_root_group.short_help', """Fleet Application Management Service API"""))
 @cli_util.help_option_group
 def fleet_apps_management_maintenance_window_root_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management_maintenance_window.maintenance_window_group.command_name', 'maintenance-window'), cls=CommandGroupWithAlias, help="""Details of Maintenance Window.""")
+@click.command(cli_util.override('fleet_apps_management_maintenance_window.maintenance_window_group.command_name', 'maintenance-window'), cls=CommandGroupWithAlias, help="""Details of Maintenance Window in Fleet Application Management.""")
 @cli_util.help_option_group
 def maintenance_window_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management_maintenance_window.maintenance_window_collection_group.command_name', 'maintenance-window-collection'), cls=CommandGroupWithAlias, help="""Results of a maintenanceWindow search. Contains boh MaintenanceWindowSummary items and other information, such as metadata.""")
+@click.command(cli_util.override('fleet_apps_management_maintenance_window.maintenance_window_collection_group.command_name', 'maintenance-window-collection'), cls=CommandGroupWithAlias, help="""Results of a maintenanceWindow search. Contains both MaintenanceWindowSummary items and other information, such as metadata.""")
 @cli_util.help_option_group
 def maintenance_window_collection_group():
     pass
@@ -40,19 +39,19 @@ fleet_apps_management_maintenance_window_root_group.add_command(maintenance_wind
 fleet_apps_management_maintenance_window_root_group.add_command(maintenance_window_collection_group)
 
 
-@maintenance_window_group.command(name=cli_util.override('fleet_apps_management_maintenance_window.create_maintenance_window.command_name', 'create'), help=u"""Creates a new MaintenanceWindow. \n[Command Reference](createMaintenanceWindow)""")
+@maintenance_window_group.command(name=cli_util.override('fleet_apps_management_maintenance_window.create_maintenance_window.command_name', 'create'), help=u"""Create a maintenance window in Fleet Application Management. \n[Command Reference](createMaintenanceWindow)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Tenancy OCID""")
-@cli_util.option('--duration', required=True, help=u"""Duration if schedule type is Custom""")
+@cli_util.option('--duration', required=True, help=u"""Duration of the maintenance window. Specify how long the maintenance window remains open.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
-@cli_util.option('--is-outage', type=click.BOOL, help=u"""Does the maintenenace window cause outage?""")
+@cli_util.option('--is-outage', type=click.BOOL, help=u"""Does the maintenenace window cause outage? An outage indicates whether a maintenance window can consider operations that require downtime. It means a period when the application is not accessible.""")
 @cli_util.option('--maintenance-window-type', type=custom_types.CliCaseInsensitiveChoice(["OPEN_ENDED"]), help=u"""Type of maintenenace window""")
-@cli_util.option('--time-schedule-start', type=custom_types.CLI_DATETIME, help=u"""Start time of schedule""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--is-recurring', type=click.BOOL, help=u"""Is this is a recurring maintenance window""")
-@cli_util.option('--recurrences', help=u"""Recurrence rule specification if recurring""")
-@cli_util.option('--task-initiation-cutoff', type=click.INT, help=u"""Task initiation cutoff""")
+@cli_util.option('--time-schedule-start', type=custom_types.CLI_DATETIME, help=u"""Specify the date and time of the day that the maintenance window starts.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--is-recurring', type=click.BOOL, help=u"""Is this a recurring maintenance window?""")
+@cli_util.option('--recurrences', help=u"""Recurrence rule specification if maintenance window recurring. Specify the frequency of running the maintenance window.""")
+@cli_util.option('--task-initiation-cutoff', type=click.INT, help=u"""Task initiation cutoff time for the maintenance window.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "DELETING", "UPDATING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -133,7 +132,7 @@ def create_maintenance_window(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@maintenance_window_group.command(name=cli_util.override('fleet_apps_management_maintenance_window.delete_maintenance_window.command_name', 'delete'), help=u"""Deletes a MaintenanceWindow resource by identifier \n[Command Reference](deleteMaintenanceWindow)""")
+@maintenance_window_group.command(name=cli_util.override('fleet_apps_management_maintenance_window.delete_maintenance_window.command_name', 'delete'), help=u"""Delete a maintenance window in Fleet Application Management. \n[Command Reference](deleteMaintenanceWindow)""")
 @cli_util.option('--maintenance-window-id', required=True, help=u"""unique MaintenanceWindow identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -189,7 +188,7 @@ def delete_maintenance_window(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@maintenance_window_group.command(name=cli_util.override('fleet_apps_management_maintenance_window.get_maintenance_window.command_name', 'get'), help=u"""Gets a MaintenanceWindow by identifier \n[Command Reference](getMaintenanceWindow)""")
+@maintenance_window_group.command(name=cli_util.override('fleet_apps_management_maintenance_window.get_maintenance_window.command_name', 'get'), help=u"""Get the details for a maintenance window in Fleet Application Management. \n[Command Reference](getMaintenanceWindow)""")
 @cli_util.option('--maintenance-window-id', required=True, help=u"""unique MaintenanceWindow identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -211,11 +210,12 @@ def get_maintenance_window(ctx, from_json, maintenance_window_id):
     cli_util.render_response(result, ctx)
 
 
-@maintenance_window_collection_group.command(name=cli_util.override('fleet_apps_management_maintenance_window.list_maintenance_windows.command_name', 'list-maintenance-windows'), help=u"""Returns a list of MaintenanceWindows in the specified Tenancy. \n[Command Reference](listMaintenanceWindows)""")
+@maintenance_window_collection_group.command(name=cli_util.override('fleet_apps_management_maintenance_window.list_maintenance_windows.command_name', 'list-maintenance-windows'), help=u"""List maintenance windows for a specified tenancy in\u00A0Fleet Application Management. \n[Command Reference](listMaintenanceWindows)""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "DELETING", "UPDATING", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "DELETING", "UPDATING", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--id', help=u"""unique MaintenanceWindow identifier""")
+@cli_util.option('--time-schedule-start-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return only resources whose timeScheduleStart is greater than or equal to the provided date and time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--id', help=u"""A filter to return only the Maintenance Windows whose identifier matches the given identifier.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -227,7 +227,7 @@ def get_maintenance_window(ctx, from_json, maintenance_window_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'MaintenanceWindowCollection'})
 @cli_util.wrap_exceptions
-def list_maintenance_windows(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, id, limit, page, sort_order, sort_by):
+def list_maintenance_windows(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, time_schedule_start_greater_than_or_equal_to, id, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -239,6 +239,8 @@ def list_maintenance_windows(ctx, from_json, all_pages, page_size, compartment_i
         kwargs['lifecycle_state'] = lifecycle_state
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if time_schedule_start_greater_than_or_equal_to is not None:
+        kwargs['time_schedule_start_greater_than_or_equal_to'] = time_schedule_start_greater_than_or_equal_to
     if id is not None:
         kwargs['id'] = id
     if limit is not None:
@@ -273,19 +275,19 @@ def list_maintenance_windows(ctx, from_json, all_pages, page_size, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@maintenance_window_group.command(name=cli_util.override('fleet_apps_management_maintenance_window.update_maintenance_window.command_name', 'update'), help=u"""Updates the MaintenanceWindow \n[Command Reference](updateMaintenanceWindow)""")
+@maintenance_window_group.command(name=cli_util.override('fleet_apps_management_maintenance_window.update_maintenance_window.command_name', 'update'), help=u"""Update a maintenance window in Fleet Application Management. \n[Command Reference](updateMaintenanceWindow)""")
 @cli_util.option('--maintenance-window-id', required=True, help=u"""unique MaintenanceWindow identifier""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
 @cli_util.option('--maintenance-window-type', type=custom_types.CliCaseInsensitiveChoice(["OPEN_ENDED"]), help=u"""MaintenanceWindow Identifier""")
-@cli_util.option('--is-outage', type=click.BOOL, help=u"""Does the maintenenace window cause outage?""")
-@cli_util.option('--time-schedule-start', type=custom_types.CLI_DATETIME, help=u"""Start time of schedule""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--duration', help=u"""Duration if schedule type is Custom""")
-@cli_util.option('--is-recurring', type=click.BOOL, help=u"""Is this is a recurring maintenance window""")
-@cli_util.option('--recurrences', help=u"""Recurrence rule specification if recurring""")
-@cli_util.option('--task-initiation-cutoff', type=click.INT, help=u"""Task initiation cutoff""")
+@cli_util.option('--is-outage', type=click.BOOL, help=u"""Does the maintenenace window cause outage? An outage indicates whether a maintenance window can consider operations that require downtime. It means a period when the application is not accessible.""")
+@cli_util.option('--time-schedule-start', type=custom_types.CLI_DATETIME, help=u"""Specify the date and time of the day that the maintenance window starts.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--duration', help=u"""Duration of the maintenance window. Specify how long the maintenance window remains open.""")
+@cli_util.option('--is-recurring', type=click.BOOL, help=u"""Is this a recurring maintenance window?""")
+@cli_util.option('--recurrences', help=u"""Recurrence rule specification if maintenance window recurring. Specify the frequency of running the maintenance window.""")
+@cli_util.option('--task-initiation-cutoff', type=click.INT, help=u"""Task initiation cutoff time for the maintenance window.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

@@ -477,3 +477,11 @@ zpr, work-request, list-zpr-policy-errors
 zpr, work-request, list-zpr-policy-logs
 zpr, zpr-policy, list
 database-migration, connection, create-oracle-connection
+fleet-apps-management, fleet-apps-management-admin, compliance-policy-rule, create
+fleet-apps-management, fleet-apps-management-admin, compliance-policy-rule, create-compliance-policy-rule-patch-level-selection-details
+fleet-apps-management, fleet-apps-management-admin, compliance-policy-rule, create-compliance-policy-rule-patch-name-selection-details
+fleet-apps-management, fleet-apps-management-admin, compliance-policy-rule, create-compliance-policy-rule-patch-release-date-selection-details
+fleet-apps-management, fleet-apps-management-admin, compliance-policy-rule, update
+fleet-apps-management, fleet-apps-management-admin, compliance-policy-rule, update-compliance-policy-rule-patch-level-selection-details
+fleet-apps-management, fleet-apps-management-admin, compliance-policy-rule, update-compliance-policy-rule-patch-name-selection-details
+fleet-apps-management, fleet-apps-management-admin, compliance-policy-rule, update-compliance-policy-rule-patch-release-date-selection-details

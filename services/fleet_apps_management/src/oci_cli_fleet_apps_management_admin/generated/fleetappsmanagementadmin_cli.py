@@ -16,55 +16,437 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.fleet_apps_management.src.oci_cli_fleet_apps_management.generated import fleet_apps_management_service_cli
 
 
-@click.command(cli_util.override('fleet_apps_management_admin.fleet_apps_management_admin_root_group.command_name', 'fleet-apps-management-admin'), cls=CommandGroupWithAlias, help=cli_util.override('fleet_apps_management_admin.fleet_apps_management_admin_root_group.help', """Fleet Application Management Service API. Use this API to for all FAMS related activities.
-To manage fleets,view complaince report for the Fleet,scedule patches and other lifecycle activities"""), short_help=cli_util.override('fleet_apps_management_admin.fleet_apps_management_admin_root_group.short_help', """Fleet Application Management Service API"""))
+@click.command(cli_util.override('fleet_apps_management_admin.fleet_apps_management_admin_root_group.command_name', 'fleet-apps-management-admin'), cls=CommandGroupWithAlias, help=cli_util.override('fleet_apps_management_admin.fleet_apps_management_admin_root_group.help', """Fleet Application Management provides a centralized platform to help you automate resource management tasks, validate patch compliance, and enhance operational efficiency across an enterprise."""), short_help=cli_util.override('fleet_apps_management_admin.fleet_apps_management_admin_root_group.short_help', """Fleet Application Management Service API"""))
 @cli_util.help_option_group
 def fleet_apps_management_admin_root_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management_admin.property_collection_group.command_name', 'property-collection'), cls=CommandGroupWithAlias, help="""Results of a property search. Contains boh PropertySummary items and other information, such as metadata.""")
+@click.command(cli_util.override('fleet_apps_management_admin.property_collection_group.command_name', 'property-collection'), cls=CommandGroupWithAlias, help="""Results of a property search. Contains both PropertySummary items and other information, such as metadata.""")
 @cli_util.help_option_group
 def property_collection_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management_admin.onboarding_collection_group.command_name', 'onboarding-collection'), cls=CommandGroupWithAlias, help="""List of FleetAppManagementService Onboardings.""")
+@click.command(cli_util.override('fleet_apps_management_admin.onboarding_collection_group.command_name', 'onboarding-collection'), cls=CommandGroupWithAlias, help="""List of Fleet Application Management Onboardings.""")
 @cli_util.help_option_group
 def onboarding_collection_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management_admin.property_group.command_name', 'property'), cls=CommandGroupWithAlias, help="""Taxonomy metadata aka Property .""")
+@click.command(cli_util.override('fleet_apps_management_admin.compliance_policy_rule_group.command_name', 'compliance-policy-rule'), cls=CommandGroupWithAlias, help="""Set of rules that are used to calculate the compliance status of the product. Specific rules will take precedence over broader rules.""")
+@cli_util.help_option_group
+def compliance_policy_rule_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_admin.platform_configuration_group.command_name', 'platform-configuration'), cls=CommandGroupWithAlias, help="""Fleet Application Management Platform Configuration .""")
+@cli_util.help_option_group
+def platform_configuration_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_admin.property_group.command_name', 'property'), cls=CommandGroupWithAlias, help="""Global metadata element details.""")
 @cli_util.help_option_group
 def property_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management_admin.onboarding_group.command_name', 'onboarding'), cls=CommandGroupWithAlias, help="""FleetAppManagementService onboarding resource.""")
+@click.command(cli_util.override('fleet_apps_management_admin.onboarding_group.command_name', 'onboarding'), cls=CommandGroupWithAlias, help="""Fleet Application Management onboarding resource. The onboarding process lets\u00A0Fleet Application Management\u00A0create a few required policies that you need to start using it and its features.""")
 @cli_util.help_option_group
 def onboarding_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management_admin.onboarding_policy_collection_group.command_name', 'onboarding-policy-collection'), cls=CommandGroupWithAlias, help="""List of FleetAppManagementService Onboard policies.""")
+@click.command(cli_util.override('fleet_apps_management_admin.platform_configuration_collection_group.command_name', 'platform-configuration-collection'), cls=CommandGroupWithAlias, help="""Results of a platform configuration search.""")
+@cli_util.help_option_group
+def platform_configuration_collection_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_admin.compliance_policy_collection_group.command_name', 'compliance-policy-collection'), cls=CommandGroupWithAlias, help="""Results of a compliancePolicy search. Contains both CompliancePolicySummary items and other information, such as metadata.""")
+@cli_util.help_option_group
+def compliance_policy_collection_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_admin.onboarding_policy_collection_group.command_name', 'onboarding-policy-collection'), cls=CommandGroupWithAlias, help="""List of Fleet Application Management Onboard policies.""")
 @cli_util.help_option_group
 def onboarding_policy_collection_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_admin.compliance_policy_rule_collection_group.command_name', 'compliance-policy-rule-collection'), cls=CommandGroupWithAlias, help="""Results of a compliancePolicyRule search. Contains both CompliancePolicyRuleSummary items and other information, such as metadata.""")
+@cli_util.help_option_group
+def compliance_policy_rule_collection_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_admin.compliance_policy_group.command_name', 'compliance-policy'), cls=CommandGroupWithAlias, help="""Define software patch compliance policies for various products running in OCI resources. A compliance policy is a configuration you set up for various products to report compliance by defining the schedule and patch baseline""")
+@cli_util.help_option_group
+def compliance_policy_group():
     pass
 
 
 fleet_apps_management_service_cli.fleet_apps_management_service_group.add_command(fleet_apps_management_admin_root_group)
 fleet_apps_management_admin_root_group.add_command(property_collection_group)
 fleet_apps_management_admin_root_group.add_command(onboarding_collection_group)
+fleet_apps_management_admin_root_group.add_command(compliance_policy_rule_group)
+fleet_apps_management_admin_root_group.add_command(platform_configuration_group)
 fleet_apps_management_admin_root_group.add_command(property_group)
 fleet_apps_management_admin_root_group.add_command(onboarding_group)
+fleet_apps_management_admin_root_group.add_command(platform_configuration_collection_group)
+fleet_apps_management_admin_root_group.add_command(compliance_policy_collection_group)
 fleet_apps_management_admin_root_group.add_command(onboarding_policy_collection_group)
+fleet_apps_management_admin_root_group.add_command(compliance_policy_rule_collection_group)
+fleet_apps_management_admin_root_group.add_command(compliance_policy_group)
 
 
-@onboarding_group.command(name=cli_util.override('fleet_apps_management_admin.create_onboarding.command_name', 'create'), help=u"""Onboard a tenant to Fleet Application Management Service \n[Command Reference](createOnboarding)""")
+@compliance_policy_rule_group.command(name=cli_util.override('fleet_apps_management_admin.create_compliance_policy_rule.command_name', 'create'), help=u"""Creates a CompliancePolicyRule. \n[Command Reference](createCompliancePolicyRule)""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--product-version', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--patch-type', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""PlatformConfiguration OCID for the patch type to which this CompliancePolicyRule applies.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--patch-selection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the CompliancePolicyRule belongs to.""")
+@cli_util.option('--compliance-policy-id', help=u"""Unique OCID of the CompliancePolicy this CompliancePolicyRule belongs to.""")
+@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Severity to which this CompliancePolicyRule applies.""")
+@cli_util.option('--grace-period', help=u"""Grace period in days,weeks,months or years the exemption is applicable for the rule. This enables a grace period when Fleet Application Management doesn't report the product as noncompliant when patch is not applied.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'product-version': {'module': 'fleet_apps_management', 'class': 'ProductVersionDetails'}, 'patch-type': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'patch-selection': {'module': 'fleet_apps_management', 'class': 'PatchSelectionDetails'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'product-version': {'module': 'fleet_apps_management', 'class': 'ProductVersionDetails'}, 'patch-type': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'patch-selection': {'module': 'fleet_apps_management', 'class': 'PatchSelectionDetails'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'CompliancePolicyRule'})
+@cli_util.wrap_exceptions
+def create_compliance_policy_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, product_version, patch_type, patch_selection, compartment_id, compliance_policy_id, severity, grace_period, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+    _details['productVersion'] = cli_util.parse_json_parameter("product_version", product_version)
+    _details['patchType'] = cli_util.parse_json_parameter("patch_type", patch_type)
+    _details['patchSelection'] = cli_util.parse_json_parameter("patch_selection", patch_selection)
+    _details['compartmentId'] = compartment_id
+
+    if compliance_policy_id is not None:
+        _details['compliancePolicyId'] = compliance_policy_id
+
+    if severity is not None:
+        _details['severity'] = cli_util.parse_json_parameter("severity", severity)
+
+    if grace_period is not None:
+        _details['gracePeriod'] = grace_period
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.create_compliance_policy_rule(
+        create_compliance_policy_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compliance_policy_rule_group.command(name=cli_util.override('fleet_apps_management_admin.create_compliance_policy_rule_patch_level_selection_details.command_name', 'create-compliance-policy-rule-patch-level-selection-details'), help=u"""Creates a CompliancePolicyRule. \n[Command Reference](createCompliancePolicyRule)""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--product-version', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--patch-type', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""PlatformConfiguration OCID for the patch type to which this CompliancePolicyRule applies.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the CompliancePolicyRule belongs to.""")
+@cli_util.option('--patch-selection-patch-level', required=True, type=custom_types.CliCaseInsensitiveChoice(["LATEST", "LATEST_MINUS_ONE", "LATEST_MINUS_TWO"]), help=u"""Patch Name.""")
+@cli_util.option('--compliance-policy-id', help=u"""Unique OCID of the CompliancePolicy this CompliancePolicyRule belongs to.""")
+@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Severity to which this CompliancePolicyRule applies.""")
+@cli_util.option('--grace-period', help=u"""Grace period in days,weeks,months or years the exemption is applicable for the rule. This enables a grace period when Fleet Application Management doesn't report the product as noncompliant when patch is not applied.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'product-version': {'module': 'fleet_apps_management', 'class': 'ProductVersionDetails'}, 'patch-type': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'product-version': {'module': 'fleet_apps_management', 'class': 'ProductVersionDetails'}, 'patch-type': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'CompliancePolicyRule'})
+@cli_util.wrap_exceptions
+def create_compliance_policy_rule_patch_level_selection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, product_version, patch_type, compartment_id, patch_selection_patch_level, compliance_policy_id, severity, grace_period, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['patchSelection'] = {}
+    _details['displayName'] = display_name
+    _details['productVersion'] = cli_util.parse_json_parameter("product_version", product_version)
+    _details['patchType'] = cli_util.parse_json_parameter("patch_type", patch_type)
+    _details['compartmentId'] = compartment_id
+    _details['patchSelection']['patchLevel'] = patch_selection_patch_level
+
+    if compliance_policy_id is not None:
+        _details['compliancePolicyId'] = compliance_policy_id
+
+    if severity is not None:
+        _details['severity'] = cli_util.parse_json_parameter("severity", severity)
+
+    if grace_period is not None:
+        _details['gracePeriod'] = grace_period
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['patchSelection']['selectionType'] = 'PATCH_LEVEL'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.create_compliance_policy_rule(
+        create_compliance_policy_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compliance_policy_rule_group.command(name=cli_util.override('fleet_apps_management_admin.create_compliance_policy_rule_patch_release_date_selection_details.command_name', 'create-compliance-policy-rule-patch-release-date-selection-details'), help=u"""Creates a CompliancePolicyRule. \n[Command Reference](createCompliancePolicyRule)""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--product-version', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--patch-type', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""PlatformConfiguration OCID for the patch type to which this CompliancePolicyRule applies.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the CompliancePolicyRule belongs to.""")
+@cli_util.option('--patch-selection-days-since-release', required=True, type=click.INT, help=u"""Days passed since patch release.""")
+@cli_util.option('--compliance-policy-id', help=u"""Unique OCID of the CompliancePolicy this CompliancePolicyRule belongs to.""")
+@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Severity to which this CompliancePolicyRule applies.""")
+@cli_util.option('--grace-period', help=u"""Grace period in days,weeks,months or years the exemption is applicable for the rule. This enables a grace period when Fleet Application Management doesn't report the product as noncompliant when patch is not applied.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'product-version': {'module': 'fleet_apps_management', 'class': 'ProductVersionDetails'}, 'patch-type': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'product-version': {'module': 'fleet_apps_management', 'class': 'ProductVersionDetails'}, 'patch-type': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'CompliancePolicyRule'})
+@cli_util.wrap_exceptions
+def create_compliance_policy_rule_patch_release_date_selection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, product_version, patch_type, compartment_id, patch_selection_days_since_release, compliance_policy_id, severity, grace_period, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['patchSelection'] = {}
+    _details['displayName'] = display_name
+    _details['productVersion'] = cli_util.parse_json_parameter("product_version", product_version)
+    _details['patchType'] = cli_util.parse_json_parameter("patch_type", patch_type)
+    _details['compartmentId'] = compartment_id
+    _details['patchSelection']['daysSinceRelease'] = patch_selection_days_since_release
+
+    if compliance_policy_id is not None:
+        _details['compliancePolicyId'] = compliance_policy_id
+
+    if severity is not None:
+        _details['severity'] = cli_util.parse_json_parameter("severity", severity)
+
+    if grace_period is not None:
+        _details['gracePeriod'] = grace_period
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['patchSelection']['selectionType'] = 'PATCH_RELEASE_DATE'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.create_compliance_policy_rule(
+        create_compliance_policy_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compliance_policy_rule_group.command(name=cli_util.override('fleet_apps_management_admin.create_compliance_policy_rule_patch_name_selection_details.command_name', 'create-compliance-policy-rule-patch-name-selection-details'), help=u"""Creates a CompliancePolicyRule. \n[Command Reference](createCompliancePolicyRule)""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--product-version', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--patch-type', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""PlatformConfiguration OCID for the patch type to which this CompliancePolicyRule applies.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the CompliancePolicyRule belongs to.""")
+@cli_util.option('--patch-selection-patch-name', required=True, help=u"""Patch Name.""")
+@cli_util.option('--compliance-policy-id', help=u"""Unique OCID of the CompliancePolicy this CompliancePolicyRule belongs to.""")
+@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Severity to which this CompliancePolicyRule applies.""")
+@cli_util.option('--grace-period', help=u"""Grace period in days,weeks,months or years the exemption is applicable for the rule. This enables a grace period when Fleet Application Management doesn't report the product as noncompliant when patch is not applied.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'product-version': {'module': 'fleet_apps_management', 'class': 'ProductVersionDetails'}, 'patch-type': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'product-version': {'module': 'fleet_apps_management', 'class': 'ProductVersionDetails'}, 'patch-type': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'CompliancePolicyRule'})
+@cli_util.wrap_exceptions
+def create_compliance_policy_rule_patch_name_selection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, product_version, patch_type, compartment_id, patch_selection_patch_name, compliance_policy_id, severity, grace_period, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['patchSelection'] = {}
+    _details['displayName'] = display_name
+    _details['productVersion'] = cli_util.parse_json_parameter("product_version", product_version)
+    _details['patchType'] = cli_util.parse_json_parameter("patch_type", patch_type)
+    _details['compartmentId'] = compartment_id
+    _details['patchSelection']['patchName'] = patch_selection_patch_name
+
+    if compliance_policy_id is not None:
+        _details['compliancePolicyId'] = compliance_policy_id
+
+    if severity is not None:
+        _details['severity'] = cli_util.parse_json_parameter("severity", severity)
+
+    if grace_period is not None:
+        _details['gracePeriod'] = grace_period
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['patchSelection']['selectionType'] = 'PATCH_NAME'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.create_compliance_policy_rule(
+        create_compliance_policy_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@onboarding_group.command(name=cli_util.override('fleet_apps_management_admin.create_onboarding.command_name', 'create'), help=u"""Onboard a tenant to Fleet Application Management. The onboarding process lets Fleet Application Management create a few required policies that you need to start using it and its features. \n[Command Reference](createOnboarding)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Tenancy OCID""")
-@cli_util.option('--is-fams-tag-enabled', type=click.BOOL, help=u"""A value determining FAMS tag is enabled or not""")
-@cli_util.option('--is-cost-tracking-tag-enabled', type=click.BOOL, help=u"""A value determining if cost tracking tag is enabled or not""")
+@cli_util.option('--is-fams-tag-enabled', type=click.BOOL, help=u"""A value determining if the Fleet Application Management tagging is enabled or not. Allow Fleet Application Management to tag resources with fleet name using \"Oracle$FAMS-Tags.FleetName\" tag.""")
+@cli_util.option('--is-cost-tracking-tag-enabled', type=click.BOOL, help=u"""A value determining if the cost tracking tag is enabled or not. Allow Fleet Application Management to tag resources with cost tracking tag using \"Oracle$FAMS-Tags.FAMSManaged\" tag.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -122,14 +504,415 @@ def create_onboarding(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@property_group.command(name=cli_util.override('fleet_apps_management_admin.create_property.command_name', 'create'), help=u"""Creates a new Property. \n[Command Reference](createProperty)""")
+@platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.create_platform_configuration.command_name', 'create'), help=u"""Creates a new PlatformConfiguration. \n[Command Reference](createPlatformConfiguration)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Tenancy OCID""")
-@cli_util.option('--selection', required=True, type=custom_types.CliCaseInsensitiveChoice(["SINGLE_CHOICE", "MULTI_CHOICE", "DEFAULT_TEXT"]), help=u"""Text selection of the category""")
-@cli_util.option('--value-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["STRING", "NUMERIC"]), help=u"""Format of the value""")
+@cli_util.option('--config-category-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
-@cli_util.option('--values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Values of the property (must be a single value if selection = 'single choice')""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "DELETING", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'config-category-details': {'module': 'fleet_apps_management', 'class': 'ConfigCategoryDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-category-details': {'module': 'fleet_apps_management', 'class': 'ConfigCategoryDetails'}}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
+@cli_util.wrap_exceptions
+def create_platform_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_category_details, display_name, description):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['configCategoryDetails'] = cli_util.parse_json_parameter("config_category_details", config_category_details)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.create_platform_configuration(
+        create_platform_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_platform_configuration') and callable(getattr(client, 'get_platform_configuration')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_platform_configuration(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.create_platform_configuration_product_stack_config_category_details.command_name', 'create-platform-configuration-product-stack-config-category-details'), help=u"""Creates a new PlatformConfiguration. \n[Command Reference](createPlatformConfiguration)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Tenancy OCID""")
+@cli_util.option('--config-category-details-products', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products that belong to the stack. For example, Oracle WebLogic and Java for the Oracle Fusion Middleware product stack.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--config-category-details-sub-category-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "DELETING", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'config-category-details-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-sub-category-details': {'module': 'fleet_apps_management', 'class': 'ProductStackSubCategoryDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-category-details-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-sub-category-details': {'module': 'fleet_apps_management', 'class': 'ProductStackSubCategoryDetails'}}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
+@cli_util.wrap_exceptions
+def create_platform_configuration_product_stack_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_category_details_products, display_name, description, config_category_details_sub_category_details):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configCategoryDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['configCategoryDetails']['products'] = cli_util.parse_json_parameter("config_category_details_products", config_category_details_products)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if config_category_details_sub_category_details is not None:
+        _details['configCategoryDetails']['subCategoryDetails'] = cli_util.parse_json_parameter("config_category_details_sub_category_details", config_category_details_sub_category_details)
+
+    _details['configCategoryDetails']['configCategory'] = 'PRODUCT_STACK'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.create_platform_configuration(
+        create_platform_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_platform_configuration') and callable(getattr(client, 'get_platform_configuration')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_platform_configuration(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.create_platform_configuration_environment_config_category_details.command_name', 'create-platform-configuration-environment-config-category-details'), help=u"""Creates a new PlatformConfiguration. \n[Command Reference](createPlatformConfiguration)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Tenancy OCID""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "DELETING", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
+@cli_util.wrap_exceptions
+def create_platform_configuration_environment_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configCategoryDetails'] = {}
+    _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    _details['configCategoryDetails']['configCategory'] = 'ENVIRONMENT'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.create_platform_configuration(
+        create_platform_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_platform_configuration') and callable(getattr(client, 'get_platform_configuration')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_platform_configuration(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.create_platform_configuration_credential_config_category_details.command_name', 'create-platform-configuration-credential-config-category-details'), help=u"""Creates a new PlatformConfiguration. \n[Command Reference](createPlatformConfiguration)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Tenancy OCID""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "DELETING", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
+@cli_util.wrap_exceptions
+def create_platform_configuration_credential_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configCategoryDetails'] = {}
+    _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    _details['configCategoryDetails']['configCategory'] = 'CREDENTIAL'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.create_platform_configuration(
+        create_platform_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_platform_configuration') and callable(getattr(client, 'get_platform_configuration')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_platform_configuration(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.create_platform_configuration_patch_type_config_category_details.command_name', 'create-platform-configuration-patch-type-config-category-details'), help=u"""Creates a new PlatformConfiguration. \n[Command Reference](createPlatformConfiguration)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Tenancy OCID""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "DELETING", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
+@cli_util.wrap_exceptions
+def create_platform_configuration_patch_type_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configCategoryDetails'] = {}
+    _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    _details['configCategoryDetails']['configCategory'] = 'PATCH_TYPE'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.create_platform_configuration(
+        create_platform_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_platform_configuration') and callable(getattr(client, 'get_platform_configuration')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_platform_configuration(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.create_platform_configuration_product_config_category_details.command_name', 'create-platform-configuration-product-config-category-details'), help=u"""Creates a new PlatformConfiguration. \n[Command Reference](createPlatformConfiguration)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Tenancy OCID""")
+@cli_util.option('--config-category-details-versions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Versions associated with the PRODUCT .""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--config-category-details-credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""OCID for the Credential name to be associated with the Product. These are useful for target discovery or lifecycle management activities, for example, Oracle WebLogic admin credentials for Oracle WebLogic Application server.
+
+This option is a JSON list with items of type ConfigAssociationDetails.  For documentation on ConfigAssociationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagementadmin/20230831/datatypes/ConfigAssociationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config-category-details-components', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Various components of the Product. For example:The administration server or node manager can be the components of the Oracle WebLogic Application server. Forms server or concurrent manager can be the components of the Oracle E-Business Suite.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config-category-details-compatible-products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products compatible with this Product. Provide products from the list of other products you have created that are compatible with the present one
+
+This option is a JSON list with items of type ConfigAssociationDetails.  For documentation on ConfigAssociationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagementadmin/20230831/datatypes/ConfigAssociationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config-category-details-patch-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Patch Types associated with this Product.
+
+This option is a JSON list with items of type ConfigAssociationDetails.  For documentation on ConfigAssociationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagementadmin/20230831/datatypes/ConfigAssociationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "DELETING", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'config-category-details-versions': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-credentials': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-components': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-compatible-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-patch-types': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-category-details-versions': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-credentials': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-components': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-compatible-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-patch-types': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
+@cli_util.wrap_exceptions
+def create_platform_configuration_product_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_category_details_versions, display_name, description, config_category_details_credentials, config_category_details_components, config_category_details_compatible_products, config_category_details_patch_types):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configCategoryDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['configCategoryDetails']['versions'] = cli_util.parse_json_parameter("config_category_details_versions", config_category_details_versions)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if config_category_details_credentials is not None:
+        _details['configCategoryDetails']['credentials'] = cli_util.parse_json_parameter("config_category_details_credentials", config_category_details_credentials)
+
+    if config_category_details_components is not None:
+        _details['configCategoryDetails']['components'] = cli_util.parse_json_parameter("config_category_details_components", config_category_details_components)
+
+    if config_category_details_compatible_products is not None:
+        _details['configCategoryDetails']['compatibleProducts'] = cli_util.parse_json_parameter("config_category_details_compatible_products", config_category_details_compatible_products)
+
+    if config_category_details_patch_types is not None:
+        _details['configCategoryDetails']['patchTypes'] = cli_util.parse_json_parameter("config_category_details_patch_types", config_category_details_patch_types)
+
+    _details['configCategoryDetails']['configCategory'] = 'PRODUCT'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.create_platform_configuration(
+        create_platform_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_platform_configuration') and callable(getattr(client, 'get_platform_configuration')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_platform_configuration(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@property_group.command(name=cli_util.override('fleet_apps_management_admin.create_property.command_name', 'create'), help=u"""Create a business-specific metadata property in Fleet Application Management and capture the business metadata classifications. \n[Command Reference](createProperty)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Tenancy OCID""")
+@cli_util.option('--selection', required=True, type=custom_types.CliCaseInsensitiveChoice(["SINGLE_CHOICE", "MULTI_CHOICE", "DEFAULT_TEXT"]), help=u"""Text selection of the property.""")
+@cli_util.option('--value-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["STRING", "NUMERIC"]), help=u"""Format of the value.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Values of the property (must be a single value if selection = 'SINGLE_CHOICE').""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -185,7 +968,175 @@ def create_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@property_group.command(name=cli_util.override('fleet_apps_management_admin.delete_property.command_name', 'delete'), help=u"""Deletes a Property resource by identifier \n[Command Reference](deleteProperty)""")
+@compliance_policy_rule_group.command(name=cli_util.override('fleet_apps_management_admin.delete_compliance_policy_rule.command_name', 'delete'), help=u"""Deletes a CompliancePolicyRule. \n[Command Reference](deleteCompliancePolicyRule)""")
+@cli_util.option('--compliance-policy-rule-id', required=True, help=u"""unique CompliancePolicyRule identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_compliance_policy_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compliance_policy_rule_id, if_match):
+
+    if isinstance(compliance_policy_rule_id, six.string_types) and len(compliance_policy_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --compliance-policy-rule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.delete_compliance_policy_rule(
+        compliance_policy_rule_id=compliance_policy_rule_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@onboarding_group.command(name=cli_util.override('fleet_apps_management_admin.delete_onboarding.command_name', 'delete'), help=u"""Deletes Fleet Application Management onboarding resource by identifier \n[Command Reference](deleteOnboarding)""")
+@cli_util.option('--onboarding-id', required=True, help=u"""A filter to return resources whose Onboarding identifier matches the given identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_onboarding(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, onboarding_id, if_match):
+
+    if isinstance(onboarding_id, six.string_types) and len(onboarding_id.strip()) == 0:
+        raise click.UsageError('Parameter --onboarding-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.delete_onboarding(
+        onboarding_id=onboarding_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.delete_platform_configuration.command_name', 'delete'), help=u"""Deletes a PlatformConfiguration resource by identifier \n[Command Reference](deletePlatformConfiguration)""")
+@cli_util.option('--platform-configuration-id', required=True, help=u"""unique PlatformConfiguration identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_platform_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, if_match):
+
+    if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.delete_platform_configuration(
+        platform_configuration_id=platform_configuration_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@property_group.command(name=cli_util.override('fleet_apps_management_admin.delete_property.command_name', 'delete'), help=u"""Delete a property in Fleet Application Management. \n[Command Reference](deleteProperty)""")
 @cli_util.option('--property-id', required=True, help=u"""unique Property identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -249,6 +1200,127 @@ def delete_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
+@onboarding_group.command(name=cli_util.override('fleet_apps_management_admin.enable_latest_policy.command_name', 'enable-latest-policy'), help=u"""Enable Policies for a newer version of Fleet Application Management \n[Command Reference](enableLatestPolicy)""")
+@cli_util.option('--onboarding-id', required=True, help=u"""A filter to return resources whose Onboarding identifier matches the given identifier.""")
+@cli_util.option('--can-latest-fams-policies-be-enabled', type=click.BOOL, help=u"""A value determining if latest Fleet Application Management policies should be enabled""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_latest_policy(ctx, from_json, onboarding_id, can_latest_fams_policies_be_enabled, if_match):
+
+    if isinstance(onboarding_id, six.string_types) and len(onboarding_id.strip()) == 0:
+        raise click.UsageError('Parameter --onboarding-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if can_latest_fams_policies_be_enabled is not None:
+        _details['canLatestFamsPoliciesBeEnabled'] = can_latest_fams_policies_be_enabled
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.enable_latest_policy(
+        onboarding_id=onboarding_id,
+        enable_latest_policy_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@compliance_policy_group.command(name=cli_util.override('fleet_apps_management_admin.get_compliance_policy.command_name', 'get'), help=u"""Gets information about a CompliancePolicy. \n[Command Reference](getCompliancePolicy)""")
+@cli_util.option('--compliance-policy-id', required=True, help=u"""unique CompliancePolicy identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'CompliancePolicy'})
+@cli_util.wrap_exceptions
+def get_compliance_policy(ctx, from_json, compliance_policy_id):
+
+    if isinstance(compliance_policy_id, six.string_types) and len(compliance_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --compliance-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.get_compliance_policy(
+        compliance_policy_id=compliance_policy_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@compliance_policy_rule_group.command(name=cli_util.override('fleet_apps_management_admin.get_compliance_policy_rule.command_name', 'get'), help=u"""Gets information about a CompliancePolicyRule. \n[Command Reference](getCompliancePolicyRule)""")
+@cli_util.option('--compliance-policy-rule-id', required=True, help=u"""unique CompliancePolicyRule identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'CompliancePolicyRule'})
+@cli_util.wrap_exceptions
+def get_compliance_policy_rule(ctx, from_json, compliance_policy_rule_id):
+
+    if isinstance(compliance_policy_rule_id, six.string_types) and len(compliance_policy_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --compliance-policy-rule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.get_compliance_policy_rule(
+        compliance_policy_rule_id=compliance_policy_rule_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@onboarding_group.command(name=cli_util.override('fleet_apps_management_admin.get_onboarding.command_name', 'get'), help=u"""Gets a Fleet Application Management Onboarding by identifier. \n[Command Reference](getOnboarding)""")
+@cli_util.option('--onboarding-id', required=True, help=u"""A filter to return resources whose Onboarding identifier matches the given identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'Onboarding'})
+@cli_util.wrap_exceptions
+def get_onboarding(ctx, from_json, onboarding_id):
+
+    if isinstance(onboarding_id, six.string_types) and len(onboarding_id.strip()) == 0:
+        raise click.UsageError('Parameter --onboarding-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.get_onboarding(
+        onboarding_id=onboarding_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.get_platform_configuration.command_name', 'get'), help=u"""Gets a PlatformConfiguration by identifier \n[Command Reference](getPlatformConfiguration)""")
+@cli_util.option('--platform-configuration-id', required=True, help=u"""unique PlatformConfiguration identifier""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
+@cli_util.wrap_exceptions
+def get_platform_configuration(ctx, from_json, platform_configuration_id):
+
+    if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.get_platform_configuration(
+        platform_configuration_id=platform_configuration_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @property_group.command(name=cli_util.override('fleet_apps_management_admin.get_property.command_name', 'get'), help=u"""Gets a Property by identifier \n[Command Reference](getProperty)""")
 @cli_util.option('--property-id', required=True, help=u"""unique Property identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -271,7 +1343,137 @@ def get_property(ctx, from_json, property_id):
     cli_util.render_response(result, ctx)
 
 
-@onboarding_policy_collection_group.command(name=cli_util.override('fleet_apps_management_admin.list_onboarding_policies.command_name', 'list-onboarding-policies'), help=u"""Returns a list of onboarding policy information for FAMS. \n[Command Reference](listOnboardingPolicies)""")
+@compliance_policy_collection_group.command(name=cli_util.override('fleet_apps_management_admin.list_compliance_policies.command_name', 'list-compliance-policies'), help=u"""Gets a list of compliancePolicies. \n[Command Reference](listCompliancePolicies)""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--id', help=u"""unique CompliancePolicy identifier.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'CompliancePolicyCollection'})
+@cli_util.wrap_exceptions
+def list_compliance_policies(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compliance_policies,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compliance_policies,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_compliance_policies(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@compliance_policy_rule_collection_group.command(name=cli_util.override('fleet_apps_management_admin.list_compliance_policy_rules.command_name', 'list-compliance-policy-rules'), help=u"""Gets a list of CompliancePolicyRules. \n[Command Reference](listCompliancePolicyRules)""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
+@cli_util.option('--patch-name', help=u"""A filter to return only resources that match the patch selection against the given patch name.""")
+@cli_util.option('--compliance-policy-id', help=u"""unique CompliancePolicy identifier.""")
+@cli_util.option('--id', help=u"""unique CompliancePolicyRule identifier.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'CompliancePolicyRuleCollection'})
+@cli_util.wrap_exceptions
+def list_compliance_policy_rules(ctx, from_json, all_pages, page_size, compartment_id, display_name, lifecycle_state, patch_name, compliance_policy_id, id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if patch_name is not None:
+        kwargs['patch_name'] = patch_name
+    if compliance_policy_id is not None:
+        kwargs['compliance_policy_id'] = compliance_policy_id
+    if id is not None:
+        kwargs['id'] = id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compliance_policy_rules,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compliance_policy_rules,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_compliance_policy_rules(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@onboarding_policy_collection_group.command(name=cli_util.override('fleet_apps_management_admin.list_onboarding_policies.command_name', 'list-onboarding-policies'), help=u"""Returns a list of onboarding policy information for Fleet Application Management. \n[Command Reference](listOnboardingPolicies)""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -323,7 +1525,7 @@ def list_onboarding_policies(ctx, from_json, all_pages, page_size, limit, page, 
 
 @onboarding_collection_group.command(name=cli_util.override('fleet_apps_management_admin.list_onboardings.command_name', 'list-onboardings'), help=u"""Returns a list of onboarding information for the Tenancy. \n[Command Reference](listOnboardings)""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--id', help=u"""unique onboarding identifier""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -380,12 +1582,77 @@ def list_onboardings(ctx, from_json, all_pages, page_size, compartment_id, lifec
     cli_util.render_response(result, ctx)
 
 
-@property_collection_group.command(name=cli_util.override('fleet_apps_management_admin.list_properties.command_name', 'list-properties'), help=u"""Returns a list of Properties for Tenancy. \n[Command Reference](listProperties)""")
+@platform_configuration_collection_group.command(name=cli_util.override('fleet_apps_management_admin.list_platform_configurations.command_name', 'list-platform-configurations'), help=u"""Returns a list of PlatformConfiguration for Tenancy. \n[Command Reference](listPlatformConfigurations)""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "DELETING", "UPDATING"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--id', help=u"""unique Property identifier""")
-@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["TAXONOMY", "PLATFORM_CONFIG"]), help=u"""A filter to return only resources their scope matches the given lifecycleState.""")
+@cli_util.option('--id', help=u"""unique PlatformConfiguration identifier""")
+@cli_util.option('--config-category', type=custom_types.CliCaseInsensitiveChoice(["PRODUCT", "PRODUCT_STACK", "ENVIRONMENT", "PATCH_TYPE", "CREDENTIAL"]), help=u"""Config Category""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfigurationCollection'})
+@cli_util.wrap_exceptions
+def list_platform_configurations(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, id, config_category, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if config_category is not None:
+        kwargs['config_category'] = config_category
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_platform_configurations,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_platform_configurations,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_platform_configurations(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@property_collection_group.command(name=cli_util.override('fleet_apps_management_admin.list_properties.command_name', 'list-properties'), help=u"""List properties and their values for a tenancy in Fleet Application Management. \n[Command Reference](listProperties)""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--id', help=u"""A filter to return only resources whose Property identifier matches the given identifier.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["TAXONOMY", "PLATFORM_CONFIG"]), help=u"""A filter to return only resources their scope matches the given scope.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -445,14 +1712,953 @@ def list_properties(ctx, from_json, all_pages, page_size, compartment_id, lifecy
     cli_util.render_response(result, ctx)
 
 
-@property_group.command(name=cli_util.override('fleet_apps_management_admin.update_property.command_name', 'update'), help=u"""Updates the Property \n[Command Reference](updateProperty)""")
+@onboarding_group.command(name=cli_util.override('fleet_apps_management_admin.manage_settings.command_name', 'manage-settings'), help=u"""Updates the Onboarding setting \n[Command Reference](manageSettings)""")
+@cli_util.option('--onboarding-id', required=True, help=u"""A filter to return resources whose Onboarding identifier matches the given identifier.""")
+@cli_util.option('--discovery-frequency', help=u"""Provide discovery frequency.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def manage_settings(ctx, from_json, onboarding_id, discovery_frequency, if_match):
+
+    if isinstance(onboarding_id, six.string_types) and len(onboarding_id.strip()) == 0:
+        raise click.UsageError('Parameter --onboarding-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if discovery_frequency is not None:
+        _details['discoveryFrequency'] = discovery_frequency
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.manage_settings(
+        onboarding_id=onboarding_id,
+        manage_settings_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@compliance_policy_rule_group.command(name=cli_util.override('fleet_apps_management_admin.update_compliance_policy_rule.command_name', 'update'), help=u"""Updates a CompliancePolicyRule. \n[Command Reference](updateCompliancePolicyRule)""")
+@cli_util.option('--compliance-policy-rule-id', required=True, help=u"""unique CompliancePolicyRule identifier.""")
+@cli_util.option('--product-version', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--patch-type', type=custom_types.CLI_COMPLEX_TYPE, help=u"""PlatformConfiguration OCID for the patch type to which this CompliancePolicyRule applies.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Severity to which this CompliancePolicyRule applies.""")
+@cli_util.option('--patch-selection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--grace-period', help=u"""Grace period in days,weeks,months or years the exemption is applicable for the rule. This enables a grace period when Fleet Application Management doesn't report the product as noncompliant when patch is not applied.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'product-version': {'module': 'fleet_apps_management', 'class': 'ProductVersionDetails'}, 'patch-type': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'patch-selection': {'module': 'fleet_apps_management', 'class': 'PatchSelectionDetails'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'product-version': {'module': 'fleet_apps_management', 'class': 'ProductVersionDetails'}, 'patch-type': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'patch-selection': {'module': 'fleet_apps_management', 'class': 'PatchSelectionDetails'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_compliance_policy_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compliance_policy_rule_id, product_version, patch_type, severity, patch_selection, grace_period, freeform_tags, defined_tags, if_match):
+
+    if isinstance(compliance_policy_rule_id, six.string_types) and len(compliance_policy_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --compliance-policy-rule-id cannot be whitespace or empty string')
+    if not force:
+        if product_version or patch_type or severity or patch_selection or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to product-version and patch-type and severity and patch-selection and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if product_version is not None:
+        _details['productVersion'] = cli_util.parse_json_parameter("product_version", product_version)
+
+    if patch_type is not None:
+        _details['patchType'] = cli_util.parse_json_parameter("patch_type", patch_type)
+
+    if severity is not None:
+        _details['severity'] = cli_util.parse_json_parameter("severity", severity)
+
+    if patch_selection is not None:
+        _details['patchSelection'] = cli_util.parse_json_parameter("patch_selection", patch_selection)
+
+    if grace_period is not None:
+        _details['gracePeriod'] = grace_period
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.update_compliance_policy_rule(
+        compliance_policy_rule_id=compliance_policy_rule_id,
+        update_compliance_policy_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compliance_policy_rule_group.command(name=cli_util.override('fleet_apps_management_admin.update_compliance_policy_rule_patch_level_selection_details.command_name', 'update-compliance-policy-rule-patch-level-selection-details'), help=u"""Updates a CompliancePolicyRule. \n[Command Reference](updateCompliancePolicyRule)""")
+@cli_util.option('--compliance-policy-rule-id', required=True, help=u"""unique CompliancePolicyRule identifier.""")
+@cli_util.option('--patch-selection-patch-level', required=True, type=custom_types.CliCaseInsensitiveChoice(["LATEST", "LATEST_MINUS_ONE", "LATEST_MINUS_TWO"]), help=u"""Patch Name.""")
+@cli_util.option('--product-version', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--patch-type', type=custom_types.CLI_COMPLEX_TYPE, help=u"""PlatformConfiguration OCID for the patch type to which this CompliancePolicyRule applies.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Severity to which this CompliancePolicyRule applies.""")
+@cli_util.option('--grace-period', help=u"""Grace period in days,weeks,months or years the exemption is applicable for the rule. This enables a grace period when Fleet Application Management doesn't report the product as noncompliant when patch is not applied.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'product-version': {'module': 'fleet_apps_management', 'class': 'ProductVersionDetails'}, 'patch-type': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'product-version': {'module': 'fleet_apps_management', 'class': 'ProductVersionDetails'}, 'patch-type': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_compliance_policy_rule_patch_level_selection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compliance_policy_rule_id, patch_selection_patch_level, product_version, patch_type, severity, grace_period, freeform_tags, defined_tags, if_match):
+
+    if isinstance(compliance_policy_rule_id, six.string_types) and len(compliance_policy_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --compliance-policy-rule-id cannot be whitespace or empty string')
+    if not force:
+        if product_version or patch_type or severity or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to product-version and patch-type and severity and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['patchSelection'] = {}
+    _details['patchSelection']['patchLevel'] = patch_selection_patch_level
+
+    if product_version is not None:
+        _details['productVersion'] = cli_util.parse_json_parameter("product_version", product_version)
+
+    if patch_type is not None:
+        _details['patchType'] = cli_util.parse_json_parameter("patch_type", patch_type)
+
+    if severity is not None:
+        _details['severity'] = cli_util.parse_json_parameter("severity", severity)
+
+    if grace_period is not None:
+        _details['gracePeriod'] = grace_period
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['patchSelection']['selectionType'] = 'PATCH_LEVEL'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.update_compliance_policy_rule(
+        compliance_policy_rule_id=compliance_policy_rule_id,
+        update_compliance_policy_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compliance_policy_rule_group.command(name=cli_util.override('fleet_apps_management_admin.update_compliance_policy_rule_patch_release_date_selection_details.command_name', 'update-compliance-policy-rule-patch-release-date-selection-details'), help=u"""Updates a CompliancePolicyRule. \n[Command Reference](updateCompliancePolicyRule)""")
+@cli_util.option('--compliance-policy-rule-id', required=True, help=u"""unique CompliancePolicyRule identifier.""")
+@cli_util.option('--patch-selection-days-since-release', required=True, type=click.INT, help=u"""Days passed since patch release.""")
+@cli_util.option('--product-version', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--patch-type', type=custom_types.CLI_COMPLEX_TYPE, help=u"""PlatformConfiguration OCID for the patch type to which this CompliancePolicyRule applies.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Severity to which this CompliancePolicyRule applies.""")
+@cli_util.option('--grace-period', help=u"""Grace period in days,weeks,months or years the exemption is applicable for the rule. This enables a grace period when Fleet Application Management doesn't report the product as noncompliant when patch is not applied.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'product-version': {'module': 'fleet_apps_management', 'class': 'ProductVersionDetails'}, 'patch-type': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'product-version': {'module': 'fleet_apps_management', 'class': 'ProductVersionDetails'}, 'patch-type': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_compliance_policy_rule_patch_release_date_selection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compliance_policy_rule_id, patch_selection_days_since_release, product_version, patch_type, severity, grace_period, freeform_tags, defined_tags, if_match):
+
+    if isinstance(compliance_policy_rule_id, six.string_types) and len(compliance_policy_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --compliance-policy-rule-id cannot be whitespace or empty string')
+    if not force:
+        if product_version or patch_type or severity or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to product-version and patch-type and severity and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['patchSelection'] = {}
+    _details['patchSelection']['daysSinceRelease'] = patch_selection_days_since_release
+
+    if product_version is not None:
+        _details['productVersion'] = cli_util.parse_json_parameter("product_version", product_version)
+
+    if patch_type is not None:
+        _details['patchType'] = cli_util.parse_json_parameter("patch_type", patch_type)
+
+    if severity is not None:
+        _details['severity'] = cli_util.parse_json_parameter("severity", severity)
+
+    if grace_period is not None:
+        _details['gracePeriod'] = grace_period
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['patchSelection']['selectionType'] = 'PATCH_RELEASE_DATE'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.update_compliance_policy_rule(
+        compliance_policy_rule_id=compliance_policy_rule_id,
+        update_compliance_policy_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compliance_policy_rule_group.command(name=cli_util.override('fleet_apps_management_admin.update_compliance_policy_rule_patch_name_selection_details.command_name', 'update-compliance-policy-rule-patch-name-selection-details'), help=u"""Updates a CompliancePolicyRule. \n[Command Reference](updateCompliancePolicyRule)""")
+@cli_util.option('--compliance-policy-rule-id', required=True, help=u"""unique CompliancePolicyRule identifier.""")
+@cli_util.option('--patch-selection-patch-name', required=True, help=u"""Patch Name.""")
+@cli_util.option('--product-version', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--patch-type', type=custom_types.CLI_COMPLEX_TYPE, help=u"""PlatformConfiguration OCID for the patch type to which this CompliancePolicyRule applies.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Severity to which this CompliancePolicyRule applies.""")
+@cli_util.option('--grace-period', help=u"""Grace period in days,weeks,months or years the exemption is applicable for the rule. This enables a grace period when Fleet Application Management doesn't report the product as noncompliant when patch is not applied.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'product-version': {'module': 'fleet_apps_management', 'class': 'ProductVersionDetails'}, 'patch-type': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'product-version': {'module': 'fleet_apps_management', 'class': 'ProductVersionDetails'}, 'patch-type': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_compliance_policy_rule_patch_name_selection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compliance_policy_rule_id, patch_selection_patch_name, product_version, patch_type, severity, grace_period, freeform_tags, defined_tags, if_match):
+
+    if isinstance(compliance_policy_rule_id, six.string_types) and len(compliance_policy_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --compliance-policy-rule-id cannot be whitespace or empty string')
+    if not force:
+        if product_version or patch_type or severity or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to product-version and patch-type and severity and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['patchSelection'] = {}
+    _details['patchSelection']['patchName'] = patch_selection_patch_name
+
+    if product_version is not None:
+        _details['productVersion'] = cli_util.parse_json_parameter("product_version", product_version)
+
+    if patch_type is not None:
+        _details['patchType'] = cli_util.parse_json_parameter("patch_type", patch_type)
+
+    if severity is not None:
+        _details['severity'] = cli_util.parse_json_parameter("severity", severity)
+
+    if grace_period is not None:
+        _details['gracePeriod'] = grace_period
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['patchSelection']['selectionType'] = 'PATCH_NAME'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.update_compliance_policy_rule(
+        compliance_policy_rule_id=compliance_policy_rule_id,
+        update_compliance_policy_rule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@onboarding_group.command(name=cli_util.override('fleet_apps_management_admin.update_onboarding.command_name', 'update'), help=u"""Updates the Onboarding \n[Command Reference](updateOnboarding)""")
+@cli_util.option('--onboarding-id', required=True, help=u"""A filter to return resources whose Onboarding identifier matches the given identifier.""")
+@cli_util.option('--is-fams-tag-enabled', type=click.BOOL, help=u"""A value determining Fleet Application Management tag is enabled or not""")
+@cli_util.option('--is-cost-tracking-tag-enabled', type=click.BOOL, help=u"""A value determining if cost tracking tag is enabled or not""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_onboarding(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, onboarding_id, is_fams_tag_enabled, is_cost_tracking_tag_enabled, if_match):
+
+    if isinstance(onboarding_id, six.string_types) and len(onboarding_id.strip()) == 0:
+        raise click.UsageError('Parameter --onboarding-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if is_fams_tag_enabled is not None:
+        _details['isFamsTagEnabled'] = is_fams_tag_enabled
+
+    if is_cost_tracking_tag_enabled is not None:
+        _details['isCostTrackingTagEnabled'] = is_cost_tracking_tag_enabled
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.update_onboarding(
+        onboarding_id=onboarding_id,
+        update_onboarding_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.update_platform_configuration.command_name', 'update'), help=u"""Updates the PlatformConfiguration \n[Command Reference](updatePlatformConfiguration)""")
+@cli_util.option('--platform-configuration-id', required=True, help=u"""unique PlatformConfiguration identifier""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--config-category-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'config-category-details': {'module': 'fleet_apps_management', 'class': 'ConfigCategoryDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-category-details': {'module': 'fleet_apps_management', 'class': 'ConfigCategoryDetails'}})
+@cli_util.wrap_exceptions
+def update_platform_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, display_name, description, config_category_details, if_match):
+
+    if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
+    if not force:
+        if config_category_details:
+            if not click.confirm("WARNING: Updates to config-category-details will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if config_category_details is not None:
+        _details['configCategoryDetails'] = cli_util.parse_json_parameter("config_category_details", config_category_details)
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.update_platform_configuration(
+        platform_configuration_id=platform_configuration_id,
+        update_platform_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.update_platform_configuration_product_stack_config_category_details.command_name', 'update-platform-configuration-product-stack-config-category-details'), help=u"""Updates the PlatformConfiguration \n[Command Reference](updatePlatformConfiguration)""")
+@cli_util.option('--platform-configuration-id', required=True, help=u"""unique PlatformConfiguration identifier""")
+@cli_util.option('--config-category-details-products', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products that belong to the stack. For example, Oracle WebLogic and Java for the Oracle Fusion Middleware product stack.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--config-category-details-sub-category-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'config-category-details-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-sub-category-details': {'module': 'fleet_apps_management', 'class': 'ProductStackSubCategoryDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-category-details-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-sub-category-details': {'module': 'fleet_apps_management', 'class': 'ProductStackSubCategoryDetails'}})
+@cli_util.wrap_exceptions
+def update_platform_configuration_product_stack_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, config_category_details_products, display_name, description, if_match, config_category_details_sub_category_details):
+
+    if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configCategoryDetails'] = {}
+    _details['configCategoryDetails']['products'] = cli_util.parse_json_parameter("config_category_details_products", config_category_details_products)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if config_category_details_sub_category_details is not None:
+        _details['configCategoryDetails']['subCategoryDetails'] = cli_util.parse_json_parameter("config_category_details_sub_category_details", config_category_details_sub_category_details)
+
+    _details['configCategoryDetails']['configCategory'] = 'PRODUCT_STACK'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.update_platform_configuration(
+        platform_configuration_id=platform_configuration_id,
+        update_platform_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.update_platform_configuration_environment_config_category_details.command_name', 'update-platform-configuration-environment-config-category-details'), help=u"""Updates the PlatformConfiguration \n[Command Reference](updatePlatformConfiguration)""")
+@cli_util.option('--platform-configuration-id', required=True, help=u"""unique PlatformConfiguration identifier""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_platform_configuration_environment_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, display_name, description, if_match):
+
+    if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configCategoryDetails'] = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    _details['configCategoryDetails']['configCategory'] = 'ENVIRONMENT'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.update_platform_configuration(
+        platform_configuration_id=platform_configuration_id,
+        update_platform_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.update_platform_configuration_credential_config_category_details.command_name', 'update-platform-configuration-credential-config-category-details'), help=u"""Updates the PlatformConfiguration \n[Command Reference](updatePlatformConfiguration)""")
+@cli_util.option('--platform-configuration-id', required=True, help=u"""unique PlatformConfiguration identifier""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_platform_configuration_credential_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, display_name, description, if_match):
+
+    if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configCategoryDetails'] = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    _details['configCategoryDetails']['configCategory'] = 'CREDENTIAL'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.update_platform_configuration(
+        platform_configuration_id=platform_configuration_id,
+        update_platform_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.update_platform_configuration_patch_type_config_category_details.command_name', 'update-platform-configuration-patch-type-config-category-details'), help=u"""Updates the PlatformConfiguration \n[Command Reference](updatePlatformConfiguration)""")
+@cli_util.option('--platform-configuration-id', required=True, help=u"""unique PlatformConfiguration identifier""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_platform_configuration_patch_type_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, display_name, description, if_match):
+
+    if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configCategoryDetails'] = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    _details['configCategoryDetails']['configCategory'] = 'PATCH_TYPE'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.update_platform_configuration(
+        platform_configuration_id=platform_configuration_id,
+        update_platform_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@platform_configuration_group.command(name=cli_util.override('fleet_apps_management_admin.update_platform_configuration_product_config_category_details.command_name', 'update-platform-configuration-product-config-category-details'), help=u"""Updates the PlatformConfiguration \n[Command Reference](updatePlatformConfiguration)""")
+@cli_util.option('--platform-configuration-id', required=True, help=u"""unique PlatformConfiguration identifier""")
+@cli_util.option('--config-category-details-versions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Versions associated with the PRODUCT .""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My new resource`""")
+@cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--config-category-details-credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""OCID for the Credential name to be associated with the Product. These are useful for target discovery or lifecycle management activities, for example, Oracle WebLogic admin credentials for Oracle WebLogic Application server.
+
+This option is a JSON list with items of type ConfigAssociationDetails.  For documentation on ConfigAssociationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagementadmin/20230831/datatypes/ConfigAssociationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config-category-details-components', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Various components of the Product. For example:The administration server or node manager can be the components of the Oracle WebLogic Application server. Forms server or concurrent manager can be the components of the Oracle E-Business Suite.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config-category-details-compatible-products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products compatible with this Product. Provide products from the list of other products you have created that are compatible with the present one
+
+This option is a JSON list with items of type ConfigAssociationDetails.  For documentation on ConfigAssociationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagementadmin/20230831/datatypes/ConfigAssociationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config-category-details-patch-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Patch Types associated with this Product.
+
+This option is a JSON list with items of type ConfigAssociationDetails.  For documentation on ConfigAssociationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagementadmin/20230831/datatypes/ConfigAssociationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'config-category-details-versions': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-credentials': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-components': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-compatible-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-patch-types': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-category-details-versions': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-credentials': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-components': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-compatible-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-patch-types': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}})
+@cli_util.wrap_exceptions
+def update_platform_configuration_product_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, config_category_details_versions, display_name, description, if_match, config_category_details_credentials, config_category_details_components, config_category_details_compatible_products, config_category_details_patch_types):
+
+    if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configCategoryDetails'] = {}
+    _details['configCategoryDetails']['versions'] = cli_util.parse_json_parameter("config_category_details_versions", config_category_details_versions)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if config_category_details_credentials is not None:
+        _details['configCategoryDetails']['credentials'] = cli_util.parse_json_parameter("config_category_details_credentials", config_category_details_credentials)
+
+    if config_category_details_components is not None:
+        _details['configCategoryDetails']['components'] = cli_util.parse_json_parameter("config_category_details_components", config_category_details_components)
+
+    if config_category_details_compatible_products is not None:
+        _details['configCategoryDetails']['compatibleProducts'] = cli_util.parse_json_parameter("config_category_details_compatible_products", config_category_details_compatible_products)
+
+    if config_category_details_patch_types is not None:
+        _details['configCategoryDetails']['patchTypes'] = cli_util.parse_json_parameter("config_category_details_patch_types", config_category_details_patch_types)
+
+    _details['configCategoryDetails']['configCategory'] = 'PRODUCT'
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
+    result = client.update_platform_configuration(
+        platform_configuration_id=platform_configuration_id,
+        update_platform_configuration_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@property_group.command(name=cli_util.override('fleet_apps_management_admin.update_property.command_name', 'update'), help=u"""Update a property in Fleet Application Management. \n[Command Reference](updateProperty)""")
 @cli_util.option('--property-id', required=True, help=u"""unique Property identifier""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
-@cli_util.option('--selection', type=custom_types.CliCaseInsensitiveChoice(["SINGLE_CHOICE", "MULTI_CHOICE", "DEFAULT_TEXT"]), help=u"""Text selection of the category""")
-@cli_util.option('--value-type', type=custom_types.CliCaseInsensitiveChoice(["STRING", "NUMERIC"]), help=u"""Format of the value""")
-@cli_util.option('--values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Values of the property (must be a single value if selection = 'single choice')""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--selection', type=custom_types.CliCaseInsensitiveChoice(["SINGLE_CHOICE", "MULTI_CHOICE", "DEFAULT_TEXT"]), help=u"""Text selection of the property.""")
+@cli_util.option('--value-type', type=custom_types.CliCaseInsensitiveChoice(["STRING", "NUMERIC"]), help=u"""Format of the value.""")
+@cli_util.option('--values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Values of the property (must be a single value if selection = 'SINGLE_CHOICE').""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")

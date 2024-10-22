@@ -2379,6 +2379,11 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 **Added In:** 2010242156
 
 **SCIM++ Properties:**  - caseExact: false  - type: string  - mutability: readWrite  - required: false  - returned: default""")
+@cli_util.option('--token', help=u"""token
+
+**Added In:** 2010242156
+
+**SCIM++ Properties:**  - caseExact: true  - type: string  - mutability: readOnly  - required: false  - returned: default  - idcsSensitive: hash_sc""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help=u"""The user's credential status.
 
 **Added In:** 2109090424
@@ -2396,7 +2401,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'user': {'module': 'identity_domains', 'class': 'AuthTokenUser'}, 'urnietfparamsscimschemasoracleidcsextensionself-change-user': {'module': 'identity_domains', 'class': 'ExtensionSelfChangeUser'}}, output_type={'module': 'identity_domains', 'class': 'AuthToken'})
 @cli_util.wrap_exceptions
-def create_auth_token(ctx, from_json, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, status, expires_on, user, urnietfparamsscimschemasoracleidcsextensionself_change_user):
+def create_auth_token(ctx, from_json, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, token, status, expires_on, user, urnietfparamsscimschemasoracleidcsextensionself_change_user):
 
     kwargs = {}
     if authorization is not None:
@@ -2449,6 +2454,9 @@ def create_auth_token(ctx, from_json, schemas, authorization, resource_type_sche
 
     if description is not None:
         _details['description'] = description
+
+    if token is not None:
+        _details['token'] = token
 
     if status is not None:
         _details['status'] = status
@@ -3269,6 +3277,9 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.option('--access-key', help=u"""The access key.
 
 **SCIM++ Properties:**  - caseExact: true  - type: string  - mutability: readOnly  - required: false  - returned: default""")
+@cli_util.option('--secret-key', help=u"""The secret key.
+
+**SCIM++ Properties:**  - caseExact: true  - type: string  - mutability: readOnly  - required: false  - returned: default""")
 @cli_util.option('--user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionself-change-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'user': {'module': 'identity_domains', 'class': 'CustomerSecretKeyUser'}, 'urnietfparamsscimschemasoracleidcsextensionself-change-user': {'module': 'identity_domains', 'class': 'ExtensionSelfChangeUser'}})
@@ -3276,7 +3287,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'user': {'module': 'identity_domains', 'class': 'CustomerSecretKeyUser'}, 'urnietfparamsscimschemasoracleidcsextensionself-change-user': {'module': 'identity_domains', 'class': 'ExtensionSelfChangeUser'}}, output_type={'module': 'identity_domains', 'class': 'CustomerSecretKey'})
 @cli_util.wrap_exceptions
-def create_customer_secret_key(ctx, from_json, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, display_name, description, status, expires_on, access_key, user, urnietfparamsscimschemasoracleidcsextensionself_change_user):
+def create_customer_secret_key(ctx, from_json, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, display_name, description, status, expires_on, access_key, secret_key, user, urnietfparamsscimschemasoracleidcsextensionself_change_user):
 
     kwargs = {}
     if authorization is not None:
@@ -3341,6 +3352,9 @@ def create_customer_secret_key(ctx, from_json, schemas, authorization, resource_
 
     if access_key is not None:
         _details['accessKey'] = access_key
+
+    if secret_key is not None:
+        _details['secretKey'] = secret_key
 
     if user is not None:
         _details['user'] = cli_util.parse_json_parameter("user", user)
@@ -6572,6 +6586,9 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 **Added In:** 2109090424
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: writeOnly  - required: false  - returned: default  - type: boolean  - uniqueness: none""")
+@cli_util.option('--secret', help=u"""Secret
+
+**SCIM++ Properties:**  - caseExact: false  - type: string  - mutability: readOnly  - required: false  - returned: default  - idcsScimCompliant: false  - idcsSensitive: hash_sc""")
 @cli_util.option('--user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionself-change-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'scopes': {'module': 'identity_domains', 'class': 'list[OAuth2ClientCredentialScopes]'}, 'user': {'module': 'identity_domains', 'class': 'OAuth2ClientCredentialUser'}, 'urnietfparamsscimschemasoracleidcsextensionself-change-user': {'module': 'identity_domains', 'class': 'ExtensionSelfChangeUser'}})
@@ -6579,7 +6596,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'scopes': {'module': 'identity_domains', 'class': 'list[OAuth2ClientCredentialScopes]'}, 'user': {'module': 'identity_domains', 'class': 'OAuth2ClientCredentialUser'}, 'urnietfparamsscimschemasoracleidcsextensionself-change-user': {'module': 'identity_domains', 'class': 'ExtensionSelfChangeUser'}}, output_type={'module': 'identity_domains', 'class': 'OAuth2ClientCredential'})
 @cli_util.wrap_exceptions
-def create_o_auth2_client_credential(ctx, from_json, schemas, name, scopes, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, status, expires_on, is_reset_secret, user, urnietfparamsscimschemasoracleidcsextensionself_change_user):
+def create_o_auth2_client_credential(ctx, from_json, schemas, name, scopes, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, status, expires_on, is_reset_secret, secret, user, urnietfparamsscimschemasoracleidcsextensionself_change_user):
 
     kwargs = {}
     if authorization is not None:
@@ -6643,6 +6660,9 @@ def create_o_auth2_client_credential(ctx, from_json, schemas, name, scopes, auth
 
     if is_reset_secret is not None:
         _details['isResetSecret'] = is_reset_secret
+
+    if secret is not None:
+        _details['secret'] = secret
 
     if user is not None:
         _details['user'] = cli_util.parse_json_parameter("user", user)
@@ -8026,6 +8046,9 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 **Added In:** 2109090424
 
 **SCIM++ Properties:**  - caseExact: false  - idcsSearchable: false  - multiValued: false  - mutability: immutable  - required: false  - returned: default  - type: dateTime  - uniqueness: none""")
+@cli_util.option('--password', help=u"""Password
+
+**SCIM++ Properties:**  - caseExact: true  - type: string  - mutability: readOnly  - required: false  - returned: default  - idcsSensitive: hash_sc""")
 @cli_util.option('--user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--urnietfparamsscimschemasoracleidcsextensionself-change-user', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'user': {'module': 'identity_domains', 'class': 'SmtpCredentialUser'}, 'urnietfparamsscimschemasoracleidcsextensionself-change-user': {'module': 'identity_domains', 'class': 'ExtensionSelfChangeUser'}})
@@ -8033,7 +8056,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'user': {'module': 'identity_domains', 'class': 'SmtpCredentialUser'}, 'urnietfparamsscimschemasoracleidcsextensionself-change-user': {'module': 'identity_domains', 'class': 'ExtensionSelfChangeUser'}}, output_type={'module': 'identity_domains', 'class': 'SmtpCredential'})
 @cli_util.wrap_exceptions
-def create_smtp_credential(ctx, from_json, schemas, user_name, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, status, expires_on, user, urnietfparamsscimschemasoracleidcsextensionself_change_user):
+def create_smtp_credential(ctx, from_json, schemas, user_name, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, status, expires_on, password, user, urnietfparamsscimschemasoracleidcsextensionself_change_user):
 
     kwargs = {}
     if authorization is not None:
@@ -8093,6 +8116,9 @@ def create_smtp_credential(ctx, from_json, schemas, user_name, authorization, re
 
     if expires_on is not None:
         _details['expiresOn'] = expires_on
+
+    if password is not None:
+        _details['password'] = password
 
     if user is not None:
         _details['user'] = cli_util.parse_json_parameter("user", user)
