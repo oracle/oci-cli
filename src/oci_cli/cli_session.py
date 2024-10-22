@@ -22,7 +22,6 @@ import sys
 import tempfile
 import zipfile
 import datetime
-import oci._vendor.jwt as jwt
 
 CONFIG_KEY_FILE_SUFFIX = "_file"
 TOKEN_FILE_SUFFIX = "_token"
@@ -98,7 +97,8 @@ def authenticate(ctx, region, tenancy_name, profile_name, config_location, use_p
         response = cli_util.to_dict(result.data)
         token = response['token']
         # get user / tenant info out of token
-        token_data = jwt.decode(token, verify=False)
+        security_token_container = oci.auth.security_token_container.SecurityTokenContainer(None, security_token=token)
+        token_data = security_token_container.get_jwt()
         user_ocid = token_data['sub']
         tenancy_ocid = token_data['tenant']
         user_session = cli_setup_bootstrap.UserSession(user_ocid, tenancy_ocid, region, token, public_key, private_key, fingerprint)

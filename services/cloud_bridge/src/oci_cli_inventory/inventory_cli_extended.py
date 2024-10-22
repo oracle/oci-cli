@@ -60,6 +60,14 @@ inventory_cli.asset_group.commands.pop(inventory_cli.update_asset_update_vmware_
                  help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vmware-v-center', type=custom_types.CLI_COMPLEX_TYPE,
                  help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--aws-ebs', type=custom_types.CLI_COMPLEX_TYPE,
+                 help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--aws-ec2', type=custom_types.CLI_COMPLEX_TYPE,
+                 help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--aws-ec2-cost', type=custom_types.CLI_COMPLEX_TYPE,
+                 help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attached-ebs-volumes-cost', type=custom_types.CLI_COMPLEX_TYPE,
+                 help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @inventory_cli.asset_group.command(
     name=cli_util.override(
         'inventory.create_asset.command_name',
@@ -86,7 +94,19 @@ inventory_cli.asset_group.commands.pop(inventory_cli.update_asset_update_vmware_
         'class': 'VmwareVmProperties'},
     'vmware-v-center': {
         'module': 'cloud_bridge',
-        'class': 'VmwareVCenterProperties'}})
+        'class': 'VmwareVCenterProperties'},
+    'aws-ebs': {
+        'module': 'cloud_bridge',
+        'class': 'AwsEbsProperties'},
+    'aws-ec2': {
+        'module': 'cloud_bridge',
+        'class': 'AwsEc2Properties'},
+    'aws-ec2-cost': {
+        'module': 'cloud_bridge',
+        'class': 'MonthlyCostSummary'},
+    'attached-ebs-volumes-cost': {
+        'module': 'cloud_bridge',
+        'class': 'MonthlyCostSummary'}})
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
     input_params_to_complex_types={
@@ -103,13 +123,22 @@ inventory_cli.asset_group.commands.pop(inventory_cli.update_asset_update_vmware_
         'vmware-vm': {'module': 'cloud_bridge',
                       'class': 'VmwareVmProperties'},
         'vmware-v-center': {'module': 'cloud_bridge',
-                            'class': 'VmwareVCenterProperties'}},
+                            'class': 'VmwareVCenterProperties'},
+        'aws-ebs': {'module': 'cloud_bridge',
+                    'class': 'AwsEbsProperties'},
+        'aws-ec2': {'module': 'cloud_bridge',
+                    'class': 'AwsEc2Properties'},
+        'aws-ec2-cost': {'module': 'cloud_bridge',
+                         'class': 'MonthlyCostSummary'},
+        'attached-ebs-volumes-cost': {'module': 'cloud_bridge',
+                                      'class': 'MonthlyCostSummary'}},
     output_type={'module': 'cloud_bridge',
                  'class': 'Asset'})
 @cli_util.wrap_exceptions
 def create_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, inventory_id, compartment_id,
                  source_key, external_asset_key, asset_type, display_name, asset_source_ids, freeform_tags,
-                 defined_tags, compute, vm, vmware_vm, vmware_v_center):
+                 defined_tags, compute, vm, vmware_vm, vmware_v_center,
+                 aws_ebs, aws_ec2, aws_ec2_cost, attached_ebs_volumes_cost):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
@@ -143,6 +172,18 @@ def create_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if vmware_v_center is not None:
         _details['vmwareVCenter'] = cli_util.parse_json_parameter("vmware_v_center", vmware_v_center)
+
+    if aws_ebs is not None:
+        _details['awsEbs'] = cli_util.parse_json_parameter("aws_ebs", aws_ebs)
+
+    if aws_ec2 is not None:
+        _details['awsEc2'] = cli_util.parse_json_parameter("aws_ec2", aws_ec2)
+
+    if aws_ec2_cost is not None:
+        _details['awsEc2Cost'] = cli_util.parse_json_parameter("aws_ec2_cost", aws_ec2_cost)
+
+    if attached_ebs_volumes_cost is not None:
+        _details['attachedEbsVolumesCost'] = cli_util.parse_json_parameter("attached_ebs_volumes_cost", attached_ebs_volumes_cost)
 
     client = cli_util.build_client('cloud_bridge', 'inventory', ctx)
     result = client.create_asset(
@@ -192,6 +233,14 @@ def create_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
                  help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vmware-v-center', type=custom_types.CLI_COMPLEX_TYPE,
                  help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--aws-ebs', type=custom_types.CLI_COMPLEX_TYPE,
+                 help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--aws-ec2', type=custom_types.CLI_COMPLEX_TYPE,
+                 help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--aws-ec2-cost', type=custom_types.CLI_COMPLEX_TYPE,
+                 help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attached-ebs-volumes-cost', type=custom_types.CLI_COMPLEX_TYPE,
+                 help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'asset-source-ids': {'module': 'cloud_bridge', 'class': 'list[string]'},
                                                 'freeform-tags': {'module': 'cloud_bridge',
                                                                   'class': 'dict(str, string)'},
@@ -201,7 +250,15 @@ def create_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
                                                 'vm': {'module': 'cloud_bridge', 'class': 'VmProperties'},
                                                 'vmware-vm': {'module': 'cloud_bridge', 'class': 'VmwareVmProperties'},
                                                 'vmware-v-center': {'module': 'cloud_bridge',
-                                                                    'class': 'VmwareVCenterProperties'}})
+                                                                    'class': 'VmwareVCenterProperties'},
+                                                'aws-ebs': {'module': 'cloud_bridge',
+                                                            'class': 'AwsEbsProperties'},
+                                                'aws-ec2': {'module': 'cloud_bridge',
+                                                            'class': 'AwsEc2Properties'},
+                                                'aws-ec2-cost': {'module': 'cloud_bridge',
+                                                                 'class': 'MonthlyCostSummary'},
+                                                'attached-ebs-volumes-cost': {'module': 'cloud_bridge',
+                                                                              'class': 'MonthlyCostSummary'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
@@ -211,12 +268,16 @@ def create_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
                                    'compute': {'module': 'cloud_bridge', 'class': 'ComputeProperties'},
                                    'vm': {'module': 'cloud_bridge', 'class': 'VmProperties'},
                                    'vmware-vm': {'module': 'cloud_bridge', 'class': 'VmwareVmProperties'},
-                                   'vmware-v-center': {'module': 'cloud_bridge', 'class': 'VmwareVCenterProperties'}},
+                                   'vmware-v-center': {'module': 'cloud_bridge', 'class': 'VmwareVCenterProperties'},
+                                   'aws-ebs': {'module': 'cloud_bridge', 'class': 'AwsEbsProperties'},
+                                   'aws-ec2': {'module': 'cloud_bridge', 'class': 'AwsEc2Properties'},
+                                   'aws-ec2-cost': {'module': 'cloud_bridge', 'class': 'MonthlyCostSummary'},
+                                   'attached-ebs-volumes-cost': {'module': 'cloud_bridge', 'class': 'MonthlyCostSummary'}},
     output_type={'module': 'cloud_bridge', 'class': 'Asset'})
 @cli_util.wrap_exceptions
 def update_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, asset_id, asset_type,
                  display_name, asset_source_ids, freeform_tags, defined_tags, compute, vm, vmware_vm, vmware_v_center,
-                 if_match):
+                aws_ebs, aws_ec2, aws_ec2_cost, attached_ebs_volumes_cost, if_match):
     if isinstance(asset_id, six.string_types) and len(asset_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-id cannot be whitespace or empty string')
     if not force:
@@ -257,6 +318,18 @@ def update_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     if vmware_v_center is not None:
         _details['vmwareVCenter'] = cli_util.parse_json_parameter("vmware_v_center", vmware_v_center)
 
+    if aws_ebs is not None:
+        _details['awsEbs'] = cli_util.parse_json_parameter("aws_ebs", aws_ebs)
+
+    if aws_ec2 is not None:
+        _details['awsEc2'] = cli_util.parse_json_parameter("aws_ec2", aws_ec2)
+
+    if aws_ec2_cost is not None:
+        _details['awsEc2Cost'] = cli_util.parse_json_parameter("aws_ec2_cost", aws_ec2_cost)
+
+    if attached_ebs_volumes_cost is not None:
+        _details['attachedEbsVolumesCost'] = cli_util.parse_json_parameter("attached_ebs_volumes_cost", attached_ebs_volumes_cost)
+
     client = cli_util.build_client('cloud_bridge', 'inventory', ctx)
     result = client.update_asset(
         asset_id=asset_id,
@@ -293,3 +366,27 @@ def update_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
+
+
+# Remove create-asset-create-aws-ebs-asset-details from oci cloud-bridge inventory asset
+inventory_cli.asset_group.commands.pop(inventory_cli.create_asset_create_aws_ebs_asset_details.name)
+
+
+# Remove create-asset-create-aws-ec2-asset-details from oci cloud-bridge inventory asset
+inventory_cli.asset_group.commands.pop(inventory_cli.create_asset_create_aws_ec2_asset_details.name)
+
+
+# Remove create-asset-create-inventory-asset-details from oci cloud-bridge inventory asset
+# inventory_cli.asset_group.commands.pop(inventory_cli.create_asset_create_inventory_asset_details.name)
+
+
+# Remove update-asset-update-aws-ebs-asset-details from oci cloud-bridge inventory asset
+inventory_cli.asset_group.commands.pop(inventory_cli.update_asset_update_aws_ebs_asset_details.name)
+
+
+# Remove update-asset-update-aws-ec2-asset-details from oci cloud-bridge inventory asset
+inventory_cli.asset_group.commands.pop(inventory_cli.update_asset_update_aws_ec2_asset_details.name)
+
+
+# Remove update-asset-update-inventory-asset-details from oci cloud-bridge inventory asset
+# inventory_cli.asset_group.commands.pop(inventory_cli.update_asset_update_inventory_asset_details.name)

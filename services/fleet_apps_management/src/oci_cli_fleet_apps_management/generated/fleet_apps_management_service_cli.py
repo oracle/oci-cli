@@ -8,8 +8,7 @@ from oci_cli import cli_util
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('fleet_apps_management_runbooks.fleet_apps_management_service_group.command_name', 'fleet-apps-management'), cls=CommandGroupWithAlias, help=cli_util.override('fleet_apps_management_runbooks.fleet_apps_management_service_group.help', """Fleet Application Management Service API. Use this API to for all FAMS related activities.
-To manage fleets,view complaince report for the Fleet,scedule patches and other lifecycle activities"""), short_help=cli_util.override('fleet_apps_management_runbooks.fleet_apps_management_service_group.short_help', """Fleet Application Management Service API"""))
+@cli.command(cli_util.override('fleet_apps_management_runbooks.fleet_apps_management_service_group.command_name', 'fleet-apps-management'), cls=CommandGroupWithAlias, help=cli_util.override('fleet_apps_management_runbooks.fleet_apps_management_service_group.help', """Fleet Application Management provides a centralized platform to help you automate resource management tasks, validate patch compliance, and enhance operational efficiency across an enterprise."""), short_help=cli_util.override('fleet_apps_management_runbooks.fleet_apps_management_service_group.short_help', """Fleet Application Management Service API"""))
 @cli_util.help_option_group
 def fleet_apps_management_service_group():
     pass

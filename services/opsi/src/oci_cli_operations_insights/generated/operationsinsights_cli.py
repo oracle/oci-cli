@@ -11818,6 +11818,51 @@ def summarize_host_insight_host_recommendation(ctx, from_json, compartment_id, i
     cli_util.render_response(result, ctx)
 
 
+@host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_io_usage_trend.command_name', 'summarize-host-insight-io-usage-trend'), help=u"""Returns response with usage time series data with breakdown by IO interface for the time period specified. \n[Command Reference](summarizeHostInsightIoUsageTrend)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--id', required=True, help=u"""Required [OCID] of the host insight resource.""")
+@cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
+@cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--host-id', help=u"""Optional [OCID] of the host (Compute Id)""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
+@cli_util.option('--statistic', type=custom_types.CliCaseInsensitiveChoice(["AVG", "MAX"]), help=u"""Choose the type of statistic metric data to be used for forecasting.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opsi', 'class': 'SummarizeHostInsightIoUsageTrendAggregationCollection'})
+@cli_util.wrap_exceptions
+def summarize_host_insight_io_usage_trend(ctx, from_json, compartment_id, id, analysis_time_interval, time_interval_start, time_interval_end, host_id, page, limit, statistic, status):
+
+    kwargs = {}
+    if analysis_time_interval is not None:
+        kwargs['analysis_time_interval'] = analysis_time_interval
+    if time_interval_start is not None:
+        kwargs['time_interval_start'] = time_interval_start
+    if time_interval_end is not None:
+        kwargs['time_interval_end'] = time_interval_end
+    if host_id is not None:
+        kwargs['host_id'] = host_id
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if statistic is not None:
+        kwargs['statistic'] = statistic
+    if status is not None and len(status) > 0:
+        kwargs['status'] = status
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.summarize_host_insight_io_usage_trend(
+        compartment_id=compartment_id,
+        id=id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @host_insights_group.command(name=cli_util.override('opsi.summarize_host_insight_network_usage_trend.command_name', 'summarize-host-insight-network-usage-trend'), help=u"""Returns response with usage time series data with breakdown by network interface for the time period specified. \n[Command Reference](summarizeHostInsightNetworkUsageTrend)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--id', required=True, help=u"""Required [OCID] of the host insight resource.""")

@@ -1053,6 +1053,7 @@ This option is a JSON list with items of type BootVolumeReplicaDetails.  For doc
 @cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
 
 This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the boot volume cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--source-details-change-block-size-in-bytes', type=click.INT, help=u"""Block size in bytes to be considered while performing volume restore. The value must be a power of 2; ranging from 4KB (4096 bytes) to 1MB (1048576 bytes). If omitted, defaults to 4,096 bytes (4 KiB).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1062,7 +1063,7 @@ This option is a JSON list with items of type AutotunePolicy.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'boot-volume-replicas': {'module': 'core', 'class': 'list[BootVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume_boot_volume_source_from_boot_volume_backup_delta_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_first_backup_id, source_details_second_backup_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, cluster_placement_group_id, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas, autotune_policies, source_details_change_block_size_in_bytes):
+def create_boot_volume_boot_volume_source_from_boot_volume_backup_delta_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_first_backup_id, source_details_second_backup_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, cluster_placement_group_id, vpus_per_gb, is_auto_tune_enabled, boot_volume_replicas, autotune_policies, xrc_kms_key_id, source_details_change_block_size_in_bytes):
 
     kwargs = {}
 
@@ -1107,6 +1108,9 @@ def create_boot_volume_boot_volume_source_from_boot_volume_backup_delta_details(
 
     if autotune_policies is not None:
         _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
+
+    if xrc_kms_key_id is not None:
+        _details['xrcKmsKeyId'] = xrc_kms_key_id
 
     if source_details_change_block_size_in_bytes is not None:
         _details['sourceDetails']['changeBlockSizeInBytes'] = source_details_change_block_size_in_bytes
@@ -1817,6 +1821,7 @@ This option is a JSON list with items of type BlockVolumeReplicaDetails.  For do
 @cli_util.option('--autotune-policies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of autotune policies to be enabled for this volume.
 
 This option is a JSON list with items of type AutotunePolicy.  For documentation on AutotunePolicy please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AutotunePolicy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--xrc-kms-key-id', help=u"""The OCID of the Vault service key which is the master encryption key for the block volume cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see [Overview of Vault service] and [Using Keys].""")
 @cli_util.option('--source-details-change-block-size-in-bytes', type=click.INT, help=u"""Block size in bytes to be considered while performing volume restore. The value must be a power of 2; ranging from 4KB (4096 bytes) to 1MB (1048576 bytes). If omitted, defaults to 4,096 bytes (4 KiB).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1826,7 +1831,7 @@ This option is a JSON list with items of type AutotunePolicy.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volume-replicas': {'module': 'core', 'class': 'list[BlockVolumeReplicaDetails]'}, 'autotune-policies': {'module': 'core', 'class': 'list[AutotunePolicy]'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume_volume_source_from_volume_backup_delta_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_first_backup_id, source_details_second_backup_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, cluster_placement_group_id, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas, autotune_policies, source_details_change_block_size_in_bytes):
+def create_volume_volume_source_from_volume_backup_delta_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_details_first_backup_id, source_details_second_backup_id, availability_domain, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, cluster_placement_group_id, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled, block_volume_replicas, autotune_policies, xrc_kms_key_id, source_details_change_block_size_in_bytes):
 
     kwargs = {}
 
@@ -1877,6 +1882,9 @@ def create_volume_volume_source_from_volume_backup_delta_details(ctx, from_json,
 
     if autotune_policies is not None:
         _details['autotunePolicies'] = cli_util.parse_json_parameter("autotune_policies", autotune_policies)
+
+    if xrc_kms_key_id is not None:
+        _details['xrcKmsKeyId'] = xrc_kms_key_id
 
     if source_details_change_block_size_in_bytes is not None:
         _details['sourceDetails']['changeBlockSizeInBytes'] = source_details_change_block_size_in_bytes

@@ -6,6 +6,101 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.49.3 - 2024-10-22
+--------------------
+Added
+~~~~~
+* Support for add and remove lock operations added to the following File Storage resources: [export, file-system, filesystem-snapshot, mount-target, outbound-connector, replication]
+
+  * ``oci fs export add --export-id <id> --lock [full|delete]``
+  * ``oci fs file-system add --file-system-id <id> --lock [full|delete]``
+  * ``oci fs filesystem-snapshot-policy add ----filesystem-snapshot-policy-id <id> --lock [full|delete]``
+  * ``oci fs filesystem-snapshot-policy add ----filesystem-snapshot-policy-id <id> --lock [full|delete]``
+  * ``oci fs mount-target add --mount-target-id <id> --lock [full|delete]``
+  * ``oci fs outbound-connector add --outbound-connector-id <id> --lock [full|delete]``
+  * ``oci fs replication add --replication-id <id> --lock [full|delete]``
+  * ``oci fs export remove --export-id <id> --lock [full|delete]``
+  * ``oci fs file-system remove --file-system-id <id> --lock [full|delete]``
+  * ``oci fs filesystem-snapshot-policy remove ----filesystem-snapshot-policy-id <id> --lock [full|delete]``
+  * ``oci fs filesystem-snapshot-policy remove ----filesystem-snapshot-policy-id <id> --lock [full|delete]``
+  * ``oci fs mount-target remove --mount-target-id <id> --lock [full|delete]``
+  * ``oci fs outbound-connector remove --outbound-connector-id <id> --lock [full|delete]``
+  * ``oci fs replication remove --replication-id <id> --lock [full|delete]``
+
+* Support for new optional parameters in the Database Service
+
+  * ``oci db autonomous-database create --encryption-key``
+  * ``oci db autonomous-database update --encryption-key``
+
+* Support for returning generated token as part of response in Identity Domains Service
+
+  * ``oci identity-domains``
+
+* Support for model backup retention and restore in Data Science Service
+
+  * ``oci data-science model create --backup-setting, --retention-setting``
+  * ``oci data-science model update --backup-setting, --retention-setting``
+  * ``oci data-science model restore-archived-model-artifact --model-id --restore-model-for-hours-specified``
+
+* Support of Host Capacity Planning for Host IO metrics in Ops Insights Service
+
+  * ``oci opsi host-insights summarize-io-usage-trend --compartment-id --id --analysis-time-interval``
+
+* Cloud Bridge Service
+
+  * Support of creating/updating Amazon Web Services asset-sources
+
+    * ``oci cloud-bridge discovery asset-source create --are-historical-metrics-collected --are-realtime-metrics-collected --is-cost-information-collected --aws-region``
+    * ``oci cloud-bridge discovery asset-source update --is-cost-information-collected``
+
+  * Support of creating/updating Amazon Web Services EC2 and EBS assets
+
+    * ``oci cloud-bridge inventory asset create --aws-ec2 --aws-ec2-cost --attached-ebs-volumes-cost``
+    * ``oci cloud-bridge inventory asset update --aws-ec2 --aws-ec2-cost --attached-ebs-volumes-cost``
+    * ``oci cloud-bridge inventory asset create --aws-ebs``
+    * ``oci cloud-bridge inventory asset update --aws-ebs``
+
+  * Support of listing the Amazon Web Services regions which are available for Discovery and Migration
+
+    * ``oci cloud-bridge discovery supported-cloud-regions list``
+
+* Fleet Application Management Service
+
+  * Support for managing onboarding
+
+    * ``oci fleet-apps-management fleet-apps-management-admin onboarding get``
+    * ``oci fleet-apps-management fleet-apps-management-admin onboarding enable-latest-policy``
+    * ``oci fleet-apps-management fleet-apps-management-admin onboarding manage-settings``
+    * ``oci fleet-apps-management fleet-apps-management-admin onboarding update``
+    * ``oci fleet-apps-management fleet-apps-management-admin onboarding delete``
+
+  * Support for managing a runbook
+
+    * ``oci fleet-apps-management fleet-apps-management-runbooks runbook create``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks runbook publish``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks runbook set-default``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks runbook update``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks runbook delete``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks task-record create``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks task-record update``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks task-record delete``
+
+  * Support for detailed job activity and managing a scheduled job
+
+    * ``oci fleet-apps-management fleet-apps-management-operations resource-collection list-resources``
+    * ``oci fleet-apps-management fleet-apps-management-operations step-collection list-steps``
+    * ``oci fleet-apps-management fleet-apps-management-operations scheduler-job manage-job-execution``
+    * ``oci fleet-apps-management fleet-apps-management-operations scheduler-job manage-job-execution-action-group-based-user-action-details``
+    * ``oci fleet-apps-management fleet-apps-management-operations scheduler-job manage-job-execution-step-based-user-action-details``
+    * ``oci fleet-apps-management fleet-apps-management-operations managed-entity-aggregation-collection summarize-managed-entity-counts``
+
+  * Support for new optional parameters
+
+    * ``oci fleet-apps-management fleet-apps-management-operations scheduler-job-collection list-scheduler-jobs --sub-state``
+    * ``oci fleet-apps-management fleet-apps-management-operations scheduler-definition-collection list-scheduler-definitions --runbook-id``
+    * ``oci fleet-apps-management fleet-apps-management-maintenance-window maintenance-window-collection list-maintenance-windows --time-schedule-start-greater-than-or-equal-to``
+    * ``oci fleet-apps-management fleet-credential-collection list-fleet-credentials --target``
+
 3.49.2 - 2024-10-15
 --------------------
 Added
@@ -67,7 +162,7 @@ Added
   * Support for defining environment type for deployments in GoldenGate service
 
     * ``oci goldengate deployment create --environment-type``
-    * ``oci goldengate deployment update --environment-type`
+    * ``oci goldengate deployment update --environment-type``
 
 3.49.1 - 2024-10-10
 --------------------

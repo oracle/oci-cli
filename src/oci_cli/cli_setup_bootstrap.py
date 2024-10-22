@@ -12,7 +12,6 @@ from oci_cli.cli_setup import prompt_for_passphrase
 import base64
 import click
 import errno
-import oci._vendor.jwt as jwt
 import oci
 import oci.regions as regions
 import os
@@ -191,7 +190,8 @@ def create_user_session(region='', tenancy_name=None):
     click.echo('    Completed browser authentication process!')
 
     # get user / tenant info out of token
-    token_data = jwt.decode(token, verify=False)
+    security_token_container = oci.auth.security_token_container.SecurityTokenContainer(None, security_token=token)
+    token_data = security_token_container.get_jwt()
     user_ocid = token_data['sub']
     tenancy_ocid = token_data['tenant']
 

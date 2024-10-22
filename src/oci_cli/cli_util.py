@@ -898,7 +898,8 @@ def pretty_print_format(d):
     return json.dumps(
         d,
         indent=2,
-        sort_keys=True
+        sort_keys=True,
+        ensure_ascii=False
     )
 
 

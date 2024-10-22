@@ -374,6 +374,10 @@ def list_host_configurations_extended(ctx, **kwargs):
 cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.opsi_root_group, operationsinsights_cli.operations_insights_private_endpoint_group, "opsi-private-endpoint")
 
 
+# oci opsi host-insights summarize-host-insight-io-usage-trend -> oci opsi host-insights summarize-io-usage-trend
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.host_insights_group, operationsinsights_cli.summarize_host_insight_io_usage_trend, "summarize-io-usage-trend")
+
+
 # oci opsi database-insights create-database-insight-create-pe-comanaged-database-insight-details -> oci opsi database-insights create-pe-comanged-database
 cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.create_database_insight_create_pe_comanaged_database_insight_details, "create-pe-comanged-database")
 

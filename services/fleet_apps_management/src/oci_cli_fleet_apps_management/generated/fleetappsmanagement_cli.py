@@ -16,14 +16,13 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.fleet_apps_management.src.oci_cli_fleet_apps_management.generated import fleet_apps_management_service_cli
 
 
-@click.command(cli_util.override('fleet_apps_management.fleet_apps_management_root_group.command_name', 'fleet-apps-management'), cls=CommandGroupWithAlias, help=cli_util.override('fleet_apps_management.fleet_apps_management_root_group.help', """Fleet Application Management Service API. Use this API to for all FAMS related activities.
-To manage fleets,view complaince report for the Fleet,scedule patches and other lifecycle activities"""), short_help=cli_util.override('fleet_apps_management.fleet_apps_management_root_group.short_help', """Fleet Application Management Service API"""))
+@click.command(cli_util.override('fleet_apps_management.fleet_apps_management_root_group.command_name', 'fleet-apps-management'), cls=CommandGroupWithAlias, help=cli_util.override('fleet_apps_management.fleet_apps_management_root_group.help', """Fleet Application Management provides a centralized platform to help you automate resource management tasks, validate patch compliance, and enhance operational efficiency across an enterprise."""), short_help=cli_util.override('fleet_apps_management.fleet_apps_management_root_group.short_help', """Fleet Application Management Service API"""))
 @cli_util.help_option_group
 def fleet_apps_management_root_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management.fleet_group.command_name', 'fleet'), cls=CommandGroupWithAlias, help="""Description of Fleet.""")
+@click.command(cli_util.override('fleet_apps_management.fleet_group.command_name', 'fleet'), cls=CommandGroupWithAlias, help="""A fleet is a collection or grouping of resources based on criteria.""")
 @cli_util.help_option_group
 def fleet_group():
     pass
@@ -41,19 +40,19 @@ def inventory_resource_collection_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management.fleet_property_collection_group.command_name', 'fleet-property-collection'), cls=CommandGroupWithAlias, help="""Results of a fleetProperty search. Contains boh FleetPropertySummary items and other information, such as metadata.""")
+@click.command(cli_util.override('fleet_apps_management.fleet_property_collection_group.command_name', 'fleet-property-collection'), cls=CommandGroupWithAlias, help="""Results of a fleetProperty search. Contains both FleetPropertySummary items and other information, such as metadata.""")
 @cli_util.help_option_group
 def fleet_property_collection_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management.announcement_collection_group.command_name', 'announcement-collection'), cls=CommandGroupWithAlias, help="""Results of list announcements . Contains AnnouncementSummary items""")
+@click.command(cli_util.override('fleet_apps_management.announcement_collection_group.command_name', 'announcement-collection'), cls=CommandGroupWithAlias, help="""Results of list announcements. Contains AnnouncementSummary items.""")
 @cli_util.help_option_group
 def announcement_collection_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management.fleet_credential_group.command_name', 'fleet-credential'), cls=CommandGroupWithAlias, help="""Description of FleetCredential.""")
+@click.command(cli_util.override('fleet_apps_management.fleet_credential_group.command_name', 'fleet-credential'), cls=CommandGroupWithAlias, help="""Credential in Fleet Application Management.""")
 @cli_util.help_option_group
 def fleet_credential_group():
     pass
@@ -65,7 +64,7 @@ def work_request_log_entry_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management.fleet_resource_collection_group.command_name', 'fleet-resource-collection'), cls=CommandGroupWithAlias, help="""Results of a fleetResource search. Contains boh FleetResourceSummary items and other information, such as metadata.""")
+@click.command(cli_util.override('fleet_apps_management.fleet_resource_collection_group.command_name', 'fleet-resource-collection'), cls=CommandGroupWithAlias, help="""Results of a fleetResource search. Contains both FleetResourceSummary items and other information, such as metadata.""")
 @cli_util.help_option_group
 def fleet_resource_collection_group():
     pass
@@ -77,7 +76,7 @@ def work_request_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management.compliance_report_group.command_name', 'compliance-report'), cls=CommandGroupWithAlias, help="""Summary of a compliance report.""")
+@click.command(cli_util.override('fleet_apps_management.compliance_report_group.command_name', 'compliance-report'), cls=CommandGroupWithAlias, help="""Compliance details for a fleet in Fleet Application Management.""")
 @cli_util.help_option_group
 def compliance_report_group():
     pass
@@ -89,13 +88,13 @@ def fleet_target_collection_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management.fleet_resource_group.command_name', 'fleet-resource'), cls=CommandGroupWithAlias, help="""Resource added to a Fleet.""")
+@click.command(cli_util.override('fleet_apps_management.fleet_resource_group.command_name', 'fleet-resource'), cls=CommandGroupWithAlias, help="""Resource added to a fleet in Fleet Application Management.""")
 @cli_util.help_option_group
 def fleet_resource_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management.fleet_property_group.command_name', 'fleet-property'), cls=CommandGroupWithAlias, help="""Property associated with a Fleet.""")
+@click.command(cli_util.override('fleet_apps_management.fleet_property_group.command_name', 'fleet-property'), cls=CommandGroupWithAlias, help="""Property to manage fleet metadata details in\u00A0Fleet Application Management.""")
 @cli_util.help_option_group
 def fleet_property_group():
     pass
@@ -156,10 +155,10 @@ fleet_apps_management_service_cli.fleet_apps_management_service_group.add_comman
 fleet_apps_management_service_cli.fleet_apps_management_service_group.add_command(fleet_collection_group)
 
 
-@fleet_group.command(name=cli_util.override('fleet_apps_management.check_resource_tagging.command_name', 'check-resource-tagging'), help=u"""Check if FAMS tags can be added for the resources \n[Command Reference](checkResourceTagging)""")
+@fleet_group.command(name=cli_util.override('fleet_apps_management.check_resource_tagging.command_name', 'check-resource-tagging'), help=u"""Check if Fleet Application Management tags can be added to the resources. \n[Command Reference](checkResourceTagging)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Tenancy OCID""")
-@cli_util.option('--resource-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Resource OCIDS that need to be verified if tag can be enabled""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--fleet-display-name', help=u"""Fleet Name""")
+@cli_util.option('--resource-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Resource OCIDS that need to be verified if a tag can be enabled for them.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--fleet-display-name', help=u"""Fleet Display Name.""")
 @json_skeleton_utils.get_cli_json_input_option({'resource-ids': {'module': 'fleet_apps_management', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
@@ -185,9 +184,9 @@ def check_resource_tagging(ctx, from_json, compartment_id, resource_ids, fleet_d
     cli_util.render_response(result, ctx)
 
 
-@fleet_group.command(name=cli_util.override('fleet_apps_management.confirm_targets.command_name', 'confirm-targets'), help=u"""Confirm targets to be managed for a Fleet.Only targets that are confirmed will be managed by FAMS \n[Command Reference](confirmTargets)""")
+@fleet_group.command(name=cli_util.override('fleet_apps_management.confirm_targets.command_name', 'confirm-targets'), help=u"""Confirm targets to be managed for a Fleet. Only targets that are confirmed will be managed by Fleet Application Management \n[Command Reference](confirmTargets)""")
 @cli_util.option('--targets', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The targets to confirm.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -243,35 +242,38 @@ def confirm_targets(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@fleet_group.command(name=cli_util.override('fleet_apps_management.create_fleet.command_name', 'create'), help=u"""Creates a new fleet instance that includes fleet resources and properties. For more information, please see the documentation. \n[Command Reference](createFleet)""")
+@fleet_group.command(name=cli_util.override('fleet_apps_management.create_fleet.command_name', 'create'), help=u"""Create a product, environment, group, or generic type of fleet in Fleet Application Management. \n[Command Reference](createFleet)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Tenancy OCID""")
-@cli_util.option('--fleet-type', required=True, help=u"""Type of the Fleet""")
+@cli_util.option('--fleet-type', required=True, help=u"""Type of the Fleet. PRODUCT - A fleet of product-specific resources for a product type. ENVIRONMENT - A fleet of environment-specific resources for a product stack. GROUP - A fleet of a fleet of either environment or product fleets. GENERIC - A fleet of resources selected dynamically or manually for reporting purposes""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
-@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--application-type', help=u"""Application Type associated with the Fleet.Applicable for Environment fleet types.""")
-@cli_util.option('--environment-type', help=u"""Environment Type associated with the Fleet.Applicable for Environment fleet types.""")
-@cli_util.option('--group-type', help=u"""Group Type associated with Group Fleet.Applicable for Group fleet types.""")
-@cli_util.option('--resource-selection-type', help=u"""Type of resource selection in a fleet""")
+@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--application-type', help=u"""Product stack associated with the Fleet. Applicable for ENVIRONMENT fleet types.""")
+@cli_util.option('--environment-type', help=u"""Environment Type associated with the Fleet. Applicable for ENVIRONMENT fleet types.""")
+@cli_util.option('--group-type', help=u"""Group Type associated with Group Fleet.""")
+@cli_util.option('--resource-selection-type', help=u"""Type of resource selection in a Fleet. Select resources manually or select resources based on rules.""")
 @cli_util.option('--rule-selection-criteria', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--notification-preferences', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--resources', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Resources to be added during fleet creation when Resource selection type is Manual.
+@cli_util.option('--resources', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Resources associated with the Fleet if resourceSelectionType is MANUAL.
 
 This option is a JSON list with items of type AssociatedFleetResourceDetails.  For documentation on AssociatedFleetResourceDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagement/20230831/datatypes/AssociatedFleetResourceDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-target-auto-confirm', type=click.BOOL, help=u"""A value which represents if auto confirming of the targets can be enabled""")
+@cli_util.option('--credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Credentials associated with the Fleet.
+
+This option is a JSON list with items of type AssociatedFleetCredentialDetails.  For documentation on AssociatedFleetCredentialDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagement/20230831/datatypes/AssociatedFleetCredentialDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-target-auto-confirm', type=click.BOOL, help=u"""A value that represents if auto-confirming of the targets can be enabled. This will allow targets to be auto-confirmed in the fleet without manual intervention.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'products': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'rule-selection-criteria': {'module': 'fleet_apps_management', 'class': 'SelectionCriteria'}, 'notification-preferences': {'module': 'fleet_apps_management', 'class': 'NotificationPreferences'}, 'resources': {'module': 'fleet_apps_management', 'class': 'list[AssociatedFleetResourceDetails]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'products': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'rule-selection-criteria': {'module': 'fleet_apps_management', 'class': 'SelectionCriteria'}, 'notification-preferences': {'module': 'fleet_apps_management', 'class': 'NotificationPreferences'}, 'resources': {'module': 'fleet_apps_management', 'class': 'list[AssociatedFleetResourceDetails]'}, 'credentials': {'module': 'fleet_apps_management', 'class': 'list[AssociatedFleetCredentialDetails]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'products': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'rule-selection-criteria': {'module': 'fleet_apps_management', 'class': 'SelectionCriteria'}, 'notification-preferences': {'module': 'fleet_apps_management', 'class': 'NotificationPreferences'}, 'resources': {'module': 'fleet_apps_management', 'class': 'list[AssociatedFleetResourceDetails]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'Fleet'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'products': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'rule-selection-criteria': {'module': 'fleet_apps_management', 'class': 'SelectionCriteria'}, 'notification-preferences': {'module': 'fleet_apps_management', 'class': 'NotificationPreferences'}, 'resources': {'module': 'fleet_apps_management', 'class': 'list[AssociatedFleetResourceDetails]'}, 'credentials': {'module': 'fleet_apps_management', 'class': 'list[AssociatedFleetCredentialDetails]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'Fleet'})
 @cli_util.wrap_exceptions
-def create_fleet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, fleet_type, display_name, description, products, application_type, environment_type, group_type, resource_selection_type, rule_selection_criteria, notification_preferences, resources, is_target_auto_confirm, freeform_tags, defined_tags):
+def create_fleet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, fleet_type, display_name, description, products, application_type, environment_type, group_type, resource_selection_type, rule_selection_criteria, notification_preferences, resources, credentials, is_target_auto_confirm, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -309,6 +311,9 @@ def create_fleet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if resources is not None:
         _details['resources'] = cli_util.parse_json_parameter("resources", resources)
+
+    if credentials is not None:
+        _details['credentials'] = cli_util.parse_json_parameter("credentials", credentials)
 
     if is_target_auto_confirm is not None:
         _details['isTargetAutoConfirm'] = is_target_auto_confirm
@@ -354,7 +359,7 @@ def create_fleet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@fleet_credential_group.command(name=cli_util.override('fleet_apps_management.create_fleet_credential.command_name', 'create'), help=u"""Creates a new FleetCredential. \n[Command Reference](createFleetCredential)""")
+@fleet_credential_group.command(name=cli_util.override('fleet_apps_management.create_fleet_credential.command_name', 'create'), help=u"""Add credentials to a fleet in Fleet Application Management. \n[Command Reference](createFleetCredential)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
@@ -362,7 +367,7 @@ Example: `My new resource`""")
 @cli_util.option('--entity-specifics', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--user', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--password', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -422,11 +427,11 @@ def create_fleet_credential(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@fleet_property_group.command(name=cli_util.override('fleet_apps_management.create_fleet_property.command_name', 'create'), help=u"""Creates a new FleetProperty. \n[Command Reference](createFleetProperty)""")
+@fleet_property_group.command(name=cli_util.override('fleet_apps_management.create_fleet_property.command_name', 'create'), help=u"""Add an existing global property to a fleet in Fleet Application Management. \n[Command Reference](createFleetProperty)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Tenancy OCID""")
-@cli_util.option('--value', required=True, help=u"""Value of the Property""")
-@cli_util.option('--property-id', required=True, help=u"""Property Id.""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@cli_util.option('--value', required=True, help=u"""Value of the Property.""")
+@cli_util.option('--property-id', required=True, help=u"""OCID referring to global level metadata property.""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -480,11 +485,11 @@ def create_fleet_property(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@fleet_resource_group.command(name=cli_util.override('fleet_apps_management.create_fleet_resource.command_name', 'create'), help=u"""Creates a new FleetResource. \n[Command Reference](createFleetResource)""")
+@fleet_resource_group.command(name=cli_util.override('fleet_apps_management.create_fleet_resource.command_name', 'create'), help=u"""Add resource to a fleet in\u00A0Fleet Application Management. \n[Command Reference](createFleetResource)""")
 @cli_util.option('--resource-id', required=True, help=u"""The OCID of the resource.""")
 @cli_util.option('--tenancy-id', required=True, help=u"""OCID of the tenancy to which the resource belongs to.""")
 @cli_util.option('--compartment-id', required=True, help=u"""OCID of the compartment to which the resource belongs to.""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @cli_util.option('--resource-region', help=u"""Associated region""")
 @cli_util.option('--resource-type', help=u"""Type of the Resource.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -550,8 +555,8 @@ def create_fleet_resource(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@fleet_group.command(name=cli_util.override('fleet_apps_management.delete_fleet.command_name', 'delete'), help=u"""Deletes a Fleet resource by identifier \n[Command Reference](deleteFleet)""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@fleet_group.command(name=cli_util.override('fleet_apps_management.delete_fleet.command_name', 'delete'), help=u"""Delete a fleet in Fleet Application Management. \n[Command Reference](deleteFleet)""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -606,9 +611,9 @@ def delete_fleet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@fleet_credential_group.command(name=cli_util.override('fleet_apps_management.delete_fleet_credential.command_name', 'delete'), help=u"""Deletes a FleetCredential resource by identifier \n[Command Reference](deleteFleetCredential)""")
+@fleet_credential_group.command(name=cli_util.override('fleet_apps_management.delete_fleet_credential.command_name', 'delete'), help=u"""Delete a credential associated with a fleet product or application in\u00A0Fleet Application Management. \n[Command Reference](deleteFleetCredential)""")
 @cli_util.option('--fleet-credential-id', required=True, help=u"""unique FleetCredential identifier""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -667,9 +672,9 @@ def delete_fleet_credential(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@fleet_property_group.command(name=cli_util.override('fleet_apps_management.delete_fleet_property.command_name', 'delete'), help=u"""Deletes a FleetProperty resource by identifier \n[Command Reference](deleteFleetProperty)""")
-@cli_util.option('--fleet-property-id', required=True, help=u"""unique FleetProperty identifier""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@fleet_property_group.command(name=cli_util.override('fleet_apps_management.delete_fleet_property.command_name', 'delete'), help=u"""Delete a property associated with a fleet in Fleet Application Management. \n[Command Reference](deleteFleetProperty)""")
+@cli_util.option('--fleet-property-id', required=True, help=u"""unique FleetProperty identifier.""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -698,9 +703,9 @@ def delete_fleet_property(ctx, from_json, fleet_property_id, fleet_id, if_match)
     cli_util.render_response(result, ctx)
 
 
-@fleet_resource_group.command(name=cli_util.override('fleet_apps_management.delete_fleet_resource.command_name', 'delete'), help=u"""Deletes a FleetResource resource by identifier \n[Command Reference](deleteFleetResource)""")
+@fleet_resource_group.command(name=cli_util.override('fleet_apps_management.delete_fleet_resource.command_name', 'delete'), help=u"""Removes a resource from the fleet in Fleet Application Management. \n[Command Reference](deleteFleetResource)""")
 @cli_util.option('--fleet-resource-id', required=True, help=u"""unique FleetResource identifier""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -759,9 +764,9 @@ def delete_fleet_resource(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@fleet_group.command(name=cli_util.override('fleet_apps_management.generate_compliance_report.command_name', 'generate-compliance-report'), help=u"""Request to generate compliance report for a Fleet \n[Command Reference](generateComplianceReport)""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
-@cli_util.option('--are-details-required', help=u"""Are compliance details required at target level also""")
+@fleet_group.command(name=cli_util.override('fleet_apps_management.generate_compliance_report.command_name', 'generate-compliance-report'), help=u"""Generate compliance reports for a Fleet. \n[Command Reference](generateComplianceReport)""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
+@cli_util.option('--are-details-required', help=u"""A value that specifies if compliance details are required at the target level also? Allowed values are N and Y.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -819,9 +824,9 @@ def generate_compliance_report(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@compliance_report_group.command(name=cli_util.override('fleet_apps_management.get_compliance_report.command_name', 'get'), help=u"""Retrieve compiane report for a Fleet \n[Command Reference](getComplianceReport)""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
-@cli_util.option('--compliance-report-id', required=True, help=u"""compliance report identifier""")
+@compliance_report_group.command(name=cli_util.override('fleet_apps_management.get_compliance_report.command_name', 'get'), help=u"""Retrieve compliance report for a fleet. \n[Command Reference](getComplianceReport)""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
+@cli_util.option('--compliance-report-id', required=True, help=u"""compliance report identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -846,8 +851,8 @@ def get_compliance_report(ctx, from_json, fleet_id, compliance_report_id):
     cli_util.render_response(result, ctx)
 
 
-@fleet_group.command(name=cli_util.override('fleet_apps_management.get_fleet.command_name', 'get'), help=u"""Gets a Fleet by identifier \n[Command Reference](getFleet)""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@fleet_group.command(name=cli_util.override('fleet_apps_management.get_fleet.command_name', 'get'), help=u"""Get the details of a fleet in Fleet Application Management. \n[Command Reference](getFleet)""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -868,9 +873,9 @@ def get_fleet(ctx, from_json, fleet_id):
     cli_util.render_response(result, ctx)
 
 
-@fleet_credential_group.command(name=cli_util.override('fleet_apps_management.get_fleet_credential.command_name', 'get'), help=u"""Gets a FleetCredential by identifier \n[Command Reference](getFleetCredential)""")
+@fleet_credential_group.command(name=cli_util.override('fleet_apps_management.get_fleet_credential.command_name', 'get'), help=u"""Gets a FleetCredential by identifier. \n[Command Reference](getFleetCredential)""")
 @cli_util.option('--fleet-credential-id', required=True, help=u"""unique FleetCredential identifier""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -895,9 +900,9 @@ def get_fleet_credential(ctx, from_json, fleet_credential_id, fleet_id):
     cli_util.render_response(result, ctx)
 
 
-@fleet_property_group.command(name=cli_util.override('fleet_apps_management.get_fleet_property.command_name', 'get'), help=u"""Gets a FleetProperty by identifier \n[Command Reference](getFleetProperty)""")
-@cli_util.option('--fleet-property-id', required=True, help=u"""unique FleetProperty identifier""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@fleet_property_group.command(name=cli_util.override('fleet_apps_management.get_fleet_property.command_name', 'get'), help=u"""Gets a Fleet Property by identifier. \n[Command Reference](getFleetProperty)""")
+@cli_util.option('--fleet-property-id', required=True, help=u"""unique FleetProperty identifier.""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -922,9 +927,9 @@ def get_fleet_property(ctx, from_json, fleet_property_id, fleet_id):
     cli_util.render_response(result, ctx)
 
 
-@fleet_resource_group.command(name=cli_util.override('fleet_apps_management.get_fleet_resource.command_name', 'get'), help=u"""Gets a FleetResource by identifier \n[Command Reference](getFleetResource)""")
+@fleet_resource_group.command(name=cli_util.override('fleet_apps_management.get_fleet_resource.command_name', 'get'), help=u"""Gets a Fleet Resource by identifier. \n[Command Reference](getFleetResource)""")
 @cli_util.option('--fleet-resource-id', required=True, help=u"""unique FleetResource identifier""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -971,13 +976,13 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@announcement_collection_group.command(name=cli_util.override('fleet_apps_management.list_announcements.command_name', 'list-announcements'), help=u"""Return a list of AnnouncementSummary items \n[Command Reference](listAnnouncements)""")
-@cli_util.option('--summary-contains', help=u"""Filter the list with summary contains the given value.""")
+@announcement_collection_group.command(name=cli_util.override('fleet_apps_management.list_announcements.command_name', 'list-announcements'), help=u"""Return a list of AnnouncementSummary items. \n[Command Reference](listAnnouncements)""")
+@cli_util.option('--summary-contains', help=u"""Filter the list of announcements that contains the given summary value.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeReleased", "summary"]), help=u"""The field to sort AnnouncementSummary by.  Only one sort order may be provided. If no value is specified _timeReleased_ is default.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeReleased", "summary"]), help=u"""The field to sort AnnouncementSummary by. Only one sort order may be provided. If no value is specified timeReleased is default.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1027,13 +1032,15 @@ def list_announcements(ctx, from_json, all_pages, page_size, summary_contains, d
     cli_util.render_response(result, ctx)
 
 
-@fleet_credential_collection_group.command(name=cli_util.override('fleet_apps_management.list_fleet_credentials.command_name', 'list-fleet-credentials'), help=u"""Returns a list of FleetCredentials. \n[Command Reference](listFleetCredentials)""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@fleet_credential_collection_group.command(name=cli_util.override('fleet_apps_management.list_fleet_credentials.command_name', 'list-fleet-credentials'), help=u"""List credentials in Fleet Application Management. \n[Command Reference](listFleetCredentials)""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--credential-level', type=custom_types.CliCaseInsensitiveChoice(["TARGET"]), help=u"""Credential Level.""")
-@cli_util.option('--id', help=u"""unique FleetCredential identifier""")
+@cli_util.option('--resource-id', help=u"""Resource Identifier""")
+@cli_util.option('--target', help=u"""A filter to return only resources whose target matches the given target name.""")
+@cli_util.option('--credential-level', type=custom_types.CliCaseInsensitiveChoice(["FLEET", "RESOURCE", "TARGET"]), help=u"""A filter to return only resources whose credentialLevel matches the given credentialLevel.""")
+@cli_util.option('--id', help=u"""A filter to return only resources whose credential identifier matches the given identifier.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -1045,7 +1052,7 @@ def list_announcements(ctx, from_json, all_pages, page_size, summary_contains, d
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'FleetCredentialCollection'})
 @cli_util.wrap_exceptions
-def list_fleet_credentials(ctx, from_json, all_pages, page_size, fleet_id, compartment_id, lifecycle_state, display_name, credential_level, id, limit, page, sort_order, sort_by):
+def list_fleet_credentials(ctx, from_json, all_pages, page_size, fleet_id, compartment_id, lifecycle_state, display_name, resource_id, target, credential_level, id, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1060,6 +1067,10 @@ def list_fleet_credentials(ctx, from_json, all_pages, page_size, fleet_id, compa
         kwargs['lifecycle_state'] = lifecycle_state
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if resource_id is not None:
+        kwargs['resource_id'] = resource_id
+    if target is not None:
+        kwargs['target'] = target
     if credential_level is not None:
         kwargs['credential_level'] = credential_level
     if id is not None:
@@ -1099,11 +1110,11 @@ def list_fleet_credentials(ctx, from_json, all_pages, page_size, fleet_id, compa
     cli_util.render_response(result, ctx)
 
 
-@fleet_product_collection_group.command(name=cli_util.override('fleet_apps_management.list_fleet_products.command_name', 'list-fleet-products'), help=u"""Returns a list of FleetProducts. \n[Command Reference](listFleetProducts)""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@fleet_product_collection_group.command(name=cli_util.override('fleet_apps_management.list_fleet_products.command_name', 'list-fleet-products'), help=u"""Returns a list of products associated with the confirmed targets. \n[Command Reference](listFleetProducts)""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--resource-id', help=u"""Resource Identifier""")
-@cli_util.option('--resource-display-name', help=u"""Resource Display Name""")
+@cli_util.option('--resource-display-name', help=u"""Resource Display Name.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -1168,12 +1179,12 @@ def list_fleet_products(ctx, from_json, all_pages, page_size, fleet_id, compartm
     cli_util.render_response(result, ctx)
 
 
-@fleet_property_collection_group.command(name=cli_util.override('fleet_apps_management.list_fleet_properties.command_name', 'list-fleet-properties'), help=u"""Returns a list of FleetProperties. \n[Command Reference](listFleetProperties)""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@fleet_property_collection_group.command(name=cli_util.override('fleet_apps_management.list_fleet_properties.command_name', 'list-fleet-properties'), help=u"""List fleet properties in Fleet Application Management. \n[Command Reference](listFleetProperties)""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--id', help=u"""unique FleetProperty identifier""")
+@cli_util.option('--id', help=u"""A filter to return only resources whose fleetProperty identifier matches the given identifier.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -1237,13 +1248,13 @@ def list_fleet_properties(ctx, from_json, all_pages, page_size, fleet_id, compar
     cli_util.render_response(result, ctx)
 
 
-@fleet_resource_collection_group.command(name=cli_util.override('fleet_apps_management.list_fleet_resources.command_name', 'list-fleet-resources'), help=u"""Returns a list of FleetResources. \n[Command Reference](listFleetResources)""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@fleet_resource_collection_group.command(name=cli_util.override('fleet_apps_management.list_fleet_resources.command_name', 'list-fleet-resources'), help=u"""List resources for a fleet in Fleet Application Management. \n[Command Reference](listFleetResources)""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @cli_util.option('--tenancy-id', help=u"""Resource Tenancy Id""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--id', help=u"""unique FleetResource identifier""")
-@cli_util.option('--fleet-resource-type', help=u"""A filter to return resources that match the Type""")
+@cli_util.option('--id', help=u"""A filter to return only resources whose identifier matches the given identifier.""")
+@cli_util.option('--fleet-resource-type', help=u"""A filter to return only resources whose resourceType matches the given resourceType.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -1309,12 +1320,12 @@ def list_fleet_resources(ctx, from_json, all_pages, page_size, fleet_id, tenancy
     cli_util.render_response(result, ctx)
 
 
-@fleet_target_collection_group.command(name=cli_util.override('fleet_apps_management.list_fleet_targets.command_name', 'list-fleet-targets'), help=u"""Returns a list of FleetTargets. \n[Command Reference](listFleetTargets)""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@fleet_target_collection_group.command(name=cli_util.override('fleet_apps_management.list_fleet_targets.command_name', 'list-fleet-targets'), help=u"""Returns the list of all confirmed targets within a fleet. \n[Command Reference](listFleetTargets)""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--product', help=u"""Product Name""")
+@cli_util.option('--product', help=u"""Product Name.""")
 @cli_util.option('--resource-id', help=u"""Resource Identifier""")
-@cli_util.option('--resource-display-name', help=u"""Resource Display Name""")
+@cli_util.option('--resource-display-name', help=u"""Resource Display Name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -1379,14 +1390,14 @@ def list_fleet_targets(ctx, from_json, all_pages, page_size, fleet_id, display_n
 
 
 @fleet_collection_group.command(name=cli_util.override('fleet_apps_management.list_fleets.command_name', 'list-fleets'), help=u"""Returns a list of Fleets in the specified Tenancy. \n[Command Reference](listFleets)""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING", "NEEDS_ATTENTION"]), help=u"""A filter to return fleets whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--fleet-type', type=custom_types.CliCaseInsensitiveChoice(["PRODUCT", "ENVIRONMENT", "GENERIC", "GROUP"]), help=u"""A filter to return only resources their fleetType matches the given fleetType.""")
-@cli_util.option('--application-type', help=u"""A filter to return only resources that match the Application Type given.""")
-@cli_util.option('--product', help=u"""A filter to return only resources that match the Product Type given.""")
-@cli_util.option('--environment-type', help=u"""A filter to return only resources that match the Environment Type given.""")
+@cli_util.option('--fleet-type', type=custom_types.CliCaseInsensitiveChoice(["PRODUCT", "ENVIRONMENT", "GENERIC", "GROUP"]), help=u"""A filter to return fleets whose fleetType matches the given fleetType.""")
+@cli_util.option('--application-type', help=u"""A filter to return resources that match the Application Type/Product Stack given..""")
+@cli_util.option('--product', help=u"""A filter to return resources that match the Product given.""")
+@cli_util.option('--environment-type', help=u"""A filter to return resources that match the Environment Type given.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--id', help=u"""unique Fleet identifier""")
+@cli_util.option('--id', help=u"""A filter to return fleets whose id matches the given Fleet identifier""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -1453,15 +1464,15 @@ def list_fleets(ctx, from_json, all_pages, page_size, lifecycle_state, compartme
 
 
 @inventory_resource_collection_group.command(name=cli_util.override('fleet_apps_management.list_inventory_resources.command_name', 'list-inventory-resources'), help=u"""Returns a list of InventoryResources. \n[Command Reference](listInventoryResources)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--resource-compartment-id', required=True, help=u"""Resource Compartment ID""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources whose base Compartment ID(TenancyId) matches the given base Compartment ID.""")
+@cli_util.option('--resource-compartment-id', required=True, help=u"""A filter to return only resources whose resource Compartment ID matches the given resource Compartment ID.""")
 @cli_util.option('--lifecycle-state', help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--resource-region', help=u"""Resource Region""")
-@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}={value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\".""")
+@cli_util.option('--defined-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a defined tag matching the value will be returned. Each item in the list has the format \"{namespace}.{tagName}={value}\".  All inputs are case-insensitive. Multiple values for the same key (i.e. same namespace and tag name) are interpreted as \"OR\". Values for different keys (i.e. different namespaces, different tag names, or both) are interpreted as \"AND\". Example: Identification.Development=Yes""")
 @cli_util.option('--freeform-tag-equals', multiple=True, help=u"""A list of tag filters to apply.  Only resources with a freeform tag matching the value will be returned. The key for each tag is \"{tagName}.{value}\".  All inputs are case-insensitive. Multiple values for the same tag name are interpreted as \"OR\".  Values for different tag names are interpreted as \"AND\".""")
-@cli_util.option('--inventory-properties', multiple=True, help=u"""A list of inventory properties filters to apply. The key for each inventory property and value for each resource type is \"{resourceType}.{inventoryProperty}={value}\".""")
-@cli_util.option('--matching-criteria', help=u"""Fetch resources matching matching ANY or ALL criteria passed as params in \"tags\" and \"inventoryProperties\"""")
+@cli_util.option('--inventory-properties', multiple=True, help=u"""A list of inventory properties filters to apply. The key for each inventory property and value for each resource type is \"{resourceType}.{inventoryProperty}={value}\". Example: Instance.displayName=TEST_INSTANCE""")
+@cli_util.option('--matching-criteria', help=u"""Fetch resources matching ANY or ALL criteria passed as params in \"tags\" and \"inventoryProperties\". Example: matchingCriteria=ANY""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -1531,8 +1542,8 @@ def list_inventory_resources(ctx, from_json, all_pages, page_size, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@fleet_target_collection_group.command(name=cli_util.override('fleet_apps_management.list_targets.command_name', 'list-targets'), help=u"""Returns a list of FleetTargets. \n[Command Reference](listTargets)""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@fleet_target_collection_group.command(name=cli_util.override('fleet_apps_management.list_targets.command_name', 'list-targets'), help=u"""Return all targets belonging to the resources within a fleet. It will include both confirmed and unconfirmed targets. \n[Command Reference](listTargets)""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -1767,10 +1778,10 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
     cli_util.render_response(result, ctx)
 
 
-@fleet_group.command(name=cli_util.override('fleet_apps_management.request_resource_validation.command_name', 'request-resource-validation'), help=u"""Request validation for resources with in a fleet \n[Command Reference](requestResourceValidation)""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
-@cli_util.option('--is-applicable-to-all-resources', type=click.BOOL, help=u"""A boolean flag which decides if all resources within the fleet should be part of vaidation.""")
-@cli_util.option('--resource-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Resource OCIDS that need to be included for validation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@fleet_group.command(name=cli_util.override('fleet_apps_management.request_resource_validation.command_name', 'request-resource-validation'), help=u"""Request validation for resources within a fleet. \n[Command Reference](requestResourceValidation)""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
+@cli_util.option('--is-applicable-to-all-resources', type=click.BOOL, help=u"""A boolean flag that decides if all resources within the fleet should be part of the validation.""")
+@cli_util.option('--resource-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Resource OCIDS to be included for validation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1831,10 +1842,10 @@ def request_resource_validation(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@fleet_group.command(name=cli_util.override('fleet_apps_management.request_target_discovery.command_name', 'request-target-discovery'), help=u"""Confirm targets to be managed for a Fleet.Only targets that are confirmed will be managed by FAMS \n[Command Reference](requestTargetDiscovery)""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
-@cli_util.option('--is-applicable-to-all-resources', type=click.BOOL, help=u"""A boolean flag which decides if all resources within the fleet should be part of discovery.""")
-@cli_util.option('--resource-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Resource OCIDS that need to be included for discovery.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@fleet_group.command(name=cli_util.override('fleet_apps_management.request_target_discovery.command_name', 'request-target-discovery'), help=u"""Confirm targets to be managed for a Fleet. Only targets that are confirmed will be managed by Fleet Application Management \n[Command Reference](requestTargetDiscovery)""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
+@cli_util.option('--is-applicable-to-all-resources', type=click.BOOL, help=u"""A boolean flag that decides if all resources within the fleet should be part of discovery.""")
+@cli_util.option('--resource-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Resource OCIDS to be included for discovery.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1895,15 +1906,15 @@ def request_target_discovery(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@fleet_group.command(name=cli_util.override('fleet_apps_management.update_fleet.command_name', 'update'), help=u"""Updates the Fleet \n[Command Reference](updateFleet)""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@fleet_group.command(name=cli_util.override('fleet_apps_management.update_fleet.command_name', 'update'), help=u"""Update fleet information in Fleet Application Management. \n[Command Reference](updateFleet)""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
 @cli_util.option('--notification-preferences', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--rule-selection-criteria', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--is-target-auto-confirm', type=click.BOOL, help=u"""A value which represents if auto confirming of the targets can be enabled""")
+@cli_util.option('--is-target-auto-confirm', type=click.BOOL, help=u"""A value that represents if auto-confirming of the targets can be enabled. This will allow targets to be auto-confirmed in the fleet without manual intervention.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1985,9 +1996,9 @@ def update_fleet(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@fleet_credential_group.command(name=cli_util.override('fleet_apps_management.update_fleet_credential.command_name', 'update'), help=u"""Updates the FleetCredential \n[Command Reference](updateFleetCredential)""")
+@fleet_credential_group.command(name=cli_util.override('fleet_apps_management.update_fleet_credential.command_name', 'update'), help=u"""Edit credentials associated with a product or application in\u00A0Fleet Application Management. \n[Command Reference](updateFleetCredential)""")
 @cli_util.option('--fleet-credential-id', required=True, help=u"""unique FleetCredential identifier""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
@@ -2072,10 +2083,10 @@ def update_fleet_credential(ctx, from_json, force, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
-@fleet_property_group.command(name=cli_util.override('fleet_apps_management.update_fleet_property.command_name', 'update'), help=u"""Updates the FleetProperty \n[Command Reference](updateFleetProperty)""")
-@cli_util.option('--fleet-property-id', required=True, help=u"""unique FleetProperty identifier""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
-@cli_util.option('--value', help=u"""Value of the Property""")
+@fleet_property_group.command(name=cli_util.override('fleet_apps_management.update_fleet_property.command_name', 'update'), help=u"""Edit a property associated with a fleet in Fleet Application Management. \n[Command Reference](updateFleetProperty)""")
+@cli_util.option('--fleet-property-id', required=True, help=u"""unique FleetProperty identifier.""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
+@cli_util.option('--value', help=u"""Value of the Property.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2136,9 +2147,9 @@ def update_fleet_property(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@fleet_resource_group.command(name=cli_util.override('fleet_apps_management.update_fleet_resource.command_name', 'update'), help=u"""Updates the FleetResource \n[Command Reference](updateFleetResource)""")
+@fleet_resource_group.command(name=cli_util.override('fleet_apps_management.update_fleet_resource.command_name', 'update'), help=u"""Updates the FleetResource. \n[Command Reference](updateFleetResource)""")
 @cli_util.option('--fleet-resource-id', required=True, help=u"""unique FleetResource identifier""")
-@cli_util.option('--fleet-id', required=True, help=u"""unique Fleet identifier""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @cli_util.option('--tenancy-id', help=u"""OCID of the tenancy to which the resource belongs to.""")
 @cli_util.option('--compartment-id', help=u"""OCID of the compartment to which the resource belongs to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

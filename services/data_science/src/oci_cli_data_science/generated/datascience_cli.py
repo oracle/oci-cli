@@ -1614,15 +1614,17 @@ This option is a JSON list with items of type Metadata.  For documentation on Me
 @cli_util.option('--output-schema', help=u"""Output schema file content in String format""")
 @cli_util.option('--model-version-set-id', help=u"""The OCID of the model version set that the model is associated to.""")
 @cli_util.option('--version-label', help=u"""The version label can add an additional description of the lifecycle state of the model or the application using/training the model.""")
+@cli_util.option('--retention-setting', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--backup-setting', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'custom-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}, 'defined-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'custom-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}, 'defined-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}, 'retention-setting': {'module': 'data_science', 'class': 'RetentionSetting'}, 'backup-setting': {'module': 'data_science', 'class': 'BackupSetting'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'custom-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}, 'defined-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}}, output_type={'module': 'data_science', 'class': 'Model'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'custom-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}, 'defined-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}, 'retention-setting': {'module': 'data_science', 'class': 'RetentionSetting'}, 'backup-setting': {'module': 'data_science', 'class': 'BackupSetting'}}, output_type={'module': 'data_science', 'class': 'Model'})
 @cli_util.wrap_exceptions
-def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, display_name, description, freeform_tags, defined_tags, custom_metadata_list, defined_metadata_list, input_schema, output_schema, model_version_set_id, version_label):
+def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, display_name, description, freeform_tags, defined_tags, custom_metadata_list, defined_metadata_list, input_schema, output_schema, model_version_set_id, version_label, retention_setting, backup_setting):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1660,6 +1662,12 @@ def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if version_label is not None:
         _details['versionLabel'] = version_label
+
+    if retention_setting is not None:
+        _details['retentionSetting'] = cli_util.parse_json_parameter("retention_setting", retention_setting)
+
+    if backup_setting is not None:
+        _details['backupSetting'] = cli_util.parse_json_parameter("backup_setting", backup_setting)
 
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.create_model(
@@ -5133,7 +5141,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @work_request_group.command(name=cli_util.override('data_science.list_work_requests.command_name', 'list'), help=u"""Lists work requests in the specified compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
-@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODELVERSIONSET_DELETE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE", "PIPELINE_CREATE", "PIPELINE_DELETE", "PIPELINE_RUN_CREATE", "PIPELINE_RUN_CANCEL", "PIPELINE_RUN_DELETE", "PRIVATE_ENDPOINT_CREATE", "PRIVATE_ENDPOINT_DELETE", "PRIVATE_ENDPOINT_MOVE", "PRIVATE_ENDPOINT_UPDATE"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODELVERSIONSET_DELETE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE", "PIPELINE_CREATE", "PIPELINE_DELETE", "PIPELINE_RUN_CREATE", "PIPELINE_RUN_CANCEL", "PIPELINE_RUN_DELETE", "PRIVATE_ENDPOINT_CREATE", "PRIVATE_ENDPOINT_DELETE", "PRIVATE_ENDPOINT_MOVE", "PRIVATE_ENDPOINT_UPDATE", "RESTORE_ARCHIVED_MODEL"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""<b>Filter</b> results by work request status.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
@@ -5194,6 +5202,64 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, id,
             compartment_id=compartment_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@model_group.command(name=cli_util.override('data_science.restore_archived_model_artifact.command_name', 'restore-archived-model-artifact'), help=u"""Restore archived model artifact \n[Command Reference](restoreArchivedModelArtifact)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--restore-model-for-hours-specified', type=click.INT, help=u"""Duration in hours for which the archived model is available for access.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def restore_archived_model_artifact(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, restore_model_for_hours_specified, if_match):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if restore_model_for_hours_specified is not None:
+        kwargs['restore_model_for_hours_specified'] = restore_model_for_hours_specified
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.restore_archived_model_artifact(
+        model_id=model_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -5641,23 +5707,25 @@ This option is a JSON list with items of type Metadata.  For documentation on Me
 This option is a JSON list with items of type Metadata.  For documentation on Metadata please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/Metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--model-version-set-id', help=u"""The OCID of the model version set that the model is associated to.""")
 @cli_util.option('--version-label', help=u"""The version label can add an additional description of the lifecycle state of the model or the application using/training the model.""")
+@cli_util.option('--retention-setting', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--backup-setting', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'custom-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}, 'defined-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'custom-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}, 'defined-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}, 'retention-setting': {'module': 'data_science', 'class': 'RetentionSetting'}, 'backup-setting': {'module': 'data_science', 'class': 'BackupSetting'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'custom-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}, 'defined-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}}, output_type={'module': 'data_science', 'class': 'Model'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'custom-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}, 'defined-metadata-list': {'module': 'data_science', 'class': 'list[Metadata]'}, 'retention-setting': {'module': 'data_science', 'class': 'RetentionSetting'}, 'backup-setting': {'module': 'data_science', 'class': 'BackupSetting'}}, output_type={'module': 'data_science', 'class': 'Model'})
 @cli_util.wrap_exceptions
-def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, display_name, description, freeform_tags, defined_tags, custom_metadata_list, defined_metadata_list, model_version_set_id, version_label, if_match):
+def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, display_name, description, freeform_tags, defined_tags, custom_metadata_list, defined_metadata_list, model_version_set_id, version_label, retention_setting, backup_setting, if_match):
 
     if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags or custom_metadata_list or defined_metadata_list:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and custom-metadata-list and defined-metadata-list will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or custom_metadata_list or defined_metadata_list or retention_setting or backup_setting:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and custom-metadata-list and defined-metadata-list and retention-setting and backup-setting will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -5690,6 +5758,12 @@ def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 
     if version_label is not None:
         _details['versionLabel'] = version_label
+
+    if retention_setting is not None:
+        _details['retentionSetting'] = cli_util.parse_json_parameter("retention_setting", retention_setting)
+
+    if backup_setting is not None:
+        _details['backupSetting'] = cli_util.parse_json_parameter("backup_setting", backup_setting)
 
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.update_model(
