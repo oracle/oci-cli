@@ -277,7 +277,7 @@ def create_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def update_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, asset_id, asset_type,
                  display_name, asset_source_ids, freeform_tags, defined_tags, compute, vm, vmware_vm, vmware_v_center,
-                aws_ebs, aws_ec2, aws_ec2_cost, attached_ebs_volumes_cost, if_match):
+                 aws_ebs, aws_ec2, aws_ec2_cost, attached_ebs_volumes_cost, if_match):
     if isinstance(asset_id, six.string_types) and len(asset_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-id cannot be whitespace or empty string')
     if not force:

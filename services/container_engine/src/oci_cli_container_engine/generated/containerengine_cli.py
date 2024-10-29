@@ -1429,6 +1429,7 @@ def get_workload_mapping(ctx, from_json, cluster_id, workload_mapping_id):
 @cli_util.option('--configurations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Addon configuration details.
 
 This option is a JSON list with items of type AddonConfiguration.  For documentation on AddonConfiguration please see our API reference: https://docs.cloud.oracle.com/api/#/en/containerengine/20180222/datatypes/AddonConfiguration.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-override-existing', type=click.BOOL, help=u"""Whether or not to override an existing addon installation. Defaults to false. If set to true, any existing addon installation would be overridden as per new installation details.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1438,7 +1439,7 @@ This option is a JSON list with items of type AddonConfiguration.  For documenta
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configurations': {'module': 'container_engine', 'class': 'list[AddonConfiguration]'}})
 @cli_util.wrap_exceptions
-def install_addon(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, addon_name, version_parameterconflict, configurations, if_match):
+def install_addon(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, addon_name, version_parameterconflict, configurations, is_override_existing, if_match):
 
     if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
@@ -1456,6 +1457,9 @@ def install_addon(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if configurations is not None:
         _details['configurations'] = cli_util.parse_json_parameter("configurations", configurations)
+
+    if is_override_existing is not None:
+        _details['isOverrideExisting'] = is_override_existing
 
     client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.install_addon(

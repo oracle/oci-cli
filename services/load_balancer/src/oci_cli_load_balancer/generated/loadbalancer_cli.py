@@ -688,7 +688,7 @@ Example: `example_backend_set`""")
 @cli_util.option('--port', required=True, type=click.INT, help=u"""The communication port for the listener.
 
 Example: `80`""")
-@cli_util.option('--protocol', required=True, help=u"""The protocol on which the listener accepts connection requests. To get a list of valid protocols, use the [ListProtocols] operation.
+@cli_util.option('--protocol', required=True, help=u"""The protocol on which the listener accepts connection requests. The supported protocols are HTTP, HTTP2, TCP, and GRPC. You can also use the [ListProtocols] operation to get a list of valid protocols.
 
 Example: `HTTP`""")
 @cli_util.option('--name', required=True, help=u"""A friendly name for the listener. It must be unique and it cannot be changed. Avoid entering confidential information.
@@ -3570,7 +3570,7 @@ Example: `example_backend_set`""")
 @cli_util.option('--port', required=True, type=click.INT, help=u"""The communication port for the listener.
 
 Example: `80`""")
-@cli_util.option('--protocol', required=True, help=u"""The protocol on which the listener accepts connection requests. To get a list of valid protocols, use the [ListProtocols] operation.
+@cli_util.option('--protocol', required=True, help=u"""The protocol on which the listener accepts connection requests. The supported protocols are HTTP, HTTP2, TCP, and GRPC. You can also use the [ListProtocols] operation to get a list of valid protocols.
 
 Example: `HTTP`""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the listener to update.""")

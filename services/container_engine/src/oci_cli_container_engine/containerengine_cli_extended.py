@@ -103,6 +103,26 @@ containerengine_cli.cluster_group.add_command(generate_token)
  deploy and troubleshoot containerized applications, and to manage Kubernetes resources. Default value is false.""")
 @cli_util.option('--tiller-enabled', type=click.BOOL, help="""Select if you want Tiller (the server portion of Helm)\
  to run in the Kubernetes cluster. Default value is false.""")
+@cli_util.option('--oidc-issuer-url', help="""URL of the provider that allows the API server to discover public signing keys.
+            Only URLs that use the https:// scheme are accepted. This is typically the provider's discovery URL,
+            changed to have an empty path.""")
+@cli_util.option('--oidc-client-id', help="""A client id that all tokens must be issued for.""")
+@cli_util.option('--oidc-username-claim', help="""JWT claim to use as the user name. By default sub, which is expected to be a unique identifier of the end
+            user. Admins can choose other claims, such as email or name, depending on their provider. However, claims
+            other than email will be prefixed with the issuer URL to prevent naming clashes with other plugins.""")
+@cli_util.option('--oidc-username-prefix', help="""Prefix prepended to username claims to prevent clashes with existing names (such as system:users).
+            For example, the value oidc: will create usernames like oidc:jane.doe. If this flag isn't provided and
+            --oidc-username-claim is a value other than email the prefix defaults to ( Issuer URL )# where
+            ( Issuer URL ) is the value of --oidc-issuer-url. The value - can be used to disable all prefixing.""")
+@cli_util.option('--oidc-groups-claim', help="""JWT claim to use as the user's group. If the claim is present it must be an array of strings.""")
+@cli_util.option('--oidc-groups-prefix', help="""Prefix prepended to group claims to prevent clashes with existing names (such as system:groups).""")
+@cli_util.option('--oidc-required-claims', type=custom_types.CLI_COMPLEX_TYPE, help="""A key=value pair that describes a required claim in the ID Token. If set, the claim is verified to be present
+            in the ID Token with a matching value. Repeat this flag to specify multiple claims.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--oidc-ca-certificate', help="""The path to the certificate for the CA that signed your identity provider's web certificate. Defaults to the
+            host's root CAs.""")
+@cli_util.option('--oidc-signing-algorithms', type=custom_types.CLI_COMPLEX_TYPE, help="""The signing algorithms accepted. Default is ["RS256"].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--open-id-connect-auth-enabled', type=click.BOOL, help="""Whether the cluster has OIDC Auth Config enabled. Defaults to false.""")
+@cli_util.option('--open-id-connect-discovery-enabled', type=click.BOOL, help="""Whether the cluster has OIDC Discovery enabled. Defaults to false. If set to true, the cluster will be assigned a public OIDC Discovery endpoint.""")
 @cli_util.option('--pods-cidr', help="""The available group of network addresses that can be allocated to pods running\
  in the cluster, expressed as a single, contiguous IPv4 CIDR block. For example, 10.244.0.0/16.""")
 @cli_util.option('--services-cidr', help="""The available group of network addresses that can be exposed as Kubernetes\
@@ -126,7 +146,10 @@ containerengine_cli.cluster_group.add_command(generate_token)
      'persistent-volume-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
      'persistent-volume-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
      'image-policy-config': {'module': 'container_engine', 'class': 'CreateImagePolicyConfigDetails'},
-     'cluster-pod-network-options': {'module': 'container_engine', 'class': 'list[ClusterPodNetworkOptionDetails]'}})
+     'governance-policy-config': {'module': 'container_engine', 'class': 'CreateGovernancePolicyConfigDetails'},
+     'cluster-pod-network-options': {'module': 'container_engine', 'class': 'list[ClusterPodNetworkOptionDetails]'},
+     'oidc-signing-algorithms': {'module': 'container_engine', 'class': 'list[string]'},
+     'oidc-required-claims': {'module': 'container_engine', 'class': 'list[KeyValue]'}})
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
     input_params_to_complex_types={'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
@@ -138,7 +161,10 @@ containerengine_cli.cluster_group.add_command(generate_token)
                                    'persistent-volume-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
                                    'persistent-volume-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
                                    'image-policy-config': {'module': 'container_engine', 'class': 'CreateImagePolicyConfigDetails'},
-                                   'cluster-pod-network-options': {'module': 'container_engine', 'class': 'list[ClusterPodNetworkOptionDetails]'}})
+                                   'governance-policy-config': {'module': 'container_engine', 'class': 'CreateGovernancePolicyConfigDetails'},
+                                   'cluster-pod-network-options': {'module': 'container_engine', 'class': 'list[ClusterPodNetworkOptionDetails]'},
+                                   'oidc-signing-algorithms': {'module': 'container_engine', 'class': 'list[string]'},
+                                   'oidc-required-claims': {'module': 'container_engine', 'class': 'list[KeyValue]'}})
 @cli_util.wrap_exceptions
 def create_cluster(ctx, **kwargs):
     kwargs['options'] = {}
@@ -157,6 +183,71 @@ def create_cluster(ctx, **kwargs):
             kwargs['options']['addOns'] = {}
         kwargs['options']['addOns']['isTillerEnabled'] = kwargs['tiller_enabled']
     kwargs.pop('tiller_enabled', None)
+
+    if 'oidc_issuer_url' in kwargs and kwargs['oidc_issuer_url'] is not None:
+        if 'openIdConnectTokenAuthenticationConfig' not in kwargs['options']:
+            kwargs['options']['openIdConnectTokenAuthenticationConfig'] = {}
+        kwargs['options']['openIdConnectTokenAuthenticationConfig']['issuerUrl'] = kwargs['oidc_issuer_url']
+    kwargs.pop('oidc_issuer_url', None)
+
+    if 'oidc_client_id' in kwargs and kwargs['oidc_client_id'] is not None:
+        if 'openIdConnectTokenAuthenticationConfig' not in kwargs['options']:
+            kwargs['options']['openIdConnectTokenAuthenticationConfig'] = {}
+        kwargs['options']['openIdConnectTokenAuthenticationConfig']['clientId'] = kwargs['oidc_client_id']
+    kwargs.pop('oidc_client_id', None)
+
+    if 'oidc_username_claim' in kwargs and kwargs['oidc_username_claim'] is not None:
+        if 'openIdConnectTokenAuthenticationConfig' not in kwargs['options']:
+            kwargs['options']['openIdConnectTokenAuthenticationConfig'] = {}
+        kwargs['options']['openIdConnectTokenAuthenticationConfig']['usernameClaim'] = kwargs['oidc_username_claim']
+    kwargs.pop('oidc_username_claim', None)
+
+    if 'oidc_username_prefix' in kwargs and kwargs['oidc_username_prefix'] is not None:
+        if 'openIdConnectTokenAuthenticationConfig' not in kwargs['options']:
+            kwargs['options']['openIdConnectTokenAuthenticationConfig'] = {}
+        kwargs['options']['openIdConnectTokenAuthenticationConfig']['usernamePrefix'] = kwargs['oidc_username_prefix']
+    kwargs.pop('oidc_username_prefix', None)
+
+    if 'oidc_groups_claim' in kwargs and kwargs['oidc_groups_claim'] is not None:
+        if 'openIdConnectTokenAuthenticationConfig' not in kwargs['options']:
+            kwargs['options']['openIdConnectTokenAuthenticationConfig'] = {}
+        kwargs['options']['openIdConnectTokenAuthenticationConfig']['groupsClaim'] = kwargs['oidc_groups_claim']
+    kwargs.pop('oidc_groups_claim', None)
+
+    if 'oidc_groups_prefix' in kwargs and kwargs['oidc_groups_prefix'] is not None:
+        if 'openIdConnectTokenAuthenticationConfig' not in kwargs['options']:
+            kwargs['options']['openIdConnectTokenAuthenticationConfig'] = {}
+        kwargs['options']['openIdConnectTokenAuthenticationConfig']['groupsPrefix'] = kwargs['oidc_groups_prefix']
+    kwargs.pop('oidc_groups_prefix', None)
+
+    if 'oidc_required_claims' in kwargs and kwargs['oidc_required_claims'] is not None:
+        if 'openIdConnectTokenAuthenticationConfig' not in kwargs['options']:
+            kwargs['options']['openIdConnectTokenAuthenticationConfig'] = {}
+        kwargs['options']['openIdConnectTokenAuthenticationConfig']['requiredClaims'] = cli_util.parse_json_parameter("oidc_required_claims", kwargs['oidc_required_claims'])
+    kwargs.pop('oidc_required_claims', None)
+
+    if 'oidc_ca_certificate' in kwargs and kwargs['oidc_ca_certificate'] is not None:
+        if 'openIdConnectTokenAuthenticationConfig' not in kwargs['options']:
+            kwargs['options']['openIdConnectTokenAuthenticationConfig'] = {}
+        kwargs['options']['openIdConnectTokenAuthenticationConfig']['caCertificate'] = kwargs['oidc_ca_certificate']
+    kwargs.pop('oidc_ca_certificate', None)
+
+    if 'oidc_signing_algorithms' in kwargs and kwargs['oidc_signing_algorithms'] is not None:
+        if 'openIdConnectTokenAuthenticationConfig' not in kwargs['options']:
+            kwargs['options']['openIdConnectTokenAuthenticationConfig'] = {}
+        kwargs['options']['openIdConnectTokenAuthenticationConfig']['signingAlgorithms'] = cli_util.parse_json_parameter("oidc_signing_algorithms", kwargs['oidc_signing_algorithms'])
+    kwargs.pop('oidc_signing_algorithms', None)
+
+    if 'open_id_connect_auth_enabled' in kwargs and kwargs['open_id_connect_auth_enabled'] is not None:
+        if 'openIdConnectTokenAuthenticationConfig' not in kwargs['options']:
+            kwargs['options']['openIdConnectTokenAuthenticationConfig'] = {}
+        kwargs['options']['openIdConnectTokenAuthenticationConfig']['isOpenIdConnectAuthEnabled'] = kwargs['open_id_connect_auth_enabled']
+    kwargs.pop('open_id_connect_auth_enabled', None)
+    if 'open_id_connect_discovery_enabled' in kwargs and kwargs['open_id_connect_discovery_enabled'] is not None:
+        if 'openIdConnectDiscovery' not in kwargs['options']:
+            kwargs['options']['openIdConnectDiscovery'] = {}
+        kwargs['options']['openIdConnectDiscovery']['isOpenIdConnectDiscoveryEnabled'] = kwargs['open_id_connect_discovery_enabled']
+    kwargs.pop('open_id_connect_discovery_enabled', None)
 
     if 'pods_cidr' in kwargs and kwargs['pods_cidr'] is not None:
         kwargs['options']['kubernetesNetworkConfig'] = {}

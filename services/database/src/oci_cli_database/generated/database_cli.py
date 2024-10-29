@@ -3976,7 +3976,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
-@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for encryption key. For example, OCI encryption key `{\"provider\":\"OCI\", \"kmsKeyId\": <kmsKeyId>, \"vaultId\": <vaultId>}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
 This cannot be used in conjunction with with OCI vault secrets (secretId).""")
@@ -4300,7 +4300,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
-@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for encryption key. For example, OCI encryption key `{\"provider\":\"OCI\", \"kmsKeyId\": <kmsKeyId>, \"vaultId\": <vaultId>}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
 This cannot be used in conjunction with with OCI vault secrets (secretId).""")
@@ -4622,7 +4622,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
-@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for encryption key. For example, OCI encryption key `{\"provider\":\"OCI\", \"kmsKeyId\": <kmsKeyId>, \"vaultId\": <vaultId>}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
 This cannot be used in conjunction with with OCI vault secrets (secretId).""")
@@ -4944,7 +4944,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
-@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for encryption key. For example, OCI encryption key `{\"provider\":\"OCI\", \"kmsKeyId\": <kmsKeyId>, \"vaultId\": <vaultId>}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
 This cannot be used in conjunction with with OCI vault secrets (secretId).""")
@@ -5288,7 +5288,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
-@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for encryption key. For example, OCI encryption key `{\"provider\":\"OCI\", \"kmsKeyId\": <kmsKeyId>, \"vaultId\": <vaultId>}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
 This cannot be used in conjunction with with OCI vault secrets (secretId).""")
@@ -5611,7 +5611,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
-@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for encryption key. For example, OCI encryption key `{\"provider\":\"OCI\", \"kmsKeyId\": <kmsKeyId>, \"vaultId\": <vaultId>}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
 This cannot be used in conjunction with with OCI vault secrets (secretId).""")
@@ -5938,7 +5938,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
-@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for encryption key. For example, OCI encryption key `{\"provider\":\"OCI\", \"kmsKeyId\": <kmsKeyId>, \"vaultId\": <vaultId>}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
 This cannot be used in conjunction with with OCI vault secrets (secretId).""")
@@ -6269,7 +6269,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
-@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for encryption key. For example, OCI encryption key `{\"provider\":\"OCI\", \"kmsKeyId\": <kmsKeyId>, \"vaultId\": <vaultId>}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
 This cannot be used in conjunction with with OCI vault secrets (secretId).""")
@@ -6595,7 +6595,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
-@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for encryption key. For example, OCI encryption key `{\"provider\":\"OCI\", \"kmsKeyId\": <kmsKeyId>, \"vaultId\": <vaultId>}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
 This cannot be used in conjunction with with OCI vault secrets (secretId).""")
@@ -6915,7 +6915,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, scheduledOperations, dbToolsDetails, or isLocalDataGuardEnabled""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--vault-id', help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault]. This parameter and `secretId` are required for Customer Managed Keys.""")
-@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for encryption key. For example, OCI encryption key `{\"provider\":\"OCI\", \"kmsKeyId\": <kmsKeyId>, \"vaultId\": <vaultId>}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--admin-password', help=u"""**Important** The `adminPassword` or `secretId` must be specified for all Autonomous Databases except for refreshable clones. The password must be between 12 and 30 characters long, and must contain at least 1 uppercase, 1 lowercase, and 1 numeric character. It cannot contain the double quote symbol (\") or the username \"admin\", regardless of casing.
 
 This cannot be used in conjunction with with OCI vault secrets (secretId).""")
@@ -27909,7 +27909,7 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 This option is a JSON list with items of type DatabaseTool.  For documentation on DatabaseTool please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/DatabaseTool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-id', help=u"""The OCI vault secret [/Content/General/Concepts/identifiers.htm]OCID. This cannot be used in conjunction with adminPassword.""")
 @cli_util.option('--secret-version-number', type=click.INT, help=u"""The version of the vault secret. If no version is specified, the latest version will be used.""")
-@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for encryption key. For example, OCI encryption key `{\"provider\":\"OCI\", \"kmsKeyId\": <kmsKeyId>, \"vaultId\": <vaultId>}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--encryption-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE", "STANDBY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
