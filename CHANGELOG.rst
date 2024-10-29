@@ -6,6 +6,41 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.49.4 - 2024-10-29
+--------------------
+Added
+~~~~~
+* OKE Control Plane service
+
+  * Support for overriding an existing addon installation
+
+    * ``oci ce cluster install-addon --is-override-existing``
+
+* Network load balancer service
+
+  * Support for L3IP listener feature
+
+    * ``oci nlb listener create --l3-ip-idle-timeout --protocol l3ip``
+    * ``oci nlb listener update --l3-ip-idle-timeout --protocol l3ip``
+
+Fixed
+~~~~~
+* OKE Control Plane service
+
+  * Support for new Open Id Connect Authentication and Open Id Connect Discovery feature
+
+    * ``oci ce cluster create --oidc-ca-certificate``
+    * ``oci ce cluster create --oidc-client-id``
+    * ``oci ce cluster create --oidc-groups-claim``
+    * ``oci ce cluster create --oidc-groups-prefix``
+    * ``oci ce cluster create --oidc-issuer-url``
+    * ``oci ce cluster create --oidc-required-claims``
+    * ``oci ce cluster create --oidc-signing-algorithms``
+    * ``oci ce cluster create --oidc-username-claim``
+    * ``oci ce cluster create --oidc-username-prefix``
+    * ``oci ce cluster create --open-id-connect-auth-enabled``
+    * ``oci ce cluster create --open-id-connect-discovery-enabled``
+
 3.49.3 - 2024-10-22
 --------------------
 Added
