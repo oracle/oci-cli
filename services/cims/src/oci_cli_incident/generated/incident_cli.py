@@ -51,41 +51,27 @@ def incident_group():
     pass
 
 
-@click.command(cli_util.override('support.status_group.command_name', 'status'), cls=CommandGroupWithAlias, help="""Details about the status of the support ticket.""")
-@cli_util.help_option_group
-def status_group():
-    pass
-
-
-@click.command(cli_util.override('support.string_group.command_name', 'string'), cls=CommandGroupWithAlias, help="""""")
-@cli_util.help_option_group
-def string_group():
-    pass
-
-
 support_root_group.add_command(update_incident_group)
 support_root_group.add_command(incident_resource_type_group)
 support_root_group.add_command(validation_response_group)
 support_root_group.add_command(incident_group)
-support_root_group.add_command(status_group)
-support_root_group.add_command(string_group)
 
 
-@incident_group.command(name=cli_util.override('support.create_incident.command_name', 'create'), help=u"""Operation to create a support ticket. \n[Command Reference](createIncident)""")
+@incident_group.command(name=cli_util.override('support.create_incident.command_name', 'create'), help=u"""Creates a support ticket in the specified tenancy. For more information, see [Creating Support Requests]. \n[Command Reference](createIncident)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy.""")
 @cli_util.option('--ticket', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--problem-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["LIMIT", "LEGACY_LIMIT", "TECH", "ACCOUNT", "TAXONOMY"]), help=u"""The kind of support ticket, such as a technical support request or a limit increase request.""")
+@cli_util.option('--problem-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["LIMIT", "LEGACY_LIMIT", "TECH", "ACCOUNT", "TAXONOMY"]), help=u"""The kind of support ticket (type of support request). For information about `ACCOUNT` support tickets, see [Creating a Billing Support Request]. For information about `LIMIT` support tickets, see [Creating a Service Limit Increase Request]. For information about `TECH` support tickets, see [Creating a Technical Support Request].""")
 @cli_util.option('--csi', help=u"""The Customer Support Identifier (CSI) number associated with the support account. The CSI is required for technical support tickets and optional for limits and billing tickets.""")
 @cli_util.option('--contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of contacts.
 
 This option is a JSON list with items of type Contact.  For documentation on Contact please see our API reference: https://docs.cloud.oracle.com/api/#/en/incident/20181231/datatypes/Contact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--referrer', help=u"""The incident referrer. This value is often the URL that the customer used when creating the support ticket.""")
-@cli_util.option('--ocid', help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account.""")
+@cli_util.option('--ocid', help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account. User OCID is mandatory for OCI Users and optional for Multicloud users.""")
 @cli_util.option('--homeregion', help=u"""The region of the tenancy.""")
 @cli_util.option('--bearertokentype', help=u"""Token type that determine which cloud provider the request come from.""")
 @cli_util.option('--bearertoken', help=u"""Token that provided by multi cloud provider, which help to validate the email.""")
 @cli_util.option('--idtoken', help=u"""IdToken that provided by multi cloud provider, which help to validate the email.""")
-@cli_util.option('--domainid', help=u"""The OCID of identity domain.""")
+@cli_util.option('--domainid', help=u"""The OCID of identity domain. DomainID is mandatory if the user is part of Non Default Identity domain.""")
 @json_skeleton_utils.get_cli_json_input_option({'ticket': {'module': 'cims', 'class': 'CreateTicketDetails'}, 'contacts': {'module': 'cims', 'class': 'list[Contact]'}})
 @cli_util.help_option
 @click.pass_context
@@ -130,62 +116,23 @@ def create_incident(ctx, from_json, compartment_id, ticket, problem_type, csi, c
     cli_util.render_response(result, ctx)
 
 
-@string_group.command(name=cli_util.override('support.get_csi_number.command_name', 'get-csi-number'), help=u"""Fetches csi number of the user. \n[Command Reference](getCsiNumber)""")
-@cli_util.option('--tenant-id', required=True, help=u"""Tenancy Ocid in oracle cloud Infrastructure""")
-@cli_util.option('--region-parameterconflict', required=True, help=u"""Home region of the customer which is part of oracle cloud infrastructure regions""")
-@cli_util.option('--ocid', help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account.""")
-@cli_util.option('--homeregion', help=u"""The region of the tenancy.""")
-@cli_util.option('--bearertokentype', help=u"""Token type that determine which cloud provider the request come from.""")
-@cli_util.option('--bearertoken', help=u"""Token that provided by multi cloud provider, which help to validate the email.""")
-@cli_util.option('--idtoken', help=u"""IdToken that provided by multi cloud provider, which help to validate the email.""")
-@cli_util.option('--domainid', help=u"""The OCID of identity domain.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
-@cli_util.wrap_exceptions
-def get_csi_number(ctx, from_json, tenant_id, region_parameterconflict, ocid, homeregion, bearertokentype, bearertoken, idtoken, domainid):
-
-    kwargs = {}
-    if ocid is not None:
-        kwargs['ocid'] = ocid
-    if homeregion is not None:
-        kwargs['homeregion'] = homeregion
-    if bearertokentype is not None:
-        kwargs['bearertokentype'] = bearertokentype
-    if bearertoken is not None:
-        kwargs['bearertoken'] = bearertoken
-    if idtoken is not None:
-        kwargs['idtoken'] = idtoken
-    if domainid is not None:
-        kwargs['domainid'] = domainid
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('cims', 'incident', ctx)
-    result = client.get_csi_number(
-        tenant_id=tenant_id,
-        region=region_parameterconflict,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@incident_group.command(name=cli_util.override('support.get_incident.command_name', 'get'), help=u"""Gets details about the specified support ticket. \n[Command Reference](getIncident)""")
+@incident_group.command(name=cli_util.override('support.get_incident.command_name', 'get'), help=u"""Gets the specified support ticket. For more information, see [Getting Details for a Support Request]. \n[Command Reference](getIncident)""")
 @cli_util.option('--incident-key', required=True, help=u"""Unique identifier for the support ticket.""")
-@cli_util.option('--csi', help=u"""The Customer Support Identifier (CSI) associated with the support account.""")
-@cli_util.option('--ocid', help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy.""")
+@cli_util.option('--csi', help=u"""The Customer Support Identifier (CSI) number associated with the support account. The CSI is required for technical support tickets and optional for limits and billing tickets.""")
+@cli_util.option('--ocid', help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account. User OCID is mandatory for OCI Users and optional for Multicloud users.""")
 @cli_util.option('--homeregion', help=u"""The region of the tenancy.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the tenancy.""")
 @cli_util.option('--problemtype', help=u"""The kind of support request.""")
 @cli_util.option('--bearertokentype', help=u"""Token type that determine which cloud provider the request come from.""")
 @cli_util.option('--bearertoken', help=u"""Token that provided by multi cloud provider, which help to validate the email.""")
 @cli_util.option('--idtoken', help=u"""IdToken that provided by multi cloud provider, which help to validate the email.""")
-@cli_util.option('--domainid', help=u"""The OCID of identity domain.""")
+@cli_util.option('--domainid', help=u"""The OCID of identity domain. DomainID is mandatory if the user is part of Non Default Identity domain.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'cims', 'class': 'Incident'})
 @cli_util.wrap_exceptions
-def get_incident(ctx, from_json, incident_key, csi, ocid, homeregion, compartment_id, problemtype, bearertokentype, bearertoken, idtoken, domainid):
+def get_incident(ctx, from_json, incident_key, compartment_id, csi, ocid, homeregion, problemtype, bearertokentype, bearertoken, idtoken, domainid):
 
     if isinstance(incident_key, six.string_types) and len(incident_key.strip()) == 0:
         raise click.UsageError('Parameter --incident-key cannot be whitespace or empty string')
@@ -197,8 +144,6 @@ def get_incident(ctx, from_json, incident_key, csi, ocid, homeregion, compartmen
         kwargs['ocid'] = ocid
     if homeregion is not None:
         kwargs['homeregion'] = homeregion
-    if compartment_id is not None:
-        kwargs['compartment_id'] = compartment_id
     if problemtype is not None:
         kwargs['problemtype'] = problemtype
     if bearertokentype is not None:
@@ -213,35 +158,13 @@ def get_incident(ctx, from_json, incident_key, csi, ocid, homeregion, compartmen
     client = cli_util.build_client('cims', 'incident', ctx)
     result = client.get_incident(
         incident_key=incident_key,
+        compartment_id=compartment_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
 
 
-@status_group.command(name=cli_util.override('support.get_status.command_name', 'get'), help=u"""Gets the status of the service. \n[Command Reference](getStatus)""")
-@cli_util.option('--ocid', help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account.""")
-@cli_util.option('--homeregion', help=u"""The region of the tenancy.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'cims', 'class': 'Status'})
-@cli_util.wrap_exceptions
-def get_status(ctx, from_json, ocid, homeregion):
-
-    kwargs = {}
-    if ocid is not None:
-        kwargs['ocid'] = ocid
-    if homeregion is not None:
-        kwargs['homeregion'] = homeregion
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('cims', 'incident', ctx)
-    result = client.get_status(
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@incident_resource_type_group.command(name=cli_util.override('support.list_incident_resource_types.command_name', 'list'), help=u"""During support ticket creation, returns the list of all possible products that Oracle Cloud Infrastructure supports. \n[Command Reference](listIncidentResourceTypes)""")
+@incident_resource_type_group.command(name=cli_util.override('support.list_incident_resource_types.command_name', 'list'), help=u"""Depending on the selected `productType`, either lists available products (service groups, services, service categories, and subcategories) for technical support tickets or lists limits and current usage for limit increase tickets. This operation is called during creation of technical support and limit increase tickets. For more information about listing products, see [Listing Products for Support Requests]. For more information about listing limits, see [Listing Limits for Service Limit Increase Requests]. \n[Command Reference](listIncidentResourceTypes)""")
 @cli_util.option('--problem-type', required=True, help=u"""The kind of support request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -249,10 +172,10 @@ def get_status(ctx, from_json, ocid, homeregion):
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["dateUpdated", "severity"]), help=u"""The key to use to sort the returned items.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The order to sort the results in.""")
 @cli_util.option('--name', help=u"""The user-friendly name of the support ticket type.""")
-@cli_util.option('--csi', help=u"""The Customer Support Identifier (CSI) associated with the support account.""")
-@cli_util.option('--ocid', help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account.""")
+@cli_util.option('--csi', help=u"""The Customer Support Identifier (CSI) number associated with the support account. The CSI is required for technical support tickets and optional for limits and billing tickets.""")
+@cli_util.option('--ocid', help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account. User OCID is mandatory for OCI Users and optional for Multicloud users.""")
 @cli_util.option('--homeregion', help=u"""The region of the tenancy.""")
-@cli_util.option('--domainid', help=u"""The OCID of identity domain.""")
+@cli_util.option('--domainid', help=u"""The OCID of identity domain. DomainID is mandatory if the user is part of Non Default Identity domain.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -314,21 +237,21 @@ def list_incident_resource_types(ctx, from_json, all_pages, page_size, problem_t
     cli_util.render_response(result, ctx)
 
 
-@incident_group.command(name=cli_util.override('support.list_incidents.command_name', 'list'), help=u"""Returns the list of support tickets raised by the tenancy. \n[Command Reference](listIncidents)""")
+@incident_group.command(name=cli_util.override('support.list_incidents.command_name', 'list'), help=u"""Lists support tickets for the specified tenancy. For more information, see [Listing Support Requests]. \n[Command Reference](listIncidents)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy.""")
-@cli_util.option('--csi', help=u"""The Customer Support Identifier (CSI) associated with the support account.""")
+@cli_util.option('--csi', help=u"""The Customer Support Identifier (CSI) number associated with the support account. The CSI is required for technical support tickets and optional for limits and billing tickets.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["dateUpdated", "severity"]), help=u"""The key to use to sort the returned items.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The order to sort the results in.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CLOSED"]), help=u"""The current state of the ticket.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--ocid', help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account.""")
+@cli_util.option('--ocid', help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account. User OCID is mandatory for OCI Users and optional for Multicloud users.""")
 @cli_util.option('--homeregion', help=u"""The region of the tenancy.""")
 @cli_util.option('--problem-type', help=u"""The kind of support request.""")
 @cli_util.option('--bearertokentype', help=u"""Token type that determine which cloud provider the request come from.""")
 @cli_util.option('--bearertoken', help=u"""Token that provided by multi cloud provider, which help to validate the email.""")
 @cli_util.option('--idtoken', help=u"""IdToken that provided by multi cloud provider, which help to validate the email.""")
-@cli_util.option('--domainid', help=u"""The OCID of identity domain.""")
+@cli_util.option('--domainid', help=u"""The OCID of identity domain. DomainID is mandatory if the user is part of Non Default Identity domain.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -395,26 +318,26 @@ def list_incidents(ctx, from_json, all_pages, page_size, compartment_id, csi, li
     cli_util.render_response(result, ctx)
 
 
-@update_incident_group.command(name=cli_util.override('support.update_incident.command_name', 'update-incident'), help=u"""Updates the specified support ticket's information. \n[Command Reference](updateIncident)""")
+@update_incident_group.command(name=cli_util.override('support.update_incident.command_name', 'update-incident'), help=u"""Updates the specified support ticket. For more information, see [Updating Support Requests]. \n[Command Reference](updateIncident)""")
 @cli_util.option('--incident-key', required=True, help=u"""Unique identifier for the support ticket.""")
 @cli_util.option('--ticket', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--problem-type', type=custom_types.CliCaseInsensitiveChoice(["LIMIT", "LEGACY_LIMIT", "TECH", "ACCOUNT", "TAXONOMY"]), help=u"""The kind of support ticket, such as a technical support request or a limit increase request.""")
-@cli_util.option('--csi', help=u"""The Customer Support Identifier (CSI) associated with the support account.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the tenancy.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy.""")
+@cli_util.option('--problem-type', type=custom_types.CliCaseInsensitiveChoice(["LIMIT", "LEGACY_LIMIT", "TECH", "ACCOUNT", "TAXONOMY"]), help=u"""The kind of support ticket (type of support request). For information about `ACCOUNT` support tickets, see [Creating a Billing Support Request]. For information about `LIMIT` support tickets, see [Creating a Service Limit Increase Request]. For information about `TECH` support tickets, see [Creating a Technical Support Request].""")
+@cli_util.option('--csi', help=u"""The Customer Support Identifier (CSI) number associated with the support account. The CSI is required for technical support tickets and optional for limits and billing tickets.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--ocid', help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account.""")
+@cli_util.option('--ocid', help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account. User OCID is mandatory for OCI Users and optional for Multicloud users.""")
 @cli_util.option('--homeregion', help=u"""The region of the tenancy.""")
 @cli_util.option('--bearertokentype', help=u"""Token type that determine which cloud provider the request come from.""")
 @cli_util.option('--bearertoken', help=u"""Token that provided by multi cloud provider, which help to validate the email.""")
 @cli_util.option('--idtoken', help=u"""IdToken that provided by multi cloud provider, which help to validate the email.""")
-@cli_util.option('--domainid', help=u"""The OCID of identity domain.""")
+@cli_util.option('--domainid', help=u"""The OCID of identity domain. DomainID is mandatory if the user is part of Non Default Identity domain.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'ticket': {'module': 'cims', 'class': 'UpdateTicketDetails'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ticket': {'module': 'cims', 'class': 'UpdateTicketDetails'}}, output_type={'module': 'cims', 'class': 'Incident'})
 @cli_util.wrap_exceptions
-def update_incident(ctx, from_json, force, incident_key, ticket, problem_type, csi, compartment_id, if_match, ocid, homeregion, bearertokentype, bearertoken, idtoken, domainid):
+def update_incident(ctx, from_json, force, incident_key, ticket, compartment_id, problem_type, csi, if_match, ocid, homeregion, bearertokentype, bearertoken, idtoken, domainid):
 
     if isinstance(incident_key, six.string_types) and len(incident_key.strip()) == 0:
         raise click.UsageError('Parameter --incident-key cannot be whitespace or empty string')
@@ -426,8 +349,6 @@ def update_incident(ctx, from_json, force, incident_key, ticket, problem_type, c
     kwargs = {}
     if csi is not None:
         kwargs['csi'] = csi
-    if compartment_id is not None:
-        kwargs['compartment_id'] = compartment_id
     if if_match is not None:
         kwargs['if_match'] = if_match
     if ocid is not None:
@@ -453,21 +374,22 @@ def update_incident(ctx, from_json, force, incident_key, ticket, problem_type, c
     client = cli_util.build_client('cims', 'incident', ctx)
     result = client.update_incident(
         incident_key=incident_key,
+        compartment_id=compartment_id,
         update_incident_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
 
 
-@validation_response_group.command(name=cli_util.override('support.validate_user.command_name', 'validate-user'), help=u"""Checks whether the requested user is valid. \n[Command Reference](validateUser)""")
-@cli_util.option('--csi', help=u"""The Customer Support Identifier (CSI) associated with the support account.""")
+@validation_response_group.command(name=cli_util.override('support.validate_user.command_name', 'validate-user'), help=u"""Checks whether the requested user is valid. For more information, see [Validating a User]. \n[Command Reference](validateUser)""")
+@cli_util.option('--csi', help=u"""The Customer Support Identifier (CSI) number associated with the support account. The CSI is required for technical support tickets and optional for limits and billing tickets.""")
 @cli_util.option('--problem-type', type=custom_types.CliCaseInsensitiveChoice(["LIMIT", "LEGACY_LIMIT", "TECH", "ACCOUNT", "TAXONOMY"]), help=u"""The kind of support request.""")
-@cli_util.option('--ocid', help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account.""")
+@cli_util.option('--ocid', help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account. User OCID is mandatory for OCI Users and optional for Multicloud users.""")
 @cli_util.option('--homeregion', help=u"""The region of the tenancy.""")
 @cli_util.option('--bearertokentype', help=u"""Token type that determine which cloud provider the request come from.""")
 @cli_util.option('--bearertoken', help=u"""Token that provided by multi cloud provider, which help to validate the email.""")
 @cli_util.option('--idtoken', help=u"""IdToken that provided by multi cloud provider, which help to validate the email.""")
-@cli_util.option('--domainid', help=u"""The OCID of identity domain.""")
+@cli_util.option('--domainid', help=u"""The OCID of identity domain. DomainID is mandatory if the user is part of Non Default Identity domain.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context

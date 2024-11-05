@@ -4,9 +4,5 @@
 
 from services.cims.src.oci_cli_incident.generated import incident_cli
 
-# Remove the cli command:  oci support status
-incident_cli.support_root_group.commands.pop(incident_cli.status_group.name)
-# Remove the cli command:  oci support string
-incident_cli.support_root_group.commands.pop(incident_cli.string_group.name)
 # Remove the cli command:  oci support update-incident
 incident_cli.support_root_group.commands.pop(incident_cli.update_incident_group.name)

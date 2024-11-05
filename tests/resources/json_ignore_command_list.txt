@@ -485,3 +485,8 @@ fleet-apps-management, fleet-apps-management-admin, compliance-policy-rule, upda
 fleet-apps-management, fleet-apps-management-admin, compliance-policy-rule, update-compliance-policy-rule-patch-level-selection-details
 fleet-apps-management, fleet-apps-management-admin, compliance-policy-rule, update-compliance-policy-rule-patch-name-selection-details
 fleet-apps-management, fleet-apps-management-admin, compliance-policy-rule, update-compliance-policy-rule-patch-release-date-selection-details
+identity-domains, condition, search
+identity-domains, oci-console-sign-on-policy-consent, search
+identity-domains, policy, search
+identity-domains, restore-oci-console-policy, create
+identity-domains, rule, search

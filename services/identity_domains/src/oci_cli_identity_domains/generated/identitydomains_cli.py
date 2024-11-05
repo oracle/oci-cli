@@ -144,12 +144,6 @@ def network_perimeter_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.conditions_group.command_name', 'conditions'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
-@cli_util.help_option_group
-def conditions_group():
-    pass
-
-
 @click.command(cli_util.override('identity_domains.my_customer_secret_key_group.command_name', 'my-customer-secret-key'), cls=CommandGroupWithAlias, help="""The user's customer secret key.""")
 @cli_util.help_option_group
 def my_customer_secret_key_group():
@@ -336,12 +330,6 @@ def o_auth2_client_credential_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.rules_group.command_name', 'rules'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
-@cli_util.help_option_group
-def rules_group():
-    pass
-
-
 @click.command(cli_util.override('identity_domains.my_o_auth2_client_credentials_group.command_name', 'my-o-auth2-client-credentials'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
 @cli_util.help_option_group
 def my_o_auth2_client_credentials_group():
@@ -426,6 +414,12 @@ def cloud_gate_group():
     pass
 
 
+@click.command(cli_util.override('identity_domains.restore_oci_console_policy_group.command_name', 'restore-oci-console-policy'), cls=CommandGroupWithAlias, help="""Schema to restoring OCI Console Policy to Factory Defaults.""")
+@cli_util.help_option_group
+def restore_oci_console_policy_group():
+    pass
+
+
 @click.command(cli_util.override('identity_domains.cloud_gate_mappings_group.command_name', 'cloud-gate-mappings'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
 @cli_util.help_option_group
 def cloud_gate_mappings_group():
@@ -501,12 +495,6 @@ def my_authentication_factor_initiator_group():
 @click.command(cli_util.override('identity_domains.notification_settings_group.command_name', 'notification-settings'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
 @cli_util.help_option_group
 def notification_settings_group():
-    pass
-
-
-@click.command(cli_util.override('identity_domains.policies_group.command_name', 'policies'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
-@cli_util.help_option_group
-def policies_group():
     pass
 
 
@@ -684,6 +672,12 @@ def api_key_group():
     pass
 
 
+@click.command(cli_util.override('identity_domains.oci_console_sign_on_policy_consent_group.command_name', 'oci-console-sign-on-policy-consent'), cls=CommandGroupWithAlias, help="""The \"Security Policy for OCI Console\" sign-on policy consent resource used to record consents. The schema to record the \"Security Policy for OCI Console\" sign-on policy consent.""")
+@cli_util.help_option_group
+def oci_console_sign_on_policy_consent_group():
+    pass
+
+
 @click.command(cli_util.override('identity_domains.my_groups_group.command_name', 'my-groups'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
 @cli_util.help_option_group
 def my_groups_group():
@@ -764,7 +758,6 @@ identity_domains_root_group.add_command(account_recovery_setting_group)
 identity_domains_root_group.add_command(self_registration_profiles_group)
 identity_domains_root_group.add_command(my_completed_approvals_group)
 identity_domains_root_group.add_command(network_perimeter_group)
-identity_domains_root_group.add_command(conditions_group)
 identity_domains_root_group.add_command(my_customer_secret_key_group)
 identity_domains_root_group.add_command(schema_group)
 identity_domains_root_group.add_command(password_policies_group)
@@ -796,7 +789,6 @@ identity_domains_root_group.add_command(my_request_group)
 identity_domains_root_group.add_command(security_question_group)
 identity_domains_root_group.add_command(authentication_factor_settings_group)
 identity_domains_root_group.add_command(o_auth2_client_credential_group)
-identity_domains_root_group.add_command(rules_group)
 identity_domains_root_group.add_command(my_o_auth2_client_credentials_group)
 identity_domains_root_group.add_command(my_smtp_credential_group)
 identity_domains_root_group.add_command(dynamic_resource_group_group)
@@ -811,6 +803,7 @@ identity_domains_root_group.add_command(network_perimeters_group)
 identity_domains_root_group.add_command(settings_group)
 identity_domains_root_group.add_command(o_auth_client_certificates_group)
 identity_domains_root_group.add_command(cloud_gate_group)
+identity_domains_root_group.add_command(restore_oci_console_policy_group)
 identity_domains_root_group.add_command(cloud_gate_mappings_group)
 identity_domains_root_group.add_command(users_group)
 identity_domains_root_group.add_command(my_pending_approvals_group)
@@ -824,7 +817,6 @@ identity_domains_root_group.add_command(my_authentication_factor_validator_group
 identity_domains_root_group.add_command(self_registration_profile_group)
 identity_domains_root_group.add_command(my_authentication_factor_initiator_group)
 identity_domains_root_group.add_command(notification_settings_group)
-identity_domains_root_group.add_command(policies_group)
 identity_domains_root_group.add_command(rule_group)
 identity_domains_root_group.add_command(user_status_changer_group)
 identity_domains_root_group.add_command(my_apps_group)
@@ -854,6 +846,7 @@ identity_domains_root_group.add_command(user_capabilities_changer_group)
 identity_domains_root_group.add_command(my_support_account_group)
 identity_domains_root_group.add_command(identity_provider_group)
 identity_domains_root_group.add_command(api_key_group)
+identity_domains_root_group.add_command(oci_console_sign_on_policy_consent_group)
 identity_domains_root_group.add_command(my_groups_group)
 identity_domains_root_group.add_command(account_recovery_settings_group)
 identity_domains_root_group.add_command(auth_token_group)
@@ -3076,7 +3069,7 @@ def create_cloud_gate_server(ctx, from_json, schemas, display_name, host_name, p
     cli_util.render_response(result, ctx)
 
 
-@condition_group.command(name=cli_util.override('identity_domains.create_condition.command_name', 'create'), help=u"""Create a Condition
+@condition_group.command(name=cli_util.override('identity_domains.create_condition.command_name', 'create'), help=u"""Create a condition
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createCondition)""")
 @cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
@@ -3110,7 +3103,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 **SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
 @cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
 
-**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Tag Key, mapsTo:tags.key], [columnHeaderName:Tag Value, mapsTo:tags.value]]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
 This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
@@ -3139,12 +3132,13 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 **Added In:** 18.1.6
 
 **SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
-@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}})
+@cli_util.option('--urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy': {'module': 'identity_domains', 'class': 'ConditionExtensionOciconsolesignonpolicyconsentPolicy'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}}, output_type={'module': 'identity_domains', 'class': 'Condition'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy': {'module': 'identity_domains', 'class': 'ConditionExtensionOciconsolesignonpolicyconsentPolicy'}}, output_type={'module': 'identity_domains', 'class': 'Condition'})
 @cli_util.wrap_exceptions
-def create_condition(ctx, from_json, schemas, name, attribute_name, operator, attribute_value, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, evaluate_condition_if):
+def create_condition(ctx, from_json, schemas, name, attribute_name, operator, attribute_value, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, evaluate_condition_if, urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy):
 
     kwargs = {}
     if authorization is not None:
@@ -3207,6 +3201,9 @@ def create_condition(ctx, from_json, schemas, name, attribute_name, operator, at
 
     if evaluate_condition_if is not None:
         _details['evaluateConditionIf'] = evaluate_condition_if
+
+    if urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy is not None:
+        _details['urn:ietf:params:scim:schemas:oracle:idcs:extension:ociconsolesignonpolicyconsent:Policy'] = cli_util.parse_json_parameter("urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy", urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy)
 
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.create_condition(
@@ -7348,7 +7345,7 @@ def create_password_policy(ctx, from_json, schemas, name, authorization, resourc
     cli_util.render_response(result, ctx)
 
 
-@policy_group.command(name=cli_util.override('identity_domains.create_policy.command_name', 'create'), help=u"""Create a Policy
+@policy_group.command(name=cli_util.override('identity_domains.create_policy.command_name', 'create'), help=u"""Create a Policy.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createPolicy)""")
 @cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
@@ -7376,7 +7373,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 **SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
 @cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
 
-**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Tag Key, mapsTo:tags.key], [columnHeaderName:Tag Value, mapsTo:tags.value]]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
 This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
@@ -7411,12 +7408,13 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
 This option is a JSON list with items of type PolicyRules.  For documentation on PolicyRules please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/PolicyRules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'rules': {'module': 'identity_domains', 'class': 'list[PolicyRules]'}, 'policy-type': {'module': 'identity_domains', 'class': 'PolicyPolicyType'}})
+@cli_util.option('--urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'rules': {'module': 'identity_domains', 'class': 'list[PolicyRules]'}, 'policy-type': {'module': 'identity_domains', 'class': 'PolicyPolicyType'}, 'urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy': {'module': 'identity_domains', 'class': 'PolicyExtensionOciconsolesignonpolicyconsentPolicy'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'rules': {'module': 'identity_domains', 'class': 'list[PolicyRules]'}, 'policy-type': {'module': 'identity_domains', 'class': 'PolicyPolicyType'}}, output_type={'module': 'identity_domains', 'class': 'Policy'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'rules': {'module': 'identity_domains', 'class': 'list[PolicyRules]'}, 'policy-type': {'module': 'identity_domains', 'class': 'PolicyPolicyType'}, 'urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy': {'module': 'identity_domains', 'class': 'PolicyExtensionOciconsolesignonpolicyconsentPolicy'}}, output_type={'module': 'identity_domains', 'class': 'Policy'})
 @cli_util.wrap_exceptions
-def create_policy(ctx, from_json, schemas, name, policy_type, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, active, policy_groovy, rules):
+def create_policy(ctx, from_json, schemas, name, policy_type, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, active, policy_groovy, rules, urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy):
 
     kwargs = {}
     if authorization is not None:
@@ -7484,6 +7482,9 @@ def create_policy(ctx, from_json, schemas, name, policy_type, authorization, res
     if rules is not None:
         _details['rules'] = cli_util.parse_json_parameter("rules", rules)
 
+    if urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy is not None:
+        _details['urn:ietf:params:scim:schemas:oracle:idcs:extension:ociconsolesignonpolicyconsent:Policy'] = cli_util.parse_json_parameter("urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy", urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy)
+
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.create_policy(
         policy=_details,
@@ -7492,7 +7493,91 @@ def create_policy(ctx, from_json, schemas, name, policy_type, authorization, res
     cli_util.render_response(result, ctx)
 
 
-@rule_group.command(name=cli_util.override('identity_domains.create_rule.command_name', 'create'), help=u"""Create a Rule
+@restore_oci_console_policy_group.command(name=cli_util.override('identity_domains.create_restore_oci_console_policy.command_name', 'create'), help=u"""Create a RestoreOciConsolePolicy entry to restore Policy to factory default.
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createRestoreOciConsolePolicy)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""**SCIM++ Properties:** - caseExact: false - idcsSearchable: false - multiValued: true - mutability: readWrite - required: true - returned: default - type: string - uniqueness: none REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--consent', required=True, type=click.BOOL, help=u"""**SCIM++ Properties:** - idcsSearchable: false - multiValued: false - required: true - mutability: writeOnly - returned: default - type: boolean Consent to be provided for restoring the Oci Console SignOn Policy to Factory Defaults. Defaults to false""")
+@cli_util.option('--reason', required=True, help=u"""**SCIM++ Properties:** - idcsSearchable: false - multiValued: false - mutability: writeOnly - required: true - returned: default - type: string Detailed reason when domain admin opts to restore the Oci Console SignOn Policy to Factory Defaults""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--id', help=u"""**SCIM++ Properties:** - caseExact: false - idcsSearchable: true - multiValued: false - mutability: readOnly - required: false - returned: always - type: string - uniqueness: global Unique identifier for the SCIM Resource as defined by the Service Provider. Each representation of the Resource MUST include a non-empty id value. This identifier MUST be unique across the Service Provider's entire set of Resources. It MUST be a stable, non-reassignable identifier that does not change when the same Resource is returned in subsequent requests. The value of the id attribute is always issued by the Service Provider and MUST never be specified by the Service Consumer. bulkId: is a reserved keyword and MUST NOT be used in the unique identifier.""")
+@cli_util.option('--ocid', help=u"""**SCIM++ Properties:** - caseExact: true - idcsSearchable: true - multiValued: false - mutability: immutable - required: false - returned: default - type: string - uniqueness: global Unique OCI identifier for the SCIM Resource.""")
+@cli_util.option('--meta', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-created-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-last-modified-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-prevented-operations', type=custom_types.CliCaseInsensitiveChoice(["replace", "update", "delete"]), help=u"""**SCIM++ Properties:** - idcsSearchable: false - multiValued: true - mutability: readOnly - required: false - returned: request - type: string - uniqueness: none Each value of this attribute specifies an operation that only an internal client may perform on this particular resource.""")
+@cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""**SCIM++ Properties:** - idcsCompositeKey: [key, value] - idcsCsvAttributeNameMappings: [[columnHeaderName:Tag Key, mapsTo:tags.key], [columnHeaderName:Tag Value, mapsTo:tags.value]] - idcsSearchable: true - multiValued: true - mutability: readWrite - required: false - returned: request - type: complex - uniqueness: none A list of tags on this resource.
+
+This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""**SCIM++ Properties:** - caseExact: false - idcsSearchable: true - multiValued: false - mutability: readOnly - required: false - returned: default - type: boolean - uniqueness: none A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.""")
+@cli_util.option('--idcs-last-upgraded-in-release', help=u"""**SCIM++ Properties:** - caseExact: false - idcsSearchable: false - multiValued: false - mutability: readOnly - required: false - returned: request - type: string - uniqueness: none The release number when the resource was upgraded.""")
+@cli_util.option('--domain-ocid', help=u"""**SCIM++ Properties:** - caseExact: false - idcsSearchable: false - multiValued: false - mutability: readOnly - required: false - returned: default - type: string - uniqueness: none OCI Domain Id (ocid) in which the resource lives.""")
+@cli_util.option('--compartment-ocid', help=u"""**SCIM++ Properties:** - caseExact: false - idcsSearchable: false - multiValued: false - mutability: readOnly - required: false - returned: default - type: string - uniqueness: none OCI Compartment Id (ocid) in which the resource lives.""")
+@cli_util.option('--tenancy-ocid', help=u"""**SCIM++ Properties:** - caseExact: false - idcsSearchable: false - multiValued: false - mutability: readOnly - required: false - returned: default - type: string - uniqueness: none OCI Tenant Id (ocid) in which the resource lives.""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}}, output_type={'module': 'identity_domains', 'class': 'RestoreOciConsolePolicy'})
+@cli_util.wrap_exceptions
+def create_restore_oci_console_policy(ctx, from_json, schemas, consent, reason, authorization, resource_type_schema_version, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+    _details['consent'] = consent
+    _details['reason'] = reason
+
+    if id is not None:
+        _details['id'] = id
+
+    if ocid is not None:
+        _details['ocid'] = ocid
+
+    if meta is not None:
+        _details['meta'] = cli_util.parse_json_parameter("meta", meta)
+
+    if idcs_created_by is not None:
+        _details['idcsCreatedBy'] = cli_util.parse_json_parameter("idcs_created_by", idcs_created_by)
+
+    if idcs_last_modified_by is not None:
+        _details['idcsLastModifiedBy'] = cli_util.parse_json_parameter("idcs_last_modified_by", idcs_last_modified_by)
+
+    if idcs_prevented_operations is not None:
+        _details['idcsPreventedOperations'] = cli_util.parse_json_parameter("idcs_prevented_operations", idcs_prevented_operations)
+
+    if tags is not None:
+        _details['tags'] = cli_util.parse_json_parameter("tags", tags)
+
+    if delete_in_progress is not None:
+        _details['deleteInProgress'] = delete_in_progress
+
+    if idcs_last_upgraded_in_release is not None:
+        _details['idcsLastUpgradedInRelease'] = idcs_last_upgraded_in_release
+
+    if domain_ocid is not None:
+        _details['domainOcid'] = domain_ocid
+
+    if compartment_ocid is not None:
+        _details['compartmentOcid'] = compartment_ocid
+
+    if tenancy_ocid is not None:
+        _details['tenancyOcid'] = tenancy_ocid
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.create_restore_oci_console_policy(
+        restore_oci_console_policy=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@rule_group.command(name=cli_util.override('identity_domains.create_rule.command_name', 'create'), help=u"""Create a Rule.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createRule)""")
 @cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""REQUIRED. The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. This specification defines URIs for User, Group, and a standard \\\"enterprise\\\" extension. All representations of SCIM schema MUST include a non-zero value array with value(s) of the URIs supported by that representation. Duplicate values MUST NOT be included. Value order is not specified and MUST not impact behavior.
@@ -7528,7 +7613,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 **SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
 @cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
 
-**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Tag Key, mapsTo:tags.key], [columnHeaderName:Tag Value, mapsTo:tags.value]]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
 This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
@@ -7562,12 +7647,13 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
 @cli_util.option('--condition-group', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'condition-group': {'module': 'identity_domains', 'class': 'RuleConditionGroup'}, 'policy-type': {'module': 'identity_domains', 'class': 'RulePolicyType'}, '-return': {'module': 'identity_domains', 'class': 'list[RuleReturn]'}})
+@cli_util.option('--urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'condition-group': {'module': 'identity_domains', 'class': 'RuleConditionGroup'}, 'policy-type': {'module': 'identity_domains', 'class': 'RulePolicyType'}, '-return': {'module': 'identity_domains', 'class': 'list[RuleReturn]'}, 'urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy': {'module': 'identity_domains', 'class': 'RuleExtensionOciconsolesignonpolicyconsentPolicy'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'condition-group': {'module': 'identity_domains', 'class': 'RuleConditionGroup'}, 'policy-type': {'module': 'identity_domains', 'class': 'RulePolicyType'}, '-return': {'module': 'identity_domains', 'class': 'list[RuleReturn]'}}, output_type={'module': 'identity_domains', 'class': 'Rule'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'condition-group': {'module': 'identity_domains', 'class': 'RuleConditionGroup'}, 'policy-type': {'module': 'identity_domains', 'class': 'RulePolicyType'}, '-return': {'module': 'identity_domains', 'class': 'list[RuleReturn]'}, 'urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy': {'module': 'identity_domains', 'class': 'RuleExtensionOciconsolesignonpolicyconsentPolicy'}}, output_type={'module': 'identity_domains', 'class': 'Rule'})
 @cli_util.wrap_exceptions
-def create_rule(ctx, from_json, schemas, name, condition, policy_type, _return, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, active, locked, rule_groovy, condition_group):
+def create_rule(ctx, from_json, schemas, name, condition, policy_type, _return, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, active, locked, rule_groovy, condition_group, urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy):
 
     kwargs = {}
     if authorization is not None:
@@ -7639,6 +7725,9 @@ def create_rule(ctx, from_json, schemas, name, condition, policy_type, _return, 
 
     if condition_group is not None:
         _details['conditionGroup'] = cli_util.parse_json_parameter("condition_group", condition_group)
+
+    if urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy is not None:
+        _details['urn:ietf:params:scim:schemas:oracle:idcs:extension:ociconsolesignonpolicyconsent:Policy'] = cli_util.parse_json_parameter("urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy", urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy)
 
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.create_rule(
@@ -9284,7 +9373,7 @@ def delete_cloud_gate_server(ctx, from_json, cloud_gate_server_id, authorization
     cli_util.render_response(result, ctx)
 
 
-@condition_group.command(name=cli_util.override('identity_domains.delete_condition.command_name', 'delete'), help=u"""Delete a Condition
+@condition_group.command(name=cli_util.override('identity_domains.delete_condition.command_name', 'delete'), help=u"""Delete a condition.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deleteCondition)""")
 @cli_util.option('--condition-id', required=True, help=u"""ID of the resource""")
@@ -10040,7 +10129,7 @@ def delete_password_policy(ctx, from_json, password_policy_id, authorization, re
     cli_util.render_response(result, ctx)
 
 
-@policy_group.command(name=cli_util.override('identity_domains.delete_policy.command_name', 'delete'), help=u"""Delete a Policy
+@policy_group.command(name=cli_util.override('identity_domains.delete_policy.command_name', 'delete'), help=u"""Delete a Policy.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deletePolicy)""")
 @cli_util.option('--policy-id', required=True, help=u"""ID of the resource""")
@@ -10076,7 +10165,7 @@ def delete_policy(ctx, from_json, policy_id, authorization, resource_type_schema
     cli_util.render_response(result, ctx)
 
 
-@rule_group.command(name=cli_util.override('identity_domains.delete_rule.command_name', 'delete'), help=u"""Delete a Rule
+@rule_group.command(name=cli_util.override('identity_domains.delete_rule.command_name', 'delete'), help=u"""Delete a Rule.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](deleteRule)""")
 @cli_util.option('--rule-id', required=True, help=u"""ID of the resource""")
@@ -10818,7 +10907,7 @@ def get_cloud_gate_server(ctx, from_json, cloud_gate_server_id, authorization, r
     cli_util.render_response(result, ctx)
 
 
-@condition_group.command(name=cli_util.override('identity_domains.get_condition.command_name', 'get'), help=u"""Get a Condition
+@condition_group.command(name=cli_util.override('identity_domains.get_condition.command_name', 'get'), help=u"""Get a condition.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getCondition)""")
 @cli_util.option('--condition-id', required=True, help=u"""ID of the resource""")
@@ -11692,6 +11781,41 @@ def get_o_auth_partner_certificate(ctx, from_json, o_auth_partner_certificate_id
     cli_util.render_response(result, ctx)
 
 
+@oci_console_sign_on_policy_consent_group.command(name=cli_util.override('identity_domains.get_oci_console_sign_on_policy_consent.command_name', 'get'), help=u"""Get a OciConsoleSignOnPolicyConsent Entry.
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getOciConsoleSignOnPolicyConsent)""")
+@cli_util.option('--oci-console-sign-on-policy-consent-id', required=True, help=u"""ID of the resource""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'OciConsoleSignOnPolicyConsent'})
+@cli_util.wrap_exceptions
+def get_oci_console_sign_on_policy_consent(ctx, from_json, oci_console_sign_on_policy_consent_id, authorization, resource_type_schema_version, attributes, attribute_sets):
+
+    if isinstance(oci_console_sign_on_policy_consent_id, six.string_types) and len(oci_console_sign_on_policy_consent_id.strip()) == 0:
+        raise click.UsageError('Parameter --oci-console-sign-on-policy-consent-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.get_oci_console_sign_on_policy_consent(
+        oci_console_sign_on_policy_consent_id=oci_console_sign_on_policy_consent_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @password_policy_group.command(name=cli_util.override('identity_domains.get_password_policy.command_name', 'get'), help=u"""Get a password policy.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getPasswordPolicy)""")
@@ -11727,7 +11851,7 @@ def get_password_policy(ctx, from_json, password_policy_id, authorization, resou
     cli_util.render_response(result, ctx)
 
 
-@policy_group.command(name=cli_util.override('identity_domains.get_policy.command_name', 'get'), help=u"""Get a Policy
+@policy_group.command(name=cli_util.override('identity_domains.get_policy.command_name', 'get'), help=u"""Get a Policy.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getPolicy)""")
 @cli_util.option('--policy-id', required=True, help=u"""ID of the resource""")
@@ -11762,7 +11886,7 @@ def get_policy(ctx, from_json, policy_id, authorization, resource_type_schema_ve
     cli_util.render_response(result, ctx)
 
 
-@rule_group.command(name=cli_util.override('identity_domains.get_rule.command_name', 'get'), help=u"""Get a Rule
+@rule_group.command(name=cli_util.override('identity_domains.get_rule.command_name', 'get'), help=u"""Get a Rule.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getRule)""")
 @cli_util.option('--rule-id', required=True, help=u"""ID of the resource""")
@@ -13098,7 +13222,7 @@ def list_cloud_gates(ctx, from_json, all_pages, page_size, filter, sort_by, sort
     cli_util.render_response(result, ctx)
 
 
-@conditions_group.command(name=cli_util.override('identity_domains.list_conditions.command_name', 'list'), help=u"""Search Conditions
+@condition_group.command(name=cli_util.override('identity_domains.list_conditions.command_name', 'list'), help=u"""Search conditions.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listConditions)""")
 @cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
@@ -15063,6 +15187,78 @@ def list_o_auth_partner_certificates(ctx, from_json, all_pages, page_size, filte
     cli_util.render_response(result, ctx)
 
 
+@oci_console_sign_on_policy_consent_group.command(name=cli_util.override('identity_domains.list_oci_console_sign_on_policy_consents.command_name', 'list'), help=u"""Search OciConsoleSignOnPolicyConsent entries
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listOciConsoleSignOnPolicyConsents)""")
+@cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
+@cli_util.option('--sort-by', help=u"""OPTIONAL. A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation form. See the Attribute Notation section of the SCIM specification for more information (Section 3.10). Also, see the Sorting section of the SCIM specification for more information (Section 3.4.2.3).""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are 'ascending' and 'descending'. See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""OPTIONAL. An integer that indicates the 1-based index of the first query result. See the Pagination section of the SCIM specification for more information. (Section 3.4.2.4). The number of results pages to return. The first page is 1. Specify 2 to access the second page of results, and so on.""")
+@cli_util.option('--count', type=click.INT, help=u"""OPTIONAL. An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. (Section 3.4.2.4).""")
+@cli_util.option('--attributes', help=u"""A comma-delimited string that specifies the names of resource attributes that should be returned in the response. By default, a response that contains resource attributes contains only attributes that are defined in the schema for that resource type as returned=always or returned=default. An attribute that is defined as returned=request is returned in a response only if the request specifies its name in the value of this query parameter. If a request specifies this query parameter, the response contains the attributes that this query parameter specifies, as well as any attribute that is defined as returned=always.""")
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), multiple=True, help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.""")
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity_domains', 'class': 'OciConsoleSignOnPolicyConsents'})
+@cli_util.wrap_exceptions
+def list_oci_console_sign_on_policy_consents(ctx, from_json, all_pages, page_size, filter, sort_by, sort_order, start_index, count, attributes, attribute_sets, authorization, resource_type_schema_version, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if filter is not None:
+        kwargs['filter'] = filter
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if start_index is not None:
+        kwargs['start_index'] = start_index
+    if count is not None:
+        kwargs['count'] = count
+    if attributes is not None:
+        kwargs['attributes'] = attributes
+    if attribute_sets is not None and len(attribute_sets) > 0:
+        kwargs['attribute_sets'] = attribute_sets
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_oci_console_sign_on_policy_consents,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_oci_console_sign_on_policy_consents,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_oci_console_sign_on_policy_consents(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @password_policies_group.command(name=cli_util.override('identity_domains.list_password_policies.command_name', 'list'), help=u"""Search for password policies.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listPasswordPolicies)""")
@@ -15135,7 +15331,7 @@ def list_password_policies(ctx, from_json, all_pages, page_size, filter, sort_by
     cli_util.render_response(result, ctx)
 
 
-@policies_group.command(name=cli_util.override('identity_domains.list_policies.command_name', 'list'), help=u"""Search Policies
+@policy_group.command(name=cli_util.override('identity_domains.list_policies.command_name', 'list'), help=u"""Search Policies.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listPolicies)""")
 @cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
@@ -15279,7 +15475,7 @@ def list_resource_type_schema_attributes(ctx, from_json, all_pages, page_size, f
     cli_util.render_response(result, ctx)
 
 
-@rules_group.command(name=cli_util.override('identity_domains.list_rules.command_name', 'list'), help=u"""Search Rules
+@rule_group.command(name=cli_util.override('identity_domains.list_rules.command_name', 'list'), help=u"""Search Rules.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listRules)""")
 @cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
@@ -16471,7 +16667,7 @@ def patch_cloud_gate_server(ctx, from_json, cloud_gate_server_id, schemas, opera
     cli_util.render_response(result, ctx)
 
 
-@condition_group.command(name=cli_util.override('identity_domains.patch_condition.command_name', 'patch'), help=u"""Update a Condition
+@condition_group.command(name=cli_util.override('identity_domains.patch_condition.command_name', 'patch'), help=u"""Update a condition.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchCondition)""")
 @cli_util.option('--condition-id', required=True, help=u"""ID of the resource""")
@@ -17396,7 +17592,7 @@ def patch_password_policy(ctx, from_json, password_policy_id, schemas, operation
     cli_util.render_response(result, ctx)
 
 
-@policy_group.command(name=cli_util.override('identity_domains.patch_policy.command_name', 'patch'), help=u"""Update a Policy
+@policy_group.command(name=cli_util.override('identity_domains.patch_policy.command_name', 'patch'), help=u"""Update a Policy.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchPolicy)""")
 @cli_util.option('--policy-id', required=True, help=u"""ID of the resource""")
@@ -17442,7 +17638,7 @@ def patch_policy(ctx, from_json, policy_id, schemas, operations, authorization, 
     cli_util.render_response(result, ctx)
 
 
-@rule_group.command(name=cli_util.override('identity_domains.patch_rule.command_name', 'patch'), help=u"""Update a Rule
+@rule_group.command(name=cli_util.override('identity_domains.patch_rule.command_name', 'patch'), help=u"""Update a Rule.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](patchRule)""")
 @cli_util.option('--rule-id', required=True, help=u"""ID of the resource""")
@@ -19842,7 +20038,7 @@ def put_cloud_gate_server(ctx, from_json, force, cloud_gate_server_id, schemas, 
     cli_util.render_response(result, ctx)
 
 
-@condition_group.command(name=cli_util.override('identity_domains.put_condition.command_name', 'put'), help=u"""Replace a Condition
+@condition_group.command(name=cli_util.override('identity_domains.put_condition.command_name', 'put'), help=u"""Replace a condition.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putCondition)""")
 @cli_util.option('--condition-id', required=True, help=u"""ID of the resource""")
@@ -19877,7 +20073,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 **SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
 @cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
 
-**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Tag Key, mapsTo:tags.key], [columnHeaderName:Tag Value, mapsTo:tags.value]]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
 This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
@@ -19906,20 +20102,21 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 **Added In:** 18.1.6
 
 **SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}})
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy': {'module': 'identity_domains', 'class': 'ConditionExtensionOciconsolesignonpolicyconsentPolicy'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}}, output_type={'module': 'identity_domains', 'class': 'Condition'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy': {'module': 'identity_domains', 'class': 'ConditionExtensionOciconsolesignonpolicyconsentPolicy'}}, output_type={'module': 'identity_domains', 'class': 'Condition'})
 @cli_util.wrap_exceptions
-def put_condition(ctx, from_json, force, condition_id, schemas, name, attribute_name, operator, attribute_value, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, evaluate_condition_if, if_match):
+def put_condition(ctx, from_json, force, condition_id, schemas, name, attribute_name, operator, attribute_value, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, evaluate_condition_if, urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy, if_match):
 
     if isinstance(condition_id, six.string_types) and len(condition_id.strip()) == 0:
         raise click.UsageError('Parameter --condition-id cannot be whitespace or empty string')
     if not force:
-        if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags:
-            if not click.confirm("WARNING: Updates to schemas and meta and idcs-created-by and idcs-last-modified-by and idcs-prevented-operations and tags will replace any existing values. Are you sure you want to continue?"):
+        if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy:
+            if not click.confirm("WARNING: Updates to schemas and meta and idcs-created-by and idcs-last-modified-by and idcs-prevented-operations and tags and urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -19985,6 +20182,9 @@ def put_condition(ctx, from_json, force, condition_id, schemas, name, attribute_
 
     if evaluate_condition_if is not None:
         _details['evaluateConditionIf'] = evaluate_condition_if
+
+    if urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy is not None:
+        _details['urn:ietf:params:scim:schemas:oracle:idcs:extension:ociconsolesignonpolicyconsent:Policy'] = cli_util.parse_json_parameter("urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy", urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy)
 
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.put_condition(
@@ -22426,7 +22626,7 @@ def put_password_policy(ctx, from_json, force, password_policy_id, schemas, name
     cli_util.render_response(result, ctx)
 
 
-@policy_group.command(name=cli_util.override('identity_domains.put_policy.command_name', 'put'), help=u"""Replace a Policy
+@policy_group.command(name=cli_util.override('identity_domains.put_policy.command_name', 'put'), help=u"""Replace a Policy.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putPolicy)""")
 @cli_util.option('--policy-id', required=True, help=u"""ID of the resource""")
@@ -22455,7 +22655,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 **SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
 @cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
 
-**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Tag Key, mapsTo:tags.key], [columnHeaderName:Tag Value, mapsTo:tags.value]]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
 This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
@@ -22490,20 +22690,21 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 **SCIM++ Properties:**  - idcsCompositeKey: [value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
 This option is a JSON list with items of type PolicyRules.  For documentation on PolicyRules please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/PolicyRules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'rules': {'module': 'identity_domains', 'class': 'list[PolicyRules]'}, 'policy-type': {'module': 'identity_domains', 'class': 'PolicyPolicyType'}})
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'rules': {'module': 'identity_domains', 'class': 'list[PolicyRules]'}, 'policy-type': {'module': 'identity_domains', 'class': 'PolicyPolicyType'}, 'urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy': {'module': 'identity_domains', 'class': 'PolicyExtensionOciconsolesignonpolicyconsentPolicy'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'rules': {'module': 'identity_domains', 'class': 'list[PolicyRules]'}, 'policy-type': {'module': 'identity_domains', 'class': 'PolicyPolicyType'}}, output_type={'module': 'identity_domains', 'class': 'Policy'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'rules': {'module': 'identity_domains', 'class': 'list[PolicyRules]'}, 'policy-type': {'module': 'identity_domains', 'class': 'PolicyPolicyType'}, 'urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy': {'module': 'identity_domains', 'class': 'PolicyExtensionOciconsolesignonpolicyconsentPolicy'}}, output_type={'module': 'identity_domains', 'class': 'Policy'})
 @cli_util.wrap_exceptions
-def put_policy(ctx, from_json, force, policy_id, schemas, name, policy_type, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, active, policy_groovy, rules, if_match):
+def put_policy(ctx, from_json, force, policy_id, schemas, name, policy_type, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, active, policy_groovy, rules, urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy, if_match):
 
     if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
         raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
     if not force:
-        if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or rules or policy_type:
-            if not click.confirm("WARNING: Updates to schemas and meta and idcs-created-by and idcs-last-modified-by and idcs-prevented-operations and tags and rules and policy-type will replace any existing values. Are you sure you want to continue?"):
+        if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or rules or policy_type or urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy:
+            if not click.confirm("WARNING: Updates to schemas and meta and idcs-created-by and idcs-last-modified-by and idcs-prevented-operations and tags and rules and policy-type and urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -22574,6 +22775,9 @@ def put_policy(ctx, from_json, force, policy_id, schemas, name, policy_type, aut
     if rules is not None:
         _details['rules'] = cli_util.parse_json_parameter("rules", rules)
 
+    if urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy is not None:
+        _details['urn:ietf:params:scim:schemas:oracle:idcs:extension:ociconsolesignonpolicyconsent:Policy'] = cli_util.parse_json_parameter("urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy", urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy)
+
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.put_policy(
         policy_id=policy_id,
@@ -22583,7 +22787,7 @@ def put_policy(ctx, from_json, force, policy_id, schemas, name, policy_type, aut
     cli_util.render_response(result, ctx)
 
 
-@rule_group.command(name=cli_util.override('identity_domains.put_rule.command_name', 'put'), help=u"""Replace a Rule
+@rule_group.command(name=cli_util.override('identity_domains.put_rule.command_name', 'put'), help=u"""Replace a Rule.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](putRule)""")
 @cli_util.option('--rule-id', required=True, help=u"""ID of the resource""")
@@ -22620,7 +22824,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 **SCIM++ Properties:**  - idcsSearchable: false  - multiValued: true  - mutability: readOnly  - required: false  - returned: request  - type: string  - uniqueness: none""")
 @cli_util.option('--tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tags on this resource.
 
-**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
+**SCIM++ Properties:**  - idcsCompositeKey: [key, value]  - idcsCsvAttributeNameMappings: [[columnHeaderName:Tag Key, mapsTo:tags.key], [columnHeaderName:Tag Value, mapsTo:tags.value]]  - idcsSearchable: true  - multiValued: true  - mutability: readWrite  - required: false  - returned: request  - type: complex  - uniqueness: none
 
 This option is a JSON list with items of type Tags.  For documentation on tags please see our API reference: https://docs.cloud.oracle.com/api/#/en/identitydomains/v1/datatypes/Tags.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--delete-in-progress', type=click.BOOL, help=u"""A boolean flag indicating this resource in the process of being deleted. Usually set to true when synchronous deletion of the resource would take too long.
@@ -22654,20 +22858,21 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 
 **SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
 @cli_util.option('--condition-group', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used to make the request conditional on an ETag""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'condition-group': {'module': 'identity_domains', 'class': 'RuleConditionGroup'}, 'policy-type': {'module': 'identity_domains', 'class': 'RulePolicyType'}, '-return': {'module': 'identity_domains', 'class': 'list[RuleReturn]'}})
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'condition-group': {'module': 'identity_domains', 'class': 'RuleConditionGroup'}, 'policy-type': {'module': 'identity_domains', 'class': 'RulePolicyType'}, '-return': {'module': 'identity_domains', 'class': 'list[RuleReturn]'}, 'urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy': {'module': 'identity_domains', 'class': 'RuleExtensionOciconsolesignonpolicyconsentPolicy'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'condition-group': {'module': 'identity_domains', 'class': 'RuleConditionGroup'}, 'policy-type': {'module': 'identity_domains', 'class': 'RulePolicyType'}, '-return': {'module': 'identity_domains', 'class': 'list[RuleReturn]'}}, output_type={'module': 'identity_domains', 'class': 'Rule'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'condition-group': {'module': 'identity_domains', 'class': 'RuleConditionGroup'}, 'policy-type': {'module': 'identity_domains', 'class': 'RulePolicyType'}, '-return': {'module': 'identity_domains', 'class': 'list[RuleReturn]'}, 'urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy': {'module': 'identity_domains', 'class': 'RuleExtensionOciconsolesignonpolicyconsentPolicy'}}, output_type={'module': 'identity_domains', 'class': 'Rule'})
 @cli_util.wrap_exceptions
-def put_rule(ctx, from_json, force, rule_id, schemas, name, condition, policy_type, _return, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, active, locked, rule_groovy, condition_group, if_match):
+def put_rule(ctx, from_json, force, rule_id, schemas, name, condition, policy_type, _return, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, active, locked, rule_groovy, condition_group, urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy, if_match):
 
     if isinstance(rule_id, six.string_types) and len(rule_id.strip()) == 0:
         raise click.UsageError('Parameter --rule-id cannot be whitespace or empty string')
     if not force:
-        if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or condition_group or policy_type or _return:
-            if not click.confirm("WARNING: Updates to schemas and meta and idcs-created-by and idcs-last-modified-by and idcs-prevented-operations and tags and condition-group and policy-type and -return will replace any existing values. Are you sure you want to continue?"):
+        if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or condition_group or policy_type or _return or urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy:
+            if not click.confirm("WARNING: Updates to schemas and meta and idcs-created-by and idcs-last-modified-by and idcs-prevented-operations and tags and condition-group and policy-type and -return and urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent-policy will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -22742,6 +22947,9 @@ def put_rule(ctx, from_json, force, rule_id, schemas, name, condition, policy_ty
 
     if condition_group is not None:
         _details['conditionGroup'] = cli_util.parse_json_parameter("condition_group", condition_group)
+
+    if urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy is not None:
+        _details['urn:ietf:params:scim:schemas:oracle:idcs:extension:ociconsolesignonpolicyconsent:Policy'] = cli_util.parse_json_parameter("urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy", urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy)
 
     client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
     result = client.put_rule(
@@ -25488,7 +25696,7 @@ def search_cloud_gates(ctx, from_json, schemas, authorization, resource_type_sch
     cli_util.render_response(result, ctx)
 
 
-@conditions_group.command(name=cli_util.override('identity_domains.search_conditions.command_name', 'search'), help=u"""Search Conditions Using POST
+@condition_group.command(name=cli_util.override('identity_domains.search_conditions.command_name', 'search'), help=u"""Search Conditions Using POST.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchConditions)""")
 @cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. Query requests MUST be identified using the following URI: \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\" REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -26516,6 +26724,70 @@ def search_o_auth_partner_certificates(ctx, from_json, schemas, authorization, r
     cli_util.render_response(result, ctx)
 
 
+@oci_console_sign_on_policy_consent_group.command(name=cli_util.override('identity_domains.search_oci_console_sign_on_policy_consents.command_name', 'search'), help=u"""Search OciConsoleSignOnPolicyConsents Using POST
+
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchOciConsoleSignOnPolicyConsents)""")
+@cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. Query requests MUST be identified using the following URI: \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\" REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--authorization', help=u"""The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.""")
+@cli_util.option('--resource-type-schema-version', help=u"""An endpoint-specific schema version number to use in the Request. Allowed version values are Earliest Version or Latest Version as specified in each REST API endpoint description, or any sequential number inbetween. All schema attributes/body parameters are a part of version 1. After version 1, any attributes added or deprecated will be tagged with the version that they were added to or deprecated in. If no version is provided, the latest schema version is returned.""")
+@cli_util.option('--attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A multi-valued list of strings indicating the names of resource attributes to return in the response overriding the set of attributes that would be returned by default. Attribute names MUST be in standard attribute notation ([Section 3.10]) form. See ([additional retrieval query parameters]). OPTIONAL.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attribute-sets', type=custom_types.CliCaseInsensitiveChoice(["all", "always", "never", "request", "default"]), help=u"""A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If \"attributes\" query parameter is also available, union of the two is fetched. Valid values : all, always, never, request, default. Values are case-insensitive. OPTIONAL.""")
+@cli_util.option('--filter', help=u"""The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See [Section 3.4.2.2]. OPTIONAL.""")
+@cli_util.option('--sort-by', help=u"""A string that indicates the attribute whose value SHALL be used to order the returned responses. The sortBy attribute MUST be in standard attribute notation ([Section 3.10]) form. See [Sorting section]. OPTIONAL.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASCENDING", "DESCENDING"]), help=u"""A string that indicates the order in which the sortBy parameter is applied. Allowed values are \"ascending\" and \"descending\". See ([Sorting Section]). OPTIONAL.""")
+@cli_util.option('--start-index', type=click.INT, help=u"""An integer that indicates the 1-based index of the first query result. See [Pagination Section]. OPTIONAL.""")
+@cli_util.option('--count', type=click.INT, help=u"""An integer that indicates the desired maximum number of query results per page. 1000 is the largest value that you can use. See the Pagination section of the System for Cross-Domain Identity Management Protocol specification for more information. ([Section 3.4.2.4]). OPTIONAL.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous 'List' call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated 'List' call.""")
+@json_skeleton_utils.get_cli_json_input_option({'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'attributes': {'module': 'identity_domains', 'class': 'list[string]'}}, output_type={'module': 'identity_domains', 'class': 'OciConsoleSignOnPolicyConsents'})
+@cli_util.wrap_exceptions
+def search_oci_console_sign_on_policy_consents(ctx, from_json, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, filter, sort_by, sort_order, start_index, count, page, limit):
+
+    kwargs = {}
+    if authorization is not None:
+        kwargs['authorization'] = authorization
+    if resource_type_schema_version is not None:
+        kwargs['resource_type_schema_version'] = resource_type_schema_version
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+
+    _details = {}
+    _details['schemas'] = cli_util.parse_json_parameter("schemas", schemas)
+
+    if attributes is not None:
+        _details['attributes'] = cli_util.parse_json_parameter("attributes", attributes)
+
+    if attribute_sets is not None:
+        _details['attributeSets'] = cli_util.parse_json_parameter("attribute_sets", attribute_sets)
+
+    if filter is not None:
+        _details['filter'] = filter
+
+    if sort_by is not None:
+        _details['sortBy'] = sort_by
+
+    if sort_order is not None:
+        _details['sortOrder'] = sort_order
+
+    if start_index is not None:
+        _details['startIndex'] = start_index
+
+    if count is not None:
+        _details['count'] = count
+
+    client = cli_util.build_client('identity_domains', 'identity_domains', ctx)
+    result = client.search_oci_console_sign_on_policy_consents(
+        oci_console_sign_on_policy_consent_search_request=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @password_policies_group.command(name=cli_util.override('identity_domains.search_password_policies.command_name', 'search'), help=u"""Search for password policies using POST.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchPasswordPolicies)""")
@@ -26580,7 +26852,7 @@ def search_password_policies(ctx, from_json, schemas, authorization, resource_ty
     cli_util.render_response(result, ctx)
 
 
-@policies_group.command(name=cli_util.override('identity_domains.search_policies.command_name', 'search'), help=u"""Search Policies Using POST
+@policy_group.command(name=cli_util.override('identity_domains.search_policies.command_name', 'search'), help=u"""Search Policies Using POST
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchPolicies)""")
 @cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. Query requests MUST be identified using the following URI: \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\" REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -26708,7 +26980,7 @@ def search_resource_type_schema_attributes(ctx, from_json, schemas, authorizatio
     cli_util.render_response(result, ctx)
 
 
-@rules_group.command(name=cli_util.override('identity_domains.search_rules.command_name', 'search'), help=u"""Search Rules Using POST
+@rule_group.command(name=cli_util.override('identity_domains.search_rules.command_name', 'search'), help=u"""Search Rules Using POST.
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchRules)""")
 @cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. Query requests MUST be identified using the following URI: \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\" REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

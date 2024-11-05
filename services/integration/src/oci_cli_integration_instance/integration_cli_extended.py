@@ -110,7 +110,7 @@ def list_work_requests_extended(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(integrationinstance_cli.update_integration_instance, params_to_exclude=['integration_instance_id', 'integration_instance_type'])
 @integrationinstance_cli.integration_instance_group.command(name=cli_util.override('integration.update_integration_instance.command_name', 'update'), help=integrationinstance_cli.update_integration_instance.help)
 @cli_util.option('--id', required=True, help=u"""Unique Integration Instance identifier.""")
-@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "ENTERPRISE"]), help=u"""Standard or Enterprise type""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "ENTERPRISE", "STANDARDX", "ENTERPRISEX", "HEALTHCARE"]), help=u"""Standard, Enterprise, Standardx, Enterprisex or Healthcare type""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'UpdateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[UpdateCustomEndpointDetails]'}})
 @cli_util.wrap_exceptions
@@ -127,7 +127,7 @@ def update_integration_instance_extended(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(integrationinstance_cli.create_integration_instance, params_to_exclude=['integration_instance_type'])
 @integrationinstance_cli.integration_instance_group.command(name=cli_util.override('integration.create_integration_instance.command_name', 'create'), help=integrationinstance_cli.create_integration_instance.help)
-@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "ENTERPRISE"]), help=u"""Standard or Enterprise type""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "ENTERPRISE", "STANDARDX", "ENTERPRISEX", "HEALTHCARE"]), help=u"""Standard, Enterprise, Standardx, Enterprisex or Healthcare type""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details': {'module': 'integration', 'class': 'NetworkEndpointDetails'}})
 @cli_util.wrap_exceptions
