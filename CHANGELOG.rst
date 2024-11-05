@@ -6,6 +6,52 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.50.0 - 2024-11-05
+--------------------
+Changed
+~~~~~~~
+* [BREAKING] Cloud Incident Management Service
+
+  * Optional parameter --compartment-id is now a required parameter for the below commands
+    
+    * ``oci support incident get``
+    * ``oci support incident update``
+
+Added
+~~~~~
+* Support for calling Oracle Cloud Infrastructure services in the ap-seoul-2 region
+
+* Support for calling Oracle Cloud Infrastructure services in the ap-suwon-1 region
+
+* Support for calling Oracle Cloud Infrastructure services in the ap-chuncheon-2 region
+
+* Identity Domains Service
+
+  * Support for MFA Enablement v2 to prevent customers from opting out of MFA Policy in IDCS SSO Service.
+
+    * ``oci identity-domains oci-console-sign-on-policy-consent list``
+    * ``oci identity-domains oci-console-sign-on-policy-consent get``
+    * ``oci identity-domains oci-console-sign-on-policy-consent search``
+    * ``oci identity-domains restore-oci-console-policy create``
+
+* Data Flow Service
+
+  * Support to start/stop Dataflow SQL Endpoint
+   
+    * ``oci data-flow sql-endpoint start``
+    * ``oci data-flow sql-endpoint stop``
+  
+  * Support to update min, max executor nodes and spark advanced configuration in Dataflow SQL Endpoint
+
+    * ``oci data-flow sql-endpoint update``
+
+Fixed
+~~~~~
+* Support for STANDARDX and ENTERPRISEX types of create and update instance subcommands in the Integration service
+
+  * ``oci integration integration-instance create --type STANDARDX | ENTERPRISEX``   
+  * ``oci integration integration-instance update --type STANDARDX | ENTERPRISEX``
+
 3.49.4 - 2024-10-29
 --------------------
 Added

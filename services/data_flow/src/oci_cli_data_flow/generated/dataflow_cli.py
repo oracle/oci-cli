@@ -1804,7 +1804,7 @@ def list_runs(ctx, from_json, all_pages, page_size, compartment_id, application_
 @sql_endpoint_collection_group.command(name=cli_util.override('data_flow.list_sql_endpoints.command_name', 'list-sql-endpoints'), help=u"""Lists all Sql Endpoints in the specified compartment. The query must include compartmentId or sqlEndpointId. If the query does not include either compartmentId or sqlEndpointId, an error is returned. \n[Command Reference](listSqlEndpoints)""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment in which to query resources.""")
 @cli_util.option('--sql-endpoint-id', help=u"""The unique id of the SQL Endpoint.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING", "NEEDS_ATTENTION"]), help=u"""A filter to return only those resources whose sqlEndpointLifecycleState matches the given sqlEndpointLifecycleState.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING", "NEEDS_ATTENTION", "INACTIVE"]), help=u"""A filter to return only those resources whose sqlEndpointLifecycleState matches the given sqlEndpointLifecycleState.""")
 @cli_util.option('--display-name', help=u"""The query parameter for the Spark application name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items that can be returned.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -2128,6 +2128,61 @@ def start_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
+@sql_endpoint_group.command(name=cli_util.override('data_flow.start_sql_endpoint.command_name', 'start'), help=u"""Starts the SqlEndpoint for a given `SqlEndpointId`. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](startSqlEndpoint)""")
+@cli_util.option('--sql-endpoint-id', required=True, help=u"""The unique id of the SQL Endpoint.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELLED", "CANCELLING", "FAILED", "INPROGRESS", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def start_sql_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_endpoint_id, if_match):
+
+    if isinstance(sql_endpoint_id, six.string_types) and len(sql_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-endpoint-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
+    result = client.start_sql_endpoint(
+        sql_endpoint_id=sql_endpoint_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @pool_group.command(name=cli_util.override('data_flow.stop_pool.command_name', 'stop'), help=u"""Stops the dataflow pool for a given `poolId`. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](stopPool)""")
 @cli_util.option('--pool-id', required=True, help=u"""The unique ID for a pool.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2151,6 +2206,61 @@ def stop_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_se
     client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.stop_pool(
         pool_id=pool_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@sql_endpoint_group.command(name=cli_util.override('data_flow.stop_sql_endpoint.command_name', 'stop'), help=u"""Stops the SqlEndpoint for a given `SqlEndpointId`. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](stopSqlEndpoint)""")
+@cli_util.option('--sql-endpoint-id', required=True, help=u"""The unique id of the SQL Endpoint.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELLED", "CANCELLING", "FAILED", "INPROGRESS", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def stop_sql_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_endpoint_id, if_match):
+
+    if isinstance(sql_endpoint_id, six.string_types) and len(sql_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --sql-endpoint-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
+    result = client.stop_sql_endpoint(
+        sql_endpoint_id=sql_endpoint_id,
         **kwargs
     )
     if wait_for_state:
@@ -2623,23 +2733,34 @@ def update_run(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--sql-endpoint-id', required=True, help=u"""The unique id of the SQL Endpoint.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""The SQL Endpoint name, which can be changed.""")
+@cli_util.option('--description', help=u"""The description of CreateSQLEndpointDetails.""")
+@cli_util.option('--driver-shape', help=u"""The shape of the SQL Endpoint driver instance.""")
+@cli_util.option('--driver-shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--executor-shape', help=u"""The shape of the SQL Endpoint worker instance.""")
+@cli_util.option('--executor-shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--min-executor-count', type=click.INT, help=u"""The minimum number of executors.""")
+@cli_util.option('--max-executor-count', type=click.INT, help=u"""The maximum number of executors.""")
+@cli_util.option('--metastore-id', help=u"""Metastore OCID""")
+@cli_util.option('--lake-id', help=u"""OCI lake OCID""")
+@cli_util.option('--spark-advanced-configurations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The Spark configuration passed to the running process. See https://spark.apache.org/docs/latest/configuration.html#available-properties. Example: { \"spark.app.name\" : \"My App Name\", \"spark.shuffle.io.maxRetries\" : \"4\" } Note: Not all Spark properties are permitted to be set.  Attempting to set a property that is not allowed to be overwritten will cause a 400 status to be returned.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELLED", "CANCELLING", "FAILED", "INPROGRESS", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'driver-shape-config': {'module': 'data_flow', 'class': 'ShapeConfig'}, 'executor-shape-config': {'module': 'data_flow', 'class': 'ShapeConfig'}, 'spark-advanced-configurations': {'module': 'data_flow', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'driver-shape-config': {'module': 'data_flow', 'class': 'ShapeConfig'}, 'executor-shape-config': {'module': 'data_flow', 'class': 'ShapeConfig'}, 'spark-advanced-configurations': {'module': 'data_flow', 'class': 'dict(str, string)'}})
 @cli_util.wrap_exceptions
-def update_sql_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_endpoint_id, defined_tags, freeform_tags, if_match):
+def update_sql_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sql_endpoint_id, defined_tags, freeform_tags, display_name, description, driver_shape, driver_shape_config, executor_shape, executor_shape_config, min_executor_count, max_executor_count, metastore_id, lake_id, spark_advanced_configurations, if_match):
 
     if isinstance(sql_endpoint_id, six.string_types) and len(sql_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --sql-endpoint-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or driver_shape_config or executor_shape_config or spark_advanced_configurations:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and driver-shape-config and executor-shape-config and spark-advanced-configurations will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -2654,6 +2775,39 @@ def update_sql_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds,
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if driver_shape is not None:
+        _details['driverShape'] = driver_shape
+
+    if driver_shape_config is not None:
+        _details['driverShapeConfig'] = cli_util.parse_json_parameter("driver_shape_config", driver_shape_config)
+
+    if executor_shape is not None:
+        _details['executorShape'] = executor_shape
+
+    if executor_shape_config is not None:
+        _details['executorShapeConfig'] = cli_util.parse_json_parameter("executor_shape_config", executor_shape_config)
+
+    if min_executor_count is not None:
+        _details['minExecutorCount'] = min_executor_count
+
+    if max_executor_count is not None:
+        _details['maxExecutorCount'] = max_executor_count
+
+    if metastore_id is not None:
+        _details['metastoreId'] = metastore_id
+
+    if lake_id is not None:
+        _details['lakeId'] = lake_id
+
+    if spark_advanced_configurations is not None:
+        _details['sparkAdvancedConfigurations'] = cli_util.parse_json_parameter("spark_advanced_configurations", spark_advanced_configurations)
 
     client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.update_sql_endpoint(
