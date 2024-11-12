@@ -30,7 +30,7 @@ def generative_ai_root_group():
 
 @click.command(cli_util.override('generative_ai.endpoint_group.command_name', 'endpoint'), cls=CommandGroupWithAlias, help="""To host a custom model for inference, create an endpoint for that model on a dedicated AI cluster of type HOSTING.
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator who gives OCI resource access to users. See [Getting Started with Policies] and [Getting Access to Generative AI Resouces].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator who gives OCI resource access to users. See [Getting Started with Policies] and [Getting Access to Generative AI Resources].""")
 @cli_util.help_option_group
 def endpoint_group():
     pass
@@ -50,7 +50,7 @@ def work_request_error_group():
 
 @click.command(cli_util.override('generative_ai.model_group.command_name', 'model'), cls=CommandGroupWithAlias, help="""You can create a custom model by using your dataset to fine-tune an out-of-the-box text generation base model. Have your dataset ready before you create a custom model. See [Training Data Requirements].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator who gives OCI resource access to users. See [Getting Started with Policies] and [Getting Access to Generative AI Resouces].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator who gives OCI resource access to users. See [Getting Started with Policies] and [Getting Access to Generative AI Resources].""")
 @cli_util.help_option_group
 def model_group():
     pass
@@ -70,7 +70,7 @@ def dedicated_ai_cluster_collection_group():
 
 @click.command(cli_util.override('generative_ai.dedicated_ai_cluster_group.command_name', 'dedicated-ai-cluster'), cls=CommandGroupWithAlias, help="""Dedicated AI clusters are compute resources that you can use for fine-tuning custom models or for hosting endpoints for custom models. The clusters are dedicated to your models and not shared with users in other tenancies.
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator who gives OCI resource access to users. See [Getting Started with Policies] and [Getting Access to Generative AI Resouces].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator who gives OCI resource access to users. See [Getting Started with Policies] and [Getting Access to Generative AI Resources].""")
 @cli_util.help_option_group
 def dedicated_ai_cluster_group():
     pass
@@ -202,7 +202,7 @@ Allowed values are: - HOSTING - FINE_TUNING""")
 @cli_util.option('--unit-count', required=True, type=click.INT, help=u"""The number of dedicated units in this AI cluster.""")
 @cli_util.option('--unit-shape', required=True, help=u"""The shape of dedicated unit in this AI cluster. The underlying hardware configuration is hidden from customers.
 
-Allowed values are: - LARGE_COHERE - LARGE_COHERE_V2 - SMALL_COHERE - SMALL_COHERE_V2 - EMBED_COHERE - LLAMA2_70 - LARGE_GENERIC - LARGE_COHERE_V2_2""")
+Allowed values are: - LARGE_COHERE - LARGE_COHERE_V2 - SMALL_COHERE - SMALL_COHERE_V2 - SMALL_COHERE_4 - EMBED_COHERE - LLAMA2_70 - LARGE_GENERIC - LARGE_COHERE_V2_2 - LARGE_GENERIC_4 - SMALL_GENERIC_V2 - LARGE_GENERIC_2""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--description', help=u"""An optional description of the dedicated AI cluster.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].

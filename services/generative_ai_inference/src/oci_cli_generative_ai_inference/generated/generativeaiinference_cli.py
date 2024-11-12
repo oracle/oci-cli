@@ -20,7 +20,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 
 Use the Generative AI service inference API to access your custom model endpoints, or to try the out-of-the-box models to [chat], [generate text], [summarize], and [create text embeddings].
 
-To use a Generative AI custom model for inference, you must first create an endpoint for that model. Use the [Generative AI service management API] to [create a custom model] by fine-tuning an out-of-the-box model, or a previous version of a custom model, using your own data. Fine-tune the custom model on a  [fine-tuning dedicated AI cluster]. Then, create a [hosting dedicated AI cluster] with an [endpoint] to host your custom model. For resource management in the Generative AI service, use the [Generative AI service management API].
+To use a Generative AI custom model for inference, you must first create an endpoint for that model. Use the [Generative AI service management API] to [create a custom model] by fine-tuning an out-of-the-box model, or a previous version of a custom model, using your own data. Fine-tune the custom model on a [fine-tuning dedicated AI cluster]. Then, create a [hosting dedicated AI cluster] with an [endpoint] to host your custom model. For resource management in the Generative AI service, use the [Generative AI service management API].
 
 To learn more about the service, see the [Generative AI documentation]."""), short_help=cli_util.override('generative_ai_inference.generative_ai_inference_root_group.short_help', """Generative AI Service Inference API"""))
 @cli_util.help_option_group
@@ -249,12 +249,14 @@ This option is a JSON list with items of type CohereMessage.  For documentation 
 @cli_util.option('--chat-request-documents', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of relevant documents that the model can refer to for generating grounded responses to the user's requests. Some example keys that you can add to the dictionary are \"text\", \"author\", and \"date\". Keep the total word count of the strings in the dictionary to 300 words or less.
 
 Example: `[   { \"title\": \"Tall penguins\", \"snippet\": \"Emperor penguins are the tallest.\" },   { \"title\": \"Penguin habitats\", \"snippet\": \"Emperor penguins only live in Antarctica.\" } ]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-response-format', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--chat-request-is-search-queries-only', type=click.BOOL, help=u"""When set to true, the response contains only a list of generated search queries without the search results and the model will not respond to the user's message.""")
 @cli_util.option('--chat-request-preamble-override', help=u"""If specified, the default Cohere preamble is replaced with the provided preamble. A preamble is an initial guideline message that can change the model's overall chat behavior and conversation style. Default preambles vary for different models.
 
 Example: `You are a travel advisor. Answer with a pirate tone.`""")
 @cli_util.option('--chat-request-is-stream', type=click.BOOL, help=u"""Whether to stream the partial progress of the model's response. When set to true, as tokens become available, they are sent as data-only server-sent events.""")
 @cli_util.option('--chat-request-max-tokens', type=click.INT, help=u"""The maximum number of output tokens that the model will generate for the response.""")
+@cli_util.option('--chat-request-max-input-tokens', type=click.INT, help=u"""The maximum number of input tokens to send to the model. If not specified, max_input_tokens is the model's context length limit minus a small buffer.""")
 @cli_util.option('--chat-request-temperature', help=u"""A number that sets the randomness of the generated output. A lower temperature means less random generations. Use lower numbers for tasks such as question answering or summarizing. High temperatures can generate hallucinations or factually incorrect information. Start with temperatures lower than 1.0 and increase the temperature for more creative outputs, as you regenerate the prompts to refine the outputs.""")
 @cli_util.option('--chat-request-top-k', type=click.INT, help=u"""A sampling method in which the model chooses the next token randomly from the top k most likely tokens. A higher value for k generates more random output, which makes the output text sound more natural. The default value for k is 0 which disables this method and considers all tokens. To set a number for the likely tokens, choose an integer between 1 and 500.
 
@@ -262,7 +264,7 @@ If also using top p, then the model considers only the top tokens whose probabil
 @cli_util.option('--chat-request-top-p', help=u"""If set to a probability 0.0 < p < 1.0, it ensures that only the most likely tokens, with total probability mass of p, are considered for generation at each step.
 
 To eliminate tokens with low likelihood, assign p a minimum percentage for the next token's likelihood. For example, when p is set to 0.75, the model eliminates the bottom 25 percent for the next token. Set to 1.0 to consider all tokens and set to 0 to disable. If both k and p are enabled, p acts after k.""")
-@cli_util.option('--chat-request-prompt-truncation', type=custom_types.CliCaseInsensitiveChoice(["OFF", "AUTO_PRESERVE_ORDER"]), help=u"""Defaults to OFF. Dictates how the prompt will be constructed. With `prompt_truncation` set to AUTO_PRESERVE_ORDER, some elements from `chat_history` and `documents` will be dropped to construct a prompt that fits within the model's context length limit. During this process the order of the documents and chat history will be preserved. With `prompt_truncation` set to OFF, no elements will be dropped.""")
+@cli_util.option('--chat-request-prompt-truncation', type=custom_types.CliCaseInsensitiveChoice(["OFF", "AUTO_PRESERVE_ORDER"]), help=u"""Defaults to OFF. Dictates how the prompt will be constructed. With `promptTruncation` set to AUTO_PRESERVE_ORDER, some elements from `chatHistory` and `documents` will be dropped to construct a prompt that fits within the model's context length limit. During this process the order of the documents and chat history will be preserved. With `prompt_truncation` set to OFF, no elements will be dropped.""")
 @cli_util.option('--chat-request-frequency-penalty', help=u"""To reduce repetitiveness of generated tokens, this number penalizes new tokens based on their frequency in the generated text so far. Greater numbers encourage the model to use new tokens, while lower numbers encourage the model to repeat the tokens. Set to 0 to disable.""")
 @cli_util.option('--chat-request-presence-penalty', help=u"""To reduce repetitiveness of generated tokens, this number penalizes new tokens based on whether they've appeared in the generated text so far. Greater numbers encourage the model to use new tokens, while lower numbers encourage the model to repeat the tokens.
 
@@ -279,12 +281,12 @@ This option is a JSON list with items of type CohereToolResult.  For documentati
 @cli_util.option('--chat-request-stop-sequences', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Stop the model generation when it reaches a stop sequence defined in this parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--chat-request-is-raw-prompting', type=click.BOOL, help=u"""When enabled, the user\u2019s `message` will be sent to the model without any preprocessing.""")
 @cli_util.option('--chat-request-citation-quality', type=custom_types.CliCaseInsensitiveChoice(["ACCURATE", "FAST"]), help=u"""When FAST is selected, citations are generated at the same time as the text output and the request will be completed sooner. May result in less accurate citations.""")
-@json_skeleton_utils.get_cli_json_input_option({'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-chat-history': {'module': 'generative_ai_inference', 'class': 'list[CohereMessage]'}, 'chat-request-documents': {'module': 'generative_ai_inference', 'class': 'list[object]'}, 'chat-request-tools': {'module': 'generative_ai_inference', 'class': 'list[CohereTool]'}, 'chat-request-tool-results': {'module': 'generative_ai_inference', 'class': 'list[CohereToolResult]'}, 'chat-request-stop-sequences': {'module': 'generative_ai_inference', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-chat-history': {'module': 'generative_ai_inference', 'class': 'list[CohereMessage]'}, 'chat-request-documents': {'module': 'generative_ai_inference', 'class': 'list[object]'}, 'chat-request-response-format': {'module': 'generative_ai_inference', 'class': 'CohereResponseFormat'}, 'chat-request-tools': {'module': 'generative_ai_inference', 'class': 'list[CohereTool]'}, 'chat-request-tool-results': {'module': 'generative_ai_inference', 'class': 'list[CohereToolResult]'}, 'chat-request-stop-sequences': {'module': 'generative_ai_inference', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-chat-history': {'module': 'generative_ai_inference', 'class': 'list[CohereMessage]'}, 'chat-request-documents': {'module': 'generative_ai_inference', 'class': 'list[object]'}, 'chat-request-tools': {'module': 'generative_ai_inference', 'class': 'list[CohereTool]'}, 'chat-request-tool-results': {'module': 'generative_ai_inference', 'class': 'list[CohereToolResult]'}, 'chat-request-stop-sequences': {'module': 'generative_ai_inference', 'class': 'list[string]'}}, output_type={'module': 'generative_ai_inference', 'class': 'ChatResult'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-chat-history': {'module': 'generative_ai_inference', 'class': 'list[CohereMessage]'}, 'chat-request-documents': {'module': 'generative_ai_inference', 'class': 'list[object]'}, 'chat-request-response-format': {'module': 'generative_ai_inference', 'class': 'CohereResponseFormat'}, 'chat-request-tools': {'module': 'generative_ai_inference', 'class': 'list[CohereTool]'}, 'chat-request-tool-results': {'module': 'generative_ai_inference', 'class': 'list[CohereToolResult]'}, 'chat-request-stop-sequences': {'module': 'generative_ai_inference', 'class': 'list[string]'}}, output_type={'module': 'generative_ai_inference', 'class': 'ChatResult'})
 @cli_util.wrap_exceptions
-def chat_cohere_chat_request(ctx, from_json, compartment_id, serving_mode, chat_request_message, chat_request_chat_history, chat_request_documents, chat_request_is_search_queries_only, chat_request_preamble_override, chat_request_is_stream, chat_request_max_tokens, chat_request_temperature, chat_request_top_k, chat_request_top_p, chat_request_prompt_truncation, chat_request_frequency_penalty, chat_request_presence_penalty, chat_request_seed, chat_request_is_echo, chat_request_tools, chat_request_tool_results, chat_request_is_force_single_step, chat_request_stop_sequences, chat_request_is_raw_prompting, chat_request_citation_quality):
+def chat_cohere_chat_request(ctx, from_json, compartment_id, serving_mode, chat_request_message, chat_request_chat_history, chat_request_documents, chat_request_response_format, chat_request_is_search_queries_only, chat_request_preamble_override, chat_request_is_stream, chat_request_max_tokens, chat_request_max_input_tokens, chat_request_temperature, chat_request_top_k, chat_request_top_p, chat_request_prompt_truncation, chat_request_frequency_penalty, chat_request_presence_penalty, chat_request_seed, chat_request_is_echo, chat_request_tools, chat_request_tool_results, chat_request_is_force_single_step, chat_request_stop_sequences, chat_request_is_raw_prompting, chat_request_citation_quality):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -301,6 +303,9 @@ def chat_cohere_chat_request(ctx, from_json, compartment_id, serving_mode, chat_
     if chat_request_documents is not None:
         _details['chatRequest']['documents'] = cli_util.parse_json_parameter("chat_request_documents", chat_request_documents)
 
+    if chat_request_response_format is not None:
+        _details['chatRequest']['responseFormat'] = cli_util.parse_json_parameter("chat_request_response_format", chat_request_response_format)
+
     if chat_request_is_search_queries_only is not None:
         _details['chatRequest']['isSearchQueriesOnly'] = chat_request_is_search_queries_only
 
@@ -312,6 +317,9 @@ def chat_cohere_chat_request(ctx, from_json, compartment_id, serving_mode, chat_
 
     if chat_request_max_tokens is not None:
         _details['chatRequest']['maxTokens'] = chat_request_max_tokens
+
+    if chat_request_max_input_tokens is not None:
+        _details['chatRequest']['maxInputTokens'] = chat_request_max_input_tokens
 
     if chat_request_temperature is not None:
         _details['chatRequest']['temperature'] = chat_request_temperature

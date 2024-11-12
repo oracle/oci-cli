@@ -1090,6 +1090,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1098,7 +1099,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_type, display_name, compartment_id, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method):
+def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_type, display_name, compartment_id, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1134,6 +1135,9 @@ def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if routing_method is not None:
         _details['routingMethod'] = routing_method
+
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
 
     client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
     result = client.create_connection(
@@ -1176,7 +1180,6 @@ def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--technology-type', required=True, help=u"""The PostgreSQL technology type.""")
 @cli_util.option('--database-name', required=True, help=u"""The name of the database.""")
 @cli_util.option('--username', required=True, help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
-@cli_util.option('--password', required=True, help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
 @cli_util.option('--security-protocol', required=True, help=u"""Security protocol for PostgreSQL.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
@@ -1193,8 +1196,11 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--host', help=u"""The name or address of a host.""")
 @cli_util.option('--port', type=click.INT, help=u"""The port of an endpoint usually specified for a connection.""")
+@cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored. The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. If secretId is used plaintext field must not be provided. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--additional-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name-value pair attribute entries. Used as additional parameters in connection string.
 
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1203,6 +1209,7 @@ This option is a JSON list with items of type NameValuePair.  For documentation 
 @cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA).""")
 @cli_util.option('--ssl-cert', help=u"""The base64 encoded certificate of the PostgreSQL server. The supported file formats are .pem and .crt.""")
 @cli_util.option('--ssl-key', help=u"""The base64 encoded private key of the PostgreSQL server. The supported file formats are .pem and .crt.""")
+@cli_util.option('--ssl-key-secret-id', help=u"""The [OCID] of the Secret that stores the private key of the PostgreSQL server. The supported file formats are .pem and .crt. Note: When provided, 'sslKey' field must not be provided.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
 The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
@@ -1215,7 +1222,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'additional-attributes': {'module': 'golden_gate', 'class': 'list[NameValuePair]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_postgresql_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, database_name, username, password, security_protocol, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, host, port, additional_attributes, ssl_mode, ssl_ca, ssl_crl, ssl_cert, ssl_key, private_ip, db_system_id):
+def create_connection_create_postgresql_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, database_name, username, security_protocol, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, host, port, password, password_secret_id, additional_attributes, ssl_mode, ssl_ca, ssl_crl, ssl_cert, ssl_key, ssl_key_secret_id, private_ip, db_system_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1226,7 +1233,6 @@ def create_connection_create_postgresql_connection_details(ctx, from_json, wait_
     _details['technologyType'] = technology_type
     _details['databaseName'] = database_name
     _details['username'] = username
-    _details['password'] = password
     _details['securityProtocol'] = security_protocol
 
     if description is not None:
@@ -1256,11 +1262,20 @@ def create_connection_create_postgresql_connection_details(ctx, from_json, wait_
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if host is not None:
         _details['host'] = host
 
     if port is not None:
         _details['port'] = port
+
+    if password is not None:
+        _details['password'] = password
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
 
     if additional_attributes is not None:
         _details['additionalAttributes'] = cli_util.parse_json_parameter("additional_attributes", additional_attributes)
@@ -1279,6 +1294,9 @@ def create_connection_create_postgresql_connection_details(ctx, from_json, wait_
 
     if ssl_key is not None:
         _details['sslKey'] = ssl_key
+
+    if ssl_key_secret_id is not None:
+        _details['sslKeySecretId'] = ssl_key_secret_id
 
     if private_ip is not None:
         _details['privateIp'] = private_ip
@@ -1344,13 +1362,20 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
-@cli_util.option('--username', help=u"""The username to access Schema Registry using basic authentation. This value is injected into 'schema.registry.basic.auth.user.info=user:password' configuration property.""")
-@cli_util.option('--password', help=u"""The password to access Schema Registry using basic authentation. This value is injected into 'schema.registry.basic.auth.user.info=user:password' configuration property.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
+@cli_util.option('--username', help=u"""The username to access Schema Registry using basic authentication. This value is injected into 'schema.registry.basic.auth.user.info=user:password' configuration property.""")
+@cli_util.option('--password', help=u"""The password to access Schema Registry using basic authentication. This value is injected into 'schema.registry.basic.auth.user.info=user:password' configuration property.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the Kafka Schema Registry password is stored, The password to access Schema Registry using basic authentication. This value is injected into 'schema.registry.basic.auth.user.info=user:password' configuration property. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--trust-store', help=u"""The base64 encoded content of the TrustStore file.""")
+@cli_util.option('--trust-store-secret-id', help=u"""The [OCID] of the Secret that stores the content of the TrustStore file. Note: When provided, 'trustStore' field must not be provided.""")
 @cli_util.option('--trust-store-password', help=u"""The TrustStore password.""")
+@cli_util.option('--trust-store-password-secret-id', help=u"""The [OCID] of the Secret where the kafka Ssl TrustStore password is stored. Note: When provided, 'trustStorePassword' field must not be provided.""")
 @cli_util.option('--key-store', help=u"""The base64 encoded content of the KeyStore file.""")
+@cli_util.option('--key-store-secret-id', help=u"""The [OCID] of the Secret that stores the content of the KeyStore file. Note: When provided, 'keyStore' field must not be provided.""")
 @cli_util.option('--key-store-password', help=u"""The KeyStore password.""")
+@cli_util.option('--key-store-password-secret-id', help=u"""The [OCID] of the Secret where the kafka Ssl KeyStore password is stored. Note: When provided, 'keyStorePassword' field must not be provided.""")
 @cli_util.option('--ssl-key-password', help=u"""The password for the cert inside the KeyStore. In case it differs from the KeyStore password, it should be provided.""")
+@cli_util.option('--ssl-key-password-secret-id', help=u"""The [OCID] of the Secret that stores the password for the cert inside the KeyStore. In case it differs from the KeyStore password, it should be provided. Note: When provided, 'sslKeyPassword' field must not be provided.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
 The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
@@ -1362,7 +1387,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_kafka_schema_registry_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, url, authentication_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, username, password, trust_store, trust_store_password, key_store, key_store_password, ssl_key_password, private_ip):
+def create_connection_create_kafka_schema_registry_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, url, authentication_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, username, password, password_secret_id, trust_store, trust_store_secret_id, trust_store_password, trust_store_password_secret_id, key_store, key_store_secret_id, key_store_password, key_store_password_secret_id, ssl_key_password, ssl_key_password_secret_id, private_ip):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1401,26 +1426,47 @@ def create_connection_create_kafka_schema_registry_connection_details(ctx, from_
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if username is not None:
         _details['username'] = username
 
     if password is not None:
         _details['password'] = password
 
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
+
     if trust_store is not None:
         _details['trustStore'] = trust_store
+
+    if trust_store_secret_id is not None:
+        _details['trustStoreSecretId'] = trust_store_secret_id
 
     if trust_store_password is not None:
         _details['trustStorePassword'] = trust_store_password
 
+    if trust_store_password_secret_id is not None:
+        _details['trustStorePasswordSecretId'] = trust_store_password_secret_id
+
     if key_store is not None:
         _details['keyStore'] = key_store
+
+    if key_store_secret_id is not None:
+        _details['keyStoreSecretId'] = key_store_secret_id
 
     if key_store_password is not None:
         _details['keyStorePassword'] = key_store_password
 
+    if key_store_password_secret_id is not None:
+        _details['keyStorePasswordSecretId'] = key_store_password_secret_id
+
     if ssl_key_password is not None:
         _details['sslKeyPassword'] = ssl_key_password
+
+    if ssl_key_password_secret_id is not None:
+        _details['sslKeyPasswordSecretId'] = ssl_key_password_secret_id
 
     if private_ip is not None:
         _details['privateIp'] = private_ip
@@ -1470,7 +1516,6 @@ def create_connection_create_kafka_schema_registry_connection_details(ctx, from_
 @cli_util.option('--host', required=True, help=u"""The name or address of a host.""")
 @cli_util.option('--port', required=True, type=click.INT, help=u"""The port of an endpoint usually specified for a connection.""")
 @cli_util.option('--username', required=True, help=u"""The username Oracle GoldenGate uses to connect to the Microsoft SQL Server. This username must already exist and be available by the Microsoft SQL Server to be connected to.""")
-@cli_util.option('--password', required=True, help=u"""The password Oracle GoldenGate uses to connect the associated Microsoft SQL Server.""")
 @cli_util.option('--security-protocol', required=True, help=u"""Security Type for Microsoft SQL Server.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
@@ -1487,6 +1532,9 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
+@cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated Microsoft SQL Server.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret that stores the password Oracle GoldenGate uses to connect the associated Microsoft SQL Server. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--additional-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name-value pair attribute entries. Used as additional parameters in connection string.
 
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1503,7 +1551,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'additional-attributes': {'module': 'golden_gate', 'class': 'list[NameValuePair]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_microsoft_sqlserver_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, database_name, host, port, username, password, security_protocol, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, additional_attributes, ssl_ca, should_validate_server_certificate, private_ip):
+def create_connection_create_microsoft_sqlserver_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, database_name, host, port, username, security_protocol, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, password, password_secret_id, additional_attributes, ssl_ca, should_validate_server_certificate, private_ip):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1516,7 +1564,6 @@ def create_connection_create_microsoft_sqlserver_connection_details(ctx, from_js
     _details['host'] = host
     _details['port'] = port
     _details['username'] = username
-    _details['password'] = password
     _details['securityProtocol'] = security_protocol
 
     if description is not None:
@@ -1545,6 +1592,15 @@ def create_connection_create_microsoft_sqlserver_connection_details(ctx, from_js
 
     if routing_method is not None:
         _details['routingMethod'] = routing_method
+
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
+    if password is not None:
+        _details['password'] = password
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
 
     if additional_attributes is not None:
         _details['additionalAttributes'] = cli_util.parse_json_parameter("additional_attributes", additional_attributes)
@@ -1615,22 +1671,30 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--jndi-connection-factory', help=u"""The Connection Factory can be looked up using this name. e.g.: 'ConnectionFactory'""")
 @cli_util.option('--jndi-provider-url', help=u"""The URL that Java Message Service will use to contact the JNDI provider. e.g.: 'tcp://myjms.host.domain:61616?jms.prefetchPolicy.all=1000'""")
 @cli_util.option('--jndi-initial-context-factory', help=u"""The implementation of javax.naming.spi.InitialContextFactory interface that the client uses to obtain initial naming context. e.g.: 'org.apache.activemq.jndi.ActiveMQInitialContextFactory'""")
 @cli_util.option('--jndi-security-principal', help=u"""Specifies the identity of the principal (user) to be authenticated. e.g.: 'admin2'""")
 @cli_util.option('--jndi-security-credentials', help=u"""The password associated to the principal.""")
+@cli_util.option('--jndi-security-credentials-secret-id', help=u"""The [OCID] of the Secret where the security credentials are stored associated to the principal. Note: When provided, 'jndiSecurityCredentials' field must not be provided.""")
 @cli_util.option('--connection-url', help=u"""Connectin URL of the Java Message Service, specifying the protocol, host, and port. e.g.: 'mq://myjms.host.domain:7676'""")
 @cli_util.option('--connection-factory', help=u"""The of Java class implementing javax.jms.ConnectionFactory interface supplied by the Java Message Service provider. e.g.: 'com.stc.jmsjca.core.JConnectionFactoryXA'""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect to the Java Message Service. This username must already exist and be available by the Java Message Service to be connected to.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated Java Message Service.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored, that Oracle GoldenGate uses to connect the associated Java Message Service. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--security-protocol', help=u"""Security protocol for Java Message Service. If not provided, default is PLAIN. Optional until 2024-06-27, in the release after it will be made required.""")
 @cli_util.option('--authentication-type', help=u"""Authentication type for Java Message Service.  If not provided, default is NONE. Optional until 2024-06-27, in the release after it will be made required.""")
 @cli_util.option('--trust-store', help=u"""The base64 encoded content of the TrustStore file.""")
+@cli_util.option('--trust-store-secret-id', help=u"""The [OCID] of the Secret where the content of the TrustStore file is stored. Note: When provided, 'trustStore' field must not be provided.""")
 @cli_util.option('--trust-store-password', help=u"""The TrustStore password.""")
+@cli_util.option('--trust-store-password-secret-id', help=u"""The [OCID] of the Secret where the TrustStore password is stored. Note: When provided, 'trustStorePassword' field must not be provided.""")
 @cli_util.option('--key-store', help=u"""The base64 encoded content of the KeyStore file.""")
+@cli_util.option('--key-store-secret-id', help=u"""The [OCID] of the Secret where the content of the KeyStore file is stored. Note: When provided, 'keyStore' field must not be provided.""")
 @cli_util.option('--key-store-password', help=u"""The KeyStore password.""")
+@cli_util.option('--key-store-password-secret-id', help=u"""The [OCID] of the Secret where the KeyStore password is stored. Note: When provided, 'keyStorePassword' field must not be provided.""")
 @cli_util.option('--ssl-key-password', help=u"""The password for the cert inside of the KeyStore. In case it differs from the KeyStore password, it should be provided.""")
+@cli_util.option('--ssl-key-password-secret-id', help=u"""The [OCID] of the Secret where the password is stored for the cert inside of the Keystore. In case it differs from the KeyStore password, it should be provided. Note: When provided, 'sslKeyPassword' field must not be provided.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
 The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
@@ -1642,7 +1706,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_java_message_service_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, should_use_jndi, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, jndi_connection_factory, jndi_provider_url, jndi_initial_context_factory, jndi_security_principal, jndi_security_credentials, connection_url, connection_factory, username, password, security_protocol, authentication_type, trust_store, trust_store_password, key_store, key_store_password, ssl_key_password, private_ip):
+def create_connection_create_java_message_service_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, should_use_jndi, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, jndi_connection_factory, jndi_provider_url, jndi_initial_context_factory, jndi_security_principal, jndi_security_credentials, jndi_security_credentials_secret_id, connection_url, connection_factory, username, password, password_secret_id, security_protocol, authentication_type, trust_store, trust_store_secret_id, trust_store_password, trust_store_password_secret_id, key_store, key_store_secret_id, key_store_password, key_store_password_secret_id, ssl_key_password, ssl_key_password_secret_id, private_ip):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1680,6 +1744,9 @@ def create_connection_create_java_message_service_connection_details(ctx, from_j
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if jndi_connection_factory is not None:
         _details['jndiConnectionFactory'] = jndi_connection_factory
 
@@ -1695,6 +1762,9 @@ def create_connection_create_java_message_service_connection_details(ctx, from_j
     if jndi_security_credentials is not None:
         _details['jndiSecurityCredentials'] = jndi_security_credentials
 
+    if jndi_security_credentials_secret_id is not None:
+        _details['jndiSecurityCredentialsSecretId'] = jndi_security_credentials_secret_id
+
     if connection_url is not None:
         _details['connectionUrl'] = connection_url
 
@@ -1707,6 +1777,9 @@ def create_connection_create_java_message_service_connection_details(ctx, from_j
     if password is not None:
         _details['password'] = password
 
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
+
     if security_protocol is not None:
         _details['securityProtocol'] = security_protocol
 
@@ -1716,17 +1789,32 @@ def create_connection_create_java_message_service_connection_details(ctx, from_j
     if trust_store is not None:
         _details['trustStore'] = trust_store
 
+    if trust_store_secret_id is not None:
+        _details['trustStoreSecretId'] = trust_store_secret_id
+
     if trust_store_password is not None:
         _details['trustStorePassword'] = trust_store_password
+
+    if trust_store_password_secret_id is not None:
+        _details['trustStorePasswordSecretId'] = trust_store_password_secret_id
 
     if key_store is not None:
         _details['keyStore'] = key_store
 
+    if key_store_secret_id is not None:
+        _details['keyStoreSecretId'] = key_store_secret_id
+
     if key_store_password is not None:
         _details['keyStorePassword'] = key_store_password
 
+    if key_store_password_secret_id is not None:
+        _details['keyStorePasswordSecretId'] = key_store_password_secret_id
+
     if ssl_key_password is not None:
         _details['sslKeyPassword'] = ssl_key_password
+
+    if ssl_key_password_secret_id is not None:
+        _details['sslKeyPasswordSecretId'] = ssl_key_password_secret_id
 
     if private_ip is not None:
         _details['privateIp'] = private_ip
@@ -1772,7 +1860,6 @@ def create_connection_create_java_message_service_connection_details(ctx, from_j
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Google BigQuery technology type.""")
-@cli_util.option('--service-account-key-file', required=True, help=u"""The base64 encoded content of the service account key file containing the credentials required to use Google BigQuery.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
 
@@ -1788,6 +1875,9 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
+@cli_util.option('--service-account-key-file', help=u"""The base64 encoded content of the service account key file containing the credentials required to use Google BigQuery.""")
+@cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which containing the credentials required to use Google BigQuery. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1796,7 +1886,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_google_big_query_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, service_account_key_file, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method):
+def create_connection_create_google_big_query_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, service_account_key_file, service_account_key_file_secret_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1805,7 +1895,6 @@ def create_connection_create_google_big_query_connection_details(ctx, from_json,
     _details['displayName'] = display_name
     _details['compartmentId'] = compartment_id
     _details['technologyType'] = technology_type
-    _details['serviceAccountKeyFile'] = service_account_key_file
 
     if description is not None:
         _details['description'] = description
@@ -1833,6 +1922,15 @@ def create_connection_create_google_big_query_connection_details(ctx, from_json,
 
     if routing_method is not None:
         _details['routingMethod'] = routing_method
+
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
+    if service_account_key_file is not None:
+        _details['serviceAccountKeyFile'] = service_account_key_file
+
+    if service_account_key_file_secret_id is not None:
+        _details['serviceAccountKeyFileSecretId'] = service_account_key_file_secret_id
 
     _details['connectionType'] = 'GOOGLE_BIGQUERY'
 
@@ -1876,7 +1974,6 @@ def create_connection_create_google_big_query_connection_details(ctx, from_json,
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Amazon Kinesis technology type.""")
 @cli_util.option('--access-key-id', required=True, help=u"""Access key ID to access the Amazon Kinesis.""")
-@cli_util.option('--secret-access-key', required=True, help=u"""Secret access key to access the Amazon Kinesis.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
 
@@ -1892,6 +1989,9 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
+@cli_util.option('--secret-access-key', help=u"""Secret access key to access the Amazon Kinesis.""")
+@cli_util.option('--secret-access-key-secret-id', help=u"""The [OCID] of the Secret where the secret access key is stored. Note: When provided, 'secretAccessKey' field must not be provided.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1900,7 +2000,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_amazon_kinesis_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, access_key_id, secret_access_key, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method):
+def create_connection_create_amazon_kinesis_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, access_key_id, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, secret_access_key, secret_access_key_secret_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1910,7 +2010,6 @@ def create_connection_create_amazon_kinesis_connection_details(ctx, from_json, w
     _details['compartmentId'] = compartment_id
     _details['technologyType'] = technology_type
     _details['accessKeyId'] = access_key_id
-    _details['secretAccessKey'] = secret_access_key
 
     if description is not None:
         _details['description'] = description
@@ -1938,6 +2037,15 @@ def create_connection_create_amazon_kinesis_connection_details(ctx, from_json, w
 
     if routing_method is not None:
         _details['routingMethod'] = routing_method
+
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
+    if secret_access_key is not None:
+        _details['secretAccessKey'] = secret_access_key
+
+    if secret_access_key_secret_id is not None:
+        _details['secretAccessKeySecretId'] = secret_access_key_secret_id
 
     _details['connectionType'] = 'AMAZON_KINESIS'
 
@@ -1997,10 +2105,14 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect to Snowflake. This username must already exist and be available by Snowflake platform to be connected to.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect to Snowflake platform.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored. The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. If secretId is used plaintext field must not be provided. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--private-key-file', help=u"""The base64 encoded content of private key file in PEM format.""")
+@cli_util.option('--private-key-file-secret-id', help=u"""The [OCID] of the Secret that stores the content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Note: When provided, 'privateKeyFile' field must not be provided.""")
 @cli_util.option('--private-key-passphrase', help=u"""Password if the private key file is encrypted.""")
+@cli_util.option('--private-key-passphrase-secret-id', help=u"""The [OCID] of the Secret that stores the password for the private key file. Note: When provided, 'privateKeyPassphrase' field must not be provided.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2009,7 +2121,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_snowflake_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, connection_url, authentication_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, username, password, private_key_file, private_key_passphrase):
+def create_connection_create_snowflake_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, connection_url, authentication_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, username, password, password_secret_id, private_key_file, private_key_file_secret_id, private_key_passphrase, private_key_passphrase_secret_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2048,17 +2160,29 @@ def create_connection_create_snowflake_connection_details(ctx, from_json, wait_f
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if username is not None:
         _details['username'] = username
 
     if password is not None:
         _details['password'] = password
 
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
+
     if private_key_file is not None:
         _details['privateKeyFile'] = private_key_file
 
+    if private_key_file_secret_id is not None:
+        _details['privateKeyFileSecretId'] = private_key_file_secret_id
+
     if private_key_passphrase is not None:
         _details['privateKeyPassphrase'] = private_key_passphrase
+
+    if private_key_passphrase_secret_id is not None:
+        _details['privateKeyPassphraseSecretId'] = private_key_passphrase_secret_id
 
     _details['connectionType'] = 'SNOWFLAKE'
 
@@ -2118,11 +2242,15 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--account-key', help=u"""Azure storage account key. This property is required when 'authenticationType' is set to 'SHARED_KEY'. e.g.: pa3WbhVATzj56xD4DH1VjOUhApRGEGHvOo58eQJVWIzX+j8j4CUVFcTjpIqDSRaSa1Wo2LbWY5at+AStEgLOIQ==""")
+@cli_util.option('--account-key-secret-id', help=u"""The [OCID] of the Secret where the account key is stored. Note: When provided, 'accountKey' field must not be provided.""")
 @cli_util.option('--sas-token', help=u"""Credential that uses a shared access signature (SAS) to authenticate to an Azure Service. This property is required when 'authenticationType' is set to 'SHARED_ACCESS_SIGNATURE'. e.g.: ?sv=2020-06-08&ss=bfqt&srt=sco&sp=rwdlacupyx&se=2020-09-10T20:27:28Z&st=2022-08-05T12:27:28Z&spr=https&sig=C1IgHsiLBmTSStYkXXGLTP8it0xBrArcgCqOsZbXwIQ%3D""")
+@cli_util.option('--sas-token-secret-id', help=u"""The [OCID] of the Secret where the sas token is stored. Note: When provided, 'sasToken' field must not be provided.""")
 @cli_util.option('--azure-tenant-id', help=u"""Azure tenant ID of the application. This property is required when 'authenticationType' is set to 'AZURE_ACTIVE_DIRECTORY'. e.g.: 14593954-d337-4a61-a364-9f758c64f97f""")
 @cli_util.option('--client-id', help=u"""Azure client ID of the application. This property is required when 'authenticationType' is set to 'AZURE_ACTIVE_DIRECTORY'. e.g.: 06ecaabf-8b80-4ec8-a0ec-20cbf463703d""")
 @cli_util.option('--client-secret', help=u"""Azure client secret (aka application password) for authentication. This property is required when 'authenticationType' is set to 'AZURE_ACTIVE_DIRECTORY'. e.g.: dO29Q~F5-VwnA.lZdd11xFF_t5NAXCaGwDl9NbT1""")
+@cli_util.option('--client-secret-secret-id', help=u"""The [OCID] of the Secret where the client secret is stored. Note: When provided, 'clientSecret' field must not be provided.""")
 @cli_util.option('--endpoint-parameterconflict', help=u"""Azure Storage service endpoint. e.g: https://test.blob.core.windows.net""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2132,7 +2260,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_azure_data_lake_storage_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, authentication_type, account_name, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, account_key, sas_token, azure_tenant_id, client_id, client_secret, endpoint_parameterconflict):
+def create_connection_create_azure_data_lake_storage_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, authentication_type, account_name, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, account_key, account_key_secret_id, sas_token, sas_token_secret_id, azure_tenant_id, client_id, client_secret, client_secret_secret_id, endpoint_parameterconflict):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2171,11 +2299,20 @@ def create_connection_create_azure_data_lake_storage_connection_details(ctx, fro
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if account_key is not None:
         _details['accountKey'] = account_key
 
+    if account_key_secret_id is not None:
+        _details['accountKeySecretId'] = account_key_secret_id
+
     if sas_token is not None:
         _details['sasToken'] = sas_token
+
+    if sas_token_secret_id is not None:
+        _details['sasTokenSecretId'] = sas_token_secret_id
 
     if azure_tenant_id is not None:
         _details['azureTenantId'] = azure_tenant_id
@@ -2185,6 +2322,9 @@ def create_connection_create_azure_data_lake_storage_connection_details(ctx, fro
 
     if client_secret is not None:
         _details['clientSecret'] = client_secret
+
+    if client_secret_secret_id is not None:
+        _details['clientSecretSecretId'] = client_secret_secret_id
 
     if endpoint_parameterconflict is not None:
         _details['endpoint'] = endpoint_parameterconflict
@@ -2245,9 +2385,11 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--connection-string', help=u"""MongoDB connection string. e.g.: 'mongodb://mongodb0.example.com:27017/recordsrecords'""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect to the database. This username must already exist and be available by the database to be connected to.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated database.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret that stores the password Oracle GoldenGate uses to connect the associated database. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--database-id', help=u"""The [OCID] of the Oracle Autonomous Json Database.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2257,7 +2399,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_mongo_db_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, connection_string, username, password, database_id):
+def create_connection_create_mongo_db_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, connection_string, username, password, password_secret_id, database_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2294,6 +2436,9 @@ def create_connection_create_mongo_db_connection_details(ctx, from_json, wait_fo
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if connection_string is not None:
         _details['connectionString'] = connection_string
 
@@ -2302,6 +2447,9 @@ def create_connection_create_mongo_db_connection_details(ctx, from_json, wait_fo
 
     if password is not None:
         _details['password'] = password
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
 
     if database_id is not None:
         _details['databaseId'] = database_id
@@ -2348,7 +2496,6 @@ def create_connection_create_mongo_db_connection_details(ctx, from_json, wait_fo
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Amazon S3 technology type.""")
 @cli_util.option('--access-key-id', required=True, help=u"""Access key ID to access the Amazon S3 bucket. e.g.: \"this-is-not-the-secret\"""")
-@cli_util.option('--secret-access-key', required=True, help=u"""Secret access key to access the Amazon S3 bucket. e.g.: \"this-is-not-the-secret\"""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
 
@@ -2364,6 +2511,9 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
+@cli_util.option('--secret-access-key', help=u"""Secret access key to access the Amazon S3 bucket. e.g.: \"this-is-not-the-secret\"""")
+@cli_util.option('--secret-access-key-secret-id', help=u"""The [OCID] of the Secret where the Secret Access Key is stored. Note: When provided, 'secretAccessKey' field must not be provided.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2372,7 +2522,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_amazon_s3_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, access_key_id, secret_access_key, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method):
+def create_connection_create_amazon_s3_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, access_key_id, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, secret_access_key, secret_access_key_secret_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2382,7 +2532,6 @@ def create_connection_create_amazon_s3_connection_details(ctx, from_json, wait_f
     _details['compartmentId'] = compartment_id
     _details['technologyType'] = technology_type
     _details['accessKeyId'] = access_key_id
-    _details['secretAccessKey'] = secret_access_key
 
     if description is not None:
         _details['description'] = description
@@ -2410,6 +2559,15 @@ def create_connection_create_amazon_s3_connection_details(ctx, from_json, wait_f
 
     if routing_method is not None:
         _details['routingMethod'] = routing_method
+
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
+    if secret_access_key is not None:
+        _details['secretAccessKey'] = secret_access_key
+
+    if secret_access_key_secret_id is not None:
+        _details['secretAccessKeySecretId'] = secret_access_key_secret_id
 
     _details['connectionType'] = 'AMAZON_S3'
 
@@ -2468,6 +2626,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2476,7 +2635,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_hdfs_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, core_site_xml, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method):
+def create_connection_create_hdfs_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, core_site_xml, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2513,6 +2672,9 @@ def create_connection_create_hdfs_connection_details(ctx, from_json, wait_for_st
 
     if routing_method is not None:
         _details['routingMethod'] = routing_method
+
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
 
     _details['connectionType'] = 'HDFS'
 
@@ -2555,7 +2717,6 @@ def create_connection_create_hdfs_connection_details(ctx, from_json, wait_for_st
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The OCI Object Storage technology type.""")
-@cli_util.option('--private-key-file', required=True, help=u"""The base64 encoded content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm""")
 @cli_util.option('--public-key-fingerprint', required=True, help=u"""The fingerprint of the API Key of the user specified by the userId. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
@@ -2572,10 +2733,14 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--tenancy-id', help=u"""The [OCID] of the related OCI tenancy.""")
 @cli_util.option('--region-parameterconflict', help=u"""The name of the region. e.g.: us-ashburn-1""")
 @cli_util.option('--user-id', help=u"""The [OCID] of the OCI user who will access the Object Storage. The user must have write access to the bucket they want to connect to.""")
+@cli_util.option('--private-key-file', help=u"""The base64 encoded content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm""")
+@cli_util.option('--private-key-file-secret-id', help=u"""The [OCID] of the Secret that stores the content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Note: When provided, 'privateKeyFile' field must not be provided.""")
 @cli_util.option('--private-key-passphrase', help=u"""The passphrase of the private key.""")
+@cli_util.option('--private-key-passphrase-secret-id', help=u"""The [OCID] of the Secret that stores the passphrase of the private key. Note: When provided, 'privateKeyPassphrase' field must not be provided.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2584,7 +2749,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_oci_object_storage_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, private_key_file, public_key_fingerprint, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, tenancy_id, region_parameterconflict, user_id, private_key_passphrase):
+def create_connection_create_oci_object_storage_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, public_key_fingerprint, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, tenancy_id, region_parameterconflict, user_id, private_key_file, private_key_file_secret_id, private_key_passphrase, private_key_passphrase_secret_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2593,7 +2758,6 @@ def create_connection_create_oci_object_storage_connection_details(ctx, from_jso
     _details['displayName'] = display_name
     _details['compartmentId'] = compartment_id
     _details['technologyType'] = technology_type
-    _details['privateKeyFile'] = private_key_file
     _details['publicKeyFingerprint'] = public_key_fingerprint
 
     if description is not None:
@@ -2623,6 +2787,9 @@ def create_connection_create_oci_object_storage_connection_details(ctx, from_jso
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if tenancy_id is not None:
         _details['tenancyId'] = tenancy_id
 
@@ -2632,8 +2799,17 @@ def create_connection_create_oci_object_storage_connection_details(ctx, from_jso
     if user_id is not None:
         _details['userId'] = user_id
 
+    if private_key_file is not None:
+        _details['privateKeyFile'] = private_key_file
+
+    if private_key_file_secret_id is not None:
+        _details['privateKeyFileSecretId'] = private_key_file_secret_id
+
     if private_key_passphrase is not None:
         _details['privateKeyPassphrase'] = private_key_passphrase
+
+    if private_key_passphrase_secret_id is not None:
+        _details['privateKeyPassphraseSecretId'] = private_key_passphrase_secret_id
 
     _details['connectionType'] = 'OCI_OBJECT_STORAGE'
 
@@ -2680,7 +2856,6 @@ def create_connection_create_oci_object_storage_connection_details(ctx, from_jso
 @cli_util.option('--host', required=True, help=u"""The name or address of a host.""")
 @cli_util.option('--port', required=True, type=click.INT, help=u"""The port of an endpoint usually specified for a connection.""")
 @cli_util.option('--username', required=True, help=u"""The username Oracle GoldenGate uses to connect to the DB2 database. This username must already exist and be available by the DB2 to be connected to.""")
-@cli_util.option('--password', required=True, help=u"""The password Oracle GoldenGate uses to connect the associated DB2 database.""")
 @cli_util.option('--security-protocol', required=True, help=u"""Security protocol for the DB2 database.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
@@ -2697,11 +2872,16 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
+@cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated DB2 database.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored, that Oracle GoldenGate uses to connect the associated DB2 database. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--additional-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name-value pair attribute entries. Used as additional parameters in connection string.
 
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ssl-client-keystoredb', help=u"""The base64 encoded keystore file created at the client containing the server certificate / CA root certificate.""")
+@cli_util.option('--ssl-client-keystoredb-secret-id', help=u"""The [OCID] of the Secret where the keystore file stored, which created at the client containing the server certificate / CA root certificate. Note: When provided, 'sslClientKeystoredb' field must not be provided.""")
 @cli_util.option('--ssl-client-keystash', help=u"""The base64 encoded keystash file which contains the encrypted password to the key database file.""")
+@cli_util.option('--ssl-client-keystash-secret-id', help=u"""The [OCID] of the Secret where the keystash file is stored, which contains the encrypted password to the key database file. Note: When provided, 'sslClientKeystash' field must not be provided.""")
 @cli_util.option('--ssl-server-certificate', help=u"""The base64 encoded file which contains the self-signed server certificate / Certificate Authority (CA) certificate.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2711,7 +2891,7 @@ This option is a JSON list with items of type NameValuePair.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'additional-attributes': {'module': 'golden_gate', 'class': 'list[NameValuePair]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_db2_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, database_name, host, port, username, password, security_protocol, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, additional_attributes, ssl_client_keystoredb, ssl_client_keystash, ssl_server_certificate):
+def create_connection_create_db2_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, database_name, host, port, username, security_protocol, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, password, password_secret_id, additional_attributes, ssl_client_keystoredb, ssl_client_keystoredb_secret_id, ssl_client_keystash, ssl_client_keystash_secret_id, ssl_server_certificate):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2724,7 +2904,6 @@ def create_connection_create_db2_connection_details(ctx, from_json, wait_for_sta
     _details['host'] = host
     _details['port'] = port
     _details['username'] = username
-    _details['password'] = password
     _details['securityProtocol'] = security_protocol
 
     if description is not None:
@@ -2754,14 +2933,29 @@ def create_connection_create_db2_connection_details(ctx, from_json, wait_for_sta
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
+    if password is not None:
+        _details['password'] = password
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
+
     if additional_attributes is not None:
         _details['additionalAttributes'] = cli_util.parse_json_parameter("additional_attributes", additional_attributes)
 
     if ssl_client_keystoredb is not None:
         _details['sslClientKeystoredb'] = ssl_client_keystoredb
 
+    if ssl_client_keystoredb_secret_id is not None:
+        _details['sslClientKeystoredbSecretId'] = ssl_client_keystoredb_secret_id
+
     if ssl_client_keystash is not None:
         _details['sslClientKeystash'] = ssl_client_keystash
+
+    if ssl_client_keystash_secret_id is not None:
+        _details['sslClientKeystashSecretId'] = ssl_client_keystash_secret_id
 
     if ssl_server_certificate is not None:
         _details['sslServerCertificate'] = ssl_server_certificate
@@ -2825,8 +3019,10 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored. The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. If secretId is used plaintext field must not be provided. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--fingerprint', help=u"""Fingerprint required by TLS security protocol. Eg.: '6152b2dfbff200f973c5074a5b91d06ab3b472c07c09a1ea57bb7fd406cdce9c'""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2836,7 +3032,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_elasticsearch_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, servers, security_protocol, authentication_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, username, password, fingerprint):
+def create_connection_create_elasticsearch_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, servers, security_protocol, authentication_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, username, password, password_secret_id, fingerprint):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2876,11 +3072,17 @@ def create_connection_create_elasticsearch_connection_details(ctx, from_json, wa
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if username is not None:
         _details['username'] = username
 
     if password is not None:
         _details['password'] = password
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
 
     if fingerprint is not None:
         _details['fingerprint'] = fingerprint
@@ -2928,7 +3130,6 @@ def create_connection_create_elasticsearch_connection_details(ctx, from_json, wa
 @cli_util.option('--technology-type', required=True, help=u"""The Azure Synapse Analytics technology type.""")
 @cli_util.option('--connection-string', required=True, help=u"""JDBC connection string. e.g.: 'jdbc:sqlserver://<synapse-workspace>.sql.azuresynapse.net:1433;database=<db-name>;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.sql.azuresynapse.net;loginTimeout=300;'""")
 @cli_util.option('--username', required=True, help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
-@cli_util.option('--password', required=True, help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
 
@@ -2944,6 +3145,9 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
+@cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored. The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. If secretId is used plaintext field must not be provided. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2952,7 +3156,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_azure_synapse_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, connection_string, username, password, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method):
+def create_connection_create_azure_synapse_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, connection_string, username, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, password, password_secret_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2963,7 +3167,6 @@ def create_connection_create_azure_synapse_connection_details(ctx, from_json, wa
     _details['technologyType'] = technology_type
     _details['connectionString'] = connection_string
     _details['username'] = username
-    _details['password'] = password
 
     if description is not None:
         _details['description'] = description
@@ -2991,6 +3194,15 @@ def create_connection_create_azure_synapse_connection_details(ctx, from_json, wa
 
     if routing_method is not None:
         _details['routingMethod'] = routing_method
+
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
+    if password is not None:
+        _details['password'] = password
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
 
     _details['connectionType'] = 'AZURE_SYNAPSE_ANALYTICS'
 
@@ -3050,13 +3262,19 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--servers', help=u"""Comma separated list of Redis server addresses, specified as host:port entries, where :port is optional. If port is not specified, it defaults to 6379. Used for establishing the initial connection to the Redis cluster. Example: `\"server1.example.com:6379,server2.example.com:6379\"`""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored. The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. If secretId is used plaintext field must not be provided. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--trust-store', help=u"""The base64 encoded content of the TrustStore file.""")
+@cli_util.option('--trust-store-secret-id', help=u"""The [OCID] of the Secret that stores the content of the TrustStore file. Note: When provided, 'trustStore' field must not be provided.""")
 @cli_util.option('--trust-store-password', help=u"""The TrustStore password.""")
+@cli_util.option('--trust-store-password-secret-id', help=u"""The [OCID] of the Secret where the Redis TrustStore password is stored. Note: When provided, 'trustStorePassword' field must not be provided.""")
 @cli_util.option('--key-store', help=u"""The base64 encoded content of the KeyStore file.""")
+@cli_util.option('--key-store-secret-id', help=u"""The [OCID] of the Secret that stores the content of the KeyStore file. Note: When provided, 'keyStore' field must not be provided.""")
 @cli_util.option('--key-store-password', help=u"""The KeyStore password.""")
+@cli_util.option('--key-store-password-secret-id', help=u"""The [OCID] of the Secret where the Redis KeyStore password is stored. Note: When provided, 'keyStorePassword' field must not be provided.""")
 @cli_util.option('--redis-cluster-id', help=u"""The [OCID] of the Redis cluster.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3066,7 +3284,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_redis_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, security_protocol, authentication_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, servers, username, password, trust_store, trust_store_password, key_store, key_store_password, redis_cluster_id):
+def create_connection_create_redis_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, security_protocol, authentication_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, servers, username, password, password_secret_id, trust_store, trust_store_secret_id, trust_store_password, trust_store_password_secret_id, key_store, key_store_secret_id, key_store_password, key_store_password_secret_id, redis_cluster_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3105,6 +3323,9 @@ def create_connection_create_redis_connection_details(ctx, from_json, wait_for_s
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if servers is not None:
         _details['servers'] = servers
 
@@ -3114,17 +3335,32 @@ def create_connection_create_redis_connection_details(ctx, from_json, wait_for_s
     if password is not None:
         _details['password'] = password
 
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
+
     if trust_store is not None:
         _details['trustStore'] = trust_store
+
+    if trust_store_secret_id is not None:
+        _details['trustStoreSecretId'] = trust_store_secret_id
 
     if trust_store_password is not None:
         _details['trustStorePassword'] = trust_store_password
 
+    if trust_store_password_secret_id is not None:
+        _details['trustStorePasswordSecretId'] = trust_store_password_secret_id
+
     if key_store is not None:
         _details['keyStore'] = key_store
 
+    if key_store_secret_id is not None:
+        _details['keyStoreSecretId'] = key_store_secret_id
+
     if key_store_password is not None:
         _details['keyStorePassword'] = key_store_password
+
+    if key_store_password_secret_id is not None:
+        _details['keyStorePasswordSecretId'] = key_store_password_secret_id
 
     if redis_cluster_id is not None:
         _details['redisClusterId'] = redis_cluster_id
@@ -3171,7 +3407,6 @@ def create_connection_create_redis_connection_details(ctx, from_json, wait_for_s
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The MySQL technology type.""")
 @cli_util.option('--username', required=True, help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
-@cli_util.option('--password', required=True, help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
 @cli_util.option('--database-name', required=True, help=u"""The name of the database.""")
 @cli_util.option('--security-protocol', required=True, help=u"""Security Type for MySQL.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
@@ -3189,6 +3424,9 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
+@cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored. The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. If secretId is used plaintext field must not be provided. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--host', help=u"""The name or address of a host.""")
 @cli_util.option('--port', type=click.INT, help=u"""The port of an endpoint usually specified for a connection.""")
 @cli_util.option('--ssl-mode', help=u"""SSL modes for MySQL.""")
@@ -3196,6 +3434,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA). Note: This is an optional property and only applicable if TLS/MTLS option is selected.""")
 @cli_util.option('--ssl-cert', help=u"""Client Certificate - The base64 encoded content of a .pem or .crt file. containing the client public key (for 2-way SSL).""")
 @cli_util.option('--ssl-key', help=u"""Client Key \u2013 The base64 encoded content of a .pem or .crt file containing the client private key (for 2-way SSL).""")
+@cli_util.option('--ssl-key-secret-id', help=u"""The [OCID] of the Secret that stores the Client Key - The content of a .pem or .crt file containing the client private key (for 2-way SSL). Note: When provided, 'sslKey' field must not be provided.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
 The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
@@ -3211,7 +3450,7 @@ This option is a JSON list with items of type NameValuePair.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'additional-attributes': {'module': 'golden_gate', 'class': 'list[NameValuePair]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_mysql_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, username, password, database_name, security_protocol, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, host, port, ssl_mode, ssl_ca, ssl_crl, ssl_cert, ssl_key, private_ip, additional_attributes, db_system_id):
+def create_connection_create_mysql_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, username, database_name, security_protocol, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, password, password_secret_id, host, port, ssl_mode, ssl_ca, ssl_crl, ssl_cert, ssl_key, ssl_key_secret_id, private_ip, additional_attributes, db_system_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3221,7 +3460,6 @@ def create_connection_create_mysql_connection_details(ctx, from_json, wait_for_s
     _details['compartmentId'] = compartment_id
     _details['technologyType'] = technology_type
     _details['username'] = username
-    _details['password'] = password
     _details['databaseName'] = database_name
     _details['securityProtocol'] = security_protocol
 
@@ -3252,6 +3490,15 @@ def create_connection_create_mysql_connection_details(ctx, from_json, wait_for_s
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
+    if password is not None:
+        _details['password'] = password
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
+
     if host is not None:
         _details['host'] = host
 
@@ -3272,6 +3519,9 @@ def create_connection_create_mysql_connection_details(ctx, from_json, wait_for_s
 
     if ssl_key is not None:
         _details['sslKey'] = ssl_key
+
+    if ssl_key_secret_id is not None:
+        _details['sslKeySecretId'] = ssl_key_secret_id
 
     if private_ip is not None:
         _details['privateIp'] = private_ip
@@ -3341,6 +3591,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3349,7 +3600,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_generic_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, host, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method):
+def create_connection_create_generic_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, host, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3386,6 +3637,9 @@ def create_connection_create_generic_connection_details(ctx, from_json, wait_for
 
     if routing_method is not None:
         _details['routingMethod'] = routing_method
+
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
 
     _details['connectionType'] = 'GENERIC'
 
@@ -3428,7 +3682,6 @@ def create_connection_create_generic_connection_details(ctx, from_json, wait_for
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Google Cloud Storage technology type.""")
-@cli_util.option('--service-account-key-file', required=True, help=u"""The base64 encoded content of the service account key file containing the credentials required to use Google Cloud Storage.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
 
@@ -3444,6 +3697,9 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
+@cli_util.option('--service-account-key-file', help=u"""The base64 encoded content of the service account key file containing the credentials required to use Google Cloud Storage.""")
+@cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which containing the credentials required to use Google Cloud Storage. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3452,7 +3708,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_google_cloud_storage_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, service_account_key_file, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method):
+def create_connection_create_google_cloud_storage_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, service_account_key_file, service_account_key_file_secret_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3461,7 +3717,6 @@ def create_connection_create_google_cloud_storage_connection_details(ctx, from_j
     _details['displayName'] = display_name
     _details['compartmentId'] = compartment_id
     _details['technologyType'] = technology_type
-    _details['serviceAccountKeyFile'] = service_account_key_file
 
     if description is not None:
         _details['description'] = description
@@ -3489,6 +3744,15 @@ def create_connection_create_google_cloud_storage_connection_details(ctx, from_j
 
     if routing_method is not None:
         _details['routingMethod'] = routing_method
+
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
+    if service_account_key_file is not None:
+        _details['serviceAccountKeyFile'] = service_account_key_file
+
+    if service_account_key_file_secret_id is not None:
+        _details['serviceAccountKeyFileSecretId'] = service_account_key_file_secret_id
 
     _details['connectionType'] = 'GOOGLE_CLOUD_STORAGE'
 
@@ -3546,6 +3810,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--stream-pool-id', help=u"""The [OCID] of the stream pool being referenced.""")
 @cli_util.option('--bootstrap-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Kafka bootstrap. Equivalent of bootstrap.servers configuration property in Kafka: list of KafkaBootstrapServer objects specified by host/port. Used for establishing the initial connection to the Kafka cluster. Example: `\"server1.example.com:9092,server2.example.com:9092\"`
 
@@ -3553,11 +3818,17 @@ This option is a JSON list with items of type KafkaBootstrapServer.  For documen
 @cli_util.option('--security-protocol', help=u"""Security Type for Kafka.""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored. The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. If secretId is used plaintext field must not be provided. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--trust-store', help=u"""The base64 encoded content of the TrustStore file.""")
+@cli_util.option('--trust-store-secret-id', help=u"""The [OCID] of the Secret where the content of the TrustStore file is stored. Note: When provided, 'trustStore' field must not be provided.""")
 @cli_util.option('--trust-store-password', help=u"""The TrustStore password.""")
+@cli_util.option('--trust-store-password-secret-id', help=u"""The [OCID] of the Secret where the kafka TrustStore password is stored. Note: When provided, 'trustStorePassword' field must not be provided.""")
 @cli_util.option('--key-store', help=u"""The base64 encoded content of the KeyStore file.""")
+@cli_util.option('--key-store-secret-id', help=u"""The [OCID] of the Secret where the content of the KeyStore file is stored. Note: When provided, 'keyStore' field must not be provided.""")
 @cli_util.option('--key-store-password', help=u"""The KeyStore password.""")
+@cli_util.option('--key-store-password-secret-id', help=u"""The [OCID] of the Secret where the kafka KeyStore password is stored. Note: When provided, 'keyStorePassword' field must not be provided.""")
 @cli_util.option('--ssl-key-password', help=u"""The password for the cert inside of the KeyStore. In case it differs from the KeyStore password, it should be provided.""")
+@cli_util.option('--ssl-key-password-secret-id', help=u"""The [OCID] of the Secret where the kafka Ssl Key password is stored. Note: When provided, 'sslKeyPassword' field must not be provided.""")
 @cli_util.option('--consumer-properties', help=u"""The base64 encoded content of the consumer.properties file.""")
 @cli_util.option('--producer-properties', help=u"""The base64 encoded content of the producer.properties file.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3568,7 +3839,7 @@ This option is a JSON list with items of type KafkaBootstrapServer.  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'bootstrap-servers': {'module': 'golden_gate', 'class': 'list[KafkaBootstrapServer]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_kafka_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, stream_pool_id, bootstrap_servers, security_protocol, username, password, trust_store, trust_store_password, key_store, key_store_password, ssl_key_password, consumer_properties, producer_properties):
+def create_connection_create_kafka_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, stream_pool_id, bootstrap_servers, security_protocol, username, password, password_secret_id, trust_store, trust_store_secret_id, trust_store_password, trust_store_password_secret_id, key_store, key_store_secret_id, key_store_password, key_store_password_secret_id, ssl_key_password, ssl_key_password_secret_id, consumer_properties, producer_properties):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3605,6 +3876,9 @@ def create_connection_create_kafka_connection_details(ctx, from_json, wait_for_s
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if stream_pool_id is not None:
         _details['streamPoolId'] = stream_pool_id
 
@@ -3620,20 +3894,38 @@ def create_connection_create_kafka_connection_details(ctx, from_json, wait_for_s
     if password is not None:
         _details['password'] = password
 
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
+
     if trust_store is not None:
         _details['trustStore'] = trust_store
+
+    if trust_store_secret_id is not None:
+        _details['trustStoreSecretId'] = trust_store_secret_id
 
     if trust_store_password is not None:
         _details['trustStorePassword'] = trust_store_password
 
+    if trust_store_password_secret_id is not None:
+        _details['trustStorePasswordSecretId'] = trust_store_password_secret_id
+
     if key_store is not None:
         _details['keyStore'] = key_store
+
+    if key_store_secret_id is not None:
+        _details['keyStoreSecretId'] = key_store_secret_id
 
     if key_store_password is not None:
         _details['keyStorePassword'] = key_store_password
 
+    if key_store_password_secret_id is not None:
+        _details['keyStorePasswordSecretId'] = key_store_password_secret_id
+
     if ssl_key_password is not None:
         _details['sslKeyPassword'] = ssl_key_password
+
+    if ssl_key_password_secret_id is not None:
+        _details['sslKeyPasswordSecretId'] = ssl_key_password_secret_id
 
     if consumer_properties is not None:
         _details['consumerProperties'] = consumer_properties
@@ -3683,7 +3975,6 @@ def create_connection_create_kafka_connection_details(ctx, from_json, wait_for_s
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Oracle technology type.""")
 @cli_util.option('--username', required=True, help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
-@cli_util.option('--password', required=True, help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
 
@@ -3699,9 +3990,13 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
+@cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored. The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. If secretId is used plaintext field must not be provided. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--connection-string', help=u"""Connect descriptor or Easy Connect Naming method used to connect to a database.""")
 @cli_util.option('--authentication-mode', help=u"""Authentication mode. It can be provided at creation of Oracle Autonomous Database Serverless connections, when a databaseId is provided. The default value is MTLS.""")
 @cli_util.option('--wallet', help=u"""The wallet contents Oracle GoldenGate uses to make connections to a database. This attribute is expected to be base64 encoded.""")
+@cli_util.option('--wallet-secret-id', help=u"""The [OCID] of the Secret where the wallet file is stored. The wallet contents Oracle GoldenGate uses to make connections to a database. Note: When provided, 'wallet' field must not be provided.""")
 @cli_util.option('--session-mode', help=u"""The mode of the database connection session to be established by the data client. 'REDIRECT' - for a RAC database, 'DIRECT' - for a non-RAC database. Connection to a RAC database involves a redirection received from the SCAN listeners to the database node to connect to. By default the mode would be DIRECT.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
@@ -3715,7 +4010,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_oracle_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, username, password, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, connection_string, authentication_mode, wallet, session_mode, private_ip, database_id):
+def create_connection_create_oracle_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, username, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, password, password_secret_id, connection_string, authentication_mode, wallet, wallet_secret_id, session_mode, private_ip, database_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3725,7 +4020,6 @@ def create_connection_create_oracle_connection_details(ctx, from_json, wait_for_
     _details['compartmentId'] = compartment_id
     _details['technologyType'] = technology_type
     _details['username'] = username
-    _details['password'] = password
 
     if description is not None:
         _details['description'] = description
@@ -3754,6 +4048,15 @@ def create_connection_create_oracle_connection_details(ctx, from_json, wait_for_
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
+    if password is not None:
+        _details['password'] = password
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
+
     if connection_string is not None:
         _details['connectionString'] = connection_string
 
@@ -3762,6 +4065,9 @@ def create_connection_create_oracle_connection_details(ctx, from_json, wait_for_
 
     if wallet is not None:
         _details['wallet'] = wallet
+
+    if wallet_secret_id is not None:
+        _details['walletSecretId'] = wallet_secret_id
 
     if session_mode is not None:
         _details['sessionMode'] = session_mode
@@ -3828,11 +4134,13 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--deployment-id', help=u"""The [OCID] of the deployment being referenced.""")
 @cli_util.option('--host', help=u"""The name or address of a host.""")
 @cli_util.option('--port', type=click.INT, help=u"""The port of an endpoint usually specified for a connection.""")
 @cli_util.option('--username', help=u"""The username credential existing in the Oracle GoldenGate used to be connected to.""")
 @cli_util.option('--password', help=u"""The password used to connect to the Oracle GoldenGate accessed trough this connection.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored, which is used to connect to the Oracle GoldenGate accessed trough this connection. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
 The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
@@ -3844,7 +4152,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_golden_gate_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, deployment_id, host, port, username, password, private_ip):
+def create_connection_create_golden_gate_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, deployment_id, host, port, username, password, password_secret_id, private_ip):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3881,6 +4189,9 @@ def create_connection_create_golden_gate_connection_details(ctx, from_json, wait
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if deployment_id is not None:
         _details['deploymentId'] = deployment_id
 
@@ -3895,6 +4206,9 @@ def create_connection_create_golden_gate_connection_details(ctx, from_json, wait
 
     if password is not None:
         _details['password'] = password
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
 
     if private_ip is not None:
         _details['privateIp'] = private_ip
@@ -3942,7 +4256,6 @@ def create_connection_create_golden_gate_connection_details(ctx, from_json, wait
 @cli_util.option('--technology-type', required=True, help=u"""The Amazon Redshift technology type.""")
 @cli_util.option('--connection-url', required=True, help=u"""Connection URL. e.g.: 'jdbc:redshift://aws-redshift-instance.aaaaaaaaaaaa.us-east-2.redshift.amazonaws.com:5439/mydb'""")
 @cli_util.option('--username', required=True, help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
-@cli_util.option('--password', required=True, help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
 
@@ -3958,6 +4271,9 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
+@cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored. The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. If secretId is used plaintext field must not be provided. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3966,7 +4282,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_amazon_redshift_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, connection_url, username, password, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method):
+def create_connection_create_amazon_redshift_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, connection_url, username, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, password, password_secret_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3977,7 +4293,6 @@ def create_connection_create_amazon_redshift_connection_details(ctx, from_json, 
     _details['technologyType'] = technology_type
     _details['connectionUrl'] = connection_url
     _details['username'] = username
-    _details['password'] = password
 
     if description is not None:
         _details['description'] = description
@@ -4005,6 +4320,15 @@ def create_connection_create_amazon_redshift_connection_details(ctx, from_json, 
 
     if routing_method is not None:
         _details['routingMethod'] = routing_method
+
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
+    if password is not None:
+        _details['password'] = password
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
 
     _details['connectionType'] = 'AMAZON_REDSHIFT'
 
@@ -4047,7 +4371,6 @@ def create_connection_create_amazon_redshift_connection_details(ctx, from_json, 
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Oracle NoSQL technology type.""")
-@cli_util.option('--private-key-file', required=True, help=u"""The base64 encoded content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm""")
 @cli_util.option('--public-key-fingerprint', required=True, help=u"""The fingerprint of the API Key of the user specified by the userId. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
@@ -4064,10 +4387,14 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--tenancy-id', help=u"""The [OCID] of the related OCI tenancy.""")
 @cli_util.option('--region-parameterconflict', help=u"""The name of the region. e.g.: us-ashburn-1""")
 @cli_util.option('--user-id', help=u"""The [OCID] of the OCI user who will access the Oracle NoSQL database. The user must have write access to the table they want to connect to.""")
+@cli_util.option('--private-key-file', help=u"""The base64 encoded content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm""")
+@cli_util.option('--private-key-file-secret-id', help=u"""The [OCID] of the Secret that stores the content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Note: When provided, 'privateKeyFile' field must not be provided.""")
 @cli_util.option('--private-key-passphrase', help=u"""The passphrase of the private key.""")
+@cli_util.option('--private-key-passphrase-secret-id', help=u"""The [OCID] of the Secret that stores the passphrase of the private key. Note: When provided, 'privateKeyPassphrase' field must not be provided.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -4076,7 +4403,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_oracle_nosql_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, private_key_file, public_key_fingerprint, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, tenancy_id, region_parameterconflict, user_id, private_key_passphrase):
+def create_connection_create_oracle_nosql_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, public_key_fingerprint, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, tenancy_id, region_parameterconflict, user_id, private_key_file, private_key_file_secret_id, private_key_passphrase, private_key_passphrase_secret_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -4085,7 +4412,6 @@ def create_connection_create_oracle_nosql_connection_details(ctx, from_json, wai
     _details['displayName'] = display_name
     _details['compartmentId'] = compartment_id
     _details['technologyType'] = technology_type
-    _details['privateKeyFile'] = private_key_file
     _details['publicKeyFingerprint'] = public_key_fingerprint
 
     if description is not None:
@@ -4115,6 +4441,9 @@ def create_connection_create_oracle_nosql_connection_details(ctx, from_json, wai
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if tenancy_id is not None:
         _details['tenancyId'] = tenancy_id
 
@@ -4124,8 +4453,17 @@ def create_connection_create_oracle_nosql_connection_details(ctx, from_json, wai
     if user_id is not None:
         _details['userId'] = user_id
 
+    if private_key_file is not None:
+        _details['privateKeyFile'] = private_key_file
+
+    if private_key_file_secret_id is not None:
+        _details['privateKeyFileSecretId'] = private_key_file_secret_id
+
     if private_key_passphrase is not None:
         _details['privateKeyPassphrase'] = private_key_passphrase
+
+    if private_key_passphrase_secret_id is not None:
+        _details['privateKeyPassphraseSecretId'] = private_key_passphrase_secret_id
 
     _details['connectionType'] = 'ORACLE_NOSQL'
 
@@ -4473,6 +4811,7 @@ Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_T
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
 
 Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-metadata-only', type=click.BOOL, help=u"""Parameter to allow users to create backup without trails""")
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4484,7 +4823,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}}, output_type={'module': 'golden_gate', 'class': 'DeploymentBackup'})
 @cli_util.wrap_exceptions
-def create_deployment_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, deployment_id, namespace_name, bucket_name, object_name, freeform_tags, defined_tags, locks):
+def create_deployment_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, deployment_id, namespace_name, bucket_name, object_name, freeform_tags, defined_tags, is_metadata_only, locks):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -4502,6 +4841,9 @@ def create_deployment_backup(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if is_metadata_only is not None:
+        _details['isMetadataOnly'] = is_metadata_only
 
     if locks is not None:
         _details['locks'] = cli_util.parse_json_parameter("locks", locks)
@@ -4964,6 +5306,7 @@ def deployment_wallet_exists_default_deployment_wallet_exists_details(ctx, from_
 @cli_util.option('--vault-id', required=True, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
 @cli_util.option('--master-encryption-key-id', required=True, help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--secret-name', required=True, help=u"""Name of the secret with which secret is shown in vault""")
+@cli_util.option('--secret-compartment-id', help=u"""The [OCID] of the compartment, where the secret will be created in.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -4974,7 +5317,7 @@ def deployment_wallet_exists_default_deployment_wallet_exists_details(ctx, from_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def export_deployment_wallet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, vault_id, master_encryption_key_id, secret_name, description, if_match):
+def export_deployment_wallet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, vault_id, master_encryption_key_id, secret_name, secret_compartment_id, description, if_match):
 
     if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
@@ -4988,6 +5331,9 @@ def export_deployment_wallet(ctx, from_json, wait_for_state, max_wait_seconds, w
     _details['vaultId'] = vault_id
     _details['masterEncryptionKeyId'] = master_encryption_key_id
     _details['secretName'] = secret_name
+
+    if secret_compartment_id is not None:
+        _details['secretCompartmentId'] = secret_compartment_id
 
     if description is not None:
         _details['description'] = description
@@ -5276,6 +5622,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.option('--vault-id', required=True, help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
 @cli_util.option('--new-wallet-secret-id', required=True, help=u"""The OCID of the customer's GoldenGate Service Secret. If provided, it references a key that customers will be required to ensure the policies are established to permit GoldenGate to use this Secret.""")
 @cli_util.option('--wallet-backup-secret-name', help=u"""Name of the secret with which secret is shown in vault""")
+@cli_util.option('--wallet-backup-secret-compartment-id', help=u"""The [OCID] of the compartment, where the secret will be created in.""")
 @cli_util.option('--master-encryption-key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -5288,7 +5635,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def import_deployment_wallet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, vault_id, new_wallet_secret_id, wallet_backup_secret_name, master_encryption_key_id, description, if_match, is_lock_override):
+def import_deployment_wallet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, vault_id, new_wallet_secret_id, wallet_backup_secret_name, wallet_backup_secret_compartment_id, master_encryption_key_id, description, if_match, is_lock_override):
 
     if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
@@ -5306,6 +5653,9 @@ def import_deployment_wallet(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if wallet_backup_secret_name is not None:
         _details['walletBackupSecretName'] = wallet_backup_secret_name
+
+    if wallet_backup_secret_compartment_id is not None:
+        _details['walletBackupSecretCompartmentId'] = wallet_backup_secret_compartment_id
 
     if master_encryption_key_id is not None:
         _details['masterEncryptionKeyId'] = master_encryption_key_id
@@ -6373,6 +6723,134 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
     cli_util.render_response(result, ctx)
 
 
+@connection_group.command(name=cli_util.override('goldengate.refresh_connection.command_name', 'refresh'), help=u"""Refresh the external Connection attributes. \n[Command Reference](refreshConnection)""")
+@cli_util.option('--connection-id', required=True, help=u"""The [OCID] of a Connection.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""The type of a refresh Connection external attributes.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def refresh_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, type, if_match, is_lock_override):
+
+    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.refresh_connection(
+        connection_id=connection_id,
+        refresh_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('goldengate.refresh_connection_default_refresh_connection_details.command_name', 'refresh-connection-default-refresh-connection-details'), help=u"""Refresh the external Connection attributes. \n[Command Reference](refreshConnection)""")
+@cli_util.option('--connection-id', required=True, help=u"""The [OCID] of a Connection.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def refresh_connection_default_refresh_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, if_match, is_lock_override):
+
+    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    _details['type'] = 'DEFAULT'
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.refresh_connection(
+        connection_id=connection_id,
+        refresh_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @connection_group.command(name=cli_util.override('goldengate.remove_connection_lock.command_name', 'remove'), help=u"""Removes a lock from a Connection resource. \n[Command Reference](removeConnectionLock)""")
 @cli_util.option('--connection-id', required=True, help=u"""The [OCID] of a Connection.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
@@ -7312,6 +7790,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -7323,7 +7802,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, connection_type, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, if_match, is_lock_override):
+def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, connection_type, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -7370,6 +7849,9 @@ def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 
     if routing_method is not None:
         _details['routingMethod'] = routing_method
+
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
 
     client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
     result = client.update_connection(
@@ -7422,11 +7904,13 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--servers', help=u"""Comma separated list of Elasticsearch server addresses, specified as host:port entries, where :port is optional. If port is not specified, it defaults to 9200. Used for establishing the initial connection to the Elasticsearch cluster. Example: `\"server1.example.com:4000,server2.example.com:4000\"`""")
 @cli_util.option('--security-protocol', help=u"""Security protocol for Elasticsearch.""")
 @cli_util.option('--authentication-type', help=u"""Authentication type for Elasticsearch.""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored. The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. If secretId is used plaintext field must not be provided. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--fingerprint', help=u"""Fingerprint required by TLS security protocol. Eg.: '6152b2dfbff200f973c5074a5b91d06ab3b472c07c09a1ea57bb7fd406cdce9c'""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
@@ -7439,7 +7923,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_elasticsearch_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, servers, security_protocol, authentication_type, username, password, fingerprint, if_match, is_lock_override):
+def update_connection_update_elasticsearch_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, servers, security_protocol, authentication_type, username, password, password_secret_id, fingerprint, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -7484,6 +7968,9 @@ def update_connection_update_elasticsearch_connection_details(ctx, from_json, fo
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if servers is not None:
         _details['servers'] = servers
 
@@ -7498,6 +7985,9 @@ def update_connection_update_elasticsearch_connection_details(ctx, from_json, fo
 
     if password is not None:
         _details['password'] = password
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
 
     if fingerprint is not None:
         _details['fingerprint'] = fingerprint
@@ -7555,7 +8045,9 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--service-account-key-file', help=u"""The base64 encoded content of the service account key file containing the credentials required to use Google BigQuery.""")
+@cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which containing the credentials required to use Google BigQuery. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -7567,7 +8059,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_google_big_query_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, service_account_key_file, if_match, is_lock_override):
+def update_connection_update_google_big_query_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, service_account_key_file, service_account_key_file_secret_id, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -7612,8 +8104,14 @@ def update_connection_update_google_big_query_connection_details(ctx, from_json,
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if service_account_key_file is not None:
         _details['serviceAccountKeyFile'] = service_account_key_file
+
+    if service_account_key_file_secret_id is not None:
+        _details['serviceAccountKeyFileSecretId'] = service_account_key_file_secret_id
 
     _details['connectionType'] = 'GOOGLE_BIGQUERY'
 
@@ -7668,11 +8166,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored. The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. If secretId is used plaintext field must not be provided. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--connection-string', help=u"""Connect descriptor or Easy Connect Naming method used to connect to a database.""")
 @cli_util.option('--authentication-mode', help=u"""Authentication mode. It can be provided at creation of Oracle Autonomous Database Serverless connections, when a databaseId is provided. The default value is MTLS.""")
 @cli_util.option('--wallet', help=u"""The wallet contents Oracle GoldenGate uses to make connections to a database. This attribute is expected to be base64 encoded.""")
+@cli_util.option('--wallet-secret-id', help=u"""The [OCID] of the Secret where the wallet file is stored. The wallet contents Oracle GoldenGate uses to make connections to a database. Note: When provided, 'wallet' field must not be provided.""")
 @cli_util.option('--session-mode', help=u"""The mode of the database connection session to be established by the data client. 'REDIRECT' - for a RAC database, 'DIRECT' - for a non-RAC database. Connection to a RAC database involves a redirection received from the SCAN listeners to the database node to connect to. By default the mode would be DIRECT.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
@@ -7689,7 +8190,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_oracle_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, username, password, connection_string, authentication_mode, wallet, session_mode, private_ip, database_id, if_match, is_lock_override):
+def update_connection_update_oracle_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, username, password, password_secret_id, connection_string, authentication_mode, wallet, wallet_secret_id, session_mode, private_ip, database_id, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -7734,11 +8235,17 @@ def update_connection_update_oracle_connection_details(ctx, from_json, force, wa
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if username is not None:
         _details['username'] = username
 
     if password is not None:
         _details['password'] = password
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
 
     if connection_string is not None:
         _details['connectionString'] = connection_string
@@ -7748,6 +8255,9 @@ def update_connection_update_oracle_connection_details(ctx, from_json, force, wa
 
     if wallet is not None:
         _details['wallet'] = wallet
+
+    if wallet_secret_id is not None:
+        _details['walletSecretId'] = wallet_secret_id
 
     if session_mode is not None:
         _details['sessionMode'] = session_mode
@@ -7811,9 +8321,11 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--connection-url', help=u"""Connection URL. e.g.: 'jdbc:redshift://aws-redshift-instance.aaaaaaaaaaaa.us-east-2.redshift.amazonaws.com:5439/mydb'""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored. The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. If secretId is used plaintext field must not be provided. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -7825,7 +8337,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_amazon_redshift_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, connection_url, username, password, if_match, is_lock_override):
+def update_connection_update_amazon_redshift_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, connection_url, username, password, password_secret_id, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -7870,6 +8382,9 @@ def update_connection_update_amazon_redshift_connection_details(ctx, from_json, 
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if connection_url is not None:
         _details['connectionUrl'] = connection_url
 
@@ -7878,6 +8393,9 @@ def update_connection_update_amazon_redshift_connection_details(ctx, from_json, 
 
     if password is not None:
         _details['password'] = password
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
 
     _details['connectionType'] = 'AMAZON_REDSHIFT'
 
@@ -7932,11 +8450,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--tenancy-id', help=u"""The [OCID] of the related OCI tenancy.""")
 @cli_util.option('--region-parameterconflict', help=u"""The name of the region. e.g.: us-ashburn-1""")
 @cli_util.option('--user-id', help=u"""The [OCID] of the OCI user who will access the Object Storage. The user must have write access to the bucket they want to connect to.""")
 @cli_util.option('--private-key-file', help=u"""The base64 encoded content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm""")
+@cli_util.option('--private-key-file-secret-id', help=u"""The [OCID] of the Secret that stores the content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Note: When provided, 'privateKeyFile' field must not be provided.""")
 @cli_util.option('--private-key-passphrase', help=u"""The passphrase of the private key.""")
+@cli_util.option('--private-key-passphrase-secret-id', help=u"""The [OCID] of the Secret that stores the passphrase of the private key. Note: When provided, 'privateKeyPassphrase' field must not be provided.""")
 @cli_util.option('--public-key-fingerprint', help=u"""The fingerprint of the API Key of the user specified by the userId. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
@@ -7949,7 +8470,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_oci_object_storage_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, tenancy_id, region_parameterconflict, user_id, private_key_file, private_key_passphrase, public_key_fingerprint, if_match, is_lock_override):
+def update_connection_update_oci_object_storage_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, tenancy_id, region_parameterconflict, user_id, private_key_file, private_key_file_secret_id, private_key_passphrase, private_key_passphrase_secret_id, public_key_fingerprint, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -7994,6 +8515,9 @@ def update_connection_update_oci_object_storage_connection_details(ctx, from_jso
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if tenancy_id is not None:
         _details['tenancyId'] = tenancy_id
 
@@ -8006,8 +8530,14 @@ def update_connection_update_oci_object_storage_connection_details(ctx, from_jso
     if private_key_file is not None:
         _details['privateKeyFile'] = private_key_file
 
+    if private_key_file_secret_id is not None:
+        _details['privateKeyFileSecretId'] = private_key_file_secret_id
+
     if private_key_passphrase is not None:
         _details['privateKeyPassphrase'] = private_key_passphrase
+
+    if private_key_passphrase_secret_id is not None:
+        _details['privateKeyPassphraseSecretId'] = private_key_passphrase_secret_id
 
     if public_key_fingerprint is not None:
         _details['publicKeyFingerprint'] = public_key_fingerprint
@@ -8065,15 +8595,21 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--servers', help=u"""Comma separated list of Redis server addresses, specified as host:port entries, where :port is optional. If port is not specified, it defaults to 6379. Used for establishing the initial connection to the Redis cluster. Example: `\"server1.example.com:6379,server2.example.com:6379\"`""")
 @cli_util.option('--security-protocol', help=u"""Security protocol for Redis.""")
 @cli_util.option('--authentication-type', help=u"""Authenticationentication type for the Redis database.""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored. The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. If secretId is used plaintext field must not be provided. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--trust-store', help=u"""The base64 encoded content of the TrustStore file.""")
+@cli_util.option('--trust-store-secret-id', help=u"""The [OCID] of the Secret that stores the content of the TrustStore file. Note: When provided, 'trustStore' field must not be provided.""")
 @cli_util.option('--trust-store-password', help=u"""The TrustStore password.""")
+@cli_util.option('--trust-store-password-secret-id', help=u"""The [OCID] of the Secret where the Redis TrustStore password is stored. Note: When provided, 'trustStorePassword' field must not be provided.""")
 @cli_util.option('--key-store', help=u"""The base64 encoded content of the KeyStore file.""")
+@cli_util.option('--key-store-secret-id', help=u"""The [OCID] of the Secret that stores the content of the KeyStore file. Note: When provided, 'keyStore' field must not be provided.""")
 @cli_util.option('--key-store-password', help=u"""The KeyStore password.""")
+@cli_util.option('--key-store-password-secret-id', help=u"""The [OCID] of the Secret where the Redis KeyStore password is stored. Note: When provided, 'keyStorePassword' field must not be provided.""")
 @cli_util.option('--redis-cluster-id', help=u"""The [OCID] of the Redis cluster.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
@@ -8086,7 +8622,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_redis_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, servers, security_protocol, authentication_type, username, password, trust_store, trust_store_password, key_store, key_store_password, redis_cluster_id, if_match, is_lock_override):
+def update_connection_update_redis_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, servers, security_protocol, authentication_type, username, password, password_secret_id, trust_store, trust_store_secret_id, trust_store_password, trust_store_password_secret_id, key_store, key_store_secret_id, key_store_password, key_store_password_secret_id, redis_cluster_id, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -8131,6 +8667,9 @@ def update_connection_update_redis_connection_details(ctx, from_json, force, wai
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if servers is not None:
         _details['servers'] = servers
 
@@ -8146,17 +8685,32 @@ def update_connection_update_redis_connection_details(ctx, from_json, force, wai
     if password is not None:
         _details['password'] = password
 
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
+
     if trust_store is not None:
         _details['trustStore'] = trust_store
+
+    if trust_store_secret_id is not None:
+        _details['trustStoreSecretId'] = trust_store_secret_id
 
     if trust_store_password is not None:
         _details['trustStorePassword'] = trust_store_password
 
+    if trust_store_password_secret_id is not None:
+        _details['trustStorePasswordSecretId'] = trust_store_password_secret_id
+
     if key_store is not None:
         _details['keyStore'] = key_store
 
+    if key_store_secret_id is not None:
+        _details['keyStoreSecretId'] = key_store_secret_id
+
     if key_store_password is not None:
         _details['keyStorePassword'] = key_store_password
+
+    if key_store_password_secret_id is not None:
+        _details['keyStorePasswordSecretId'] = key_store_password_secret_id
 
     if redis_cluster_id is not None:
         _details['redisClusterId'] = redis_cluster_id
@@ -8214,9 +8768,11 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--connection-string', help=u"""MongoDB connection string. e.g.: 'mongodb://mongodb0.example.com:27017/recordsrecords'""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect to the database. This username must already exist and be available by the database to be connected to.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated database.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret that stores the password Oracle GoldenGate uses to connect the associated database. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--database-id', help=u"""The [OCID] of the Oracle Autonomous Json Database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
@@ -8229,7 +8785,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_mongo_db_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, connection_string, username, password, database_id, if_match, is_lock_override):
+def update_connection_update_mongo_db_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, connection_string, username, password, password_secret_id, database_id, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -8274,6 +8830,9 @@ def update_connection_update_mongo_db_connection_details(ctx, from_json, force, 
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if connection_string is not None:
         _details['connectionString'] = connection_string
 
@@ -8282,6 +8841,9 @@ def update_connection_update_mongo_db_connection_details(ctx, from_json, force, 
 
     if password is not None:
         _details['password'] = password
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
 
     if database_id is not None:
         _details['databaseId'] = database_id
@@ -8339,7 +8901,9 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--service-account-key-file', help=u"""The base64 encoded content of the service account key file containing the credentials required to use Google Cloud Storage.""")
+@cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which containing the credentials required to use Google Cloud Storage. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -8351,7 +8915,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_google_cloud_storage_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, service_account_key_file, if_match, is_lock_override):
+def update_connection_update_google_cloud_storage_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, service_account_key_file, service_account_key_file_secret_id, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -8396,8 +8960,14 @@ def update_connection_update_google_cloud_storage_connection_details(ctx, from_j
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if service_account_key_file is not None:
         _details['serviceAccountKeyFile'] = service_account_key_file
+
+    if service_account_key_file_secret_id is not None:
+        _details['serviceAccountKeyFileSecretId'] = service_account_key_file_secret_id
 
     _details['connectionType'] = 'GOOGLE_CLOUD_STORAGE'
 
@@ -8452,13 +9022,17 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--authentication-type', help=u"""Used authentication mechanism to access Azure Data Lake Storage.""")
 @cli_util.option('--account-name', help=u"""Sets the Azure storage account name.""")
 @cli_util.option('--account-key', help=u"""Azure storage account key. This property is required when 'authenticationType' is set to 'SHARED_KEY'. e.g.: pa3WbhVATzj56xD4DH1VjOUhApRGEGHvOo58eQJVWIzX+j8j4CUVFcTjpIqDSRaSa1Wo2LbWY5at+AStEgLOIQ==""")
+@cli_util.option('--account-key-secret-id', help=u"""The [OCID] of the Secret where the account key is stored. Note: When provided, 'accountKey' field must not be provided.""")
 @cli_util.option('--sas-token', help=u"""Credential that uses a shared access signature (SAS) to authenticate to an Azure Service. This property is required when 'authenticationType' is set to 'SHARED_ACCESS_SIGNATURE'. e.g.: ?sv=2020-06-08&ss=bfqt&srt=sco&sp=rwdlacupyx&se=2020-09-10T20:27:28Z&st=2022-08-05T12:27:28Z&spr=https&sig=C1IgHsiLBmTSStYkXXGLTP8it0xBrArcgCqOsZbXwIQ%3D""")
+@cli_util.option('--sas-token-secret-id', help=u"""The [OCID] of the Secret where the sas token is stored. Note: When provided, 'sasToken' field must not be provided.""")
 @cli_util.option('--azure-tenant-id', help=u"""Azure tenant ID of the application. This property is required when 'authenticationType' is set to 'AZURE_ACTIVE_DIRECTORY'. e.g.: 14593954-d337-4a61-a364-9f758c64f97f""")
 @cli_util.option('--client-id', help=u"""Azure client ID of the application. This property is required when 'authenticationType' is set to 'AZURE_ACTIVE_DIRECTORY'. e.g.: 06ecaabf-8b80-4ec8-a0ec-20cbf463703d""")
 @cli_util.option('--client-secret', help=u"""Azure client secret (aka application password) for authentication. This property is required when 'authenticationType' is set to 'AZURE_ACTIVE_DIRECTORY'. e.g.: dO29Q~F5-VwnA.lZdd11xFF_t5NAXCaGwDl9NbT1""")
+@cli_util.option('--client-secret-secret-id', help=u"""The [OCID] of the Secret where the client secret is stored. Note: When provided, 'clientSecret' field must not be provided.""")
 @cli_util.option('--endpoint-parameterconflict', help=u"""Azure Storage service endpoint. e.g: https://test.blob.core.windows.net""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
@@ -8471,7 +9045,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_azure_data_lake_storage_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, authentication_type, account_name, account_key, sas_token, azure_tenant_id, client_id, client_secret, endpoint_parameterconflict, if_match, is_lock_override):
+def update_connection_update_azure_data_lake_storage_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, authentication_type, account_name, account_key, account_key_secret_id, sas_token, sas_token_secret_id, azure_tenant_id, client_id, client_secret, client_secret_secret_id, endpoint_parameterconflict, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -8516,6 +9090,9 @@ def update_connection_update_azure_data_lake_storage_connection_details(ctx, fro
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if authentication_type is not None:
         _details['authenticationType'] = authentication_type
 
@@ -8525,8 +9102,14 @@ def update_connection_update_azure_data_lake_storage_connection_details(ctx, fro
     if account_key is not None:
         _details['accountKey'] = account_key
 
+    if account_key_secret_id is not None:
+        _details['accountKeySecretId'] = account_key_secret_id
+
     if sas_token is not None:
         _details['sasToken'] = sas_token
+
+    if sas_token_secret_id is not None:
+        _details['sasTokenSecretId'] = sas_token_secret_id
 
     if azure_tenant_id is not None:
         _details['azureTenantId'] = azure_tenant_id
@@ -8536,6 +9119,9 @@ def update_connection_update_azure_data_lake_storage_connection_details(ctx, fro
 
     if client_secret is not None:
         _details['clientSecret'] = client_secret
+
+    if client_secret_secret_id is not None:
+        _details['clientSecretSecretId'] = client_secret_secret_id
 
     if endpoint_parameterconflict is not None:
         _details['endpoint'] = endpoint_parameterconflict
@@ -8593,8 +9179,10 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--access-key-id', help=u"""Access key ID to access the Amazon Kinesis.""")
 @cli_util.option('--secret-access-key', help=u"""Secret access key to access the Amazon Kinesis.""")
+@cli_util.option('--secret-access-key-secret-id', help=u"""The [OCID] of the Secret where the secret access key is stored. Note: When provided, 'secretAccessKey' field must not be provided.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -8606,7 +9194,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_amazon_kinesis_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, access_key_id, secret_access_key, if_match, is_lock_override):
+def update_connection_update_amazon_kinesis_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, access_key_id, secret_access_key, secret_access_key_secret_id, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -8651,11 +9239,17 @@ def update_connection_update_amazon_kinesis_connection_details(ctx, from_json, f
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if access_key_id is not None:
         _details['accessKeyId'] = access_key_id
 
     if secret_access_key is not None:
         _details['secretAccessKey'] = secret_access_key
+
+    if secret_access_key_secret_id is not None:
+        _details['secretAccessKeySecretId'] = secret_access_key_secret_id
 
     _details['connectionType'] = 'AMAZON_KINESIS'
 
@@ -8710,23 +9304,31 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--should-use-jndi', type=click.BOOL, help=u"""If set to true, Java Naming and Directory Interface (JNDI) properties should be provided.""")
 @cli_util.option('--jndi-connection-factory', help=u"""The Connection Factory can be looked up using this name. e.g.: 'ConnectionFactory'""")
 @cli_util.option('--jndi-provider-url', help=u"""The URL that Java Message Service will use to contact the JNDI provider. e.g.: 'tcp://myjms.host.domain:61616?jms.prefetchPolicy.all=1000'""")
 @cli_util.option('--jndi-initial-context-factory', help=u"""The implementation of javax.naming.spi.InitialContextFactory interface that the client uses to obtain initial naming context. e.g.: 'org.apache.activemq.jndi.ActiveMQInitialContextFactory'""")
 @cli_util.option('--jndi-security-principal', help=u"""Specifies the identity of the principal (user) to be authenticated. e.g.: 'admin2'""")
 @cli_util.option('--jndi-security-credentials', help=u"""The password associated to the principal.""")
+@cli_util.option('--jndi-security-credentials-secret-id', help=u"""The [OCID] of the Secret where the security credentials are stored associated to the principal. Note: When provided, 'jndiSecurityCredentials' field must not be provided.""")
 @cli_util.option('--connection-url', help=u"""Connectin URL of the Java Message Service, specifying the protocol, host, and port. e.g.: 'mq://myjms.host.domain:7676'""")
 @cli_util.option('--connection-factory', help=u"""The of Java class implementing javax.jms.ConnectionFactory interface supplied by the Java Message Service provider. e.g.: 'com.stc.jmsjca.core.JConnectionFactoryXA'""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect to the Java Message Service. This username must already exist and be available by the Java Message Service to be connected to.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated Java Message Service.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored, that Oracle GoldenGate uses to connect the associated Java Message Service. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--security-protocol', help=u"""Security protocol for Java Message Service. If not provided, default is PLAIN. Optional until 2024-06-27, in the release after it will be made required.""")
 @cli_util.option('--authentication-type', help=u"""Authentication type for Java Message Service.  If not provided, default is NONE. Optional until 2024-06-27, in the release after it will be made required.""")
 @cli_util.option('--trust-store', help=u"""The base64 encoded content of the TrustStore file.""")
+@cli_util.option('--trust-store-secret-id', help=u"""The [OCID] of the Secret where the content of the TrustStore file is stored. Note: When provided, 'trustStore' field must not be provided.""")
 @cli_util.option('--trust-store-password', help=u"""The TrustStore password.""")
+@cli_util.option('--trust-store-password-secret-id', help=u"""The [OCID] of the Secret where the TrustStore password is stored. Note: When provided, 'trustStorePassword' field must not be provided.""")
 @cli_util.option('--key-store', help=u"""The base64 encoded content of the KeyStore file.""")
+@cli_util.option('--key-store-secret-id', help=u"""The [OCID] of the Secret where the content of the KeyStore file is stored. Note: When provided, 'keyStore' field must not be provided.""")
 @cli_util.option('--key-store-password', help=u"""The KeyStore password.""")
+@cli_util.option('--key-store-password-secret-id', help=u"""The [OCID] of the Secret where the KeyStore password is stored. Note: When provided, 'keyStorePassword' field must not be provided.""")
 @cli_util.option('--ssl-key-password', help=u"""The password for the cert inside of the KeyStore. In case it differs from the KeyStore password, it should be provided.""")
+@cli_util.option('--ssl-key-password-secret-id', help=u"""The [OCID] of the Secret where the password is stored for the cert inside of the Keystore. In case it differs from the KeyStore password, it should be provided. Note: When provided, 'sslKeyPassword' field must not be provided.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
 The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
@@ -8741,7 +9343,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_java_message_service_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, should_use_jndi, jndi_connection_factory, jndi_provider_url, jndi_initial_context_factory, jndi_security_principal, jndi_security_credentials, connection_url, connection_factory, username, password, security_protocol, authentication_type, trust_store, trust_store_password, key_store, key_store_password, ssl_key_password, private_ip, if_match, is_lock_override):
+def update_connection_update_java_message_service_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, should_use_jndi, jndi_connection_factory, jndi_provider_url, jndi_initial_context_factory, jndi_security_principal, jndi_security_credentials, jndi_security_credentials_secret_id, connection_url, connection_factory, username, password, password_secret_id, security_protocol, authentication_type, trust_store, trust_store_secret_id, trust_store_password, trust_store_password_secret_id, key_store, key_store_secret_id, key_store_password, key_store_password_secret_id, ssl_key_password, ssl_key_password_secret_id, private_ip, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -8786,6 +9388,9 @@ def update_connection_update_java_message_service_connection_details(ctx, from_j
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if should_use_jndi is not None:
         _details['shouldUseJndi'] = should_use_jndi
 
@@ -8804,6 +9409,9 @@ def update_connection_update_java_message_service_connection_details(ctx, from_j
     if jndi_security_credentials is not None:
         _details['jndiSecurityCredentials'] = jndi_security_credentials
 
+    if jndi_security_credentials_secret_id is not None:
+        _details['jndiSecurityCredentialsSecretId'] = jndi_security_credentials_secret_id
+
     if connection_url is not None:
         _details['connectionUrl'] = connection_url
 
@@ -8816,6 +9424,9 @@ def update_connection_update_java_message_service_connection_details(ctx, from_j
     if password is not None:
         _details['password'] = password
 
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
+
     if security_protocol is not None:
         _details['securityProtocol'] = security_protocol
 
@@ -8825,17 +9436,32 @@ def update_connection_update_java_message_service_connection_details(ctx, from_j
     if trust_store is not None:
         _details['trustStore'] = trust_store
 
+    if trust_store_secret_id is not None:
+        _details['trustStoreSecretId'] = trust_store_secret_id
+
     if trust_store_password is not None:
         _details['trustStorePassword'] = trust_store_password
+
+    if trust_store_password_secret_id is not None:
+        _details['trustStorePasswordSecretId'] = trust_store_password_secret_id
 
     if key_store is not None:
         _details['keyStore'] = key_store
 
+    if key_store_secret_id is not None:
+        _details['keyStoreSecretId'] = key_store_secret_id
+
     if key_store_password is not None:
         _details['keyStorePassword'] = key_store_password
 
+    if key_store_password_secret_id is not None:
+        _details['keyStorePasswordSecretId'] = key_store_password_secret_id
+
     if ssl_key_password is not None:
         _details['sslKeyPassword'] = ssl_key_password
+
+    if ssl_key_password_secret_id is not None:
+        _details['sslKeyPasswordSecretId'] = ssl_key_password_secret_id
 
     if private_ip is not None:
         _details['privateIp'] = private_ip
@@ -8893,11 +9519,13 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--deployment-id', help=u"""The [OCID] of the deployment being referenced.""")
 @cli_util.option('--host', help=u"""The name or address of a host.""")
 @cli_util.option('--port', type=click.INT, help=u"""The port of an endpoint usually specified for a connection.""")
 @cli_util.option('--username', help=u"""The username credential existing in the Oracle GoldenGate used to be connected to.""")
 @cli_util.option('--password', help=u"""The password used to connect to the Oracle GoldenGate accessed trough this connection.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored, which is used to connect to the Oracle GoldenGate accessed trough this connection. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
 The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
@@ -8912,7 +9540,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_golden_gate_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, deployment_id, host, port, username, password, private_ip, if_match, is_lock_override):
+def update_connection_update_golden_gate_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, deployment_id, host, port, username, password, password_secret_id, private_ip, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -8957,6 +9585,9 @@ def update_connection_update_golden_gate_connection_details(ctx, from_json, forc
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if deployment_id is not None:
         _details['deploymentId'] = deployment_id
 
@@ -8971,6 +9602,9 @@ def update_connection_update_golden_gate_connection_details(ctx, from_json, forc
 
     if password is not None:
         _details['password'] = password
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
 
     if private_ip is not None:
         _details['privateIp'] = private_ip
@@ -9028,11 +9662,13 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--database-name', help=u"""The name of the database.""")
 @cli_util.option('--host', help=u"""The name or address of a host.""")
 @cli_util.option('--port', type=click.INT, help=u"""The port of an endpoint usually specified for a connection.""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored. The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. If secretId is used plaintext field must not be provided. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--additional-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name-value pair attribute entries. Used as additional parameters in connection string.
 
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -9042,6 +9678,7 @@ This option is a JSON list with items of type NameValuePair.  For documentation 
 @cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA).""")
 @cli_util.option('--ssl-cert', help=u"""The base64 encoded certificate of the PostgreSQL server. The supported file formats are .pem and .crt.""")
 @cli_util.option('--ssl-key', help=u"""The base64 encoded private key of the PostgreSQL server. The supported file formats are .pem and .crt.""")
+@cli_util.option('--ssl-key-secret-id', help=u"""The [OCID] of the Secret that stores the private key of the PostgreSQL server. The supported file formats are .pem and .crt. Note: When provided, 'sslKey' field must not be provided.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
 The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
@@ -9057,7 +9694,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'additional-attributes': {'module': 'golden_gate', 'class': 'list[NameValuePair]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_postgresql_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, database_name, host, port, username, password, additional_attributes, security_protocol, ssl_mode, ssl_ca, ssl_crl, ssl_cert, ssl_key, private_ip, db_system_id, if_match, is_lock_override):
+def update_connection_update_postgresql_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, database_name, host, port, username, password, password_secret_id, additional_attributes, security_protocol, ssl_mode, ssl_ca, ssl_crl, ssl_cert, ssl_key, ssl_key_secret_id, private_ip, db_system_id, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -9102,6 +9739,9 @@ def update_connection_update_postgresql_connection_details(ctx, from_json, force
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if database_name is not None:
         _details['databaseName'] = database_name
 
@@ -9116,6 +9756,9 @@ def update_connection_update_postgresql_connection_details(ctx, from_json, force
 
     if password is not None:
         _details['password'] = password
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
 
     if additional_attributes is not None:
         _details['additionalAttributes'] = cli_util.parse_json_parameter("additional_attributes", additional_attributes)
@@ -9137,6 +9780,9 @@ def update_connection_update_postgresql_connection_details(ctx, from_json, force
 
     if ssl_key is not None:
         _details['sslKey'] = ssl_key
+
+    if ssl_key_secret_id is not None:
+        _details['sslKeySecretId'] = ssl_key_secret_id
 
     if private_ip is not None:
         _details['privateIp'] = private_ip
@@ -9197,11 +9843,13 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--database-name', help=u"""The name of the database.""")
 @cli_util.option('--host', help=u"""The name or address of a host.""")
 @cli_util.option('--port', type=click.INT, help=u"""The port of an endpoint usually specified for a connection.""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect to the Microsoft SQL Server. This username must already exist and be available by the Microsoft SQL Server to be connected to.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated Microsoft SQL Server.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret that stores the password Oracle GoldenGate uses to connect the associated Microsoft SQL Server. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--additional-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name-value pair attribute entries. Used as additional parameters in connection string.
 
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -9222,7 +9870,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'additional-attributes': {'module': 'golden_gate', 'class': 'list[NameValuePair]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_microsoft_sqlserver_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, database_name, host, port, username, password, additional_attributes, security_protocol, ssl_ca, should_validate_server_certificate, private_ip, if_match, is_lock_override):
+def update_connection_update_microsoft_sqlserver_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, database_name, host, port, username, password, password_secret_id, additional_attributes, security_protocol, ssl_ca, should_validate_server_certificate, private_ip, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -9267,6 +9915,9 @@ def update_connection_update_microsoft_sqlserver_connection_details(ctx, from_js
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if database_name is not None:
         _details['databaseName'] = database_name
 
@@ -9281,6 +9932,9 @@ def update_connection_update_microsoft_sqlserver_connection_details(ctx, from_js
 
     if password is not None:
         _details['password'] = password
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
 
     if additional_attributes is not None:
         _details['additionalAttributes'] = cli_util.parse_json_parameter("additional_attributes", additional_attributes)
@@ -9350,11 +10004,14 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--tenancy-id', help=u"""The [OCID] of the related OCI tenancy.""")
 @cli_util.option('--region-parameterconflict', help=u"""The name of the region. e.g.: us-ashburn-1""")
 @cli_util.option('--user-id', help=u"""The [OCID] of the OCI user who will access the Oracle NoSQL database. The user must have write access to the table they want to connect to.""")
 @cli_util.option('--private-key-file', help=u"""The base64 encoded content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm""")
+@cli_util.option('--private-key-file-secret-id', help=u"""The [OCID] of the Secret that stores the content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Note: When provided, 'privateKeyFile' field must not be provided.""")
 @cli_util.option('--private-key-passphrase', help=u"""The passphrase of the private key.""")
+@cli_util.option('--private-key-passphrase-secret-id', help=u"""The [OCID] of the Secret that stores the passphrase of the private key. Note: When provided, 'privateKeyPassphrase' field must not be provided.""")
 @cli_util.option('--public-key-fingerprint', help=u"""The fingerprint of the API Key of the user specified by the userId. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
@@ -9367,7 +10024,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_oracle_nosql_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, tenancy_id, region_parameterconflict, user_id, private_key_file, private_key_passphrase, public_key_fingerprint, if_match, is_lock_override):
+def update_connection_update_oracle_nosql_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, tenancy_id, region_parameterconflict, user_id, private_key_file, private_key_file_secret_id, private_key_passphrase, private_key_passphrase_secret_id, public_key_fingerprint, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -9412,6 +10069,9 @@ def update_connection_update_oracle_nosql_connection_details(ctx, from_json, for
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if tenancy_id is not None:
         _details['tenancyId'] = tenancy_id
 
@@ -9424,8 +10084,14 @@ def update_connection_update_oracle_nosql_connection_details(ctx, from_json, for
     if private_key_file is not None:
         _details['privateKeyFile'] = private_key_file
 
+    if private_key_file_secret_id is not None:
+        _details['privateKeyFileSecretId'] = private_key_file_secret_id
+
     if private_key_passphrase is not None:
         _details['privateKeyPassphrase'] = private_key_passphrase
+
+    if private_key_passphrase_secret_id is not None:
+        _details['privateKeyPassphraseSecretId'] = private_key_passphrase_secret_id
 
     if public_key_fingerprint is not None:
         _details['publicKeyFingerprint'] = public_key_fingerprint
@@ -9483,15 +10149,22 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--url', help=u"""Kafka Schema Registry URL. e.g.: 'https://server1.us.oracle.com:8081'""")
 @cli_util.option('--authentication-type', help=u"""Used authentication mechanism to access Schema Registry.""")
-@cli_util.option('--username', help=u"""The username to access Schema Registry using basic authentation. This value is injected into 'schema.registry.basic.auth.user.info=user:password' configuration property.""")
-@cli_util.option('--password', help=u"""The password to access Schema Registry using basic authentation. This value is injected into 'schema.registry.basic.auth.user.info=user:password' configuration property.""")
+@cli_util.option('--username', help=u"""The username to access Schema Registry using basic authentication. This value is injected into 'schema.registry.basic.auth.user.info=user:password' configuration property.""")
+@cli_util.option('--password', help=u"""The password to access Schema Registry using basic authentication. This value is injected into 'schema.registry.basic.auth.user.info=user:password' configuration property.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored. The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. If secretId is used plaintext field must not be provided. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--trust-store', help=u"""The base64 encoded content of the TrustStore file.""")
+@cli_util.option('--trust-store-secret-id', help=u"""The [OCID] of the Secret that stores the content of the TrustStore file. Note: When provided, 'trustStore' field must not be provided.""")
 @cli_util.option('--trust-store-password', help=u"""The TrustStore password.""")
+@cli_util.option('--trust-store-password-secret-id', help=u"""The [OCID] of the Secret where the kafka Ssl TrustStore password is stored. Note: When provided, 'trustStorePassword' field must not be provided.""")
 @cli_util.option('--key-store', help=u"""The base64 encoded content of the KeyStore file.""")
+@cli_util.option('--key-store-secret-id', help=u"""The [OCID] of the Secret that stores the content of the KeyStore file. Note: When provided, 'keyStore' field must not be provided.""")
 @cli_util.option('--key-store-password', help=u"""The KeyStore password.""")
+@cli_util.option('--key-store-password-secret-id', help=u"""The [OCID] of the Secret where the kafka Ssl KeyStore password is stored. Note: When provided, 'keyStorePassword' field must not be provided.""")
 @cli_util.option('--ssl-key-password', help=u"""The password for the cert inside the KeyStore. In case it differs from the KeyStore password, it should be provided.""")
+@cli_util.option('--ssl-key-password-secret-id', help=u"""The [OCID] of the Secret that stores the password for the cert inside the KeyStore. In case it differs from the KeyStore password, it should be provided. Note: When provided, 'sslKeyPassword' field must not be provided.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
 The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
@@ -9506,7 +10179,7 @@ The private IP address of the connection's endpoint in the customer's VCN, typic
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_kafka_schema_registry_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, url, authentication_type, username, password, trust_store, trust_store_password, key_store, key_store_password, ssl_key_password, private_ip, if_match, is_lock_override):
+def update_connection_update_kafka_schema_registry_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, url, authentication_type, username, password, password_secret_id, trust_store, trust_store_secret_id, trust_store_password, trust_store_password_secret_id, key_store, key_store_secret_id, key_store_password, key_store_password_secret_id, ssl_key_password, ssl_key_password_secret_id, private_ip, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -9551,6 +10224,9 @@ def update_connection_update_kafka_schema_registry_connection_details(ctx, from_
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if url is not None:
         _details['url'] = url
 
@@ -9563,20 +10239,38 @@ def update_connection_update_kafka_schema_registry_connection_details(ctx, from_
     if password is not None:
         _details['password'] = password
 
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
+
     if trust_store is not None:
         _details['trustStore'] = trust_store
+
+    if trust_store_secret_id is not None:
+        _details['trustStoreSecretId'] = trust_store_secret_id
 
     if trust_store_password is not None:
         _details['trustStorePassword'] = trust_store_password
 
+    if trust_store_password_secret_id is not None:
+        _details['trustStorePasswordSecretId'] = trust_store_password_secret_id
+
     if key_store is not None:
         _details['keyStore'] = key_store
+
+    if key_store_secret_id is not None:
+        _details['keyStoreSecretId'] = key_store_secret_id
 
     if key_store_password is not None:
         _details['keyStorePassword'] = key_store_password
 
+    if key_store_password_secret_id is not None:
+        _details['keyStorePasswordSecretId'] = key_store_password_secret_id
+
     if ssl_key_password is not None:
         _details['sslKeyPassword'] = ssl_key_password
+
+    if ssl_key_password_secret_id is not None:
+        _details['sslKeyPasswordSecretId'] = ssl_key_password_secret_id
 
     if private_ip is not None:
         _details['privateIp'] = private_ip
@@ -9634,8 +10328,10 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--access-key-id', help=u"""Access key ID to access the Amazon S3 bucket. e.g.: \"this-is-not-the-secret\"""")
 @cli_util.option('--secret-access-key', help=u"""Secret access key to access the Amazon S3 bucket. e.g.: \"this-is-not-the-secret\"""")
+@cli_util.option('--secret-access-key-secret-id', help=u"""The [OCID] of the Secret where the Secret Access Key is stored. Note: When provided, 'secretAccessKey' field must not be provided.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -9647,7 +10343,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_amazon_s3_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, access_key_id, secret_access_key, if_match, is_lock_override):
+def update_connection_update_amazon_s3_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, access_key_id, secret_access_key, secret_access_key_secret_id, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -9692,11 +10388,17 @@ def update_connection_update_amazon_s3_connection_details(ctx, from_json, force,
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if access_key_id is not None:
         _details['accessKeyId'] = access_key_id
 
     if secret_access_key is not None:
         _details['secretAccessKey'] = secret_access_key
+
+    if secret_access_key_secret_id is not None:
+        _details['secretAccessKeySecretId'] = secret_access_key_secret_id
 
     _details['connectionType'] = 'AMAZON_S3'
 
@@ -9751,12 +10453,16 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--connection-url', help=u"""JDBC connection URL. e.g.: 'jdbc:snowflake://<account_name>.snowflakecomputing.com/?warehouse=<warehouse-name>&db=<db-name>'""")
 @cli_util.option('--authentication-type', help=u"""Used authentication mechanism to access Snowflake.""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect to Snowflake. This username must already exist and be available by Snowflake platform to be connected to.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect to Snowflake platform.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret that stores the password Oracle GoldenGate uses to connect to Snowflake platform. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--private-key-file', help=u"""The base64 encoded content of private key file in PEM format.""")
+@cli_util.option('--private-key-file-secret-id', help=u"""The [OCID] of the Secret that stores the content of the private key file (PEM file) corresponding to the API key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm Note: When provided, 'privateKeyFile' field must not be provided.""")
 @cli_util.option('--private-key-passphrase', help=u"""Password if the private key file is encrypted.""")
+@cli_util.option('--private-key-passphrase-secret-id', help=u"""The [OCID] of the Secret that stores the password for the private key file. Note: When provided, 'privateKeyPassphrase' field must not be provided.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -9768,7 +10474,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_snowflake_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, connection_url, authentication_type, username, password, private_key_file, private_key_passphrase, if_match, is_lock_override):
+def update_connection_update_snowflake_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, connection_url, authentication_type, username, password, password_secret_id, private_key_file, private_key_file_secret_id, private_key_passphrase, private_key_passphrase_secret_id, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -9813,6 +10519,9 @@ def update_connection_update_snowflake_connection_details(ctx, from_json, force,
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if connection_url is not None:
         _details['connectionUrl'] = connection_url
 
@@ -9825,11 +10534,20 @@ def update_connection_update_snowflake_connection_details(ctx, from_json, force,
     if password is not None:
         _details['password'] = password
 
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
+
     if private_key_file is not None:
         _details['privateKeyFile'] = private_key_file
 
+    if private_key_file_secret_id is not None:
+        _details['privateKeyFileSecretId'] = private_key_file_secret_id
+
     if private_key_passphrase is not None:
         _details['privateKeyPassphrase'] = private_key_passphrase
+
+    if private_key_passphrase_secret_id is not None:
+        _details['privateKeyPassphraseSecretId'] = private_key_passphrase_secret_id
 
     _details['connectionType'] = 'SNOWFLAKE'
 
@@ -9884,6 +10602,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--core-site-xml', help=u"""The base64 encoded content of the Hadoop Distributed File System configuration file (core-site.xml).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
@@ -9896,7 +10615,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_hdfs_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, core_site_xml, if_match, is_lock_override):
+def update_connection_update_hdfs_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, core_site_xml, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -9940,6 +10659,9 @@ def update_connection_update_hdfs_connection_details(ctx, from_json, force, wait
 
     if routing_method is not None:
         _details['routingMethod'] = routing_method
+
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
 
     if core_site_xml is not None:
         _details['coreSiteXml'] = core_site_xml
@@ -9997,8 +10719,10 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored. The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. If secretId is used plaintext field must not be provided. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--host', help=u"""The name or address of a host.""")
 @cli_util.option('--port', type=click.INT, help=u"""The port of an endpoint usually specified for a connection.""")
 @cli_util.option('--database-name', help=u"""The name of the database.""")
@@ -10008,6 +10732,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA). Note: This is an optional property and only applicable if TLS/MTLS option is selected.""")
 @cli_util.option('--ssl-cert', help=u"""Client Certificate - The base64 encoded content of a .pem or .crt file. containing the client public key (for 2-way SSL).""")
 @cli_util.option('--ssl-key', help=u"""Client Key \u2013 The base64 encoded content of a .pem or .crt file containing the client private key (for 2-way SSL).""")
+@cli_util.option('--ssl-key-secret-id', help=u"""The [OCID] of the Secret that stores the Client Key - The content of a .pem or .crt file containing the client private key (for 2-way SSL). Note: When provided, 'sslKey' field must not be provided.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
 The private IP address of the connection's endpoint in the customer's VCN, typically a database endpoint or a big data endpoint (e.g. Kafka bootstrap server). In case the privateIp is provided, the subnetId must also be provided. In case the privateIp (and the subnetId) is not provided it is assumed the datasource is publicly accessible. In case the connection is accessible only privately, the lack of privateIp will result in not being able to access the connection.""")
@@ -10026,7 +10751,7 @@ This option is a JSON list with items of type NameValuePair.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'additional-attributes': {'module': 'golden_gate', 'class': 'list[NameValuePair]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_mysql_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, username, password, host, port, database_name, security_protocol, ssl_mode, ssl_ca, ssl_crl, ssl_cert, ssl_key, private_ip, additional_attributes, db_system_id, if_match, is_lock_override):
+def update_connection_update_mysql_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, username, password, password_secret_id, host, port, database_name, security_protocol, ssl_mode, ssl_ca, ssl_crl, ssl_cert, ssl_key, ssl_key_secret_id, private_ip, additional_attributes, db_system_id, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -10071,11 +10796,17 @@ def update_connection_update_mysql_connection_details(ctx, from_json, force, wai
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if username is not None:
         _details['username'] = username
 
     if password is not None:
         _details['password'] = password
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
 
     if host is not None:
         _details['host'] = host
@@ -10103,6 +10834,9 @@ def update_connection_update_mysql_connection_details(ctx, from_json, force, wai
 
     if ssl_key is not None:
         _details['sslKey'] = ssl_key
+
+    if ssl_key_secret_id is not None:
+        _details['sslKeySecretId'] = ssl_key_secret_id
 
     if private_ip is not None:
         _details['privateIp'] = private_ip
@@ -10166,6 +10900,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--stream-pool-id', help=u"""The [OCID] of the stream pool being referenced.""")
 @cli_util.option('--bootstrap-servers', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Kafka bootstrap. Equivalent of bootstrap.servers configuration property in Kafka: list of KafkaBootstrapServer objects specified by host/port. Used for establishing the initial connection to the Kafka cluster. Example: `\"server1.example.com:9092,server2.example.com:9092\"`
 
@@ -10173,11 +10908,17 @@ This option is a JSON list with items of type KafkaBootstrapServer.  For documen
 @cli_util.option('--security-protocol', help=u"""Security Type for Kafka.""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored. The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. If secretId is used plaintext field must not be provided. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--trust-store', help=u"""The base64 encoded content of the TrustStore file.""")
+@cli_util.option('--trust-store-secret-id', help=u"""The [OCID] of the Secret where the content of the TrustStore file is stored. Note: When provided, 'trustStore' field must not be provided.""")
 @cli_util.option('--trust-store-password', help=u"""The TrustStore password.""")
+@cli_util.option('--trust-store-password-secret-id', help=u"""The [OCID] of the Secret where the kafka TrustStore password is stored. Note: When provided, 'trustStorePassword' field must not be provided.""")
 @cli_util.option('--key-store', help=u"""The base64 encoded content of the KeyStore file.""")
+@cli_util.option('--key-store-secret-id', help=u"""The [OCID] of the Secret where the content of the KeyStore file is stored. Note: When provided, 'keyStore' field must not be provided.""")
 @cli_util.option('--key-store-password', help=u"""The KeyStore password.""")
+@cli_util.option('--key-store-password-secret-id', help=u"""The [OCID] of the Secret where the kafka KeyStore password is stored. Note: When provided, 'keyStorePassword' field must not be provided.""")
 @cli_util.option('--ssl-key-password', help=u"""The password for the cert inside of the KeyStore. In case it differs from the KeyStore password, it should be provided.""")
+@cli_util.option('--ssl-key-password-secret-id', help=u"""The [OCID] of the Secret where the kafka Ssl Key password is stored. Note: When provided, 'sslKeyPassword' field must not be provided.""")
 @cli_util.option('--consumer-properties', help=u"""The base64 encoded content of the consumer.properties file.""")
 @cli_util.option('--producer-properties', help=u"""The base64 encoded content of the producer.properties file.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -10191,7 +10932,7 @@ This option is a JSON list with items of type KafkaBootstrapServer.  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'bootstrap-servers': {'module': 'golden_gate', 'class': 'list[KafkaBootstrapServer]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_kafka_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, stream_pool_id, bootstrap_servers, security_protocol, username, password, trust_store, trust_store_password, key_store, key_store_password, ssl_key_password, consumer_properties, producer_properties, if_match, is_lock_override):
+def update_connection_update_kafka_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, stream_pool_id, bootstrap_servers, security_protocol, username, password, password_secret_id, trust_store, trust_store_secret_id, trust_store_password, trust_store_password_secret_id, key_store, key_store_secret_id, key_store_password, key_store_password_secret_id, ssl_key_password, ssl_key_password_secret_id, consumer_properties, producer_properties, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -10236,6 +10977,9 @@ def update_connection_update_kafka_connection_details(ctx, from_json, force, wai
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if stream_pool_id is not None:
         _details['streamPoolId'] = stream_pool_id
 
@@ -10251,20 +10995,38 @@ def update_connection_update_kafka_connection_details(ctx, from_json, force, wai
     if password is not None:
         _details['password'] = password
 
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
+
     if trust_store is not None:
         _details['trustStore'] = trust_store
+
+    if trust_store_secret_id is not None:
+        _details['trustStoreSecretId'] = trust_store_secret_id
 
     if trust_store_password is not None:
         _details['trustStorePassword'] = trust_store_password
 
+    if trust_store_password_secret_id is not None:
+        _details['trustStorePasswordSecretId'] = trust_store_password_secret_id
+
     if key_store is not None:
         _details['keyStore'] = key_store
+
+    if key_store_secret_id is not None:
+        _details['keyStoreSecretId'] = key_store_secret_id
 
     if key_store_password is not None:
         _details['keyStorePassword'] = key_store_password
 
+    if key_store_password_secret_id is not None:
+        _details['keyStorePasswordSecretId'] = key_store_password_secret_id
+
     if ssl_key_password is not None:
         _details['sslKeyPassword'] = ssl_key_password
+
+    if ssl_key_password_secret_id is not None:
+        _details['sslKeyPasswordSecretId'] = ssl_key_password_secret_id
 
     if consumer_properties is not None:
         _details['consumerProperties'] = consumer_properties
@@ -10325,17 +11087,21 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--database-name', help=u"""The name of the database.""")
 @cli_util.option('--host', help=u"""The name or address of a host.""")
 @cli_util.option('--port', type=click.INT, help=u"""The port of an endpoint usually specified for a connection.""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect to the DB2 database. This username must already exist and be available by the DB2 to be connected to.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated DB2 database.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored, that Oracle GoldenGate uses to connect the associated DB2 database. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--additional-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name-value pair attribute entries. Used as additional parameters in connection string.
 
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--security-protocol', help=u"""Security protocol for the DB2 database.""")
 @cli_util.option('--ssl-client-keystoredb', help=u"""The base64 encoded keystore file created at the client containing the server certificate / CA root certificate.""")
+@cli_util.option('--ssl-client-keystoredb-secret-id', help=u"""The [OCID] of the Secret where the keystore file stored, which created at the client containing the server certificate / CA root certificate. Note: When provided, 'sslClientKeystoredb' field must not be provided.""")
 @cli_util.option('--ssl-client-keystash', help=u"""The base64 encoded keystash file which contains the encrypted password to the key database file.""")
+@cli_util.option('--ssl-client-keystash-secret-id', help=u"""The [OCID] of the Secret where the keystash file is stored, which contains the encrypted password to the key database file. Note: When provided, 'sslClientKeystash' field must not be provided.""")
 @cli_util.option('--ssl-server-certificate', help=u"""The base64 encoded file which contains the self-signed server certificate / Certificate Authority (CA) certificate.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
@@ -10348,7 +11114,7 @@ This option is a JSON list with items of type NameValuePair.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'additional-attributes': {'module': 'golden_gate', 'class': 'list[NameValuePair]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_db2_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, database_name, host, port, username, password, additional_attributes, security_protocol, ssl_client_keystoredb, ssl_client_keystash, ssl_server_certificate, if_match, is_lock_override):
+def update_connection_update_db2_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, database_name, host, port, username, password, password_secret_id, additional_attributes, security_protocol, ssl_client_keystoredb, ssl_client_keystoredb_secret_id, ssl_client_keystash, ssl_client_keystash_secret_id, ssl_server_certificate, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -10393,6 +11159,9 @@ def update_connection_update_db2_connection_details(ctx, from_json, force, wait_
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if database_name is not None:
         _details['databaseName'] = database_name
 
@@ -10408,6 +11177,9 @@ def update_connection_update_db2_connection_details(ctx, from_json, force, wait_
     if password is not None:
         _details['password'] = password
 
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
+
     if additional_attributes is not None:
         _details['additionalAttributes'] = cli_util.parse_json_parameter("additional_attributes", additional_attributes)
 
@@ -10417,8 +11189,14 @@ def update_connection_update_db2_connection_details(ctx, from_json, force, wait_
     if ssl_client_keystoredb is not None:
         _details['sslClientKeystoredb'] = ssl_client_keystoredb
 
+    if ssl_client_keystoredb_secret_id is not None:
+        _details['sslClientKeystoredbSecretId'] = ssl_client_keystoredb_secret_id
+
     if ssl_client_keystash is not None:
         _details['sslClientKeystash'] = ssl_client_keystash
+
+    if ssl_client_keystash_secret_id is not None:
+        _details['sslClientKeystashSecretId'] = ssl_client_keystash_secret_id
 
     if ssl_server_certificate is not None:
         _details['sslServerCertificate'] = ssl_server_certificate
@@ -10476,6 +11254,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--host', help=u"""Host and port separated by colon. Example: `\"server.example.com:1234\"`
 
 For multiple hosts, provide a comma separated list. Example: `\"server1.example.com:1000,server1.example.com:2000\"`""")
@@ -10490,7 +11269,7 @@ For multiple hosts, provide a comma separated list. Example: `\"server1.example.
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_generic_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, host, if_match, is_lock_override):
+def update_connection_update_generic_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, host, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -10534,6 +11313,9 @@ def update_connection_update_generic_connection_details(ctx, from_json, force, w
 
     if routing_method is not None:
         _details['routingMethod'] = routing_method
+
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
 
     if host is not None:
         _details['host'] = host
@@ -10591,9 +11373,11 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--connection-string', help=u"""JDBC connection string. e.g.: 'jdbc:sqlserver://<synapse-workspace>.sql.azuresynapse.net:1433;database=<db-name>;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.sql.azuresynapse.net;loginTimeout=300;'""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect the associated system of the given technology. This username must already exist and be available by the system/application to be connected to and must conform to the case sensitivty requirments defined in it.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on.""")
+@cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored. The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. If secretId is used plaintext field must not be provided. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -10605,7 +11389,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_azure_synapse_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, connection_string, username, password, if_match, is_lock_override):
+def update_connection_update_azure_synapse_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, connection_string, username, password, password_secret_id, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -10650,6 +11434,9 @@ def update_connection_update_azure_synapse_connection_details(ctx, from_json, fo
     if routing_method is not None:
         _details['routingMethod'] = routing_method
 
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
     if connection_string is not None:
         _details['connectionString'] = connection_string
 
@@ -10658,6 +11445,9 @@ def update_connection_update_azure_synapse_connection_details(ctx, from_json, fo
 
     if password is not None:
         _details['password'] = password
+
+    if password_secret_id is not None:
+        _details['passwordSecretId'] = password_secret_id
 
     _details['connectionType'] = 'AZURE_SYNAPSE_ANALYTICS'
 

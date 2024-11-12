@@ -6,6 +6,82 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.50.1 - 2024-11-12
+--------------------
+Added
+~~~~~
+* Generative AI Service Management
+
+  * Support for the new DAC unit shape of Large Generic V2, Llama 3.2 11b model and Llama 3.2 90b model
+
+    * ``oci generative-ai dedicated-ai-cluster create --unit-shape``
+
+* Generative AI Service Inference
+
+  * Support for the response format in Cohere CommandR CommandR Plus v1.6 models
+
+    * ``oci generative-ai-inference chat-result chat-cohere-chat-request --chat-request-response-format``
+
+* GoldenGate Service
+
+  * Support new operations for connection entity
+
+    * ``oci goldengate connection refresh``
+
+  * Support for new optional parameters in below commands
+
+    * ``oci goldengate deployment export-wallet --secret-compartment-id``
+    * ``oci goldengate deployment import-wallet --wallet-backup-secret-compartment-id``
+    * ``oci goldengate deployment-backup create --is-metadata-only``
+    * ``oci goldengate connection create-amazon-kinesis-connection --secret-access-key, --does-use-secret-ids, --secret-access-key-secret-id``
+    * ``oci goldengate connection create-amazon-redshift-connection --password, --does-use-secret-ids, --password-secret-id``
+    * ``oci goldengate connection create-amazon-s3-connection --secret-access-key, --does-use-secret-ids, --secret-access-key-secret-id``
+    * ``oci goldengate connection create-azure-data-lake-storage-connection --account-key-secret-id, --client-secret-secret-id, --does-use-secret-ids, --sas-token-secret-id``
+    * ``oci goldengate connection create-azure-synapse-connection --password, --does-use-secret-ids, --password-secret-id``
+    * ``oci goldengate connection create-db2-connection --password, --does-use-secret-ids, --password-secret-id, --ssl-client-keystash-secret-id, --ssl-client-keystoredb-secret-id``
+    * ``oci goldengate connection create-elasticsearch-connection --does-use-secret-ids, --password-secret-id``
+    * ``oci goldengate connection create-generic-connection --does-use-secret-ids``
+    * ``oci goldengate connection create-goldengate-connection --does-use-secret-ids, --password-secret-id``
+    * ``oci goldengate connection create-google-big-query-connection --service-account-key-file, --does-use-secret-ids, --service-account-key-file-secret-id``
+    * ``oci goldengate connection create-google-cloud-storage-connection --service-account-key-file, --does-use-secret-ids, --service-account-key-file-secret-id``
+    * ``oci goldengate connection create-hdfs-connection --does-use-secret-ids``
+    * ``oci goldengate connection create-jms-connection --does-use-secret-ids, --jndi-security-credentials-secret-id, --key-store-password-secret-id, --key-store-secret-id, --password-secret-id, --ssl-key-password-secret-id, --trust-store-password-secret-id, --trust-store-secret-id``
+    * ``oci goldengate connection create-kafka-connection --does-use-secret-ids, --key-store-password-secret-id, --key-store-secret-id, --password-secret-id, --ssl-key-password-secret-id, --trust-store-password-secret-id, --trust-store-secret-id``
+    * ``oci goldengate connection create-kafka-schema-registry-connection --does-use-secret-ids, --key-store-password-secret-id, --key-store-secret-id, --password-secret-id, --ssl-key-password-secret-id, --trust-store-password-secret-id, --trust-store-secret-id``
+    * ``oci goldengate connection create-microsoft-sqlserver-connection --password, --does-use-secret-ids, --password-secret-id``
+    * ``oci goldengate connection create-mongo-db-connection --does-use-secret-ids, --password-secret-id``
+    * ``oci goldengate connection create-mysql-connection --password, --does-use-secret-ids, --password-secret-id, --ssl-key-secret-id``
+    * ``oci goldengate connection create-object-storage-connection --private-key-file, --does-use-secret-ids, --private-key-file-secret-id, --private-key-passphrase-secret-id``
+    * ``oci goldengate connection create-oracle-connection --password, --does-use-secret-ids, --password-secret-id, --wallet-secret-id``
+    * ``oci goldengate connection create-oracle-nosql-connection --private-key-file, --does-use-secret-ids, --private-key-file-secret-id, --private-key-passphrase-secret-id``
+    * ``oci goldengate connection create-postgresql-connection --password, --does-use-secret-ids, --password-secret-id, --ssl-key-secret-id``
+    * ``oci goldengate connection create-redis-connection --does-use-secret-ids, --key-store-password-secret-id, --key-store-secret-id, --password-secret-id, --trust-store-password-secret-id, --trust-store-secret-id``
+    * ``oci goldengate connection create-snowflake-connection --does-use-secret-ids, --password-secret-id, --private-key-file-secret-id, --private-key-passphrase-secret-id``
+    * ``oci goldengate connection update-amazon-kinesis-connection --does-use-secret-ids, --secret-access-key-secret-id``
+    * ``oci goldengate connection update-amazon-redshift-connection --does-use-secret-ids, --password-secret-id``
+    * ``oci goldengate connection update-amazon-s3-connection --does-use-secret-ids, --secret-access-key-secret-id``
+    * ``oci goldengate connection update-azure-data-lake-storage-connection --account-key-secret-id, --client-secret-secret-id, --does-use-secret-ids, --sas-token-secret-id``
+    * ``oci goldengate connection update-azure-synapse-connection --does-use-secret-ids, --password-secret-id``
+    * ``oci goldengate connection update-db2-connection --does-use-secret-ids, --password-secret-id, --ssl-client-keystash-secret-id, --ssl-client-keystoredb-secret-id``
+    * ``oci goldengate connection update-elasticsearch-connection --does-use-secret-ids, --password-secret-id``
+    * ``oci goldengate connection update-generic-connection --does-use-secret-ids``
+    * ``oci goldengate connection update-goldengate-connection --does-use-secret-ids, --password-secret-id``
+    * ``oci goldengate connection update-google-big-query-connection --does-use-secret-ids, --service-account-key-file-secret-id``
+    * ``oci goldengate connection update-google-cloud-storage-connection --does-use-secret-ids, --service-account-key-file-secret-id``
+    * ``oci goldengate connection update-hdfs-connection --does-use-secret-ids``
+    * ``oci goldengate connection update-jms-connection --does-use-secret-ids, --jndi-security-credentials-secret-id, --key-store-password-secret-id, --key-store-secret-id, --password-secret-id, --ssl-key-password-secret-id, --trust-store-password-secret-id, --trust-store-secret-id``
+    * ``oci goldengate connection update-kafka-connection --does-use-secret-ids, --key-store-password-secret-id, --key-store-secret-id, --password-secret-id, --ssl-key-password-secret-id, --trust-store-password-secret-id, --trust-store-secret-id``
+    * ``oci goldengate connection update-kafka-schema-registry-connection --does-use-secret-ids, --key-store-password-secret-id, --key-store-secret-id, --password-secret-id, --ssl-key-password-secret-id, --trust-store-password-secret-id, --trust-store-secret-id``
+    * ``oci goldengate connection update-microsoft-sqlserver-connection --does-use-secret-ids, --password-secret-id``
+    * ``oci goldengate connection update-mongo-db-connection --does-use-secret-ids, --password-secret-id``
+    * ``oci goldengate connection update-mysql-connection --does-use-secret-ids, --password-secret-id, --ssl-key-secret-id``
+    * ``oci goldengate connection update-object-storage-connection --does-use-secret-ids, --private-key-file-secret-id, --private-key-passphrase-secret-id``
+    * ``oci goldengate connection update-oracle-connection --does-use-secret-ids, --password-secret-id, --wallet-secret-id``
+    * ``oci goldengate connection update-oracle-nosql-connection --does-use-secret-ids, --private-key-file-secret-id, --private-key-passphrase-secret-id``
+    * ``oci goldengate connection update-postgresql-connection --does-use-secret-ids, --password-secret-id, --ssl-key-secret-id``
+    * ``oci goldengate connection update-redis-connection --does-use-secret-ids, --key-store-password-secret-id, --key-store-secret-id, --password-secret-id, --trust-store-password-secret-id, --trust-store-secret-id``
+    * ``oci goldengate connection update-snowflake-connection --does-use-secret-ids, --password-secret-id, --private-key-file-secret-id, --private-key-passphrase-secret-id``
+
 3.50.0 - 2024-11-05
 --------------------
 Changed
