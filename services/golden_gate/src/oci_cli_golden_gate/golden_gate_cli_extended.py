@@ -642,3 +642,6 @@ cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldeng
 
 # oci goldengate deployment generate-library-url-generate-log-reader-component-library-url-details -> oci goldengate deployment generate-log-reader-component-library-url
 cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.generate_library_url_generate_log_reader_component_library_url_details, "generate-log-reader-component-library-url")
+
+# oci goldengate connection refresh-connection-default-refresh-connection-details -> oci goldengate connection refresh
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.refresh_connection_default_refresh_connection_details, "refresh")
