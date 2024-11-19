@@ -427,12 +427,13 @@ See [Object Names] for object naming requirements. \n[Command Reference](createM
 @cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-kms-key-id', help=u"""The [OCID] of a master encryption key used to call the Key Management service to generate a data encryption key or to encrypt or decrypt a data encryption key.""")
+@cli_util.option('--opc-checksum-algorithm', type=custom_types.CliCaseInsensitiveChoice(["CRC32C", "SHA256", "SHA384"]), help=u"""The optional checksum algorithm to use to compute and store the checksum of the body of the HTTP request (or the parts in case of multipart uploads), in addition to the default MD5 checksum.""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}}, output_type={'module': 'object_storage', 'class': 'MultipartUpload'})
 @cli_util.wrap_exceptions
-def create_multipart_upload(ctx, from_json, namespace_name, bucket_name, object, content_type, content_language, content_encoding, content_disposition, cache_control, storage_tier, metadata, if_match, if_none_match, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256, opc_sse_kms_key_id):
+def create_multipart_upload(ctx, from_json, namespace_name, bucket_name, object, content_type, content_language, content_encoding, content_disposition, cache_control, storage_tier, metadata, if_match, if_none_match, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256, opc_sse_kms_key_id, opc_checksum_algorithm):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -453,6 +454,8 @@ def create_multipart_upload(ctx, from_json, namespace_name, bucket_name, object,
         kwargs['opc_sse_customer_key_sha256'] = opc_sse_customer_key_sha256
     if opc_sse_kms_key_id is not None:
         kwargs['opc_sse_kms_key_id'] = opc_sse_kms_key_id
+    if opc_checksum_algorithm is not None:
+        kwargs['opc_checksum_algorithm'] = opc_checksum_algorithm
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -2197,6 +2200,22 @@ See [Special Instructions for Object Storage PUT] for request signature requirem
 @cli_util.option('--content-md5', help=u"""The optional header that defines the base64-encoded MD5 hash of the body. If the optional Content-MD5 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the MD5 hash for the body and comparing it to the MD5 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content MD5 error is returned with the message:
 
 \"The computed MD5 of the request body (ACTUAL_MD5) does not match the Content-MD5 header (HEADER_MD5)\"""")
+@cli_util.option('--opc-checksum-algorithm', type=custom_types.CliCaseInsensitiveChoice(["CRC32C", "SHA256", "SHA384"]), help=u"""The optional checksum algorithm to use to compute and store the checksum of the body of the HTTP request (or the parts in case of multipart uploads), in addition to the default MD5 checksum.""")
+@cli_util.option('--opc-content-crc32c', help=u"""Applicable only if CRC32C is specified in the opc-checksum-algorithm request header.
+
+The optional header that defines the base64-encoded, 32-bit CRC32C (Castagnoli) checksum of the body. If the optional opc-content-crc32c header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the CRC32C checksum for the body and comparing it to the CRC32C checksum supplied in the header. If the two checksums do not match, the object is rejected and an HTTP-400 Unmatched Content CRC32C error is returned with the message:
+
+\"The computed CRC32C of the request body (ACTUAL_CRC32C) does not match the opc-content-crc32c header (HEADER_CRC32C)\"""")
+@cli_util.option('--opc-content-sha256', help=u"""Applicable only if SHA256 is specified in the opc-checksum-algorithm request header.
+
+The optional header that defines the base64-encoded SHA256 hash of the body. If the optional opc-content-sha256 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the SHA256 hash for the body and comparing it to the SHA256 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content SHA256 error is returned with the message:
+
+\"The computed SHA256 of the request body (ACTUAL_SHA256) does not match the opc-content-sha256 header (HEADER_SHA256)\"""")
+@cli_util.option('--opc-content-sha384', help=u"""Applicable only if SHA384 is specified in the opc-checksum-algorithm request header.
+
+The optional header that defines the base64-encoded SHA384 hash of the body. If the optional opc-content-sha384 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the SHA384 hash for the body and comparing it to the SHA384 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content SHA384 error is returned with the message:
+
+\"The computed SHA384 of the request body (ACTUAL_SHA384) does not match the opc-content-sha384 header (HEADER_SHA384)\"""")
 @cli_util.option('--content-type', help=u"""The optional Content-Type header that defines the standard MIME type format of the object. Content type defaults to 'application/octet-stream' if not specified in the PutObject call. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to identify and perform special operations on text only objects.""")
 @cli_util.option('--content-language', help=u"""The optional Content-Language header that defines the content language of the object to upload. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to identify and differentiate objects based on a particular language.""")
 @cli_util.option('--content-encoding', help=u"""The optional Content-Encoding header that defines the content encodings that were applied to the object to upload. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to determine what decoding mechanisms need to be applied to obtain the media-type specified by the Content-Type header of the object.""")
@@ -2213,7 +2232,7 @@ See [Special Instructions for Object Storage PUT] for request signature requirem
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def put_object(ctx, from_json, namespace_name, bucket_name, object_name, put_object_body, content_length, if_match, if_none_match, expect, content_md5, content_type, content_language, content_encoding, content_disposition, cache_control, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256, opc_sse_kms_key_id, storage_tier, opc_meta_):
+def put_object(ctx, from_json, namespace_name, bucket_name, object_name, put_object_body, content_length, if_match, if_none_match, expect, content_md5, opc_checksum_algorithm, opc_content_crc32c, opc_content_sha256, opc_content_sha384, content_type, content_language, content_encoding, content_disposition, cache_control, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256, opc_sse_kms_key_id, storage_tier, opc_meta_):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -2235,6 +2254,14 @@ def put_object(ctx, from_json, namespace_name, bucket_name, object_name, put_obj
         kwargs['expect'] = expect
     if content_md5 is not None:
         kwargs['content_md5'] = content_md5
+    if opc_checksum_algorithm is not None:
+        kwargs['opc_checksum_algorithm'] = opc_checksum_algorithm
+    if opc_content_crc32c is not None:
+        kwargs['opc_content_crc32c'] = opc_content_crc32c
+    if opc_content_sha256 is not None:
+        kwargs['opc_content_sha256'] = opc_content_sha256
+    if opc_content_sha384 is not None:
+        kwargs['opc_content_sha384'] = opc_content_sha384
     if content_type is not None:
         kwargs['content_type'] = content_type
     if content_language is not None:
@@ -2837,6 +2864,22 @@ def update_retention_rule(ctx, from_json, force, namespace_name, bucket_name, re
 @cli_util.option('--content-md5', help=u"""The optional header that defines the base64-encoded MD5 hash of the body. If the optional Content-MD5 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the MD5 hash for the body and comparing it to the MD5 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content MD5 error is returned with the message:
 
 \"The computed MD5 of the request body (ACTUAL_MD5) does not match the Content-MD5 header (HEADER_MD5)\"""")
+@cli_util.option('--opc-checksum-algorithm', type=custom_types.CliCaseInsensitiveChoice(["CRC32C", "SHA256", "SHA384"]), help=u"""The optional checksum algorithm to use to compute and store the checksum of the body of the HTTP request (or the parts in case of multipart uploads), in addition to the default MD5 checksum.""")
+@cli_util.option('--opc-content-crc32c', help=u"""Applicable only if CRC32C is specified in the opc-checksum-algorithm request header.
+
+The optional header that defines the base64-encoded, 32-bit CRC32C (Castagnoli) checksum of the body. If the optional opc-content-crc32c header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the CRC32C checksum for the body and comparing it to the CRC32C checksum supplied in the header. If the two checksums do not match, the object is rejected and an HTTP-400 Unmatched Content CRC32C error is returned with the message:
+
+\"The computed CRC32C of the request body (ACTUAL_CRC32C) does not match the opc-content-crc32c header (HEADER_CRC32C)\"""")
+@cli_util.option('--opc-content-sha256', help=u"""Applicable only if SHA256 is specified in the opc-checksum-algorithm request header.
+
+The optional header that defines the base64-encoded SHA256 hash of the body. If the optional opc-content-sha256 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the SHA256 hash for the body and comparing it to the SHA256 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content SHA256 error is returned with the message:
+
+\"The computed SHA256 of the request body (ACTUAL_SHA256) does not match the opc-content-sha256 header (HEADER_SHA256)\"""")
+@cli_util.option('--opc-content-sha384', help=u"""Applicable only if SHA384 is specified in the opc-checksum-algorithm request header.
+
+The optional header that defines the base64-encoded SHA384 hash of the body. If the optional opc-content-sha384 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the SHA384 hash for the body and comparing it to the SHA384 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content SHA384 error is returned with the message:
+
+\"The computed SHA384 of the request body (ACTUAL_SHA384) does not match the opc-content-sha384 header (HEADER_SHA384)\"""")
 @cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
@@ -2846,7 +2889,7 @@ def update_retention_rule(ctx, from_json, force, namespace_name, bucket_name, re
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def upload_part(ctx, from_json, namespace_name, bucket_name, object_name, upload_id, upload_part_num, upload_part_body, content_length, if_match, if_none_match, expect, content_md5, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256, opc_sse_kms_key_id):
+def upload_part(ctx, from_json, namespace_name, bucket_name, object_name, upload_id, upload_part_num, upload_part_body, content_length, if_match, if_none_match, expect, content_md5, opc_checksum_algorithm, opc_content_crc32c, opc_content_sha256, opc_content_sha384, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256, opc_sse_kms_key_id):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -2868,6 +2911,14 @@ def upload_part(ctx, from_json, namespace_name, bucket_name, object_name, upload
         kwargs['expect'] = expect
     if content_md5 is not None:
         kwargs['content_md5'] = content_md5
+    if opc_checksum_algorithm is not None:
+        kwargs['opc_checksum_algorithm'] = opc_checksum_algorithm
+    if opc_content_crc32c is not None:
+        kwargs['opc_content_crc32c'] = opc_content_crc32c
+    if opc_content_sha256 is not None:
+        kwargs['opc_content_sha256'] = opc_content_sha256
+    if opc_content_sha384 is not None:
+        kwargs['opc_content_sha384'] = opc_content_sha384
     if opc_sse_customer_algorithm is not None:
         kwargs['opc_sse_customer_algorithm'] = opc_sse_customer_algorithm
     if opc_sse_customer_key is not None:

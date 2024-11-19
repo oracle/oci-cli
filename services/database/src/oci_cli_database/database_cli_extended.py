@@ -381,6 +381,7 @@ cli_util.rename_command(database_cli, database_cli.autonomous_database_group, da
 @cli_util.option('--is-diagnostics-events-enabled', required=False, type=click.BOOL, help="""Enables customer to receive Events service notifications for guest VM issues""")
 @cli_util.option('--is-health-monitoring-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive diagnostic data and share it with its operations and support personnel""")
 @cli_util.option('--is-incident-logs-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive Events service notifications for guest VM issues, collect incident logs and traces""")
+@cli_util.option('--is-unified-auditing-enabled', required=False, type=click.BOOL, help="""Indicates whether unified auditing is enabled or not. Set to True to enable unified auditing on respective DBHome.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
@@ -393,6 +394,9 @@ def launch_db_system_extended(ctx, **kwargs):
 
     if 'database_software_image_id' in kwargs and kwargs['database_software_image_id']:
         create_db_home_details['databaseSoftwareImageId'] = kwargs['database_software_image_id']
+
+    if 'is_unified_auditing_enabled' in kwargs and kwargs['is_unified_auditing_enabled']:
+        create_db_home_details['is_unified_auditing_enabled'] = kwargs['is_unified_auditing_enabled']
 
     create_database_details = {}
     if 'admin_password' in kwargs and kwargs['admin_password']:
@@ -500,6 +504,7 @@ def launch_db_system_extended(ctx, **kwargs):
     del kwargs['auto_full_backup_day']
     del kwargs['auto_full_backup_window']
     del kwargs['run_immediate_full_backup']
+    del kwargs['is_unified_auditing_enabled']
 
     ctx.invoke(database_cli.launch_db_system_launch_db_system_details, **kwargs)
 
@@ -518,6 +523,7 @@ def launch_db_system_extended(ctx, **kwargs):
 @cli_util.option('--is-diagnostics-events-enabled', required=False, type=click.BOOL, help="""Enables customer to receive Events service notifications for guest VM issues""")
 @cli_util.option('--is-health-monitoring-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive diagnostic data and share it with its operations and support personnel""")
 @cli_util.option('--is-incident-logs-enabled', required=False, type=click.BOOL, help="""Enables Oracle to receive Events service notifications for guest VM issues, collect incident logs and traces""")
+@cli_util.option('--is-unified-auditing-enabled', required=False, type=click.BOOL, help="""Indicates whether unified auditing is enabled or not. Set to True to enable unified auditing on respective DBHome.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
@@ -546,6 +552,9 @@ def launch_db_system_backup_extended(ctx, **kwargs):
 
     if 'database_software_image_id' in kwargs and kwargs['database_software_image_id']:
         create_db_home_details['databaseSoftwareImageId'] = kwargs['database_software_image_id']
+
+    if 'is_unified_auditing_enabled' in kwargs and kwargs['is_unified_auditing_enabled']:
+        create_db_home_details['is_unified_auditing_enabled'] = kwargs['is_unified_auditing_enabled']
 
     kwargs['db_home'] = json.dumps(create_db_home_details)
 
@@ -588,6 +597,7 @@ def launch_db_system_backup_extended(ctx, **kwargs):
     del kwargs['is_diagnostics_events_enabled']
     del kwargs['is_health_monitoring_enabled']
     del kwargs['is_incident_logs_enabled']
+    del kwargs['is_unified_auditing_enabled']
 
     ctx.invoke(database_cli.launch_db_system_launch_db_system_from_backup_details, **kwargs)
 
@@ -3674,6 +3684,25 @@ database_cli.autonomous_database_group.commands.pop(database_cli.create_autonomo
 
 # Remove create-autonomous-database-okv-key-details from oci db autonomous-database
 database_cli.autonomous_database_group.commands.pop(database_cli.create_autonomous_database_okv_key_details.name)
+
+
+# Rename "oci db database gi-minor-version-summary list-gi-version-minor-versions" -> "oci db database gi-minor-version-summary list"
+cli_util.rename_command(database_cli, database_cli.gi_minor_version_summary_group, database_cli.list_gi_version_minor_versions, "list")
+
+
+@cli_util.copy_params_from_generated_command(database_cli.list_gi_version_minor_versions, params_to_exclude=['version_parameterconflict'])
+@database_cli.gi_minor_version_summary_group.command(name=database_cli.list_gi_version_minor_versions.name, help=database_cli.list_gi_version_minor_versions.help)
+@cli_util.option('--gi-version', required=True, help=u"""The Oracle Grid Infrastructure major version. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[GiMinorVersionSummary]'})
+@cli_util.wrap_exceptions
+def list_gi_version_minor_versions_extended(ctx, **kwargs):
+
+    if 'gi_version' in kwargs:
+        kwargs['version_parameterconflict'] = kwargs['gi_version']
+        kwargs.pop('gi_version')
+
+    ctx.invoke(database_cli.list_gi_version_minor_versions, **kwargs)
 
 
 # Renaming the parameter high-capacity-database-storage to high-capacity-db-storage

@@ -157,7 +157,7 @@ class TestDefaultFilesCommandInvocation(unittest.TestCase):
                 util.print_latest_exception(error)
                 error_count = error_count + 1
 
-        self.assertEquals(0, error_count)
+        self.assertEqual(0, error_count)
 
     def invoke(self, commands, debug=False, ** args):
         if debug is True:

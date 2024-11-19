@@ -196,7 +196,7 @@ class TestBlockStorage(unittest.TestCase):
         result = self.invoke(
             ['backup', 'list', '--compartment-id', util.COMPARTMENT_ID, '--volume-id', self.volume_id])
         util.validate_response(result)
-        self.assertEquals(1, len(json.loads(result.output)['data']))
+        self.assertEqual(1, len(json.loads(result.output)['data']))
 
         retrieve_list_and_ensure_sorted(
             ['bv', 'backup', 'list', '-c', util.COMPARTMENT_ID, '--sort-by', 'DISPLAYNAME', '--sort-order', 'asc'],
@@ -280,7 +280,7 @@ class TestBlockStorage(unittest.TestCase):
             ['volume-group-backup', 'list', '--compartment-id', util.COMPARTMENT_ID, '--volume-group-id',
              self.volume_group])
         util.validate_response(result)
-        self.assertEquals(1, len(json.loads(result.output)['data']))
+        self.assertEqual(1, len(json.loads(result.output)['data']))
 
         backup_name = backup_name + "_UPDATED"
         result = self.invoke(
@@ -431,7 +431,7 @@ class TestBlockStorage(unittest.TestCase):
                     util.print_latest_exception(error)
                     error_count = error_count + 1
 
-        self.assertEquals(0, error_count)
+        self.assertEqual(0, error_count)
 
     def invoke(self, params, debug=False, **args):
         commands = ['bv'] + params

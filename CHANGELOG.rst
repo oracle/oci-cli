@@ -6,6 +6,58 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.50.2 - 2024-11-19
+--------------------
+Added
+~~~~~
+* Database Service
+
+  * Command to list Oracle Grid Infrastructure minor versions for the given major version. If --is-gi-version-for-provisioning argument is provided, then the command lists the versions that can be used for provisioning a cluster.
+
+     * ``oci db database gi-minor-version-summary list``
+
+  * Support to create and list exascale db vault
+
+    * ``oci db exascale-db-storage-vault create --exadata-infrastructure-id``
+    * ``oci db exascale-db-storage-vault list --exadata-infrastructure-id``
+
+  * Support to create vm cluster with db vault
+
+    * ``oci db vm-cluster create --exascale-db-storage-vault-id``
+
+  * Support to configure exascale
+
+    * ``oci db exadata-infrastructure configure-exascale --exadata-infrastructure-id, --total-storage-in-gbs``
+
+  * Support for new optional parameter for Unified Auditing in the Database service
+
+    * ``oci db system launch --is-unified-auditing-enabled``
+    * ``oci db system launch-from-backup --is-unified-auditing-enabled``
+
+* Oracle Database PostgreSQL service
+
+   * Support Single Read Only (RO) endpoint for the Read Replica
+
+    * ``oci psql db-system create``
+
+* Customer Incident Management Service
+
+  * Introduced UserGroupId for creating Tech SR
+
+     * ``oci support incident create --user-group-id``
+
+* Object Storage Service
+
+  * Support for additional checksum parameters in the Object Storage service.
+    * opc-checksum-algorithm`` - Specifies the checksum algorithm to be used (options: SHA256, SHA384, CRC32C).
+    * opc-content-sha256`` - Specifies the SHA256 checksum value.
+    * opc-content-sha384`` - Specifies the SHA384 checksum value.
+    * opc-content-crc32c`` - Specifies the CRC32C checksum value.
+
+    * ``oci os object put``
+
+* Support for python 3.12
+
 3.50.1 - 2024-11-12
 --------------------
 Added
