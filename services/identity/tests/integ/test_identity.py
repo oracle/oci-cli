@@ -84,13 +84,13 @@ class TestIdentity(unittest.TestCase):
 
         result = self.invoke(['compartment', 'list', '--include-root', '--limit', '10'])
         self.validate_response(result)
-        self.assertEquals(len(json.loads(result.output)['data']), 10)
+        self.assertEqual(len(json.loads(result.output)['data']), 10)
 
         result = self.invoke(['compartment', 'list', '--include-root', '--limit', '1'])
         self.validate_response(result)
         tenant_id = "ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq"
-        self.assertEquals(tenant_id, json.loads(result.output)['data'][0]['id'])
-        self.assertEquals(len(json.loads(result.output)['data']), 1)
+        self.assertEqual(tenant_id, json.loads(result.output)['data'][0]['id'])
+        self.assertEqual(len(json.loads(result.output)['data']), 1)
 
         result = self.invoke(['compartment', 'list', '--all', '--include-root'])
         self.validate_response(result)
@@ -105,7 +105,7 @@ class TestIdentity(unittest.TestCase):
         result = self.invoke(
             ['compartment', 'update', '--compartment-id', util.COMPARTMENT_ID, '--description', update_description])
         self.validate_response(result, expect_etag=True)
-        self.assertEquals(update_description, json.loads(result.output)['data']['description'])
+        self.assertEqual(update_description, json.loads(result.output)['data']['description'])
 
     def subtest_compartment_rename(self):
         compartment_to_rename = self.get_compartment_to_rename()
@@ -116,9 +116,9 @@ class TestIdentity(unittest.TestCase):
         self.validate_response(result, expect_etag=True)
 
         parsed_result = json.loads(result.output)
-        self.assertEquals(compartment_to_rename['id'], parsed_result['data']['id'])
-        self.assertEquals(updated_description, parsed_result['data']['description'])
-        self.assertEquals(updated_name, parsed_result['data']['name'])
+        self.assertEqual(compartment_to_rename['id'], parsed_result['data']['id'])
+        self.assertEqual(updated_description, parsed_result['data']['description'])
+        self.assertEqual(updated_name, parsed_result['data']['name'])
 
     def subtest_user_operations(self):
         self.user_name = util.random_name('cli_test_user')
@@ -269,20 +269,20 @@ P8ZM9xRukuJ4bnPTe8olOFB8UCCkAEmkUxtZI4vF90HvDKDOV0KY4OH5YESY6apH
         password_ocid = json_result['data']['id']
         password = json_result['data']['password']
         assert len(password) > 5
-        self.assertEquals(description, json_result['data']['description'])
+        self.assertEqual(description, json_result['data']['description'])
 
         description = description + " UPDATED"
         result = self.invoke(
             ['user', 'swift-password', 'update', '--user-id', self.user_ocid, '--swift-password-id', password_ocid, '--description', description])
         self.validate_response(result, expect_etag=True)
         json_result = json.loads(result.output)
-        self.assertEquals(description, json_result['data']['description'])
+        self.assertEqual(description, json_result['data']['description'])
 
         result = self.invoke(
             ['user', 'swift-password', 'list', '--user-id', self.user_ocid])
         self.validate_response(result)
         json_result = json.loads(result.output)
-        self.assertEquals(1, len(json_result['data']))
+        self.assertEqual(1, len(json_result['data']))
 
         result = self.invoke(
             ['user', 'swift-password', 'delete', '--user-id', self.user_ocid, '--swift-password-id', password_ocid, '--force'])

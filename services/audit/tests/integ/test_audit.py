@@ -83,7 +83,7 @@ class TestAudit(unittest.TestCase):
         assert result.exit_code == 0
         response = json.loads(result.output)
         events = response["data"]
-        self.assertEquals(len(events), event_count)
+        self.assertEqual(len(events), event_count)
         for event in events:
             parsed_date = parse(event["event-time"])
             event_type = event["event-type"]
@@ -100,7 +100,7 @@ class TestAudit(unittest.TestCase):
         assert result.exit_code == 0
         response = json.loads(result.output)
         events = response["data"]
-        self.assertEquals(len(events), event_count)
+        self.assertEqual(len(events), event_count)
         for event in events:
             parsed_date = parse(event["eventTime"])
             event_type = event["eventType"]
@@ -117,7 +117,7 @@ class TestAudit(unittest.TestCase):
         assert result.exit_code == 0
         response = json.loads(result.output)
         events = response["data"]
-        self.assertEquals(len(events), event_count)
+        self.assertEqual(len(events), event_count)
         for event in events:
             parsed_date = parse(event["eventTime"])
             event_type = event["eventType"]
@@ -192,7 +192,7 @@ class TestAudit(unittest.TestCase):
                 "data[?contains(\"event-type\",'com.oraclecloud.Audit.ListEvents')].{\"event-type\":\"event-type\",\"source\":\"source\",LoginDate:\"event-time\",\"user\":\"data\".\"identity\".\"credentials\"}"])
         assert result.exit_code == 0
         events = json.loads(result.output)
-        self.assertEquals(len(events), event_count)
+        self.assertEqual(len(events), event_count)
         for event in events:
             parsed_date = parse(event["LoginDate"])
             event_type = event["event-type"]
@@ -211,7 +211,7 @@ class TestAudit(unittest.TestCase):
                 "data[?contains(\"eventType\",'com.oraclecloud.Audit.ListEvents')].{\"event-type\":\"eventTtype\",\"source\":\"source\",LoginDate:\"eventTime\",\"user\":\"data\".\"identity\".\"credentials\"}"])
         assert result.exit_code == 0
         events = json.loads(result.output)
-        self.assertEquals(len(events), event_count)
+        self.assertEqual(len(events), event_count)
         for event in events:
             parsed_date = parse(event["LoginDate"])
             event_type = event["event-type"]
@@ -230,7 +230,7 @@ class TestAudit(unittest.TestCase):
                 "data[?contains(\"eventType\",'com.oraclecloud.Audit.ListEvents')].{\"event-type\":\"eventType\",\"source\":\"source\",LoginDate:\"eventTime\",\"user\":\"data\".\"identity\".\"credentials\"}"])
         assert result.exit_code == 0
         events = json.loads(result.output)
-        self.assertEquals(len(events), event_count)
+        self.assertEqual(len(events), event_count)
         for event in events:
             parsed_date = parse(event["LoginDate"])
             event_type = event["event-type"]

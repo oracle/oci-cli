@@ -115,7 +115,12 @@ OBJECT_PUT_DISPLAY_HEADERS = {
     "etag",
     "opc-content-md5",
     "last-modified",
-    "opc-multipart-md5"
+    "opc-multipart-md5",
+    "opc-content-crc32c",
+    "opc-content-sha256",
+    "opc-content-sha384",
+    "opc-multipart-sha256",
+    "opc-multipart-sha384"
 }
 
 SSE_PARAMS = ['opc_sse_customer_algorithm', 'opc_sse_customer_key', 'opc_sse_customer_key_sha256']
@@ -511,6 +516,22 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
 @cli_util.option('--content-md5', help=u"""The optional base-64 header that defines the encoded MD5 hash of the body. If the optional Content-MD5 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the MD5 hash for the body and comparing it to the MD5 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content MD5 error is returned with the message:
      "The computed MD5 of the request body (ACTUAL_MD5) does not match the Content-MD5 header (HEADER_MD5)"
 """)
+@cli_util.option('--opc-checksum-algorithm', type=custom_types.CliCaseInsensitiveChoice(["CRC32C", "SHA256", "SHA384"]), help=u"""The optional checksum algorithm to use to compute and store the checksum of the body of the HTTP request (or the parts in case of multipart uploads), in addition to the default MD5 checksum.""")
+@cli_util.option('--opc-content-crc32c', help=u"""Applicable only if CRC32C is specified in the opc-checksum-algorithm request header.
+
+The optional header that defines the base64-encoded, 32-bit CRC32C (Castagnoli) checksum of the body. If the optional opc-content-crc32c header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the CRC32C checksum for the body and comparing it to the CRC32C checksum supplied in the header. If the two checksums do not match, the object is rejected and an HTTP-400 Unmatched Content CRC32C error is returned with the message:
+
+\"The computed CRC32C of the request body (ACTUAL_CRC32C) does not match the opc-content-crc32c header (HEADER_CRC32C)\"""")
+@cli_util.option('--opc-content-sha256', help=u"""Applicable only if SHA256 is specified in the opc-checksum-algorithm request header.
+
+The optional header that defines the base64-encoded SHA256 hash of the body. If the optional opc-content-sha256 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the SHA256 hash for the body and comparing it to the SHA256 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content SHA256 error is returned with the message:
+
+\"The computed SHA256 of the request body (ACTUAL_SHA256) does not match the opc-content-sha256 header (HEADER_SHA256)\"""")
+@cli_util.option('--opc-content-sha384', help=u"""Applicable only if SHA384 is specified in the opc-checksum-algorithm request header.
+
+The optional header that defines the base64-encoded SHA384 hash of the body. If the optional opc-content-sha384 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the SHA384 hash for the body and comparing it to the SHA384 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content SHA384 error is returned with the message:
+
+\"The computed SHA384 of the request body (ACTUAL_SHA384) does not match the opc-content-sha384 header (HEADER_SHA384)\"""")
 @cli_util.option('--metadata', help=metadata_option_help_text)
 @cli_util.option('--content-type', help=content_type_option_help_text)
 @cli_util.option('--content-language', help=content_language_option_help_text)
@@ -542,7 +563,7 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
     input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}},
     output_type={'module': 'object_storage', 'class': 'ObjectSummary'})
 @wrap_exceptions
-def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, content_md5, metadata, content_type,
+def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, content_md5, opc_checksum_algorithm, opc_content_crc32c, opc_content_sha256, opc_content_sha384, metadata, content_type,
                content_language, content_encoding, force, no_overwrite, no_multipart, part_size,
                disable_parallel_uploads, parallel_upload_count, verify_checksum, content_disposition, cache_control,
                encryption_key_file, storage_tier, opc_sse_kms_key_id):
@@ -604,6 +625,18 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
 
     if content_md5 is not None:
         kwargs['content_md5'] = content_md5
+
+    if opc_checksum_algorithm is not None:
+        kwargs['opc_checksum_algorithm'] = opc_checksum_algorithm
+
+    if opc_content_sha256 is not None:
+        kwargs['opc_content_sha256'] = opc_content_sha256
+
+    if opc_content_sha384 is not None:
+        kwargs['opc_content_sha384'] = opc_content_sha384
+
+    if opc_content_crc32c is not None:
+        kwargs['opc_content_crc32c'] = opc_content_crc32c
 
     if metadata is not None:
         kwargs['metadata'] = parse_json_parameter("metadata", metadata, default={})
@@ -718,6 +751,21 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
         if 'content_md5' in kwargs:
             click.echo(
                 'Warning: The --content-md5 option cannot be used with multipart uploads. It will be ignored.',
+                file=sys.stderr)
+
+        if 'opc_content_sha256' in kwargs:
+            click.echo(
+                'Warning: The --opc_content_sha256 option cannot be used with multipart uploads. It will be ignored.',
+                file=sys.stderr)
+
+        if 'opc_content_sha384' in kwargs:
+            click.echo(
+                'Warning: The --opc_content_sha384 option cannot be used with multipart uploads. It will be ignored.',
+                file=sys.stderr)
+
+        if 'opc_content_crc32c' in kwargs:
+            click.echo(
+                'Warning: The --opc_content_crc32c option cannot be used with multipart uploads. It will be ignored.',
                 file=sys.stderr)
 
         if disable_parallel_uploads:

@@ -246,10 +246,10 @@ class TestCompute(unittest.TestCase):
             ['network', 'vnic', 'get', '--vnic-id', second_vnic_id])
         util.validate_response(result)
         second_vnic = json.loads(result.output)['data']
-        self.assertEquals(vnic_hostname_label, second_vnic['hostname-label'])
-        self.assertEquals(vnic_private_ip, second_vnic['private-ip'])
-        self.assertEquals(vnic_display_name, second_vnic['display-name'])
-        self.assertEquals(None, second_vnic['public-ip'])
+        self.assertEqual(vnic_hostname_label, second_vnic['hostname-label'])
+        self.assertEqual(vnic_private_ip, second_vnic['private-ip'])
+        self.assertEqual(vnic_display_name, second_vnic['display-name'])
+        self.assertEqual(None, second_vnic['public-ip'])
 
         # Some extra time is needed after VNIC CRUD operations for state to stabilize.
         util.vcr_mode_aware_sleep(5)
@@ -260,7 +260,7 @@ class TestCompute(unittest.TestCase):
              self.instance_ocid])
         util.validate_response(result)
         json_data = json.loads(result.output)
-        self.assertEquals(2, len(json_data['data']))
+        self.assertEqual(2, len(json_data['data']))
 
         # Update vnic
         result = self.invoke(
@@ -271,7 +271,7 @@ class TestCompute(unittest.TestCase):
         result = self.invoke(['compute', 'vnic-attachment', 'list', '--compartment-id', util.COMPARTMENT_ID, '--vnic-id', second_vnic_id])
         util.validate_response(result)
         json_data = json.loads(result.output)
-        self.assertEquals(1, len(json_data['data']))
+        self.assertEqual(1, len(json_data['data']))
         second_vnic_attachment_id = json_data['data'][0]['id']
 
         result = self.invoke(['compute', 'vnic-attachment', 'get', '--vnic-attachment-id', second_vnic_attachment_id])
@@ -307,8 +307,8 @@ class TestCompute(unittest.TestCase):
         second_vnic = json.loads(result.output)['data']
         vnic_resp_private_ip = second_vnic['private-ip']
         vnic_resp_public_ip = second_vnic['public-ip']
-        self.assertEquals(vnic_private_ip, vnic_resp_private_ip)
-        self.assertNotEquals(None, vnic_resp_public_ip)
+        self.assertEqual(vnic_private_ip, vnic_resp_private_ip)
+        self.assertNotEqual(None, vnic_resp_public_ip)
 
         # Some extra time is needed after VNIC operations for state to stabilize.
         util.vcr_mode_aware_sleep(5)
@@ -323,7 +323,7 @@ class TestCompute(unittest.TestCase):
         resp_public_ip_id = public_ip_obj['id']
         resp_private_ip_id = public_ip_obj['private-ip-id']
         resp_public_ip_addr = public_ip_obj['ip-address']
-        self.assertEquals(vnic_resp_public_ip, resp_public_ip_addr)
+        self.assertEqual(vnic_resp_public_ip, resp_public_ip_addr)
 
         # 2. get --public-ip-id
         result = self.invoke(['network', 'public-ip', 'get',
@@ -332,8 +332,8 @@ class TestCompute(unittest.TestCase):
         public_ip_obj = json.loads(result.output)['data']
         resp_private_ip_id_2 = public_ip_obj['private-ip-id']
         resp_public_ip_addr_2 = public_ip_obj['ip-address']
-        self.assertEquals(resp_private_ip_id, resp_private_ip_id_2)
-        self.assertEquals(resp_public_ip_addr, resp_public_ip_addr_2)
+        self.assertEqual(resp_private_ip_id, resp_private_ip_id_2)
+        self.assertEqual(resp_public_ip_addr, resp_public_ip_addr_2)
 
         # 3. get --private-ip-id
         result = self.invoke(['network', 'public-ip', 'get',
@@ -342,14 +342,14 @@ class TestCompute(unittest.TestCase):
         public_ip_obj = json.loads(result.output)['data']
         resp_public_ip_id_3 = public_ip_obj['id']
         resp_public_ip_addr_3 = public_ip_obj['ip-address']
-        self.assertEquals(resp_public_ip_id, resp_public_ip_id_3)
-        self.assertEquals(resp_public_ip_addr, resp_public_ip_addr_3)
+        self.assertEqual(resp_public_ip_id, resp_public_ip_id_3)
+        self.assertEqual(resp_public_ip_addr, resp_public_ip_addr_3)
 
         # Get the secondary attachment ID
         result = self.invoke(['compute', 'vnic-attachment', 'list', '--compartment-id', util.COMPARTMENT_ID, '--vnic-id', second_vnic_id])
         util.validate_response(result)
         json_data = json.loads(result.output)
-        self.assertEquals(1, len(json_data['data']))
+        self.assertEqual(1, len(json_data['data']))
         second_vnic_attachment_id = json_data['data'][0]['id']
 
         # Detach vnic
@@ -421,7 +421,7 @@ class TestCompute(unittest.TestCase):
     def subtest_console_history_operations(self):
         result = self.invoke(['compute', 'console-history', 'capture', '--instance-id', self.instance_ocid, '--display-name', 'Original'])
         parsed_result = json.loads(result.output)
-        self.assertEquals('Original', parsed_result['data']['display-name'])
+        self.assertEqual('Original', parsed_result['data']['display-name'])
 
         self.ch_ocid = util.find_id_in_response(result.output)
         util.validate_response(result, expect_etag=True)
@@ -429,7 +429,7 @@ class TestCompute(unittest.TestCase):
 
         result = self.invoke(['compute', 'console-history', 'update', '--instance-console-history-id', self.ch_ocid, '--display-name', 'Updated'])
         parsed_result = json.loads(result.output)
-        self.assertEquals('Updated', parsed_result['data']['display-name'])
+        self.assertEqual('Updated', parsed_result['data']['display-name'])
 
         result = self.invoke(['compute', 'console-history', 'list', '--compartment-id', util.COMPARTMENT_ID, '--instance-id', self.instance_ocid])
         util.validate_response(result)
@@ -492,18 +492,18 @@ class TestCompute(unittest.TestCase):
         self.assertIsNotNone(instance_console_connection_details['data']['connection-string'])
         self.assertIsNotNone(instance_console_connection_details['data']['id'])
         self.assertIsNotNone(instance_console_connection_details['data']['lifecycle-state'])
-        self.assertEquals(self.instance_ocid, instance_console_connection_details['data']['instance-id'])
+        self.assertEqual(self.instance_ocid, instance_console_connection_details['data']['instance-id'])
         self.assertIsNotNone(instance_console_connection_details['data']['fingerprint'])
 
         result = self.invoke(['compute', 'instance-console-connection', 'get', '--instance-console-connection-id', instance_console_connection_details['data']['id']])
         parsed_result = json.loads(result.output)
-        self.assertEquals(instance_console_connection_details['data']['id'], parsed_result['data']['id'])
-        self.assertEquals(instance_console_connection_details['data']['instance-id'], parsed_result['data']['instance-id'])
-        self.assertEquals(instance_console_connection_details['data']['fingerprint'], parsed_result['data']['fingerprint'])
-        self.assertEquals(instance_console_connection_details['data']['compartment-id'], parsed_result['data']['compartment-id'])
-        self.assertEquals(instance_console_connection_details['data']['connection-string'], parsed_result['data']['connection-string'])
-        self.assertEquals({}, instance_console_connection_details['data']['freeform-tags'])
-        self.assertEquals({}, instance_console_connection_details['data']['defined-tags'])
+        self.assertEqual(instance_console_connection_details['data']['id'], parsed_result['data']['id'])
+        self.assertEqual(instance_console_connection_details['data']['instance-id'], parsed_result['data']['instance-id'])
+        self.assertEqual(instance_console_connection_details['data']['fingerprint'], parsed_result['data']['fingerprint'])
+        self.assertEqual(instance_console_connection_details['data']['compartment-id'], parsed_result['data']['compartment-id'])
+        self.assertEqual(instance_console_connection_details['data']['connection-string'], parsed_result['data']['connection-string'])
+        self.assertEqual({}, instance_console_connection_details['data']['freeform-tags'])
+        self.assertEqual({}, instance_console_connection_details['data']['defined-tags'])
         self.assertIsNotNone(parsed_result['data']['lifecycle-state'])
 
         private_key_file = 'C:\\Users\\oci\console.ppk'  # noqa: W605
@@ -558,10 +558,10 @@ class TestCompute(unittest.TestCase):
         for conn in all_connections:
             if conn['id'] == instance_console_connection_details['data']['id']:
                 match_found = True
-                self.assertEquals(instance_console_connection_details['data']['instance-id'], conn['instance-id'])
-                self.assertEquals(instance_console_connection_details['data']['fingerprint'], conn['fingerprint'])
-                self.assertEquals(instance_console_connection_details['data']['compartment-id'], conn['compartment-id'])
-                self.assertEquals(instance_console_connection_details['data']['connection-string'], conn['connection-string'])
+                self.assertEqual(instance_console_connection_details['data']['instance-id'], conn['instance-id'])
+                self.assertEqual(instance_console_connection_details['data']['fingerprint'], conn['fingerprint'])
+                self.assertEqual(instance_console_connection_details['data']['compartment-id'], conn['compartment-id'])
+                self.assertEqual(instance_console_connection_details['data']['connection-string'], conn['connection-string'])
                 self.assertIsNotNone(conn['lifecycle-state'])
                 break
 
@@ -600,8 +600,8 @@ class TestCompute(unittest.TestCase):
         instance_console_connection_details = json.loads(result.output)
         expected_freeform = {'tagOne': 'value1', 'tag_Two': 'value two'}
         expected_defined = {tag_data_container.tag_namespace.name: tag_names_to_values}
-        self.assertEquals(expected_freeform, instance_console_connection_details['data']['freeform-tags'])
-        self.assertEquals(expected_defined, instance_console_connection_details['data']['defined-tags'])
+        self.assertEqual(expected_freeform, instance_console_connection_details['data']['freeform-tags'])
+        self.assertEqual(expected_defined, instance_console_connection_details['data']['defined-tags'])
 
         self.invoke(['compute', 'instance-console-connection', 'delete', '--instance-console-connection-id', instance_console_connection_details['data']['id'], '--force'])
         result = self.invoke(['compute', 'instance-console-connection', 'get', '--instance-console-connection-id', instance_console_connection_details['data']['id']])
@@ -705,7 +705,7 @@ class TestCompute(unittest.TestCase):
                 util.print_latest_exception(error)
                 error_count = error_count + 1
 
-        self.assertEquals(0, error_count)
+        self.assertEqual(0, error_count)
 
     def invoke(self, commands, debug=False, ** args):
         if debug is True:

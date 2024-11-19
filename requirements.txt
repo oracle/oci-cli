@@ -11,11 +11,11 @@ coverage==4.5.2
 cryptography>=3.2.1,<46.0.0
 httpsig-cffi==15.0.0
 Jinja2==3.0.3; python_version == '3.6'
-Jinja2>=3.1.4; python_version >= '3.7'
+Jinja2<3.1; python_version >= '3.7'
 jmespath==0.10.0
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.138.1
+oci==2.139.0
 packaging==20.2
 pluggy==0.13.0
 py==1.11.0
