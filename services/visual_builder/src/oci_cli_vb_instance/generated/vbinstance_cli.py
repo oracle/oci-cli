@@ -148,15 +148,16 @@ def change_vb_instance_compartment(ctx, from_json, wait_for_state, max_wait_seco
 
 This option is a JSON list with items of type CreateCustomEndpointDetails.  For documentation on CreateCustomEndpointDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/vbinstance/20210601/datatypes/CreateCustomEndpointDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--consumption-model', type=custom_types.CliCaseInsensitiveChoice(["UCM", "GOV", "VB4SAAS"]), help=u"""Optional parameter specifying which entitlement to use for billing purposes. Only required if the account possesses more than one entitlement.""")
+@cli_util.option('--network-endpoint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'visual_builder', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'visual_builder', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'visual_builder', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'visual_builder', 'class': 'list[CreateCustomEndpointDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'visual_builder', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'visual_builder', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'visual_builder', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'visual_builder', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details': {'module': 'visual_builder', 'class': 'NetworkEndpointDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'visual_builder', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'visual_builder', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'visual_builder', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'visual_builder', 'class': 'list[CreateCustomEndpointDetails]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'visual_builder', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'visual_builder', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'visual_builder', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'visual_builder', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details': {'module': 'visual_builder', 'class': 'NetworkEndpointDetails'}})
 @cli_util.wrap_exceptions
-def create_vb_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, node_count, freeform_tags, defined_tags, idcs_open_id, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, consumption_model):
+def create_vb_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, node_count, freeform_tags, defined_tags, idcs_open_id, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, consumption_model, network_endpoint_details):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -186,6 +187,109 @@ def create_vb_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if consumption_model is not None:
         _details['consumptionModel'] = consumption_model
+
+    if network_endpoint_details is not None:
+        _details['networkEndpointDetails'] = cli_util.parse_json_parameter("network_endpoint_details", network_endpoint_details)
+
+    client = cli_util.build_client('visual_builder', 'vb_instance', ctx)
+    result = client.create_vb_instance(
+        create_vb_instance_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@vb_instance_group.command(name=cli_util.override('visual_builder.create_vb_instance_private_endpoint_details.command_name', 'create-vb-instance-private-endpoint-details'), help=u"""Creates a new Vb Instance. \n[Command Reference](createVbInstance)""")
+@cli_util.option('--display-name', required=True, help=u"""Vb Instance Identifier.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--node-count', required=True, type=click.INT, help=u"""The number of Nodes""")
+@cli_util.option('--network-endpoint-details-subnet-id', required=True, help=u"""The subnet OCID for the private endpoint.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-open-id', help=u"""Encrypted IDCS Open ID token. This is required for pre-UCPIS cloud accounts, but not UCPIS, hence not a required parameter""")
+@cli_util.option('--is-visual-builder-enabled', type=click.BOOL, help=u"""Visual Builder is enabled or not.""")
+@cli_util.option('--custom-endpoint', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--alternate-custom-endpoints', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of alternate custom endpoints to be used for the vb instance URL (contact Oracle for alternateCustomEndpoints availability for a specific instance).
+
+This option is a JSON list with items of type CreateCustomEndpointDetails.  For documentation on CreateCustomEndpointDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/vbinstance/20210601/datatypes/CreateCustomEndpointDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--consumption-model', type=custom_types.CliCaseInsensitiveChoice(["UCM", "GOV", "VB4SAAS"]), help=u"""Optional parameter specifying which entitlement to use for billing purposes. Only required if the account possesses more than one entitlement.""")
+@cli_util.option('--network-endpoint-details-network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Network Security Group OCIDs for the Private Endpoint.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-endpoint-details-private-endpoint-ip', help=u"""The IP address to be assigned to Private Endpoint""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'visual_builder', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'visual_builder', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'visual_builder', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'visual_builder', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details-network-security-group-ids': {'module': 'visual_builder', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'visual_builder', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'visual_builder', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'visual_builder', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'visual_builder', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details-network-security-group-ids': {'module': 'visual_builder', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def create_vb_instance_private_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, node_count, network_endpoint_details_subnet_id, freeform_tags, defined_tags, idcs_open_id, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, consumption_model, network_endpoint_details_network_security_group_ids, network_endpoint_details_private_endpoint_ip):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['networkEndpointDetails'] = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['nodeCount'] = node_count
+    _details['networkEndpointDetails']['subnetId'] = network_endpoint_details_subnet_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if idcs_open_id is not None:
+        _details['idcsOpenId'] = idcs_open_id
+
+    if is_visual_builder_enabled is not None:
+        _details['isVisualBuilderEnabled'] = is_visual_builder_enabled
+
+    if custom_endpoint is not None:
+        _details['customEndpoint'] = cli_util.parse_json_parameter("custom_endpoint", custom_endpoint)
+
+    if alternate_custom_endpoints is not None:
+        _details['alternateCustomEndpoints'] = cli_util.parse_json_parameter("alternate_custom_endpoints", alternate_custom_endpoints)
+
+    if consumption_model is not None:
+        _details['consumptionModel'] = consumption_model
+
+    if network_endpoint_details_network_security_group_ids is not None:
+        _details['networkEndpointDetails']['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_endpoint_details_network_security_group_ids", network_endpoint_details_network_security_group_ids)
+
+    if network_endpoint_details_private_endpoint_ip is not None:
+        _details['networkEndpointDetails']['privateEndpointIp'] = network_endpoint_details_private_endpoint_ip
+
+    _details['networkEndpointDetails']['networkEndpointType'] = 'PRIVATE'
 
     client = cli_util.build_client('visual_builder', 'vb_instance', ctx)
     result = client.create_vb_instance(
@@ -545,6 +649,61 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
     cli_util.render_response(result, ctx)
 
 
+@vb_instance_group.command(name=cli_util.override('visual_builder.reconfigure_private_endpoint_vb_instance.command_name', 'reconfigure-private-endpoint'), help=u"""Reconfigures the Private Endpoint associated with the private visual builder instance. Use this action in case the Private Endpoint is not working and needs to be reset. The VB instance has to be in ACTIVE state and should be a private instance to perform this operation. If the previous state is not ACTIVE, then the state of the vbInstance will not be changed and a 409 response returned. \n[Command Reference](reconfigurePrivateEndpointVbInstance)""")
+@cli_util.option('--vb-instance-id', required=True, help=u"""Unique Vb Instance identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def reconfigure_private_endpoint_vb_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vb_instance_id, if_match):
+
+    if isinstance(vb_instance_id, six.string_types) and len(vb_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --vb-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('visual_builder', 'vb_instance', ctx)
+    result = client.reconfigure_private_endpoint_vb_instance(
+        vb_instance_id=vb_instance_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @application_summary_collection_group.command(name=cli_util.override('visual_builder.request_summarized_applications.command_name', 'request-summarized-applications'), help=u"""Summarizes the applications for a vb instance. \n[Command Reference](requestSummarizedApplications)""")
 @cli_util.option('--vb-instance-id', required=True, help=u"""Unique Vb Instance identifier.""")
 @cli_util.option('--idcs-open-id', help=u"""Encrypted IDCS Open ID token. This is required for pre-UCPIS cloud accounts, but not UCPIS, hence not a required parameter""")
@@ -700,23 +859,24 @@ def stop_vb_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--alternate-custom-endpoints', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of alternate custom endpoints to be used for the vb instance URL (contact Oracle for alternateCustomEndpoints availability for a specific instance).
 
 This option is a JSON list with items of type UpdateCustomEndpointDetails.  For documentation on UpdateCustomEndpointDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/vbinstance/20210601/datatypes/UpdateCustomEndpointDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-endpoint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'visual_builder', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'visual_builder', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'visual_builder', 'class': 'UpdateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'visual_builder', 'class': 'list[UpdateCustomEndpointDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'visual_builder', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'visual_builder', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'visual_builder', 'class': 'UpdateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'visual_builder', 'class': 'list[UpdateCustomEndpointDetails]'}, 'network-endpoint-details': {'module': 'visual_builder', 'class': 'UpdateNetworkEndpointDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'visual_builder', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'visual_builder', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'visual_builder', 'class': 'UpdateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'visual_builder', 'class': 'list[UpdateCustomEndpointDetails]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'visual_builder', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'visual_builder', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'visual_builder', 'class': 'UpdateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'visual_builder', 'class': 'list[UpdateCustomEndpointDetails]'}, 'network-endpoint-details': {'module': 'visual_builder', 'class': 'UpdateNetworkEndpointDetails'}})
 @cli_util.wrap_exceptions
-def update_vb_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vb_instance_id, display_name, freeform_tags, defined_tags, idcs_open_id, node_count, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, if_match):
+def update_vb_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vb_instance_id, display_name, freeform_tags, defined_tags, idcs_open_id, node_count, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, network_endpoint_details, if_match):
 
     if isinstance(vb_instance_id, six.string_types) and len(vb_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --vb-instance-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags or custom_endpoint or alternate_custom_endpoints:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and custom-endpoint and alternate-custom-endpoints will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or custom_endpoint or alternate_custom_endpoints or network_endpoint_details:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and custom-endpoint and alternate-custom-endpoints and network-endpoint-details will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -749,6 +909,118 @@ def update_vb_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
     if alternate_custom_endpoints is not None:
         _details['alternateCustomEndpoints'] = cli_util.parse_json_parameter("alternate_custom_endpoints", alternate_custom_endpoints)
+
+    if network_endpoint_details is not None:
+        _details['networkEndpointDetails'] = cli_util.parse_json_parameter("network_endpoint_details", network_endpoint_details)
+
+    client = cli_util.build_client('visual_builder', 'vb_instance', ctx)
+    result = client.update_vb_instance(
+        vb_instance_id=vb_instance_id,
+        update_vb_instance_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@vb_instance_group.command(name=cli_util.override('visual_builder.update_vb_instance_update_private_endpoint_details.command_name', 'update-vb-instance-update-private-endpoint-details'), help=u"""Updates the Vb Instance. \n[Command Reference](updateVbInstance)""")
+@cli_util.option('--vb-instance-id', required=True, help=u"""Unique Vb Instance identifier.""")
+@cli_util.option('--display-name', help=u"""Vb Instance Identifier.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--idcs-open-id', help=u"""Encrypted IDCS Open ID token. This is required for pre-UCPIS cloud accounts, but not UCPIS, hence not a required parameter""")
+@cli_util.option('--node-count', type=click.INT, help=u"""The number of Nodes""")
+@cli_util.option('--is-visual-builder-enabled', type=click.BOOL, help=u"""Enable Visual Builder. If Visual Builder is enabled alredy, then it cannot be disabled.""")
+@cli_util.option('--custom-endpoint', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--alternate-custom-endpoints', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of alternate custom endpoints to be used for the vb instance URL (contact Oracle for alternateCustomEndpoints availability for a specific instance).
+
+This option is a JSON list with items of type UpdateCustomEndpointDetails.  For documentation on UpdateCustomEndpointDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/vbinstance/20210601/datatypes/UpdateCustomEndpointDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--network-endpoint-details-subnet-id', help=u"""The subnet OCID for the private endpoint. If provided then a new Private Endpoint will be created and a new Private Endpoint IP may be generated.""")
+@cli_util.option('--network-endpoint-details-network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Network Security Group OCIDs for the Private Endpoint.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'visual_builder', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'visual_builder', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'visual_builder', 'class': 'UpdateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'visual_builder', 'class': 'list[UpdateCustomEndpointDetails]'}, 'network-endpoint-details-network-security-group-ids': {'module': 'visual_builder', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'visual_builder', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'visual_builder', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'visual_builder', 'class': 'UpdateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'visual_builder', 'class': 'list[UpdateCustomEndpointDetails]'}, 'network-endpoint-details-network-security-group-ids': {'module': 'visual_builder', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def update_vb_instance_update_private_endpoint_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vb_instance_id, display_name, freeform_tags, defined_tags, idcs_open_id, node_count, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, if_match, network_endpoint_details_subnet_id, network_endpoint_details_network_security_group_ids):
+
+    if isinstance(vb_instance_id, six.string_types) and len(vb_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --vb-instance-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags or custom_endpoint or alternate_custom_endpoints:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and custom-endpoint and alternate-custom-endpoints will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['networkEndpointDetails'] = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if idcs_open_id is not None:
+        _details['idcsOpenId'] = idcs_open_id
+
+    if node_count is not None:
+        _details['nodeCount'] = node_count
+
+    if is_visual_builder_enabled is not None:
+        _details['isVisualBuilderEnabled'] = is_visual_builder_enabled
+
+    if custom_endpoint is not None:
+        _details['customEndpoint'] = cli_util.parse_json_parameter("custom_endpoint", custom_endpoint)
+
+    if alternate_custom_endpoints is not None:
+        _details['alternateCustomEndpoints'] = cli_util.parse_json_parameter("alternate_custom_endpoints", alternate_custom_endpoints)
+
+    if network_endpoint_details_subnet_id is not None:
+        _details['networkEndpointDetails']['subnetId'] = network_endpoint_details_subnet_id
+
+    if network_endpoint_details_network_security_group_ids is not None:
+        _details['networkEndpointDetails']['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_endpoint_details_network_security_group_ids", network_endpoint_details_network_security_group_ids)
+
+    _details['networkEndpointDetails']['networkEndpointType'] = 'PRIVATE'
 
     client = cli_util.build_client('visual_builder', 'vb_instance', ctx)
     result = client.update_vb_instance(

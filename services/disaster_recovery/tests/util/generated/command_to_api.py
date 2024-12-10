@@ -25,10 +25,12 @@ SDK_client_map = {
     "disaster_recovery.list_work_request_logs": "oci.disaster_recovery.DisasterRecoveryClient.list_work_request_logs",
     "disaster_recovery.list_work_requests": "oci.disaster_recovery.DisasterRecoveryClient.list_work_requests",
     "disaster_recovery.pause_dr_plan_execution": "oci.disaster_recovery.DisasterRecoveryClient.pause_dr_plan_execution",
+    "disaster_recovery.refresh_dr_plan": "oci.disaster_recovery.DisasterRecoveryClient.refresh_dr_plan",
     "disaster_recovery.resume_dr_plan_execution": "oci.disaster_recovery.DisasterRecoveryClient.resume_dr_plan_execution",
     "disaster_recovery.retry_dr_plan_execution": "oci.disaster_recovery.DisasterRecoveryClient.retry_dr_plan_execution",
     "disaster_recovery.update_dr_plan": "oci.disaster_recovery.DisasterRecoveryClient.update_dr_plan",
     "disaster_recovery.update_dr_plan_execution": "oci.disaster_recovery.DisasterRecoveryClient.update_dr_plan_execution",
     "disaster_recovery.update_dr_protection_group": "oci.disaster_recovery.DisasterRecoveryClient.update_dr_protection_group",
     "disaster_recovery.update_dr_protection_group_role": "oci.disaster_recovery.DisasterRecoveryClient.update_dr_protection_group_role",
+    "disaster_recovery.verify_dr_plan": "oci.disaster_recovery.DisasterRecoveryClient.verify_dr_plan",
 }

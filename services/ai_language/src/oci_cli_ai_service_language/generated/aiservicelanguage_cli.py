@@ -186,6 +186,7 @@ ai_root_group.add_command(batch_detect_language_text_classification_group)
 
 Limitations: - A batch may have up to 100 records. - A record may be up to 5000 characters long. - The total of characters to process in a request can be up to 20,000 characters. \n[Command Reference](batchDetectDominantLanguage)""")
 @cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Documents for detect language.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--alias', help=u"""Unique name across user tenancy in a region to identify an endpoint to be used for inferencing.""")
 @cli_util.option('--should-ignore-transliteration', type=click.BOOL, help=u"""Specifies whether to consider or ignore transliteration. For example \"hi, aap kaise ho? sab kuch teek hai? I will call you tomorrow.\" would be detected as English when ignore transliteration=true, Hindi when ignoreTransliteration=false.""")
 @cli_util.option('--chars-to-consider', type=click.INT, help=u"""default value is None. Specifies maximum number of characters to consider for determining the dominant language. If unspecified, then optimum number characters will be considered. If 0 is specified then all the characters are used to determine the language. If the value is greater than 0, then specified number of characters will be considered from the beginning of the text.""")
 @cli_util.option('--endpoint-id', help=u"""The endpoint which have to be used for inferencing. If endpointId and compartmentId is provided, then inference will be served from custom model which is mapped to this Endpoint.""")
@@ -195,13 +196,16 @@ Limitations: - A batch may have up to 100 records. - A record may be up to 5000 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'documents': {'module': 'ai_language', 'class': 'list[DominantLanguageDocument]'}}, output_type={'module': 'ai_language', 'class': 'BatchDetectDominantLanguageResult'})
 @cli_util.wrap_exceptions
-def batch_detect_dominant_language(ctx, from_json, documents, should_ignore_transliteration, chars_to_consider, endpoint_id, compartment_id):
+def batch_detect_dominant_language(ctx, from_json, documents, alias, should_ignore_transliteration, chars_to_consider, endpoint_id, compartment_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['documents'] = cli_util.parse_json_parameter("documents", documents)
+
+    if alias is not None:
+        _details['alias'] = alias
 
     if should_ignore_transliteration is not None:
         _details['shouldIgnoreTransliteration'] = should_ignore_transliteration
@@ -228,6 +232,7 @@ def batch_detect_dominant_language(ctx, from_json, documents, should_ignore_tran
 Limitations: - A batch may have up to 100 records. - A record may be up to 5000 characters long. - The total of characters to process in a request can be up to 20,000 characters. \n[Command Reference](batchDetectHealthEntity)""")
 @cli_util.option('--endpoint-id', required=True, help=u"""The endpoint which have to be used for inferencing.""")
 @cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Documents for detect health entities.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--alias', help=u"""Unique name across user tenancy in a region to identify an endpoint to be used for inferencing.""")
 @cli_util.option('--link-ontologies', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of NLP health ontologies to be linked""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-detect-assertions', type=click.BOOL, help=u"""is assertion on input text required. default value true.""")
 @cli_util.option('--is-detect-relationships', type=click.BOOL, help=u"""is relationship on input text required. default value true.""")
@@ -237,7 +242,7 @@ Limitations: - A batch may have up to 100 records. - A record may be up to 5000 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'documents': {'module': 'ai_language', 'class': 'list[TextDocument]'}, 'link-ontologies': {'module': 'ai_language', 'class': 'list[string]'}, 'profile-parameterconflict': {'module': 'ai_language', 'class': 'Profile'}}, output_type={'module': 'ai_language', 'class': 'BatchDetectHealthEntityResult'})
 @cli_util.wrap_exceptions
-def batch_detect_health_entity(ctx, from_json, endpoint_id, documents, link_ontologies, is_detect_assertions, is_detect_relationships, profile_parameterconflict):
+def batch_detect_health_entity(ctx, from_json, endpoint_id, documents, alias, link_ontologies, is_detect_assertions, is_detect_relationships, profile_parameterconflict):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -245,6 +250,9 @@ def batch_detect_health_entity(ctx, from_json, endpoint_id, documents, link_onto
     _details = {}
     _details['endpointId'] = endpoint_id
     _details['documents'] = cli_util.parse_json_parameter("documents", documents)
+
+    if alias is not None:
+        _details['alias'] = alias
 
     if link_ontologies is not None:
         _details['linkOntologies'] = cli_util.parse_json_parameter("link_ontologies", link_ontologies)
@@ -272,6 +280,7 @@ def batch_detect_health_entity(ctx, from_json, endpoint_id, documents, link_onto
 
 Limitations: - A batch may have up to 100 records. - A record may be up to 5000 characters long. - The total of characters to process in a request can be up to 20,000 characters. \n[Command Reference](batchDetectLanguageEntities)""")
 @cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Documents for detect entities.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--alias', help=u"""Unique name across user tenancy in a region to identify an endpoint to be used for inferencing.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
 @cli_util.option('--endpoint-id', help=u"""The endpoint which have to be used for inferencing. If endpointId and compartmentId is provided, then inference will be served from custom model which is mapped to this Endpoint.""")
 @json_skeleton_utils.get_cli_json_input_option({'documents': {'module': 'ai_language', 'class': 'list[TextDocument]'}})
@@ -279,13 +288,16 @@ Limitations: - A batch may have up to 100 records. - A record may be up to 5000 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'documents': {'module': 'ai_language', 'class': 'list[TextDocument]'}}, output_type={'module': 'ai_language', 'class': 'BatchDetectLanguageEntitiesResult'})
 @cli_util.wrap_exceptions
-def batch_detect_language_entities(ctx, from_json, documents, compartment_id, endpoint_id):
+def batch_detect_language_entities(ctx, from_json, documents, alias, compartment_id, endpoint_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['documents'] = cli_util.parse_json_parameter("documents", documents)
+
+    if alias is not None:
+        _details['alias'] = alias
 
     if compartment_id is not None:
         _details['compartmentId'] = compartment_id
@@ -305,6 +317,7 @@ def batch_detect_language_entities(ctx, from_json, documents, compartment_id, en
 
 Limitations: - A batch may have up to 100 records. - A record may be up to 5000 characters long. - The total of characters to process in a request can be up to 20,000 characters. \n[Command Reference](batchDetectLanguageKeyPhrases)""")
 @cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Documents for detect keyPhrases.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--alias', help=u"""Unique name across user tenancy in a region to identify an endpoint to be used for inferencing.""")
 @cli_util.option('--endpoint-id', help=u"""The endpoint which have to be used for inferencing. If endpointId and compartmentId is provided, then inference will be served from custom model which is mapped to this Endpoint.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
 @json_skeleton_utils.get_cli_json_input_option({'documents': {'module': 'ai_language', 'class': 'list[TextDocument]'}})
@@ -312,13 +325,16 @@ Limitations: - A batch may have up to 100 records. - A record may be up to 5000 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'documents': {'module': 'ai_language', 'class': 'list[TextDocument]'}}, output_type={'module': 'ai_language', 'class': 'BatchDetectLanguageKeyPhrasesResult'})
 @cli_util.wrap_exceptions
-def batch_detect_language_key_phrases(ctx, from_json, documents, endpoint_id, compartment_id):
+def batch_detect_language_key_phrases(ctx, from_json, documents, alias, endpoint_id, compartment_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['documents'] = cli_util.parse_json_parameter("documents", documents)
+
+    if alias is not None:
+        _details['alias'] = alias
 
     if endpoint_id is not None:
         _details['endpointId'] = endpoint_id
@@ -338,6 +354,7 @@ def batch_detect_language_key_phrases(ctx, from_json, documents, endpoint_id, co
 
 Limitations: - A batch may have up to 100 records. - A record may be up to 5000 characters long. - The total of characters to process in a request can be up to 20,000 characters. \n[Command Reference](batchDetectLanguagePiiEntities)""")
 @cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of documents to detect personal identification information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--alias', help=u"""Unique name across user tenancy in a region to identify an endpoint to be used for inferencing.""")
 @cli_util.option('--endpoint-id', help=u"""The endpoint which have to be used for inferencing. If endpointId and compartmentId is provided, then inference will be served from custom model which is mapped to this Endpoint.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
 @cli_util.option('--masking', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Mask recognized PII entities with different modes.
@@ -349,13 +366,16 @@ This option is a JSON dictionary of type dict(str, PiiEntityMasking).  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'documents': {'module': 'ai_language', 'class': 'list[TextDocument]'}, 'masking': {'module': 'ai_language', 'class': 'dict(str, PiiEntityMasking)'}, 'profile-parameterconflict': {'module': 'ai_language', 'class': 'Profile'}}, output_type={'module': 'ai_language', 'class': 'BatchDetectLanguagePiiEntitiesResult'})
 @cli_util.wrap_exceptions
-def batch_detect_language_pii_entities(ctx, from_json, documents, endpoint_id, compartment_id, masking, profile_parameterconflict):
+def batch_detect_language_pii_entities(ctx, from_json, documents, alias, endpoint_id, compartment_id, masking, profile_parameterconflict):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['documents'] = cli_util.parse_json_parameter("documents", documents)
+
+    if alias is not None:
+        _details['alias'] = alias
 
     if endpoint_id is not None:
         _details['endpointId'] = endpoint_id
@@ -387,6 +407,7 @@ Learn more about sentiment analysis [here].
 
 Limitations:  - A batch may have up to 100 records.  - A record may be up to 5000 characters long.  - The total of characters to process in a request can be up to 20,000 characters. \n[Command Reference](batchDetectLanguageSentiments)""")
 @cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Documents for detect sentiments.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--alias', help=u"""Unique name across user tenancy in a region to identify an endpoint to be used for inferencing.""")
 @cli_util.option('--endpoint-id', help=u"""The endpoint which have to be used for inferencing. If endpointId and compartmentId is provided, then inference will be served from custom model which is mapped to this Endpoint.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
 @cli_util.option('--level', type=custom_types.CliCaseInsensitiveChoice(["ASPECT", "SENTENCE"]), multiple=True, help=u"""Set this parameter for sentence and aspect level sentiment analysis. Allowed values are:    - ASPECT    - SENTENCE""")
@@ -395,7 +416,7 @@ Limitations:  - A batch may have up to 100 records.  - A record may be up to 500
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'documents': {'module': 'ai_language', 'class': 'list[TextDocument]'}}, output_type={'module': 'ai_language', 'class': 'BatchDetectLanguageSentimentsResult'})
 @cli_util.wrap_exceptions
-def batch_detect_language_sentiments(ctx, from_json, documents, endpoint_id, compartment_id, level):
+def batch_detect_language_sentiments(ctx, from_json, documents, alias, endpoint_id, compartment_id, level):
 
     kwargs = {}
     if level is not None and len(level) > 0:
@@ -404,6 +425,9 @@ def batch_detect_language_sentiments(ctx, from_json, documents, endpoint_id, com
 
     _details = {}
     _details['documents'] = cli_util.parse_json_parameter("documents", documents)
+
+    if alias is not None:
+        _details['alias'] = alias
 
     if endpoint_id is not None:
         _details['endpointId'] = endpoint_id
@@ -427,6 +451,7 @@ Learn more about text classification [here].
 
 Limitations: - A batch may have up to 100 records. - A record may be up to 5000 characters long. - The total of characters to process in a request can be up to 20,000 characters. \n[Command Reference](batchDetectLanguageTextClassification)""")
 @cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Documents for detect text classification.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--alias', help=u"""Unique name across user tenancy in a region to identify an endpoint to be used for inferencing.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
 @cli_util.option('--endpoint-id', help=u"""The endpoint which have to be used for inferencing. If endpointId and compartmentId is provided, then inference will be served from custom model which is mapped to this Endpoint.""")
 @json_skeleton_utils.get_cli_json_input_option({'documents': {'module': 'ai_language', 'class': 'list[TextDocument]'}})
@@ -434,13 +459,16 @@ Limitations: - A batch may have up to 100 records. - A record may be up to 5000 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'documents': {'module': 'ai_language', 'class': 'list[TextDocument]'}}, output_type={'module': 'ai_language', 'class': 'BatchDetectLanguageTextClassificationResult'})
 @cli_util.wrap_exceptions
-def batch_detect_language_text_classification(ctx, from_json, documents, compartment_id, endpoint_id):
+def batch_detect_language_text_classification(ctx, from_json, documents, alias, compartment_id, endpoint_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['documents'] = cli_util.parse_json_parameter("documents", documents)
+
+    if alias is not None:
+        _details['alias'] = alias
 
     if compartment_id is not None:
         _details['compartmentId'] = compartment_id
@@ -458,20 +486,32 @@ def batch_detect_language_text_classification(ctx, from_json, documents, compart
 
 @batch_language_translation_group.command(name=cli_util.override('ai.batch_language_translation.command_name', 'batch-language-translation'), help=u"""Translates a batch of text documents from source to target language. A batch can contain:   - up to 100 records.   - documents length less than 5000 characters.   - 20,000 characters in total as a sum of all documents length. \n[Command Reference](batchLanguageTranslation)""")
 @cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of documents for translation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--alias', help=u"""Unique name to identify an endpoint to be used for inferencing""")
+@cli_util.option('--endpoint-id', help=u"""The endpoint that has to be used for inferencing.""")
+@cli_util.option('--no-translate', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of words not to be translated""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that calls the API, inference will be served from pre trained model""")
 @cli_util.option('--target-language-code', help=u"""Language code supported Arabic - ar Brazilian Portuguese -  pt-BR Canadian French - fr-CA Croatian - hr Czech - cs Danish - da Dutch - nl English - en Finnish - fi French - fr German - de Greek - el Hebrew - he Hungarian - hu Italian - it Japanese - ja Korean - ko Norwegian - no Polish - pl Portuguese - pt Romanian - ro Russian - ru Simplified Chinese - zh-CN Slovak - sk Slovenian - sl Spanish - es Swedish - sv Thai - th Traditional Chinese - zh-TW Turkish - tr Vietnamese - vi""")
-@json_skeleton_utils.get_cli_json_input_option({'documents': {'module': 'ai_language', 'class': 'list[TextDocument]'}})
+@json_skeleton_utils.get_cli_json_input_option({'no-translate': {'module': 'ai_language', 'class': 'list[string]'}, 'documents': {'module': 'ai_language', 'class': 'list[TextDocument]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'documents': {'module': 'ai_language', 'class': 'list[TextDocument]'}}, output_type={'module': 'ai_language', 'class': 'BatchLanguageTranslationResult'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'no-translate': {'module': 'ai_language', 'class': 'list[string]'}, 'documents': {'module': 'ai_language', 'class': 'list[TextDocument]'}}, output_type={'module': 'ai_language', 'class': 'BatchLanguageTranslationResult'})
 @cli_util.wrap_exceptions
-def batch_language_translation(ctx, from_json, documents, compartment_id, target_language_code):
+def batch_language_translation(ctx, from_json, documents, alias, endpoint_id, no_translate, compartment_id, target_language_code):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['documents'] = cli_util.parse_json_parameter("documents", documents)
+
+    if alias is not None:
+        _details['alias'] = alias
+
+    if endpoint_id is not None:
+        _details['endpointId'] = endpoint_id
+
+    if no_translate is not None:
+        _details['noTranslate'] = cli_util.parse_json_parameter("no_translate", no_translate)
 
     if compartment_id is not None:
         _details['compartmentId'] = compartment_id
@@ -640,6 +680,8 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] compartment identifier for the endpoint""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model to associate with the endpoint.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It should be unique and can be modified. Avoid entering confidential information.""")
+@cli_util.option('--compute-type', type=custom_types.CliCaseInsensitiveChoice(["CPU", "GPU"]), help=u"""Compute infra type for endpoint.""")
+@cli_util.option('--alias', help=u"""Unique name across user tenancy in a region to identify an endpoint to be used for inferencing.""")
 @cli_util.option('--description', help=u"""A short description of the an endpoint.""")
 @cli_util.option('--inference-units', type=click.INT, help=u"""Number of replicas required for this endpoint. This will be optional parameter. Default will be 1.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -652,7 +694,7 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_language', 'class': 'Endpoint'})
 @cli_util.wrap_exceptions
-def create_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, model_id, display_name, description, inference_units, freeform_tags, defined_tags):
+def create_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, model_id, display_name, compute_type, alias, description, inference_units, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -663,6 +705,12 @@ def create_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if compute_type is not None:
+        _details['computeType'] = compute_type
+
+    if alias is not None:
+        _details['alias'] = alias
 
     if description is not None:
         _details['description'] = description
@@ -1111,6 +1159,96 @@ def create_model_pre_trained_key_phrase_extraction_model_details(ctx, from_json,
     cli_util.render_response(result, ctx)
 
 
+@model_group.command(name=cli_util.override('ai.create_model_pre_trained_translation_model_details.command_name', 'create-model-pre-trained-translation-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""A short description of the a model.""")
+@cli_util.option('--training-dataset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--test-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-details-language-code', help=u"""supported language default value is en""")
+@cli_util.option('--model-details-version', help=u"""Optional pre trained model version. If nothing specified latest pre trained model will be used. Supported versions can be found at /modelTypes/{modelType}""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_language', 'class': 'Model'})
+@cli_util.wrap_exceptions
+def create_model_pre_trained_translation_model_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, display_name, description, training_dataset, test_strategy, freeform_tags, defined_tags, model_details_language_code, model_details_version):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['modelDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['projectId'] = project_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if training_dataset is not None:
+        _details['trainingDataset'] = cli_util.parse_json_parameter("training_dataset", training_dataset)
+
+    if test_strategy is not None:
+        _details['testStrategy'] = cli_util.parse_json_parameter("test_strategy", test_strategy)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if model_details_language_code is not None:
+        _details['modelDetails']['languageCode'] = model_details_language_code
+
+    if model_details_version is not None:
+        _details['modelDetails']['version'] = model_details_version
+
+    _details['modelDetails']['modelType'] = 'PRE_TRAINED_TRANSLATION'
+
+    client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
+    result = client.create_model(
+        create_model_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @model_group.command(name=cli_util.override('ai.create_model_pre_trained_health_nlu_model_details.command_name', 'create-model-pre-trained-health-nlu-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
@@ -1255,6 +1393,456 @@ def create_model_pre_trained_universal_model(ctx, from_json, wait_for_state, max
         _details['modelDetails']['version'] = model_details_version
 
     _details['modelDetails']['modelType'] = 'PRE_TRAINED_UNIVERSAL'
+
+    client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
+    result = client.create_model(
+        create_model_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_group.command(name=cli_util.override('ai.create_model_pre_trained_language_detection_model_details.command_name', 'create-model-pre-trained-language-detection-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""A short description of the a model.""")
+@cli_util.option('--training-dataset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--test-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-details-language-code', help=u"""supported language default value is en""")
+@cli_util.option('--model-details-version', help=u"""Optional pre trained model version. if nothing specified latest pre trained model will be used. Supported versions can be found at /modelTypes/{modelType}""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_language', 'class': 'Model'})
+@cli_util.wrap_exceptions
+def create_model_pre_trained_language_detection_model_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, display_name, description, training_dataset, test_strategy, freeform_tags, defined_tags, model_details_language_code, model_details_version):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['modelDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['projectId'] = project_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if training_dataset is not None:
+        _details['trainingDataset'] = cli_util.parse_json_parameter("training_dataset", training_dataset)
+
+    if test_strategy is not None:
+        _details['testStrategy'] = cli_util.parse_json_parameter("test_strategy", test_strategy)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if model_details_language_code is not None:
+        _details['modelDetails']['languageCode'] = model_details_language_code
+
+    if model_details_version is not None:
+        _details['modelDetails']['version'] = model_details_version
+
+    _details['modelDetails']['modelType'] = 'PRE_TRAINED_LANGUAGE_DETECTION'
+
+    client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
+    result = client.create_model(
+        create_model_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_group.command(name=cli_util.override('ai.create_model_pre_trained_sentiment_analysis_model_details.command_name', 'create-model-pre-trained-sentiment-analysis-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""A short description of the a model.""")
+@cli_util.option('--training-dataset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--test-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-details-language-code', help=u"""supported language default value is en""")
+@cli_util.option('--model-details-version', help=u"""Optional pre trained model version. if nothing specified latest pre trained model will be used. Supported versions can be found at /modelTypes/{modelType}""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_language', 'class': 'Model'})
+@cli_util.wrap_exceptions
+def create_model_pre_trained_sentiment_analysis_model_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, display_name, description, training_dataset, test_strategy, freeform_tags, defined_tags, model_details_language_code, model_details_version):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['modelDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['projectId'] = project_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if training_dataset is not None:
+        _details['trainingDataset'] = cli_util.parse_json_parameter("training_dataset", training_dataset)
+
+    if test_strategy is not None:
+        _details['testStrategy'] = cli_util.parse_json_parameter("test_strategy", test_strategy)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if model_details_language_code is not None:
+        _details['modelDetails']['languageCode'] = model_details_language_code
+
+    if model_details_version is not None:
+        _details['modelDetails']['version'] = model_details_version
+
+    _details['modelDetails']['modelType'] = 'PRE_TRAINED_SENTIMENT_ANALYSIS'
+
+    client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
+    result = client.create_model(
+        create_model_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_group.command(name=cli_util.override('ai.create_model_text_classification_model_details.command_name', 'create-model-text-classification-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""A short description of the a model.""")
+@cli_util.option('--training-dataset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--test-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-details-language-code', help=u"""supported language default value is en""")
+@cli_util.option('--model-details-classification-mode', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}, 'model-details-classification-mode': {'module': 'ai_language', 'class': 'ClassificationType'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}, 'model-details-classification-mode': {'module': 'ai_language', 'class': 'ClassificationType'}}, output_type={'module': 'ai_language', 'class': 'Model'})
+@cli_util.wrap_exceptions
+def create_model_text_classification_model_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, display_name, description, training_dataset, test_strategy, freeform_tags, defined_tags, model_details_language_code, model_details_classification_mode):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['modelDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['projectId'] = project_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if training_dataset is not None:
+        _details['trainingDataset'] = cli_util.parse_json_parameter("training_dataset", training_dataset)
+
+    if test_strategy is not None:
+        _details['testStrategy'] = cli_util.parse_json_parameter("test_strategy", test_strategy)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if model_details_language_code is not None:
+        _details['modelDetails']['languageCode'] = model_details_language_code
+
+    if model_details_classification_mode is not None:
+        _details['modelDetails']['classificationMode'] = cli_util.parse_json_parameter("model_details_classification_mode", model_details_classification_mode)
+
+    _details['modelDetails']['modelType'] = 'TEXT_CLASSIFICATION'
+
+    client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
+    result = client.create_model(
+        create_model_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_group.command(name=cli_util.override('ai.create_model_health_nlu_model_details.command_name', 'create-model-health-nlu-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""A short description of the a model.""")
+@cli_util.option('--training-dataset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--test-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-details-language-code', help=u"""supported language default value is en""")
+@cli_util.option('--model-details-version', help=u"""Optional pre trained model version. If nothing specified latest pre trained model will be used. Supported versions can be found at /modelTypes/{modelType}""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_language', 'class': 'Model'})
+@cli_util.wrap_exceptions
+def create_model_health_nlu_model_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, display_name, description, training_dataset, test_strategy, freeform_tags, defined_tags, model_details_language_code, model_details_version):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['modelDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['projectId'] = project_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if training_dataset is not None:
+        _details['trainingDataset'] = cli_util.parse_json_parameter("training_dataset", training_dataset)
+
+    if test_strategy is not None:
+        _details['testStrategy'] = cli_util.parse_json_parameter("test_strategy", test_strategy)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if model_details_language_code is not None:
+        _details['modelDetails']['languageCode'] = model_details_language_code
+
+    if model_details_version is not None:
+        _details['modelDetails']['version'] = model_details_version
+
+    _details['modelDetails']['modelType'] = 'HEALTH_NLU'
+
+    client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
+    result = client.create_model(
+        create_model_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_group.command(name=cli_util.override('ai.create_model_pre_trained_summarization.command_name', 'create-model-pre-trained-summarization'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""A short description of the a model.""")
+@cli_util.option('--training-dataset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--test-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-details-language-code', help=u"""supported language default value is en""")
+@cli_util.option('--model-details-version', help=u"""Optional pre trained model version. if nothing specified latest pre trained model will be used. Supported versions can be found at /modelTypes/{modelType}""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_language', 'class': 'Model'})
+@cli_util.wrap_exceptions
+def create_model_pre_trained_summarization(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, display_name, description, training_dataset, test_strategy, freeform_tags, defined_tags, model_details_language_code, model_details_version):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['modelDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['projectId'] = project_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if training_dataset is not None:
+        _details['trainingDataset'] = cli_util.parse_json_parameter("training_dataset", training_dataset)
+
+    if test_strategy is not None:
+        _details['testStrategy'] = cli_util.parse_json_parameter("test_strategy", test_strategy)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if model_details_language_code is not None:
+        _details['modelDetails']['languageCode'] = model_details_language_code
+
+    if model_details_version is not None:
+        _details['modelDetails']['version'] = model_details_version
+
+    _details['modelDetails']['modelType'] = 'PRE_TRAINED_SUMMARIZATION'
 
     client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
     result = client.create_model(
@@ -1471,96 +2059,6 @@ def create_model_pii_model_details(ctx, from_json, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
-@model_group.command(name=cli_util.override('ai.create_model_pre_trained_language_detection_model_details.command_name', 'create-model-pre-trained-language-detection-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
-@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
-@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
-@cli_util.option('--description', help=u"""A short description of the a model.""")
-@cli_util.option('--training-dataset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--test-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--model-details-language-code', help=u"""supported language default value is en""")
-@cli_util.option('--model-details-version', help=u"""Optional pre trained model version. if nothing specified latest pre trained model will be used. Supported versions can be found at /modelTypes/{modelType}""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_language', 'class': 'Model'})
-@cli_util.wrap_exceptions
-def create_model_pre_trained_language_detection_model_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, display_name, description, training_dataset, test_strategy, freeform_tags, defined_tags, model_details_language_code, model_details_version):
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['modelDetails'] = {}
-    _details['compartmentId'] = compartment_id
-    _details['projectId'] = project_id
-
-    if display_name is not None:
-        _details['displayName'] = display_name
-
-    if description is not None:
-        _details['description'] = description
-
-    if training_dataset is not None:
-        _details['trainingDataset'] = cli_util.parse_json_parameter("training_dataset", training_dataset)
-
-    if test_strategy is not None:
-        _details['testStrategy'] = cli_util.parse_json_parameter("test_strategy", test_strategy)
-
-    if freeform_tags is not None:
-        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if defined_tags is not None:
-        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    if model_details_language_code is not None:
-        _details['modelDetails']['languageCode'] = model_details_language_code
-
-    if model_details_version is not None:
-        _details['modelDetails']['version'] = model_details_version
-
-    _details['modelDetails']['modelType'] = 'PRE_TRAINED_LANGUAGE_DETECTION'
-
-    client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
-    result = client.create_model(
-        create_model_details=_details,
-        **kwargs
-    )
-    if wait_for_state:
-
-        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
-            try:
-                wait_period_kwargs = {}
-                if max_wait_seconds is not None:
-                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds is not None:
-                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
-
-                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
-            except oci.exceptions.MaximumWaitTimeExceeded as e:
-                # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                sys.exit(2)
-            except Exception:
-                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                raise
-        else:
-            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
-    cli_util.render_response(result, ctx)
-
-
 @model_group.command(name=cli_util.override('ai.create_model_pre_trained_named_entity_recognition_model_details.command_name', 'create-model-pre-trained-named-entity-recognition-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
@@ -1651,96 +2149,6 @@ def create_model_pre_trained_named_entity_recognition_model_details(ctx, from_js
     cli_util.render_response(result, ctx)
 
 
-@model_group.command(name=cli_util.override('ai.create_model_pre_trained_sentiment_analysis_model_details.command_name', 'create-model-pre-trained-sentiment-analysis-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
-@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
-@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
-@cli_util.option('--description', help=u"""A short description of the a model.""")
-@cli_util.option('--training-dataset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--test-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--model-details-language-code', help=u"""supported language default value is en""")
-@cli_util.option('--model-details-version', help=u"""Optional pre trained model version. if nothing specified latest pre trained model will be used. Supported versions can be found at /modelTypes/{modelType}""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_language', 'class': 'Model'})
-@cli_util.wrap_exceptions
-def create_model_pre_trained_sentiment_analysis_model_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, display_name, description, training_dataset, test_strategy, freeform_tags, defined_tags, model_details_language_code, model_details_version):
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['modelDetails'] = {}
-    _details['compartmentId'] = compartment_id
-    _details['projectId'] = project_id
-
-    if display_name is not None:
-        _details['displayName'] = display_name
-
-    if description is not None:
-        _details['description'] = description
-
-    if training_dataset is not None:
-        _details['trainingDataset'] = cli_util.parse_json_parameter("training_dataset", training_dataset)
-
-    if test_strategy is not None:
-        _details['testStrategy'] = cli_util.parse_json_parameter("test_strategy", test_strategy)
-
-    if freeform_tags is not None:
-        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if defined_tags is not None:
-        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    if model_details_language_code is not None:
-        _details['modelDetails']['languageCode'] = model_details_language_code
-
-    if model_details_version is not None:
-        _details['modelDetails']['version'] = model_details_version
-
-    _details['modelDetails']['modelType'] = 'PRE_TRAINED_SENTIMENT_ANALYSIS'
-
-    client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
-    result = client.create_model(
-        create_model_details=_details,
-        **kwargs
-    )
-    if wait_for_state:
-
-        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
-            try:
-                wait_period_kwargs = {}
-                if max_wait_seconds is not None:
-                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds is not None:
-                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
-
-                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
-            except oci.exceptions.MaximumWaitTimeExceeded as e:
-                # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                sys.exit(2)
-            except Exception:
-                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                raise
-        else:
-            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
-    cli_util.render_response(result, ctx)
-
-
 @model_group.command(name=cli_util.override('ai.create_model_pre_trained_text_classification_model_details.command_name', 'create-model-pre-trained-text-classification-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
@@ -1795,186 +2203,6 @@ def create_model_pre_trained_text_classification_model_details(ctx, from_json, w
         _details['modelDetails']['version'] = model_details_version
 
     _details['modelDetails']['modelType'] = 'PRE_TRAINED_TEXT_CLASSIFICATION'
-
-    client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
-    result = client.create_model(
-        create_model_details=_details,
-        **kwargs
-    )
-    if wait_for_state:
-
-        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
-            try:
-                wait_period_kwargs = {}
-                if max_wait_seconds is not None:
-                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds is not None:
-                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
-
-                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
-            except oci.exceptions.MaximumWaitTimeExceeded as e:
-                # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                sys.exit(2)
-            except Exception:
-                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                raise
-        else:
-            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
-    cli_util.render_response(result, ctx)
-
-
-@model_group.command(name=cli_util.override('ai.create_model_text_classification_model_details.command_name', 'create-model-text-classification-model-details'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
-@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
-@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
-@cli_util.option('--description', help=u"""A short description of the a model.""")
-@cli_util.option('--training-dataset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--test-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--model-details-language-code', help=u"""supported language default value is en""")
-@cli_util.option('--model-details-classification-mode', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}, 'model-details-classification-mode': {'module': 'ai_language', 'class': 'ClassificationType'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}, 'model-details-classification-mode': {'module': 'ai_language', 'class': 'ClassificationType'}}, output_type={'module': 'ai_language', 'class': 'Model'})
-@cli_util.wrap_exceptions
-def create_model_text_classification_model_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, display_name, description, training_dataset, test_strategy, freeform_tags, defined_tags, model_details_language_code, model_details_classification_mode):
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['modelDetails'] = {}
-    _details['compartmentId'] = compartment_id
-    _details['projectId'] = project_id
-
-    if display_name is not None:
-        _details['displayName'] = display_name
-
-    if description is not None:
-        _details['description'] = description
-
-    if training_dataset is not None:
-        _details['trainingDataset'] = cli_util.parse_json_parameter("training_dataset", training_dataset)
-
-    if test_strategy is not None:
-        _details['testStrategy'] = cli_util.parse_json_parameter("test_strategy", test_strategy)
-
-    if freeform_tags is not None:
-        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if defined_tags is not None:
-        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    if model_details_language_code is not None:
-        _details['modelDetails']['languageCode'] = model_details_language_code
-
-    if model_details_classification_mode is not None:
-        _details['modelDetails']['classificationMode'] = cli_util.parse_json_parameter("model_details_classification_mode", model_details_classification_mode)
-
-    _details['modelDetails']['modelType'] = 'TEXT_CLASSIFICATION'
-
-    client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
-    result = client.create_model(
-        create_model_details=_details,
-        **kwargs
-    )
-    if wait_for_state:
-
-        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
-            try:
-                wait_period_kwargs = {}
-                if max_wait_seconds is not None:
-                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds is not None:
-                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-                if 'opc-work-request-id' not in result.headers:
-                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
-                    cli_util.render_response(result, ctx)
-                    return
-
-                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
-            except oci.exceptions.MaximumWaitTimeExceeded as e:
-                # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                sys.exit(2)
-            except Exception:
-                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                raise
-        else:
-            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
-    cli_util.render_response(result, ctx)
-
-
-@model_group.command(name=cli_util.override('ai.create_model_pre_trained_summarization.command_name', 'create-model-pre-trained-summarization'), help=u"""Creates a new model for training and train the model with date provided. \n[Command Reference](createModel)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  for the models compartment.""")
-@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
-@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.""")
-@cli_util.option('--description', help=u"""A short description of the a model.""")
-@cli_util.option('--training-dataset', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--test-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--model-details-language-code', help=u"""supported language default value is en""")
-@cli_util.option('--model-details-version', help=u"""Optional pre trained model version. if nothing specified latest pre trained model will be used. Supported versions can be found at /modelTypes/{modelType}""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "WAITING", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'training-dataset': {'module': 'ai_language', 'class': 'DatasetDetails'}, 'test-strategy': {'module': 'ai_language', 'class': 'TestStrategy'}, 'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_language', 'class': 'Model'})
-@cli_util.wrap_exceptions
-def create_model_pre_trained_summarization(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, display_name, description, training_dataset, test_strategy, freeform_tags, defined_tags, model_details_language_code, model_details_version):
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['modelDetails'] = {}
-    _details['compartmentId'] = compartment_id
-    _details['projectId'] = project_id
-
-    if display_name is not None:
-        _details['displayName'] = display_name
-
-    if description is not None:
-        _details['description'] = description
-
-    if training_dataset is not None:
-        _details['trainingDataset'] = cli_util.parse_json_parameter("training_dataset", training_dataset)
-
-    if test_strategy is not None:
-        _details['testStrategy'] = cli_util.parse_json_parameter("test_strategy", test_strategy)
-
-    if freeform_tags is not None:
-        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if defined_tags is not None:
-        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
-
-    if model_details_language_code is not None:
-        _details['modelDetails']['languageCode'] = model_details_language_code
-
-    if model_details_version is not None:
-        _details['modelDetails']['version'] = model_details_version
-
-    _details['modelDetails']['modelType'] = 'PRE_TRAINED_SUMMARIZATION'
 
     client = cli_util.build_client('ai_language', 'ai_service_language', ctx)
     result = client.create_model(
@@ -3414,6 +3642,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @endpoint_group.command(name=cli_util.override('ai.update_endpoint.command_name', 'update'), help=u"""Update the Endpoint identified by the id \n[Command Reference](updateEndpoint)""")
 @cli_util.option('--endpoint-id', required=True, help=u"""The OCID of the endpoint.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It should be unique and can be modified. Avoid entering confidential information.""")
+@cli_util.option('--alias', help=u"""Unique name across user tenancy in a region to identify an endpoint to be used for inferencing.""")
 @cli_util.option('--description', help=u"""A short description of the endpoint.""")
 @cli_util.option('--model-id', help=u"""The [OCID] of the model to associate with the endpoint.""")
 @cli_util.option('--inference-units', type=click.INT, help=u"""Number of replicas required for this endpoint. This will be optional parameter.""")
@@ -3429,7 +3658,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, endpoint_id, display_name, description, model_id, inference_units, freeform_tags, defined_tags, if_match):
+def update_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, endpoint_id, display_name, alias, description, model_id, inference_units, freeform_tags, defined_tags, if_match):
 
     if isinstance(endpoint_id, six.string_types) and len(endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --endpoint-id cannot be whitespace or empty string')
@@ -3447,6 +3676,9 @@ def update_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if alias is not None:
+        _details['alias'] = alias
 
     if description is not None:
         _details['description'] = description

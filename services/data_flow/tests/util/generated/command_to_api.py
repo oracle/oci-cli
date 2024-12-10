@@ -2,6 +2,7 @@
 # Copyright (c) 2016, 2024, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
+    "data_flow.cascading_delete_application": "oci.data_flow.DataFlowClient.cascading_delete_application",
     "data_flow.change_application_compartment": "oci.data_flow.DataFlowClient.change_application_compartment",
     "data_flow.change_pool_compartment": "oci.data_flow.DataFlowClient.change_pool_compartment",
     "data_flow.change_private_endpoint_compartment": "oci.data_flow.DataFlowClient.change_private_endpoint_compartment",
