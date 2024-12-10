@@ -145,3 +145,11 @@ language_group.add_command(aiservicelanguage_cli.job_group)
 
 # Remove polymorphic model group command
 aiservicelanguage_cli.model_group.commands.pop(aiservicelanguage_cli.create_model_pii_model_details.name)
+
+
+# Remove create-model-pre-trained-translation-model-details from oci ai language model
+aiservicelanguage_cli.model_group.commands.pop(aiservicelanguage_cli.create_model_pre_trained_translation_model_details.name)
+
+
+# Remove create-model-health-nlu-model-details from oci ai language model
+aiservicelanguage_cli.model_group.commands.pop(aiservicelanguage_cli.create_model_health_nlu_model_details.name)

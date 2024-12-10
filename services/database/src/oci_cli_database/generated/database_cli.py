@@ -26083,6 +26083,7 @@ def restore_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @autonomous_container_database_group.command(name=cli_util.override('db.rotate_autonomous_container_database_encryption_key.command_name', 'rotate-autonomous-container-database-encryption-key'), help=u"""Creates a new version of an existing [Vault service] key. \n[Command Reference](rotateAutonomousContainerDatabaseEncryptionKey)""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--key-version-id', help=u"""Key version ocid of the key provided by the user for rotate operation. [OCID].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "BACKUP_IN_PROGRESS", "RESTORING", "RESTORE_FAILED", "RESTARTING", "MAINTENANCE_IN_PROGRESS", "ROLE_CHANGE_IN_PROGRESS", "ENABLING_AUTONOMOUS_DATA_GUARD", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -26091,7 +26092,7 @@ def restore_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
 @cli_util.wrap_exceptions
-def rotate_autonomous_container_database_encryption_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, if_match):
+def rotate_autonomous_container_database_encryption_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, if_match, key_version_id):
 
     if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
@@ -26100,9 +26101,16 @@ def rotate_autonomous_container_database_encryption_key(ctx, from_json, wait_for
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if key_version_id is not None:
+        _details['keyVersionId'] = key_version_id
+
     client = cli_util.build_client('database', 'database', ctx)
     result = client.rotate_autonomous_container_database_encryption_key(
         autonomous_container_database_id=autonomous_container_database_id,
+        rotate_autonomous_container_database_encryption_key_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -26134,6 +26142,7 @@ def rotate_autonomous_container_database_encryption_key(ctx, from_json, wait_for
 @autonomous_database_group.command(name=cli_util.override('db.rotate_autonomous_database_encryption_key.command_name', 'rotate-autonomous-database-encryption-key'), help=u"""Rotate existing AutonomousDatabase [Vault service] key. \n[Command Reference](rotateAutonomousDatabaseEncryptionKey)""")
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--key-version-id', help=u"""Key version ocid of the key provided by the user for rotate operation. [OCID].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS", "RESTARTING", "RECREATING", "ROLE_CHANGE_IN_PROGRESS", "UPGRADING", "INACCESSIBLE", "STANDBY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -26142,7 +26151,7 @@ def rotate_autonomous_container_database_encryption_key(ctx, from_json, wait_for
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def rotate_autonomous_database_encryption_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, if_match):
+def rotate_autonomous_database_encryption_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, if_match, key_version_id):
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
@@ -26151,9 +26160,16 @@ def rotate_autonomous_database_encryption_key(ctx, from_json, wait_for_state, ma
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if key_version_id is not None:
+        _details['keyVersionId'] = key_version_id
+
     client = cli_util.build_client('database', 'database', ctx)
     result = client.rotate_autonomous_database_encryption_key(
         autonomous_database_id=autonomous_database_id,
+        rotate_autonomous_database_encryption_key_details=_details,
         **kwargs
     )
     if wait_for_state:

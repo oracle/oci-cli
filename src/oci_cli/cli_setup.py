@@ -706,17 +706,19 @@ def write_public_key_to_file(filename, public_key, overwrite=False, silent=False
     return True
 
 
-def write_private_key_to_file(filename, private_key, passphrase, overwrite=False, silent=False):
+def write_private_key_to_file(filename, private_key, passphrase, overwrite=False, silent=False, add_private_key_label=True):
     if not overwrite and os.path.isfile(filename) and not click.confirm('File {} already exists, do you want to overwrite?'.format(filename)):
         return False
 
     with open(filename, "wb") as f:
         f.write(cli_util.serialize_key(private_key=private_key, passphrase=passphrase))
 
-    # Open a file in append mode
-    with open(filename, 'a') as file:
-        # add the static label
-        file.write(PRIVATE_KEY_LABEL)
+    # Add PRIVATE_KEY_LABEL only if flag is true
+    if add_private_key_label:
+        # Open a file in append mode
+        with open(filename, 'a') as file:
+            # add the static label
+            file.write(PRIVATE_KEY_LABEL)
 
     # only user has R/W permissions to the key file
     cli_util.apply_user_only_access_permissions(filename)

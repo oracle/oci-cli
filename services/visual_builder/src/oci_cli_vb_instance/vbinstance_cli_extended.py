@@ -135,7 +135,7 @@ def stop_vb_instance_extended(ctx, **kwargs):
 @vbinstance_cli.vb_instance_group.command(name=vbinstance_cli.update_vb_instance.name, help=vbinstance_cli.update_vb_instance.help)
 @cli_util.option('--id', required=True, help=u"""Unique Vb Instance identifier. [required]""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'visual_builder', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'visual_builder', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'visual_builder', 'class': 'UpdateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'visual_builder', 'class': 'list[UpdateCustomEndpointDetails]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'visual_builder', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'visual_builder', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'visual_builder', 'class': 'UpdateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'visual_builder', 'class': 'list[UpdateCustomEndpointDetails]'}, 'network-endpoint-details': {'module': 'visual_builder', 'class': 'UpdateNetworkEndpointDetails'}})
 @cli_util.wrap_exceptions
 def update_vb_instance_extended(ctx, **kwargs):
     if 'id' in kwargs:

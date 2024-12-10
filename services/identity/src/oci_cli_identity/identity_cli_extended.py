@@ -759,7 +759,7 @@ def get_db_token(ctx, from_json, scope, db_token_location):
     response = cli_util.to_dict(result.data)
 
     # persist private key and result db_token
-    if not cli_setup.write_private_key_to_file(private_key_file_path, private_key, '', True, True):
+    if not cli_setup.write_private_key_to_file(private_key_file_path, private_key, '', True, True, add_private_key_label=False):
         click.echo("Error: Unable to write private key at: {}".format(private_key_file_path))
         ctx.exit(1)
     else:

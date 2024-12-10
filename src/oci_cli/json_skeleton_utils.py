@@ -199,7 +199,9 @@ def generate_input_dict_for_skeleton(ctx, targeted_complex_param=None):
 
         # If this is a dictionary, remove any redundant elements from the top level (as they have
         # been splatted out of the complex param)
-        remove_keys_if_dict(example_obj, already_processed_params)
+        # Removing this line because it causes an issue when there is a parameter at the top level and another
+        # one with the same name as a subparameter in a complex param
+        # remove_keys_if_dict(example_obj, already_processed_params)
 
         return example_obj
 
@@ -211,7 +213,9 @@ def generate_input_dict_for_skeleton(ctx, targeted_complex_param=None):
             input_as_dict[camelize(attr_name)] = tags_obj
         else:
             example_obj = translate_complex_param_to_example_object(complex_param_entry, set())
-            remove_keys_if_dict(example_obj, already_processed_params)
+            # Removing this line because it causes an issue when there is a parameter at the top level and another
+            # one with the same name as a subparameter in a complex param
+            # remove_keys_if_dict(example_obj, already_processed_params)
             input_as_dict[camelize(attr_name)] = example_obj
 
     return input_as_dict

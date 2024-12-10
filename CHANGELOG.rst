@@ -6,6 +6,63 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+
+3.50.3 - 2024-12-10
+--------------------
+Added
+~~~~~
+
+* Database Service
+
+  * Support for BYOK(bring your own key)
+
+    * ``oci db autonomous-container-database rotate-key --key-version-id``
+    * ``oci db autonomous-database rotate-key --key-version-id``
+
+* Disaster Recovery Service
+
+  * Support for Refreshing DrPlans
+
+    * ``oci disaster-recovery dr-plan refresh``
+    * ``oci disaster-recovery dr-plan refresh-dr-plan-refresh-dr-plan-default-details``
+    * ``oci disaster-recovery dr-plan verify``
+    * ``oci disaster-recovery dr-plan verify-dr-plan-verify-dr-plan-default-details``
+
+* Visual Builder Service
+
+  * Add support for Private Access to a VB instance
+
+    * ``oci visual-builder vb-instance create-vb-instance-private-endpoint-details --compartment-id | -c, --display-name, --network-endpoint-details-subnet-id, --node-count, --alternate-custom-endpoints, --consumption-model, --custom-endpoint, --defined-tags, --freeform-tags, -? | -h | --help, --idcs-open-id, --is-visual-builder-enabled, --network-endpoint-details-network-security-group-ids, --network-endpoint-details-private-endpoint-ip``
+    * ``oci visual-builder vb-instance reconfigure-private-endpoint --vb-instance-id, -? | -h | --help``
+    * ``oci visual-builder vb-instance update-vb-instance-update-private-endpoint-details --vb-instance-id, --alternate-custom-endpoints, --custom-endpoint, --defined-tags, --display-name, --force, --freeform-tags, -? | -h | --help, --idcs-open-id, --is-visual-builder-enabled, --network-endpoint-details-network-security-group-ids, --network-endpoint-details-subnet-id, --node-count``
+
+* Fleet Software Update Service
+
+  * Support for Exadata Fleet Update DB and GI Rollback Maintenance Cycle Feature
+
+    * ``oci fleet-software-update fsu-action create-fsu-action-create-rollback-cycle-apply-action-details``
+
+* AI Language Service
+
+  * Support for new optional parameter alias
+
+    * ``oci ai language batch-detect-entities --alias``
+    * ``oci ai language batch-detect-health-entities --alias``
+    * ``oci ai language batch-detect-key-phrases --alias``
+    * ``oci ai language batch-detect-language --alias``
+    * ``oci ai language batch-detect-pii-entities --alias``
+    * ``oci ai language batch-detect-sentiments --alias``
+    * ``oci ai language batch-detect-text-classification --alias``
+    * ``oci ai language batch-language-translation --alias, --endpoint-id, --no-translate``
+    * ``oci ai language endpoint create --alias, --compute-type``
+    * ``oci ai language endpoint update --alias``
+
+* Data Flow Service
+
+  * Support for cascading deletion of Applications and Runs
+
+    * ``oci data-flow application cascading-delete --application-id``
+
 3.50.2 - 2024-11-19
 --------------------
 Added

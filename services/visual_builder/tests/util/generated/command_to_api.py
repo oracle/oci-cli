@@ -11,6 +11,7 @@ SDK_client_map = {
     "visual_builder.list_work_request_errors": "oci.visual_builder.VbInstanceClient.list_work_request_errors",
     "visual_builder.list_work_request_logs": "oci.visual_builder.VbInstanceClient.list_work_request_logs",
     "visual_builder.list_work_requests": "oci.visual_builder.VbInstanceClient.list_work_requests",
+    "visual_builder.reconfigure_private_endpoint_vb_instance": "oci.visual_builder.VbInstanceClient.reconfigure_private_endpoint_vb_instance",
     "visual_builder.request_summarized_applications": "oci.visual_builder.VbInstanceClient.request_summarized_applications",
     "visual_builder.start_vb_instance": "oci.visual_builder.VbInstanceClient.start_vb_instance",
     "visual_builder.stop_vb_instance": "oci.visual_builder.VbInstanceClient.stop_vb_instance",
