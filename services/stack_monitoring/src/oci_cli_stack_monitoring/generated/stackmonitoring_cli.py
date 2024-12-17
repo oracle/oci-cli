@@ -1294,6 +1294,82 @@ def create_metric_extension_jmx_query_properties(ctx, from_json, wait_for_state,
     cli_util.render_response(result, ctx)
 
 
+@metric_extension_group.command(name=cli_util.override('stack_monitoring.create_metric_extension_http_query_properties.command_name', 'create-metric-extension-http-query-properties'), help=u"""Creates a new metric extension resource for a given compartment \n[Command Reference](createMetricExtension)""")
+@cli_util.option('--name', required=True, help=u"""Metric Extension Resource name.""")
+@cli_util.option('--display-name', required=True, help=u"""Metric Extension display name.""")
+@cli_util.option('--resource-type', required=True, help=u"""Resource type to which Metric Extension applies""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID]""")
+@cli_util.option('--collection-recurrences', required=True, help=u"""Schedule of metric extension should use RFC 5545 format i.e. recur-rule-part = \"FREQ\";INTERVAL where FREQ rule part identifies the type of recurrence rule. Valid values are \"MINUTELY\",\"HOURLY\",\"DAILY\" to specify repeating events based on an interval of a minute, an hour and a day or more. Example- FREQ=DAILY;INTERVAL=1""")
+@cli_util.option('--metric-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of metrics which are part of this metric extension""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--query-properties-url', required=True, help=u"""Http(s) end point URL""")
+@cli_util.option('--query-properties-response-content-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["TEXT_PLAIN", "TEXT_HTML", "APPLICATION_JSON", "APPLICATION_XML"]), help=u"""Type of content response given by the http(s) URL""")
+@cli_util.option('--query-properties-script-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""Description of the metric extension.""")
+@cli_util.option('--query-properties-protocol-type', type=custom_types.CliCaseInsensitiveChoice(["HTTP", "HTTPS"]), help=u"""Supported protocol of resources to be associated with this metric extension. This is optional and defaults to HTTPS, which uses secure connection to the URL""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'metric-list': {'module': 'stack_monitoring', 'class': 'list[Metric]'}, 'query-properties-script-details': {'module': 'stack_monitoring', 'class': 'HttpScriptFileDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metric-list': {'module': 'stack_monitoring', 'class': 'list[Metric]'}, 'query-properties-script-details': {'module': 'stack_monitoring', 'class': 'HttpScriptFileDetails'}}, output_type={'module': 'stack_monitoring', 'class': 'MetricExtension'})
+@cli_util.wrap_exceptions
+def create_metric_extension_http_query_properties(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, display_name, resource_type, compartment_id, collection_recurrences, metric_list, query_properties_url, query_properties_response_content_type, query_properties_script_details, description, query_properties_protocol_type):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['queryProperties'] = {}
+    _details['name'] = name
+    _details['displayName'] = display_name
+    _details['resourceType'] = resource_type
+    _details['compartmentId'] = compartment_id
+    _details['collectionRecurrences'] = collection_recurrences
+    _details['metricList'] = cli_util.parse_json_parameter("metric_list", metric_list)
+    _details['queryProperties']['url'] = query_properties_url
+    _details['queryProperties']['responseContentType'] = query_properties_response_content_type
+    _details['queryProperties']['scriptDetails'] = cli_util.parse_json_parameter("query_properties_script_details", query_properties_script_details)
+
+    if description is not None:
+        _details['description'] = description
+
+    if query_properties_protocol_type is not None:
+        _details['queryProperties']['protocolType'] = query_properties_protocol_type
+
+    _details['queryProperties']['collectionMethod'] = 'HTTP'
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.create_metric_extension(
+        create_metric_extension_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_metric_extension') and callable(getattr(client, 'get_metric_extension')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_metric_extension(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource.command_name', 'create'), help=u"""Creates a new monitored resource for the given resource type with the details and submits a work request for promoting the resource to agent. Once the resource is successfully added to agent, resource state will be marked active. \n[Command Reference](createMonitoredResource)""")
 @cli_util.option('--name', required=True, help=u"""Monitored Resource Name.""")
 @cli_util.option('--type', required=True, help=u"""Monitored Resource Type.""")
@@ -3602,16 +3678,17 @@ def list_maintenance_windows(ctx, from_json, all_pages, page_size, compartment_i
 
 
 @metric_extension_group.command(name=cli_util.override('stack_monitoring.list_metric_extensions.command_name', 'list'), help=u"""Returns a list of metric extensions \n[Command Reference](listMetricExtensions)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which data is listed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "TIME_CREATED"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for resources is ascending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "TIME_CREATED", "ENABLED_ON_RESOURCE_COUNT"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for resources is ascending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which data is listed.""")
 @cli_util.option('--resource-type', help=u"""A filter to return resources based on resource type.""")
 @cli_util.option('--name', help=u"""A filter to return resources based on name.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DRAFT", "PUBLISHED"]), help=u"""A filter to return resources based on status e.g. Draft or Published""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""A filter to return metric extensions based on Lifecycle State""")
 @cli_util.option('--enabled-on-resource-id', help=u"""A filter to return metric extensions based on input resource Id on which metric extension is enabled""")
+@cli_util.option('--metric-extension-id', help=u"""Identifier for the metric extension""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3619,7 +3696,7 @@ def list_maintenance_windows(ctx, from_json, all_pages, page_size, compartment_i
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'stack_monitoring', 'class': 'MetricExtensionCollection'})
 @cli_util.wrap_exceptions
-def list_metric_extensions(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, resource_type, name, status, lifecycle_state, enabled_on_resource_id):
+def list_metric_extensions(ctx, from_json, all_pages, page_size, limit, page, sort_by, sort_order, compartment_id, resource_type, name, status, lifecycle_state, enabled_on_resource_id, metric_extension_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3633,6 +3710,8 @@ def list_metric_extensions(ctx, from_json, all_pages, page_size, compartment_id,
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
     if resource_type is not None:
         kwargs['resource_type'] = resource_type
     if name is not None:
@@ -3643,6 +3722,8 @@ def list_metric_extensions(ctx, from_json, all_pages, page_size, compartment_id,
         kwargs['lifecycle_state'] = lifecycle_state
     if enabled_on_resource_id is not None:
         kwargs['enabled_on_resource_id'] = enabled_on_resource_id
+    if metric_extension_id is not None:
+        kwargs['metric_extension_id'] = metric_extension_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
     if all_pages:
@@ -3651,7 +3732,6 @@ def list_metric_extensions(ctx, from_json, all_pages, page_size, compartment_id,
 
         result = cli_util.list_call_get_all_results(
             client.list_metric_extensions,
-            compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
@@ -3659,12 +3739,10 @@ def list_metric_extensions(ctx, from_json, all_pages, page_size, compartment_id,
             client.list_metric_extensions,
             limit,
             page_size,
-            compartment_id=compartment_id,
             **kwargs
         )
     else:
         result = client.list_metric_extensions(
-            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -5779,6 +5857,103 @@ def update_metric_extension_os_command_update_query_properties(ctx, from_json, f
         _details['queryProperties']['startsWith'] = query_properties_starts_with
 
     _details['queryProperties']['collectionMethod'] = 'OS_COMMAND'
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.update_metric_extension(
+        metric_extension_id=metric_extension_id,
+        update_metric_extension_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_metric_extension') and callable(getattr(client, 'get_metric_extension')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_metric_extension(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@metric_extension_group.command(name=cli_util.override('stack_monitoring.update_metric_extension_http_update_query_properties.command_name', 'update-metric-extension-http-update-query-properties'), help=u"""Updates the Metric Extension \n[Command Reference](updateMetricExtension)""")
+@cli_util.option('--metric-extension-id', required=True, help=u"""The [OCID] of the metric extension resource.""")
+@cli_util.option('--display-name', help=u"""Metric Extension resource display name.""")
+@cli_util.option('--description', help=u"""Description of the metric extension.""")
+@cli_util.option('--collection-recurrences', help=u"""Schedule of metric extension should use RFC 5545 format -> recur-rule-part = \"FREQ\";\"INTERVAL\" where FREQ rule part identifies the type of recurrence rule. Valid values are \"MINUTELY\",\"HOURLY\",\"DAILY\" to specify repeating events based on an interval of a minute, an hour and a day or more. Example- FREQ=DAILY;INTERVAL=1""")
+@cli_util.option('--metric-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of metrics which are part of this metric extension
+
+This option is a JSON list with items of type Metric.  For documentation on Metric please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/Metric.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--query-properties-url', help=u"""Http(s) end point URL""")
+@cli_util.option('--query-properties-response-content-type', type=custom_types.CliCaseInsensitiveChoice(["TEXT_PLAIN", "TEXT_HTML", "APPLICATION_JSON", "APPLICATION_XML"]), help=u"""Type of content response given by the http(s) URL""")
+@cli_util.option('--query-properties-protocol-type', type=custom_types.CliCaseInsensitiveChoice(["HTTP", "HTTPS"]), help=u"""Supported protocol of resources to be associated with this metric extension. This is optional and defaults to HTTPS, which uses secure connection to the URL""")
+@cli_util.option('--query-properties-script-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'metric-list': {'module': 'stack_monitoring', 'class': 'list[Metric]'}, 'query-properties-script-details': {'module': 'stack_monitoring', 'class': 'UpdateHttpScriptFileDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metric-list': {'module': 'stack_monitoring', 'class': 'list[Metric]'}, 'query-properties-script-details': {'module': 'stack_monitoring', 'class': 'UpdateHttpScriptFileDetails'}}, output_type={'module': 'stack_monitoring', 'class': 'MetricExtension'})
+@cli_util.wrap_exceptions
+def update_metric_extension_http_update_query_properties(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, metric_extension_id, display_name, description, collection_recurrences, metric_list, if_match, query_properties_url, query_properties_response_content_type, query_properties_protocol_type, query_properties_script_details):
+
+    if isinstance(metric_extension_id, six.string_types) and len(metric_extension_id.strip()) == 0:
+        raise click.UsageError('Parameter --metric-extension-id cannot be whitespace or empty string')
+    if not force:
+        if metric_list:
+            if not click.confirm("WARNING: Updates to metric-list will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['queryProperties'] = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if collection_recurrences is not None:
+        _details['collectionRecurrences'] = collection_recurrences
+
+    if metric_list is not None:
+        _details['metricList'] = cli_util.parse_json_parameter("metric_list", metric_list)
+
+    if query_properties_url is not None:
+        _details['queryProperties']['url'] = query_properties_url
+
+    if query_properties_response_content_type is not None:
+        _details['queryProperties']['responseContentType'] = query_properties_response_content_type
+
+    if query_properties_protocol_type is not None:
+        _details['queryProperties']['protocolType'] = query_properties_protocol_type
+
+    if query_properties_script_details is not None:
+        _details['queryProperties']['scriptDetails'] = cli_util.parse_json_parameter("query_properties_script_details", query_properties_script_details)
+
+    _details['queryProperties']['collectionMethod'] = 'HTTP'
 
     client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
     result = client.update_metric_extension(

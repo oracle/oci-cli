@@ -490,3 +490,4 @@ identity-domains, oci-console-sign-on-policy-consent, search
 identity-domains, policy, search
 identity-domains, restore-oci-console-policy, create
 identity-domains, rule, search
+goldengate, deployment, update

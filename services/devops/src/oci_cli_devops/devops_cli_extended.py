@@ -1520,3 +1520,13 @@ def summarize_project_repository_analytics(ctx, from_json, project_id, repositor
         **kwargs
     )
     cli_util.render_response(result, ctx)
+
+
+@cli_util.copy_params_from_generated_command(devops_cli.create_or_update_protected_branch, params_to_exclude=['protection_levels'])
+@devops_cli.protected_branch_group.command(name=cli_util.override('devops.create_or_update_protected_branch.command_name', 'create-or-update'), help=u"""Creates a restriction on a branch that prevents certain actions on it. \n[Command Reference](createOrUpdateProtectedBranch)""")
+@cli_util.option('--protection-levels', type=custom_types.CliCaseInsensitiveChoice(["READ_ONLY", "PULL_REQUEST_MERGE_ONLY"]), multiple=True, help=u"""Level of protection to add on a branch.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'ProtectedBranch'})
+@cli_util.wrap_exceptions
+def create_or_update_protected_branch_extended(ctx, **kwargs):
+    ctx.invoke(devops_cli.create_or_update_protected_branch, **kwargs)

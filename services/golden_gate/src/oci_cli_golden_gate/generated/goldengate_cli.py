@@ -58,6 +58,12 @@ def message_summary_group():
     pass
 
 
+@click.command(cli_util.override('goldengate.recipe_summary_collection_group.command_name', 'recipe-summary-collection'), cls=CommandGroupWithAlias, help="""The list of Recipe objects.""")
+@cli_util.help_option_group
+def recipe_summary_collection_group():
+    pass
+
+
 @click.command(cli_util.override('goldengate.database_registration_group.command_name', 'database-registration'), cls=CommandGroupWithAlias, help="""Represents the metadata description of a database used by deployments in the same compartment.""")
 @cli_util.help_option_group
 def database_registration_group():
@@ -73,6 +79,12 @@ def deployment_upgrade_group():
 @click.command(cli_util.override('goldengate.deployment_wallets_operation_summary_group.command_name', 'deployment-wallets-operation-summary'), cls=CommandGroupWithAlias, help="""Summary of the deployment wallets operations.""")
 @cli_util.help_option_group
 def deployment_wallets_operation_summary_group():
+    pass
+
+
+@click.command(cli_util.override('goldengate.pipeline_group.command_name', 'pipeline'), cls=CommandGroupWithAlias, help="""Represents the metadata details of a pipeline in the same compartment.""")
+@cli_util.help_option_group
+def pipeline_group():
     pass
 
 
@@ -136,9 +148,11 @@ goldengate_root_group.add_command(certificate_group)
 goldengate_root_group.add_command(work_request_log_entry_group)
 goldengate_root_group.add_command(work_request_group)
 goldengate_root_group.add_command(message_summary_group)
+goldengate_root_group.add_command(recipe_summary_collection_group)
 goldengate_root_group.add_command(database_registration_group)
 goldengate_root_group.add_command(deployment_upgrade_group)
 goldengate_root_group.add_command(deployment_wallets_operation_summary_group)
+goldengate_root_group.add_command(pipeline_group)
 goldengate_root_group.add_command(deployment_type_collection_group)
 goldengate_root_group.add_command(connection_assignment_group)
 goldengate_root_group.add_command(trail_sequence_summary_group)
@@ -828,6 +842,70 @@ def change_deployment_compartment(ctx, from_json, wait_for_state, max_wait_secon
     result = client.change_deployment_compartment(
         deployment_id=deployment_id,
         change_deployment_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('goldengate.change_pipeline_compartment.command_name', 'change-compartment'), help=u"""Moves the Pipeline into a different compartment within the same tenancy. When provided, If-Match is checked against ETag values of the resource.  For information about moving resources between compartments, see [Moving Resources Between Compartments]. \n[Command Reference](changePipelineCompartment)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline created.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_pipeline_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, compartment_id, if_match, is_lock_override):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.change_pipeline_compartment(
+        pipeline_id=pipeline_id,
+        change_pipeline_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -3433,7 +3511,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of a .pem or .crt file. containing the server public key (for 1 and 2-way SSL).""")
 @cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA). Note: This is an optional property and only applicable if TLS/MTLS option is selected.""")
 @cli_util.option('--ssl-cert', help=u"""Client Certificate - The base64 encoded content of a .pem or .crt file. containing the client public key (for 2-way SSL).""")
-@cli_util.option('--ssl-key', help=u"""Client Key \u2013 The base64 encoded content of a .pem or .crt file containing the client private key (for 2-way SSL).""")
+@cli_util.option('--ssl-key', help=u"""Client Key - The base64 encoded content of a .pem or .crt file containing the client private key (for 2-way SSL).""")
 @cli_util.option('--ssl-key-secret-id', help=u"""The [OCID] of the Secret that stores the Client Key - The content of a .pem or .crt file containing the client private key (for 2-way SSL). Note: When provided, 'sslKey' field must not be provided.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
@@ -4883,6 +4961,180 @@ def create_deployment_backup(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
+@pipeline_group.command(name=cli_util.override('goldengate.create_pipeline.command_name', 'create'), help=u"""Creates a new Pipeline. \n[Command Reference](createPipeline)""")
+@cli_util.option('--recipe-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ZERO_ETL"]), help=u"""The type of the recipe""")
+@cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--license-model', required=True, type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to a Deployment.""")
+@cli_util.option('--source-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""Metadata about this specific object.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
+
+Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[ResourceLock]'}, 'source-connection-details': {'module': 'golden_gate', 'class': 'SourcePipelineConnectionDetails'}, 'target-connection-details': {'module': 'golden_gate', 'class': 'TargetPipelineConnectionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[ResourceLock]'}, 'source-connection-details': {'module': 'golden_gate', 'class': 'SourcePipelineConnectionDetails'}, 'target-connection-details': {'module': 'golden_gate', 'class': 'TargetPipelineConnectionDetails'}}, output_type={'module': 'golden_gate', 'class': 'Pipeline'})
+@cli_util.wrap_exceptions
+def create_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, recipe_type, display_name, compartment_id, license_model, source_connection_details, target_connection_details, description, freeform_tags, defined_tags, locks):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['recipeType'] = recipe_type
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['licenseModel'] = license_model
+    _details['sourceConnectionDetails'] = cli_util.parse_json_parameter("source_connection_details", source_connection_details)
+    _details['targetConnectionDetails'] = cli_util.parse_json_parameter("target_connection_details", target_connection_details)
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.create_pipeline(
+        create_pipeline_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('goldengate.create_pipeline_create_zero_etl_pipeline_details.command_name', 'create-pipeline-create-zero-etl-pipeline-details'), help=u"""Creates a new Pipeline. \n[Command Reference](createPipeline)""")
+@cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--license-model', required=True, type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to a Deployment.""")
+@cli_util.option('--source-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--target-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""Metadata about this specific object.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
+
+Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--process-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[ResourceLock]'}, 'source-connection-details': {'module': 'golden_gate', 'class': 'SourcePipelineConnectionDetails'}, 'target-connection-details': {'module': 'golden_gate', 'class': 'TargetPipelineConnectionDetails'}, 'process-options': {'module': 'golden_gate', 'class': 'ProcessOptions'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[ResourceLock]'}, 'source-connection-details': {'module': 'golden_gate', 'class': 'SourcePipelineConnectionDetails'}, 'target-connection-details': {'module': 'golden_gate', 'class': 'TargetPipelineConnectionDetails'}, 'process-options': {'module': 'golden_gate', 'class': 'ProcessOptions'}}, output_type={'module': 'golden_gate', 'class': 'Pipeline'})
+@cli_util.wrap_exceptions
+def create_pipeline_create_zero_etl_pipeline_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, license_model, source_connection_details, target_connection_details, description, freeform_tags, defined_tags, locks, process_options):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['licenseModel'] = license_model
+    _details['sourceConnectionDetails'] = cli_util.parse_json_parameter("source_connection_details", source_connection_details)
+    _details['targetConnectionDetails'] = cli_util.parse_json_parameter("target_connection_details", target_connection_details)
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
+
+    if process_options is not None:
+        _details['processOptions'] = cli_util.parse_json_parameter("process_options", process_options)
+
+    _details['recipeType'] = 'ZERO_ETL'
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.create_pipeline(
+        create_pipeline_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @certificate_group.command(name=cli_util.override('goldengate.delete_certificate.command_name', 'delete'), help=u"""Deletes the certificate from truststore. \n[Command Reference](deleteCertificate)""")
 @cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
 @cli_util.option('--certificate-key', required=True, help=u"""A unique certificate identifier.""")
@@ -5207,6 +5459,65 @@ def delete_deployment_backup(ctx, from_json, wait_for_state, max_wait_seconds, w
     client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
     result = client.delete_deployment_backup(
         deployment_backup_id=deployment_backup_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('goldengate.delete_pipeline.command_name', 'delete'), help=u"""Deletes a Pipeline. \n[Command Reference](deletePipeline)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline created.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, if_match, is_lock_override):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.delete_pipeline(
+        pipeline_id=pipeline_id,
         **kwargs
     )
     if wait_for_state:
@@ -5590,6 +5901,28 @@ def get_deployment_upgrade(ctx, from_json, deployment_upgrade_id):
     client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
     result = client.get_deployment_upgrade(
         deployment_upgrade_id=deployment_upgrade_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('goldengate.get_pipeline.command_name', 'get'), help=u"""Retrieves a Pipeline details. \n[Command Reference](getPipeline)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline created.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'Pipeline'})
+@cli_util.wrap_exceptions
+def get_pipeline(ctx, from_json, pipeline_id):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.get_pipeline(
+        pipeline_id=pipeline_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -6441,6 +6774,337 @@ def list_messages(ctx, from_json, all_pages, page_size, deployment_id, limit, pa
     else:
         result = client.list_messages(
             deployment_id=deployment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('goldengate.list_pipeline_initialization_steps.command_name', 'list-pipeline-initialization-steps'), help=u"""Retrieves a Pipeline recipe steps and its progress details. \n[Command Reference](listPipelineInitializationSteps)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline created.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'PipelineInitializationSteps'})
+@cli_util.wrap_exceptions
+def list_pipeline_initialization_steps(ctx, from_json, all_pages, pipeline_id):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.list_pipeline_initialization_steps(
+        pipeline_id=pipeline_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('goldengate.list_pipeline_running_processes.command_name', 'list-pipeline-running-processes'), help=u"""Retrieves a Pipeline's running replication process's status like extracts/replicats. \n[Command Reference](listPipelineRunningProcesses)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline created.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order can be provided. Default order for 'timeCreated' is descending.  Default order for 'displayName' is ascending. If no value is specified timeCreated is the default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'PipelineRunningProcessCollection'})
+@cli_util.wrap_exceptions
+def list_pipeline_running_processes(ctx, from_json, all_pages, page_size, pipeline_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_pipeline_running_processes,
+            pipeline_id=pipeline_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_pipeline_running_processes,
+            limit,
+            page_size,
+            pipeline_id=pipeline_id,
+            **kwargs
+        )
+    else:
+        result = client.list_pipeline_running_processes(
+            pipeline_id=pipeline_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('goldengate.list_pipeline_schema_tables.command_name', 'list-pipeline-schema-tables'), help=u"""Returns an array of tables under the given schemas of the pipeline for given source and target schemas passed as query params. \n[Command Reference](listPipelineSchemaTables)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline created.""")
+@cli_util.option('--source-schema-name', required=True, help=u"""Name of the source schema obtained from get schema endpoint of the created pipeline.""")
+@cli_util.option('--target-schema-name', required=True, help=u"""Name of the target schema obtained from get schema endpoint of the created pipeline.""")
+@cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order can be provided. Default order for 'timeCreated' is descending.  Default order for 'displayName' is ascending. If no value is specified timeCreated is the default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'PipelineSchemaTableCollection'})
+@cli_util.wrap_exceptions
+def list_pipeline_schema_tables(ctx, from_json, all_pages, page_size, pipeline_id, source_schema_name, target_schema_name, display_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_pipeline_schema_tables,
+            pipeline_id=pipeline_id,
+            source_schema_name=source_schema_name,
+            target_schema_name=target_schema_name,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_pipeline_schema_tables,
+            limit,
+            page_size,
+            pipeline_id=pipeline_id,
+            source_schema_name=source_schema_name,
+            target_schema_name=target_schema_name,
+            **kwargs
+        )
+    else:
+        result = client.list_pipeline_schema_tables(
+            pipeline_id=pipeline_id,
+            source_schema_name=source_schema_name,
+            target_schema_name=target_schema_name,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('goldengate.list_pipeline_schemas.command_name', 'list-pipeline-schemas'), help=u"""Returns an array of schemas based on mapping rules for a pipeline. \n[Command Reference](listPipelineSchemas)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline created.""")
+@cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order can be provided. Default order for 'timeCreated' is descending.  Default order for 'displayName' is ascending. If no value is specified timeCreated is the default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'PipelineSchemaCollection'})
+@cli_util.wrap_exceptions
+def list_pipeline_schemas(ctx, from_json, all_pages, page_size, pipeline_id, display_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_pipeline_schemas,
+            pipeline_id=pipeline_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_pipeline_schemas,
+            limit,
+            page_size,
+            pipeline_id=pipeline_id,
+            **kwargs
+        )
+    else:
+        result = client.list_pipeline_schemas(
+            pipeline_id=pipeline_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('goldengate.list_pipelines.command_name', 'list'), help=u"""Lists the Pipelines in the compartment. \n[Command Reference](listPipelines)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "NEEDS_ATTENTION", "DELETING", "DELETED", "FAILED"]), help=u"""A filtered list of pipelines to return for a given lifecycleState.""")
+@cli_util.option('--lifecycle-sub-state', type=custom_types.CliCaseInsensitiveChoice(["STARTING", "STOPPING", "STOPPED", "MOVING", "RUNNING"]), help=u"""A filtered list of pipelines to return for a given lifecycleSubState.""")
+@cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order can be provided. Default order for 'timeCreated' is descending.  Default order for 'displayName' is ascending. If no value is specified timeCreated is the default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'PipelineCollection'})
+@cli_util.wrap_exceptions
+def list_pipelines(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, lifecycle_sub_state, display_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if lifecycle_sub_state is not None:
+        kwargs['lifecycle_sub_state'] = lifecycle_sub_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_pipelines,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_pipelines,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_pipelines(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@recipe_summary_collection_group.command(name=cli_util.override('goldengate.list_recipes.command_name', 'list-recipes'), help=u"""Returns an array of Recipe Summary. \n[Command Reference](listRecipes)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
+@cli_util.option('--recipe-type', type=custom_types.CliCaseInsensitiveChoice(["ZERO_ETL"]), help=u"""The pipeline's recipe type. The default value is ZERO_ETL.""")
+@cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order can be provided. Default order for 'timeCreated' is descending.  Default order for 'displayName' is ascending. If no value is specified timeCreated is the default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'RecipeSummaryCollection'})
+@cli_util.wrap_exceptions
+def list_recipes(ctx, from_json, all_pages, page_size, compartment_id, recipe_type, display_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if recipe_type is not None:
+        kwargs['recipe_type'] = recipe_type
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_recipes,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_recipes,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_recipes(
+            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -7584,6 +8248,134 @@ def start_deployment_default_start_deployment_details(ctx, from_json, wait_for_s
     cli_util.render_response(result, ctx)
 
 
+@pipeline_group.command(name=cli_util.override('goldengate.start_pipeline.command_name', 'start'), help=u"""Starts the pipeline for data replication. \n[Command Reference](startPipeline)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline created.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""Type of pipeline start. This option applies when starting a pipeline.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def start_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, type, if_match, is_lock_override):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.start_pipeline(
+        pipeline_id=pipeline_id,
+        start_pipeline_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('goldengate.start_pipeline_default_start_pipeline_details.command_name', 'start-pipeline-default-start-pipeline-details'), help=u"""Starts the pipeline for data replication. \n[Command Reference](startPipeline)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline created.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def start_pipeline_default_start_pipeline_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, if_match, is_lock_override):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    _details['type'] = 'DEFAULT'
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.start_pipeline(
+        pipeline_id=pipeline_id,
+        start_pipeline_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @deployment_group.command(name=cli_util.override('goldengate.stop_deployment.command_name', 'stop'), help=u"""Stops a Deployment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](stopDeployment)""")
 @cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""The type of a deployment stop""")
@@ -7712,6 +8504,134 @@ def stop_deployment_default_stop_deployment_details(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
+@pipeline_group.command(name=cli_util.override('goldengate.stop_pipeline.command_name', 'stop'), help=u"""Stops the pipeline for data replication. \n[Command Reference](stopPipeline)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline created.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""Type of a pipeline stop. This option applies when stopping a pipeline.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def stop_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, type, if_match, is_lock_override):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.stop_pipeline(
+        pipeline_id=pipeline_id,
+        stop_pipeline_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('goldengate.stop_pipeline_default_stop_pipeline_details.command_name', 'stop-pipeline-default-stop-pipeline-details'), help=u"""Stops the pipeline for data replication. \n[Command Reference](stopPipeline)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline created.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def stop_pipeline_default_stop_pipeline_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, if_match, is_lock_override):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    _details['type'] = 'DEFAULT'
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.stop_pipeline(
+        pipeline_id=pipeline_id,
+        stop_pipeline_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @connection_assignment_group.command(name=cli_util.override('goldengate.test_connection_assignment.command_name', 'test'), help=u"""Tests the connectivity between given GoldenGate deployment and one of the associated database / service. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](testConnectionAssignment)""")
 @cli_util.option('--connection-assignment-id', required=True, help=u"""The [OCID] of the Connection Assignment.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""The type of the test of the assigned connection.""")
@@ -7769,6 +8689,70 @@ def test_connection_assignment_default_test_connection_assignment_details(ctx, f
     result = client.test_connection_assignment(
         connection_assignment_id=connection_assignment_id,
         test_connection_assignment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('goldengate.test_pipeline_connection.command_name', 'test-pipeline-connection'), help=u"""Tests pipeline connections against pipeline to verify the connectivity. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](testPipelineConnection)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline created.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""Type of test for an assigned pipeline connection. This option applies when testing a pipeline connection.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'TestPipelineConnectionResult'})
+@cli_util.wrap_exceptions
+def test_pipeline_connection(ctx, from_json, pipeline_id, type, if_match):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.test_pipeline_connection(
+        pipeline_id=pipeline_id,
+        test_pipeline_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('goldengate.test_pipeline_connection_default_test_pipeline_connection_details.command_name', 'test-pipeline-connection-default-test-pipeline-connection-details'), help=u"""Tests pipeline connections against pipeline to verify the connectivity. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](testPipelineConnection)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline created.""")
+@cli_util.option('--connection-id', required=True, help=u"""The [OCID] of the connection being referenced.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'TestPipelineConnectionResult'})
+@cli_util.wrap_exceptions
+def test_pipeline_connection_default_test_pipeline_connection_details(ctx, from_json, pipeline_id, connection_id, if_match):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connectionId'] = connection_id
+
+    _details['type'] = 'DEFAULT'
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.test_pipeline_connection(
+        pipeline_id=pipeline_id,
+        test_pipeline_connection_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -10731,7 +11715,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of a .pem or .crt file. containing the server public key (for 1 and 2-way SSL).""")
 @cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA). Note: This is an optional property and only applicable if TLS/MTLS option is selected.""")
 @cli_util.option('--ssl-cert', help=u"""Client Certificate - The base64 encoded content of a .pem or .crt file. containing the client public key (for 2-way SSL).""")
-@cli_util.option('--ssl-key', help=u"""Client Key \u2013 The base64 encoded content of a .pem or .crt file containing the client private key (for 2-way SSL).""")
+@cli_util.option('--ssl-key', help=u"""Client Key - The base64 encoded content of a .pem or .crt file containing the client private key (for 2-way SSL).""")
 @cli_util.option('--ssl-key-secret-id', help=u"""The [OCID] of the Secret that stores the Client Key - The content of a .pem or .crt file containing the client private key (for 2-way SSL). Note: When provided, 'sslKey' field must not be provided.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
@@ -11806,6 +12790,204 @@ def update_deployment_backup(ctx, from_json, force, wait_for_state, max_wait_sec
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('goldengate.update_pipeline.command_name', 'update'), help=u"""Updates the Pipeline. \n[Command Reference](updatePipeline)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline created.""")
+@cli_util.option('--recipe-type', type=custom_types.CliCaseInsensitiveChoice(["ZERO_ETL"]), help=u"""The type of the recipe""")
+@cli_util.option('--display-name', help=u"""An object's Display Name.""")
+@cli_util.option('--description', help=u"""Metadata about this specific object.""")
+@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to a Deployment.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
+
+Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_pipeline(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, recipe_type, display_name, description, license_model, freeform_tags, defined_tags, if_match, is_lock_override):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if recipe_type is not None:
+        _details['recipeType'] = recipe_type
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if license_model is not None:
+        _details['licenseModel'] = license_model
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.update_pipeline(
+        pipeline_id=pipeline_id,
+        update_pipeline_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('goldengate.update_pipeline_update_zero_etl_pipeline_details.command_name', 'update-pipeline-update-zero-etl-pipeline-details'), help=u"""Updates the Pipeline. \n[Command Reference](updatePipeline)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline created.""")
+@cli_util.option('--display-name', help=u"""An object's Display Name.""")
+@cli_util.option('--description', help=u"""Metadata about this specific object.""")
+@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to a Deployment.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
+
+Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--process-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--mapping-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Mapping for source/target schema/tables for the pipeline data replication.
+
+This option is a JSON list with items of type MappingRule.  For documentation on MappingRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/MappingRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'process-options': {'module': 'golden_gate', 'class': 'ProcessOptions'}, 'mapping-rules': {'module': 'golden_gate', 'class': 'list[MappingRule]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'process-options': {'module': 'golden_gate', 'class': 'ProcessOptions'}, 'mapping-rules': {'module': 'golden_gate', 'class': 'list[MappingRule]'}})
+@cli_util.wrap_exceptions
+def update_pipeline_update_zero_etl_pipeline_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, display_name, description, license_model, freeform_tags, defined_tags, process_options, mapping_rules, if_match, is_lock_override):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags or process_options or mapping_rules:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and process-options and mapping-rules will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if license_model is not None:
+        _details['licenseModel'] = license_model
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if process_options is not None:
+        _details['processOptions'] = cli_util.parse_json_parameter("process_options", process_options)
+
+    if mapping_rules is not None:
+        _details['mappingRules'] = cli_util.parse_json_parameter("mapping_rules", mapping_rules)
+
+    _details['recipeType'] = 'ZERO_ETL'
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.update_pipeline(
+        pipeline_id=pipeline_id,
+        update_pipeline_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

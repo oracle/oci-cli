@@ -22,6 +22,12 @@ def ai_vision_root_group():
     pass
 
 
+@click.command(cli_util.override('ai_vision.video_job_group.command_name', 'video-job'), cls=CommandGroupWithAlias, help="""Job details for a video analysis.""")
+@cli_util.help_option_group
+def video_job_group():
+    pass
+
+
 @click.command(cli_util.override('ai_vision.image_job_group.command_name', 'image-job'), cls=CommandGroupWithAlias, help="""The job details for a batch image analysis.""")
 @cli_util.help_option_group
 def image_job_group():
@@ -88,6 +94,7 @@ def model_collection_group():
     pass
 
 
+ai_vision_root_group.add_command(video_job_group)
 ai_vision_root_group.add_command(image_job_group)
 ai_vision_root_group.add_command(work_request_error_group)
 ai_vision_root_group.add_command(project_group)
@@ -376,6 +383,31 @@ def cancel_image_job(ctx, from_json, image_job_id, if_match):
     client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
     result = client.cancel_image_job(
         image_job_id=image_job_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@video_job_group.command(name=cli_util.override('ai_vision.cancel_video_job.command_name', 'cancel'), help=u"""Cancel a video analysis job. \n[Command Reference](cancelVideoJob)""")
+@cli_util.option('--video-job-id', required=True, help=u"""Video job id.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def cancel_video_job(ctx, from_json, video_job_id, if_match):
+
+    if isinstance(video_job_id, six.string_types) and len(video_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --video-job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.cancel_video_job(
+        video_job_id=video_job_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -915,6 +947,147 @@ def create_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
+@video_job_group.command(name=cli_util.override('ai_vision.create_video_job.command_name', 'create'), help=u"""Create a video analysis job with given inputs and features. \n[Command Reference](createVideoJob)""")
+@cli_util.option('--input-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""a list of video analysis features.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', help=u"""Compartment identifier from the requester.""")
+@cli_util.option('--display-name', help=u"""Video job display name.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "FAILED", "ACCEPTED", "CANCELED", "IN_PROGRESS", "CANCELING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'input-location': {'module': 'ai_vision', 'class': 'InputLocation'}, 'features': {'module': 'ai_vision', 'class': 'list[VideoFeature]'}, 'output-location': {'module': 'ai_vision', 'class': 'OutputLocation'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'input-location': {'module': 'ai_vision', 'class': 'InputLocation'}, 'features': {'module': 'ai_vision', 'class': 'list[VideoFeature]'}, 'output-location': {'module': 'ai_vision', 'class': 'OutputLocation'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_vision', 'class': 'VideoJob'})
+@cli_util.wrap_exceptions
+def create_video_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, input_location, features, output_location, compartment_id, display_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['inputLocation'] = cli_util.parse_json_parameter("input_location", input_location)
+    _details['features'] = cli_util.parse_json_parameter("features", features)
+    _details['outputLocation'] = cli_util.parse_json_parameter("output_location", output_location)
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.create_video_job(
+        create_video_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_video_job') and callable(getattr(client, 'get_video_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_video_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@video_job_group.command(name=cli_util.override('ai_vision.create_video_job_object_list_inline_input_location.command_name', 'create-video-job-object-list-inline-input-location'), help=u"""Create a video analysis job with given inputs and features. \n[Command Reference](createVideoJob)""")
+@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""a list of video analysis features.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--input-location-object-locations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of ObjectLocations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', help=u"""Compartment identifier from the requester.""")
+@cli_util.option('--display-name', help=u"""Video job display name.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "FAILED", "ACCEPTED", "CANCELED", "IN_PROGRESS", "CANCELING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_vision', 'class': 'list[VideoFeature]'}, 'output-location': {'module': 'ai_vision', 'class': 'OutputLocation'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}, 'input-location-object-locations': {'module': 'ai_vision', 'class': 'list[ObjectLocation]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'features': {'module': 'ai_vision', 'class': 'list[VideoFeature]'}, 'output-location': {'module': 'ai_vision', 'class': 'OutputLocation'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}, 'input-location-object-locations': {'module': 'ai_vision', 'class': 'list[ObjectLocation]'}}, output_type={'module': 'ai_vision', 'class': 'VideoJob'})
+@cli_util.wrap_exceptions
+def create_video_job_object_list_inline_input_location(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, features, output_location, input_location_object_locations, compartment_id, display_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['inputLocation'] = {}
+    _details['features'] = cli_util.parse_json_parameter("features", features)
+    _details['outputLocation'] = cli_util.parse_json_parameter("output_location", output_location)
+    _details['inputLocation']['objectLocations'] = cli_util.parse_json_parameter("input_location_object_locations", input_location_object_locations)
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['inputLocation']['sourceType'] = 'OBJECT_LIST_INLINE_INPUT_LOCATION'
+
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.create_video_job(
+        create_video_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_video_job') and callable(getattr(client, 'get_video_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_video_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @model_group.command(name=cli_util.override('ai_vision.delete_model.command_name', 'delete'), help=u"""Delete a model by identifier. \n[Command Reference](deleteModel)""")
 @cli_util.option('--model-id', required=True, help=u"""A unique model identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1110,6 +1283,28 @@ def get_project(ctx, from_json, project_id):
     client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
     result = client.get_project(
         project_id=project_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@video_job_group.command(name=cli_util.override('ai_vision.get_video_job.command_name', 'get'), help=u"""Get details of a video analysis job. \n[Command Reference](getVideoJob)""")
+@cli_util.option('--video-job-id', required=True, help=u"""Video job id.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_vision', 'class': 'VideoJob'})
+@cli_util.wrap_exceptions
+def get_video_job(ctx, from_json, video_job_id):
+
+    if isinstance(video_job_id, six.string_types) and len(video_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --video-job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.get_video_job(
+        video_job_id=video_job_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)

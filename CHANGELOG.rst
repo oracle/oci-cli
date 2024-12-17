@@ -6,6 +6,95 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.51.0 - 2024-12-17
+--------------------
+Added
+~~~~~
+* Cloud Bridge Service
+
+  * Support of creating/updating Amazon Web Services asset-sources
+
+    * ``oci cloud-bridge discovery asset-source create``
+    * ``oci cloud-bridge discovery asset-source update``
+
+  * Support of creating/updating Amazon Web Services EC2 and EBS assets
+
+    * ``oci cloud-bridge inventory asset create``
+    * ``oci cloud-bridge inventory asset update``
+
+  * Support of listing the Amazon Web Services regions which are available for Discovery and Migration
+
+    * ``oci cloud-bridge discovery supported-cloud-regions list``
+
+* AI Vision service
+
+  * Support of Stored Video Analysis
+
+    * ``oci ai-vision video-job cancel``
+    * ``oci ai-vision video-job create``
+    * ``oci ai-vision video-job get``
+
+* Stack Monitoring service
+
+  * Support for HTTP type of Metric Extensions
+
+    * ``oci stack-monitoring metric-extension create-http-metric-ext``
+    * ``oci stack-monitoring metric-extension update-http-metric-ext``
+
+  * Support for new optional parameter in List Metric Extensions
+
+    * ``oci stack-monitoring metric-extension list --metric-ext-id``
+
+* Big Data Service
+
+  * Support for OCI identity domain integration
+
+    * ``oci bds identity-configuration``
+
+  * Support for Historical Cluster Versions and Natgateway update
+
+    * ``oci bds instance create --bds-cluster-version-summary``
+    * ``oci bds instance update``
+    * ``oci bds instance install-patch-domain-based-odh-patching-config``
+    * ``oci bds instance install-patch-batching-based-odh-patching-config``
+
+  * Support for Start API with heterogenous shape supports
+
+    * ``oci bds instance start``
+
+* Generative AI Agent service
+
+  * Support multi modality flag in Data source resource
+
+    * ``oci generative-ai-agent data-source update-object-storage-ds --data-source-config-object-storage-prefixes, --data-source-config-should-enable-multi-modality``
+    * ``oci generative-ai-agent data-source create-object-storage-ds --data-source-config-object-storage-prefixes, --data-source-config-should-enable-multi-modality``
+
+* Support for create and update autonomous database with backup retention lock in the Database Service
+
+  * ``oci db autonomous-database create --is-backup-retention-locked``
+  * ``oci db autonomous-database update --is-backup-retention-locked``
+
+* Support for ZeroETL pipelines in the GoldenGate service
+
+  * ``oci goldengate pipeline``
+  * ``oci goldengate pipeline-recipe-collection``
+
+Changed
+~~~~~~~
+* [BREAKING] session chat command is changed to agent-endpoint chat in Generative AI Agent Client service
+
+  * ``oci generative-ai-agent-runtime agent-endpoint chat``
+
+* data-source-config-object-storage-prefixes is now an optional parameter for below command in the Generative AI Agent service
+
+  * ``oci generative-ai-agent data-source update-object-storage-ds``
+  * ``oci generative-ai-agent data-source create-object-storage-ds``
+
+Fixed
+~~~~~
+*  Bug in below command in the Source Control Management Service
+
+  * ``oci devops protected-branch create-or-update``
 
 3.50.3 - 2024-12-10
 --------------------
