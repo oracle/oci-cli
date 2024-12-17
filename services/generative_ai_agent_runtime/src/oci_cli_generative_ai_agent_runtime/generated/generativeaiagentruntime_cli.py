@@ -36,10 +36,17 @@ def session_group():
     pass
 
 
+@click.command(cli_util.override('generative_ai_agent_runtime.agent_endpoint_group.command_name', 'agent-endpoint'), cls=CommandGroupWithAlias, help="""""")
+@cli_util.help_option_group
+def agent_endpoint_group():
+    pass
+
+
 generative_ai_agent_runtime_root_group.add_command(session_group)
+generative_ai_agent_runtime_root_group.add_command(agent_endpoint_group)
 
 
-@session_group.command(name=cli_util.override('generative_ai_agent_runtime.chat.command_name', 'chat'), help=u"""Chat on endpoint with provided messages. \n[Command Reference](chat)""")
+@agent_endpoint_group.command(name=cli_util.override('generative_ai_agent_runtime.chat.command_name', 'chat'), help=u"""Chat on endpoint with provided messages. \n[Command Reference](chat)""")
 @cli_util.option('--agent-endpoint-id', required=True, help=u"""A unique ID for the endpoint.""")
 @cli_util.option('--user-message', required=True, help=u"""The input user message content for the chat.""")
 @cli_util.option('--should-stream', type=click.BOOL, help=u"""Whether to stream the response.""")

@@ -1225,3 +1225,110 @@ stackmonitoring_cli.maintenance_window_group.commands.pop(stackmonitoring_cli.up
 
 # Remove update-maintenance-window-recurrent-maintenance-window-schedule from oci stack-monitoring maintenance-window
 stackmonitoring_cli.maintenance_window_group.commands.pop(stackmonitoring_cli.update_maintenance_window_recurrent_maintenance_window_schedule.name)
+
+
+# oci stack-monitoring metric-extension create-metric-extension-http-query-properties -> oci stack-monitoring metric-extension create-http-metric-ext
+cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.metric_extension_group, stackmonitoring_cli.create_metric_extension_http_query_properties, "create-http-metric-ext")
+
+
+# oci stack-monitoring metric-extension update-metric-extension-http-update-query-properties -> oci stack-monitoring metric-extension update-http-metric-ext
+cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.metric_extension_group, stackmonitoring_cli.update_metric_extension_http_update_query_properties, "update-http-metric-ext")
+
+
+@cli_util.copy_params_from_generated_command(stackmonitoring_cli.list_metric_extensions, params_to_exclude=['metric_extension_id'])
+@stackmonitoring_cli.metric_extension_group.command(name=stackmonitoring_cli.list_metric_extensions.name, help=stackmonitoring_cli.list_metric_extensions.help)
+@cli_util.option('--metric-ext-id', help=u"""Identifier for the metric extension""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'stack_monitoring', 'class': 'MetricExtensionCollection'})
+@cli_util.wrap_exceptions
+def list_metric_extensions_extended(ctx, **kwargs):
+
+    if 'metric_ext_id' in kwargs:
+        kwargs['metric_extension_id'] = kwargs['metric_ext_id']
+        kwargs.pop('metric_ext_id')
+
+    ctx.invoke(stackmonitoring_cli.list_metric_extensions, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(stackmonitoring_cli.create_metric_extension_http_query_properties, params_to_exclude=['collection_recurrences', 'query_properties_response_content_type', 'query_properties_script_details', 'query_properties_url', 'query_properties_protocol_type'])
+@stackmonitoring_cli.metric_extension_group.command(name=stackmonitoring_cli.create_metric_extension_http_query_properties.name, help=stackmonitoring_cli.create_metric_extension_http_query_properties.help)
+@cli_util.option('--collection-schedule', required=True, help=u"""Schedule of metric extension should use RFC 5545 format i.e. recur-rule-part = "FREQ";INTERVAL where FREQ rule part identifies the type of recurrence rule. Valid values are "MINUTELY","HOURLY","DAILY" to specify repeating events based on an interval of a minute, an hour and a day or more. Example- FREQ=DAILY;INTERVAL=1 [required]""")
+@cli_util.option('--response-content-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["TEXT_PLAIN", "TEXT_HTML", "APPLICATION_JSON", "APPLICATION_XML"]), help=u"""Type of content response given by the http(s) URL [required]""")
+@cli_util.option('--script-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@cli_util.option('--url', required=True, help=u"""Http(s) end point URL [required]""")
+@cli_util.option('--protocol-type', type=custom_types.CliCaseInsensitiveChoice(["HTTP", "HTTPS"]), help=u"""Supported protocol of resources to be associated with this metric extension. This is optional and defaults to HTTPS, which uses secure connection to the URL""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metric-list': {'module': 'stack_monitoring', 'class': 'list[Metric]'}, 'script-details': {'module': 'stack_monitoring', 'class': 'HttpScriptFileDetails'}}, output_type={'module': 'stack_monitoring', 'class': 'MetricExtension'})
+@cli_util.wrap_exceptions
+def create_metric_extension_http_query_properties_extended(ctx, **kwargs):
+
+    if 'collection_schedule' in kwargs:
+        kwargs['collection_recurrences'] = kwargs['collection_schedule']
+        kwargs.pop('collection_schedule')
+
+    if 'response_content_type' in kwargs:
+        kwargs['query_properties_response_content_type'] = kwargs['response_content_type']
+        kwargs.pop('response_content_type')
+
+    if 'script_details' in kwargs:
+        kwargs['query_properties_script_details'] = kwargs['script_details']
+        kwargs.pop('script_details')
+
+    if 'url' in kwargs:
+        kwargs['query_properties_url'] = kwargs['url']
+        kwargs.pop('url')
+
+    if 'protocol_type' in kwargs:
+        kwargs['query_properties_protocol_type'] = kwargs['protocol_type']
+        kwargs.pop('protocol_type')
+
+    ctx.invoke(stackmonitoring_cli.create_metric_extension_http_query_properties, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(stackmonitoring_cli.update_metric_extension_http_update_query_properties, params_to_exclude=['metric_extension_id', 'collection_recurrences', 'query_properties_protocol_type', 'query_properties_response_content_type', 'query_properties_script_details', 'query_properties_url'])
+@stackmonitoring_cli.metric_extension_group.command(name=stackmonitoring_cli.update_metric_extension_http_update_query_properties.name, help=stackmonitoring_cli.update_metric_extension_http_update_query_properties.help)
+@cli_util.option('--metric-ext-id', required=True, help=u"""The [OCID] of the metric extension resource. [required]""")
+@cli_util.option('--collection-schedule', help=u"""Schedule of metric extension should use RFC 5545 format -> recur-rule-part = "FREQ";"INTERVAL" where FREQ rule part identifies the type of recurrence rule. Valid values are "MINUTELY","HOURLY","DAILY" to specify repeating events based on an interval of a minute, an hour and a day or more. Example- FREQ=DAILY;INTERVAL=1""")
+@cli_util.option('--protocol-type', type=custom_types.CliCaseInsensitiveChoice(["HTTP", "HTTPS"]), help=u"""Supported protocol of resources to be associated with this metric extension. This is optional and defaults to HTTPS, which uses secure connection to the URL""")
+@cli_util.option('--response-content-type', type=custom_types.CliCaseInsensitiveChoice(["TEXT_PLAIN", "TEXT_HTML", "APPLICATION_JSON", "APPLICATION_XML"]), help=u"""Type of content response given by the http(s) URL""")
+@cli_util.option('--script-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@cli_util.option('--url', help=u"""Http(s) end point URL""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metric-list': {'module': 'stack_monitoring', 'class': 'list[Metric]'}, 'script-details': {'module': 'stack_monitoring', 'class': 'UpdateHttpScriptFileDetails'}}, output_type={'module': 'stack_monitoring', 'class': 'MetricExtension'})
+@cli_util.wrap_exceptions
+def update_metric_extension_http_update_query_properties_extended(ctx, **kwargs):
+
+    if 'metric_ext_id' in kwargs:
+        kwargs['metric_extension_id'] = kwargs['metric_ext_id']
+        kwargs.pop('metric_ext_id')
+
+    if 'collection_schedule' in kwargs:
+        kwargs['collection_recurrences'] = kwargs['collection_schedule']
+        kwargs.pop('collection_schedule')
+
+    if 'protocol_type' in kwargs:
+        kwargs['query_properties_protocol_type'] = kwargs['protocol_type']
+        kwargs.pop('protocol_type')
+
+    if 'response_content_type' in kwargs:
+        kwargs['query_properties_response_content_type'] = kwargs['response_content_type']
+        kwargs.pop('response_content_type')
+
+    if 'script_details' in kwargs:
+        kwargs['query_properties_script_details'] = kwargs['script_details']
+        kwargs.pop('script_details')
+
+    if 'url' in kwargs:
+        kwargs['query_properties_url'] = kwargs['url']
+        kwargs.pop('url')
+
+    ctx.invoke(stackmonitoring_cli.update_metric_extension_http_update_query_properties, **kwargs)

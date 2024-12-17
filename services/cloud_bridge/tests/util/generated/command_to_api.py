@@ -24,4 +24,5 @@ SDK_client_map = {
     "ocb_agent_svc.update_agent": "oci.cloud_bridge.OcbAgentSvcClient.update_agent",
     "ocb_agent_svc.update_agent_dependency": "oci.cloud_bridge.OcbAgentSvcClient.update_agent_dependency",
     "ocb_agent_svc.update_environment": "oci.cloud_bridge.OcbAgentSvcClient.update_environment",
+    "ocb_agent_svc.update_plugin": "oci.cloud_bridge.OcbAgentSvcClient.update_plugin",
 }

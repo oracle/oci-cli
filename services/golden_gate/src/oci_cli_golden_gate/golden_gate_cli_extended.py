@@ -1,3 +1,24 @@
+# Copyright (c) 2016, 2023, Oracle and/or its affiliates.
+#
+# This software is dual-licensed to you under the Universal Permissive License
+# (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl and Apache License
+# 2.0 as shown at https://www.apache.org/licenses/LICENSE-2.0. You may choose
+# either license.
+#
+# If you elect to accept the software under the Apache License, Version 2.0,
+# the following applies:
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 # coding: utf-8
 # Copyright (c) 2016, 2021, Oracle and/or its affiliates. All rights reserved.
 
@@ -55,24 +76,24 @@ cli_util.rename_command(goldengate_cli,
                                              params_to_exclude=['ogg_data', 'maintenance_window'],
                                              copy_from_json=False)
 @goldengate_cli.deployment_group.command(name='create', help=goldengate_cli.create_deployment.help)
-@cli_util.option('--deployment-name', help=u"""The name given to the GoldenGate service deployment.
+@cli_util.option('--deployment-name', help="""The name given to the GoldenGate service deployment.
 The name must be 1 to 32 characters long, must contain only alphanumeric characters and must start with a letter.""")
 @cli_util.option('--credential-store', type=click.Choice(['IAM', 'GOLDENGATE'], case_sensitive=True), help="""The type of credential store for OGG.""")
 @cli_util.option('--identity-domain-id', help="""The [OCID] of the Identity Domain when IAM credential store is used.""")
-@cli_util.option('--admin-username', help=u"""The GoldenGate deployment console username.""")
-@cli_util.option('--admin-password', help=u"""The password associated with the GoldenGate deployment console username.
+@cli_util.option('--admin-username', help="""The GoldenGate deployment console username.""")
+@cli_util.option('--admin-password', help="""The password associated with the GoldenGate deployment console username.
 The password must be 8 to 30 characters long and must contain at least 1 uppercase, 1 lowercase, 1 numeric,
 and 1 special character. Special characters such as '$', '^', or '?' are not allowed.
 This field will be deprecated and replaced by 'password-secret-id'.""")
 @cli_util.option('--password-secret-id', help="""The [OCID] of the Secret where the deployment password is stored.""")
-@cli_util.option('--certificate-file', type=click.File('r'), help=u"""The SSL certificate for this deployment in PEM format.""")
-@cli_util.option('--private-key-file', type=click.File('r'), help=u"""The private key for your certificate in PEM format.""")
-@cli_util.option('--ogg-version', help=u"""Version of OGG.""")
-@cli_util.option('--maintenance-window-day', type=custom_types.CliCaseInsensitiveChoice(["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]), help=u"""Day of week for the maintenance.""")
-@cli_util.option('--maintenance-window-start-hour', help=u"""Start hour for maintenance period. Hour is in UTC.""")
+@cli_util.option('--certificate-file', type=click.File('r'), help="""The SSL certificate for this deployment in PEM format.""")
+@cli_util.option('--private-key-file', type=click.File('r'), help="""The private key for your certificate in PEM format.""")
+@cli_util.option('--ogg-version', help="""Version of OGG.""")
+@cli_util.option('--maintenance-window-day', type=custom_types.CliCaseInsensitiveChoice(["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]), help="""Day of week for the maintenance.""")
+@cli_util.option('--maintenance-window-start-hour', help="""Start hour for maintenance period. Hour is in UTC.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'CreateMaintenanceWindowDetails'}, 'maintenance-configuration': {'module': 'golden_gate', 'class': 'CreateMaintenanceConfigurationDetails'}}, output_type={'module': 'golden_gate', 'class': 'Deployment'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'CreateMaintenanceWindowDetails'}}, output_type={'module': 'golden_gate', 'class': 'Deployment'})
 @cli_util.wrap_exceptions
 def create_deployment_extended(ctx, **kwargs):
     if kwargs.get('ogg_data') is None:
@@ -156,19 +177,19 @@ def create_deployment_extended(ctx, **kwargs):
 @goldengate_cli.deployment_group.command(name='update', help=goldengate_cli.update_deployment.help)
 @cli_util.option('--credential-store', type=click.Choice(['IAM', 'GOLDENGATE'], case_sensitive=True), help="""The type of credential store for OGG.""")
 @cli_util.option('--identity-domain-id', help="""The [OCID] of the Identity Domain when IAM credential store is used.""")
-@cli_util.option('--admin-username', help=u"""The GoldenGate deployment console username.""")
-@cli_util.option('--admin-password', help=u"""The password associated with the GoldenGate deployment console username.
+@cli_util.option('--admin-username', help="""The GoldenGate deployment console username.""")
+@cli_util.option('--admin-password', help="""The password associated with the GoldenGate deployment console username.
 The password must be 8 to 30 characters long and must contain at least 1 uppercase, 1 lowercase, 1 numeric,
 and 1 special character. Special characters such as '$', '^', or '?' are not allowed.
 This field will be deprecated and replaced by 'password-secret-id'.""")
 @cli_util.option('--password-secret-id', help="""The [OCID] of the Secret where the deployment password is stored.""")
-@cli_util.option('--certificate-file', type=click.File('r'), help=u"""The SSL certificate for this deployment in PEM format.""")
-@cli_util.option('--private-key-file', type=click.File('r'), help=u"""The private key for your certificate in PEM format.""")
-@cli_util.option('--maintenance-window-day', help=u"""Day of week for the maintenance.""")
-@cli_util.option('--maintenance-window-start-hour', help=u"""Start hour for maintenance period. Hour is in UTC.""")
+@cli_util.option('--certificate-file', type=click.File('r'), help="""The SSL certificate for this deployment in PEM format.""")
+@cli_util.option('--private-key-file', type=click.File('r'), help="""The private key for your certificate in PEM format.""")
+@cli_util.option('--maintenance-window-day', help="""Day of week for the maintenance.""")
+@cli_util.option('--maintenance-window-start-hour', help="""Start hour for maintenance period. Hour is in UTC.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'UpdateMaintenanceWindowDetails'}, 'maintenance-configuration': {'module': 'golden_gate', 'class': 'UpdateMaintenanceConfigurationDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'UpdateMaintenanceWindowDetails'}})
 @cli_util.wrap_exceptions
 def update_deployment_extended(ctx, **kwargs):
     if kwargs.get('ogg_data') is None:
@@ -645,3 +666,91 @@ cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldeng
 
 # oci goldengate connection refresh-connection-default-refresh-connection-details -> oci goldengate connection refresh
 cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.refresh_connection_default_refresh_connection_details, "refresh")
+
+# oci goldengate deployment-environment-collection list-deployment-environments -> oci goldengate deployment-environment-collection list
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_environment_collection_group, goldengate_cli.list_deployment_environments, "list")
+
+# oci goldengate deployment-environment-collection -> oci goldengate deployment-environment
+cli_util.rename_command(goldengate_cli, goldengate_cli.goldengate_root_group, goldengate_cli.deployment_environment_collection_group, "deployment-environment")
+
+
+# oci goldengate pipeline create-pipeline-create-zero-etl-pipeline-details -> oci goldengate pipeline create-zero-etl-pipeline
+cli_util.rename_command(goldengate_cli, goldengate_cli.pipeline_group, goldengate_cli.create_pipeline_create_zero_etl_pipeline_details, "create-zero-etl-pipeline")
+
+
+# oci goldengate pipeline list-pipeline-initialization-steps -> oci goldengate pipeline list-initialization-steps
+cli_util.rename_command(goldengate_cli, goldengate_cli.pipeline_group, goldengate_cli.list_pipeline_initialization_steps, "list-initialization-steps")
+
+
+# oci goldengate pipeline list-pipeline-running-processes -> oci goldengate pipeline list-running-processes
+cli_util.rename_command(goldengate_cli, goldengate_cli.pipeline_group, goldengate_cli.list_pipeline_running_processes, "list-running-processes")
+
+
+# oci goldengate pipeline list-pipeline-schema-tables -> oci goldengate pipeline list-schema-tables
+cli_util.rename_command(goldengate_cli, goldengate_cli.pipeline_group, goldengate_cli.list_pipeline_schema_tables, "list-schema-tables")
+
+
+# oci goldengate pipeline list-pipeline-schemas -> oci goldengate pipeline list-schemas
+cli_util.rename_command(goldengate_cli, goldengate_cli.pipeline_group, goldengate_cli.list_pipeline_schemas, "list-schemas")
+
+
+# oci goldengate pipeline start-pipeline-default-start-pipeline-details -> oci goldengate pipeline start
+cli_util.rename_command(goldengate_cli, goldengate_cli.pipeline_group, goldengate_cli.start_pipeline_default_start_pipeline_details, "start")
+
+
+# oci goldengate pipeline stop-pipeline-default-stop-pipeline-details -> oci goldengate pipeline stop
+cli_util.rename_command(goldengate_cli, goldengate_cli.pipeline_group, goldengate_cli.stop_pipeline_default_stop_pipeline_details, "stop")
+
+
+# oci goldengate pipeline test-pipeline-connection-default-test-pipeline-connection-details -> oci goldengate pipeline test-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.pipeline_group, goldengate_cli.test_pipeline_connection_default_test_pipeline_connection_details, "test-connection")
+
+
+# oci goldengate pipeline update-pipeline-update-zero-etl-pipeline-details -> oci goldengate pipeline update-zero-etl-pipeline
+cli_util.rename_command(goldengate_cli, goldengate_cli.pipeline_group, goldengate_cli.update_pipeline_update_zero_etl_pipeline_details, "update-zero-etl-pipeline")
+
+
+# oci goldengate recipe-summary-collection -> oci goldengate pipeline-recipe-collection
+cli_util.rename_command(goldengate_cli, goldengate_cli.goldengate_root_group, goldengate_cli.recipe_summary_collection_group, "pipeline-recipe-collection")
+
+
+# Remove create from oci goldengate pipeline
+goldengate_cli.pipeline_group.commands.pop(goldengate_cli.create_pipeline.name)
+
+
+# Remove update from oci goldengate pipeline
+goldengate_cli.pipeline_group.commands.pop(goldengate_cli.update_pipeline.name)
+
+
+# Remove test-pipeline-connection from oci goldengate pipeline
+goldengate_cli.pipeline_group.commands.pop(goldengate_cli.test_pipeline_connection.name)
+
+
+@cli_util.copy_params_from_generated_command(goldengate_cli.create_pipeline_create_zero_etl_pipeline_details, params_to_exclude=['source_connection_details', 'target_connection_details'])
+@goldengate_cli.pipeline_group.command(name=goldengate_cli.create_pipeline_create_zero_etl_pipeline_details.name, help=goldengate_cli.create_pipeline_create_zero_etl_pipeline_details.help)
+@cli_util.option('--source-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@cli_util.option('--target-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[ResourceLock]'}, 'source-connection': {'module': 'golden_gate', 'class': 'SourcePipelineConnectionDetails'}, 'target-connection': {'module': 'golden_gate', 'class': 'TargetPipelineConnectionDetails'}, 'process-options': {'module': 'golden_gate', 'class': 'ProcessOptions'}}, output_type={'module': 'golden_gate', 'class': 'Pipeline'})
+@cli_util.wrap_exceptions
+def create_pipeline_create_zero_etl_pipeline_details_extended(ctx, **kwargs):
+
+    if 'source_connection' in kwargs:
+        kwargs['source_connection_details'] = kwargs['source_connection']
+        kwargs.pop('source_connection')
+
+    if 'target_connection' in kwargs:
+        kwargs['target_connection_details'] = kwargs['target_connection']
+        kwargs.pop('target_connection')
+
+    ctx.invoke(goldengate_cli.create_pipeline_create_zero_etl_pipeline_details, **kwargs)

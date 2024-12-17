@@ -742,7 +742,7 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
 @data_science_private_endpoint_group.command(name=cli_util.override('data_science.create_data_science_private_endpoint.command_name', 'create'), help=u"""Creates a Data Science private endpoint to be used by a Data Science resource. \n[Command Reference](createDataSciencePrivateEndpoint)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the private endpoint.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet.""")
-@cli_util.option('--data-science-resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION"]), help=u"""Data Science resource type.""")
+@cli_util.option('--data-science-resource-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION", "MODEL_DEPLOYMENT"]), help=u"""Data Science resource type.""")
 @cli_util.option('--description', help=u"""A user friendly description. Avoid entering confidential information.""")
 @cli_util.option('--display-name', help=u"""A user friendly name. It doesn't have to be unique. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1330,8 +1330,8 @@ def create_job_artifact(ctx, from_json, job_id, job_artifact, content_length, co
 
 
 @job_run_group.command(name=cli_util.override('data_science.create_job_run.command_name', 'create'), help=u"""Creates a job run. \n[Command Reference](createJobRun)""")
-@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job run with.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job run.""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job to create a run for.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--job-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1410,8 +1410,8 @@ def create_job_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
 
 @job_run_group.command(name=cli_util.override('data_science.create_job_run_default_job_configuration_details.command_name', 'create-job-run-default-job-configuration-details'), help=u"""Creates a job run. \n[Command Reference](createJobRun)""")
-@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job run with.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job run.""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job to create a run for.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
 @cli_util.option('--job-log-configuration-override-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1501,8 +1501,8 @@ def create_job_run_default_job_configuration_details(ctx, from_json, wait_for_st
 
 
 @job_run_group.command(name=cli_util.override('data_science.create_job_run_ocir_container_job_environment_configuration_details.command_name', 'create-job-run-ocir-container-job-environment-configuration-details'), help=u"""Creates a job run. \n[Command Reference](createJobRun)""")
-@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job with.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the job run with.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the job run.""")
 @cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job to create a run for.""")
 @cli_util.option('--job-environment-configuration-override-details-image', required=True, help=u"""The full path to the Oracle Container Repository (OCIR) registry, image, and tag in a canonical format. Acceptable format: `<region>.ocir.io/<registry>/<image>:<tag>` `<region>.ocir.io/<registry>/<image>:<tag>@digest`""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
@@ -4103,7 +4103,7 @@ See [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
 @cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
-@cli_util.option('--data-science-resource-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION"]), help=u"""Resource types in the Data Science service such as notebooks.""")
+@cli_util.option('--data-science-resource-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION", "MODEL_DEPLOYMENT"]), help=u"""Resource types in the Data Science service such as notebooks.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})

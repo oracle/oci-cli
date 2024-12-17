@@ -16,10 +16,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('generative_ai_agent.generative_ai_agent_root_group.command_name', 'generative-ai-agent'), cls=CommandGroupWithAlias, help=cli_util.override('generative_ai_agent.generative_ai_agent_root_group.help', """**Generative AI Agents API**
-
-
-OCI Generative AI Agents is a fully managed service that combines the power of large language models (LLMs) with an intelligent retrieval system to create contextually relevant answers by searching your knowledge base, making your AI applications smart and efficient.
+@cli.command(cli_util.override('generative_ai_agent.generative_ai_agent_root_group.command_name', 'generative-ai-agent'), cls=CommandGroupWithAlias, help=cli_util.override('generative_ai_agent.generative_ai_agent_root_group.help', """OCI Generative AI Agents is a fully managed service that combines the power of large language models (LLMs) with an intelligent retrieval system to create contextually relevant answers by searching your knowledge base, making your AI applications smart and efficient.
 
 OCI Generative AI Agents supports several ways to onboard your data and then allows you and your customers to interact with your data using a chat interface or API.
 
@@ -33,9 +30,7 @@ def generative_ai_agent_root_group():
     pass
 
 
-@click.command(cli_util.override('generative_ai_agent.agent_endpoint_group.command_name', 'agent-endpoint'), cls=CommandGroupWithAlias, help="""**AgentEndpoint**
-
-The endpoint to access a deployed agent.
+@click.command(cli_util.override('generative_ai_agent.agent_endpoint_group.command_name', 'agent-endpoint'), cls=CommandGroupWithAlias, help="""The endpoint to access a deployed agent.
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -43,9 +38,7 @@ def agent_endpoint_group():
     pass
 
 
-@click.command(cli_util.override('generative_ai_agent.data_ingestion_job_group.command_name', 'data-ingestion-job'), cls=CommandGroupWithAlias, help="""**DataIngestionJob**
-
-When you create a data source, you specify the location of the data files. To make those files usable by an agent, you must download them into the agent's associated knowledge base, a process known as data ingestion. Data ingestion is a process that extracts data from data source documents, converts it into a structured format suitable for analysis, and then stores it in a knowledge base.
+@click.command(cli_util.override('generative_ai_agent.data_ingestion_job_group.command_name', 'data-ingestion-job'), cls=CommandGroupWithAlias, help="""When you create a data source, you specify the location of the data files. To make those files usable by an agent, you must download them into the agent's associated knowledge base, a process known as data ingestion. Data ingestion is a process that extracts data from data source documents, converts it into a structured format suitable for analysis, and then stores it in a knowledge base.
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -53,9 +46,7 @@ def data_ingestion_job_group():
     pass
 
 
-@click.command(cli_util.override('generative_ai_agent.agent_group.command_name', 'agent'), cls=CommandGroupWithAlias, help="""**Agent**
-
-An agent is an LLM-based autonomous system that understands and generates human-like text, enabling natural-language processing interactions. OCI Generative AI Agents supports retrieval-augmented generation (RAG) agents. A RAG agent connects to a data source, retrieves data, and augments model responses with the information from the data sources to generate more relevant responses.
+@click.command(cli_util.override('generative_ai_agent.agent_group.command_name', 'agent'), cls=CommandGroupWithAlias, help="""An agent is an LLM-based autonomous system that understands and generates human-like text, enabling natural-language processing interactions. OCI Generative AI Agents supports retrieval-augmented generation (RAG) agents. A RAG agent connects to a data source, retrieves data, and augments model responses with the information from the data sources to generate more relevant responses.
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -63,17 +54,13 @@ def agent_group():
     pass
 
 
-@click.command(cli_util.override('generative_ai_agent.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""**WorkRequestError**
-
-An error encountered while performing an operation that is tracked by a work request.""")
+@click.command(cli_util.override('generative_ai_agent.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while performing an operation that is tracked by a work request.""")
 @cli_util.help_option_group
 def work_request_error_group():
     pass
 
 
-@click.command(cli_util.override('generative_ai_agent.knowledge_base_group.command_name', 'knowledge-base'), cls=CommandGroupWithAlias, help="""**KnowledgeBase**
-
-A knowledge base is the base for all the data sources that an agent can use to retrieve information for its responses.
+@click.command(cli_util.override('generative_ai_agent.knowledge_base_group.command_name', 'knowledge-base'), cls=CommandGroupWithAlias, help="""A knowledge base is the base for all the data sources that an agent can use to retrieve information for its responses.
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -81,25 +68,19 @@ def knowledge_base_group():
     pass
 
 
-@click.command(cli_util.override('generative_ai_agent.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""**WorkRequestLogEntry**
-
-A log message from performing an operation that is tracked by a work request.""")
+@click.command(cli_util.override('generative_ai_agent.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from performing an operation that is tracked by a work request.""")
 @cli_util.help_option_group
 def work_request_log_entry_group():
     pass
 
 
-@click.command(cli_util.override('generative_ai_agent.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""**WorkRequest**
-
-An asynchronous work request. Work requests help you monitor long-running operations. When you start a long-running operation, the service creates a work request. A work request is an activity log that lets you track each step in the operation's progress. Each work request has an OCID that lets you interact with it programmatically and use it for automation.""")
+@click.command(cli_util.override('generative_ai_agent.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An asynchronous work request. Work requests help you monitor long-running operations. When you start a long-running operation, the service creates a work request. A work request is an activity log that lets you track each step in the operation's progress. Each work request has an OCID that lets you interact with it programmatically and use it for automation.""")
 @cli_util.help_option_group
 def work_request_group():
     pass
 
 
-@click.command(cli_util.override('generative_ai_agent.data_source_group.command_name', 'data-source'), cls=CommandGroupWithAlias, help="""**DataSource**
-
-A data source points to the source of your data. After you add a data source to a knowledge base, you must ingest the data source's data, so that agents using the knowledge base can refer to the data.
+@click.command(cli_util.override('generative_ai_agent.data_source_group.command_name', 'data-source'), cls=CommandGroupWithAlias, help="""A data source points to the source of your data. After you add a data source to a knowledge base, you must ingest the data source's data, so that agents using the knowledge base can refer to the data.
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -117,9 +98,7 @@ generative_ai_agent_root_group.add_command(work_request_group)
 generative_ai_agent_root_group.add_command(data_source_group)
 
 
-@work_request_group.command(name=cli_util.override('generative_ai_agent.cancel_work_request.command_name', 'cancel'), help=u"""**CancelWorkRequest**
-
-Cancels a work request. \n[Command Reference](cancelWorkRequest)""")
+@work_request_group.command(name=cli_util.override('generative_ai_agent.cancel_work_request.command_name', 'cancel'), help=u"""Cancels a work request. \n[Command Reference](cancelWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the asynchronous work request.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -145,9 +124,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@agent_group.command(name=cli_util.override('generative_ai_agent.change_agent_compartment.command_name', 'change-compartment'), help=u"""**ChangeAgentCompartment**
-
-Moves an agent into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeAgentCompartment)""")
+@agent_group.command(name=cli_util.override('generative_ai_agent.change_agent_compartment.command_name', 'change-compartment'), help=u"""Moves an agent into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeAgentCompartment)""")
 @cli_util.option('--agent-id', required=True, help=u"""The [OCID] of the agent.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the agent to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -208,9 +185,7 @@ def change_agent_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@agent_endpoint_group.command(name=cli_util.override('generative_ai_agent.change_agent_endpoint_compartment.command_name', 'change-compartment'), help=u"""**ChangeAgentEndpointCompartment**
-
-Moves an endpoint into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeAgentEndpointCompartment)""")
+@agent_endpoint_group.command(name=cli_util.override('generative_ai_agent.change_agent_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves an endpoint into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeAgentEndpointCompartment)""")
 @cli_util.option('--agent-endpoint-id', required=True, help=u"""The [OCID] of the endpoint.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the endpoint to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -271,9 +246,7 @@ def change_agent_endpoint_compartment(ctx, from_json, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.change_knowledge_base_compartment.command_name', 'change-compartment'), help=u"""**ChangeKnowledgeBaseCompartment**
-
-Moves a knowledge base into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeKnowledgeBaseCompartment)""")
+@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.change_knowledge_base_compartment.command_name', 'change-compartment'), help=u"""Moves a knowledge base into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeKnowledgeBaseCompartment)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The [OCID] of the knowledge base.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the KnowledgeBase to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -334,9 +307,7 @@ def change_knowledge_base_compartment(ctx, from_json, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@agent_group.command(name=cli_util.override('generative_ai_agent.create_agent.command_name', 'create'), help=u"""**CreateAgent**
-
-Creates an agent. \n[Command Reference](createAgent)""")
+@agent_group.command(name=cli_util.override('generative_ai_agent.create_agent.command_name', 'create'), help=u"""Creates an agent. \n[Command Reference](createAgent)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the agent in.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Description about the agent.""")
@@ -417,9 +388,7 @@ def create_agent(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@agent_endpoint_group.command(name=cli_util.override('generative_ai_agent.create_agent_endpoint.command_name', 'create'), help=u"""**CreateAgentEndpoint**
-
-Creates an endpoint. \n[Command Reference](createAgentEndpoint)""")
+@agent_endpoint_group.command(name=cli_util.override('generative_ai_agent.create_agent_endpoint.command_name', 'create'), help=u"""Creates an endpoint. \n[Command Reference](createAgentEndpoint)""")
 @cli_util.option('--agent-id', required=True, help=u"""The OCID of the agent that this endpoint is associated with.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the endpoint in.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -514,9 +483,7 @@ def create_agent_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@data_ingestion_job_group.command(name=cli_util.override('generative_ai_agent.create_data_ingestion_job.command_name', 'create'), help=u"""**CreateDataIngestionJob**
-
-Creates a data ingestion job. \n[Command Reference](createDataIngestionJob)""")
+@data_ingestion_job_group.command(name=cli_util.override('generative_ai_agent.create_data_ingestion_job.command_name', 'create'), help=u"""Creates a data ingestion job. \n[Command Reference](createDataIngestionJob)""")
 @cli_util.option('--data-source-id', required=True, help=u"""The [OCID] of the parent DataSource.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the data ingestion job in.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -591,9 +558,7 @@ def create_data_ingestion_job(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@data_source_group.command(name=cli_util.override('generative_ai_agent.create_data_source.command_name', 'create'), help=u"""**CreateDataSource**
-
-Creates a data source. \n[Command Reference](createDataSource)""")
+@data_source_group.command(name=cli_util.override('generative_ai_agent.create_data_source.command_name', 'create'), help=u"""Creates a data source. \n[Command Reference](createDataSource)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The [OCID] of the parent KnowledgeBase.""")
 @cli_util.option('--data-source-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the data source in.""")
@@ -670,12 +635,9 @@ def create_data_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@data_source_group.command(name=cli_util.override('generative_ai_agent.create_data_source_oci_object_storage_data_source_config.command_name', 'create-data-source-oci-object-storage-data-source-config'), help=u"""**CreateDataSource**
-
-Creates a data source. \n[Command Reference](createDataSource)""")
+@data_source_group.command(name=cli_util.override('generative_ai_agent.create_data_source_oci_object_storage_data_source_config.command_name', 'create-data-source-oci-object-storage-data-source-config'), help=u"""Creates a data source. \n[Command Reference](createDataSource)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The [OCID] of the parent KnowledgeBase.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the data source in.""")
-@cli_util.option('--data-source-config-object-storage-prefixes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The locations of data items in Object Storage, can either be an object (File) or a prefix (folder).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A description of the data source.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -684,6 +646,10 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-source-config-should-enable-multi-modality', type=click.BOOL, help=u"""Flag to enable or disable multi modality such as image processing while ingestion of data. True enable the processing and false exclude the multi modality contents during ingestion.""")
+@cli_util.option('--data-source-config-object-storage-prefixes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The locations of data items in Object Storage, can either be an object (File) or a prefix (folder).
+
+This option is a JSON list with items of type ObjectStoragePrefix.  For documentation on ObjectStoragePrefix please see our API reference: https://docs.cloud.oracle.com/api/#/en/generativeaiagent/20240531/datatypes/ObjectStoragePrefix.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -692,7 +658,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'generative_ai_agent', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai_agent', 'class': 'dict(str, dict(str, object))'}, 'data-source-config-object-storage-prefixes': {'module': 'generative_ai_agent', 'class': 'list[ObjectStoragePrefix]'}}, output_type={'module': 'generative_ai_agent', 'class': 'DataSource'})
 @cli_util.wrap_exceptions
-def create_data_source_oci_object_storage_data_source_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, compartment_id, data_source_config_object_storage_prefixes, display_name, description, freeform_tags, defined_tags):
+def create_data_source_oci_object_storage_data_source_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, compartment_id, display_name, description, freeform_tags, defined_tags, data_source_config_should_enable_multi_modality, data_source_config_object_storage_prefixes):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -701,7 +667,6 @@ def create_data_source_oci_object_storage_data_source_config(ctx, from_json, wai
     _details['dataSourceConfig'] = {}
     _details['knowledgeBaseId'] = knowledge_base_id
     _details['compartmentId'] = compartment_id
-    _details['dataSourceConfig']['objectStoragePrefixes'] = cli_util.parse_json_parameter("data_source_config_object_storage_prefixes", data_source_config_object_storage_prefixes)
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -714,6 +679,12 @@ def create_data_source_oci_object_storage_data_source_config(ctx, from_json, wai
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if data_source_config_should_enable_multi_modality is not None:
+        _details['dataSourceConfig']['shouldEnableMultiModality'] = data_source_config_should_enable_multi_modality
+
+    if data_source_config_object_storage_prefixes is not None:
+        _details['dataSourceConfig']['objectStoragePrefixes'] = cli_util.parse_json_parameter("data_source_config_object_storage_prefixes", data_source_config_object_storage_prefixes)
 
     _details['dataSourceConfig']['dataSourceConfigType'] = 'OCI_OBJECT_STORAGE'
 
@@ -752,9 +723,7 @@ def create_data_source_oci_object_storage_data_source_config(ctx, from_json, wai
     cli_util.render_response(result, ctx)
 
 
-@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.create_knowledge_base.command_name', 'create'), help=u"""**CreateKnowledgeBase**
-
-Creates a knowledge base. \n[Command Reference](createKnowledgeBase)""")
+@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.create_knowledge_base.command_name', 'create'), help=u"""Creates a knowledge base. \n[Command Reference](createKnowledgeBase)""")
 @cli_util.option('--index-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the knowledge base in.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -829,9 +798,7 @@ def create_knowledge_base(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.create_knowledge_base_default_index_config.command_name', 'create-knowledge-base-default-index-config'), help=u"""**CreateKnowledgeBase**
-
-Creates a knowledge base. \n[Command Reference](createKnowledgeBase)""")
+@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.create_knowledge_base_default_index_config.command_name', 'create-knowledge-base-default-index-config'), help=u"""Creates a knowledge base. \n[Command Reference](createKnowledgeBase)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the knowledge base in.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A user-friendly description of the knowledge base.""")
@@ -911,9 +878,7 @@ def create_knowledge_base_default_index_config(ctx, from_json, wait_for_state, m
     cli_util.render_response(result, ctx)
 
 
-@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.create_knowledge_base_oci_database_config.command_name', 'create-knowledge-base-oci-database-config'), help=u"""**CreateKnowledgeBase**
-
-Creates a knowledge base. \n[Command Reference](createKnowledgeBase)""")
+@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.create_knowledge_base_oci_database_config.command_name', 'create-knowledge-base-oci-database-config'), help=u"""Creates a knowledge base. \n[Command Reference](createKnowledgeBase)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the knowledge base in.""")
 @cli_util.option('--index-config-database-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--index-config-database-functions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of Database functions to be used.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -993,9 +958,7 @@ def create_knowledge_base_oci_database_config(ctx, from_json, wait_for_state, ma
     cli_util.render_response(result, ctx)
 
 
-@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.create_knowledge_base_oci_open_search_index_config.command_name', 'create-knowledge-base-oci-open-search-index-config'), help=u"""**CreateKnowledgeBase**
-
-Creates a knowledge base. \n[Command Reference](createKnowledgeBase)""")
+@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.create_knowledge_base_oci_open_search_index_config.command_name', 'create-knowledge-base-oci-open-search-index-config'), help=u"""Creates a knowledge base. \n[Command Reference](createKnowledgeBase)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the knowledge base in.""")
 @cli_util.option('--index-config-cluster-id', required=True, help=u"""The [OCID] of the OpenSearch Cluster.""")
 @cli_util.option('--index-config-secret-detail', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1077,9 +1040,7 @@ def create_knowledge_base_oci_open_search_index_config(ctx, from_json, wait_for_
     cli_util.render_response(result, ctx)
 
 
-@agent_group.command(name=cli_util.override('generative_ai_agent.delete_agent.command_name', 'delete'), help=u"""**DeleteAgent**
-
-Deletes an agent. \n[Command Reference](deleteAgent)""")
+@agent_group.command(name=cli_util.override('generative_ai_agent.delete_agent.command_name', 'delete'), help=u"""Deletes an agent. \n[Command Reference](deleteAgent)""")
 @cli_util.option('--agent-id', required=True, help=u"""The [OCID] of the agent.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1135,9 +1096,7 @@ def delete_agent(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@agent_endpoint_group.command(name=cli_util.override('generative_ai_agent.delete_agent_endpoint.command_name', 'delete'), help=u"""**DeleteAgentEndpoint**
-
-Deletes an endpoint. \n[Command Reference](deleteAgentEndpoint)""")
+@agent_endpoint_group.command(name=cli_util.override('generative_ai_agent.delete_agent_endpoint.command_name', 'delete'), help=u"""Deletes an endpoint. \n[Command Reference](deleteAgentEndpoint)""")
 @cli_util.option('--agent-endpoint-id', required=True, help=u"""The [OCID] of the endpoint.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1193,9 +1152,7 @@ def delete_agent_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@data_ingestion_job_group.command(name=cli_util.override('generative_ai_agent.delete_data_ingestion_job.command_name', 'delete'), help=u"""**DeleteDataIngestionJob**
-
-Deletes a data ingestion job. \n[Command Reference](deleteDataIngestionJob)""")
+@data_ingestion_job_group.command(name=cli_util.override('generative_ai_agent.delete_data_ingestion_job.command_name', 'delete'), help=u"""Deletes a data ingestion job. \n[Command Reference](deleteDataIngestionJob)""")
 @cli_util.option('--data-ingestion-job-id', required=True, help=u"""The [OCID] of the data ingestion job.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1251,9 +1208,7 @@ def delete_data_ingestion_job(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@data_source_group.command(name=cli_util.override('generative_ai_agent.delete_data_source.command_name', 'delete'), help=u"""**DeleteDataSource**
-
-Deletes a data source. \n[Command Reference](deleteDataSource)""")
+@data_source_group.command(name=cli_util.override('generative_ai_agent.delete_data_source.command_name', 'delete'), help=u"""Deletes a data source. \n[Command Reference](deleteDataSource)""")
 @cli_util.option('--data-source-id', required=True, help=u"""The [OCID] of the data source.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1309,9 +1264,7 @@ def delete_data_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.delete_knowledge_base.command_name', 'delete'), help=u"""**DeleteKnowledgeBase**
-
-Deletes a knowledge base. \n[Command Reference](deleteKnowledgeBase)""")
+@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.delete_knowledge_base.command_name', 'delete'), help=u"""Deletes a knowledge base. \n[Command Reference](deleteKnowledgeBase)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The [OCID] of the knowledge base.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1367,9 +1320,7 @@ def delete_knowledge_base(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@agent_group.command(name=cli_util.override('generative_ai_agent.get_agent.command_name', 'get'), help=u"""**GetAgent**
-
-Gets information about an agent. \n[Command Reference](getAgent)""")
+@agent_group.command(name=cli_util.override('generative_ai_agent.get_agent.command_name', 'get'), help=u"""Gets information about an agent. \n[Command Reference](getAgent)""")
 @cli_util.option('--agent-id', required=True, help=u"""The [OCID] of the agent.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1391,9 +1342,7 @@ def get_agent(ctx, from_json, agent_id):
     cli_util.render_response(result, ctx)
 
 
-@agent_endpoint_group.command(name=cli_util.override('generative_ai_agent.get_agent_endpoint.command_name', 'get'), help=u"""**GetAgentEndpoint**
-
-Gets information about an endpoint. \n[Command Reference](getAgentEndpoint)""")
+@agent_endpoint_group.command(name=cli_util.override('generative_ai_agent.get_agent_endpoint.command_name', 'get'), help=u"""Gets information about an endpoint. \n[Command Reference](getAgentEndpoint)""")
 @cli_util.option('--agent-endpoint-id', required=True, help=u"""The [OCID] of the endpoint.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1415,9 +1364,7 @@ def get_agent_endpoint(ctx, from_json, agent_endpoint_id):
     cli_util.render_response(result, ctx)
 
 
-@data_ingestion_job_group.command(name=cli_util.override('generative_ai_agent.get_data_ingestion_job.command_name', 'get'), help=u"""**GetDataIngestionJob**
-
-Gets information about a data ingestion job. \n[Command Reference](getDataIngestionJob)""")
+@data_ingestion_job_group.command(name=cli_util.override('generative_ai_agent.get_data_ingestion_job.command_name', 'get'), help=u"""Gets information about a data ingestion job. \n[Command Reference](getDataIngestionJob)""")
 @cli_util.option('--data-ingestion-job-id', required=True, help=u"""The [OCID] of the data ingestion job.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1439,9 +1386,7 @@ def get_data_ingestion_job(ctx, from_json, data_ingestion_job_id):
     cli_util.render_response(result, ctx)
 
 
-@data_ingestion_job_group.command(name=cli_util.override('generative_ai_agent.get_data_ingestion_job_log_content.command_name', 'get-data-ingestion-job-log-content'), help=u"""**GetDataIngestionJobLogContent**
-
-Returns the raw log file for the specified data ingestion job in text format. \n[Command Reference](getDataIngestionJobLogContent)""")
+@data_ingestion_job_group.command(name=cli_util.override('generative_ai_agent.get_data_ingestion_job_log_content.command_name', 'get-data-ingestion-job-log-content'), help=u"""Returns the raw log file for the specified data ingestion job in text format. \n[Command Reference](getDataIngestionJobLogContent)""")
 @cli_util.option('--data-ingestion-job-id', required=True, help=u"""The [OCID] of the data ingestion job.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1486,9 +1431,7 @@ def get_data_ingestion_job_log_content(ctx, from_json, file, data_ingestion_job_
         file.close()
 
 
-@data_source_group.command(name=cli_util.override('generative_ai_agent.get_data_source.command_name', 'get'), help=u"""**GetDataSource**
-
-Gets information about a data source. \n[Command Reference](getDataSource)""")
+@data_source_group.command(name=cli_util.override('generative_ai_agent.get_data_source.command_name', 'get'), help=u"""Gets information about a data source. \n[Command Reference](getDataSource)""")
 @cli_util.option('--data-source-id', required=True, help=u"""The [OCID] of the data source.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1510,9 +1453,7 @@ def get_data_source(ctx, from_json, data_source_id):
     cli_util.render_response(result, ctx)
 
 
-@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.get_knowledge_base.command_name', 'get'), help=u"""**GetKnowledgeBase**
-
-Gets information about a knowledge base. \n[Command Reference](getKnowledgeBase)""")
+@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.get_knowledge_base.command_name', 'get'), help=u"""Gets information about a knowledge base. \n[Command Reference](getKnowledgeBase)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The [OCID] of the knowledge base.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1534,9 +1475,7 @@ def get_knowledge_base(ctx, from_json, knowledge_base_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('generative_ai_agent.get_work_request.command_name', 'get'), help=u"""**GetWorkRequest**
-
-Gets the details of a work request. \n[Command Reference](getWorkRequest)""")
+@work_request_group.command(name=cli_util.override('generative_ai_agent.get_work_request.command_name', 'get'), help=u"""Gets the details of a work request. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the asynchronous work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1558,9 +1497,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@agent_endpoint_group.command(name=cli_util.override('generative_ai_agent.list_agent_endpoints.command_name', 'list'), help=u"""**ListAgentEndpoints**
-
-Gets a list of endpoints. \n[Command Reference](listAgentEndpoints)""")
+@agent_endpoint_group.command(name=cli_util.override('generative_ai_agent.list_agent_endpoints.command_name', 'list'), help=u"""Gets a list of endpoints. \n[Command Reference](listAgentEndpoints)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--agent-id', help=u"""The [OCID] of the agent.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
@@ -1622,9 +1559,7 @@ def list_agent_endpoints(ctx, from_json, all_pages, page_size, compartment_id, a
     cli_util.render_response(result, ctx)
 
 
-@agent_group.command(name=cli_util.override('generative_ai_agent.list_agents.command_name', 'list'), help=u"""**ListAgents**
-
-Gets a list of agents. \n[Command Reference](listAgents)""")
+@agent_group.command(name=cli_util.override('generative_ai_agent.list_agents.command_name', 'list'), help=u"""Gets a list of agents. \n[Command Reference](listAgents)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
@@ -1683,9 +1618,7 @@ def list_agents(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_
     cli_util.render_response(result, ctx)
 
 
-@data_ingestion_job_group.command(name=cli_util.override('generative_ai_agent.list_data_ingestion_jobs.command_name', 'list'), help=u"""**ListDataIngestionJobs**
-
-Gets a list of data ingestion jobs. \n[Command Reference](listDataIngestionJobs)""")
+@data_ingestion_job_group.command(name=cli_util.override('generative_ai_agent.list_data_ingestion_jobs.command_name', 'list'), help=u"""Gets a list of data ingestion jobs. \n[Command Reference](listDataIngestionJobs)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--data-source-id', help=u"""The [OCID] of the data source.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "DELETING", "DELETED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
@@ -1747,9 +1680,7 @@ def list_data_ingestion_jobs(ctx, from_json, all_pages, page_size, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@data_source_group.command(name=cli_util.override('generative_ai_agent.list_data_sources.command_name', 'list'), help=u"""**ListDataSources**
-
-Gets a list of data sources. \n[Command Reference](listDataSources)""")
+@data_source_group.command(name=cli_util.override('generative_ai_agent.list_data_sources.command_name', 'list'), help=u"""Gets a list of data sources. \n[Command Reference](listDataSources)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--knowledge-base-id', help=u"""The [OCID] of the knowledge base.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
@@ -1811,9 +1742,7 @@ def list_data_sources(ctx, from_json, all_pages, page_size, compartment_id, know
     cli_util.render_response(result, ctx)
 
 
-@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.list_knowledge_bases.command_name', 'list'), help=u"""**ListKnowledgeBases**
-
-Gets a list of knowledge bases. \n[Command Reference](listKnowledgeBases)""")
+@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.list_knowledge_bases.command_name', 'list'), help=u"""Gets a list of knowledge bases. \n[Command Reference](listKnowledgeBases)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
@@ -1872,9 +1801,7 @@ def list_knowledge_bases(ctx, from_json, all_pages, page_size, compartment_id, l
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('generative_ai_agent.list_work_request_errors.command_name', 'list'), help=u"""**ListWorkRequestErrors**
-
-Lists the errors for a work request. \n[Command Reference](listWorkRequestErrors)""")
+@work_request_error_group.command(name=cli_util.override('generative_ai_agent.list_work_request_errors.command_name', 'list'), help=u"""Lists the errors for a work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the asynchronous work request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1931,9 +1858,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_entry_group.command(name=cli_util.override('generative_ai_agent.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""**ListWorkRequestLogs**
-
-Lists the logs for a work request. \n[Command Reference](listWorkRequestLogs)""")
+@work_request_log_entry_group.command(name=cli_util.override('generative_ai_agent.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Lists the logs for a work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the asynchronous work request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1990,9 +1915,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('generative_ai_agent.list_work_requests.command_name', 'list'), help=u"""**ListWorkRequests**
-
-Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
+@work_request_group.command(name=cli_util.override('generative_ai_agent.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', help=u"""The [OCID] of the asynchronous work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only the resources that match the given lifecycle state.""")
@@ -2054,9 +1977,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
     cli_util.render_response(result, ctx)
 
 
-@agent_group.command(name=cli_util.override('generative_ai_agent.update_agent.command_name', 'update'), help=u"""**UpdateAgent**
-
-Updates an agent. \n[Command Reference](updateAgent)""")
+@agent_group.command(name=cli_util.override('generative_ai_agent.update_agent.command_name', 'update'), help=u"""Updates an agent. \n[Command Reference](updateAgent)""")
 @cli_util.option('--agent-id', required=True, help=u"""The [OCID] of the agent.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Description about the agent.""")
@@ -2148,9 +2069,7 @@ def update_agent(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@agent_endpoint_group.command(name=cli_util.override('generative_ai_agent.update_agent_endpoint.command_name', 'update'), help=u"""**UpdateAgentEndpoint**
-
-Updates an endpoint. \n[Command Reference](updateAgentEndpoint)""")
+@agent_endpoint_group.command(name=cli_util.override('generative_ai_agent.update_agent_endpoint.command_name', 'update'), help=u"""Updates an endpoint. \n[Command Reference](updateAgentEndpoint)""")
 @cli_util.option('--agent-endpoint-id', required=True, help=u"""The [OCID] of the endpoint.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""An optional description of the AgentEndpoint.""")
@@ -2250,9 +2169,7 @@ def update_agent_endpoint(ctx, from_json, force, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
-@data_source_group.command(name=cli_util.override('generative_ai_agent.update_data_source.command_name', 'update'), help=u"""**UpdateDataSource**
-
-Updates a data source. \n[Command Reference](updateDataSource)""")
+@data_source_group.command(name=cli_util.override('generative_ai_agent.update_data_source.command_name', 'update'), help=u"""Updates a data source. \n[Command Reference](updateDataSource)""")
 @cli_util.option('--data-source-id', required=True, help=u"""The [OCID] of the data source.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A user-friendly description of the data source.""")
@@ -2340,11 +2257,8 @@ def update_data_source(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@data_source_group.command(name=cli_util.override('generative_ai_agent.update_data_source_oci_object_storage_data_source_config.command_name', 'update-data-source-oci-object-storage-data-source-config'), help=u"""**UpdateDataSource**
-
-Updates a data source. \n[Command Reference](updateDataSource)""")
+@data_source_group.command(name=cli_util.override('generative_ai_agent.update_data_source_oci_object_storage_data_source_config.command_name', 'update-data-source-oci-object-storage-data-source-config'), help=u"""Updates a data source. \n[Command Reference](updateDataSource)""")
 @cli_util.option('--data-source-id', required=True, help=u"""The [OCID] of the data source.""")
-@cli_util.option('--data-source-config-object-storage-prefixes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The locations of data items in Object Storage, can either be an object (File) or a prefix (folder).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A user-friendly description of the data source.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -2354,6 +2268,10 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--data-source-config-should-enable-multi-modality', type=click.BOOL, help=u"""Flag to enable or disable multi modality such as image processing while ingestion of data. True enable the processing and false exclude the multi modality contents during ingestion.""")
+@cli_util.option('--data-source-config-object-storage-prefixes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The locations of data items in Object Storage, can either be an object (File) or a prefix (folder).
+
+This option is a JSON list with items of type ObjectStoragePrefix.  For documentation on ObjectStoragePrefix please see our API reference: https://docs.cloud.oracle.com/api/#/en/generativeaiagent/20240531/datatypes/ObjectStoragePrefix.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2363,7 +2281,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'generative_ai_agent', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai_agent', 'class': 'dict(str, dict(str, object))'}, 'data-source-config-object-storage-prefixes': {'module': 'generative_ai_agent', 'class': 'list[ObjectStoragePrefix]'}})
 @cli_util.wrap_exceptions
-def update_data_source_oci_object_storage_data_source_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_source_id, data_source_config_object_storage_prefixes, display_name, description, freeform_tags, defined_tags, if_match):
+def update_data_source_oci_object_storage_data_source_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_source_id, display_name, description, freeform_tags, defined_tags, if_match, data_source_config_should_enable_multi_modality, data_source_config_object_storage_prefixes):
 
     if isinstance(data_source_id, six.string_types) and len(data_source_id.strip()) == 0:
         raise click.UsageError('Parameter --data-source-id cannot be whitespace or empty string')
@@ -2379,7 +2297,6 @@ def update_data_source_oci_object_storage_data_source_config(ctx, from_json, for
 
     _details = {}
     _details['dataSourceConfig'] = {}
-    _details['dataSourceConfig']['objectStoragePrefixes'] = cli_util.parse_json_parameter("data_source_config_object_storage_prefixes", data_source_config_object_storage_prefixes)
 
     if display_name is not None:
         _details['displayName'] = display_name
@@ -2392,6 +2309,12 @@ def update_data_source_oci_object_storage_data_source_config(ctx, from_json, for
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if data_source_config_should_enable_multi_modality is not None:
+        _details['dataSourceConfig']['shouldEnableMultiModality'] = data_source_config_should_enable_multi_modality
+
+    if data_source_config_object_storage_prefixes is not None:
+        _details['dataSourceConfig']['objectStoragePrefixes'] = cli_util.parse_json_parameter("data_source_config_object_storage_prefixes", data_source_config_object_storage_prefixes)
 
     _details['dataSourceConfig']['dataSourceConfigType'] = 'OCI_OBJECT_STORAGE'
 
@@ -2431,9 +2354,7 @@ def update_data_source_oci_object_storage_data_source_config(ctx, from_json, for
     cli_util.render_response(result, ctx)
 
 
-@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.update_knowledge_base.command_name', 'update'), help=u"""**UpdateKnowledgeBase**
-
-Updates a knowledge base. \n[Command Reference](updateKnowledgeBase)""")
+@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.update_knowledge_base.command_name', 'update'), help=u"""Updates a knowledge base. \n[Command Reference](updateKnowledgeBase)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The [OCID] of the knowledge base.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A description of the knowledge base.""")
@@ -2521,9 +2442,7 @@ def update_knowledge_base(ctx, from_json, force, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
-@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.update_knowledge_base_default_index_config.command_name', 'update-knowledge-base-default-index-config'), help=u"""**UpdateKnowledgeBase**
-
-Updates a knowledge base. \n[Command Reference](updateKnowledgeBase)""")
+@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.update_knowledge_base_default_index_config.command_name', 'update-knowledge-base-default-index-config'), help=u"""Updates a knowledge base. \n[Command Reference](updateKnowledgeBase)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The [OCID] of the knowledge base.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A description of the knowledge base.""")
@@ -2614,9 +2533,7 @@ def update_knowledge_base_default_index_config(ctx, from_json, force, wait_for_s
     cli_util.render_response(result, ctx)
 
 
-@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.update_knowledge_base_oci_database_config.command_name', 'update-knowledge-base-oci-database-config'), help=u"""**UpdateKnowledgeBase**
-
-Updates a knowledge base. \n[Command Reference](updateKnowledgeBase)""")
+@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.update_knowledge_base_oci_database_config.command_name', 'update-knowledge-base-oci-database-config'), help=u"""Updates a knowledge base. \n[Command Reference](updateKnowledgeBase)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The [OCID] of the knowledge base.""")
 @cli_util.option('--index-config-database-connection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--index-config-database-functions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of Database functions to be used.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2707,9 +2624,7 @@ def update_knowledge_base_oci_database_config(ctx, from_json, force, wait_for_st
     cli_util.render_response(result, ctx)
 
 
-@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.update_knowledge_base_oci_open_search_index_config.command_name', 'update-knowledge-base-oci-open-search-index-config'), help=u"""**UpdateKnowledgeBase**
-
-Updates a knowledge base. \n[Command Reference](updateKnowledgeBase)""")
+@knowledge_base_group.command(name=cli_util.override('generative_ai_agent.update_knowledge_base_oci_open_search_index_config.command_name', 'update-knowledge-base-oci-open-search-index-config'), help=u"""Updates a knowledge base. \n[Command Reference](updateKnowledgeBase)""")
 @cli_util.option('--knowledge-base-id', required=True, help=u"""The [OCID] of the knowledge base.""")
 @cli_util.option('--index-config-cluster-id', required=True, help=u"""The [OCID] of the OpenSearch Cluster.""")
 @cli_util.option('--index-config-secret-detail', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
