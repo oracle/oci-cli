@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.51.0 - 2024-12-20
+--------------------
+Fixed
+~~~~~
+* `Github Issue #728 <https://github.com/oracle/oci-python-sdk/issues/728>`_ for RPv1.1
+
 3.51.0 - 2024-12-17
 --------------------
 Added
