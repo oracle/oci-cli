@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
-3.51.0 - 2024-12-20
+3.51.1 - 2024-12-20
 --------------------
 Fixed
 ~~~~~
