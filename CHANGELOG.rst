@@ -6,6 +6,34 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.51.2 - 2025-01-14
+--------------------
+Added
+~~~~~
+* Open Search Service
+
+  * Support for a new command for an opensearch cluster
+
+    * ``oci opensearch cluster configureoutboundcluster``
+
+  * Support for Cross Cluster Search(CCS) functionality for an opensearch cluster
+
+    * ``oci opensearch cluster create --backup-policy --inbound-cluster-ids  --maintenance-details --outbound-cluster-config --reverse-connection-endpoint-customer-ips --security-saml-config``
+    * ``oci opensearch cluster update --backup-policy --maintenance-details --outbound-cluster-config --reverse-connection-endpoint-customer-ips --security-saml-config``
+
+* Support for new optional parameter in update autonomous database patch level post provisioning in Database Service
+
+  * ``oci db autonomous-database update --autonomous-maintenance-schedule-type``
+
+* Support for new optional parameter ``route-table-id`` in Network Service
+
+   * ``oci network vnic assign-private-ip --route-table-id``
+   * ``oci network private-ip update --route-table-id``
+   * ``oci network vnic assign-ipv6 --route-table-id``
+   * ``oci network ipv6 create --route-table-id``
+   * ``oci network ipv6 update --route-table-id``
+   * ``oci network vnic update --route-table-id``
+
 3.51.1 - 2024-12-20
 --------------------
 Fixed

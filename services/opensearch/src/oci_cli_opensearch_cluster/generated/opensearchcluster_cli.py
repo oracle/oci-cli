@@ -137,6 +137,67 @@ def backup_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
+@opensearch_cluster_group.command(name=cli_util.override('opensearch_cluster.configure_outbound_cluster.command_name', 'configure-outbound-cluster'), help=u"""Configure Outbound cluster for cross-cluster operations \n[Command Reference](configureOutboundCluster)""")
+@cli_util.option('--opensearch-cluster-id', required=True, help=u"""unique OpensearchCluster identifier""")
+@cli_util.option('--inbound-cluster-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of inbound clusters that will be queried using cross cluster search""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'inbound-cluster-ids': {'module': 'opensearch', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'inbound-cluster-ids': {'module': 'opensearch', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def configure_outbound_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, inbound_cluster_ids, if_match):
+
+    if isinstance(opensearch_cluster_id, six.string_types) and len(opensearch_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --opensearch-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['inboundClusterIds'] = cli_util.parse_json_parameter("inbound_cluster_ids", inbound_cluster_ids)
+
+    client = cli_util.build_client('opensearch', 'opensearch_cluster', ctx)
+    result = client.configure_outbound_cluster(
+        opensearch_cluster_id=opensearch_cluster_id,
+        configure_outbound_cluster_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @opensearch_cluster_group.command(name=cli_util.override('opensearch_cluster.create_opensearch_cluster.command_name', 'create'), help=u"""Creates a new OpensearchCluster. \n[Command Reference](createOpensearchCluster)""")
 @cli_util.option('--display-name', required=True, help=u"""The name of the cluster. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to create the cluster in.""")
@@ -162,18 +223,24 @@ def backup_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--security-mode', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "PERMISSIVE", "ENFORCING"]), help=u"""The security mode of the cluster.""")
 @cli_util.option('--security-master-user-name', help=u"""The name of the master user that are used to manage security config""")
 @cli_util.option('--security-master-user-password-hash', help=u"""The password hash of the master user that are used to manage security config""")
+@cli_util.option('--security-saml-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--backup-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--reverse-connection-endpoint-customer-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The customer IP addresses of the endpoint in customer VCN""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--inbound-cluster-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of inbound clusters that will be queried using cross cluster search""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--outbound-cluster-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--maintenance-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of system tag keys. These predefined keys are scoped to namespaces. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'security-saml-config': {'module': 'opensearch', 'class': 'SecuritySamlConfig'}, 'backup-policy': {'module': 'opensearch', 'class': 'BackupPolicy'}, 'reverse-connection-endpoint-customer-ips': {'module': 'opensearch', 'class': 'list[string]'}, 'inbound-cluster-ids': {'module': 'opensearch', 'class': 'list[string]'}, 'outbound-cluster-config': {'module': 'opensearch', 'class': 'OutboundClusterConfig'}, 'maintenance-details': {'module': 'opensearch', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'security-saml-config': {'module': 'opensearch', 'class': 'SecuritySamlConfig'}, 'backup-policy': {'module': 'opensearch', 'class': 'BackupPolicy'}, 'reverse-connection-endpoint-customer-ips': {'module': 'opensearch', 'class': 'list[string]'}, 'inbound-cluster-ids': {'module': 'opensearch', 'class': 'list[string]'}, 'outbound-cluster-config': {'module': 'opensearch', 'class': 'OutboundClusterConfig'}, 'maintenance-details': {'module': 'opensearch', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, software_version, master_node_count, master_node_host_type, master_node_host_ocpu_count, master_node_host_memory_gb, data_node_count, data_node_host_type, data_node_host_ocpu_count, data_node_host_memory_gb, data_node_storage_gb, opendashboard_node_count, opendashboard_node_host_ocpu_count, opendashboard_node_host_memory_gb, vcn_id, subnet_id, vcn_compartment_id, subnet_compartment_id, master_node_host_bare_metal_shape, data_node_host_bare_metal_shape, security_mode, security_master_user_name, security_master_user_password_hash, freeform_tags, defined_tags, system_tags):
+def create_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, software_version, master_node_count, master_node_host_type, master_node_host_ocpu_count, master_node_host_memory_gb, data_node_count, data_node_host_type, data_node_host_ocpu_count, data_node_host_memory_gb, data_node_storage_gb, opendashboard_node_count, opendashboard_node_host_ocpu_count, opendashboard_node_host_memory_gb, vcn_id, subnet_id, vcn_compartment_id, subnet_compartment_id, master_node_host_bare_metal_shape, data_node_host_bare_metal_shape, security_mode, security_master_user_name, security_master_user_password_hash, security_saml_config, backup_policy, reverse_connection_endpoint_customer_ips, inbound_cluster_ids, outbound_cluster_config, maintenance_details, freeform_tags, defined_tags, system_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -213,6 +280,24 @@ def create_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if security_master_user_password_hash is not None:
         _details['securityMasterUserPasswordHash'] = security_master_user_password_hash
+
+    if security_saml_config is not None:
+        _details['securitySamlConfig'] = cli_util.parse_json_parameter("security_saml_config", security_saml_config)
+
+    if backup_policy is not None:
+        _details['backupPolicy'] = cli_util.parse_json_parameter("backup_policy", backup_policy)
+
+    if reverse_connection_endpoint_customer_ips is not None:
+        _details['reverseConnectionEndpointCustomerIps'] = cli_util.parse_json_parameter("reverse_connection_endpoint_customer_ips", reverse_connection_endpoint_customer_ips)
+
+    if inbound_cluster_ids is not None:
+        _details['inboundClusterIds'] = cli_util.parse_json_parameter("inbound_cluster_ids", inbound_cluster_ids)
+
+    if outbound_cluster_config is not None:
+        _details['outboundClusterConfig'] = cli_util.parse_json_parameter("outbound_cluster_config", outbound_cluster_config)
+
+    if maintenance_details is not None:
+        _details['maintenanceDetails'] = cli_util.parse_json_parameter("maintenance_details", maintenance_details)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -872,6 +957,11 @@ def resize_opensearch_cluster_vertical(ctx, from_json, wait_for_state, max_wait_
 @cli_util.option('--security-mode', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "PERMISSIVE", "ENFORCING"]), help=u"""The security mode of the cluster.""")
 @cli_util.option('--security-master-user-name', help=u"""The name of the master user that are used to manage security config""")
 @cli_util.option('--security-master-user-password-hash', help=u"""The password hash of the master user that are used to manage security config""")
+@cli_util.option('--security-saml-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--backup-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--reverse-connection-endpoint-customer-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The customer IP addresses of the endpoint in customer VCN""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--outbound-cluster-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--maintenance-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -879,18 +969,18 @@ def resize_opensearch_cluster_vertical(ctx, from_json, wait_for_state, max_wait_
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'security-saml-config': {'module': 'opensearch', 'class': 'SecuritySamlConfig'}, 'backup-policy': {'module': 'opensearch', 'class': 'BackupPolicy'}, 'reverse-connection-endpoint-customer-ips': {'module': 'opensearch', 'class': 'list[string]'}, 'outbound-cluster-config': {'module': 'opensearch', 'class': 'OutboundClusterConfig'}, 'maintenance-details': {'module': 'opensearch', 'class': 'UpdateMaintenanceDetails'}, 'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'security-saml-config': {'module': 'opensearch', 'class': 'SecuritySamlConfig'}, 'backup-policy': {'module': 'opensearch', 'class': 'BackupPolicy'}, 'reverse-connection-endpoint-customer-ips': {'module': 'opensearch', 'class': 'list[string]'}, 'outbound-cluster-config': {'module': 'opensearch', 'class': 'OutboundClusterConfig'}, 'maintenance-details': {'module': 'opensearch', 'class': 'UpdateMaintenanceDetails'}, 'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_opensearch_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, display_name, software_version, security_mode, security_master_user_name, security_master_user_password_hash, freeform_tags, defined_tags, if_match):
+def update_opensearch_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, display_name, software_version, security_mode, security_master_user_name, security_master_user_password_hash, security_saml_config, backup_policy, reverse_connection_endpoint_customer_ips, outbound_cluster_config, maintenance_details, freeform_tags, defined_tags, if_match):
 
     if isinstance(opensearch_cluster_id, six.string_types) and len(opensearch_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --opensearch-cluster-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if security_saml_config or backup_policy or reverse_connection_endpoint_customer_ips or outbound_cluster_config or maintenance_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to security-saml-config and backup-policy and reverse-connection-endpoint-customer-ips and outbound-cluster-config and maintenance-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -913,6 +1003,21 @@ def update_opensearch_cluster(ctx, from_json, force, wait_for_state, max_wait_se
     if security_master_user_password_hash is not None:
         _details['securityMasterUserPasswordHash'] = security_master_user_password_hash
 
+    if security_saml_config is not None:
+        _details['securitySamlConfig'] = cli_util.parse_json_parameter("security_saml_config", security_saml_config)
+
+    if backup_policy is not None:
+        _details['backupPolicy'] = cli_util.parse_json_parameter("backup_policy", backup_policy)
+
+    if reverse_connection_endpoint_customer_ips is not None:
+        _details['reverseConnectionEndpointCustomerIps'] = cli_util.parse_json_parameter("reverse_connection_endpoint_customer_ips", reverse_connection_endpoint_customer_ips)
+
+    if outbound_cluster_config is not None:
+        _details['outboundClusterConfig'] = cli_util.parse_json_parameter("outbound_cluster_config", outbound_cluster_config)
+
+    if maintenance_details is not None:
+        _details['maintenanceDetails'] = cli_util.parse_json_parameter("maintenance_details", maintenance_details)
+
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
@@ -923,6 +1028,87 @@ def update_opensearch_cluster(ctx, from_json, force, wait_for_state, max_wait_se
     result = client.update_opensearch_cluster(
         opensearch_cluster_id=opensearch_cluster_id,
         update_opensearch_cluster_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@opensearch_cluster_group.command(name=cli_util.override('opensearch_cluster.upgrade_open_search_cluster.command_name', 'upgrade-open-search-cluster'), help=u"""Upgrade or clone the opensearch cluster. \n[Command Reference](upgradeOpenSearchCluster)""")
+@cli_util.option('--opensearch-cluster-id', required=True, help=u"""unique OpensearchCluster identifier""")
+@cli_util.option('--original-cluster-display-name', required=True, help=u"""The display name of the original cluster. This is required to validate that the cluster ID has the same display name.""")
+@cli_util.option('--desired-software-version', required=True, help=u"""The software version the cluster is desired.""")
+@cli_util.option('--upgrade-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["MINOR", "MAJOR"]), help=u"""The upgrade type of cluster (major or minor).""")
+@cli_util.option('--is-clone', type=click.BOOL, help=u"""The cluster would be cloned for true and updated for false with the provided version.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of system tag keys. These predefined keys are scoped to namespaces. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def upgrade_open_search_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, original_cluster_display_name, desired_software_version, upgrade_type, is_clone, freeform_tags, defined_tags, system_tags, if_match):
+
+    if isinstance(opensearch_cluster_id, six.string_types) and len(opensearch_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --opensearch-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['originalClusterDisplayName'] = original_cluster_display_name
+    _details['desiredSoftwareVersion'] = desired_software_version
+    _details['upgradeType'] = upgrade_type
+
+    if is_clone is not None:
+        _details['isClone'] = is_clone
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if system_tags is not None:
+        _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
+
+    client = cli_util.build_client('opensearch', 'opensearch_cluster', ctx)
+    result = client.upgrade_open_search_cluster(
+        opensearch_cluster_id=opensearch_cluster_id,
+        upgrade_open_search_cluster_details=_details,
         **kwargs
     )
     if wait_for_state:

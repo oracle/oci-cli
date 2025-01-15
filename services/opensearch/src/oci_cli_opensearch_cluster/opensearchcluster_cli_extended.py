@@ -20,6 +20,7 @@ opensearchcluster_cli.opensearch_cluster_root_group.add_command(opensearchcluste
 opensearchcluster_cli.opensearch_cluster_root_group.add_command(opensearchcluster_cli.resize_opensearch_cluster_horizontal)
 opensearchcluster_cli.opensearch_cluster_root_group.add_command(opensearchcluster_cli.resize_opensearch_cluster_vertical)
 opensearchcluster_cli.opensearch_cluster_root_group.add_command(opensearchcluster_cli.update_opensearch_cluster)
+opensearchcluster_cli.opensearch_cluster_root_group.add_command(opensearchcluster_cli.configure_outbound_cluster)
 
 
 # Move commands under 'oci opensearch cluster opensearch-cluster-collection' -> 'oci opensearch cluster'
@@ -39,6 +40,8 @@ cli_util.rename_command(opensearchcluster_cli, opensearchcluster_cli.opensearch_
 # oci opensearch cluster resize-opensearch-cluster-vertical -> oci opensearch cluster resizevertical
 cli_util.rename_command(opensearchcluster_cli, opensearchcluster_cli.opensearch_cluster_root_group, opensearchcluster_cli.resize_opensearch_cluster_vertical, "resizevertical")
 
+# oci opensearch cluster configure_outbound_cluster -> oci opensearch cluster configureoutboundcluster
+cli_util.rename_command(opensearchcluster_cli, opensearchcluster_cli.opensearch_cluster_root_group, opensearchcluster_cli.configure_outbound_cluster, "configureoutboundcluster")
 
 # oci opensearch cluster opensearch-cluster-restore -> oci opensearch cluster restore
 cli_util.rename_command(opensearchcluster_cli, opensearchcluster_cli.opensearch_cluster_root_group, opensearchcluster_cli.opensearch_cluster_restore, "restore")

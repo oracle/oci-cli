@@ -491,3 +491,4 @@ identity-domains, policy, search
 identity-domains, restore-oci-console-policy, create
 identity-domains, rule, search
 goldengate, deployment, update
+network, vnic, assign-ipv6

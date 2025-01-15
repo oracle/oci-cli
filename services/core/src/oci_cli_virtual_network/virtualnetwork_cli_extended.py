@@ -122,7 +122,7 @@ For more information about secondary private IPs, see [IP Addresses]
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
-def assign_private_ip(ctx, from_json, vnic_id, vlan_id, ip_address, display_name, hostname_label, unassign_if_already_assigned, defined_tags, freeform_tags):
+def assign_private_ip(ctx, from_json, vnic_id, vlan_id, ip_address, display_name, hostname_label, unassign_if_already_assigned, defined_tags, freeform_tags, route_table_id):
     networking_client = cli_util.build_client('core', 'virtual_network', ctx)
     assign_private_ip_request_body = {}
     is_ip_reassignment = False
@@ -207,6 +207,9 @@ def assign_private_ip(ctx, from_json, vnic_id, vlan_id, ip_address, display_name
     if display_name is not None:
         assign_private_ip_request_body['displayName'] = display_name
 
+    if route_table_id is not None:
+        assign_private_ip_request_body['routeTableId'] = route_table_id
+
     if defined_tags is not None:
         assign_private_ip_request_body['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
     if freeform_tags is not None:
@@ -285,7 +288,7 @@ def unassign_private_ip(ctx, from_json, vnic_id, ip_address):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
-def assign_ipv6(ctx, from_json, vnic_id, defined_tags, display_name, freeform_tags, ip_address, unassign_if_already_assigned, ipv6_subnet_cidr):
+def assign_ipv6(ctx, from_json, vnic_id, defined_tags, display_name, freeform_tags, ip_address, unassign_if_already_assigned, ipv6_subnet_cidr, route_table_id):
     networking_client = cli_util.build_client('core', 'virtual_network', ctx)
 
     # First we get the VNIC because we need to know the subnet OCID for the ListIpv6s call
@@ -338,6 +341,9 @@ def assign_ipv6(ctx, from_json, vnic_id, defined_tags, display_name, freeform_ta
 
     if ipv6_subnet_cidr is not None:
         assign_ip_request_body['ipv6SubnetCidr'] = ipv6_subnet_cidr
+
+    if route_table_id is not None:
+        assign_ip_request_body['routeTableId'] = route_table_id
 
     # If we are here then either the IP address does not exist or it is a candidate to be moved
     if not is_ip_reassignment:
