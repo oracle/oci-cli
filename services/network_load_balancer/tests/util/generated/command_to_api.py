@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2024, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2025, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
     "nlb.change_network_load_balancer_compartment": "oci.network_load_balancer.NetworkLoadBalancerClient.change_network_load_balancer_compartment",
@@ -13,6 +13,7 @@ SDK_client_map = {
     "nlb.delete_network_load_balancer": "oci.network_load_balancer.NetworkLoadBalancerClient.delete_network_load_balancer",
     "nlb.get_backend": "oci.network_load_balancer.NetworkLoadBalancerClient.get_backend",
     "nlb.get_backend_health": "oci.network_load_balancer.NetworkLoadBalancerClient.get_backend_health",
+    "nlb.get_backend_operational_status": "oci.network_load_balancer.NetworkLoadBalancerClient.get_backend_operational_status",
     "nlb.get_backend_set": "oci.network_load_balancer.NetworkLoadBalancerClient.get_backend_set",
     "nlb.get_backend_set_health": "oci.network_load_balancer.NetworkLoadBalancerClient.get_backend_set_health",
     "nlb.get_health_checker": "oci.network_load_balancer.NetworkLoadBalancerClient.get_health_checker",

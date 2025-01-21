@@ -664,6 +664,7 @@ def launch_db_system_from_database_extended(ctx, **kwargs):
 @cli_util.option('--run-immediate-full-backup', type=click.BOOL, required=False, help="""If set to true, configures automatic full backups in the local region (the region of the DB system) for the first backup run immediately.""")
 @cli_util.option('--backup-destination', required=False, type=custom_types.CLI_COMPLEX_TYPE, help="""backup destination list""")
 @cli_util.option('--vault-id', required=False, help="""The OCID of the Oracle Cloud Infrastructure vault.""")
+@cli_util.option('--hsm-password', required=False, help=u"""Provide the HSM password as you would in RDBMS for External HSM.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
@@ -737,6 +738,12 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
 
     if 'kms_key_version_id' in kwargs and kwargs['kms_key_version_id']:
         create_database_details['kmsKeyVersionId'] = kwargs['kms_key_version_id']
+
+    _encryption_key_location_details = {}
+    if 'hsm_password' in kwargs and kwargs['hsm_password']:
+        _encryption_key_location_details['providerType'] = 'EXTERNAL'
+        _encryption_key_location_details['hsmPassword'] = kwargs['hsm_password']
+        create_database_details.encryption_key_location_details = _encryption_key_location_details
 
     if 'auto-backup-window' in kwargs and kwargs['auto-backup-window'] and kwargs['auto_backup_enabled'] is not None:
         db_backup_config.auto_backup_enabled = kwargs['auto_backup_enabled']
@@ -1416,7 +1423,7 @@ def create_data_guard_association_group():
     pass
 
 
-@cli_util.copy_params_from_generated_command(database_cli.create_data_guard_association, params_to_exclude=['wait_for_state', 'max_wait_seconds', 'wait_interval_seconds'])
+@cli_util.copy_params_from_generated_command(database_cli.create_data_guard_association, params_to_exclude=['wait_for_state', 'max_wait_seconds', 'wait_interval_seconds', 'source_encryption_key_location_details'])
 @create_data_guard_association_group.command('from-existing-db-system', help="""Creates a new Data Guard association using an existing DB System.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 All Oracle Cloud Infrastructue resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. Fore more information, see [Resource Identifiers].""")
@@ -1456,7 +1463,7 @@ def create_data_guard_association_from_existing_db_system(ctx, from_json, databa
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.create_data_guard_association, params_to_exclude=['wait_for_state', 'max_wait_seconds', 'wait_interval_seconds', 'peer_db_unique_name', 'peer_sid_prefix', 'storage_volume_performance_mode'])
+@cli_util.copy_params_from_generated_command(database_cli.create_data_guard_association, params_to_exclude=['wait_for_state', 'max_wait_seconds', 'wait_interval_seconds', 'peer_db_unique_name', 'peer_sid_prefix', 'storage_volume_performance_mode', 'source_encryption_key_location_details'])
 @create_data_guard_association_group.command('with-new-db-system', help="""Creates a new Data Guard association with a new DB System.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 
@@ -1556,17 +1563,18 @@ def create_data_guard_association_with_new_db_system(ctx, from_json, database_id
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.create_data_guard_association, params_to_exclude=['wait_for_state', 'max_wait_seconds', 'wait_interval_seconds', 'creation_type'])
+@cli_util.copy_params_from_generated_command(database_cli.create_data_guard_association, params_to_exclude=['wait_for_state', 'max_wait_seconds', 'wait_interval_seconds', 'creation_type', 'source_encryption_key_location_details'])
 @create_data_guard_association_group.command('from-existing-vm-cluster', help=u"""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers].""")
 @cli_util.option('--peer-vm-cluster-id', required=True, help=u"""The [OCID] of the VM Cluster in which to create the standby database. You must supply this value if creationType is `ExistingVmCluster`.""")
 @cli_util.option('--peer-db-home-id', required=False, help="""The OCID of the DB Home to create the standby database on.""")
 @cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
+@cli_util.option('--hsm-password', required=False, help="""Provide the HSM password as you would in RDBMS for External HSM.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_from_existing_vm_cluster(ctx, from_json, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, is_active_data_guard_enabled, peer_vm_cluster_id, peer_db_unique_name, peer_sid_prefix, peer_db_home_id):
+def create_data_guard_association_from_existing_vm_cluster(ctx, from_json, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, is_active_data_guard_enabled, peer_vm_cluster_id, peer_db_unique_name, peer_sid_prefix, peer_db_home_id, hsm_password):
 
     kwargs = {}
 
@@ -1587,6 +1595,11 @@ def create_data_guard_association_from_existing_vm_cluster(ctx, from_json, datab
         details['peerSidPrefix'] = peer_sid_prefix
     if is_active_data_guard_enabled is not None:
         details['isActiveDataGuardEnabled'] = is_active_data_guard_enabled
+    _source_encryption_key_location_details = {}
+    if hsm_password is not None:
+        _source_encryption_key_location_details['hsmPassword'] = hsm_password
+        _source_encryption_key_location_details['providerType'] = 'EXTERNAL'
+        details['sourceEncryptionKeyLocationDetails'] = _source_encryption_key_location_details
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_data_guard_association(
@@ -3844,3 +3857,118 @@ database_cli.database_group.commands.pop(database_cli.set_db_key_version.name)
 
 # Remove set-pdb-key-version from oci db pluggable-database
 database_cli.pluggable_database_group.commands.pop(database_cli.set_pdb_key_version.name)
+
+# Remove change-encryption-key-location from oci db database
+database_cli.database_group.commands.pop(database_cli.change_encryption_key_location.name)
+
+# Remove create-data-guard-association-external-hsm-encryption-details from oci db data-guard-association
+# database_cli.data_guard_association_group.commands.pop(database_cli.create_data_guard_association_external_hsm_encryption_details.name)
+
+# oci db database change-encryption-key-location-external-hsm-encryption-details -> oci db change-to-external-hsm-key-location
+cli_util.rename_command(database_cli, database_cli.database_group, database_cli.change_encryption_key_location_external_hsm_encryption_details, "change-to-external-hsm-key-location")
+
+# Replacing the database complex type by adding respective CLI parameters and rename the command for create / add standby in multiple standby env.
+# database_cli.database_group.commands.pop(database_cli.create_database_create_stand_by_database_details.name)
+
+
+#@cli_util.copy_params_from_generated_command(database_cli.create_database_create_stand_by_database_details, params_to_exclude=['database'])
+@database_cli.database_group.command(name='create-standby-database', help="""Creates a new standby database for the given source database id.""")
+@cli_util.option('--database-admin-password', required=True, help=u"""The administrator password of the primary database in this Data Guard association.
+
+* The password MUST be the same as the primary admin password.""")
+@cli_util.option('--db-unique-name', help=u"""Specifies the `DB_UNIQUE_NAME` of the standby database to be created.""")
+@cli_util.option('--protection-mode', type=custom_types.CliCaseInsensitiveChoice(["MAXIMUM_AVAILABILITY", "MAXIMUM_PERFORMANCE"]), help=u"""The protection mode to set up between the primary and standby databases. For more information, see [Oracle Data Guard Protection Modes] in the Oracle Data Guard documentation.
+
+**IMPORTANT** - The protection mode is required for first standby to be created.""")
+@cli_util.option('--transport-type', type=custom_types.CliCaseInsensitiveChoice(["SYNC", "ASYNC"]), help=u"""The redo transport type to use for the standby database to be created.  Valid values depend on the specified `protectionMode`:
+
+* MAXIMUM_AVAILABILITY - SYNC * MAXIMUM_PERFORMANCE - ASYNC
+
+For more information, see [Redo Transport Services] in the Oracle Data Guard documentation.""")
+@cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
+@cli_util.option('--source-database-id', required=True, help=u"""The [OCID] of the source (primary) database for the Data Guard group.""")
+@cli_util.option('--source-tde-wallet-password', help=u"""The existing TDE wallet password of the source (primary) database.""")
+@cli_util.option('--sid-prefix', help=u"""Specifies a prefix for the `Oracle SID` of the standby database to be created.""")
+@cli_util.help_option
+@click.pass_context
+@cli_util.wrap_exceptions
+def create_standby_database_for_multiple_standby(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds, **kwargs):
+
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dbHomeId'] = kwargs['db_home_id']
+
+    create_standby_details = oci.database.models.CreateStandbyDetails()
+
+    if 'database_admin_password' in kwargs and kwargs['database_admin_password']:
+        create_standby_details.database_admin_password = kwargs['database_admin_password']
+
+    if 'db_unique_name' in kwargs and kwargs['db_unique_name']:
+        create_standby_details.db_unique_name = kwargs['db_unique_name']
+
+    if 'protection_mode' in kwargs and kwargs['protection_mode']:
+        create_standby_details.protection_mode = kwargs['protection_mode']
+
+    if 'transport_type' in kwargs and kwargs['transport_type']:
+        create_standby_details.transport_type = kwargs['transport_type']
+
+    if 'is_active_data_guard_enabled' in kwargs and kwargs['is_active_data_guard_enabled']:
+        create_standby_details.is_active_data_guard_enabled = kwargs['is_active_data_guard_enabled']
+
+    if 'source_database_id' in kwargs and kwargs['source_database_id']:
+        create_standby_details.source_database_id = kwargs['source_database_id']
+
+    if 'source_tde_wallet_password' in kwargs and kwargs['source_tde_wallet_password']:
+        create_standby_details.source_tde_wallet_password = kwargs['source_tde_wallet_password']
+
+    if 'sid_prefix' in kwargs and kwargs['sid_prefix']:
+        create_standby_details.sid_prefix = kwargs['sid_prefix']
+
+    _details['database'] = create_standby_details
+
+    if 'db_version' in kwargs and kwargs['db_version']:
+        _details['dbVersion'] = kwargs['db_version']
+
+    if 'kms_key_id' in kwargs and kwargs['kms_key_id']:
+        _details['kmsKeyId'] = kwargs['kms_key_id']
+
+    if 'kms_key_version_id' in kwargs and kwargs['kms_key_version_id']:
+        _details['kmsKeyVersionId'] = kwargs['kms_key_version_id']
+
+    _details['source'] = 'DATAGUARD'
+
+    client = cli_util.build_client('database', 'database', ctx)
+
+    create_new_database_details = _details
+    result = client.create_database(create_new_database_details)
+
+    if wait_for_state:
+
+        if hasattr(client, 'get_database') and callable(getattr(client, 'get_database')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+# Multiple Stabdby : Migrate from Single Standby:  oci db data-guard-association migrate-data-guard-association-to-multi-data-guards -> oci db data-guard-association migrate-to-multiple-standby-model
+
+cli_util.rename_command(database_cli, database_cli.data_guard_association_group, database_cli.migrate_data_guard_association_to_multi_data_guards, "migrate-to-multiple-standby-model")

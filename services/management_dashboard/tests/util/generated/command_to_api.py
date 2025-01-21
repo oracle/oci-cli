@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2024, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2025, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
     "management_dashboard.change_management_dashboards_compartment": "oci.management_dashboard.DashxApisClient.change_management_dashboards_compartment",
