@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2024, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2025, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
     "capacity_management.create_occ_availability_catalog": "oci.capacity_management.CapacityManagementClient.create_occ_availability_catalog",

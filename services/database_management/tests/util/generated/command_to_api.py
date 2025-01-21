@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2024, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2025, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
     "sql_tuning.clone_sql_tuning_task": "oci.database_management.SqlTuningClient.clone_sql_tuning_task",

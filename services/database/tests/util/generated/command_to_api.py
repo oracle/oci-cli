@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2024, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2025, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
     "db.activate_exadata_infrastructure": "oci.database.DatabaseClient.activate_exadata_infrastructure",
@@ -27,6 +27,7 @@ SDK_client_map = {
     "db.change_dataguard_role": "oci.database.DatabaseClient.change_dataguard_role",
     "db.change_db_system_compartment": "oci.database.DatabaseClient.change_db_system_compartment",
     "db.change_disaster_recovery_configuration": "oci.database.DatabaseClient.change_disaster_recovery_configuration",
+    "db.change_encryption_key_location": "oci.database.DatabaseClient.change_encryption_key_location",
     "db.change_exadata_infrastructure_compartment": "oci.database.DatabaseClient.change_exadata_infrastructure_compartment",
     "db.change_exadb_vm_cluster_compartment": "oci.database.DatabaseClient.change_exadb_vm_cluster_compartment",
     "db.change_exascale_db_storage_vault_compartment": "oci.database.DatabaseClient.change_exascale_db_storage_vault_compartment",
@@ -47,6 +48,7 @@ SDK_client_map = {
     "db.confirm_key_store_details_are_correct": "oci.database.DatabaseClient.confirm_key_store_details_are_correct",
     "db.convert_to_pdb": "oci.database.DatabaseClient.convert_to_pdb",
     "db.convert_to_regular_pluggable_database": "oci.database.DatabaseClient.convert_to_regular_pluggable_database",
+    "db.convert_to_standalone": "oci.database.DatabaseClient.convert_to_standalone",
     "db.create_application_vip": "oci.database.DatabaseClient.create_application_vip",
     "db.create_autonomous_container_database": "oci.database.DatabaseClient.create_autonomous_container_database",
     "db.create_autonomous_container_database_dataguard_association": "oci.database.DatabaseClient.create_autonomous_container_database_dataguard_association",
@@ -150,6 +152,7 @@ SDK_client_map = {
     "db.enable_pluggable_database_management": "oci.database.DatabaseClient.enable_pluggable_database_management",
     "db.fail_over_autonomous_database": "oci.database.DatabaseClient.fail_over_autonomous_database",
     "db.failover_autonomous_container_database_dataguard_association": "oci.database.DatabaseClient.failover_autonomous_container_database_dataguard_association",
+    "db.failover_data_guard": "oci.database.DatabaseClient.failover_data_guard",
     "db.failover_data_guard_association": "oci.database.DatabaseClient.failover_data_guard_association",
     "db.generate_autonomous_database_wallet": "oci.database.DatabaseClient.generate_autonomous_database_wallet",
     "db.generate_recommended_vm_cluster_network": "oci.database.DatabaseClient.generate_recommended_vm_cluster_network",
@@ -309,6 +312,7 @@ SDK_client_map = {
     "db.list_vm_cluster_updates": "oci.database.DatabaseClient.list_vm_cluster_updates",
     "db.list_vm_clusters": "oci.database.DatabaseClient.list_vm_clusters",
     "db.local_clone_pluggable_database": "oci.database.DatabaseClient.local_clone_pluggable_database",
+    "db.migrate_data_guard_association_to_multi_data_guards": "oci.database.DatabaseClient.migrate_data_guard_association_to_multi_data_guards",
     "db.migrate_exadata_db_system_resource_model": "oci.database.DatabaseClient.migrate_exadata_db_system_resource_model",
     "db.migrate_vault_key": "oci.database.DatabaseClient.migrate_vault_key",
     "db.modify_database_management": "oci.database.DatabaseClient.modify_database_management",
@@ -317,6 +321,7 @@ SDK_client_map = {
     "db.refresh_pluggable_database": "oci.database.DatabaseClient.refresh_pluggable_database",
     "db.register_autonomous_database_data_safe": "oci.database.DatabaseClient.register_autonomous_database_data_safe",
     "db.reinstate_autonomous_container_database_dataguard_association": "oci.database.DatabaseClient.reinstate_autonomous_container_database_dataguard_association",
+    "db.reinstate_data_guard": "oci.database.DatabaseClient.reinstate_data_guard",
     "db.reinstate_data_guard_association": "oci.database.DatabaseClient.reinstate_data_guard_association",
     "db.remote_clone_pluggable_database": "oci.database.DatabaseClient.remote_clone_pluggable_database",
     "db.remove_virtual_machine_from_cloud_vm_cluster": "oci.database.DatabaseClient.remove_virtual_machine_from_cloud_vm_cluster",
@@ -349,6 +354,7 @@ SDK_client_map = {
     "db.start_pluggable_database": "oci.database.DatabaseClient.start_pluggable_database",
     "db.stop_autonomous_database": "oci.database.DatabaseClient.stop_autonomous_database",
     "db.stop_pluggable_database": "oci.database.DatabaseClient.stop_pluggable_database",
+    "db.switch_over_data_guard": "oci.database.DatabaseClient.switch_over_data_guard",
     "db.switchover_autonomous_container_database_dataguard_association": "oci.database.DatabaseClient.switchover_autonomous_container_database_dataguard_association",
     "db.switchover_autonomous_database": "oci.database.DatabaseClient.switchover_autonomous_database",
     "db.switchover_data_guard_association": "oci.database.DatabaseClient.switchover_data_guard_association",
@@ -371,6 +377,7 @@ SDK_client_map = {
     "db.update_cloud_vm_cluster_iorm_config": "oci.database.DatabaseClient.update_cloud_vm_cluster_iorm_config",
     "db.update_console_connection": "oci.database.DatabaseClient.update_console_connection",
     "db.update_console_history": "oci.database.DatabaseClient.update_console_history",
+    "db.update_data_guard": "oci.database.DatabaseClient.update_data_guard",
     "db.update_data_guard_association": "oci.database.DatabaseClient.update_data_guard_association",
     "db.update_database": "oci.database.DatabaseClient.update_database",
     "db.update_database_software_image": "oci.database.DatabaseClient.update_database_software_image",
