@@ -3871,7 +3871,7 @@ cli_util.rename_command(database_cli, database_cli.database_group, database_cli.
 # database_cli.database_group.commands.pop(database_cli.create_database_create_stand_by_database_details.name)
 
 
-#@cli_util.copy_params_from_generated_command(database_cli.create_database_create_stand_by_database_details, params_to_exclude=['database'])
+# @cli_util.copy_params_from_generated_command(database_cli.create_database_create_stand_by_database_details, params_to_exclude=['database'])
 @database_cli.database_group.command(name='create-standby-database', help="""Creates a new standby database for the given source database id.""")
 @cli_util.option('--database-admin-password', required=True, help=u"""The administrator password of the primary database in this Data Guard association.
 
@@ -3971,4 +3971,4 @@ def create_standby_database_for_multiple_standby(ctx, wait_for_state, max_wait_s
 
 # Multiple Stabdby : Migrate from Single Standby:  oci db data-guard-association migrate-data-guard-association-to-multi-data-guards -> oci db data-guard-association migrate-to-multiple-standby-model
 
-cli_util.rename_command(database_cli, database_cli.data_guard_association_group, database_cli.migrate_data_guard_association_to_multi_data_guards, "migrate-to-multiple-standby-model")
+# cli_util.rename_command(database_cli, database_cli.data_guard_association_group, database_cli.migrate_data_guard_association_to_multi_data_guards, "migrate-to-multiple-standby-model")
