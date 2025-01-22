@@ -249,6 +249,7 @@ IGNORED_COMMANDS = [
     ['apm-synthetics', 'monitor', 'create-sql-monitor'],
     ['apm-synthetics', 'monitor', 'update-sql-monitor'],
     ['bds', 'instance', 'install-patch'],
+    ['db', 'database', 'create-standby-database'],
 ]
 
 IGNORED_COMMANDS_DOCS = [

@@ -6,6 +6,43 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.51.4 - 2025-01-21
+--------------------
+Added
+~~~~~
+* Network Load Balancer Service
+
+  * Support for Active/Standby Purist Mode
+
+  * Support for Configurable TCP Reset
+
+    * ``oci nlb backend-set create --is-instant-failover-tcp-reset-enabled, --are-operationally-active-backends-preferred``
+    * ``oci nlb backend-set update --is-instant-failover-tcp-reset-enabled, --are-operationally-active-backends-preferred``
+
+* Database Service
+
+  * Support for Data Guard Transaction Processing
+
+    * ``oci db database create-standby-database``
+    * ``oci db database update-data-guard``
+    * ``oci db database switch-over-data-guard``
+    * ``oci db database failover-data-guard``
+    * ``oci db database reinstate-data-guard``
+
+  * Support for permanently disconnecting a peer Autonomous Database from its Primary
+
+    * ``oci db autonomous-database update --is-disconnect-peer``
+
+  * Support for External HSM for TDE key management in ExaDB-C@C and ExaDB-D
+
+    * ``oci db database change-to-external-hsm-key-location --database-id --hsm-password``
+    * ``oci db database create --hsm-password``
+    * ``oci db data-guard-association create from-existing-vm-cluster --hsm-password``
+
+* Support for Bring Your Own ASN (BYOASN) in Core Service
+
+  * ``oci network byoasn``
+
 3.51.2 - 2025-01-14
 --------------------
 Added
