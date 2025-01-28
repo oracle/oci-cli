@@ -6,6 +6,67 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.51.5 - 2025-01-28
+--------------------
+Added
+~~~~~
+* Ops Insights Service
+
+  * Support to add tag filters for news reports
+
+    * ``oci opsi news-reports create --match-rule, --tag-filters``
+
+  * Support to update more parameters for news reports
+
+    * ``oci opsi news-reports update --match-rule, --tag-filters``
+
+  * Support for MySQL Heatwave database systems
+
+    * ``oci opsi database-insights change-external-mysql``
+    * ``oci opsi database-insights create-external-mysql-database-insight``
+    * ``oci opsi database-insights enable-external-mysql-database-insight``
+    * ``oci opsi database-insights update-external-mysql-database-insight``
+
+* Database Management Service
+
+  * Support for external MySQL database management
+
+    * ``oci database-management external-my-sql-database create``
+    * ``oci database-management external-my-sql-database delete``
+    * ``oci database-management external-my-sql-database disable-external-my-sql-database-management``
+    * ``oci database-management external-my-sql-database enable-external-my-sql-database-management``
+    * ``oci database-management external-my-sql-database get-external-my-sql-database-connector``
+    * ``oci database-management external-my-sql-database get``
+    * ``oci database-management external-my-sql-database update-external-mysql-database``
+    * ``oci database-management external-my-sql-database-collection list-external-my-sql-databases``
+    * ``oci database-management external-my-sql-database-connector check-external-my-sql-database-connector-connection-status``
+    * ``oci database-management external-my-sql-database-connector create``
+    * ``oci database-management external-my-sql-database-connector delete``
+    * ``oci database-management external-my-sql-database-connector update-external-mysql-database-connector``
+    * ``oci database-management my-sql-connector-collection list-my-sql-database-connectors``
+
+  * Support for fetching HA metric for managed databases in Database Management
+
+    * ``oci database-management database-fleet-ha-overview-metrics get``
+    * ``oci database-management database-fleet-dataguard-metrics get``
+    * ``oci database-management database-fleet-backup-metrics get``
+    * ``oci database-management managed-database database-ha-backup-details get --managed-database-id``
+
+Changed
+~~~~~~~
+* Database Management Service
+
+  * Optional parameter filter-by-my-sql-database-type-param added in the list-managed-my-sql-databases and  my-sql-fleet-metrics commands
+
+    * ``oci database-management managed-my-sql-databases managed-my-sql-database-collection list-managed-my-sql-databases``
+    * ``oci database-management managed-my-sql-databases my-sql-fleet-metrics get``
+
+* Organizations Service
+
+  * Support for optional parameter subscriptionId to the existing createChildTenancy API
+
+    * ``oci organizations child-tenancy create --subscription-id``
+
 3.51.4 - 2025-01-21
 --------------------
 Added

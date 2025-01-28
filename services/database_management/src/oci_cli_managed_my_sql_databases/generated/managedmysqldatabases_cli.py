@@ -119,6 +119,7 @@ def get_managed_my_sql_database(ctx, from_json, managed_my_sql_database_id):
 @cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
 @cli_util.option('--filter-by-my-sql-deployment-type-param', type=custom_types.CliCaseInsensitiveChoice(["ONPREMISE", "MDS"]), help=u"""The parameter to filter by MySQL deployment type.""")
 @cli_util.option('--filter-by-mds-deployment-type', type=custom_types.CliCaseInsensitiveChoice(["HA", "HEATWAVE", "STANDALONE"]), help=u"""The parameter to filter by MySQL Database System type.""")
+@cli_util.option('--filter-by-my-sql-database-type-param', type=custom_types.CliCaseInsensitiveChoice(["EXTERNAL", "MDS"]), help=u"""The parameter to filter by MySQL database type. Allowed values are EXTERNAL or MDS.""")
 @cli_util.option('--filter-by-my-sql-status', type=custom_types.CliCaseInsensitiveChoice(["UP", "DOWN", "UNKNOWN"]), help=u"""The parameter to filter by MySQL Database status.""")
 @cli_util.option('--filter-by-my-sql-database-version', help=u"""The parameter to filter by MySQL database version.""")
 @cli_util.option('--is-heat-wave-enabled', type=click.BOOL, help=u"""The parameter to filter based on whether HeatWave is enabled for the database.""")
@@ -127,7 +128,7 @@ def get_managed_my_sql_database(ctx, from_json, managed_my_sql_database_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'MySqlFleetMetrics'})
 @cli_util.wrap_exceptions
-def get_my_sql_fleet_metric(ctx, from_json, compartment_id, start_time, end_time, filter_by_metric_names, filter_by_my_sql_deployment_type_param, filter_by_mds_deployment_type, filter_by_my_sql_status, filter_by_my_sql_database_version, is_heat_wave_enabled):
+def get_my_sql_fleet_metric(ctx, from_json, compartment_id, start_time, end_time, filter_by_metric_names, filter_by_my_sql_deployment_type_param, filter_by_mds_deployment_type, filter_by_my_sql_database_type_param, filter_by_my_sql_status, filter_by_my_sql_database_version, is_heat_wave_enabled):
 
     kwargs = {}
     if filter_by_metric_names is not None:
@@ -136,6 +137,8 @@ def get_my_sql_fleet_metric(ctx, from_json, compartment_id, start_time, end_time
         kwargs['filter_by_my_sql_deployment_type_param'] = filter_by_my_sql_deployment_type_param
     if filter_by_mds_deployment_type is not None:
         kwargs['filter_by_mds_deployment_type'] = filter_by_mds_deployment_type
+    if filter_by_my_sql_database_type_param is not None:
+        kwargs['filter_by_my_sql_database_type_param'] = filter_by_my_sql_database_type_param
     if filter_by_my_sql_status is not None:
         kwargs['filter_by_my_sql_status'] = filter_by_my_sql_status
     if filter_by_my_sql_database_version is not None:
@@ -282,6 +285,7 @@ def list_managed_my_sql_database_sql_data(ctx, from_json, all_pages, page_size, 
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--filter-by-my-sql-database-type-param', type=custom_types.CliCaseInsensitiveChoice(["EXTERNAL", "MDS"]), help=u"""The parameter to filter by MySQL database type. Allowed values are EXTERNAL or MDS.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for \u2018TIMECREATED\u2019 is descending and the default sort order for \u2018NAME\u2019 is ascending. The \u2018NAME\u2019 sort order is case-sensitive.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -291,7 +295,7 @@ def list_managed_my_sql_database_sql_data(ctx, from_json, all_pages, page_size, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'ManagedMySqlDatabaseCollection'})
 @cli_util.wrap_exceptions
-def list_managed_my_sql_databases(ctx, from_json, all_pages, page_size, compartment_id, page, limit, sort_by, sort_order):
+def list_managed_my_sql_databases(ctx, from_json, all_pages, page_size, compartment_id, page, limit, filter_by_my_sql_database_type_param, sort_by, sort_order):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -301,6 +305,8 @@ def list_managed_my_sql_databases(ctx, from_json, all_pages, page_size, compartm
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if filter_by_my_sql_database_type_param is not None:
+        kwargs['filter_by_my_sql_database_type_param'] = filter_by_my_sql_database_type_param
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     if sort_order is not None:

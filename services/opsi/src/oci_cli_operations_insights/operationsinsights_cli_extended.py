@@ -881,3 +881,15 @@ cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_
 
 # Remove change-pe-comanaged-database-insight-credential-by-iam from oci opsi database-insights
 operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.change_pe_comanaged_database_insight_credential_by_iam.name)
+
+
+# oci opsi database-insights create-database-insight-create-external-mysql-database-insight-details -> oci opsi database-insights create-external-mysql-database-insight
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.create_database_insight_create_external_mysql_database_insight_details, "create-external-mysql-database-insight")
+
+
+# oci opsi database-insights enable-database-insight-enable-external-mysql-database-insight-details -> oci opsi database-insights enable-external-mysql-database-insight
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.enable_database_insight_enable_external_mysql_database_insight_details, "enable-external-mysql-database-insight")
+
+
+# oci opsi database-insights update-database-insight-update-external-mysql-database-insight-details -> oci opsi database-insights update-external-mysql-database-insight
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.update_database_insight_update_external_mysql_database_insight_details, "update-external-mysql-database-insight")

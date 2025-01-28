@@ -203,6 +203,9 @@ def list_associated_databases_extended(ctx, **kwargs):
 # dbmanagement_cli.db_management_root_group.commands.pop(dbmanagement_cli.user_group.name)
 dbmanagement_cli.managed_database_group.add_command(dbmanagement_cli.get_user)
 
+# 23-Dec-2024: oci database-management managed-database database-ha-backup-details get
+dbmanagement_cli.managed_database_group.add_command(dbmanagement_cli.database_ha_backup_details_group)
+
 
 # Move commands under 'oci database-management db-management' -> 'oci database-management'
 database_management_service_cli.database_management_service_group.commands.pop(dbmanagement_cli.db_management_root_group.name)
@@ -243,6 +246,15 @@ database_management_service_cli.database_management_service_group.add_command(db
 database_management_service_cli.database_management_service_group.add_command(dbmanagement_cli.external_exadata_storage_connector_group)
 database_management_service_cli.database_management_service_group.add_command(dbmanagement_cli.external_exadata_storage_server_group)
 database_management_service_cli.database_management_service_group.add_command(dbmanagement_cli.external_exadata_storage_grid_group)
+
+# 23-Dec-2024: oci database-management database-fleet-ha-overview-metrics get
+database_management_service_cli.database_management_service_group.add_command(dbmanagement_cli.database_fleet_ha_overview_metrics_group)
+
+# 23-Dec-2024: oci database-management database-fleet-dataguard-metrics get
+database_management_service_cli.database_management_service_group.add_command(dbmanagement_cli.database_fleet_dataguard_metrics_group)
+
+# 23-Dec-2024: oci database-management database-fleet-backup-metrics get
+database_management_service_cli.database_management_service_group.add_command(dbmanagement_cli.database_fleet_backup_metrics_group)
 
 # oci database-management tablespace drop-tablespace-tablespace-admin-password-credential-details -> oci database-management tablespace drop-with-pwd
 cli_util.rename_command(dbmanagement_cli, dbmanagement_cli.tablespace_group, dbmanagement_cli.drop_tablespace_tablespace_admin_password_credential_details, "drop-with-pwd")
