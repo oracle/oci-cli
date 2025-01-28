@@ -80,6 +80,7 @@ def approve_organization_tenancy_for_transfer(ctx, from_json, compartment_id, or
 @cli_util.option('--admin-email', required=True, help=u"""Email address of the child tenancy administrator.""")
 @cli_util.option('--policy-name', help=u"""The name to use for the administrator policy in the child tenancy. Must contain only letters and underscores.""")
 @cli_util.option('--governance-status', type=custom_types.CliCaseInsensitiveChoice(["OPTED_IN", "OPTED_OUT"]), help=u"""The governance status of the child tenancy.""")
+@cli_util.option('--subscription-id', help=u"""OCID of the subscription that needs to be assigned to the child tenancy.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -88,7 +89,7 @@ def approve_organization_tenancy_for_transfer(ctx, from_json, compartment_id, or
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_child_tenancy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, tenancy_name, home_region, admin_email, policy_name, governance_status):
+def create_child_tenancy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, tenancy_name, home_region, admin_email, policy_name, governance_status, subscription_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -104,6 +105,9 @@ def create_child_tenancy(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if governance_status is not None:
         _details['governanceStatus'] = governance_status
+
+    if subscription_id is not None:
+        _details['subscriptionId'] = subscription_id
 
     client = cli_util.build_client('tenant_manager_control_plane', 'organization', ctx)
     result = client.create_child_tenancy(

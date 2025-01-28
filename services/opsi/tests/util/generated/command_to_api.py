@@ -8,6 +8,7 @@ SDK_client_map = {
     "opsi.change_database_insight_compartment": "oci.opsi.OperationsInsightsClient.change_database_insight_compartment",
     "opsi.change_enterprise_manager_bridge_compartment": "oci.opsi.OperationsInsightsClient.change_enterprise_manager_bridge_compartment",
     "opsi.change_exadata_insight_compartment": "oci.opsi.OperationsInsightsClient.change_exadata_insight_compartment",
+    "opsi.change_external_mysql_database_insight_connection": "oci.opsi.OperationsInsightsClient.change_external_mysql_database_insight_connection",
     "opsi.change_host_insight_compartment": "oci.opsi.OperationsInsightsClient.change_host_insight_compartment",
     "opsi.change_macs_managed_cloud_database_insight_connection": "oci.opsi.OperationsInsightsClient.change_macs_managed_cloud_database_insight_connection",
     "opsi.change_news_report_compartment": "oci.opsi.OperationsInsightsClient.change_news_report_compartment",
