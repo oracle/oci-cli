@@ -157,18 +157,21 @@ Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 11
 @cli_util.option('--crash-recovery', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Whether to run the DB System with InnoDB Redo Logs and the Double Write Buffer enabled or disabled, and whether to enable or disable syncing of the Binary Logs.""")
 @cli_util.option('--database-management', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Whether to enable monitoring via the Database Management service.""")
 @cli_util.option('--secure-connections', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-mode', help=u"""The database mode indicating the types of statements that will be allowed to run in the DB system. This mode will apply only to statements run by user connections. Replicated write statements will continue to be allowed regardless of the DatabaseMode.   - READ_WRITE (default): allow running read and write statements on the DB system;   - READ_ONLY: only allow running read statements on the DB system.""")
+@cli_util.option('--access-mode', help=u"""The access mode indicating if the database access will be restricted only to administrators or not:  - UNRESTRICTED (default): the access to the database is not restricted;  - RESTRICTED: the access will be allowed only to users with specific privileges;    RESTRICTED will correspond to setting the MySQL system variable    [offline_mode] to ON.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customer email addresses that receive information from Oracle about the specified OCI DB System resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a DB System.
 
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/dbsystem/20190415/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--read-endpoint', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'source': {'module': 'mysql', 'class': 'CreateDbSystemSourceDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}})
+@json_skeleton_utils.get_cli_json_input_option({'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'source': {'module': 'mysql', 'class': 'CreateDbSystemSourceDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'CreateReadEndpointDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'source': {'module': 'mysql', 'class': 'CreateDbSystemSourceDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'source': {'module': 'mysql', 'class': 'CreateDbSystemSourceDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'CreateReadEndpointDetails'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, data_storage, hostname_label, ip_address, port, port_x, backup_policy, source, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections, customer_contacts):
+def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, data_storage, hostname_label, ip_address, port, port_x, backup_policy, source, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections, database_mode, access_mode, customer_contacts, read_endpoint):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -250,8 +253,17 @@ def create_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     if secure_connections is not None:
         _details['secureConnections'] = cli_util.parse_json_parameter("secure_connections", secure_connections)
 
+    if database_mode is not None:
+        _details['databaseMode'] = database_mode
+
+    if access_mode is not None:
+        _details['accessMode'] = access_mode
+
     if customer_contacts is not None:
         _details['customerContacts'] = cli_util.parse_json_parameter("customer_contacts", customer_contacts)
+
+    if read_endpoint is not None:
+        _details['readEndpoint'] = cli_util.parse_json_parameter("read_endpoint", read_endpoint)
 
     client = cli_util.build_client('mysql', 'db_system', ctx)
     result = client.create_db_system(
@@ -332,18 +344,21 @@ Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 11
 @cli_util.option('--crash-recovery', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Whether to run the DB System with InnoDB Redo Logs and the Double Write Buffer enabled or disabled, and whether to enable or disable syncing of the Binary Logs.""")
 @cli_util.option('--database-management', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Whether to enable monitoring via the Database Management service.""")
 @cli_util.option('--secure-connections', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-mode', help=u"""The database mode indicating the types of statements that will be allowed to run in the DB system. This mode will apply only to statements run by user connections. Replicated write statements will continue to be allowed regardless of the DatabaseMode.   - READ_WRITE (default): allow running read and write statements on the DB system;   - READ_ONLY: only allow running read statements on the DB system.""")
+@cli_util.option('--access-mode', help=u"""The access mode indicating if the database access will be restricted only to administrators or not:  - UNRESTRICTED (default): the access to the database is not restricted;  - RESTRICTED: the access will be allowed only to users with specific privileges;    RESTRICTED will correspond to setting the MySQL system variable    [offline_mode] to ON.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customer email addresses that receive information from Oracle about the specified OCI DB System resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a DB System.
 
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/dbsystem/20190415/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--read-endpoint', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}})
+@json_skeleton_utils.get_cli_json_input_option({'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'CreateReadEndpointDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'CreateReadEndpointDetails'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system_create_db_system_source_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, source_backup_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, data_storage, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections, customer_contacts):
+def create_db_system_create_db_system_source_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, source_backup_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, data_storage, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections, database_mode, access_mode, customer_contacts, read_endpoint):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -424,8 +439,17 @@ def create_db_system_create_db_system_source_from_backup_details(ctx, from_json,
     if secure_connections is not None:
         _details['secureConnections'] = cli_util.parse_json_parameter("secure_connections", secure_connections)
 
+    if database_mode is not None:
+        _details['databaseMode'] = database_mode
+
+    if access_mode is not None:
+        _details['accessMode'] = access_mode
+
     if customer_contacts is not None:
         _details['customerContacts'] = cli_util.parse_json_parameter("customer_contacts", customer_contacts)
+
+    if read_endpoint is not None:
+        _details['readEndpoint'] = cli_util.parse_json_parameter("read_endpoint", read_endpoint)
 
     _details['source']['sourceType'] = 'BACKUP'
 
@@ -507,18 +531,21 @@ Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 11
 @cli_util.option('--crash-recovery', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Whether to run the DB System with InnoDB Redo Logs and the Double Write Buffer enabled or disabled, and whether to enable or disable syncing of the Binary Logs.""")
 @cli_util.option('--database-management', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Whether to enable monitoring via the Database Management service.""")
 @cli_util.option('--secure-connections', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-mode', help=u"""The database mode indicating the types of statements that will be allowed to run in the DB system. This mode will apply only to statements run by user connections. Replicated write statements will continue to be allowed regardless of the DatabaseMode.   - READ_WRITE (default): allow running read and write statements on the DB system;   - READ_ONLY: only allow running read statements on the DB system.""")
+@cli_util.option('--access-mode', help=u"""The access mode indicating if the database access will be restricted only to administrators or not:  - UNRESTRICTED (default): the access to the database is not restricted;  - RESTRICTED: the access will be allowed only to users with specific privileges;    RESTRICTED will correspond to setting the MySQL system variable    [offline_mode] to ON.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customer email addresses that receive information from Oracle about the specified OCI DB System resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a DB System.
 
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/dbsystem/20190415/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--read-endpoint', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}})
+@json_skeleton_utils.get_cli_json_input_option({'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'CreateReadEndpointDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'CreateReadEndpointDetails'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system_create_db_system_source_from_none_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, data_storage, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections, customer_contacts):
+def create_db_system_create_db_system_source_from_none_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, data_storage, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections, database_mode, access_mode, customer_contacts, read_endpoint):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -598,8 +625,17 @@ def create_db_system_create_db_system_source_from_none_details(ctx, from_json, w
     if secure_connections is not None:
         _details['secureConnections'] = cli_util.parse_json_parameter("secure_connections", secure_connections)
 
+    if database_mode is not None:
+        _details['databaseMode'] = database_mode
+
+    if access_mode is not None:
+        _details['accessMode'] = access_mode
+
     if customer_contacts is not None:
         _details['customerContacts'] = cli_util.parse_json_parameter("customer_contacts", customer_contacts)
+
+    if read_endpoint is not None:
+        _details['readEndpoint'] = cli_util.parse_json_parameter("read_endpoint", read_endpoint)
 
     _details['source']['sourceType'] = 'NONE'
 
@@ -682,18 +718,21 @@ Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 11
 @cli_util.option('--crash-recovery', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Whether to run the DB System with InnoDB Redo Logs and the Double Write Buffer enabled or disabled, and whether to enable or disable syncing of the Binary Logs.""")
 @cli_util.option('--database-management', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Whether to enable monitoring via the Database Management service.""")
 @cli_util.option('--secure-connections', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-mode', help=u"""The database mode indicating the types of statements that will be allowed to run in the DB system. This mode will apply only to statements run by user connections. Replicated write statements will continue to be allowed regardless of the DatabaseMode.   - READ_WRITE (default): allow running read and write statements on the DB system;   - READ_ONLY: only allow running read statements on the DB system.""")
+@cli_util.option('--access-mode', help=u"""The access mode indicating if the database access will be restricted only to administrators or not:  - UNRESTRICTED (default): the access to the database is not restricted;  - RESTRICTED: the access will be allowed only to users with specific privileges;    RESTRICTED will correspond to setting the MySQL system variable    [offline_mode] to ON.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customer email addresses that receive information from Oracle about the specified OCI DB System resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a DB System.
 
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/dbsystem/20190415/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--read-endpoint', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}})
+@json_skeleton_utils.get_cli_json_input_option({'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'CreateReadEndpointDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'CreateReadEndpointDetails'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system_create_db_system_source_import_from_url_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, source_source_url, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, data_storage, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections, customer_contacts):
+def create_db_system_create_db_system_source_import_from_url_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, source_source_url, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, data_storage, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections, database_mode, access_mode, customer_contacts, read_endpoint):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -774,8 +813,17 @@ def create_db_system_create_db_system_source_import_from_url_details(ctx, from_j
     if secure_connections is not None:
         _details['secureConnections'] = cli_util.parse_json_parameter("secure_connections", secure_connections)
 
+    if database_mode is not None:
+        _details['databaseMode'] = database_mode
+
+    if access_mode is not None:
+        _details['accessMode'] = access_mode
+
     if customer_contacts is not None:
         _details['customerContacts'] = cli_util.parse_json_parameter("customer_contacts", customer_contacts)
+
+    if read_endpoint is not None:
+        _details['readEndpoint'] = cli_util.parse_json_parameter("read_endpoint", read_endpoint)
 
     _details['source']['sourceType'] = 'IMPORTURL'
 
@@ -858,19 +906,22 @@ Must be unique across all VNICs in the subnet and comply with RFC 952 and RFC 11
 @cli_util.option('--crash-recovery', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Whether to run the DB System with InnoDB Redo Logs and the Double Write Buffer enabled or disabled, and whether to enable or disable syncing of the Binary Logs.""")
 @cli_util.option('--database-management', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Whether to enable monitoring via the Database Management service.""")
 @cli_util.option('--secure-connections', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-mode', help=u"""The database mode indicating the types of statements that will be allowed to run in the DB system. This mode will apply only to statements run by user connections. Replicated write statements will continue to be allowed regardless of the DatabaseMode.   - READ_WRITE (default): allow running read and write statements on the DB system;   - READ_ONLY: only allow running read statements on the DB system.""")
+@cli_util.option('--access-mode', help=u"""The access mode indicating if the database access will be restricted only to administrators or not:  - UNRESTRICTED (default): the access to the database is not restricted;  - RESTRICTED: the access will be allowed only to users with specific privileges;    RESTRICTED will correspond to setting the MySQL system variable    [offline_mode] to ON.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customer email addresses that receive information from Oracle about the specified OCI DB System resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a DB System.
 
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/dbsystem/20190415/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--read-endpoint', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-recovery-point', type=custom_types.CLI_DATETIME, help=u"""The date and time, as per RFC 3339, of the change up to which the new DB System shall be restored to, using a backup and logs from the original DB System. In case no point in time is specified, then this new DB System shall be restored up to the latest change recorded for the original DB System.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}})
+@json_skeleton_utils.get_cli_json_input_option({'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'CreateReadEndpointDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'CreateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'CreateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'CreateReadEndpointDetails'}}, output_type={'module': 'mysql', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def create_db_system_create_db_system_source_from_pitr_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, source_db_system_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, data_storage, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections, customer_contacts, source_recovery_point):
+def create_db_system_create_db_system_source_from_pitr_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, shape_name, subnet_id, source_db_system_id, display_name, description, is_highly_available, availability_domain, fault_domain, configuration_id, mysql_version, admin_username, admin_password, data_storage_size_in_gbs, data_storage, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections, database_mode, access_mode, customer_contacts, read_endpoint, source_recovery_point):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -951,8 +1002,17 @@ def create_db_system_create_db_system_source_from_pitr_details(ctx, from_json, w
     if secure_connections is not None:
         _details['secureConnections'] = cli_util.parse_json_parameter("secure_connections", secure_connections)
 
+    if database_mode is not None:
+        _details['databaseMode'] = database_mode
+
+    if access_mode is not None:
+        _details['accessMode'] = access_mode
+
     if customer_contacts is not None:
         _details['customerContacts'] = cli_util.parse_json_parameter("customer_contacts", customer_contacts)
+
+    if read_endpoint is not None:
+        _details['readEndpoint'] = cli_util.parse_json_parameter("read_endpoint", read_endpoint)
 
     if source_recovery_point is not None:
         _details['source']['recoveryPoint'] = source_recovery_point
@@ -1676,6 +1736,8 @@ Updating different fields in the DB System will have different results on the up
 @cli_util.option('--display-name', help=u"""The user-friendly name for the DB System. It does not have to be unique.""")
 @cli_util.option('--description', help=u"""User-provided data about the DB System.""")
 @cli_util.option('--subnet-id', help=u"""The OCID of the subnet the DB System is associated with.""")
+@cli_util.option('--database-mode', help=u"""The database mode indicating the types of statements that will be allowed to run in the DB system. This mode will apply only to statements run by user connections. Replicated write statements will continue to be allowed regardless of the DatabaseMode.   - READ_WRITE: allow running read and write statements on the DB system;   - READ_ONLY: only allow running read statements on the DB system.""")
+@cli_util.option('--access-mode', help=u"""The access mode indicating if the database access will be restricted only to administrators or not:  - UNRESTRICTED: the access to the database is not restricted;  - RESTRICTED: the access will be allowed only to users with specific privileges;    RESTRICTED will correspond to setting the MySQL system variable    [offline_mode] to ON.""")
 @cli_util.option('--is-highly-available', type=click.BOOL, help=u"""Specifies if the DB System is highly available.
 
 Set to true to enable high availability. Two secondary MySQL instances are created and placed in the unused availability or fault domains, depending on your region and subnet type. Set to false to disable high availability. The secondary MySQL instances are removed and the MySQL instance in the preferred location is used.""")
@@ -1717,23 +1779,24 @@ It is not possible to decrease data storage size.""")
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customer email addresses that receive information from Oracle about the specified OCI DB System resource. Oracle uses these email addresses to send notifications about planned and unplanned software maintenance updates, information about system hardware, and other information needed by administrators. Up to 10 email addresses can be added to the customer contacts for a DB System.
 
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/dbsystem/20190415/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--read-endpoint', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'UpdateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'UpdateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'UpdateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}})
+@json_skeleton_utils.get_cli_json_input_option({'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'UpdateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'UpdateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'UpdateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'UpdateReadEndpointDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'UpdateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'UpdateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'UpdateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-storage': {'module': 'mysql', 'class': 'DataStorageDetails'}, 'backup-policy': {'module': 'mysql', 'class': 'UpdateBackupPolicyDetails'}, 'maintenance': {'module': 'mysql', 'class': 'UpdateMaintenanceDetails'}, 'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}, 'deletion-policy': {'module': 'mysql', 'class': 'UpdateDeletionPolicyDetails'}, 'secure-connections': {'module': 'mysql', 'class': 'SecureConnectionDetails'}, 'customer-contacts': {'module': 'mysql', 'class': 'list[CustomerContact]'}, 'read-endpoint': {'module': 'mysql', 'class': 'UpdateReadEndpointDetails'}})
 @cli_util.wrap_exceptions
-def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, display_name, description, subnet_id, is_highly_available, availability_domain, fault_domain, shape_name, mysql_version, configuration_id, admin_username, admin_password, data_storage_size_in_gbs, data_storage, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections, customer_contacts, if_match):
+def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, display_name, description, subnet_id, database_mode, access_mode, is_highly_available, availability_domain, fault_domain, shape_name, mysql_version, configuration_id, admin_username, admin_password, data_storage_size_in_gbs, data_storage, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections, customer_contacts, read_endpoint, if_match):
 
     if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
     if not force:
-        if data_storage or backup_policy or maintenance or freeform_tags or defined_tags or deletion_policy or secure_connections or customer_contacts:
-            if not click.confirm("WARNING: Updates to data-storage and backup-policy and maintenance and freeform-tags and defined-tags and deletion-policy and secure-connections and customer-contacts will replace any existing values. Are you sure you want to continue?"):
+        if data_storage or backup_policy or maintenance or freeform_tags or defined_tags or deletion_policy or secure_connections or customer_contacts or read_endpoint:
+            if not click.confirm("WARNING: Updates to data-storage and backup-policy and maintenance and freeform-tags and defined-tags and deletion-policy and secure-connections and customer-contacts and read-endpoint will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1751,6 +1814,12 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if subnet_id is not None:
         _details['subnetId'] = subnet_id
+
+    if database_mode is not None:
+        _details['databaseMode'] = database_mode
+
+    if access_mode is not None:
+        _details['accessMode'] = access_mode
 
     if is_highly_available is not None:
         _details['isHighlyAvailable'] = is_highly_available
@@ -1820,6 +1889,9 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if customer_contacts is not None:
         _details['customerContacts'] = cli_util.parse_json_parameter("customer_contacts", customer_contacts)
+
+    if read_endpoint is not None:
+        _details['readEndpoint'] = cli_util.parse_json_parameter("read_endpoint", read_endpoint)
 
     client = cli_util.build_client('mysql', 'db_system', ctx)
     result = client.update_db_system(

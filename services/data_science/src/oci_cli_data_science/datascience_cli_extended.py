@@ -573,3 +573,35 @@ def update_data_science_private_endpoint_extended(ctx, **kwargs):
         kwargs.pop('ds_private_endpoint_id')
 
     ctx.invoke(datascience_cli.update_data_science_private_endpoint, **kwargs)
+
+
+# Remove create-schedule-schedule-cron-trigger from oci data-science schedule
+datascience_cli.schedule_group.commands.pop(datascience_cli.create_schedule_schedule_cron_trigger.name)
+
+
+# Remove create-schedule-schedule-http-action from oci data-science schedule
+datascience_cli.schedule_group.commands.pop(datascience_cli.create_schedule_schedule_http_action.name)
+
+
+# Remove create-schedule-schedule-i-cal-trigger from oci data-science schedule
+datascience_cli.schedule_group.commands.pop(datascience_cli.create_schedule_schedule_i_cal_trigger.name)
+
+
+# Remove create-schedule-schedule-interval-trigger from oci data-science schedule
+datascience_cli.schedule_group.commands.pop(datascience_cli.create_schedule_schedule_interval_trigger.name)
+
+
+# Remove update-schedule-schedule-cron-trigger from oci data-science schedule
+datascience_cli.schedule_group.commands.pop(datascience_cli.update_schedule_schedule_cron_trigger.name)
+
+
+# Remove update-schedule-schedule-http-action from oci data-science schedule
+datascience_cli.schedule_group.commands.pop(datascience_cli.update_schedule_schedule_http_action.name)
+
+
+# Remove update-schedule-schedule-i-cal-trigger from oci data-science schedule
+datascience_cli.schedule_group.commands.pop(datascience_cli.update_schedule_schedule_i_cal_trigger.name)
+
+
+# Remove update-schedule-schedule-interval-trigger from oci data-science schedule
+datascience_cli.schedule_group.commands.pop(datascience_cli.update_schedule_schedule_interval_trigger.name)
