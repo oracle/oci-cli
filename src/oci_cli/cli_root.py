@@ -46,6 +46,8 @@ OCI_CLI_AUTH_CHOICES = [cli_constants.OCI_CLI_AUTH_API_KEY, cli_constants.OCI_CL
 
 OCI_HELP = 'Oracle Cloud Infrastructure command line interface'
 
+PRIVATE_KEY_LABEL = "OCI_API_KEY"
+
 OCI_USER_HELP = f'''Oracle Cloud Infrastructure command line interface, with support for Audit, Block Volume,
 Compute, Database, IAM, Load Balancing, Networking, DNS, File Storage, Email Delivery and Object Storage Services.
 
@@ -515,6 +517,9 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, re
     cli_metrics.Metrics.update_metric("NUM_INVOCATIONS", ctx.obj['debug'])
     ctx.obj['start_time'] = start
 
+    if not (cli_constants.OCI_CLI_AUTO_PROMPT_ENV_VAR in os.environ or cli_auto_prompt):
+        check_key_for_security(auth, config_file, profile)
+
     # Support inititialization for a subcommand.
     # In an "extended" file, add a mapping of the subcommand to the subcommand_init_module.
     # The subcommand_init_module can be the extended file itself or a separate module altogether.
@@ -551,6 +556,43 @@ def cli_auto_prompt_env():
         os.environ.pop(cli_constants.OCI_CLI_AUTO_PROMPT_ENV_VAR)
         return True
     return False
+
+
+def check_key_for_security(auth, config_file, profile):
+
+    # put a condition to check this only for api based authentication
+    if auth is None or auth == 'api_key':
+        key_file = get_key_file(config_file, profile)
+        if cli_constants.OCI_CLI_KEY_FILE_ENV_VAR in os.environ:
+            key_file = os.environ[cli_constants.OCI_CLI_KEY_FILE_ENV_VAR]
+        if os.getenv('SUPPRESS_LABEL_WARNING') is None:
+            if key_file and not validate_label_private_key(key_file):
+                private_label_message = (
+                    f"To increase security of your API key located at {key_file}, "
+                    "append an extra line with 'OCI_API_KEY' at the end. For more information, "
+                    "refer to https://docs.oracle.com/iaas/Content/API/Concepts/apisigningkey.htm"
+                    ". To supress the warning, set the env variable SUPPRESS_LABEL_WARNING=True"
+                )
+                click.echo(click.style(f"Warning: {private_label_message}", fg='yellow'), err=True)
+
+
+def validate_label_private_key(file_path):
+
+    with open(file_path, "r") as file:
+        content = file.read()
+
+    return content.endswith(PRIVATE_KEY_LABEL)
+
+
+def get_key_file(filename, profile):
+    file_location = os.path.expanduser(filename)
+    config = configparser.ConfigParser()
+    config.read(file_location)
+
+    if profile in config:
+        return config[profile].get('key_file', None)
+    else:
+        return None
 
 
 def is_top_level_help(ctx):

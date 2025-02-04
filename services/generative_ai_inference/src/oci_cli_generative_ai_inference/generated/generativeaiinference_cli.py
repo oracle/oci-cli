@@ -46,6 +46,12 @@ def summarize_text_result_group():
     pass
 
 
+@click.command(cli_util.override('generative_ai_inference.rerank_text_result_group.command_name', 'rerank-text-result'), cls=CommandGroupWithAlias, help="""The rerank response to return to the caller.""")
+@cli_util.help_option_group
+def rerank_text_result_group():
+    pass
+
+
 @click.command(cli_util.override('generative_ai_inference.chat_result_group.command_name', 'chat-result'), cls=CommandGroupWithAlias, help="""The response to the chat conversation.""")
 @cli_util.help_option_group
 def chat_result_group():
@@ -55,6 +61,7 @@ def chat_result_group():
 generative_ai_inference_root_group.add_command(generate_text_result_group)
 generative_ai_inference_root_group.add_command(embed_text_result_group)
 generative_ai_inference_root_group.add_command(summarize_text_result_group)
+generative_ai_inference_root_group.add_command(rerank_text_result_group)
 generative_ai_inference_root_group.add_command(chat_result_group)
 
 
@@ -153,6 +160,7 @@ def chat_on_demand_serving_mode(ctx, from_json, compartment_id, chat_request, se
 This option is a JSON list with items of type Message.  For documentation on Message please see our API reference: https://docs.cloud.oracle.com/api/#/en/generativeaiinference/20231130/datatypes/Message.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--chat-request-is-stream', type=click.BOOL, help=u"""Whether to stream back partial progress. If set to true, as tokens become available, they are sent as data-only server-sent events.""")
 @cli_util.option('--chat-request-num-generations', type=click.INT, help=u"""The number of of generated texts that will be returned.""")
+@cli_util.option('--chat-request-seed', type=click.INT, help=u"""If specified, the backend will make a best effort to sample tokens deterministically, so that repeated requests with the same seed and parameters yield the same result. However, determinism cannot be fully guaranteed.""")
 @cli_util.option('--chat-request-is-echo', type=click.BOOL, help=u"""Whether to include the user prompt in the response. Applies only to non-stream results.""")
 @cli_util.option('--chat-request-top-k', type=click.INT, help=u"""An integer that sets up the model to use only the top k most likely tokens in the generated output. A higher k introduces more randomness into the output making the output text sound more natural. Default value is -1 which means to consider all tokens. Setting to 0 disables this method and considers all tokens.
 
@@ -175,12 +183,16 @@ For example, if the log probability is 5, the API returns a list of the 5 most l
 @cli_util.option('--chat-request-logit-bias', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Modifies the likelihood of specified tokens that appear in the completion.
 
 Example: '{\"6395\": 2, \"8134\": 1, \"21943\": 0.5, \"5923\": -100}'""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-messages': {'module': 'generative_ai_inference', 'class': 'list[Message]'}, 'chat-request-stop': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'chat-request-logit-bias': {'module': 'generative_ai_inference', 'class': 'object'}})
+@cli_util.option('--chat-request-tool-choice', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-tools', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tools the model may call. Use this to provide a list of functions the model may generate JSON inputs for. A max of 128 functions are supported.
+
+This option is a JSON list with items of type ToolDefinition.  For documentation on ToolDefinition please see our API reference: https://docs.cloud.oracle.com/api/#/en/generativeaiinference/20231130/datatypes/ToolDefinition.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-messages': {'module': 'generative_ai_inference', 'class': 'list[Message]'}, 'chat-request-stop': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'chat-request-logit-bias': {'module': 'generative_ai_inference', 'class': 'object'}, 'chat-request-tool-choice': {'module': 'generative_ai_inference', 'class': 'ToolChoice'}, 'chat-request-tools': {'module': 'generative_ai_inference', 'class': 'list[ToolDefinition]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-messages': {'module': 'generative_ai_inference', 'class': 'list[Message]'}, 'chat-request-stop': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'chat-request-logit-bias': {'module': 'generative_ai_inference', 'class': 'object'}}, output_type={'module': 'generative_ai_inference', 'class': 'ChatResult'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-messages': {'module': 'generative_ai_inference', 'class': 'list[Message]'}, 'chat-request-stop': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'chat-request-logit-bias': {'module': 'generative_ai_inference', 'class': 'object'}, 'chat-request-tool-choice': {'module': 'generative_ai_inference', 'class': 'ToolChoice'}, 'chat-request-tools': {'module': 'generative_ai_inference', 'class': 'list[ToolDefinition]'}}, output_type={'module': 'generative_ai_inference', 'class': 'ChatResult'})
 @cli_util.wrap_exceptions
-def chat_generic_chat_request(ctx, from_json, compartment_id, serving_mode, chat_request_messages, chat_request_is_stream, chat_request_num_generations, chat_request_is_echo, chat_request_top_k, chat_request_top_p, chat_request_temperature, chat_request_frequency_penalty, chat_request_presence_penalty, chat_request_stop, chat_request_log_probs, chat_request_max_tokens, chat_request_logit_bias):
+def chat_generic_chat_request(ctx, from_json, compartment_id, serving_mode, chat_request_messages, chat_request_is_stream, chat_request_num_generations, chat_request_seed, chat_request_is_echo, chat_request_top_k, chat_request_top_p, chat_request_temperature, chat_request_frequency_penalty, chat_request_presence_penalty, chat_request_stop, chat_request_log_probs, chat_request_max_tokens, chat_request_logit_bias, chat_request_tool_choice, chat_request_tools):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -198,6 +210,9 @@ def chat_generic_chat_request(ctx, from_json, compartment_id, serving_mode, chat
 
     if chat_request_num_generations is not None:
         _details['chatRequest']['numGenerations'] = chat_request_num_generations
+
+    if chat_request_seed is not None:
+        _details['chatRequest']['seed'] = chat_request_seed
 
     if chat_request_is_echo is not None:
         _details['chatRequest']['isEcho'] = chat_request_is_echo
@@ -228,6 +243,12 @@ def chat_generic_chat_request(ctx, from_json, compartment_id, serving_mode, chat
 
     if chat_request_logit_bias is not None:
         _details['chatRequest']['logitBias'] = cli_util.parse_json_parameter("chat_request_logit_bias", chat_request_logit_bias)
+
+    if chat_request_tool_choice is not None:
+        _details['chatRequest']['toolChoice'] = cli_util.parse_json_parameter("chat_request_tool_choice", chat_request_tool_choice)
+
+    if chat_request_tools is not None:
+        _details['chatRequest']['tools'] = cli_util.parse_json_parameter("chat_request_tools", chat_request_tools)
 
     _details['chatRequest']['apiFormat'] = 'GENERIC'
 
@@ -269,7 +290,7 @@ To eliminate tokens with low likelihood, assign p a minimum percentage for the n
 @cli_util.option('--chat-request-presence-penalty', help=u"""To reduce repetitiveness of generated tokens, this number penalizes new tokens based on whether they've appeared in the generated text so far. Greater numbers encourage the model to use new tokens, while lower numbers encourage the model to repeat the tokens.
 
 Similar to frequency penalty, a penalty is applied to previously present tokens, except that this penalty is applied equally to all tokens that have already appeared, regardless of how many times they've appeared. Set to 0 to disable.""")
-@cli_util.option('--chat-request-seed', type=click.INT, help=u"""If specified, the backend will make a best effort to sample tokens deterministically, such that repeated requests with the same seed and parameters should return the same result. However, determinism cannot be totally guaranteed.""")
+@cli_util.option('--chat-request-seed', type=click.INT, help=u"""If specified, the backend will make a best effort to sample tokens deterministically, so that repeated requests with the same seed and parameters yield the same result. However, determinism cannot be fully guaranteed.""")
 @cli_util.option('--chat-request-is-echo', type=click.BOOL, help=u"""Returns the full prompt that was sent to the model when True.""")
 @cli_util.option('--chat-request-tools', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of available tools (functions) that the model may suggest invoking before producing a text response.
 
@@ -376,12 +397,12 @@ def chat_cohere_chat_request(ctx, from_json, compartment_id, serving_mode, chat_
 @embed_text_result_group.command(name=cli_util.override('generative_ai_inference.embed_text.command_name', 'embed-text'), help=u"""Produces embeddings for the inputs.
 
 An embedding is numeric representation of a piece of text. This text can be a phrase, a sentence, or one or more paragraphs. The Generative AI embedding model transforms each phrase, sentence, or paragraph that you input, into an array with 1024 numbers. You can use these embeddings for finding similarity in your input text such as finding phrases that are similar in context or category. Embeddings are mostly used for semantic searches where the search function focuses on the meaning of the text that it's searching through rather than finding results based on keywords. \n[Command Reference](embedText)""")
-@cli_util.option('--inputs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Provide a list of strings. Each string can be words, a phrase, or a paragraph. The maximum length of each string entry in the list is 512 tokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--inputs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Provide a list of strings or one base64 encoded image with `input_type` setting to `IMAGE`. If text embedding, each string can be words, a phrase, or a paragraph. The maximum length of each string entry in the list is 512 tokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--serving-mode', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to create text embeddings.""")
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to include the original inputs in the response. Results are index-based.""")
 @cli_util.option('--truncate', type=custom_types.CliCaseInsensitiveChoice(["NONE", "START", "END"]), help=u"""For an input that's longer than the maximum token length, specifies which part of the input text will be truncated.""")
-@cli_util.option('--input-type', type=custom_types.CliCaseInsensitiveChoice(["SEARCH_DOCUMENT", "SEARCH_QUERY", "CLASSIFICATION", "CLUSTERING"]), help=u"""Specifies the input type.""")
+@cli_util.option('--input-type', type=custom_types.CliCaseInsensitiveChoice(["SEARCH_DOCUMENT", "SEARCH_QUERY", "CLASSIFICATION", "CLUSTERING", "IMAGE"]), help=u"""Specifies the input type.""")
 @json_skeleton_utils.get_cli_json_input_option({'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}})
 @cli_util.help_option
 @click.pass_context
@@ -417,12 +438,12 @@ def embed_text(ctx, from_json, inputs, serving_mode, compartment_id, is_echo, tr
 @embed_text_result_group.command(name=cli_util.override('generative_ai_inference.embed_text_dedicated_serving_mode.command_name', 'embed-text-dedicated-serving-mode'), help=u"""Produces embeddings for the inputs.
 
 An embedding is numeric representation of a piece of text. This text can be a phrase, a sentence, or one or more paragraphs. The Generative AI embedding model transforms each phrase, sentence, or paragraph that you input, into an array with 1024 numbers. You can use these embeddings for finding similarity in your input text such as finding phrases that are similar in context or category. Embeddings are mostly used for semantic searches where the search function focuses on the meaning of the text that it's searching through rather than finding results based on keywords. \n[Command Reference](embedText)""")
-@cli_util.option('--inputs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Provide a list of strings. Each string can be words, a phrase, or a paragraph. The maximum length of each string entry in the list is 512 tokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--inputs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Provide a list of strings or one base64 encoded image with `input_type` setting to `IMAGE`. If text embedding, each string can be words, a phrase, or a paragraph. The maximum length of each string entry in the list is 512 tokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to create text embeddings.""")
 @cli_util.option('--serving-mode-endpoint-id', required=True, help=u"""The OCID of the endpoint to use.""")
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to include the original inputs in the response. Results are index-based.""")
 @cli_util.option('--truncate', type=custom_types.CliCaseInsensitiveChoice(["NONE", "START", "END"]), help=u"""For an input that's longer than the maximum token length, specifies which part of the input text will be truncated.""")
-@cli_util.option('--input-type', type=custom_types.CliCaseInsensitiveChoice(["SEARCH_DOCUMENT", "SEARCH_QUERY", "CLASSIFICATION", "CLUSTERING"]), help=u"""Specifies the input type.""")
+@cli_util.option('--input-type', type=custom_types.CliCaseInsensitiveChoice(["SEARCH_DOCUMENT", "SEARCH_QUERY", "CLASSIFICATION", "CLUSTERING", "IMAGE"]), help=u"""Specifies the input type.""")
 @json_skeleton_utils.get_cli_json_input_option({'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
@@ -461,12 +482,12 @@ def embed_text_dedicated_serving_mode(ctx, from_json, inputs, compartment_id, se
 @embed_text_result_group.command(name=cli_util.override('generative_ai_inference.embed_text_on_demand_serving_mode.command_name', 'embed-text-on-demand-serving-mode'), help=u"""Produces embeddings for the inputs.
 
 An embedding is numeric representation of a piece of text. This text can be a phrase, a sentence, or one or more paragraphs. The Generative AI embedding model transforms each phrase, sentence, or paragraph that you input, into an array with 1024 numbers. You can use these embeddings for finding similarity in your input text such as finding phrases that are similar in context or category. Embeddings are mostly used for semantic searches where the search function focuses on the meaning of the text that it's searching through rather than finding results based on keywords. \n[Command Reference](embedText)""")
-@cli_util.option('--inputs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Provide a list of strings. Each string can be words, a phrase, or a paragraph. The maximum length of each string entry in the list is 512 tokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--inputs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Provide a list of strings or one base64 encoded image with `input_type` setting to `IMAGE`. If text embedding, each string can be words, a phrase, or a paragraph. The maximum length of each string entry in the list is 512 tokens.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of compartment in which to call the Generative AI service to create text embeddings.""")
 @cli_util.option('--serving-mode-model-id', required=True, help=u"""The unique ID of a model to use. You can use the [ListModels] API to list the available models.""")
 @cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to include the original inputs in the response. Results are index-based.""")
 @cli_util.option('--truncate', type=custom_types.CliCaseInsensitiveChoice(["NONE", "START", "END"]), help=u"""For an input that's longer than the maximum token length, specifies which part of the input text will be truncated.""")
-@cli_util.option('--input-type', type=custom_types.CliCaseInsensitiveChoice(["SEARCH_DOCUMENT", "SEARCH_QUERY", "CLASSIFICATION", "CLUSTERING"]), help=u"""Specifies the input type.""")
+@cli_util.option('--input-type', type=custom_types.CliCaseInsensitiveChoice(["SEARCH_DOCUMENT", "SEARCH_QUERY", "CLASSIFICATION", "CLUSTERING", "IMAGE"]), help=u"""Specifies the input type.""")
 @json_skeleton_utils.get_cli_json_input_option({'inputs': {'module': 'generative_ai_inference', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
@@ -756,6 +777,141 @@ def generate_text_cohere_llm_inference_request(ctx, from_json, compartment_id, s
     client = cli_util.build_client('generative_ai_inference', 'generative_ai_inference', ctx)
     result = client.generate_text(
         generate_text_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@rerank_text_result_group.command(name=cli_util.override('generative_ai_inference.rerank_text.command_name', 'rerank-text'), help=u"""Reranks the text responses based on the input documents and a prompt.
+
+Rerank assigns an index and a relevance score to each document, indicating which document is most related to the prompt. \n[Command Reference](rerankText)""")
+@cli_util.option('--input', required=True, help=u"""Input query for search in the documents.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to call into the Generative AI service LLMs.""")
+@cli_util.option('--serving-mode', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of document strings to rerank based on the query asked.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--top-n', type=click.INT, help=u"""The number of most relevant documents or indices to return. Defaults to the length of the documents.""")
+@cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to return the documents in the response.""")
+@cli_util.option('--max-chunks-per-document', type=click.INT, help=u"""The maximum number of chunks to produce internally from a document.""")
+@json_skeleton_utils.get_cli_json_input_option({'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'documents': {'module': 'generative_ai_inference', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'documents': {'module': 'generative_ai_inference', 'class': 'list[string]'}}, output_type={'module': 'generative_ai_inference', 'class': 'RerankTextResult'})
+@cli_util.wrap_exceptions
+def rerank_text(ctx, from_json, input, compartment_id, serving_mode, documents, top_n, is_echo, max_chunks_per_document):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['input'] = input
+    _details['compartmentId'] = compartment_id
+    _details['servingMode'] = cli_util.parse_json_parameter("serving_mode", serving_mode)
+    _details['documents'] = cli_util.parse_json_parameter("documents", documents)
+
+    if top_n is not None:
+        _details['topN'] = top_n
+
+    if is_echo is not None:
+        _details['isEcho'] = is_echo
+
+    if max_chunks_per_document is not None:
+        _details['maxChunksPerDocument'] = max_chunks_per_document
+
+    client = cli_util.build_client('generative_ai_inference', 'generative_ai_inference', ctx)
+    result = client.rerank_text(
+        rerank_text_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@rerank_text_result_group.command(name=cli_util.override('generative_ai_inference.rerank_text_dedicated_serving_mode.command_name', 'rerank-text-dedicated-serving-mode'), help=u"""Reranks the text responses based on the input documents and a prompt.
+
+Rerank assigns an index and a relevance score to each document, indicating which document is most related to the prompt. \n[Command Reference](rerankText)""")
+@cli_util.option('--input', required=True, help=u"""Input query for search in the documents.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to call into the Generative AI service LLMs.""")
+@cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of document strings to rerank based on the query asked.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--serving-mode-endpoint-id', required=True, help=u"""The OCID of the endpoint to use.""")
+@cli_util.option('--top-n', type=click.INT, help=u"""The number of most relevant documents or indices to return. Defaults to the length of the documents.""")
+@cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to return the documents in the response.""")
+@cli_util.option('--max-chunks-per-document', type=click.INT, help=u"""The maximum number of chunks to produce internally from a document.""")
+@json_skeleton_utils.get_cli_json_input_option({'documents': {'module': 'generative_ai_inference', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'documents': {'module': 'generative_ai_inference', 'class': 'list[string]'}}, output_type={'module': 'generative_ai_inference', 'class': 'RerankTextResult'})
+@cli_util.wrap_exceptions
+def rerank_text_dedicated_serving_mode(ctx, from_json, input, compartment_id, documents, serving_mode_endpoint_id, top_n, is_echo, max_chunks_per_document):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['servingMode'] = {}
+    _details['input'] = input
+    _details['compartmentId'] = compartment_id
+    _details['documents'] = cli_util.parse_json_parameter("documents", documents)
+    _details['servingMode']['endpointId'] = serving_mode_endpoint_id
+
+    if top_n is not None:
+        _details['topN'] = top_n
+
+    if is_echo is not None:
+        _details['isEcho'] = is_echo
+
+    if max_chunks_per_document is not None:
+        _details['maxChunksPerDocument'] = max_chunks_per_document
+
+    _details['servingMode']['servingType'] = 'DEDICATED'
+
+    client = cli_util.build_client('generative_ai_inference', 'generative_ai_inference', ctx)
+    result = client.rerank_text(
+        rerank_text_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@rerank_text_result_group.command(name=cli_util.override('generative_ai_inference.rerank_text_on_demand_serving_mode.command_name', 'rerank-text-on-demand-serving-mode'), help=u"""Reranks the text responses based on the input documents and a prompt.
+
+Rerank assigns an index and a relevance score to each document, indicating which document is most related to the prompt. \n[Command Reference](rerankText)""")
+@cli_util.option('--input', required=True, help=u"""Input query for search in the documents.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to call into the Generative AI service LLMs.""")
+@cli_util.option('--documents', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of document strings to rerank based on the query asked.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--serving-mode-model-id', required=True, help=u"""The unique ID of a model to use. You can use the [ListModels] API to list the available models.""")
+@cli_util.option('--top-n', type=click.INT, help=u"""The number of most relevant documents or indices to return. Defaults to the length of the documents.""")
+@cli_util.option('--is-echo', type=click.BOOL, help=u"""Whether or not to return the documents in the response.""")
+@cli_util.option('--max-chunks-per-document', type=click.INT, help=u"""The maximum number of chunks to produce internally from a document.""")
+@json_skeleton_utils.get_cli_json_input_option({'documents': {'module': 'generative_ai_inference', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'documents': {'module': 'generative_ai_inference', 'class': 'list[string]'}}, output_type={'module': 'generative_ai_inference', 'class': 'RerankTextResult'})
+@cli_util.wrap_exceptions
+def rerank_text_on_demand_serving_mode(ctx, from_json, input, compartment_id, documents, serving_mode_model_id, top_n, is_echo, max_chunks_per_document):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['servingMode'] = {}
+    _details['input'] = input
+    _details['compartmentId'] = compartment_id
+    _details['documents'] = cli_util.parse_json_parameter("documents", documents)
+    _details['servingMode']['modelId'] = serving_mode_model_id
+
+    if top_n is not None:
+        _details['topN'] = top_n
+
+    if is_echo is not None:
+        _details['isEcho'] = is_echo
+
+    if max_chunks_per_document is not None:
+        _details['maxChunksPerDocument'] = max_chunks_per_document
+
+    _details['servingMode']['servingType'] = 'ON_DEMAND'
+
+    client = cli_util.build_client('generative_ai_inference', 'generative_ai_inference', ctx)
+    result = client.rerank_text(
+        rerank_text_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
