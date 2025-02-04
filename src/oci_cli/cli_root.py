@@ -565,15 +565,19 @@ def check_key_for_security(auth, config_file, profile):
         key_file = get_key_file(config_file, profile)
         if cli_constants.OCI_CLI_KEY_FILE_ENV_VAR in os.environ:
             key_file = os.environ[cli_constants.OCI_CLI_KEY_FILE_ENV_VAR]
-        if os.getenv('SUPPRESS_LABEL_WARNING') is None:
-            if key_file and not validate_label_private_key(key_file):
-                private_label_message = (
-                    f"To increase security of your API key located at {key_file}, "
-                    "append an extra line with 'OCI_API_KEY' at the end. For more information, "
-                    "refer to https://docs.oracle.com/iaas/Content/API/Concepts/apisigningkey.htm"
-                    ". To supress the warning, set the env variable SUPPRESS_LABEL_WARNING=True"
-                )
-                click.echo(click.style(f"Warning: {private_label_message}", fg='yellow'), err=True)
+
+        suppress_warning = os.getenv('SUPPRESS_LABEL_WARNING')
+        if suppress_warning == 'True':
+            return
+
+        if key_file and not validate_label_private_key(key_file):
+            private_label_message = (
+                f"To increase security of your API key located at {key_file}, "
+                "append an extra line with 'OCI_API_KEY' at the end. For more information, "
+                "refer to https://docs.oracle.com/iaas/Content/API/Concepts/apisigningkey.htm"
+                ". To suppress the warning, set the env variable SUPPRESS_LABEL_WARNING=True"
+            )
+            click.echo(click.style(f"Warning: {private_label_message}", fg='yellow'), err=True)
 
 
 def validate_label_private_key(file_path):
