@@ -22,6 +22,12 @@ def data_science_root_group():
     pass
 
 
+@click.command(cli_util.override('data_science.container_group.command_name', 'container'), cls=CommandGroupWithAlias, help="""Summary representation of a container""")
+@cli_util.help_option_group
+def container_group():
+    pass
+
+
 @click.command(cli_util.override('data_science.model_deployment_shape_group.command_name', 'model-deployment-shape'), cls=CommandGroupWithAlias, help="""The compute shape used to launch a model deployment compute instance.""")
 @cli_util.help_option_group
 def model_deployment_shape_group():
@@ -70,6 +76,12 @@ def pipeline_group():
     pass
 
 
+@click.command(cli_util.override('data_science.schedule_group.command_name', 'schedule'), cls=CommandGroupWithAlias, help="""A repeating action. Examples: * Invoke a ML Pipeline Run once an hour. * Call ML Job Run every night at midnight.""")
+@cli_util.help_option_group
+def schedule_group():
+    pass
+
+
 @click.command(cli_util.override('data_science.model_version_set_group.command_name', 'model-version-set'), cls=CommandGroupWithAlias, help="""A model version set to associate different versions of machine learning models.""")
 @cli_util.help_option_group
 def model_version_set_group():
@@ -112,6 +124,7 @@ def data_science_private_endpoint_group():
     pass
 
 
+data_science_root_group.add_command(container_group)
 data_science_root_group.add_command(model_deployment_shape_group)
 data_science_root_group.add_command(job_shape_group)
 data_science_root_group.add_command(model_deployment_group)
@@ -120,6 +133,7 @@ data_science_root_group.add_command(pipeline_run_group)
 data_science_root_group.add_command(work_request_group)
 data_science_root_group.add_command(notebook_session_group)
 data_science_root_group.add_command(pipeline_group)
+data_science_root_group.add_command(schedule_group)
 data_science_root_group.add_command(model_version_set_group)
 data_science_root_group.add_command(job_run_group)
 data_science_root_group.add_command(fast_launch_job_config_group)
@@ -258,6 +272,61 @@ def activate_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, 
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.activate_notebook_session(
         notebook_session_id=notebook_session_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@schedule_group.command(name=cli_util.override('data_science.activate_schedule.command_name', 'activate'), help=u"""Activate schedule. \n[Command Reference](activateSchedule)""")
+@cli_util.option('--schedule-id', required=True, help=u"""unique Schedule identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def activate_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, if_match):
+
+    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.activate_schedule(
+        schedule_id=schedule_id,
         **kwargs
     )
     if wait_for_state:
@@ -736,6 +805,67 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
         change_project_compartment_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@schedule_group.command(name=cli_util.override('data_science.change_schedule_compartment.command_name', 'change-compartment'), help=u"""Moves a Schedule resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeScheduleCompartment)""")
+@cli_util.option('--schedule-id', required=True, help=u"""unique Schedule identifier""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_schedule_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, compartment_id, if_match):
+
+    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.change_schedule_compartment(
+        schedule_id=schedule_id,
+        change_schedule_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -2529,6 +2659,433 @@ def create_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
+@schedule_group.command(name=cli_util.override('data_science.create_schedule.command_name', 'create'), help=u"""Creates a new Schedule. \n[Command Reference](createSchedule)""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Avoid entering confidential information.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the schedule with.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the schedule.""")
+@cli_util.option('--trigger', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--action', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A short description of the schedule.""")
+@cli_util.option('--log-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'trigger': {'module': 'data_science', 'class': 'ScheduleTrigger'}, 'action': {'module': 'data_science', 'class': 'ScheduleAction'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'trigger': {'module': 'data_science', 'class': 'ScheduleTrigger'}, 'action': {'module': 'data_science', 'class': 'ScheduleAction'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def create_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, project_id, compartment_id, trigger, action, description, log_details, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+    _details['projectId'] = project_id
+    _details['compartmentId'] = compartment_id
+    _details['trigger'] = cli_util.parse_json_parameter("trigger", trigger)
+    _details['action'] = cli_util.parse_json_parameter("action", action)
+
+    if description is not None:
+        _details['description'] = description
+
+    if log_details is not None:
+        _details['logDetails'] = cli_util.parse_json_parameter("log_details", log_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_schedule(
+        create_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@schedule_group.command(name=cli_util.override('data_science.create_schedule_schedule_i_cal_trigger.command_name', 'create-schedule-schedule-i-cal-trigger'), help=u"""Creates a new Schedule. \n[Command Reference](createSchedule)""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Avoid entering confidential information.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the schedule with.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the schedule.""")
+@cli_util.option('--action', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trigger-recurrence', required=True, help=u"""This recurrence field conforms to RFC-5545 formatting""")
+@cli_util.option('--description', help=u"""A short description of the schedule.""")
+@cli_util.option('--log-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trigger-time-start', type=custom_types.CLI_DATETIME, help=u"""The schedule starting date time, if null, System set the time when schedule is created. Format is defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--trigger-time-end', type=custom_types.CLI_DATETIME, help=u"""The schedule end date time, if null, the schedule will never expire. Format is defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'action': {'module': 'data_science', 'class': 'ScheduleAction'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'action': {'module': 'data_science', 'class': 'ScheduleAction'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def create_schedule_schedule_i_cal_trigger(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, project_id, compartment_id, action, trigger_recurrence, description, log_details, freeform_tags, defined_tags, trigger_time_start, trigger_time_end):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['trigger'] = {}
+    _details['displayName'] = display_name
+    _details['projectId'] = project_id
+    _details['compartmentId'] = compartment_id
+    _details['action'] = cli_util.parse_json_parameter("action", action)
+    _details['trigger']['recurrence'] = trigger_recurrence
+
+    if description is not None:
+        _details['description'] = description
+
+    if log_details is not None:
+        _details['logDetails'] = cli_util.parse_json_parameter("log_details", log_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if trigger_time_start is not None:
+        _details['trigger']['timeStart'] = trigger_time_start
+
+    if trigger_time_end is not None:
+        _details['trigger']['timeEnd'] = trigger_time_end
+
+    _details['trigger']['triggerType'] = 'ICAL'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_schedule(
+        create_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@schedule_group.command(name=cli_util.override('data_science.create_schedule_schedule_interval_trigger.command_name', 'create-schedule-schedule-interval-trigger'), help=u"""Creates a new Schedule. \n[Command Reference](createSchedule)""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Avoid entering confidential information.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the schedule with.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the schedule.""")
+@cli_util.option('--action', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trigger-frequency', required=True, type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY"]), help=u"""The type of frequency""")
+@cli_util.option('--trigger-interval', required=True, type=click.INT, help=u"""The interval of frequency.""")
+@cli_util.option('--description', help=u"""A short description of the schedule.""")
+@cli_util.option('--log-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trigger-time-start', type=custom_types.CLI_DATETIME, help=u"""The schedule starting date time, if null, System set the time when schedule is created. Format is defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--trigger-time-end', type=custom_types.CLI_DATETIME, help=u"""The schedule end date time, if null, the schedule will never expire. Format is defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--trigger-is-random-start-time', type=click.BOOL, help=u"""when true and timeStart is null, system generate a random start time between now and now + interval; isRandomStartTime can be true if timeStart is null.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'action': {'module': 'data_science', 'class': 'ScheduleAction'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'action': {'module': 'data_science', 'class': 'ScheduleAction'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def create_schedule_schedule_interval_trigger(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, project_id, compartment_id, action, trigger_frequency, trigger_interval, description, log_details, freeform_tags, defined_tags, trigger_time_start, trigger_time_end, trigger_is_random_start_time):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['trigger'] = {}
+    _details['displayName'] = display_name
+    _details['projectId'] = project_id
+    _details['compartmentId'] = compartment_id
+    _details['action'] = cli_util.parse_json_parameter("action", action)
+    _details['trigger']['frequency'] = trigger_frequency
+    _details['trigger']['interval'] = trigger_interval
+
+    if description is not None:
+        _details['description'] = description
+
+    if log_details is not None:
+        _details['logDetails'] = cli_util.parse_json_parameter("log_details", log_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if trigger_time_start is not None:
+        _details['trigger']['timeStart'] = trigger_time_start
+
+    if trigger_time_end is not None:
+        _details['trigger']['timeEnd'] = trigger_time_end
+
+    if trigger_is_random_start_time is not None:
+        _details['trigger']['isRandomStartTime'] = trigger_is_random_start_time
+
+    _details['trigger']['triggerType'] = 'INTERVAL'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_schedule(
+        create_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@schedule_group.command(name=cli_util.override('data_science.create_schedule_schedule_cron_trigger.command_name', 'create-schedule-schedule-cron-trigger'), help=u"""Creates a new Schedule. \n[Command Reference](createSchedule)""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Avoid entering confidential information.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the schedule with.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the schedule.""")
+@cli_util.option('--action', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trigger-cron-expression', required=True, help=u"""Schedule cron expression""")
+@cli_util.option('--description', help=u"""A short description of the schedule.""")
+@cli_util.option('--log-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trigger-time-start', type=custom_types.CLI_DATETIME, help=u"""The schedule starting date time, if null, System set the time when schedule is created. Format is defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--trigger-time-end', type=custom_types.CLI_DATETIME, help=u"""The schedule end date time, if null, the schedule will never expire. Format is defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'action': {'module': 'data_science', 'class': 'ScheduleAction'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'action': {'module': 'data_science', 'class': 'ScheduleAction'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def create_schedule_schedule_cron_trigger(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, project_id, compartment_id, action, trigger_cron_expression, description, log_details, freeform_tags, defined_tags, trigger_time_start, trigger_time_end):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['trigger'] = {}
+    _details['displayName'] = display_name
+    _details['projectId'] = project_id
+    _details['compartmentId'] = compartment_id
+    _details['action'] = cli_util.parse_json_parameter("action", action)
+    _details['trigger']['cronExpression'] = trigger_cron_expression
+
+    if description is not None:
+        _details['description'] = description
+
+    if log_details is not None:
+        _details['logDetails'] = cli_util.parse_json_parameter("log_details", log_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if trigger_time_start is not None:
+        _details['trigger']['timeStart'] = trigger_time_start
+
+    if trigger_time_end is not None:
+        _details['trigger']['timeEnd'] = trigger_time_end
+
+    _details['trigger']['triggerType'] = 'CRON'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_schedule(
+        create_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@schedule_group.command(name=cli_util.override('data_science.create_schedule_schedule_http_action.command_name', 'create-schedule-schedule-http-action'), help=u"""Creates a new Schedule. \n[Command Reference](createSchedule)""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name. Avoid entering confidential information.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate the schedule with.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the schedule.""")
+@cli_util.option('--trigger', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--action-action-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A short description of the schedule.""")
+@cli_util.option('--log-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'trigger': {'module': 'data_science', 'class': 'ScheduleTrigger'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'action-action-details': {'module': 'data_science', 'class': 'ScheduleHttpActionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'trigger': {'module': 'data_science', 'class': 'ScheduleTrigger'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'action-action-details': {'module': 'data_science', 'class': 'ScheduleHttpActionDetails'}}, output_type={'module': 'data_science', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def create_schedule_schedule_http_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, project_id, compartment_id, trigger, action_action_details, description, log_details, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['action'] = {}
+    _details['displayName'] = display_name
+    _details['projectId'] = project_id
+    _details['compartmentId'] = compartment_id
+    _details['trigger'] = cli_util.parse_json_parameter("trigger", trigger)
+    _details['action']['actionDetails'] = cli_util.parse_json_parameter("action_action_details", action_action_details)
+
+    if description is not None:
+        _details['description'] = description
+
+    if log_details is not None:
+        _details['logDetails'] = cli_util.parse_json_parameter("log_details", log_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['action']['actionType'] = 'HTTP'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_schedule(
+        create_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @pipeline_group.command(name=cli_util.override('data_science.create_step_artifact.command_name', 'create-step-artifact'), help=u"""Upload the artifact for a step in the pipeline. \n[Command Reference](createStepArtifact)""")
 @cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline.""")
 @cli_util.option('--step-name', required=True, help=u"""Unique Step identifier in a pipeline.""")
@@ -2697,6 +3254,61 @@ def deactivate_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.deactivate_notebook_session(
         notebook_session_id=notebook_session_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@schedule_group.command(name=cli_util.override('data_science.deactivate_schedule.command_name', 'deactivate'), help=u"""Deactivate schedule. \n[Command Reference](deactivateSchedule)""")
+@cli_util.option('--schedule-id', required=True, help=u"""unique Schedule identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def deactivate_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, if_match):
+
+    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.deactivate_schedule(
+        schedule_id=schedule_id,
         **kwargs
     )
     if wait_for_state:
@@ -3328,6 +3940,62 @@ def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
+@schedule_group.command(name=cli_util.override('data_science.delete_schedule.command_name', 'delete'), help=u"""Deletes a Schedule resource by identifier \n[Command Reference](deleteSchedule)""")
+@cli_util.option('--schedule-id', required=True, help=u"""unique Schedule identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, if_match):
+
+    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.delete_schedule(
+        schedule_id=schedule_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @model_group.command(name=cli_util.override('data_science.export_model_artifact.command_name', 'export-model-artifact'), help=u"""Export model artifact from source to the service bucket \n[Command Reference](exportModelArtifact)""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
 @cli_util.option('--artifact-export-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3805,6 +4473,28 @@ def get_project(ctx, from_json, project_id):
     cli_util.render_response(result, ctx)
 
 
+@schedule_group.command(name=cli_util.override('data_science.get_schedule.command_name', 'get'), help=u"""Gets a Schedule by identifier \n[Command Reference](getSchedule)""")
+@cli_util.option('--schedule-id', required=True, help=u"""unique Schedule identifier""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'Schedule'})
+@cli_util.wrap_exceptions
+def get_schedule(ctx, from_json, schedule_id):
+
+    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.get_schedule(
+        schedule_id=schedule_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @pipeline_group.command(name=cli_util.override('data_science.get_step_artifact_content.command_name', 'get-step-artifact-content'), help=u"""Download the artifact for a step in the pipeline. \n[Command Reference](getStepArtifactContent)""")
 @cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline.""")
 @cli_util.option('--step-name', required=True, help=u"""Unique Step identifier in a pipeline.""")
@@ -4087,6 +4777,75 @@ def import_model_artifact_artifact_import_details_object_storage(ctx, from_json,
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@container_group.command(name=cli_util.override('data_science.list_containers.command_name', 'list'), help=u"""List containers. \n[Command Reference](listContainers)""")
+@cli_util.option('--is-latest', type=click.BOOL, help=u"""if true, this returns latest version of container.""")
+@cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
+@cli_util.option('--container-name', help=u"""<b>Filter</b> results by the container name.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help=u"""<b>Filter</b> results by the specified lifecycle state. Must be a valid   state for the resource type.""")
+@cli_util.option('--target-workload', type=custom_types.CliCaseInsensitiveChoice(["MODEL_DEPLOYMENT", "JOB_RUN"]), help=u"""<b>Filter</b> results by the target workload.""")
+@cli_util.option('--usage-query-param', type=custom_types.CliCaseInsensitiveChoice(["INFERENCE", "FINE_TUNE", "EVALUATION", "BATCH_INFERENCE", "OTHER"]), help=u"""<b>Filter</b> results by the usage.""")
+@cli_util.option('--tag-query-param', help=u"""<b>Filter</b> results by the container version tag.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+See [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[ContainerSummary]'})
+@cli_util.wrap_exceptions
+def list_containers(ctx, from_json, all_pages, page_size, is_latest, display_name, container_name, lifecycle_state, target_workload, usage_query_param, tag_query_param, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if is_latest is not None:
+        kwargs['is_latest'] = is_latest
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if container_name is not None:
+        kwargs['container_name'] = container_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if target_workload is not None:
+        kwargs['target_workload'] = target_workload
+    if usage_query_param is not None:
+        kwargs['usage_query_param'] = usage_query_param
+    if tag_query_param is not None:
+        kwargs['tag_query_param'] = tag_query_param
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_containers,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_containers,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_containers(
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -5028,6 +5787,76 @@ def list_projects(ctx, from_json, all_pages, page_size, compartment_id, id, disp
     cli_util.render_response(result, ctx)
 
 
+@schedule_group.command(name=cli_util.override('data_science.list_schedules.command_name', 'list'), help=u"""Returns a list of Schedules. \n[Command Reference](listSchedules)""")
+@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
+@cli_util.option('--id', help=u"""unique Schedule identifier""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+See [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[ScheduleSummary]'})
+@cli_util.wrap_exceptions
+def list_schedules(ctx, from_json, all_pages, page_size, compartment_id, project_id, lifecycle_state, display_name, id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if project_id is not None:
+        kwargs['project_id'] = project_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_schedules,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_schedules,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_schedules(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @work_request_group.command(name=cli_util.override('data_science.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Lists work request errors for the specified work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
@@ -5141,7 +5970,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @work_request_group.command(name=cli_util.override('data_science.list_work_requests.command_name', 'list'), help=u"""Lists work requests in the specified compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
-@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODELVERSIONSET_DELETE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE", "PIPELINE_CREATE", "PIPELINE_DELETE", "PIPELINE_RUN_CREATE", "PIPELINE_RUN_CANCEL", "PIPELINE_RUN_DELETE", "PRIVATE_ENDPOINT_CREATE", "PRIVATE_ENDPOINT_DELETE", "PRIVATE_ENDPOINT_MOVE", "PRIVATE_ENDPOINT_UPDATE", "RESTORE_ARCHIVED_MODEL"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODELVERSIONSET_DELETE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE", "PIPELINE_CREATE", "PIPELINE_DELETE", "PIPELINE_RUN_CREATE", "PIPELINE_RUN_CANCEL", "PIPELINE_RUN_DELETE", "PRIVATE_ENDPOINT_CREATE", "PRIVATE_ENDPOINT_DELETE", "PRIVATE_ENDPOINT_MOVE", "PRIVATE_ENDPOINT_UPDATE", "SCHEDULE_CREATE", "SCHEDULE_UPDATE", "SCHEDULE_DELETE", "SCHEDULE_MOVE", "SCHEDULE_ACTIVATE", "SCHEDULE_DEACTIVATE", "RESTORE_ARCHIVED_MODEL"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""<b>Filter</b> results by work request status.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
@@ -6535,4 +7364,498 @@ def update_project(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@schedule_group.command(name=cli_util.override('data_science.update_schedule.command_name', 'update'), help=u"""Updates the Schedule \n[Command Reference](updateSchedule)""")
+@cli_util.option('--schedule-id', required=True, help=u"""unique Schedule identifier""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""A short description of the schedule.""")
+@cli_util.option('--trigger', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--action', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--log-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'trigger': {'module': 'data_science', 'class': 'ScheduleTrigger'}, 'action': {'module': 'data_science', 'class': 'ScheduleAction'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'trigger': {'module': 'data_science', 'class': 'ScheduleTrigger'}, 'action': {'module': 'data_science', 'class': 'ScheduleAction'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, display_name, description, trigger, action, log_details, freeform_tags, defined_tags, if_match):
+
+    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
+    if not force:
+        if trigger or action or log_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to trigger and action and log-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if trigger is not None:
+        _details['trigger'] = cli_util.parse_json_parameter("trigger", trigger)
+
+    if action is not None:
+        _details['action'] = cli_util.parse_json_parameter("action", action)
+
+    if log_details is not None:
+        _details['logDetails'] = cli_util.parse_json_parameter("log_details", log_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_schedule(
+        schedule_id=schedule_id,
+        update_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@schedule_group.command(name=cli_util.override('data_science.update_schedule_schedule_i_cal_trigger.command_name', 'update-schedule-schedule-i-cal-trigger'), help=u"""Updates the Schedule \n[Command Reference](updateSchedule)""")
+@cli_util.option('--schedule-id', required=True, help=u"""unique Schedule identifier""")
+@cli_util.option('--trigger-recurrence', required=True, help=u"""This recurrence field conforms to RFC-5545 formatting""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""A short description of the schedule.""")
+@cli_util.option('--action', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--log-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--trigger-time-start', type=custom_types.CLI_DATETIME, help=u"""The schedule starting date time, if null, System set the time when schedule is created. Format is defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--trigger-time-end', type=custom_types.CLI_DATETIME, help=u"""The schedule end date time, if null, the schedule will never expire. Format is defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'action': {'module': 'data_science', 'class': 'ScheduleAction'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'action': {'module': 'data_science', 'class': 'ScheduleAction'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_schedule_schedule_i_cal_trigger(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, trigger_recurrence, display_name, description, action, log_details, freeform_tags, defined_tags, if_match, trigger_time_start, trigger_time_end):
+
+    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
+    if not force:
+        if action or log_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to action and log-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['trigger'] = {}
+    _details['trigger']['recurrence'] = trigger_recurrence
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if action is not None:
+        _details['action'] = cli_util.parse_json_parameter("action", action)
+
+    if log_details is not None:
+        _details['logDetails'] = cli_util.parse_json_parameter("log_details", log_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if trigger_time_start is not None:
+        _details['trigger']['timeStart'] = trigger_time_start
+
+    if trigger_time_end is not None:
+        _details['trigger']['timeEnd'] = trigger_time_end
+
+    _details['trigger']['triggerType'] = 'ICAL'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_schedule(
+        schedule_id=schedule_id,
+        update_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@schedule_group.command(name=cli_util.override('data_science.update_schedule_schedule_interval_trigger.command_name', 'update-schedule-schedule-interval-trigger'), help=u"""Updates the Schedule \n[Command Reference](updateSchedule)""")
+@cli_util.option('--schedule-id', required=True, help=u"""unique Schedule identifier""")
+@cli_util.option('--trigger-frequency', required=True, type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY"]), help=u"""The type of frequency""")
+@cli_util.option('--trigger-interval', required=True, type=click.INT, help=u"""The interval of frequency.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""A short description of the schedule.""")
+@cli_util.option('--action', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--log-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--trigger-time-start', type=custom_types.CLI_DATETIME, help=u"""The schedule starting date time, if null, System set the time when schedule is created. Format is defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--trigger-time-end', type=custom_types.CLI_DATETIME, help=u"""The schedule end date time, if null, the schedule will never expire. Format is defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--trigger-is-random-start-time', type=click.BOOL, help=u"""when true and timeStart is null, system generate a random start time between now and now + interval; isRandomStartTime can be true if timeStart is null.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'action': {'module': 'data_science', 'class': 'ScheduleAction'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'action': {'module': 'data_science', 'class': 'ScheduleAction'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_schedule_schedule_interval_trigger(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, trigger_frequency, trigger_interval, display_name, description, action, log_details, freeform_tags, defined_tags, if_match, trigger_time_start, trigger_time_end, trigger_is_random_start_time):
+
+    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
+    if not force:
+        if action or log_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to action and log-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['trigger'] = {}
+    _details['trigger']['frequency'] = trigger_frequency
+    _details['trigger']['interval'] = trigger_interval
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if action is not None:
+        _details['action'] = cli_util.parse_json_parameter("action", action)
+
+    if log_details is not None:
+        _details['logDetails'] = cli_util.parse_json_parameter("log_details", log_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if trigger_time_start is not None:
+        _details['trigger']['timeStart'] = trigger_time_start
+
+    if trigger_time_end is not None:
+        _details['trigger']['timeEnd'] = trigger_time_end
+
+    if trigger_is_random_start_time is not None:
+        _details['trigger']['isRandomStartTime'] = trigger_is_random_start_time
+
+    _details['trigger']['triggerType'] = 'INTERVAL'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_schedule(
+        schedule_id=schedule_id,
+        update_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@schedule_group.command(name=cli_util.override('data_science.update_schedule_schedule_cron_trigger.command_name', 'update-schedule-schedule-cron-trigger'), help=u"""Updates the Schedule \n[Command Reference](updateSchedule)""")
+@cli_util.option('--schedule-id', required=True, help=u"""unique Schedule identifier""")
+@cli_util.option('--trigger-cron-expression', required=True, help=u"""Schedule cron expression""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""A short description of the schedule.""")
+@cli_util.option('--action', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--log-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--trigger-time-start', type=custom_types.CLI_DATETIME, help=u"""The schedule starting date time, if null, System set the time when schedule is created. Format is defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--trigger-time-end', type=custom_types.CLI_DATETIME, help=u"""The schedule end date time, if null, the schedule will never expire. Format is defined by [RFC3339].""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'action': {'module': 'data_science', 'class': 'ScheduleAction'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'action': {'module': 'data_science', 'class': 'ScheduleAction'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_schedule_schedule_cron_trigger(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, trigger_cron_expression, display_name, description, action, log_details, freeform_tags, defined_tags, if_match, trigger_time_start, trigger_time_end):
+
+    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
+    if not force:
+        if action or log_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to action and log-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['trigger'] = {}
+    _details['trigger']['cronExpression'] = trigger_cron_expression
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if action is not None:
+        _details['action'] = cli_util.parse_json_parameter("action", action)
+
+    if log_details is not None:
+        _details['logDetails'] = cli_util.parse_json_parameter("log_details", log_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if trigger_time_start is not None:
+        _details['trigger']['timeStart'] = trigger_time_start
+
+    if trigger_time_end is not None:
+        _details['trigger']['timeEnd'] = trigger_time_end
+
+    _details['trigger']['triggerType'] = 'CRON'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_schedule(
+        schedule_id=schedule_id,
+        update_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@schedule_group.command(name=cli_util.override('data_science.update_schedule_schedule_http_action.command_name', 'update-schedule-schedule-http-action'), help=u"""Updates the Schedule \n[Command Reference](updateSchedule)""")
+@cli_util.option('--schedule-id', required=True, help=u"""unique Schedule identifier""")
+@cli_util.option('--action-action-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""A short description of the schedule.""")
+@cli_util.option('--trigger', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--log-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'trigger': {'module': 'data_science', 'class': 'ScheduleTrigger'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'action-action-details': {'module': 'data_science', 'class': 'ScheduleHttpActionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'trigger': {'module': 'data_science', 'class': 'ScheduleTrigger'}, 'log-details': {'module': 'data_science', 'class': 'ScheduleLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'action-action-details': {'module': 'data_science', 'class': 'ScheduleHttpActionDetails'}})
+@cli_util.wrap_exceptions
+def update_schedule_schedule_http_action(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, action_action_details, display_name, description, trigger, log_details, freeform_tags, defined_tags, if_match):
+
+    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
+    if not force:
+        if trigger or log_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to trigger and log-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['action'] = {}
+    _details['action']['actionDetails'] = cli_util.parse_json_parameter("action_action_details", action_action_details)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if trigger is not None:
+        _details['trigger'] = cli_util.parse_json_parameter("trigger", trigger)
+
+    if log_details is not None:
+        _details['logDetails'] = cli_util.parse_json_parameter("log_details", log_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['action']['actionType'] = 'HTTP'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_schedule(
+        schedule_id=schedule_id,
+        update_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)

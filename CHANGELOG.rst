@@ -6,6 +6,79 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.51.6 - 2025-02-04
+--------------------
+Added
+~~~~~
+* Data Science Service
+
+  * Support for Data Science Schedule
+
+    * ``oci data-science schedule``
+
+  * Support for OCI Data Science List Service Managed Container Endpoint 
+  
+    * ``oci data-science list``
+
+* Generative AI inference service 
+
+  * Support for VLLM tool use 
+
+    * ``oci generative-ai-inference chat-result chat-cohere-chat-request``
+    * ``oci generative-ai-inference chat-result chat-generic-chat-request``
+    * ``oci generative-ai-inference rerank-text-result rerank-text``
+    * ``oci generative-ai-inference rerank-text-result rerank-text-dedicated-serving-mode``
+    * ``oci generative-ai-inference rerank-text-result rerank-text-on-demand-serving-mode``
+
+   * Support for Cohere Embed V3 with image
+
+    *  ``oci generative-ai-inference embed-text-result embed-text``
+
+* Data Safe service
+    
+  * Support for new Referential Relation APIs
+
+    * ``oci data-safe referential-relation create``
+    * ``oci data-safe referential-relation delete``
+    * ``oci data-safe referential-relation get``
+    * ``oci data-safe referential-relation list``
+    * ``oci data-safe masking-policy-referential-relation-summary list-masking-policy-referential-relations``
+
+  * Support for Export Sensitive Types
+
+    * ``oci data-safe sensitive-type bulk-create``
+    * ``oci data-safe sensitive-types-export change-compartment``
+    * ``oci data-safe sensitive-types-export create``
+    * ``oci data-safe sensitive-types-export delete``
+    * ``oci data-safe sensitive-types-export download``
+    * ``oci data-safe sensitive-types-export get``
+    * ``oci data-safe sensitive-types-export update``
+    * ``oci data-safe sensitive-types-export-collection list-sensitive-types-exports``
+
+  * Support for ListPasswordExpiryDateAnalytics
+
+    * ``oci data-safe user-assessment list-password-expiry-date-analytics`` 
+
+* MySQL Database Service
+
+  * Support for new optional DB system parameters (database mode, access mode, read endpoint) in the Heatwave sevice
+
+    * ``oci mysql db-system create --database-mode --access-mode --read-endpoint``
+    * ``oci mysql db-system update --database-mode --access-mode --read-endpoint``
+    * ``oci mysql db-system clone --database-mode --access-mode --read-endpoint``
+    * ``oci mysql db-system import --database-mode --access-mode --read-endpoint``
+
+* Security Enhancement: Improved security for API key management by showing warning to encourage addition of label on Private-Key.
+
+Changed
+~~~~~~~
+* Data Safe service
+
+  * Modified User Assessment List users / userAnalytics
+
+    * ``oci data-safe user-assessment list-user-analytics``
+    * ``oci data-safe user-assessment list-users``
+
 3.51.5 - 2025-01-28
 --------------------
 Added
