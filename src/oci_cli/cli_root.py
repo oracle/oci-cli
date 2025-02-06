@@ -581,6 +581,8 @@ def validate_label_private_key(file_path):
     with open(file_path, "r") as file:
         content = file.read()
 
+    # remove trailing whitespaces
+    content = content.rstrip()
     return content.endswith(PRIVATE_KEY_LABEL)
 
 
