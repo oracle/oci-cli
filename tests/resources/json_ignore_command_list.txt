@@ -493,3 +493,5 @@ identity-domains, rule, search
 goldengate, deployment, update
 network, vnic, assign-ipv6
 db, database, create-standby-database
+stack-monitoring, resource-type, create-system-format-resource-type
+stack-monitoring, resource-type, update-system-format-resource-type

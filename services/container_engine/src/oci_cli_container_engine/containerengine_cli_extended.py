@@ -136,6 +136,7 @@ containerengine_cli.cluster_group.add_command(generate_token)
  security groups (NSGs) to apply to the cluster endpoint. You must also specify --endpoint-subnet-id.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--endpoint-public-ip-enabled', type=click.BOOL, help="""Whether the cluster should be assigned a public\
  IP address. Defaults to false. If set to true on a private subnet, the cluster provisioning will fail. You must also specify --endpoint-subnet-id.""")
+@cli_util.option('--ip-families', type=custom_types.CLI_COMPLEX_TYPE, help="""A list of IP families for the cluster. Example: '[\"IPv4\", \"IPv6\"]'""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option(
     {'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
      'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
@@ -149,7 +150,8 @@ containerengine_cli.cluster_group.add_command(generate_token)
      'governance-policy-config': {'module': 'container_engine', 'class': 'CreateGovernancePolicyConfigDetails'},
      'cluster-pod-network-options': {'module': 'container_engine', 'class': 'list[ClusterPodNetworkOptionDetails]'},
      'oidc-signing-algorithms': {'module': 'container_engine', 'class': 'list[string]'},
-     'oidc-required-claims': {'module': 'container_engine', 'class': 'list[KeyValue]'}})
+     'oidc-required-claims': {'module': 'container_engine', 'class': 'list[KeyValue]'},
+     'ip-families': {'module': 'container_engine', 'class': 'list[string]'}})
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
     input_params_to_complex_types={'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
@@ -164,7 +166,8 @@ containerengine_cli.cluster_group.add_command(generate_token)
                                    'governance-policy-config': {'module': 'container_engine', 'class': 'CreateGovernancePolicyConfigDetails'},
                                    'cluster-pod-network-options': {'module': 'container_engine', 'class': 'list[ClusterPodNetworkOptionDetails]'},
                                    'oidc-signing-algorithms': {'module': 'container_engine', 'class': 'list[string]'},
-                                   'oidc-required-claims': {'module': 'container_engine', 'class': 'list[KeyValue]'}})
+                                   'oidc-required-claims': {'module': 'container_engine', 'class': 'list[KeyValue]'},
+                                   'ip-families': {'module': 'container_engine', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def create_cluster(ctx, **kwargs):
     kwargs['options'] = {}
@@ -172,6 +175,11 @@ def create_cluster(ctx, **kwargs):
         kwargs['options'] = {'serviceLbSubnetIds': cli_util.parse_json_parameter("service_lb_subnet_ids",
                                                                                  kwargs['service_lb_subnet_ids'])}
     kwargs.pop('service_lb_subnet_ids', None)
+
+    if 'ip_families' in kwargs and kwargs['ip_families'] is not None:
+        kwargs['options'] = {'ipFamilies': cli_util.parse_json_parameter("ip_families",
+                                                                         kwargs['ip_families'])}
+    kwargs.pop('ip_families', None)
 
     if 'dashboard_enabled' in kwargs and kwargs['dashboard_enabled'] is not None:
         kwargs['options']['addOns'] = {}

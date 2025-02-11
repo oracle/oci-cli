@@ -329,7 +329,7 @@ def get_baselineable_metric_extended(ctx, **kwargs):
     ctx.invoke(stackmonitoring_cli.get_baselineable_metric, **kwargs)
 
 
-# oci stack-monitoring monitored-resource-task create-monitored-resource-task-import-oci-telemetry-resources-task-details -> oci stack-monitoring monitored- import-telemetry-resources
+# oci stack-monitoring monitored-resource-task create-monitored-resource-task-import-oci-telemetry-resources-task-details -> oci stack-monitoring monitored-resource-task import-telemetry-resources
 cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.monitored_resource_task_group, stackmonitoring_cli.create_monitored_resource_task_import_oci_telemetry_resources_task_details, "import-telemetry-resources")
 
 
@@ -521,8 +521,14 @@ def update_monitored_resource_type_extended(ctx, **kwargs):
     ctx.invoke(stackmonitoring_cli.update_monitored_resource_type, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(stackmonitoring_cli.create_monitored_resource_type_system_format_resource_type_metadata_details, params_to_exclude=['metadata_agent_properties', 'metadata_required_properties', 'metadata_unique_property_sets', 'metadata_valid_properties_for_create', 'metadata_valid_properties_for_update', 'metadata_valid_property_values'])
+@cli_util.copy_params_from_generated_command(stackmonitoring_cli.create_monitored_resource_type_system_format_resource_type_metadata_details, params_to_exclude=['metadata_agent_properties', 'metadata_required_properties', 'metadata_unique_property_sets', 'metadata_valid_properties_for_create', 'metadata_valid_properties_for_update', 'metadata_valid_property_values', 'metadata_valid_sub_resource_types'])
 @stackmonitoring_cli.monitored_resource_type_group.command(name=stackmonitoring_cli.create_monitored_resource_type_system_format_resource_type_metadata_details.name, help=stackmonitoring_cli.create_monitored_resource_type_system_format_resource_type_metadata_details.help)
+@cli_util.option('--sub-resource-types', type=custom_types.CLI_COMPLEX_TYPE, help="""List of valid sub-resource types for a composite resource type. The sub-resource types will be obtained from the valid association pairs corresponding to the composite resource types. It will be empty for non composite resource types
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--agent-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of properties needed by the agent for monitoring the resource. Valid only if resource type is OCI management agent based. When specified, these properties are passed to the management agent during resource create or update.
 This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
 the file://path/to/file syntax.
@@ -566,6 +572,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @cli_util.wrap_exceptions
 def create_monitored_resource_type_system_format_resource_type_metadata_details_extended(ctx, **kwargs):
 
+    if 'sub_resource_types' in kwargs:
+        kwargs['metadata_valid_sub_resource_types'] = kwargs['sub_resource_types']
+        kwargs.pop('sub_resource_types')
+
     if 'agent_properties' in kwargs:
         kwargs['metadata_agent_properties'] = kwargs['agent_properties']
         kwargs.pop('agent_properties')
@@ -593,8 +603,14 @@ def create_monitored_resource_type_system_format_resource_type_metadata_details_
     ctx.invoke(stackmonitoring_cli.create_monitored_resource_type_system_format_resource_type_metadata_details, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(stackmonitoring_cli.update_monitored_resource_type_system_format_resource_type_metadata_details, params_to_exclude=['monitored_resource_type_id', 'metadata_agent_properties', 'metadata_required_properties', 'metadata_unique_property_sets', 'metadata_valid_properties_for_create', 'metadata_valid_properties_for_update', 'metadata_valid_property_values'])
+@cli_util.copy_params_from_generated_command(stackmonitoring_cli.update_monitored_resource_type_system_format_resource_type_metadata_details, params_to_exclude=['monitored_resource_type_id', 'metadata_agent_properties', 'metadata_required_properties', 'metadata_unique_property_sets', 'metadata_valid_properties_for_create', 'metadata_valid_properties_for_update', 'metadata_valid_property_values', 'metadata_valid_sub_resource_types'])
 @stackmonitoring_cli.monitored_resource_type_group.command(name=stackmonitoring_cli.update_monitored_resource_type_system_format_resource_type_metadata_details.name, help=stackmonitoring_cli.update_monitored_resource_type_system_format_resource_type_metadata_details.help)
+@cli_util.option('--sub-resource-types', type=custom_types.CLI_COMPLEX_TYPE, help="""List of valid sub-resource types for a composite resource type. The sub-resource types will be obtained from the valid association pairs corresponding to the composite resource types. It will be empty for non composite resource types
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
 @cli_util.option('--resource-type-id', required=True, help=u"""The [OCID] of monitored resource type. [required]""")
 @cli_util.option('--agent-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of properties needed by the agent for monitoring the resource. Valid only if resource type is OCI management agent based. When specified, these properties are passed to the management agent during resource create or update.
 This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
@@ -638,6 +654,10 @@ in a file, modifying it as needed and then passing it back in via the file:// sy
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'required-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'agent-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'valid-properties-for-create': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'valid-properties-for-update': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'unique-property-sets': {'module': 'stack_monitoring', 'class': 'list[UniquePropertySet]'}, 'valid-property-values': {'module': 'stack_monitoring', 'class': 'dict(str, list[string])'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceType'})
 @cli_util.wrap_exceptions
 def update_monitored_resource_type_system_format_resource_type_metadata_details_extended(ctx, **kwargs):
+
+    if 'sub_resource_types' in kwargs:
+        kwargs['metadata_valid_sub_resource_types'] = kwargs['sub_resource_types']
+        kwargs.pop('sub_resource_types')
 
     if 'resource_type_id' in kwargs:
         kwargs['monitored_resource_type_id'] = kwargs['resource_type_id']
@@ -1332,3 +1352,94 @@ def update_metric_extension_http_update_query_properties_extended(ctx, **kwargs)
         kwargs.pop('url')
 
     ctx.invoke(stackmonitoring_cli.update_metric_extension_http_update_query_properties, **kwargs)
+
+
+# oci stack-monitoring defined-monitoring-template-summary -> oci stack-monitoring defined-mt
+cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.stack_monitoring_root_group, stackmonitoring_cli.defined_monitoring_template_summary_group, "defined-mt")
+
+
+# oci stack-monitoring defined-monitoring-template-summary list-defined-monitoring-templates -> oci stack-monitoring defined-monitoring-template-summary list
+cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.defined_monitoring_template_summary_group, stackmonitoring_cli.list_defined_monitoring_templates, "list")
+
+
+# oci stack-monitoring metric-extension request-summarized-metric-extensions-metrics -> oci stack-monitoring metric-extension summarize-metrics
+cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.metric_extension_group, stackmonitoring_cli.request_summarized_metric_extensions_metrics, "summarize-metrics")
+
+
+# oci stack-monitoring metric-extension request-summarized-metric-extensions-resources -> oci stack-monitoring metric-extension summarize-resources
+cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.metric_extension_group, stackmonitoring_cli.request_summarized_metric_extensions_resources, "summarize-resources")
+
+
+@cli_util.copy_params_from_generated_command(stackmonitoring_cli.request_summarized_metric_extensions_metrics, params_to_exclude=['contains_metric_with_name', 'metric_extension_id'])
+@stackmonitoring_cli.metric_extension_group.command(name=stackmonitoring_cli.request_summarized_metric_extensions_metrics.name, help=stackmonitoring_cli.request_summarized_metric_extensions_metrics.help)
+@cli_util.option('--contains-metric-name', help=u"""Filter for metric extension resources which contain the given metric name""")
+@cli_util.option('--metric-ext-id', help=u"""The [OCID] of Metric Extension resource""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'stack_monitoring', 'class': 'MetricExtensionMetricAggregationCollection'})
+@cli_util.wrap_exceptions
+def request_summarized_metric_extensions_metrics_extended(ctx, **kwargs):
+
+    if 'contains_metric_name' in kwargs:
+        kwargs['contains_metric_with_name'] = kwargs['contains_metric_name']
+        kwargs.pop('contains_metric_name')
+
+    if 'metric_ext_id' in kwargs:
+        kwargs['metric_extension_id'] = kwargs['metric_ext_id']
+        kwargs.pop('metric_ext_id')
+
+    ctx.invoke(stackmonitoring_cli.request_summarized_metric_extensions_metrics, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(stackmonitoring_cli.request_summarized_metric_extensions_resources, params_to_exclude=['metric_extension_id'])
+@stackmonitoring_cli.metric_extension_group.command(name=stackmonitoring_cli.request_summarized_metric_extensions_resources.name, help=stackmonitoring_cli.request_summarized_metric_extensions_resources.help)
+@cli_util.option('--metric-ext-id', help=u"""The [OCID] of Metric Extension resource""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'stack_monitoring', 'class': 'MetricExtensionResourceAggregationCollection'})
+@cli_util.wrap_exceptions
+def request_summarized_metric_extensions_resources_extended(ctx, **kwargs):
+
+    if 'metric_ext_id' in kwargs:
+        kwargs['metric_extension_id'] = kwargs['metric_ext_id']
+        kwargs.pop('metric_ext_id')
+
+    ctx.invoke(stackmonitoring_cli.request_summarized_metric_extensions_resources, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(stackmonitoring_cli.create_monitoring_template, params_to_exclude=['repeat_notification_duration', 'is_split_notification_enabled'])
+@stackmonitoring_cli.monitoring_template_group.command(name=stackmonitoring_cli.create_monitoring_template.name, help=stackmonitoring_cli.create_monitoring_template.help)
+@cli_util.option('--repeat-notif-duration', help=u"""The frequency for re-submitting alarm notifications, if the alarm keeps firing without interruption. Format defined by ISO 8601. For example, PT4H indicates four hours. Minimum- PT1M. Maximum - P30D.""")
+@cli_util.option('--split-notif-enabled', type=click.BOOL, help=u"""Whether the alarm notification is enabled or disabled, it will be Enabled by default.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destinations': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'members': {'module': 'stack_monitoring', 'class': 'list[MemberReference]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoringTemplate'})
+@cli_util.wrap_exceptions
+def create_monitoring_template_extended(ctx, **kwargs):
+
+    if 'repeat_notif_duration' in kwargs:
+        kwargs['repeat_notification_duration'] = kwargs['repeat_notif_duration']
+        kwargs.pop('repeat_notif_duration')
+
+    if 'split_notif_enabled' in kwargs:
+        kwargs['is_split_notification_enabled'] = kwargs['split_notif_enabled']
+        kwargs.pop('split_notif_enabled')
+
+    ctx.invoke(stackmonitoring_cli.create_monitoring_template, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(stackmonitoring_cli.update_monitoring_template, params_to_exclude=['repeat_notification_duration', 'is_split_notification_enabled'])
+@stackmonitoring_cli.monitoring_template_group.command(name=stackmonitoring_cli.update_monitoring_template.name, help=stackmonitoring_cli.update_monitoring_template.help)
+@cli_util.option('--repeat-notif-duration', help=u"""The frequency for re-submitting alarm notifications, if the alarm keeps firing without interruption. Format defined by ISO 8601. For example, PT4H indicates four hours. Minimum- PT1M. Maximum - P30D.""")
+@cli_util.option('--split-notif-enabled', type=click.BOOL, help=u"""Whether the alarm notification is enabled or disabled, it will be Enabled by default.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destinations': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'members': {'module': 'stack_monitoring', 'class': 'list[MemberReference]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoringTemplate'})
+@cli_util.wrap_exceptions
+def update_monitoring_template_extended(ctx, **kwargs):
+
+    if 'repeat_notif_duration' in kwargs:
+        kwargs['repeat_notification_duration'] = kwargs['repeat_notif_duration']
+        kwargs.pop('repeat_notif_duration')
+
+    if 'split_notif_enabled' in kwargs:
+        kwargs['is_split_notification_enabled'] = kwargs['split_notif_enabled']
+        kwargs.pop('split_notif_enabled')
+
+    ctx.invoke(stackmonitoring_cli.update_monitoring_template, **kwargs)

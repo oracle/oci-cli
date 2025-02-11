@@ -6,6 +6,64 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.51.7 - 2025-02-11
+--------------------
+Added
+~~~~~
+* Database Service
+
+  * Support for new backup recovery parameters during autonomous-database creation in the Database Service
+
+    * ``oci db autonomous-database create-from-backup-id --clone-table-space-list``
+    * ``oci db autonomous-database create-from-backup-timestamp --clone-table-space-list``
+
+  * Support for IPv6 address in BaseDB service
+
+    * ``oci db system launch --private-ip-v6``
+    * ``oci db system launch-from-backup --private-ip-v6``
+    * ``oci db system launch-from-database --private-ip-v6``
+    * ``oci db system launch-from-db-system --private-ip-v6``
+
+* Stack Monitoring Service
+
+  * Support for Monitoring Templates
+
+    * ``oci stack-monitoring monitoring-template``
+
+  * Support for Alarm Condition
+
+    * ``oci stack-monitoring alarm-condition``
+
+  * Support for new optional parameters in below commands
+
+    * ``oci stack-monitoring resource-type create-system-format-resource-type``
+    * ``oci stack-monitoring resource-type update-system-format-resource-type``
+
+* OKE Control Plane Service
+
+  * Support for ipv6 cluster creation
+
+    * ``oci ce cluster create --ip-families``
+
+* GoldenGate Service
+
+  * Support for creating/updating new connection types
+
+    * ``oci goldengate connection create-databricks-connection``
+    * ``oci goldengate connection update-databricks-connection``
+    * ``oci goldengate connection create-google-pub-sub-connection``
+    * ``oci goldengate connection update-google-pub-sub-connection``
+    * ``oci goldengate connection create-microsoft-fabric-connection``
+    * ``oci goldengate connection update-microsoft-fabric-connection``
+
+Fixed
+~~~~~
+* `Github Issue #905 <https://github.com/oracle/oci-cli/issues/905>`_ for OCI_API_KEY
+
+* `Github Issue #902 <https://github.com/oracle/oci-cli/issues/902>`_ for OCI_API_KEY
+
+* `Github Issue #900 <https://github.com/oracle/oci-cli/issues/900>`_ for SUPPRESS_LABEL_WARNING
+
 3.51.6 - 2025-02-04
 --------------------
 Added
