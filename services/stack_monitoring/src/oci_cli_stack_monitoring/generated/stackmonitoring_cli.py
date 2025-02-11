@@ -70,6 +70,18 @@ def monitored_resource_type_group():
     pass
 
 
+@click.command(cli_util.override('stack_monitoring.monitoring_template_group.command_name', 'monitoring-template'), cls=CommandGroupWithAlias, help="""Detailed information of the Monitoring Template""")
+@cli_util.help_option_group
+def monitoring_template_group():
+    pass
+
+
+@click.command(cli_util.override('stack_monitoring.defined_monitoring_template_summary_group.command_name', 'defined-monitoring-template-summary'), cls=CommandGroupWithAlias, help="""Summary information about defined Monitoring Template for specified resourceType.""")
+@cli_util.help_option_group
+def defined_monitoring_template_summary_group():
+    pass
+
+
 @click.command(cli_util.override('stack_monitoring.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""A description of workrequest status""")
 @cli_util.help_option_group
 def work_request_group():
@@ -85,6 +97,12 @@ def process_set_collection_group():
 @click.command(cli_util.override('stack_monitoring.monitored_resource_task_group.command_name', 'monitored-resource-task'), cls=CommandGroupWithAlias, help="""The request details for importing resources from Telemetry.""")
 @cli_util.help_option_group
 def monitored_resource_task_group():
+    pass
+
+
+@click.command(cli_util.override('stack_monitoring.alarm_condition_group.command_name', 'alarm-condition'), cls=CommandGroupWithAlias, help="""The information about template condition in the same monitoringTemplate in a compartment.""")
+@cli_util.help_option_group
+def alarm_condition_group():
     pass
 
 
@@ -134,15 +152,73 @@ stack_monitoring_root_group.add_command(work_request_summary_collection_group)
 stack_monitoring_root_group.add_command(baselineable_metric_group)
 stack_monitoring_root_group.add_command(maintenance_window_group)
 stack_monitoring_root_group.add_command(monitored_resource_type_group)
+stack_monitoring_root_group.add_command(monitoring_template_group)
+stack_monitoring_root_group.add_command(defined_monitoring_template_summary_group)
 stack_monitoring_root_group.add_command(work_request_group)
 stack_monitoring_root_group.add_command(process_set_collection_group)
 stack_monitoring_root_group.add_command(monitored_resource_task_group)
+stack_monitoring_root_group.add_command(alarm_condition_group)
 stack_monitoring_root_group.add_command(work_request_error_collection_group)
 stack_monitoring_root_group.add_command(discovery_job_group)
 stack_monitoring_root_group.add_command(config_collection_group)
 stack_monitoring_root_group.add_command(config_group)
 stack_monitoring_root_group.add_command(discovery_job_log_collection_group)
 stack_monitoring_root_group.add_command(work_request_log_entry_collection_group)
+
+
+@monitoring_template_group.command(name=cli_util.override('stack_monitoring.apply_monitoring_template.command_name', 'apply'), help=u"""Apply the Monitoring Template identified by the id \n[Command Reference](applyMonitoringTemplate)""")
+@cli_util.option('--monitoring-template-id', required=True, help=u"""The [OCID] of the monitoring template.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def apply_monitoring_template(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, monitoring_template_id, if_match):
+
+    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+        raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.apply_monitoring_template(
+        monitoring_template_id=monitoring_template_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
 
 
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.associate_monitored_resources.command_name', 'associate'), help=u"""Create an association between two monitored resources. Associations can be created between resources from different compartments as long they are in same tenancy. User should have required access in both the compartments. \n[Command Reference](associateMonitoredResources)""")
@@ -249,7 +325,7 @@ def change_metric_extension_compartment(ctx, from_json, metric_extension_id, com
 @cli_util.option('--monitored-resource-id', required=True, help=u"""The [OCID] of monitored resource.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -365,6 +441,80 @@ def change_process_set_compartment(ctx, from_json, process_set_id, compartment_i
         change_process_set_compartment_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@alarm_condition_group.command(name=cli_util.override('stack_monitoring.create_alarm_condition.command_name', 'create'), help=u"""Create a new alarm condition in same monitoringTemplate compartment. \n[Command Reference](createAlarmCondition)""")
+@cli_util.option('--namespace', required=True, help=u"""The stack monitoring service or application emitting the metric that is evaluated by the alarm.""")
+@cli_util.option('--resource-type', required=True, help=u"""The resource group OCID.""")
+@cli_util.option('--metric-name', required=True, help=u"""The metric name.""")
+@cli_util.option('--condition-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FIXED", "AVAILABILITY"]), help=u"""Type of defined monitoring template.""")
+@cli_util.option('--conditions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Monitoring template conditions.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--monitoring-template-id', required=True, help=u"""The [OCID] of the monitoring template.""")
+@cli_util.option('--composite-type', help=u"""The OCID of the composite resource type like EBS/PEOPLE_SOFT.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'conditions': {'module': 'stack_monitoring', 'class': 'list[Condition]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'conditions': {'module': 'stack_monitoring', 'class': 'list[Condition]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'AlarmCondition'})
+@cli_util.wrap_exceptions
+def create_alarm_condition(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace, resource_type, metric_name, condition_type, conditions, monitoring_template_id, composite_type, freeform_tags, defined_tags):
+
+    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+        raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['namespace'] = namespace
+    _details['resourceType'] = resource_type
+    _details['metricName'] = metric_name
+    _details['conditionType'] = condition_type
+    _details['conditions'] = cli_util.parse_json_parameter("conditions", conditions)
+
+    if composite_type is not None:
+        _details['compositeType'] = composite_type
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.create_alarm_condition(
+        monitoring_template_id=monitoring_template_id,
+        create_alarm_condition_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_alarm_condition') and callable(getattr(client, 'get_alarm_condition')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_alarm_condition(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -502,7 +652,7 @@ def create_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 For example, when a new Management Agent gets registered in a certain compartment, this Management Agent can potentially get promoted to a HOST resource. The configuration item will determine if HOST resources in the selected compartment will be discovered automatically. \n[Command Reference](createConfig)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment in which the configuration is created.""")
-@cli_util.option('--license', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION"]), help=u"""License edition.""")
+@cli_util.option('--license', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_FOR_GPU_INFRASTRUCTURE"]), help=u"""License edition.""")
 @cli_util.option('--display-name', help=u"""The display name of the configuration.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -778,7 +928,7 @@ def create_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.option('--resources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of resource Ids which are part of the Maintenance Window""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schedule', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Maintenance Window description.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'schedule': {'module': 'stack_monitoring', 'class': 'MaintenanceWindowSchedule'}})
@@ -844,7 +994,7 @@ def create_maintenance_window(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--schedule-time-maintenance-window-start', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--schedule-time-maintenance-window-end', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--schedule-maintenance-window-duration', help=u"""Duration time of each recurrence of each Maintenance Window. It must be specified as a string in ISO 8601 extended format.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}})
@@ -920,7 +1070,7 @@ def create_maintenance_window_recurrent_maintenance_window_schedule(ctx, from_js
 @cli_util.option('--description', help=u"""Maintenance Window description.""")
 @cli_util.option('--schedule-time-maintenance-window-start', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--schedule-time-maintenance-window-end', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}})
@@ -1379,7 +1529,7 @@ def create_metric_extension_http_query_properties(ctx, from_json, wait_for_state
 @cli_util.option('--external-id', help=u"""External resource is any OCI resource identifier [OCID] which is not a Stack Monitoring service resource. Currently supports only OCI compute instance.""")
 @cli_util.option('--management-agent-id', help=u"""Management Agent Identifier [OCID].""")
 @cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID. Specifies the preference with a value that uses the IANA Time Zone Database format (x-obmcs-time-zone). For example - America/Los_Angeles""")
-@cli_util.option('--license', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION"]), help=u"""License edition of the monitored resource. If not provided the default license type for the compartment will be used.""")
+@cli_util.option('--license', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_FOR_GPU_INFRASTRUCTURE"]), help=u"""License edition of the monitored resource. If not provided the default license type for the compartment will be used.""")
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties.
 
 This option is a JSON list with items of type MonitoredResourceProperty.  For documentation on MonitoredResourceProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1395,7 +1545,7 @@ This option is a JSON list with items of type MonitoredResourceAliasCredential. 
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--external-resource-id', help=u"""Generally used by DBaaS to send the Database OCID stored on the DBaaS. The same will be passed to resource service to enable Stack Monitoring Service on DBM. This will be stored in Stack Monitoring Resource Service data store as identifier for monitored resource. If this header is not set as part of the request, then an id will be generated and stored for the resource.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'credentials': {'module': 'stack_monitoring', 'class': 'MonitoredResourceCredential'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
@@ -1501,7 +1651,7 @@ def create_monitored_resource(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--external-id', help=u"""External resource is any OCI resource identifier [OCID] which is not a Stack Monitoring service resource. Currently supports only OCI compute instance.""")
 @cli_util.option('--management-agent-id', help=u"""Management Agent Identifier [OCID].""")
 @cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID. Specifies the preference with a value that uses the IANA Time Zone Database format (x-obmcs-time-zone). For example - America/Los_Angeles""")
-@cli_util.option('--license', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION"]), help=u"""License edition of the monitored resource. If not provided the default license type for the compartment will be used.""")
+@cli_util.option('--license', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_FOR_GPU_INFRASTRUCTURE"]), help=u"""License edition of the monitored resource. If not provided the default license type for the compartment will be used.""")
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties.
 
 This option is a JSON list with items of type MonitoredResourceProperty.  For documentation on MonitoredResourceProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1520,7 +1670,7 @@ This option is a JSON list with items of type MonitoredResourceAliasCredential. 
 @cli_util.option('--credentials-name', help=u"""The name of the credential, within the context of the source.""")
 @cli_util.option('--credentials-type', help=u"""The type of the credential ( ex. JMXCreds,DBCreds).""")
 @cli_util.option('--credentials-description', help=u"""The user-specified textual description of the credential.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
@@ -1640,7 +1790,7 @@ def create_monitored_resource_pre_existing_credentials(ctx, from_json, wait_for_
 @cli_util.option('--external-id', help=u"""External resource is any OCI resource identifier [OCID] which is not a Stack Monitoring service resource. Currently supports only OCI compute instance.""")
 @cli_util.option('--management-agent-id', help=u"""Management Agent Identifier [OCID].""")
 @cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID. Specifies the preference with a value that uses the IANA Time Zone Database format (x-obmcs-time-zone). For example - America/Los_Angeles""")
-@cli_util.option('--license', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION"]), help=u"""License edition of the monitored resource. If not provided the default license type for the compartment will be used.""")
+@cli_util.option('--license', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_FOR_GPU_INFRASTRUCTURE"]), help=u"""License edition of the monitored resource. If not provided the default license type for the compartment will be used.""")
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties.
 
 This option is a JSON list with items of type MonitoredResourceProperty.  For documentation on MonitoredResourceProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1659,7 +1809,7 @@ This option is a JSON list with items of type MonitoredResourceAliasCredential. 
 @cli_util.option('--credentials-name', help=u"""The name of the credential, within the context of the source.""")
 @cli_util.option('--credentials-type', help=u"""The type of the credential ( ex. JMXCreds,DBCreds).""")
 @cli_util.option('--credentials-description', help=u"""The user-specified textual description of the credential.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}})
@@ -1780,7 +1930,7 @@ def create_monitored_resource_encrypted_credentials(ctx, from_json, wait_for_sta
 @cli_util.option('--external-id', help=u"""External resource is any OCI resource identifier [OCID] which is not a Stack Monitoring service resource. Currently supports only OCI compute instance.""")
 @cli_util.option('--management-agent-id', help=u"""Management Agent Identifier [OCID].""")
 @cli_util.option('--resource-time-zone', help=u"""Time zone in the form of tz database canonical zone ID. Specifies the preference with a value that uses the IANA Time Zone Database format (x-obmcs-time-zone). For example - America/Los_Angeles""")
-@cli_util.option('--license', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION"]), help=u"""License edition of the monitored resource. If not provided the default license type for the compartment will be used.""")
+@cli_util.option('--license', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_FOR_GPU_INFRASTRUCTURE"]), help=u"""License edition of the monitored resource. If not provided the default license type for the compartment will be used.""")
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of monitored resource properties.
 
 This option is a JSON list with items of type MonitoredResourceProperty.  For documentation on MonitoredResourceProperty please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MonitoredResourceProperty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1799,7 +1949,7 @@ This option is a JSON list with items of type MonitoredResourceAliasCredential. 
 @cli_util.option('--credentials-name', help=u"""The name of the credential, within the context of the source.""")
 @cli_util.option('--credentials-type', help=u"""The type of the credential ( ex. JMXCreds,DBCreds).""")
 @cli_util.option('--credentials-description', help=u"""The user-specified textual description of the credential.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}})
@@ -1915,7 +2065,7 @@ def create_monitored_resource_plain_text_credentials(ctx, from_json, wait_for_st
 @cli_util.option('--name', help=u"""Name of the task. If not provided by default the following names will be taken OCI tasks - namespace plus timestamp.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'task-details': {'module': 'stack_monitoring', 'class': 'MonitoredResourceTaskDetails'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
@@ -1995,7 +2145,7 @@ def create_monitored_resource_task(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.option('--task-details-resource-type-filter', help=u"""The resource type filter. Resources matching with the resource type filter will be imported. Regular expressions will be accepted.""")
 @cli_util.option('--task-details-availability-proxy-metrics', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of metrics to be used to calculate the availability of the resource. Resource is considered to be up if at least one of the specified metrics is available for the resource during the specified interval using the property 'availabilityProxyMetricCollectionIntervalInSeconds'. If no metrics are specified, availability will not be calculated for the resource.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--task-details-availability-proxy-metric-collection-interval', type=click.INT, help=u"""Metrics collection interval in seconds used when calculating the availability of the resource based on metrics specified using the property 'availabilityProxyMetrics'.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'task-details-lifecycle-status-mappings-for-up-status': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'task-details-availability-proxy-metrics': {'module': 'stack_monitoring', 'class': 'list[string]'}})
@@ -2197,15 +2347,16 @@ def create_monitored_resource_type(ctx, from_json, wait_for_state, max_wait_seco
 
 This option is a JSON list with items of type UniquePropertySet.  For documentation on UniquePropertySet please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/UniquePropertySet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata-valid-property-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of valid values for the properties. This is useful when resource type wants to restrict only certain values for some properties. For instance for 'osType' property, supported values can be restricted to be either Linux or Windows. Example: `{ \"osType\": [\"Linux\",\"Windows\",\"Solaris\"]}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--metadata-valid-sub-resource-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of valid sub-resource types for a composite resource type. The sub-resource types will be obtained from the valid association pairs corresponding to the composite resource types. It will be empty for non composite resource types""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'metadata-required-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-agent-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-create': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-update': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-unique-property-sets': {'module': 'stack_monitoring', 'class': 'list[UniquePropertySet]'}, 'metadata-valid-property-values': {'module': 'stack_monitoring', 'class': 'dict(str, list[string])'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'metadata-required-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-agent-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-create': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-update': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-unique-property-sets': {'module': 'stack_monitoring', 'class': 'list[UniquePropertySet]'}, 'metadata-valid-property-values': {'module': 'stack_monitoring', 'class': 'dict(str, list[string])'}, 'metadata-valid-sub-resource-types': {'module': 'stack_monitoring', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'metadata-required-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-agent-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-create': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-update': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-unique-property-sets': {'module': 'stack_monitoring', 'class': 'list[UniquePropertySet]'}, 'metadata-valid-property-values': {'module': 'stack_monitoring', 'class': 'dict(str, list[string])'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceType'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'metadata-required-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-agent-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-create': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-update': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-unique-property-sets': {'module': 'stack_monitoring', 'class': 'list[UniquePropertySet]'}, 'metadata-valid-property-values': {'module': 'stack_monitoring', 'class': 'dict(str, list[string])'}, 'metadata-valid-sub-resource-types': {'module': 'stack_monitoring', 'class': 'list[string]'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceType'})
 @cli_util.wrap_exceptions
-def create_monitored_resource_type_system_format_resource_type_metadata_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, display_name, description, metric_namespace, source_type, resource_category, freeform_tags, defined_tags, metadata_required_properties, metadata_agent_properties, metadata_valid_properties_for_create, metadata_valid_properties_for_update, metadata_unique_property_sets, metadata_valid_property_values):
+def create_monitored_resource_type_system_format_resource_type_metadata_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, display_name, description, metric_namespace, source_type, resource_category, freeform_tags, defined_tags, metadata_required_properties, metadata_agent_properties, metadata_valid_properties_for_create, metadata_valid_properties_for_update, metadata_unique_property_sets, metadata_valid_property_values, metadata_valid_sub_resource_types):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2254,6 +2405,9 @@ def create_monitored_resource_type_system_format_resource_type_metadata_details(
     if metadata_valid_property_values is not None:
         _details['metadata']['validPropertyValues'] = cli_util.parse_json_parameter("metadata_valid_property_values", metadata_valid_property_values)
 
+    if metadata_valid_sub_resource_types is not None:
+        _details['metadata']['validSubResourceTypes'] = cli_util.parse_json_parameter("metadata_valid_sub_resource_types", metadata_valid_sub_resource_types)
+
     _details['metadata']['format'] = 'SYSTEM_FORMAT'
 
     client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
@@ -2273,6 +2427,89 @@ def create_monitored_resource_type_system_format_resource_type_metadata_details(
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_monitored_resource_type(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@monitoring_template_group.command(name=cli_util.override('stack_monitoring.create_monitoring_template.command_name', 'create'), help=u"""Creates a new monitoring template for a given compartment. \n[Command Reference](createMonitoringTemplate)""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the monitoring template. It is unique and mutable in nature. Avoid entering confidential information.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the monitoringTemplate.""")
+@cli_util.option('--destinations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of destinations for alarm notifications. Each destination is represented by the OCID of a related resource, such as a topic.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--members', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of members of this monitoring template""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""A user-friendly description for the monitoring template. It does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--is-alarms-enabled', type=click.BOOL, help=u"""Whether the alarm is enabled or disabled, it will be Enabled by default.""")
+@cli_util.option('--is-split-notification-enabled', type=click.BOOL, help=u"""Whether the alarm notification is enabled or disabled, it will be Enabled by default.""")
+@cli_util.option('--repeat-notification-duration', help=u"""The frequency for re-submitting alarm notifications, if the alarm keeps firing without interruption. Format defined by ISO 8601. For example, PT4H indicates four hours. Minimum- PT1M. Maximum - P30D.""")
+@cli_util.option('--message-format', type=custom_types.CliCaseInsensitiveChoice(["RAW", "PRETTY_JSON", "ONS_OPTIMIZED"]), help=u"""The format to use for alarm notifications.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'destinations': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'members': {'module': 'stack_monitoring', 'class': 'list[MemberReference]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destinations': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'members': {'module': 'stack_monitoring', 'class': 'list[MemberReference]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoringTemplate'})
+@cli_util.wrap_exceptions
+def create_monitoring_template(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, destinations, members, description, is_alarms_enabled, is_split_notification_enabled, repeat_notification_duration, message_format, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['destinations'] = cli_util.parse_json_parameter("destinations", destinations)
+    _details['members'] = cli_util.parse_json_parameter("members", members)
+
+    if description is not None:
+        _details['description'] = description
+
+    if is_alarms_enabled is not None:
+        _details['isAlarmsEnabled'] = is_alarms_enabled
+
+    if is_split_notification_enabled is not None:
+        _details['isSplitNotificationEnabled'] = is_split_notification_enabled
+
+    if repeat_notification_duration is not None:
+        _details['repeatNotificationDuration'] = repeat_notification_duration
+
+    if message_format is not None:
+        _details['messageFormat'] = message_format
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.create_monitoring_template(
+        create_monitoring_template_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_monitoring_template') and callable(getattr(client, 'get_monitoring_template')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_monitoring_template(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -2345,6 +2582,37 @@ def create_process_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@alarm_condition_group.command(name=cli_util.override('stack_monitoring.delete_alarm_condition.command_name', 'delete'), help=u"""Deletes the alarm conditions by identifier \n[Command Reference](deleteAlarmCondition)""")
+@cli_util.option('--alarm-condition-id', required=True, help=u"""The [OCID] of the alarm condition.""")
+@cli_util.option('--monitoring-template-id', required=True, help=u"""The [OCID] of the monitoring template.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_alarm_condition(ctx, from_json, alarm_condition_id, monitoring_template_id, if_match):
+
+    if isinstance(alarm_condition_id, six.string_types) and len(alarm_condition_id.strip()) == 0:
+        raise click.UsageError('Parameter --alarm-condition-id cannot be whitespace or empty string')
+
+    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+        raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.delete_alarm_condition(
+        alarm_condition_id=alarm_condition_id,
+        monitoring_template_id=monitoring_template_id,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -2544,7 +2812,7 @@ def delete_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.option('--maintenance-window-id', required=True, help=u"""The [OCID] of maintenance window.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2665,7 +2933,7 @@ def delete_metric_extension(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-delete-members', type=click.BOOL, help=u"""If this query parameter is specified and set to true, all the member resources will be deleted before deleting the specified resource.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2783,6 +3051,70 @@ def delete_monitored_resource_type(ctx, from_json, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
+@monitoring_template_group.command(name=cli_util.override('stack_monitoring.delete_monitoring_template.command_name', 'delete'), help=u"""Deletes the monitoring template by identifier \n[Command Reference](deleteMonitoringTemplate)""")
+@cli_util.option('--monitoring-template-id', required=True, help=u"""The [OCID] of the monitoring template.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_monitoring_template(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, monitoring_template_id, if_match):
+
+    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+        raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.delete_monitoring_template(
+        monitoring_template_id=monitoring_template_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_monitoring_template') and callable(getattr(client, 'get_monitoring_template')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_monitoring_template(monitoring_template_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @process_set_group.command(name=cli_util.override('stack_monitoring.delete_process_set.command_name', 'delete'), help=u"""Deletes a Process Set \n[Command Reference](deleteProcessSet)""")
 @cli_util.option('--process-set-id', required=True, help=u"""The Process Set ID""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2850,7 +3182,7 @@ def delete_process_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.disable_external_database.command_name', 'disable-external-database'), help=u"""Disable external database resource monitoring. All the references in DBaaS, DBM and resource service will be deleted as part of this operation. \n[Command Reference](disableExternalDatabase)""")
 @cli_util.option('--monitored-resource-id', required=True, help=u"""The [OCID] of monitored resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2906,7 +3238,7 @@ def disable_external_database(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--metric-extension-id', required=True, help=u"""The [OCID] of the metric extension resource.""")
 @cli_util.option('--resource-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Resource IDs [OCIDs]. Currently supports upto 20 resources per request""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'resource-ids': {'module': 'stack_monitoring', 'class': 'list[string]'}})
@@ -3005,7 +3337,7 @@ def disassociate_monitored_resources(ctx, from_json, compartment_id, association
 @cli_util.option('--metric-extension-id', required=True, help=u"""The [OCID] of the metric extension resource.""")
 @cli_util.option('--resource-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Resource IDs [OCIDs]. Currently supports upto 20 resources per request""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'resource-ids': {'module': 'stack_monitoring', 'class': 'list[string]'}})
@@ -3141,6 +3473,81 @@ def export_metric_extension(ctx, from_json, file, metric_extension_id, if_match)
         if bar:
             bar.render_finish()
         file.close()
+
+
+@monitoring_template_group.command(name=cli_util.override('stack_monitoring.export_monitoring_template.command_name', 'export'), help=u"""Export the specified monitoring template \n[Command Reference](exportMonitoringTemplate)""")
+@cli_util.option('--monitoring-template-id', required=True, help=u"""The [OCID] of the monitoring template.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def export_monitoring_template(ctx, from_json, file, monitoring_template_id, if_match):
+
+    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+        raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.export_monitoring_template(
+        monitoring_template_id=monitoring_template_id,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
+@alarm_condition_group.command(name=cli_util.override('stack_monitoring.get_alarm_condition.command_name', 'get'), help=u"""Gets a Alarm Condition by identifier. \n[Command Reference](getAlarmCondition)""")
+@cli_util.option('--alarm-condition-id', required=True, help=u"""The [OCID] of the alarm condition.""")
+@cli_util.option('--monitoring-template-id', required=True, help=u"""The [OCID] of the monitoring template.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'stack_monitoring', 'class': 'AlarmCondition'})
+@cli_util.wrap_exceptions
+def get_alarm_condition(ctx, from_json, alarm_condition_id, monitoring_template_id):
+
+    if isinstance(alarm_condition_id, six.string_types) and len(alarm_condition_id.strip()) == 0:
+        raise click.UsageError('Parameter --alarm-condition-id cannot be whitespace or empty string')
+
+    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+        raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.get_alarm_condition(
+        alarm_condition_id=alarm_condition_id,
+        monitoring_template_id=monitoring_template_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @baselineable_metric_group.command(name=cli_util.override('stack_monitoring.get_baselineable_metric.command_name', 'get'), help=u"""Get the Baseline-able metric for the given id \n[Command Reference](getBaselineableMetric)""")
@@ -3319,6 +3726,28 @@ def get_monitored_resource_type(ctx, from_json, monitored_resource_type_id):
     cli_util.render_response(result, ctx)
 
 
+@monitoring_template_group.command(name=cli_util.override('stack_monitoring.get_monitoring_template.command_name', 'get'), help=u"""Gets a Monitoring Template by identifier \n[Command Reference](getMonitoringTemplate)""")
+@cli_util.option('--monitoring-template-id', required=True, help=u"""The [OCID] of the monitoring template.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'stack_monitoring', 'class': 'MonitoringTemplate'})
+@cli_util.wrap_exceptions
+def get_monitoring_template(ctx, from_json, monitoring_template_id):
+
+    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+        raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.get_monitoring_template(
+        monitoring_template_id=monitoring_template_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @process_set_group.command(name=cli_util.override('stack_monitoring.get_process_set.command_name', 'get'), help=u"""API to get the details of a Process Set by identifier. \n[Command Reference](getProcessSet)""")
 @cli_util.option('--process-set-id', required=True, help=u"""The Process Set ID""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3360,6 +3789,75 @@ def get_work_request(ctx, from_json, work_request_id):
         work_request_id=work_request_id,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@alarm_condition_group.command(name=cli_util.override('stack_monitoring.list_alarm_conditions.command_name', 'list'), help=u"""Returns a list of Alarm Conditions. \n[Command Reference](listAlarmConditions)""")
+@cli_util.option('--monitoring-template-id', required=True, help=u"""The [OCID] of the monitoring template.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["metricName", "lifeCycleState", "resourceType", "status", "timeUpdated", "timeCreated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeUpdated is descending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["NOT_APPLIED", "APPLIED", "PARTIAL_APPLIED", "ERROR"]), help=u"""A filter to return alarm condition based on input status.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETED"]), help=u"""A filter to return alarm condition based on Lifecycle State.""")
+@cli_util.option('--resource-types', multiple=True, help=u"""Multiple resource types filter.""")
+@cli_util.option('--metric-name', multiple=True, help=u"""metricName filter.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'resource-types': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metric-name': {'module': 'stack_monitoring', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resource-types': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metric-name': {'module': 'stack_monitoring', 'class': 'list[string]'}}, output_type={'module': 'stack_monitoring', 'class': 'AlarmConditionCollection'})
+@cli_util.wrap_exceptions
+def list_alarm_conditions(ctx, from_json, all_pages, page_size, monitoring_template_id, limit, page, sort_by, sort_order, status, lifecycle_state, resource_types, metric_name):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+        raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if status is not None:
+        kwargs['status'] = status
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if resource_types is not None and len(resource_types) > 0:
+        kwargs['resource_types'] = resource_types
+    if metric_name is not None and len(metric_name) > 0:
+        kwargs['metric_name'] = metric_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_alarm_conditions,
+            monitoring_template_id=monitoring_template_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_alarm_conditions,
+            limit,
+            page_size,
+            monitoring_template_id=monitoring_template_id,
+            **kwargs
+        )
+    else:
+        result = client.list_alarm_conditions(
+            monitoring_template_id=monitoring_template_id,
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -3491,6 +3989,66 @@ def list_configs(ctx, from_json, all_pages, page_size, compartment_id, display_n
         )
     else:
         result = client.list_configs(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@defined_monitoring_template_summary_group.command(name=cli_util.override('stack_monitoring.list_defined_monitoring_templates.command_name', 'list-defined-monitoring-templates'), help=u"""List Defined Monitoring Templates. \n[Command Reference](listDefinedMonitoringTemplates)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the tenancy(root) for which defined monitored templates should be listed.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["namespace"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for 'namespace' is ascending.""")
+@cli_util.option('--display-name', help=u"""A filter to return monitoring template based on name.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--resource-types', multiple=True, help=u"""Multiple resource types filter.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'resource-types': {'module': 'stack_monitoring', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resource-types': {'module': 'stack_monitoring', 'class': 'list[string]'}}, output_type={'module': 'stack_monitoring', 'class': 'DefinedMonitoringTemplateCollection'})
+@cli_util.wrap_exceptions
+def list_defined_monitoring_templates(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, display_name, sort_order, resource_types):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if resource_types is not None and len(resource_types) > 0:
+        kwargs['resource_types'] = resource_types
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_defined_monitoring_templates,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_defined_monitoring_templates,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_defined_monitoring_templates(
             compartment_id=compartment_id,
             **kwargs
         )
@@ -3942,6 +4500,80 @@ def list_monitored_resources(ctx, from_json, all_pages, page_size, compartment_i
     cli_util.render_response(result, ctx)
 
 
+@monitoring_template_group.command(name=cli_util.override('stack_monitoring.list_monitoring_templates.command_name', 'list'), help=u"""Returns a list of Monitoring Templates. \n[Command Reference](listMonitoringTemplates)""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which data is listed.""")
+@cli_util.option('--monitoring-template-id', help=u"""A filter to return monitoring template based on input monitoringTemplateId""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "lifeCycleState", "status", "timeUpdated", "timeCreated"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeUpdated is descending.""")
+@cli_util.option('--display-name', help=u"""A filter to return monitoring template based on name.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["NOT_APPLIED", "APPLIED", "PARTIAL_APPLIED"]), help=u"""A filter to return monitoring template based on input status""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETED"]), help=u"""A filter to return monitoring template based on Lifecycle State""")
+@cli_util.option('--resource-types', multiple=True, help=u"""Multiple resource types filter.""")
+@cli_util.option('--metric-name', multiple=True, help=u"""metricName filter.""")
+@cli_util.option('--namespace', multiple=True, help=u"""namespace filter.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'resource-types': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metric-name': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'namespace': {'module': 'stack_monitoring', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resource-types': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metric-name': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'namespace': {'module': 'stack_monitoring', 'class': 'list[string]'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoringTemplateCollection'})
+@cli_util.wrap_exceptions
+def list_monitoring_templates(ctx, from_json, all_pages, page_size, compartment_id, monitoring_template_id, limit, page, sort_order, sort_by, display_name, status, lifecycle_state, resource_types, metric_name, namespace):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if monitoring_template_id is not None:
+        kwargs['monitoring_template_id'] = monitoring_template_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if status is not None:
+        kwargs['status'] = status
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if resource_types is not None and len(resource_types) > 0:
+        kwargs['resource_types'] = resource_types
+    if metric_name is not None and len(metric_name) > 0:
+        kwargs['metric_name'] = metric_name
+    if namespace is not None and len(namespace) > 0:
+        kwargs['namespace'] = namespace
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_monitoring_templates,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_monitoring_templates,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_monitoring_templates(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @process_set_collection_group.command(name=cli_util.override('stack_monitoring.list_process_sets.command_name', 'list-process-sets'), help=u"""API to get the details of all Process Sets. \n[Command Reference](listProcessSets)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which data is listed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -4116,7 +4748,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @work_request_summary_collection_group.command(name=cli_util.override('stack_monitoring.list_work_requests.command_name', 'list-work-requests'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which data is listed.""")
 @cli_util.option('--work-request-id', help=u"""The ID of the asynchronous work request.""")
-@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources their lifecycleState matches the given OperationStatus.""")
 @cli_util.option('--resource-id', help=u"""The ID of the resource affected by the work request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -4178,7 +4810,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.manage_license.command_name', 'manage-license'), help=u"""Each resource is assigned a license based on which features are enabled for it. User is charged differently based on license. Specify the license type to be updated for the parent resource in the topology. The license type value is propagated to the member resources as well. Member resource is a resource which has \"contains\" association with the resource. \n[Command Reference](manageLicense)""")
 @cli_util.option('--monitored-resource-id', required=True, help=u"""The [OCID] of monitored resource.""")
-@cli_util.option('--license', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION"]), help=u"""License edition of the monitored resource.""")
+@cli_util.option('--license', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_FOR_GPU_INFRASTRUCTURE"]), help=u"""License edition of the monitored resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -4261,7 +4893,7 @@ def publish_metric_extension(ctx, from_json, wait_for_state, max_wait_seconds, w
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.request_monitored_resources_summarized_count.command_name', 'request-monitored-resources-summarized-count'), help=u"""Gets resource count based on the aggregation criteria specified using \"groupBy\" parameter. \n[Command Reference](requestMonitoredResourcesSummarizedCount)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which data is listed.""")
 @cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["resourceType", "license", "parentResourceId"]), help=u"""The field to group by. Default group by is 'resourceType'.""")
-@cli_util.option('--license', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION"]), help=u"""Filter to return resource counts that match with the given licence edition.""")
+@cli_util.option('--license', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_FOR_GPU_INFRASTRUCTURE"]), help=u"""Filter to return resource counts that match with the given licence edition.""")
 @cli_util.option('--resource-type', help=u"""A filter to return resource counts that match exact resource type.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["count"]), help=u"""If this query parameter is specified, the result is sorted by this query parameter value.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -4298,10 +4930,120 @@ def request_monitored_resources_summarized_count(ctx, from_json, compartment_id,
     cli_util.render_response(result, ctx)
 
 
+@metric_extension_group.command(name=cli_util.override('stack_monitoring.request_summarized_metric_extensions_metrics.command_name', 'request-summarized-metric-extensions-metrics'), help=u"""Gets metric extension metrics count based on the aggregation criteria specified using request body. Either metricExtensionId or compartmentId must be passed even when no other filter property is passed. \n[Command Reference](requestSummarizedMetricExtensionsMetrics)""")
+@cli_util.option('--metric-extension-id', help=u"""The [OCID] of Metric Extension resource""")
+@cli_util.option('--resource-type', help=u"""Resource type to which Metric Extension applies""")
+@cli_util.option('--compartment-id', help=u"""Compartment Identifier [OCID]""")
+@cli_util.option('--contains-metric-with-name', help=u"""Filter for metric extension resources which contain the given metric name""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["COUNT"]), help=u"""Result will ne sorted by this parameter value""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Sort orders""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'stack_monitoring', 'class': 'MetricExtensionMetricAggregationCollection'})
+@cli_util.wrap_exceptions
+def request_summarized_metric_extensions_metrics(ctx, from_json, metric_extension_id, resource_type, compartment_id, contains_metric_with_name, sort_by, sort_order, limit, page):
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if metric_extension_id is not None:
+        _details['metricExtensionId'] = metric_extension_id
+
+    if resource_type is not None:
+        _details['resourceType'] = resource_type
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if contains_metric_with_name is not None:
+        _details['containsMetricWithName'] = contains_metric_with_name
+
+    if sort_by is not None:
+        _details['sortBy'] = sort_by
+
+    if sort_order is not None:
+        _details['sortOrder'] = sort_order
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.request_summarized_metric_extensions_metrics(
+        request_summarized_metric_extensions_metrics_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@metric_extension_group.command(name=cli_util.override('stack_monitoring.request_summarized_metric_extensions_resources.command_name', 'request-summarized-metric-extensions-resources'), help=u"""Gets metric extension resources count based on the aggregation criteria specified using request body. Either metricExtensionId or compartmentId should be passed, if no other property is passed. \n[Command Reference](requestSummarizedMetricExtensionsResources)""")
+@cli_util.option('--metric-extension-id', help=u"""The [OCID] of Metric Extension resource""")
+@cli_util.option('--resource-type', help=u"""Resource type to which Metric Extension applies""")
+@cli_util.option('--compartment-id', help=u"""Compartment Identifier [OCID]""")
+@cli_util.option('--association-status', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Filter to return metric extensions based on input enable status i.e. Enabled/Disabled""")
+@cli_util.option('--resource-id', help=u"""The [OCID] of Monitored Resource""")
+@cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["METRIC_EXTENSION_ID"]), help=u"""The field to group by""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["COUNT"]), help=u"""Result will ne sorted by this parameter value""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Sort orders""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'stack_monitoring', 'class': 'MetricExtensionResourceAggregationCollection'})
+@cli_util.wrap_exceptions
+def request_summarized_metric_extensions_resources(ctx, from_json, metric_extension_id, resource_type, compartment_id, association_status, resource_id, group_by, sort_by, sort_order, limit, page):
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if metric_extension_id is not None:
+        _details['metricExtensionId'] = metric_extension_id
+
+    if resource_type is not None:
+        _details['resourceType'] = resource_type
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if association_status is not None:
+        _details['associationStatus'] = association_status
+
+    if resource_id is not None:
+        _details['resourceId'] = resource_id
+
+    if group_by is not None:
+        _details['groupBy'] = group_by
+
+    if sort_by is not None:
+        _details['sortBy'] = sort_by
+
+    if sort_order is not None:
+        _details['sortOrder'] = sort_order
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.request_summarized_metric_extensions_resources(
+        request_summarized_metric_extensions_resources_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @maintenance_window_group.command(name=cli_util.override('stack_monitoring.retry_failed_maintenance_window_operation.command_name', 'retry-failed-maintenance-window-operation'), help=u"""Retry the last failed operation. The operation failed will be the most recent one. It won't apply for previous failed operations. \n[Command Reference](retryFailedMaintenanceWindowOperation)""")
 @cli_util.option('--maintenance-window-id', required=True, help=u"""The [OCID] of maintenance window.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4540,7 +5282,7 @@ This option is a JSON list with items of type ResourceLifecycleState.  For docum
 @cli_util.option('--host-name-contains', help=u"""A filter to return resources with host name pattern.""")
 @cli_util.option('--management-agent-id', help=u"""A filter to return resources with matching management agent id.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return resources with matching lifecycle state.""")
-@cli_util.option('--license', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION"]), help=u"""License edition of the monitored resource.""")
+@cli_util.option('--license', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_FOR_GPU_INFRASTRUCTURE"]), help=u"""License edition of the monitored resource.""")
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Search for resources that were created within a specific date range, using this parameter to specify the earliest creation date for the returned list (inclusive). Specifying this parameter without the corresponding `timeCreatedLessThan` parameter will retrieve resources created from the given `timeCreatedGreaterThanOrEqualTo` to the current time, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by [RFC 3339].
 
 **Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -4659,7 +5401,7 @@ def search_monitored_resources(ctx, from_json, compartment_id, compartment_ids, 
 @maintenance_window_group.command(name=cli_util.override('stack_monitoring.stop_maintenance_window.command_name', 'stop'), help=u"""Stop a maintenance window before the end time is reached. \n[Command Reference](stopMaintenanceWindow)""")
 @cli_util.option('--maintenance-window-id', required=True, help=u"""The [OCID] of maintenance window.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4715,7 +5457,7 @@ def stop_maintenance_window(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--metric-extension-id', required=True, help=u"""The [OCID] of the metric extension resource.""")
 @cli_util.option('--resource-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Resource IDs [OCID]. Currently supports only one resource id per request.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'resource-ids': {'module': 'stack_monitoring', 'class': 'list[string]'}})
@@ -4772,13 +5514,167 @@ def test_metric_extension(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
+@monitoring_template_group.command(name=cli_util.override('stack_monitoring.unapply_monitoring_template.command_name', 'unapply'), help=u"""Unapply the Monitoring Template identified by the id \n[Command Reference](unapplyMonitoringTemplate)""")
+@cli_util.option('--monitoring-template-id', required=True, help=u"""The [OCID] of the monitoring template.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def unapply_monitoring_template(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, monitoring_template_id, if_match):
+
+    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+        raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.unapply_monitoring_template(
+        monitoring_template_id=monitoring_template_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@alarm_condition_group.command(name=cli_util.override('stack_monitoring.update_alarm_condition.command_name', 'update'), help=u"""Update a Alarm Condition by identifier \n[Command Reference](updateAlarmCondition)""")
+@cli_util.option('--alarm-condition-id', required=True, help=u"""The [OCID] of the alarm condition.""")
+@cli_util.option('--monitoring-template-id', required=True, help=u"""The [OCID] of the monitoring template.""")
+@cli_util.option('--namespace', help=u"""The stack monitoring service or application emitting the metric that is evaluated by the alarm.""")
+@cli_util.option('--composite-type', help=u"""The OCID of composite resource type like EBS/PEOPLE_SOFT.""")
+@cli_util.option('--resource-type', help=u"""The resource type OCID.""")
+@cli_util.option('--metric-name', help=u"""The metric name.""")
+@cli_util.option('--condition-type', type=custom_types.CliCaseInsensitiveChoice(["FIXED", "AVAILABILITY"]), help=u"""Type of defined monitoring template.""")
+@cli_util.option('--conditions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Monitoring template conditions
+
+This option is a JSON list with items of type Condition.  For documentation on Condition please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/Condition.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'conditions': {'module': 'stack_monitoring', 'class': 'list[Condition]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'conditions': {'module': 'stack_monitoring', 'class': 'list[Condition]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'AlarmCondition'})
+@cli_util.wrap_exceptions
+def update_alarm_condition(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, alarm_condition_id, monitoring_template_id, namespace, composite_type, resource_type, metric_name, condition_type, conditions, freeform_tags, defined_tags, if_match):
+
+    if isinstance(alarm_condition_id, six.string_types) and len(alarm_condition_id.strip()) == 0:
+        raise click.UsageError('Parameter --alarm-condition-id cannot be whitespace or empty string')
+
+    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+        raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
+    if not force:
+        if conditions or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to conditions and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if namespace is not None:
+        _details['namespace'] = namespace
+
+    if composite_type is not None:
+        _details['compositeType'] = composite_type
+
+    if resource_type is not None:
+        _details['resourceType'] = resource_type
+
+    if metric_name is not None:
+        _details['metricName'] = metric_name
+
+    if condition_type is not None:
+        _details['conditionType'] = condition_type
+
+    if conditions is not None:
+        _details['conditions'] = cli_util.parse_json_parameter("conditions", conditions)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.update_alarm_condition(
+        alarm_condition_id=alarm_condition_id,
+        monitoring_template_id=monitoring_template_id,
+        update_alarm_condition_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_alarm_condition') and callable(getattr(client, 'get_alarm_condition')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_alarm_condition(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.update_and_propagate_tags.command_name', 'update-and-propagate-tags'), help=u"""Provided tags will be added or updated in the existing list of tags for the affected resources. Resources to be updated are identified based on association types specified. If association types not specified, then tags will be updated only for the resource identified by the given monitored resource identifier [OCID]. \n[Command Reference](updateAndPropagateTags)""")
 @cli_util.option('--monitored-resource-id', required=True, help=u"""The [OCID] of monitored resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--association-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Association types that will be traversed recursively starting from the current resource, to identify resources for which the tags will be updated. If no association type is specified, only current resource will be updated. Default is empty list, which means no related resources will be updated.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'association-types': {'module': 'stack_monitoring', 'class': 'list[string]'}})
@@ -5180,7 +6076,7 @@ def update_config_update_auto_promote_config_details(ctx, from_json, force, wait
 @cli_util.option('--display-name', help=u"""The display name of the configuration.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--license', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION"]), help=u"""License edition.""")
+@cli_util.option('--license', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_FOR_GPU_INFRASTRUCTURE"]), help=u"""License edition.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -5262,7 +6158,7 @@ This option is a JSON list with items of type CreateMaintenanceWindowResourceDet
 @cli_util.option('--schedule', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'schedule': {'module': 'stack_monitoring', 'class': 'MaintenanceWindowSchedule'}})
@@ -5343,7 +6239,7 @@ This option is a JSON list with items of type CreateMaintenanceWindowResourceDet
 @cli_util.option('--schedule-time-maintenance-window-end', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--schedule-maintenance-window-duration', help=u"""Duration time of each recurrence of each Maintenance Window. It must be specified as a string in ISO 8601 extended format.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}})
@@ -5432,7 +6328,7 @@ This option is a JSON list with items of type CreateMaintenanceWindowResourceDet
 @cli_util.option('--schedule-time-maintenance-window-start', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--schedule-time-maintenance-window-end', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}})
@@ -6008,7 +6904,7 @@ This option is a JSON list with items of type MonitoredResourceAliasCredential. 
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'credentials': {'module': 'stack_monitoring', 'class': 'MonitoredResourceCredential'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
@@ -6125,7 +7021,7 @@ This option is a JSON list with items of type MonitoredResourceAliasCredential. 
 @cli_util.option('--credentials-type', help=u"""The type of the credential ( ex. JMXCreds,DBCreds).""")
 @cli_util.option('--credentials-description', help=u"""The user-specified textual description of the credential.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
@@ -6256,7 +7152,7 @@ This option is a JSON list with items of type MonitoredResourceAliasCredential. 
 @cli_util.option('--credentials-type', help=u"""The type of the credential ( ex. JMXCreds,DBCreds).""")
 @cli_util.option('--credentials-description', help=u"""The user-specified textual description of the credential.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}})
@@ -6388,7 +7284,7 @@ This option is a JSON list with items of type MonitoredResourceAliasCredential. 
 @cli_util.option('--credentials-type', help=u"""The type of the credential ( ex. JMXCreds,DBCreds).""")
 @cli_util.option('--credentials-description', help=u"""The user-specified textual description of the credential.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceProperty]'}, 'database-connection-details': {'module': 'stack_monitoring', 'class': 'ConnectionDetails'}, 'aliases': {'module': 'stack_monitoring', 'class': 'MonitoredResourceAliasCredential'}, 'additional-credentials': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceCredential]'}, 'additional-aliases': {'module': 'stack_monitoring', 'class': 'list[MonitoredResourceAliasCredential]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'credentials-properties': {'module': 'stack_monitoring', 'class': 'list[CredentialProperty]'}})
@@ -6672,16 +7568,17 @@ def update_monitored_resource_type(ctx, from_json, force, wait_for_state, max_wa
 
 This option is a JSON list with items of type UniquePropertySet.  For documentation on UniquePropertySet please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/UniquePropertySet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata-valid-property-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of valid values for the properties. This is useful when resource type wants to restrict only certain values for some properties. For instance for 'osType' property, supported values can be restricted to be either Linux or Windows. Example: `{ \"osType\": [\"Linux\",\"Windows\",\"Solaris\"]}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--metadata-valid-sub-resource-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of valid sub-resource types for a composite resource type. The sub-resource types will be obtained from the valid association pairs corresponding to the composite resource types. It will be empty for non composite resource types""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'metadata-required-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-agent-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-create': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-update': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-unique-property-sets': {'module': 'stack_monitoring', 'class': 'list[UniquePropertySet]'}, 'metadata-valid-property-values': {'module': 'stack_monitoring', 'class': 'dict(str, list[string])'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'metadata-required-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-agent-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-create': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-update': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-unique-property-sets': {'module': 'stack_monitoring', 'class': 'list[UniquePropertySet]'}, 'metadata-valid-property-values': {'module': 'stack_monitoring', 'class': 'dict(str, list[string])'}, 'metadata-valid-sub-resource-types': {'module': 'stack_monitoring', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'metadata-required-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-agent-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-create': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-update': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-unique-property-sets': {'module': 'stack_monitoring', 'class': 'list[UniquePropertySet]'}, 'metadata-valid-property-values': {'module': 'stack_monitoring', 'class': 'dict(str, list[string])'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceType'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'metadata-required-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-agent-properties': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-create': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-valid-properties-for-update': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'metadata-unique-property-sets': {'module': 'stack_monitoring', 'class': 'list[UniquePropertySet]'}, 'metadata-valid-property-values': {'module': 'stack_monitoring', 'class': 'dict(str, list[string])'}, 'metadata-valid-sub-resource-types': {'module': 'stack_monitoring', 'class': 'list[string]'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceType'})
 @cli_util.wrap_exceptions
-def update_monitored_resource_type_system_format_resource_type_metadata_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_type_id, display_name, description, metric_namespace, source_type, resource_category, freeform_tags, defined_tags, if_match, metadata_required_properties, metadata_agent_properties, metadata_valid_properties_for_create, metadata_valid_properties_for_update, metadata_unique_property_sets, metadata_valid_property_values):
+def update_monitored_resource_type_system_format_resource_type_metadata_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_type_id, display_name, description, metric_namespace, source_type, resource_category, freeform_tags, defined_tags, if_match, metadata_required_properties, metadata_agent_properties, metadata_valid_properties_for_create, metadata_valid_properties_for_update, metadata_unique_property_sets, metadata_valid_property_values, metadata_valid_sub_resource_types):
 
     if isinstance(monitored_resource_type_id, six.string_types) and len(monitored_resource_type_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-type-id cannot be whitespace or empty string')
@@ -6737,6 +7634,9 @@ def update_monitored_resource_type_system_format_resource_type_metadata_details(
     if metadata_valid_property_values is not None:
         _details['metadata']['validPropertyValues'] = cli_util.parse_json_parameter("metadata_valid_property_values", metadata_valid_property_values)
 
+    if metadata_valid_sub_resource_types is not None:
+        _details['metadata']['validSubResourceTypes'] = cli_util.parse_json_parameter("metadata_valid_sub_resource_types", metadata_valid_sub_resource_types)
+
     _details['metadata']['format'] = 'SYSTEM_FORMAT'
 
     client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
@@ -6757,6 +7657,108 @@ def update_monitored_resource_type_system_format_resource_type_metadata_details(
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_monitored_resource_type(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@monitoring_template_group.command(name=cli_util.override('stack_monitoring.update_monitoring_template.command_name', 'update'), help=u"""Updates the Monitoring Template \n[Command Reference](updateMonitoringTemplate)""")
+@cli_util.option('--monitoring-template-id', required=True, help=u"""The [OCID] of the monitoring template.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the monitoring template. It is unique and mutable in nature.""")
+@cli_util.option('--description', help=u"""A user-friendly description for the monitoring template. It does not have to be unique, and it's changeable.""")
+@cli_util.option('--destinations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of destinations for alarm notifications. Each destination is represented by the OCID of a related resource""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-alarms-enabled', type=click.BOOL, help=u"""User can create the out of box alarm only for multiple resourceTypes not for individual resource instances and groups for specified compartment.""")
+@cli_util.option('--is-split-notification-enabled', type=click.BOOL, help=u"""Whether the alarm notification is enabled or disabled, it will be Enabled by default.""")
+@cli_util.option('--members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of members of this monitoring template.
+
+This option is a JSON list with items of type MemberReference.  For documentation on MemberReference please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/MemberReference.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--repeat-notification-duration', help=u"""The frequency for re-submitting alarm notifications, if the alarm keeps firing without interruption. Format defined by ISO 8601. For example, PT4H indicates four hours. Minimum- PT1M. Maximum - P30D.""")
+@cli_util.option('--message-format', type=custom_types.CliCaseInsensitiveChoice(["RAW", "PRETTY_JSON", "ONS_OPTIMIZED"]), help=u"""The format to use for alarm notifications.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'destinations': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'members': {'module': 'stack_monitoring', 'class': 'list[MemberReference]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destinations': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'members': {'module': 'stack_monitoring', 'class': 'list[MemberReference]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoringTemplate'})
+@cli_util.wrap_exceptions
+def update_monitoring_template(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitoring_template_id, display_name, description, destinations, is_alarms_enabled, is_split_notification_enabled, members, repeat_notification_duration, message_format, freeform_tags, defined_tags, if_match):
+
+    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+        raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
+    if not force:
+        if destinations or members or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to destinations and members and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if destinations is not None:
+        _details['destinations'] = cli_util.parse_json_parameter("destinations", destinations)
+
+    if is_alarms_enabled is not None:
+        _details['isAlarmsEnabled'] = is_alarms_enabled
+
+    if is_split_notification_enabled is not None:
+        _details['isSplitNotificationEnabled'] = is_split_notification_enabled
+
+    if members is not None:
+        _details['members'] = cli_util.parse_json_parameter("members", members)
+
+    if repeat_notification_duration is not None:
+        _details['repeatNotificationDuration'] = repeat_notification_duration
+
+    if message_format is not None:
+        _details['messageFormat'] = message_format
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.update_monitoring_template(
+        monitoring_template_id=monitoring_template_id,
+        update_monitoring_template_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_monitoring_template') and callable(getattr(client, 'get_monitoring_template')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_monitoring_template(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
