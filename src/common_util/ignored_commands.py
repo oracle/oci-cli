@@ -250,6 +250,14 @@ IGNORED_COMMANDS = [
     ['apm-synthetics', 'monitor', 'update-sql-monitor'],
     ['bds', 'instance', 'install-patch'],
     ['db', 'database', 'create-standby-database'],
+    ['db', 'maintenance-run', 'list'],
+    ['jms', 'fleet', 'summarize-resource-inventory'],
+    ['jms', 'fleet-error-aggregation', 'summarize-fleet-errors'],
+    ['jms', 'fleet-error-summary', 'list-fleet-errors'],
+    ['jms', 'jms-plugin', 'list'],
+    ['jms', 'performance-tuning-analysis-result', 'list'],
+    ['jms', 'plugin-error-aggregation', 'summarize-plugin-errors'],
+    ['jms', 'plugin-error-summary', 'list-plugin-errors']
 ]
 
 IGNORED_COMMANDS_DOCS = [

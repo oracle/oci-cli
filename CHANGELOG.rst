@@ -6,6 +6,35 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.51.8 - 2025-02-18
+--------------------
+Added
+~~~~~~~
+* Java Management Service
+
+  * Support for Customer Onboarding Success in the Java Management Service
+
+    * ``oci jms fleet-error-summary list-fleet-errors``
+    * ``oci jms plugin-error-summary list-plugin-errors``
+    * ``oci jms fleet-error-aggregation summarize-fleet-errors``
+    * ``oci jms plugin-error-aggregation summarize-plugin-errors``
+
+Changed
+~~~~~~~
+* Database Service
+
+  * Added new optional parameter is-local-adg to maintenance-run
+
+    * ``oci db maintenance-run list --is-local-adg <boolean>``
+
+* Java Management Service
+
+  * Added new options to existing commands
+
+    * ``oci jms fleet summarize-resource-inventory --compartment-id-in-subtree``
+    * ``oci jms jms-plugin list --agent-type``
+    * ``oci jms performance-tuning-analysis-result list --application-name``
+
 3.51.7 - 2025-02-11
 --------------------
 Added

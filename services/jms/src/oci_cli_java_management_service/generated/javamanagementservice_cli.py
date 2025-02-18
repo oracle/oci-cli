@@ -46,6 +46,12 @@ def java_migration_analysis_result_group():
     pass
 
 
+@click.command(cli_util.override('jms.fleet_error_aggregation_group.command_name', 'fleet-error-aggregation'), cls=CommandGroupWithAlias, help="""Aggregation of FleetErrors""")
+@cli_util.help_option_group
+def fleet_error_aggregation_group():
+    pass
+
+
 @click.command(cli_util.override('jms.application_installation_usage_summary_group.command_name', 'application-installation-usage-summary'), cls=CommandGroupWithAlias, help="""Summarizes application installation usage information during a specified time period. The main difference between ApplicationUsage and ApplicationInstallationUsageSummary is the presence of installation information. ApplicationUsage provides only aggregated information for an application regardless of the installation paths. Therefore, two different applications with the same application name installed in two different paths will be aggregated to a single application. This aggregation makes it difficult to focus actions to single application installed on a known path. An application installation is independent of the Java Runtime on which it's running or the Managed Instance where it's installed.""")
 @cli_util.help_option_group
 def application_installation_usage_summary_group():
@@ -67,6 +73,12 @@ def installation_usage_group():
 @click.command(cli_util.override('jms.java_family_group.command_name', 'java-family'), cls=CommandGroupWithAlias, help="""Metadata associated with a specific Java release family. A Java release family is typically a major version in the Java version identifier.""")
 @cli_util.help_option_group
 def java_family_group():
+    pass
+
+
+@click.command(cli_util.override('jms.plugin_error_summary_group.command_name', 'plugin-error-summary'), cls=CommandGroupWithAlias, help="""Entity that represents an error identified in a plugin.""")
+@cli_util.help_option_group
+def plugin_error_summary_group():
     pass
 
 
@@ -97,6 +109,12 @@ def deployed_application_installation_usage_summary_group():
 @click.command(cli_util.override('jms.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing an operation that is tracked by a work request.""")
 @cli_util.help_option_group
 def work_request_error_group():
+    pass
+
+
+@click.command(cli_util.override('jms.plugin_error_aggregation_group.command_name', 'plugin-error-aggregation'), cls=CommandGroupWithAlias, help="""Aggregation of PluginErrors""")
+@cli_util.help_option_group
+def plugin_error_aggregation_group():
     pass
 
 
@@ -214,19 +232,28 @@ def export_setting_group():
     pass
 
 
+@click.command(cli_util.override('jms.fleet_error_summary_group.command_name', 'fleet-error-summary'), cls=CommandGroupWithAlias, help="""The summary of a fleet error.""")
+@cli_util.help_option_group
+def fleet_error_summary_group():
+    pass
+
+
 jms_root_group.add_command(fleet_group)
 jms_root_group.add_command(installation_site_summary_group)
 jms_root_group.add_command(export_status_group)
 jms_root_group.add_command(java_migration_analysis_result_group)
+jms_root_group.add_command(fleet_error_aggregation_group)
 jms_root_group.add_command(application_installation_usage_summary_group)
 jms_root_group.add_command(work_item_summary_group)
 jms_root_group.add_command(installation_usage_group)
 jms_root_group.add_command(java_family_group)
+jms_root_group.add_command(plugin_error_summary_group)
 jms_root_group.add_command(jre_usage_group)
 jms_root_group.add_command(work_request_group)
 jms_root_group.add_command(java_server_instance_usage_group)
 jms_root_group.add_command(deployed_application_installation_usage_summary_group)
 jms_root_group.add_command(work_request_error_group)
+jms_root_group.add_command(plugin_error_aggregation_group)
 jms_root_group.add_command(deployed_application_usage_group)
 jms_root_group.add_command(managed_instance_usage_group)
 jms_root_group.add_command(blocklist_group)
@@ -246,6 +273,7 @@ jms_root_group.add_command(application_usage_group)
 jms_root_group.add_command(drs_file_group)
 jms_root_group.add_command(crypto_analysis_result_group)
 jms_root_group.add_command(export_setting_group)
+jms_root_group.add_command(fleet_error_summary_group)
 
 
 @installation_site_summary_group.command(name=cli_util.override('jms.add_fleet_installation_sites.command_name', 'add'), help=u"""Add Java installation sites in a Fleet. \n[Command Reference](addFleetInstallationSites)""")
@@ -1220,7 +1248,7 @@ def generate_agent_deploy_script(ctx, from_json, file, fleet_id, install_key_id,
 
 
 @agent_installer_summary_group.command(name=cli_util.override('jms.generate_agent_installer_configuration.command_name', 'generate-agent-installer-configuration'), help=u"""Generates the agent installer configuration using the information provided. \n[Command Reference](generateAgentInstallerConfiguration)""")
-@cli_util.option('--install-key-id', required=True, help=u"""The [OCID] of the install key for which to generate the configuration file.""")
+@cli_util.option('--install-key-id', required=True, help=u"""The [OCID] of the management agent install key for which to generate the configuration file.""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the fleet for which to generate the configuration file.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2014,6 +2042,77 @@ def list_fleet_diagnoses(ctx, from_json, all_pages, page_size, fleet_id, limit, 
     cli_util.render_response(result, ctx)
 
 
+@fleet_error_summary_group.command(name=cli_util.override('jms.list_fleet_errors.command_name', 'list-fleet-errors'), help=u"""Returns a list of fleet errors that describe all detected errors. \n[Command Reference](listFleetErrors)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Flag to determine whether the info should be gathered only in the compartment or in the compartment and its subcompartments.""")
+@cli_util.option('--fleet-id', help=u"""The ID of the Fleet.""")
+@cli_util.option('--time-first-seen-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""If specified, only errors with a first seen time earlier than this parameter will be included in the search (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-first-seen-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""If specified, only errors with a first seen time later than this parameter will be included in the search (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-last-seen-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""If specified, only errors with a last seen time earlier than this parameter will be included in the search (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-last-seen-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""If specified, only errors with a last seen time later than this parameter will be included in the search (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_FIRST_SEEN", "TIME_LAST_SEEN"]), help=u"""The field to sort FleetError. Only one sort order may be provided. Default order is **descending**. If no value is specified _timeLastSeen_ is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'FleetErrorCollection'})
+@cli_util.wrap_exceptions
+def list_fleet_errors(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, fleet_id, time_first_seen_less_than_or_equal_to, time_first_seen_greater_than_or_equal_to, time_last_seen_less_than_or_equal_to, time_last_seen_greater_than_or_equal_to, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if fleet_id is not None:
+        kwargs['fleet_id'] = fleet_id
+    if time_first_seen_less_than_or_equal_to is not None:
+        kwargs['time_first_seen_less_than_or_equal_to'] = time_first_seen_less_than_or_equal_to
+    if time_first_seen_greater_than_or_equal_to is not None:
+        kwargs['time_first_seen_greater_than_or_equal_to'] = time_first_seen_greater_than_or_equal_to
+    if time_last_seen_less_than_or_equal_to is not None:
+        kwargs['time_last_seen_less_than_or_equal_to'] = time_last_seen_less_than_or_equal_to
+    if time_last_seen_greater_than_or_equal_to is not None:
+        kwargs['time_last_seen_greater_than_or_equal_to'] = time_last_seen_greater_than_or_equal_to
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_fleet_errors,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_fleet_errors,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_fleet_errors(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @fleet_group.command(name=cli_util.override('jms.list_fleets.command_name', 'list'), help=u"""Returns a list of all the Fleets contained by a compartment. The query parameter `compartmentId` is required unless the query parameter `id` is specified. \n[Command Reference](listFleets)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--id', help=u"""The ID.""")
@@ -2373,6 +2472,7 @@ def list_java_releases(ctx, from_json, all_pages, page_size, release_version, fa
 @cli_util.option('--agent-id', help=u"""The ManagementAgent (OMA) or Instance (OCA) [OCID] that identifies the Agent.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "NEEDS_ATTENTION", "DELETED"]), help=u"""Filter JmsPlugin with its lifecycle state.""")
 @cli_util.option('--availability-status', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "SILENT", "NOT_AVAILABLE"]), help=u"""Filter JmsPlugin with its availability status.""")
+@cli_util.option('--agent-type', type=custom_types.CliCaseInsensitiveChoice(["OMA", "OCA"]), help=u"""Filter JmsPlugin with agent type.""")
 @cli_util.option('--time-registered-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""If present, only plugins with a registration time before this parameter are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-last-seen-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""If present, only plugins with a last seen time before this parameter are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -2387,7 +2487,7 @@ def list_java_releases(ctx, from_json, all_pages, page_size, release_version, fa
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'JmsPluginCollection'})
 @cli_util.wrap_exceptions
-def list_jms_plugins(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, id, fleet_id, agent_id, lifecycle_state, availability_status, time_registered_less_than_or_equal_to, time_last_seen_less_than_or_equal_to, limit, page, sort_order, sort_by, hostname_contains):
+def list_jms_plugins(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, id, fleet_id, agent_id, lifecycle_state, availability_status, agent_type, time_registered_less_than_or_equal_to, time_last_seen_less_than_or_equal_to, limit, page, sort_order, sort_by, hostname_contains):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2407,6 +2507,8 @@ def list_jms_plugins(ctx, from_json, all_pages, page_size, compartment_id, compa
         kwargs['lifecycle_state'] = lifecycle_state
     if availability_status is not None:
         kwargs['availability_status'] = availability_status
+    if agent_type is not None:
+        kwargs['agent_type'] = agent_type
     if time_registered_less_than_or_equal_to is not None:
         kwargs['time_registered_less_than_or_equal_to'] = time_registered_less_than_or_equal_to
     if time_last_seen_less_than_or_equal_to is not None:
@@ -2517,6 +2619,7 @@ def list_jre_usage(ctx, from_json, all_pages, page_size, compartment_id, host_id
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the related managed instance.""")
 @cli_util.option('--application-id', help=u"""The Fleet-unique identifier of the related application.""")
+@cli_util.option('--application-name', help=u"""The name of the application.""")
 @cli_util.option('--host-name', help=u"""The host [OCID] of the managed instance.""")
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -2531,7 +2634,7 @@ def list_jre_usage(ctx, from_json, all_pages, page_size, compartment_id, host_id
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'PerformanceTuningAnalysisResultCollection'})
 @cli_util.wrap_exceptions
-def list_performance_tuning_analysis_results(ctx, from_json, all_pages, page_size, fleet_id, managed_instance_id, application_id, host_name, time_start, time_end, limit, page, sort_order, sort_by):
+def list_performance_tuning_analysis_results(ctx, from_json, all_pages, page_size, fleet_id, managed_instance_id, application_id, application_name, host_name, time_start, time_end, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2544,6 +2647,8 @@ def list_performance_tuning_analysis_results(ctx, from_json, all_pages, page_siz
         kwargs['managed_instance_id'] = managed_instance_id
     if application_id is not None:
         kwargs['application_id'] = application_id
+    if application_name is not None:
+        kwargs['application_name'] = application_name
     if host_name is not None:
         kwargs['host_name'] = host_name
     if time_start is not None:
@@ -2580,6 +2685,77 @@ def list_performance_tuning_analysis_results(ctx, from_json, all_pages, page_siz
     else:
         result = client.list_performance_tuning_analysis_results(
             fleet_id=fleet_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@plugin_error_summary_group.command(name=cli_util.override('jms.list_plugin_errors.command_name', 'list-plugin-errors'), help=u"""Returns a list of plugin errors that describe all detected errors. \n[Command Reference](listPluginErrors)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Flag to determine whether the info should be gathered only in the compartment or in the compartment and its subcompartments.""")
+@cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the managed instance.""")
+@cli_util.option('--time-first-seen-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""If specified, only errors with a first seen time earlier than this parameter will be included in the search (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-first-seen-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""If specified, only errors with a first seen time later than this parameter will be included in the search (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-last-seen-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""If specified, only errors with a last seen time earlier than this parameter will be included in the search (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-last-seen-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""If specified, only errors with a last seen time later than this parameter will be included in the search (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_FIRST_SEEN", "TIME_LAST_SEEN"]), help=u"""The field to sort PluginError. Only one sort order may be provided. Default order is **descending**. If no value is specified _timeLastSeen_ is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'PluginErrorCollection'})
+@cli_util.wrap_exceptions
+def list_plugin_errors(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, managed_instance_id, time_first_seen_less_than_or_equal_to, time_first_seen_greater_than_or_equal_to, time_last_seen_less_than_or_equal_to, time_last_seen_greater_than_or_equal_to, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if managed_instance_id is not None:
+        kwargs['managed_instance_id'] = managed_instance_id
+    if time_first_seen_less_than_or_equal_to is not None:
+        kwargs['time_first_seen_less_than_or_equal_to'] = time_first_seen_less_than_or_equal_to
+    if time_first_seen_greater_than_or_equal_to is not None:
+        kwargs['time_first_seen_greater_than_or_equal_to'] = time_first_seen_greater_than_or_equal_to
+    if time_last_seen_less_than_or_equal_to is not None:
+        kwargs['time_last_seen_less_than_or_equal_to'] = time_last_seen_less_than_or_equal_to
+    if time_last_seen_greater_than_or_equal_to is not None:
+        kwargs['time_last_seen_greater_than_or_equal_to'] = time_last_seen_greater_than_or_equal_to
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_plugin_errors,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_plugin_errors,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_plugin_errors(
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -3608,6 +3784,35 @@ def summarize_deployed_application_usage(ctx, from_json, fleet_id, server_key, s
     cli_util.render_response(result, ctx)
 
 
+@fleet_error_aggregation_group.command(name=cli_util.override('jms.summarize_fleet_errors.command_name', 'summarize-fleet-errors'), help=u"""Returns a high level summary of FleetErrors. \n[Command Reference](summarizeFleetErrors)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Flag to determine whether the info should be gathered only in the compartment or in the compartment and its subcompartments.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'FleetErrorAggregationCollection'})
+@cli_util.wrap_exceptions
+def summarize_fleet_errors(ctx, from_json, compartment_id, compartment_id_in_subtree, limit, page):
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.summarize_fleet_errors(
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @installation_usage_group.command(name=cli_util.override('jms.summarize_installation_usage.command_name', 'summarize'), help=u"""List Java installation usage in a Fleet filtered by query parameters. \n[Command Reference](summarizeInstallationUsage)""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @cli_util.option('--jre-vendor', help=u"""The vendor of the related Java Runtime.""")
@@ -3992,8 +4197,38 @@ def summarize_managed_instance_usage(ctx, from_json, fleet_id, managed_instance_
     cli_util.render_response(result, ctx)
 
 
+@plugin_error_aggregation_group.command(name=cli_util.override('jms.summarize_plugin_errors.command_name', 'summarize-plugin-errors'), help=u"""Returns a high level summary of PluginErrors. \n[Command Reference](summarizePluginErrors)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Flag to determine whether the info should be gathered only in the compartment or in the compartment and its subcompartments.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'PluginErrorAggregationCollection'})
+@cli_util.wrap_exceptions
+def summarize_plugin_errors(ctx, from_json, compartment_id, compartment_id_in_subtree, limit, page):
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.summarize_plugin_errors(
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @fleet_group.command(name=cli_util.override('jms.summarize_resource_inventory.command_name', 'summarize-resource-inventory'), help=u"""Retrieve the inventory of JMS resources in the specified compartment: a list of the number of _active_ fleets, managed instances, Java Runtimes, Java installations, and applications. \n[Command Reference](summarizeResourceInventory)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Flag to determine whether the info should be gathered only in the compartment or in the compartment and its subcompartments.""")
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4001,11 +4236,13 @@ def summarize_managed_instance_usage(ctx, from_json, fleet_id, managed_instance_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'ResourceInventory'})
 @cli_util.wrap_exceptions
-def summarize_resource_inventory(ctx, from_json, compartment_id, time_start, time_end):
+def summarize_resource_inventory(ctx, from_json, compartment_id, compartment_id_in_subtree, time_start, time_end):
 
     kwargs = {}
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
     if time_start is not None:
         kwargs['time_start'] = time_start
     if time_end is not None:

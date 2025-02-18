@@ -24268,6 +24268,7 @@ def list_maintenance_run_history(ctx, from_json, all_pages, page_size, compartme
 @cli_util.option('--maintenance-type', type=custom_types.CliCaseInsensitiveChoice(["PLANNED", "UNPLANNED"]), help=u"""The maintenance type.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--is-local-adg', type=click.BOOL, help=u"""A filter to return the maintenance history results for the local standby Autonomous Database Serverless only.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIME_SCHEDULED", "TIME_ENDED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIME_SCHEDULED and TIME_ENDED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
 **Note:** If you do not include the availability domain filter, the resources are grouped by availability domain, then sorted.""")
@@ -24282,7 +24283,7 @@ def list_maintenance_run_history(ctx, from_json, all_pages, page_size, compartme
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[MaintenanceRunSummary]'})
 @cli_util.wrap_exceptions
-def list_maintenance_runs(ctx, from_json, all_pages, page_size, compartment_id, target_resource_id, target_resource_type, maintenance_type, limit, page, sort_by, sort_order, lifecycle_state, availability_domain, maintenance_subtype):
+def list_maintenance_runs(ctx, from_json, all_pages, page_size, compartment_id, target_resource_id, target_resource_type, maintenance_type, limit, page, is_local_adg, sort_by, sort_order, lifecycle_state, availability_domain, maintenance_subtype):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -24300,6 +24301,8 @@ def list_maintenance_runs(ctx, from_json, all_pages, page_size, compartment_id, 
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if is_local_adg is not None:
+        kwargs['is_local_adg'] = is_local_adg
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
