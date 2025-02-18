@@ -442,6 +442,7 @@ For information on interactive features, see {cli_constants.INTERACTIVE_CLI_DOCU
 @click.pass_context
 def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, realm_specific_endpoint, cert_bundle, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, proxy, debug, cli_auto_prompt, connection_timeout, read_timeout, help):
 
+    start_time1 = timer()
     click.exceptions.UsageError.show = cli_util.update_click_help_message
     if max_retries and no_retry:
         raise click.UsageError('The option --max-retries is not applicable when using the --no-retry flag.')
@@ -497,9 +498,9 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, re
         ctx.obj = initial_dict
     else:
         ctx.obj.update(initial_dict)
-
+    start_time2 = timer()
     load_default_values(ctx, cli_rc_file, profile)
-
+    end_time2 = timer()
     # Show help in any case if there are no subcommands, or if the help option
     # is used but there are subcommands, then set a flag for user later.
     if not ctx.invoked_subcommand and not (cli_constants.OCI_CLI_AUTO_PROMPT_ENV_VAR in os.environ or cli_auto_prompt):
@@ -517,9 +518,10 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, re
     cli_metrics.Metrics.update_metric("NUM_INVOCATIONS", ctx.obj['debug'])
     ctx.obj['start_time'] = start
 
+    start_time3 = timer()
     if not (cli_constants.OCI_CLI_AUTO_PROMPT_ENV_VAR in os.environ or cli_auto_prompt):
         check_key_for_security(auth, config_file, profile)
-
+    end_time3 = timer()
     # Support inititialization for a subcommand.
     # In an "extended" file, add a mapping of the subcommand to the subcommand_init_module.
     # The subcommand_init_module can be the extended file itself or a separate module altogether.
@@ -549,6 +551,9 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, re
         for env in os.environ:
             if env in ['http_proxy', 'HTTP_PROXY', 'https_proxy', 'HTTPS_PROXY', 'no_proxy', 'NO_PROXY', 'REQUESTS_CA_BUNDLE'] or 'OCI_' in env:
                 print("env {} is set".format(env))
+        print(f"Time taken to import modules: {start_time1 - start} seconds")
+        print(f"Time taken to load default values: {end_time2 - start_time2} seconds")
+        print(f"Time taken to check label: {end_time3 - start_time3} seconds")
 
 
 def cli_auto_prompt_env():
