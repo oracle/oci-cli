@@ -75,8 +75,9 @@ managedinstance_cli.windows_update_group.add_command(managedinstance_cli.list_wi
 os_management_hub_service_cli.os_management_hub_service_group.add_command(managedinstance_cli.windows_update_group)
 
 
-@cli_util.copy_params_from_generated_command(managedinstance_cli.list_managed_instances, params_to_exclude=['is_attached_to_group_or_lifecycle_stage', 'lifecycle_stage', 'lifecycle_stage_not_equal_to', 'group_not_equal_to', 'lifecycle_environment', 'lifecycle_environment_not_equal_to', 'location_not_equal_to', 'profile_not_equal_to', 'profile_parameterconflict', 'is_managed_by_autonomous_linux'])
+@cli_util.copy_params_from_generated_command(managedinstance_cli.list_managed_instances, params_to_exclude=['is_attached_to_group_or_lifecycle_stage', 'lifecycle_stage', 'lifecycle_stage_not_equal_to', 'group_not_equal_to', 'lifecycle_environment', 'lifecycle_environment_not_equal_to', 'location_not_equal_to', 'profile_not_equal_to', 'profile_parameterconflict', 'is_managed_by_autonomous_linux', 'management_station_not_equal_to'])
 @managedinstance_cli.managed_instance_group.command(name=managedinstance_cli.list_managed_instances.name, help=managedinstance_cli.list_managed_instances.help)
+@cli_util.option('--management-station-ne', multiple=True, help="""A filter to return resources that aren't associated with the specified management station [OCIDs].""")
 @cli_util.option('--lifecycle-env-id', help="""A filter to return only managed instances in a specific lifecycle environment.""")
 @cli_util.option('--lifecycle-env-id-ne', help="""A filter to return only managed instances that aren't in a specific lifecycle environment.""")
 @cli_util.option('--location-ne', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help="""A filter to return only resources whose location does not match the given value.""")
@@ -91,6 +92,10 @@ os_management_hub_service_cli.os_management_hub_service_group.add_command(manage
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'display-name': {'module': 'os_management_hub', 'class': 'list[string]'}, 'advisory-name': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'ManagedInstanceCollection'})
 @cli_util.wrap_exceptions
 def list_managed_instances_extended(ctx, **kwargs):
+
+    if 'management_station_ne' in kwargs:
+        kwargs['management_station_not_equal_to'] = kwargs['management_station_ne']
+        kwargs.pop('management_station_ne')
 
     if 'lifecycle_env_id' in kwargs:
         kwargs['lifecycle_environment'] = kwargs['lifecycle_env_id']

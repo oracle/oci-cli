@@ -2243,17 +2243,20 @@ def create_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--storage-mount-configuration-details-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The storage mount details to mount to the instance running the pipeline step.
+
+This option is a JSON list with items of type StorageMountConfigurationDetails.  For documentation on StorageMountConfigurationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/StorageMountConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'configuration-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'configuration-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Pipeline'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Pipeline'})
 @cli_util.wrap_exceptions
-def create_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, step_details, display_name, description, configuration_details, log_configuration_details, infrastructure_configuration_details, freeform_tags, defined_tags):
+def create_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, step_details, display_name, description, configuration_details, log_configuration_details, infrastructure_configuration_details, storage_mount_configuration_details_list, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2277,6 +2280,9 @@ def create_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if infrastructure_configuration_details is not None:
         _details['infrastructureConfigurationDetails'] = cli_util.parse_json_parameter("infrastructure_configuration_details", infrastructure_configuration_details)
+
+    if storage_mount_configuration_details_list is not None:
+        _details['storageMountConfigurationDetailsList'] = cli_util.parse_json_parameter("storage_mount_configuration_details_list", storage_mount_configuration_details_list)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -2323,6 +2329,9 @@ def create_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--description', help=u"""A short description of the pipeline.""")
 @cli_util.option('--log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--storage-mount-configuration-details-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The storage mount details to mount to the instance running the pipeline step.
+
+This option is a JSON list with items of type StorageMountConfigurationDetails.  For documentation on StorageMountConfigurationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/StorageMountConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-details-maximum-runtime-in-minutes', type=click.INT, help=u"""A time bound for the execution of the entire Pipeline. Timer starts when the Pipeline Run is in progress.""")
@@ -2331,12 +2340,12 @@ def create_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}}, output_type={'module': 'data_science', 'class': 'Pipeline'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}}, output_type={'module': 'data_science', 'class': 'Pipeline'})
 @cli_util.wrap_exceptions
-def create_pipeline_pipeline_default_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, step_details, display_name, description, log_configuration_details, infrastructure_configuration_details, freeform_tags, defined_tags, configuration_details_maximum_runtime_in_minutes, configuration_details_environment_variables, configuration_details_command_line_arguments):
+def create_pipeline_pipeline_default_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, step_details, display_name, description, log_configuration_details, infrastructure_configuration_details, storage_mount_configuration_details_list, freeform_tags, defined_tags, configuration_details_maximum_runtime_in_minutes, configuration_details_environment_variables, configuration_details_command_line_arguments):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2358,6 +2367,9 @@ def create_pipeline_pipeline_default_configuration_details(ctx, from_json, wait_
 
     if infrastructure_configuration_details is not None:
         _details['infrastructureConfigurationDetails'] = cli_util.parse_json_parameter("infrastructure_configuration_details", infrastructure_configuration_details)
+
+    if storage_mount_configuration_details_list is not None:
+        _details['storageMountConfigurationDetailsList'] = cli_util.parse_json_parameter("storage_mount_configuration_details_list", storage_mount_configuration_details_list)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -7027,6 +7039,9 @@ def update_notebook_session(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.option('--configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--storage-mount-configuration-details-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The storage mount details to mount to the instance running the pipeline step.
+
+This option is a JSON list with items of type StorageMountConfigurationDetails.  For documentation on StorageMountConfigurationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/StorageMountConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--step-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of update details for each step. Only step configurations and step infrastructure configurations are allowed to be updated.
 
 This option is a JSON list with items of type PipelineStepUpdateDetails.  For documentation on PipelineStepUpdateDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/PipelineStepUpdateDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7037,18 +7052,18 @@ This option is a JSON list with items of type PipelineStepUpdateDetails.  For do
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'configuration-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'configuration-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Pipeline'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-details': {'module': 'data_science', 'class': 'PipelineConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Pipeline'})
 @cli_util.wrap_exceptions
-def update_pipeline(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, display_name, description, configuration_details, infrastructure_configuration_details, log_configuration_details, step_details, freeform_tags, defined_tags, if_match):
+def update_pipeline(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, display_name, description, configuration_details, infrastructure_configuration_details, log_configuration_details, storage_mount_configuration_details_list, step_details, freeform_tags, defined_tags, if_match):
 
     if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
     if not force:
-        if configuration_details or infrastructure_configuration_details or log_configuration_details or step_details or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to configuration-details and infrastructure-configuration-details and log-configuration-details and step-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if configuration_details or infrastructure_configuration_details or log_configuration_details or storage_mount_configuration_details_list or step_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to configuration-details and infrastructure-configuration-details and log-configuration-details and storage-mount-configuration-details-list and step-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -7072,6 +7087,9 @@ def update_pipeline(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if log_configuration_details is not None:
         _details['logConfigurationDetails'] = cli_util.parse_json_parameter("log_configuration_details", log_configuration_details)
+
+    if storage_mount_configuration_details_list is not None:
+        _details['storageMountConfigurationDetailsList'] = cli_util.parse_json_parameter("storage_mount_configuration_details_list", storage_mount_configuration_details_list)
 
     if step_details is not None:
         _details['stepDetails'] = cli_util.parse_json_parameter("step_details", step_details)
@@ -7120,6 +7138,9 @@ def update_pipeline(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--description', help=u"""A short description for the resource.""")
 @cli_util.option('--infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--storage-mount-configuration-details-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The storage mount details to mount to the instance running the pipeline step.
+
+This option is a JSON list with items of type StorageMountConfigurationDetails.  For documentation on StorageMountConfigurationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/StorageMountConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--step-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of update details for each step. Only step configurations and step infrastructure configurations are allowed to be updated.
 
 This option is a JSON list with items of type PipelineStepUpdateDetails.  For documentation on PipelineStepUpdateDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/datascience/20190101/datatypes/PipelineStepUpdateDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7133,18 +7154,18 @@ This option is a JSON list with items of type PipelineStepUpdateDetails.  For do
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "FAILED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}}, output_type={'module': 'data_science', 'class': 'Pipeline'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'infrastructure-configuration-details': {'module': 'data_science', 'class': 'PipelineInfrastructureConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'PipelineLogConfigurationDetails'}, 'storage-mount-configuration-details-list': {'module': 'data_science', 'class': 'list[StorageMountConfigurationDetails]'}, 'step-details': {'module': 'data_science', 'class': 'list[PipelineStepUpdateDetails]'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'configuration-details-environment-variables': {'module': 'data_science', 'class': 'dict(str, string)'}}, output_type={'module': 'data_science', 'class': 'Pipeline'})
 @cli_util.wrap_exceptions
-def update_pipeline_pipeline_default_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, display_name, description, infrastructure_configuration_details, log_configuration_details, step_details, freeform_tags, defined_tags, if_match, configuration_details_maximum_runtime_in_minutes, configuration_details_environment_variables, configuration_details_command_line_arguments):
+def update_pipeline_pipeline_default_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, display_name, description, infrastructure_configuration_details, log_configuration_details, storage_mount_configuration_details_list, step_details, freeform_tags, defined_tags, if_match, configuration_details_maximum_runtime_in_minutes, configuration_details_environment_variables, configuration_details_command_line_arguments):
 
     if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
     if not force:
-        if infrastructure_configuration_details or log_configuration_details or step_details or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to infrastructure-configuration-details and log-configuration-details and step-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if infrastructure_configuration_details or log_configuration_details or storage_mount_configuration_details_list or step_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to infrastructure-configuration-details and log-configuration-details and storage-mount-configuration-details-list and step-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -7166,6 +7187,9 @@ def update_pipeline_pipeline_default_configuration_details(ctx, from_json, force
 
     if log_configuration_details is not None:
         _details['logConfigurationDetails'] = cli_util.parse_json_parameter("log_configuration_details", log_configuration_details)
+
+    if storage_mount_configuration_details_list is not None:
+        _details['storageMountConfigurationDetailsList'] = cli_util.parse_json_parameter("storage_mount_configuration_details_list", storage_mount_configuration_details_list)
 
     if step_details is not None:
         _details['stepDetails'] = cli_util.parse_json_parameter("step_details", step_details)

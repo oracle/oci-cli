@@ -84,6 +84,7 @@ This option is a JSON list with items of type ManagedInstanceLocation.  For docu
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--retry-intervals', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The amount of time in minutes to wait until retrying the scheduled job. If set, the service will automatically retry a failed scheduled job after the interval. For example, you could set the interval to [2,5,10]. If the initial execution of the job fails, the service waits 2 minutes and then retries. If that fails, the service waits 5 minutes and then retries. If that fails, the service waits 10 minutes and then retries.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-managed-by-autonomous-linux', type=click.BOOL, help=u"""Indicates whether this scheduled job is managed by the Autonomous Linux service.""")
+@cli_util.option('--work-request-id', help=u"""The [OCID] for the work request that will be rerun.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -92,7 +93,7 @@ This option is a JSON list with items of type ManagedInstanceLocation.  For docu
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'locations': {'module': 'os_management_hub', 'class': 'list[ManagedInstanceLocation]'}, 'managed-instance-ids': {'module': 'os_management_hub', 'class': 'list[string]'}, 'managed-instance-group-ids': {'module': 'os_management_hub', 'class': 'list[string]'}, 'managed-compartment-ids': {'module': 'os_management_hub', 'class': 'list[string]'}, 'lifecycle-stage-ids': {'module': 'os_management_hub', 'class': 'list[string]'}, 'operations': {'module': 'os_management_hub', 'class': 'list[ScheduledJobOperation]'}, 'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'retry-intervals': {'module': 'os_management_hub', 'class': 'list[integer]'}}, output_type={'module': 'os_management_hub', 'class': 'ScheduledJob'})
 @cli_util.wrap_exceptions
-def create_scheduled_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, schedule_type, time_next_execution, operations, display_name, description, locations, recurring_rule, managed_instance_ids, managed_instance_group_ids, managed_compartment_ids, lifecycle_stage_ids, is_subcompartment_included, freeform_tags, defined_tags, retry_intervals, is_managed_by_autonomous_linux):
+def create_scheduled_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, schedule_type, time_next_execution, operations, display_name, description, locations, recurring_rule, managed_instance_ids, managed_instance_group_ids, managed_compartment_ids, lifecycle_stage_ids, is_subcompartment_included, freeform_tags, defined_tags, retry_intervals, is_managed_by_autonomous_linux, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -141,6 +142,9 @@ def create_scheduled_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if is_managed_by_autonomous_linux is not None:
         _details['isManagedByAutonomousLinux'] = is_managed_by_autonomous_linux
+
+    if work_request_id is not None:
+        _details['workRequestId'] = work_request_id
 
     client = cli_util.build_client('os_management_hub', 'scheduled_job', ctx)
     result = client.create_scheduled_job(
@@ -268,7 +272,7 @@ def get_scheduled_job(ctx, from_json, scheduled_job_id):
 @cli_util.option('--managed-instance-group-id', help=u"""The [OCID] of the managed instance group. This filter returns resources associated with this group.""")
 @cli_util.option('--managed-compartment-id', help=u"""The [OCID] of the managed compartment. This filter returns resources associated with this compartment.""")
 @cli_util.option('--lifecycle-stage-id', help=u"""The [OCID] of the lifecycle stage. This resource returns resources associated with this lifecycle stage.""")
-@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["INSTALL_PACKAGES", "UPDATE_PACKAGES", "REMOVE_PACKAGES", "UPDATE_ALL", "UPDATE_SECURITY", "UPDATE_BUGFIX", "UPDATE_ENHANCEMENT", "UPDATE_OTHER", "UPDATE_KSPLICE_USERSPACE", "UPDATE_KSPLICE_KERNEL", "MANAGE_MODULE_STREAMS", "SWITCH_MODULE_STREAM", "ATTACH_SOFTWARE_SOURCES", "DETACH_SOFTWARE_SOURCES", "SYNC_MANAGEMENT_STATION_MIRROR", "PROMOTE_LIFECYCLE", "INSTALL_WINDOWS_UPDATES", "INSTALL_ALL_WINDOWS_UPDATES", "INSTALL_SECURITY_WINDOWS_UPDATES", "INSTALL_BUGFIX_WINDOWS_UPDATES", "INSTALL_ENHANCEMENT_WINDOWS_UPDATES", "INSTALL_OTHER_WINDOWS_UPDATES"]), help=u"""A filter to return only scheduled jobs with the given operation type.""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["INSTALL_PACKAGES", "UPDATE_PACKAGES", "REMOVE_PACKAGES", "UPDATE_ALL", "UPDATE_SECURITY", "UPDATE_BUGFIX", "UPDATE_ENHANCEMENT", "UPDATE_OTHER", "UPDATE_KSPLICE_USERSPACE", "UPDATE_KSPLICE_KERNEL", "MANAGE_MODULE_STREAMS", "SWITCH_MODULE_STREAM", "ATTACH_SOFTWARE_SOURCES", "DETACH_SOFTWARE_SOURCES", "SYNC_MANAGEMENT_STATION_MIRROR", "PROMOTE_LIFECYCLE", "INSTALL_WINDOWS_UPDATES", "INSTALL_ALL_WINDOWS_UPDATES", "INSTALL_SECURITY_WINDOWS_UPDATES", "INSTALL_BUGFIX_WINDOWS_UPDATES", "INSTALL_ENHANCEMENT_WINDOWS_UPDATES", "INSTALL_OTHER_WINDOWS_UPDATES", "REBOOT", "RERUN_WORK_REQUEST"]), help=u"""A filter to return only scheduled jobs with the given operation type.""")
 @cli_util.option('--schedule-type', type=custom_types.CliCaseInsensitiveChoice(["ONETIME", "RECURRING"]), help=u"""A filter to return only scheduled jobs of the given scheduling type (one-time or recurring).""")
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""A filter to return only resources with a date on or after the given value, in ISO 8601 format.
 
@@ -401,7 +405,7 @@ def run_scheduled_job_now(ctx, from_json, scheduled_job_id, if_match):
 @cli_util.option('--display-name', help=u"""User-friendly name for the scheduled job. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""User-specified description for the scheduled job. Avoid entering confidential information.""")
 @cli_util.option('--schedule-type', type=custom_types.CliCaseInsensitiveChoice(["ONETIME", "RECURRING"]), help=u"""The type of scheduling frequency for the job.""")
-@cli_util.option('--time-next-execution', type=custom_types.CLI_DATETIME, help=u"""The desired time of the next execution of this scheduled job (in [RFC 3339] format).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-next-execution', type=custom_types.CLI_DATETIME, help=u"""The time of the next execution of this scheduled job (in [RFC 3339] format).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--recurring-rule', help=u"""The frequency schedule for a recurring scheduled job.""")
 @cli_util.option('--operations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of operations this scheduled job needs to perform. A scheduled job supports only one operation type, unless it is one of the following: * UPDATE_PACKAGES * UPDATE_ALL * UPDATE_SECURITY * UPDATE_BUGFIX * UPDATE_ENHANCEMENT * UPDATE_OTHER * UPDATE_KSPLICE_USERSPACE * UPDATE_KSPLICE_KERNEL
 

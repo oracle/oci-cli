@@ -204,3 +204,18 @@ def change_lifecycle_environment_compartment_extended(ctx, **kwargs):
         kwargs.pop('lifecycle_env_id')
 
     ctx.invoke(lifecycleenvironment_cli.change_lifecycle_environment_compartment, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(lifecycleenvironment_cli.reboot_lifecycle_stage, params_to_exclude=['lifecycle_stage_id'])
+@lifecycleenvironment_cli.lifecycle_stage_group.command(name=lifecycleenvironment_cli.reboot_lifecycle_stage.name, help=lifecycleenvironment_cli.reboot_lifecycle_stage.help)
+@cli_util.option('--stage-id', required=True, help=u"""The [OCID] of the lifecycle stage. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@cli_util.wrap_exceptions
+def reboot_lifecycle_stage_extended(ctx, **kwargs):
+
+    if 'stage_id' in kwargs:
+        kwargs['lifecycle_stage_id'] = kwargs['stage_id']
+        kwargs.pop('stage_id')
+
+    ctx.invoke(lifecycleenvironment_cli.reboot_lifecycle_stage, **kwargs)

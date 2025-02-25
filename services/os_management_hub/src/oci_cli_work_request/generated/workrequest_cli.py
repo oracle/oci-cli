@@ -33,7 +33,7 @@ os_management_hub_service_cli.os_management_hub_service_group.add_command(work_r
 work_request_root_group.add_command(work_request_group)
 
 
-@work_request_group.command(name=cli_util.override('work_request.get_work_request.command_name', 'get'), help=u"""Gets information about the specified work request. \n[Command Reference](getWorkRequest)""")
+@work_request_group.command(name=cli_util.override('work_request.get_work_request.command_name', 'get'), help=u"""Returns information about the specified work request. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -55,7 +55,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('work_request.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Gets the errors for the specified work request. \n[Command Reference](listWorkRequestErrors)""")
+@work_request_group.command(name=cli_util.override('work_request.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Returns the errors for the specified work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -116,7 +116,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('work_request.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Gets the logs for the specified work request. \n[Command Reference](listWorkRequestLogs)""")
+@work_request_group.command(name=cli_util.override('work_request.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Returns the logs for the specified work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -180,7 +180,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @work_request_group.command(name=cli_util.override('work_request.list_work_requests.command_name', 'list'), help=u"""Lists work requests that match the specified compartment or work request OCID. Filter the list against a variety of criteria including but not limited to its name, status, and operation type. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--work-request-id', help=u"""The [OCID] of the work request.""")
-@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help=u"""A filter to return work requests that match the given status.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help=u"""A filter to return work requests that match the given status.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource. This filter returns resources associated with the specified resource.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -193,9 +193,10 @@ Example: `50`""")
 @cli_util.option('--initiator-id', help=u"""The [OCID] of the schedule job that initiated the work request.""")
 @cli_util.option('--parent-id', help=u"""The [OCID] of the parent work request.""")
 @cli_util.option('--parent-resources-not-equal-to', multiple=True, help=u"""A filter to return the resources whose parent resources are not the same as the given resource [OCIDs].""")
-@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["INSTALL_PACKAGES", "REMOVE_PACKAGES", "UPDATE_PACKAGES", "UPDATE_ALL_PACKAGES", "UPDATE_SECURITY", "UPDATE_BUGFIX", "UPDATE_ENHANCEMENT", "UPDATE_OTHER", "UPDATE_KSPLICE_KERNEL", "UPDATE_KSPLICE_USERSPACE", "ENABLE_MODULE_STREAMS", "DISABLE_MODULE_STREAMS", "SWITCH_MODULE_STREAM", "INSTALL_MODULE_PROFILES", "REMOVE_MODULE_PROFILES", "SET_SOFTWARE_SOURCES", "LIST_PACKAGES", "SET_MANAGEMENT_STATION_CONFIG", "SYNC_MANAGEMENT_STATION_MIRROR", "UPDATE_MANAGEMENT_STATION_SOFTWARE", "UPDATE", "MODULE_ACTIONS", "LIFECYCLE_PROMOTION", "CREATE_SOFTWARE_SOURCE", "UPDATE_SOFTWARE_SOURCE", "IMPORT_CONTENT", "SYNC_AGENT_CONFIG", "INSTALL_WINDOWS_UPDATES", "LIST_WINDOWS_UPDATE", "GET_WINDOWS_UPDATE_DETAILS", "INSTALL_ALL_WINDOWS_UPDATES", "INSTALL_SECURITY_WINDOWS_UPDATES", "INSTALL_BUGFIX_WINDOWS_UPDATES", "INSTALL_ENHANCEMENT_WINDOWS_UPDATES", "INSTALL_OTHER_WINDOWS_UPDATES", "REMOVE_CONTENT", "UNREGISTER_MANAGED_INSTANCE"]), multiple=True, help=u"""The asynchronous operation tracked by this work request. The filter returns only resources that match the given OperationType.""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["INSTALL_PACKAGES", "REMOVE_PACKAGES", "UPDATE_PACKAGES", "UPDATE_ALL_PACKAGES", "UPDATE_SECURITY", "UPDATE_BUGFIX", "UPDATE_ENHANCEMENT", "UPDATE_OTHER", "UPDATE_KSPLICE_KERNEL", "UPDATE_KSPLICE_USERSPACE", "ENABLE_MODULE_STREAMS", "DISABLE_MODULE_STREAMS", "SWITCH_MODULE_STREAM", "INSTALL_MODULE_PROFILES", "REMOVE_MODULE_PROFILES", "SET_SOFTWARE_SOURCES", "LIST_PACKAGES", "SET_MANAGEMENT_STATION_CONFIG", "SYNC_MANAGEMENT_STATION_MIRROR", "UPDATE_MANAGEMENT_STATION_SOFTWARE", "UPDATE", "MODULE_ACTIONS", "LIFECYCLE_PROMOTION", "CREATE_SOFTWARE_SOURCE", "UPDATE_SOFTWARE_SOURCE", "IMPORT_CONTENT", "SYNC_AGENT_CONFIG", "INSTALL_WINDOWS_UPDATES", "LIST_WINDOWS_UPDATE", "GET_WINDOWS_UPDATE_DETAILS", "INSTALL_ALL_WINDOWS_UPDATES", "INSTALL_SECURITY_WINDOWS_UPDATES", "INSTALL_BUGFIX_WINDOWS_UPDATES", "INSTALL_ENHANCEMENT_WINDOWS_UPDATES", "INSTALL_OTHER_WINDOWS_UPDATES", "REMOVE_CONTENT", "UNREGISTER_MANAGED_INSTANCE", "REBOOT"]), multiple=True, help=u"""The asynchronous operation tracked by this work request. The filter returns only resources that match the given OperationType.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
 @cli_util.option('--retry-of-id', help=u"""A filter to return the work requests that are a retry of the given work request [OCIDs].""")
+@cli_util.option('--rerun-of-id', help=u"""A filter to return the work requests that are a rerun of the given work request [OCIDs].""")
 @cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter to return work requests that were created before the date provided (in [RFC 3339] format). Example: '2023-08-25T21:10:29.600Z'""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return work requests that were created on or after the date provided (in [RFC 3339] format). Example: '2023-08-25T21:10:29.600Z'""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--is-managed-by-autonomous-linux', type=click.BOOL, help=u"""Indicates whether to list only resources managed by the Autonomous Linux service.""")
@@ -206,7 +207,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'parent-resources-not-equal-to': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'WorkRequestSummaryCollection'})
 @cli_util.wrap_exceptions
-def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, work_request_id, status, resource_id, page, limit, sort_order, sort_by, initiator_id, parent_id, parent_resources_not_equal_to, operation_type, display_name_contains, retry_of_id, time_created_less_than, time_created_greater_than_or_equal_to, is_managed_by_autonomous_linux):
+def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, work_request_id, status, resource_id, page, limit, sort_order, sort_by, initiator_id, parent_id, parent_resources_not_equal_to, operation_type, display_name_contains, retry_of_id, rerun_of_id, time_created_less_than, time_created_greater_than_or_equal_to, is_managed_by_autonomous_linux):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -240,6 +241,8 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
         kwargs['display_name_contains'] = display_name_contains
     if retry_of_id is not None:
         kwargs['retry_of_id'] = retry_of_id
+    if rerun_of_id is not None:
+        kwargs['rerun_of_id'] = rerun_of_id
     if time_created_less_than is not None:
         kwargs['time_created_less_than'] = time_created_less_than
     if time_created_greater_than_or_equal_to is not None:
@@ -267,4 +270,71 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
         result = client.list_work_requests(
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@work_request_group.command(name=cli_util.override('work_request.rerun_work_request.command_name', 'rerun'), help=u"""Reruns a failed work for the specified work request [OCID]. Rerunning restarts the work on failed targets. \n[Command Reference](rerunWorkRequest)""")
+@cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
+@cli_util.option('--managed-instances', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of managed instance [OCIDs] to affected by the rerun of the work request.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--work-request-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'managed-instances': {'module': 'os_management_hub', 'class': 'list[string]'}, 'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'managed-instances': {'module': 'os_management_hub', 'class': 'list[string]'}, 'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@cli_util.wrap_exceptions
+def rerun_work_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, work_request_id, managed_instances, work_request_details, if_match):
+
+    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if managed_instances is not None:
+        _details['managedInstances'] = cli_util.parse_json_parameter("managed_instances", managed_instances)
+
+    if work_request_details is not None:
+        _details['workRequestDetails'] = cli_util.parse_json_parameter("work_request_details", work_request_details)
+
+    client = cli_util.build_client('os_management_hub', 'work_request', ctx)
+    result = client.rerun_work_request(
+        work_request_id=work_request_id,
+        rerun_work_request_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)

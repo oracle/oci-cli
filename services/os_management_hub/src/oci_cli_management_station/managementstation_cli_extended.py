@@ -50,9 +50,10 @@ def create_management_station_extended(ctx, **kwargs):
     ctx.invoke(managementstation_cli.create_management_station, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(managementstation_cli.list_management_stations, params_to_exclude=['id'])
+@cli_util.copy_params_from_generated_command(managementstation_cli.list_management_stations, params_to_exclude=['id', 'location_not_equal_to'])
 @managementstation_cli.management_station_group.command(name=managementstation_cli.list_management_stations.name, help=managementstation_cli.list_management_stations.help)
 @cli_util.option('--management-station-id', help=u"""The OCID of the management station.""")
+@cli_util.option('--location-ne', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help=u"""A filter to return only resources whose location does not match the given value.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management_hub', 'class': 'ManagementStationCollection'})
 @cli_util.wrap_exceptions
@@ -61,6 +62,10 @@ def list_management_stations_extended(ctx, **kwargs):
     if 'management_station_id' in kwargs:
         kwargs['id'] = kwargs['management_station_id']
         kwargs.pop('management_station_id')
+
+    if 'location_ne' in kwargs:
+        kwargs['location_not_equal_to'] = kwargs['location_ne']
+        kwargs.pop('location_ne')
 
     ctx.invoke(managementstation_cli.list_management_stations, **kwargs)
 

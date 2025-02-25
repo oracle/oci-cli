@@ -754,3 +754,52 @@ def create_pipeline_create_zero_etl_pipeline_details_extended(ctx, **kwargs):
         kwargs.pop('target_connection')
 
     ctx.invoke(goldengate_cli.create_pipeline_create_zero_etl_pipeline_details, **kwargs)
+
+
+# oci goldengate connection create-connection-create-databricks-connection-details -> oci goldengate connection create-databricks-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_databricks_connection_details, "create-databricks-connection")
+
+# oci goldengate connection update-connection-update-databricks-connection-details -> oci goldengate connection update-databricks-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_databricks_connection_details, "update-databricks-connection")
+
+# oci goldengate connection create-connection-create-google-pub-sub-connection-details -> oci goldengate connection create-google-pub-sub-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_google_pub_sub_connection_details, "create-google-pub-sub-connection")
+
+# oci goldengate connection update-connection-update-google-pub-sub-connection-details -> oci goldengate connection update-google-pub-sub-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_google_pub_sub_connection_details, "update-google-pub-sub-connection")
+
+# oci goldengate connection create-connection-create-microsoft-fabric-connection-details -> oci goldengate connection create-microsoft-fabric-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_microsoft_fabric_connection_details, "create-microsoft-fabric-connection")
+
+# oci goldengate connection update-connection-update-microsoft-fabric-connection-details -> oci goldengate connection update-microsoft-fabric-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_microsoft_fabric_connection_details, "update-microsoft-fabric-connection")
+
+
+@cli_util.copy_params_from_generated_command(goldengate_cli.create_connection_create_microsoft_fabric_connection_details, params_to_exclude=['endpoint_parameterconflict'])
+@goldengate_cli.connection_group.command(name=goldengate_cli.create_connection_create_microsoft_fabric_connection_details.name, help=goldengate_cli.create_connection_create_microsoft_fabric_connection_details.help)
+@cli_util.option('--connection-endpoint', help=u"""Optional Microsoft Fabric service endpoint. Default value: https://onelake.dfs.fabric.microsoft.com""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_microsoft_fabric_connection_details_extended(ctx, **kwargs):
+
+    if 'connection_endpoint' in kwargs:
+        kwargs['endpoint_parameterconflict'] = kwargs['connection_endpoint']
+        kwargs.pop('connection_endpoint')
+
+    ctx.invoke(goldengate_cli.create_connection_create_microsoft_fabric_connection_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(goldengate_cli.update_connection_update_microsoft_fabric_connection_details, params_to_exclude=['endpoint_parameterconflict'])
+@goldengate_cli.connection_group.command(name=goldengate_cli.update_connection_update_microsoft_fabric_connection_details.name, help=goldengate_cli.update_connection_update_microsoft_fabric_connection_details.help)
+@cli_util.option('--connection-endpoint', help=u"""Optional Microsoft Fabric service endpoint. Default value: https://onelake.dfs.fabric.microsoft.com""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def update_connection_update_microsoft_fabric_connection_details_extended(ctx, **kwargs):
+
+    if 'connection_endpoint' in kwargs:
+        kwargs['endpoint_parameterconflict'] = kwargs['connection_endpoint']
+        kwargs.pop('connection_endpoint')
+
+    ctx.invoke(goldengate_cli.update_connection_update_microsoft_fabric_connection_details, **kwargs)

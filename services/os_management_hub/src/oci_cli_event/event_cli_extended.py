@@ -179,3 +179,9 @@ os_management_hub_service_cli.os_management_hub_service_group.add_command(event_
 event_cli.event_root_group.commands.pop(event_cli.event_collection_group.name)
 # this is the same annotating the extended method with @event_cli.event_group.command
 event_cli.event_group.add_command(list_events_extended)
+
+# oci os-management-hub event get-event-content -> oci os-management-hub event get-event-content
+cli_util.rename_command(event_cli, event_cli.event_group, event_cli.get_event_content, "get-event-content")
+
+# oci os-management-hub event delete-event-content -> oci os-management-hub event delete-event-content
+cli_util.rename_command(event_cli, event_cli.event_group, event_cli.delete_event_content, "delete-event-content")

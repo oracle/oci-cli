@@ -61,11 +61,12 @@ software_source_root_group.add_command(module_stream_profile_group)
 software_source_root_group.add_command(package_group_group)
 
 
-@software_source_group.command(name=cli_util.override('software_source.add_packages_to_software_source.command_name', 'add'), help=u"""Adds packages to a software source. This operation can only be done for custom and versioned custom software sources that are not created using filters. For a versioned custom software source, you can only add packages when the source is created. Once content is added to a versioned custom software source, it is immutable. \n[Command Reference](addPackagesToSoftwareSource)""")
+@software_source_group.command(name=cli_util.override('software_source.add_packages_to_software_source.command_name', 'add'), help=u"""Adds packages to a software source. This operation can only be done for custom and versioned custom software sources that are not created using filters. For a versioned custom software source, you can only add packages when the source is created. Once content is added to a versioned custom software source, it is immutable. Packages can be of the format:   * name (for example: git). If isLatestContentOnly is true, only the latest version of the package will be added, otherwise all versions of the package will be added.   * name-version-release.architecture (for example: git-2.43.5-1.el8_10.x86_64)   * name-epoch:version-release.architecture (for example: git-0:2.43.5-1.el8_10.x86_64) \n[Command Reference](addPackagesToSoftwareSource)""")
 @cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
-@cli_util.option('--packages', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of packages specified by the full package name (NEVRA.rpm).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--packages', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of packages specified by the name of the package (N) or the full package name (NVRA or NEVRA).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-continue-on-missing-packages', type=click.BOOL, help=u"""Indicates whether the service should generate a custom software source when the package list contains invalid values. When set to true, the service ignores any invalid packages and generates the custom software source with using the valid packages.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'packages': {'module': 'os_management_hub', 'class': 'list[string]'}})
@@ -73,7 +74,7 @@ software_source_root_group.add_command(package_group_group)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'packages': {'module': 'os_management_hub', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def add_packages_to_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, packages, if_match):
+def add_packages_to_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, packages, is_continue_on_missing_packages, if_match):
 
     if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
         raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
@@ -85,6 +86,9 @@ def add_packages_to_software_source(ctx, from_json, wait_for_state, max_wait_sec
 
     _details = {}
     _details['packages'] = cli_util.parse_json_parameter("packages", packages)
+
+    if is_continue_on_missing_packages is not None:
+        _details['isContinueOnMissingPackages'] = is_continue_on_missing_packages
 
     client = cli_util.build_client('os_management_hub', 'software_source', ctx)
     result = client.add_packages_to_software_source(
@@ -201,14 +205,14 @@ def create_entitlement(ctx, from_json, compartment_id, csi):
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('software_source.create_software_source.command_name', 'create'), help=u"""Creates a new versioned or custom software source. \n[Command Reference](createSoftwareSource)""")
+@software_source_group.command(name=cli_util.override('software_source.create_software_source.command_name', 'create'), help=u"""Creates a new software source. \n[Command Reference](createSoftwareSource)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the software source.""")
-@cli_util.option('--software-source-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VENDOR", "CUSTOM", "VERSIONED"]), help=u"""Type of software source.""")
+@cli_util.option('--software-source-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VENDOR", "CUSTOM", "VERSIONED", "PRIVATE", "THIRD_PARTY"]), help=u"""Type of software source.""")
 @cli_util.option('--display-name', help=u"""User-friendly name for the software source. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""User-specified description for the software source. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}})
@@ -272,7 +276,7 @@ def create_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('software_source.create_software_source_create_custom_software_source_details.command_name', 'create-software-source-create-custom-software-source-details'), help=u"""Creates a new versioned or custom software source. \n[Command Reference](createSoftwareSource)""")
+@software_source_group.command(name=cli_util.override('software_source.create_software_source_create_custom_software_source_details.command_name', 'create-software-source-create-custom-software-source-details'), help=u"""Creates a new software source. \n[Command Reference](createSoftwareSource)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the software source.""")
 @cli_util.option('--vendor-software-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of vendor software sources.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""User-friendly name for the software source. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
@@ -285,7 +289,8 @@ def create_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--is-created-from-package-list', type=click.BOOL, help=u"""Indicates whether the service should create the software source from a list of packages provided by the user.""")
 @cli_util.option('--is-latest-content-only', type=click.BOOL, help=u"""Indicates whether the software source will include only the latest versions of content from vendor software sources, while accounting for other constraints set in the custom or versioned custom software source (such as a package list or filters). * For a module filter that does not specify a stream, this will include all available streams, and within each stream only the latest version of packages. * For a module filter that does specify a stream, this will include only the latest version of packages for the specified stream. * For a package filter that does not specify a version, this will include only the latest available version of the package. * For a package filter that does specify a version, this will include only the specified version of the package (the isLatestContentOnly attribute is ignored). * For a package list, this will include only the specified version of packages and modules in the list (the isLatestContentOnly attribute is ignored).""")
 @cli_util.option('--packages', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A property used for compatibility only. It doesn't provide a complete list of packages. See [AddPackagesToSoftwareSourceDetails] for providing the list of packages used to create the software source when isCreatedFromPackageList is set to true.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--software-source-sub-type', type=custom_types.CliCaseInsensitiveChoice(["FILTER", "MANIFEST", "SNAPSHOT"]), help=u"""The creation type of a software source.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'vendor-software-sources': {'module': 'os_management_hub', 'class': 'list[Id]'}, 'custom-software-source-filter': {'module': 'os_management_hub', 'class': 'CustomSoftwareSourceFilter'}, 'packages': {'module': 'os_management_hub', 'class': 'list[string]'}})
@@ -293,7 +298,7 @@ def create_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'vendor-software-sources': {'module': 'os_management_hub', 'class': 'list[Id]'}, 'custom-software-source-filter': {'module': 'os_management_hub', 'class': 'CustomSoftwareSourceFilter'}, 'packages': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSource'})
 @cli_util.wrap_exceptions
-def create_software_source_create_custom_software_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vendor_software_sources, display_name, description, freeform_tags, defined_tags, custom_software_source_filter, is_automatically_updated, is_auto_resolve_dependencies, is_created_from_package_list, is_latest_content_only, packages):
+def create_software_source_create_custom_software_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vendor_software_sources, display_name, description, freeform_tags, defined_tags, custom_software_source_filter, is_automatically_updated, is_auto_resolve_dependencies, is_created_from_package_list, is_latest_content_only, packages, software_source_sub_type):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -332,6 +337,9 @@ def create_software_source_create_custom_software_source_details(ctx, from_json,
     if packages is not None:
         _details['packages'] = cli_util.parse_json_parameter("packages", packages)
 
+    if software_source_sub_type is not None:
+        _details['softwareSourceSubType'] = software_source_sub_type
+
     _details['softwareSourceType'] = 'CUSTOM'
 
     client = cli_util.build_client('os_management_hub', 'software_source', ctx)
@@ -369,14 +377,14 @@ def create_software_source_create_custom_software_source_details(ctx, from_json,
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('software_source.create_software_source_create_vendor_software_source_details.command_name', 'create-software-source-create-vendor-software-source-details'), help=u"""Creates a new versioned or custom software source. \n[Command Reference](createSoftwareSource)""")
+@software_source_group.command(name=cli_util.override('software_source.create_software_source_create_vendor_software_source_details.command_name', 'create-software-source-create-vendor-software-source-details'), help=u"""Creates a new software source. \n[Command Reference](createSoftwareSource)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the software source.""")
 @cli_util.option('--origin-software-source-id', required=True, help=u"""The [OCID] of the vendor software source in the root compartment that is being replicated.""")
 @cli_util.option('--display-name', help=u"""User-friendly name for the software source. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""User-specified description for the software source. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}})
@@ -442,7 +450,104 @@ def create_software_source_create_vendor_software_source_details(ctx, from_json,
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('software_source.create_software_source_create_versioned_custom_software_source_details.command_name', 'create-software-source-create-versioned-custom-software-source-details'), help=u"""Creates a new versioned or custom software source. \n[Command Reference](createSoftwareSource)""")
+@software_source_group.command(name=cli_util.override('software_source.create_software_source_create_private_software_source_details.command_name', 'create-software-source-create-private-software-source-details'), help=u"""Creates a new software source. \n[Command Reference](createSoftwareSource)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the software source.""")
+@cli_util.option('--os-family', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), help=u"""The OS family for the private software source.""")
+@cli_util.option('--arch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386"]), help=u"""The architecture type supported by the private software source.""")
+@cli_util.option('--url', required=True, help=u"""URL for the private software source.""")
+@cli_util.option('--display-name', help=u"""User-friendly name for the software source. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""User-specified description for the software source. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--gpg-key-url', help=u"""URI of the GPG key for this software source.""")
+@cli_util.option('--is-gpg-check-enabled', type=click.BOOL, help=u"""Whether signature verification should be done for the software source""")
+@cli_util.option('--is-ssl-verify-enabled', type=click.BOOL, help=u"""Whether SSL validation needs to be turned on""")
+@cli_util.option('--advanced-repo-options', help=u"""Advanced repository options for the software source""")
+@cli_util.option('--is-mirror-sync-allowed', type=click.BOOL, help=u"""Whether this software source can be synced to a management station""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSource'})
+@cli_util.wrap_exceptions
+def create_software_source_create_private_software_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, os_family, arch_type, url, display_name, description, freeform_tags, defined_tags, gpg_key_url, is_gpg_check_enabled, is_ssl_verify_enabled, advanced_repo_options, is_mirror_sync_allowed):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['osFamily'] = os_family
+    _details['archType'] = arch_type
+    _details['url'] = url
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if gpg_key_url is not None:
+        _details['gpgKeyUrl'] = gpg_key_url
+
+    if is_gpg_check_enabled is not None:
+        _details['isGpgCheckEnabled'] = is_gpg_check_enabled
+
+    if is_ssl_verify_enabled is not None:
+        _details['isSslVerifyEnabled'] = is_ssl_verify_enabled
+
+    if advanced_repo_options is not None:
+        _details['advancedRepoOptions'] = advanced_repo_options
+
+    if is_mirror_sync_allowed is not None:
+        _details['isMirrorSyncAllowed'] = is_mirror_sync_allowed
+
+    _details['softwareSourceType'] = 'PRIVATE'
+
+    client = cli_util.build_client('os_management_hub', 'software_source', ctx)
+    result = client.create_software_source(
+        create_software_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@software_source_group.command(name=cli_util.override('software_source.create_software_source_create_versioned_custom_software_source_details.command_name', 'create-software-source-create-versioned-custom-software-source-details'), help=u"""Creates a new software source. \n[Command Reference](createSoftwareSource)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the software source.""")
 @cli_util.option('--vendor-software-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of vendor software sources.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--software-source-version', required=True, help=u"""The version to assign to this custom software source.""")
@@ -455,7 +560,8 @@ def create_software_source_create_vendor_software_source_details(ctx, from_json,
 @cli_util.option('--is-created-from-package-list', type=click.BOOL, help=u"""Indicates whether the service should create the software source from a list of packages provided by the user.""")
 @cli_util.option('--is-latest-content-only', type=click.BOOL, help=u"""Indicates whether the software source will include only the latest versions of content from vendor software sources, while accounting for other constraints set in the custom or versioned custom software source (such as a package list or filters). * For a module filter that does not specify a stream, this will include all available streams, and within each stream only the latest version of packages. * For a module filter that does specify a stream, this will include only the latest version of packages for the specified stream. * For a package filter that does not specify a version, this will include only the latest available version of the package. * For a package filter that does specify a version, this will include only the specified version of the package (the isLatestContentOnly attribute is ignored). * For a package list, this will include only the specified version of packages and modules in the list (the isLatestContentOnly attribute is ignored).""")
 @cli_util.option('--packages', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A property used for compatibility only. It doesn't provide a complete list of packages. See [AddPackagesToSoftwareSourceDetails] for providing the list of packages used to create the software source when isCreatedFromPackageList is set to true.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--software-source-sub-type', type=custom_types.CliCaseInsensitiveChoice(["FILTER", "MANIFEST", "SNAPSHOT"]), help=u"""The creation type of a software source.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'vendor-software-sources': {'module': 'os_management_hub', 'class': 'list[Id]'}, 'custom-software-source-filter': {'module': 'os_management_hub', 'class': 'CustomSoftwareSourceFilter'}, 'packages': {'module': 'os_management_hub', 'class': 'list[string]'}})
@@ -463,7 +569,7 @@ def create_software_source_create_vendor_software_source_details(ctx, from_json,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'vendor-software-sources': {'module': 'os_management_hub', 'class': 'list[Id]'}, 'custom-software-source-filter': {'module': 'os_management_hub', 'class': 'CustomSoftwareSourceFilter'}, 'packages': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSource'})
 @cli_util.wrap_exceptions
-def create_software_source_create_versioned_custom_software_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vendor_software_sources, software_source_version, display_name, description, freeform_tags, defined_tags, custom_software_source_filter, is_auto_resolve_dependencies, is_created_from_package_list, is_latest_content_only, packages):
+def create_software_source_create_versioned_custom_software_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vendor_software_sources, software_source_version, display_name, description, freeform_tags, defined_tags, custom_software_source_filter, is_auto_resolve_dependencies, is_created_from_package_list, is_latest_content_only, packages, software_source_sub_type):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -500,7 +606,107 @@ def create_software_source_create_versioned_custom_software_source_details(ctx, 
     if packages is not None:
         _details['packages'] = cli_util.parse_json_parameter("packages", packages)
 
+    if software_source_sub_type is not None:
+        _details['softwareSourceSubType'] = software_source_sub_type
+
     _details['softwareSourceType'] = 'VERSIONED'
+
+    client = cli_util.build_client('os_management_hub', 'software_source', ctx)
+    result = client.create_software_source(
+        create_software_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@software_source_group.command(name=cli_util.override('software_source.create_software_source_create_third_party_software_source_details.command_name', 'create-software-source-create-third-party-software-source-details'), help=u"""Creates a new software source. \n[Command Reference](createSoftwareSource)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the software source.""")
+@cli_util.option('--os-family', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), help=u"""The OS family for the third-party software source.""")
+@cli_util.option('--arch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386"]), help=u"""The architecture type supported by the third-party software source.""")
+@cli_util.option('--url', required=True, help=u"""URL for the third-party software source.""")
+@cli_util.option('--display-name', help=u"""User-friendly name for the software source. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""User-specified description for the software source. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--gpg-key-url', help=u"""URI of the GPG key for this software source.""")
+@cli_util.option('--is-gpg-check-enabled', type=click.BOOL, help=u"""Whether signature verification should be done for the software source.""")
+@cli_util.option('--is-ssl-verify-enabled', type=click.BOOL, help=u"""Whether SSL validation needs to be turned on""")
+@cli_util.option('--advanced-repo-options', help=u"""Advanced repository options for the software source""")
+@cli_util.option('--is-mirror-sync-allowed', type=click.BOOL, help=u"""Whether this software source can be synced to a management station""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSource'})
+@cli_util.wrap_exceptions
+def create_software_source_create_third_party_software_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, os_family, arch_type, url, display_name, description, freeform_tags, defined_tags, gpg_key_url, is_gpg_check_enabled, is_ssl_verify_enabled, advanced_repo_options, is_mirror_sync_allowed):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['osFamily'] = os_family
+    _details['archType'] = arch_type
+    _details['url'] = url
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if gpg_key_url is not None:
+        _details['gpgKeyUrl'] = gpg_key_url
+
+    if is_gpg_check_enabled is not None:
+        _details['isGpgCheckEnabled'] = is_gpg_check_enabled
+
+    if is_ssl_verify_enabled is not None:
+        _details['isSslVerifyEnabled'] = is_ssl_verify_enabled
+
+    if advanced_repo_options is not None:
+        _details['advancedRepoOptions'] = advanced_repo_options
+
+    if is_mirror_sync_allowed is not None:
+        _details['isMirrorSyncAllowed'] = is_mirror_sync_allowed
+
+    _details['softwareSourceType'] = 'THIRD_PARTY'
 
     client = cli_util.build_client('os_management_hub', 'software_source', ctx)
     result = client.create_software_source(
@@ -541,7 +747,7 @@ def create_software_source_create_versioned_custom_software_source_details(ctx, 
 @cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -739,7 +945,7 @@ def get_software_package(ctx, from_json, software_source_id, software_package_na
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('software_source.get_software_package_by_name.command_name', 'get-software-package-by-name'), help=u"""Returns information about the specified software package based on its fully qualified name. \n[Command Reference](getSoftwarePackageByName)""")
+@software_source_group.command(name=cli_util.override('software_source.get_software_package_by_name.command_name', 'get-software-package-by-name'), help=u"""Returns information about the specified software package based on its fully qualified name (NVRA or NEVRA). \n[Command Reference](getSoftwarePackageByName)""")
 @cli_util.option('--software-package-name', required=True, help=u"""The name of the software package.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -781,6 +987,51 @@ def get_software_source(ctx, from_json, software_source_id):
         **kwargs
     )
     cli_util.render_response(result, ctx)
+
+
+@software_source_group.command(name=cli_util.override('software_source.get_software_source_manifest.command_name', 'get-software-source-manifest'), help=u"""Returns an archive containing the list of packages in the software source. \n[Command Reference](getSoftwareSourceManifest)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_software_source_manifest(ctx, from_json, file, software_source_id):
+
+    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management_hub', 'software_source', ctx)
+    result = client.get_software_source_manifest(
+        software_source_id=software_source_id,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
 
 
 @software_source_group.command(name=cli_util.override('software_source.list_all_software_packages.command_name', 'list-all-software-packages'), help=u"""Lists software packages available through the OS Management Hub service.  Filter the list against a variety of criteria including but not limited to its name. \n[Command Reference](listAllSoftwarePackages)""")
@@ -855,9 +1106,79 @@ def list_all_software_packages(ctx, from_json, all_pages, page_size, display_nam
     cli_util.render_response(result, ctx)
 
 
+@software_source_group.command(name=cli_util.override('software_source.list_available_software_packages.command_name', 'list-available-software-packages'), help=u"""Lists software packages that are available to be added to a custom software source of type MANIFEST.  Filter the list against a variety of criteria including but not limited to its name. \n[Command Reference](listAvailableSoftwarePackages)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
+@cli_util.option('--display-name', help=u"""A filter to return resources that match the given user-friendly name.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
+@cli_util.option('--is-latest', type=click.BOOL, help=u"""Indicates whether to list only the latest versions of packages, module streams, and stream profiles.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `3`""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management_hub', 'class': 'SoftwarePackageCollection'})
+@cli_util.wrap_exceptions
+def list_available_software_packages(ctx, from_json, all_pages, page_size, software_source_id, display_name, display_name_contains, is_latest, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
+    if is_latest is not None:
+        kwargs['is_latest'] = is_latest
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management_hub', 'software_source', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_available_software_packages,
+            software_source_id=software_source_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_available_software_packages,
+            limit,
+            page_size,
+            software_source_id=software_source_id,
+            **kwargs
+        )
+    else:
+        result = client.list_available_software_packages(
+            software_source_id=software_source_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @software_source_group.command(name=cli_util.override('software_source.list_entitlements.command_name', 'list-entitlements'), help=u"""Lists entitlements in the specified tenancy [OCID]. Filter the list against a variety of criteria including but not limited to its Customer Support Identifier (CSI), and vendor name. \n[Command Reference](listEntitlements)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This parameter is required and returns only resources contained within the specified compartment.""")
-@cli_util.option('--csi', help=u"""A filter to return entitlements that match the given CSI.""")
+@cli_util.option('--csi', help=u"""A filter to return entitlements that match the given customer support identifier (CSI).""")
 @cli_util.option('--vendor-name', type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MICROSOFT"]), help=u"""A filter to return only resources that match the given vendor name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -1226,12 +1547,12 @@ def list_package_groups(ctx, from_json, all_pages, page_size, software_source_id
 @software_source_group.command(name=cli_util.override('software_source.list_software_package_software_sources.command_name', 'list-software-package'), help=u"""Lists the software sources in the tenancy that contain the software package. Filter the list against a variety of criteria including but not limited to its name, type, architecture, and OS family. \n[Command Reference](listSoftwarePackageSoftwareSources)""")
 @cli_util.option('--software-package-name', required=True, help=u"""The name of the software package.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This parameter is required and returns only resources contained within the specified compartment.""")
-@cli_util.option('--software-source-type', type=custom_types.CliCaseInsensitiveChoice(["VENDOR", "CUSTOM", "VERSIONED"]), multiple=True, help=u"""The type of the software source.""")
+@cli_util.option('--software-source-type', type=custom_types.CliCaseInsensitiveChoice(["VENDOR", "CUSTOM", "VERSIONED", "PRIVATE", "THIRD_PARTY"]), multiple=True, help=u"""The type of the software source.""")
 @cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), multiple=True, help=u"""A filter to return only resources that match the given operating system family.""")
-@cli_util.option('--arch-type', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC"]), multiple=True, help=u"""A filter to return only instances whose architecture type matches the given architecture.""")
-@cli_util.option('--availability', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SELECTED", "RESTRICTED", "UNAVAILABLE"]), multiple=True, help=u"""The availabilities of the software source in a non-OCI environment for a tenancy.""")
-@cli_util.option('--availability-at-oci', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SELECTED", "RESTRICTED", "UNAVAILABLE"]), multiple=True, help=u"""The availabilities of the software source in an OCI environment for a tenancy.""")
-@cli_util.option('--availability-anywhere', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SELECTED", "RESTRICTED", "UNAVAILABLE"]), multiple=True, help=u"""The availabilities of the software source. Use this query parameter to filter across availabilities in different environments.""")
+@cli_util.option('--arch-type', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386"]), multiple=True, help=u"""A filter to return only instances whose architecture type matches the given architecture.""")
+@cli_util.option('--availability', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SELECTED", "RESTRICTED", "UNAVAILABLE"]), multiple=True, help=u"""The availability of the software source in a non-OCI environment for a tenancy.""")
+@cli_util.option('--availability-at-oci', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SELECTED", "RESTRICTED", "UNAVAILABLE"]), multiple=True, help=u"""The availability of the software source in an OCI environment for a tenancy.""")
+@cli_util.option('--availability-anywhere', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SELECTED", "RESTRICTED", "UNAVAILABLE"]), multiple=True, help=u"""The availability of the software source. Use this query parameter to filter across availabilities in different environments.""")
 @cli_util.option('--display-name', help=u"""A filter to return resources that match the given user-friendly name.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -1242,7 +1563,7 @@ Example: `50`""")
 Example: `3`""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""A filter to return only software sources whose state matches the given state.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help=u"""A filter to return only software sources whose state matches the given state.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1417,14 +1738,15 @@ def list_software_source_vendors(ctx, from_json, all_pages, compartment_id, sort
 @software_source_group.command(name=cli_util.override('software_source.list_software_sources.command_name', 'list'), help=u"""Lists software sources that match the specified tenancy or software source [OCID]. Filter the list against a variety of criteria including but not limited to its name, status, architecture, and OS family. \n[Command Reference](listSoftwareSources)""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment that contains the resources to list. This filter returns only resources contained within the specified compartment.""")
 @cli_util.option('--software-source-id', help=u"""The [OCID] for the software source.""")
-@cli_util.option('--software-source-type', type=custom_types.CliCaseInsensitiveChoice(["VENDOR", "CUSTOM", "VERSIONED"]), multiple=True, help=u"""The type of the software source.""")
+@cli_util.option('--software-source-type', type=custom_types.CliCaseInsensitiveChoice(["VENDOR", "CUSTOM", "VERSIONED", "PRIVATE", "THIRD_PARTY"]), multiple=True, help=u"""The type of the software source.""")
 @cli_util.option('--vendor-name', type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MICROSOFT"]), help=u"""A filter to return only resources that match the given vendor name.""")
 @cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), multiple=True, help=u"""A filter to return only resources that match the given operating system family.""")
-@cli_util.option('--arch-type', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC"]), multiple=True, help=u"""A filter to return only instances whose architecture type matches the given architecture.""")
-@cli_util.option('--availability', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SELECTED", "RESTRICTED", "UNAVAILABLE"]), multiple=True, help=u"""The availabilities of the software source in a non-OCI environment for a tenancy.""")
-@cli_util.option('--availability-at-oci', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SELECTED", "RESTRICTED", "UNAVAILABLE"]), multiple=True, help=u"""The availabilities of the software source in an OCI environment for a tenancy.""")
-@cli_util.option('--availability-anywhere', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SELECTED", "RESTRICTED", "UNAVAILABLE"]), multiple=True, help=u"""The availabilities of the software source. Use this query parameter to filter across availabilities in different environments.""")
+@cli_util.option('--arch-type', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386"]), multiple=True, help=u"""A filter to return only instances whose architecture type matches the given architecture.""")
+@cli_util.option('--availability', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SELECTED", "RESTRICTED", "UNAVAILABLE"]), multiple=True, help=u"""The availability of the software source in a non-OCI environment for a tenancy.""")
+@cli_util.option('--availability-at-oci', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SELECTED", "RESTRICTED", "UNAVAILABLE"]), multiple=True, help=u"""The availability of the software source in an OCI environment for a tenancy.""")
+@cli_util.option('--availability-anywhere', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "SELECTED", "RESTRICTED", "UNAVAILABLE"]), multiple=True, help=u"""The availability of the software source. Use this query parameter to filter across availabilities in different environments.""")
 @cli_util.option('--is-mandatory-for-autonomous-linux', type=click.BOOL, help=u"""Indicates whether the software source is mandatory for the Autonomous Linux service.""")
+@cli_util.option('--is-mirror-sync-allowed', type=click.BOOL, help=u"""A filter to return software sources which can be synced to a management station.""")
 @cli_util.option('--display-name', help=u"""A filter to return resources that match the given user-friendly name.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
 @cli_util.option('--display-name-not-equal-to', multiple=True, help=u"""A multi filter to return resources that do not contains the given display names.""")
@@ -1436,7 +1758,7 @@ Example: `50`""")
 Example: `3`""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""A filter to return only software sources whose state matches the given state.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help=u"""A filter to return only software sources whose state matches the given state.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({'display-name-not-equal-to': {'module': 'os_management_hub', 'class': 'list[string]'}})
@@ -1444,7 +1766,7 @@ Example: `3`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'display-name-not-equal-to': {'module': 'os_management_hub', 'class': 'list[string]'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSourceCollection'})
 @cli_util.wrap_exceptions
-def list_software_sources(ctx, from_json, all_pages, page_size, compartment_id, software_source_id, software_source_type, vendor_name, os_family, arch_type, availability, availability_at_oci, availability_anywhere, is_mandatory_for_autonomous_linux, display_name, display_name_contains, display_name_not_equal_to, limit, page, sort_order, sort_by, lifecycle_state):
+def list_software_sources(ctx, from_json, all_pages, page_size, compartment_id, software_source_id, software_source_type, vendor_name, os_family, arch_type, availability, availability_at_oci, availability_anywhere, is_mandatory_for_autonomous_linux, is_mirror_sync_allowed, display_name, display_name_contains, display_name_not_equal_to, limit, page, sort_order, sort_by, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1470,6 +1792,8 @@ def list_software_sources(ctx, from_json, all_pages, page_size, compartment_id, 
         kwargs['availability_anywhere'] = availability_anywhere
     if is_mandatory_for_autonomous_linux is not None:
         kwargs['is_mandatory_for_autonomous_linux'] = is_mandatory_for_autonomous_linux
+    if is_mirror_sync_allowed is not None:
+        kwargs['is_mirror_sync_allowed'] = is_mirror_sync_allowed
     if display_name is not None:
         kwargs['display_name'] = display_name
     if display_name_contains is not None:
@@ -1507,6 +1831,128 @@ def list_software_sources(ctx, from_json, all_pages, page_size, compartment_id, 
         result = client.list_software_sources(
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@software_source_group.command(name=cli_util.override('software_source.remove_packages_from_software_source.command_name', 'remove'), help=u"""Removes packages from a software source. This operation can only be done for custom software sources that are not created using filters. Packages can be of the format:   * name (for example: git). This removes all versions of the package.   * name-version-release.architecture (for example: git-2.43.5-1.el8_10.x86_64)   * name-epoch:version-release.architecture (for example: git-0:2.43.5-1.el8_10.x86_64) \n[Command Reference](removePackagesFromSoftwareSource)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
+@cli_util.option('--packages', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of packages specified by the name of the package (N) or the full package name (NVRA or NEVRA).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'packages': {'module': 'os_management_hub', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'packages': {'module': 'os_management_hub', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def remove_packages_from_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, packages, if_match):
+
+    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['packages'] = cli_util.parse_json_parameter("packages", packages)
+
+    client = cli_util.build_client('os_management_hub', 'software_source', ctx)
+    result = client.remove_packages_from_software_source(
+        software_source_id=software_source_id,
+        remove_packages_from_software_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@software_source_group.command(name=cli_util.override('software_source.replace_packages_in_software_source.command_name', 'replace-packages-in'), help=u"""Replaces packages in a software source with the provided list of packages. This operation can only be done for custom software sources that are not created using filters. Packages can be of the format:  * name (for example: git). If isLatestContentOnly is true, only the latest version of the package will be added, otherwise all versions of the package will be added.  * name-version-release.architecture (for example: git-2.43.5-1.el8_10.x86_64)  * name-epoch:version-release.architecture (for example: git-0:2.43.5-1.el8_10.x86_64) \n[Command Reference](replacePackagesInSoftwareSource)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
+@cli_util.option('--packages', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of packages specified by the name of the package (N) or the full package name (NVRA or NEVRA).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'packages': {'module': 'os_management_hub', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'packages': {'module': 'os_management_hub', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def replace_packages_in_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, packages, if_match):
+
+    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['packages'] = cli_util.parse_json_parameter("packages", packages)
+
+    client = cli_util.build_client('os_management_hub', 'software_source', ctx)
+    result = client.replace_packages_in_software_source(
+        software_source_id=software_source_id,
+        replace_packages_in_software_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1653,17 +2099,42 @@ def search_software_source_package_groups(ctx, from_json, software_source_ids, s
     cli_util.render_response(result, ctx)
 
 
+@software_source_group.command(name=cli_util.override('software_source.software_source_generate_metadata.command_name', 'software-source-generate-metadata'), help=u"""Regenerates metadata for the specified custom software source. \n[Command Reference](softwareSourceGenerateMetadata)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def software_source_generate_metadata(ctx, from_json, software_source_id, if_match):
+
+    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management_hub', 'software_source', ctx)
+    result = client.software_source_generate_metadata(
+        software_source_id=software_source_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @software_source_group.command(name=cli_util.override('software_source.update_software_source.command_name', 'update'), help=u"""Updates the specified software source's details, including but not limited to name, description, and tags. \n[Command Reference](updateSoftwareSource)""")
 @cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that contains the software source.""")
 @cli_util.option('--display-name', help=u"""User-friendly name for the software source.""")
 @cli_util.option('--description', help=u"""User-specified description of the software source.""")
-@cli_util.option('--software-source-type', type=custom_types.CliCaseInsensitiveChoice(["VENDOR", "CUSTOM", "VERSIONED"]), help=u"""Type of the software source.""")
+@cli_util.option('--software-source-type', type=custom_types.CliCaseInsensitiveChoice(["VENDOR", "CUSTOM", "VERSIONED", "PRIVATE", "THIRD_PARTY"]), help=u"""Type of the software source.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}})
@@ -1757,7 +2228,7 @@ This option is a JSON list with items of type Id.  For documentation on Id pleas
 @cli_util.option('--is-latest-content-only', type=click.BOOL, help=u"""Indicates whether the software source will include only the latest versions of content from vendor software sources, while accounting for other constraints set in the custom or versioned custom software source (such as a package list or filters). * For a module filter that does not specify a stream, this will include all available streams, and within each stream only the latest version of packages. * For a module filter that does specify a stream, this will include only the latest version of packages for the specified stream. * For a package filter that does not specify a version, this will include only the latest available version of the package. * For a package filter that does specify a version, this will include only the specified version of the package (the isLatestContentOnly attribute is ignored). * For a package list, this will include only the specified version of packages and modules in the list (the isLatestContentOnly attribute is ignored).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}, 'vendor-software-sources': {'module': 'os_management_hub', 'class': 'list[Id]'}, 'custom-software-source-filter': {'module': 'os_management_hub', 'class': 'CustomSoftwareSourceFilter'}})
@@ -1849,6 +2320,116 @@ def update_software_source_update_custom_software_source_details(ctx, from_json,
     cli_util.render_response(result, ctx)
 
 
+@software_source_group.command(name=cli_util.override('software_source.update_software_source_update_private_software_source_details.command_name', 'update-software-source-update-private-software-source-details'), help=u"""Updates the specified software source's details, including but not limited to name, description, and tags. \n[Command Reference](updateSoftwareSource)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that contains the software source.""")
+@cli_util.option('--display-name', help=u"""User-friendly name for the software source.""")
+@cli_util.option('--description', help=u"""User-specified description of the software source.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--url', help=u"""URL for the private software source.""")
+@cli_util.option('--gpg-key-url', help=u"""URI of the GPG key for this software source.""")
+@cli_util.option('--is-gpg-check-enabled', type=click.BOOL, help=u"""Whether signature verification should be done for the software source.""")
+@cli_util.option('--is-ssl-verify-enabled', type=click.BOOL, help=u"""Whether SSL validation needs to be turned on""")
+@cli_util.option('--advanced-repo-options', help=u"""Advanced repository options for the software source""")
+@cli_util.option('--is-mirror-sync-allowed', type=click.BOOL, help=u"""Whether this software source can be synced to a management station""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSource'})
+@cli_util.wrap_exceptions
+def update_software_source_update_private_software_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, compartment_id, display_name, description, freeform_tags, defined_tags, url, gpg_key_url, is_gpg_check_enabled, is_ssl_verify_enabled, advanced_repo_options, is_mirror_sync_allowed, if_match):
+
+    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if url is not None:
+        _details['url'] = url
+
+    if gpg_key_url is not None:
+        _details['gpgKeyUrl'] = gpg_key_url
+
+    if is_gpg_check_enabled is not None:
+        _details['isGpgCheckEnabled'] = is_gpg_check_enabled
+
+    if is_ssl_verify_enabled is not None:
+        _details['isSslVerifyEnabled'] = is_ssl_verify_enabled
+
+    if advanced_repo_options is not None:
+        _details['advancedRepoOptions'] = advanced_repo_options
+
+    if is_mirror_sync_allowed is not None:
+        _details['isMirrorSyncAllowed'] = is_mirror_sync_allowed
+
+    _details['softwareSourceType'] = 'PRIVATE'
+
+    client = cli_util.build_client('os_management_hub', 'software_source', ctx)
+    result = client.update_software_source(
+        software_source_id=software_source_id,
+        update_software_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @software_source_group.command(name=cli_util.override('software_source.update_software_source_update_versioned_custom_software_source_details.command_name', 'update-software-source-update-versioned-custom-software-source-details'), help=u"""Updates the specified software source's details, including but not limited to name, description, and tags. \n[Command Reference](updateSoftwareSource)""")
 @cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that contains the software source.""")
@@ -1858,7 +2439,7 @@ def update_software_source_update_custom_software_source_details(ctx, from_json,
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}})
@@ -1944,7 +2525,7 @@ def update_software_source_update_versioned_custom_software_source_details(ctx, 
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}})
@@ -1989,6 +2570,177 @@ def update_software_source_update_vendor_software_source_details(ctx, from_json,
     result = client.update_software_source(
         software_source_id=software_source_id,
         update_software_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@software_source_group.command(name=cli_util.override('software_source.update_software_source_update_third_party_software_source_details.command_name', 'update-software-source-update-third-party-software-source-details'), help=u"""Updates the specified software source's details, including but not limited to name, description, and tags. \n[Command Reference](updateSoftwareSource)""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that contains the software source.""")
+@cli_util.option('--display-name', help=u"""User-friendly name for the software source.""")
+@cli_util.option('--description', help=u"""User-specified description of the software source.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--url', help=u"""URL for the third-party software source.""")
+@cli_util.option('--gpg-key-url', help=u"""URI of the GPG key for this software source.""")
+@cli_util.option('--is-gpg-check-enabled', type=click.BOOL, help=u"""Whether signature verification should be done for the software source.""")
+@cli_util.option('--is-ssl-verify-enabled', type=click.BOOL, help=u"""Whether SSL validation needs to be turned on""")
+@cli_util.option('--advanced-repo-options', help=u"""Advanced repository options for the software source""")
+@cli_util.option('--is-mirror-sync-allowed', type=click.BOOL, help=u"""Whether this software source can be synced to a management station""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management_hub', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management_hub', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSource'})
+@cli_util.wrap_exceptions
+def update_software_source_update_third_party_software_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, software_source_id, compartment_id, display_name, description, freeform_tags, defined_tags, url, gpg_key_url, is_gpg_check_enabled, is_ssl_verify_enabled, advanced_repo_options, is_mirror_sync_allowed, if_match):
+
+    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if url is not None:
+        _details['url'] = url
+
+    if gpg_key_url is not None:
+        _details['gpgKeyUrl'] = gpg_key_url
+
+    if is_gpg_check_enabled is not None:
+        _details['isGpgCheckEnabled'] = is_gpg_check_enabled
+
+    if is_ssl_verify_enabled is not None:
+        _details['isSslVerifyEnabled'] = is_ssl_verify_enabled
+
+    if advanced_repo_options is not None:
+        _details['advancedRepoOptions'] = advanced_repo_options
+
+    if is_mirror_sync_allowed is not None:
+        _details['isMirrorSyncAllowed'] = is_mirror_sync_allowed
+
+    _details['softwareSourceType'] = 'THIRD_PARTY'
+
+    client = cli_util.build_client('os_management_hub', 'software_source', ctx)
+    result = client.update_software_source(
+        software_source_id=software_source_id,
+        update_software_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@software_source_group.command(name=cli_util.override('software_source.update_software_source_manifest.command_name', 'update-software-source-manifest'), help=u"""Updates the package list document for the software source. \n[Command Reference](updateSoftwareSourceManifest)""")
+@cli_util.option('--update-software-source-manifest-details', required=True, help=u"""Provides the document used to update the package list of the software source.""")
+@cli_util.option('--software-source-id', required=True, help=u"""The [OCID] of the software source.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management_hub', 'class': 'SoftwareSource'})
+@cli_util.wrap_exceptions
+def update_software_source_manifest(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, update_software_source_manifest_details, software_source_id, if_match):
+
+    if isinstance(software_source_id, six.string_types) and len(software_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --software-source-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
+    client = cli_util.build_client('os_management_hub', 'software_source', ctx)
+    result = client.update_software_source_manifest(
+        update_software_source_manifest_details=update_software_source_manifest_details,
+        software_source_id=software_source_id,
         **kwargs
     )
     if wait_for_state:
