@@ -228,6 +228,11 @@ service_mapping = {
         "Database Service",
         "Databases"
     ],
+    "dblm": [
+        "dblm",
+        "Dblm",
+        "Others"
+    ],
     "dbtools": [
         "database_tools",
         "Database Tools",

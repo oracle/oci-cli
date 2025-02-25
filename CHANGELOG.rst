@@ -6,6 +6,100 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.51.9 - 2025-02-25
+--------------------
+Fixed
+~~~~~
+* Unsupported feature "COMMAND health check" feature for Container Instance Service has been removed, There is no specific CLI change since the option is passed in by json blob ( --containers [complex type])
+
+Added
+~~~~~
+* Support for Database Lifecycle Management
+  * ``oci dblm``
+
+* Support for OCI cache service
+  * ``oci cache``
+
+* Support for Bring Your Own DKIM Keys in OCI Email Delivery Service
+
+* Support for Dataflow Steps and Storage Mounts in Pipelines in Data Science service
+
+  * ``oci data-science pipeline create --storage-mount-configuration-details-list``
+  * ``oci data-science pipeline update --storage-mount-configuration-details-list``
+
+* Support for new Open Id Connect Multi Authentication command in the OKE Control Plane service
+
+  * ``oci ce cluster create --configuration-file``
+
+* Support for the ZPR Security Attributes
+
+  * ``oci load balancer``
+
+* Support for Reserve Private IP for Private IP and IPv6
+
+  * ``oci network ipv6 ipv6-vnic-detach <input-params>``
+  * ``oci network private-ip private-ip-vnic-detach <input- params>``
+
+* Support for new optional parameters in the Private IP and IPv6 for Reserve Private IP
+  * ``oci network ipv6 create --lifetime``
+  * ``oci network private-ip create --lifetime``
+  * ``oci network ipv6 update --lifetime``
+  * ``oci network private-ip update --lifetime``
+
+* Support for extra user-editable configuration parameters in the MySQL Heatwave Database service
+
+* OS Management Hub service
+
+  * Support for rebooting of instances, groups and lifecycle stages
+
+    * ``oci os-management-hub lifecycle-stage reboot``
+    * ``oci os-management-hub managed-instance reboot``
+    * ``oci os-management-hub managed-instance-group reboot``
+
+  * Support for private and third party repositories
+    * ``oci os-management-hub software-source create-private-swsrc``
+    * ``oci os-management-hub software-source create-third-party-swsrc``
+    * ``oci os-management-hub software-source update-private-swsrc``
+    * ``oci os-management-hub software-source update-third-party-swsrc``
+
+  * Support for re-running work requests
+    * ``oci os-management-hub work-request rerun``
+
+  * Support for new commands for custom software sources
+    * ``oci os-management-hub software-source get-software-source-manifest``
+    * ``oci os-management-hub software-source update-software-source-manifest``
+    * ``oci os-management-hub software-source remove-packages``
+    * ``oci os-management-hub software-source replace-packages``
+    * ``oci os-management-hub software-source list-available-software-packages``
+    * ``oci os-management-hub software-source generate-metadata``
+
+  * Support for new commands for profiles
+    * ``oci os-management-hub profile list-available-software-sources``
+    * ``oci os-management-hub profile get-profile-version``
+    * ``oci os-management-hub profile detach-software-sources``
+    * ``oci os-management-hub profile attach-software-sources``
+    * ``oci os-management-hub profile attach-management-station``
+    * ``oci os-management-hub profile attach-managed-instance-group``
+    * ``oci os-management-hub profile attach-lifecycle-stage``
+    * ``oci os-management-hub profile create-windows-stand-alone-profile``
+
+  * Support for new commands for manages instances
+    * ``oci os-management-hub managed-instance associate-managed-instances-with-management-station``
+
+  * Support for new optional parameter
+    * ``oci os-management-hub managed-instance list --agent-version --management-station --is-reboot-required --management-station-ne
+    * ``oci os-management-hub managed-instance-group install-packages --is-latest``
+    * ``oci os-management-hub management-station create --is-auto-config-enabled``
+    * ``oci os-management-hub management-station update --is-auto-config-enabled``
+    * ``oci os-management-hub management-station list --location --location-ne
+    * ``oci os-management-hub profile list --management-station --management-station-ne --profile-version``
+    * ``oci os-management-hub scheduled-job create --work-request-id``
+    * ``oci os-management-hub software-source add-packages --is-continue-on-missing-packages``
+    * ``oci os-management-hub software-source create-custom-swsrc --software-source-sub-type``
+    * ``oci os-management-hub software-source create-versioned-custom-swsrc --software-source-sub-type``
+    * ``oci os-management-hub software-source list ----is-mirror-sync-allowed``
+    * ``oci os-management-hub work-request list --rerun-of-id``
+
 3.51.8 - 2025-02-18
 --------------------
 Added

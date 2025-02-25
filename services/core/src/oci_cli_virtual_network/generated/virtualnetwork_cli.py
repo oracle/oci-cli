@@ -238,19 +238,19 @@ A network security group consists of two items:
 
   * The set of [VNICs] that all have the same security rule needs (for     example, a group of Compute instances all running the same application)   * A set of NSG [SecurityRules] that apply to the VNICs in the group
 
-After creating an NSG, you can add VNICs and security rules to it. For example, when you create an instance, you can specify one or more NSGs to add the instance to (see `[CreateVnicDetails])`. Or you can add an existing instance to an NSG with `[UpdateVnic]`.
+After creating an NSG, you can add VNICs and security rules to it. For example, when you create an instance, you can specify one or more NSGs to add the instance to (see [CreateVnicDetails]). Or you can add an existing instance to an NSG with [UpdateVnic].
 
-To add security rules to an NSG, see `[AddNetworkSecurityGroupSecurityRules]`.
+To add security rules to an NSG, see [AddNetworkSecurityGroupSecurityRules].
 
-To list the VNICs in an NSG, see `[ListNetworkSecurityGroupVnics]`.
+To list the VNICs in an NSG, see [ListNetworkSecurityGroupVnics].
 
-To list the security rules in an NSG, see `[ListNetworkSecurityGroupSecurityRules]`.
+To list the security rules in an NSG, see [ListNetworkSecurityGroupSecurityRules].
 
-For more information about network security groups, see `[Network Security Groups]`.
+For more information about network security groups, see [Network Security Groups].
 
 **Important:** Oracle Cloud Infrastructure Compute service images automatically include firewall rules (for example, Linux iptables, Windows firewall). If there are issues with some type of access to an instance, make sure all of the following are set correctly:
 
-  * Any security rules in any NSGs the instance's VNIC belongs to   * Any `[SecurityLists]` associated with the instance's subnet   * The instance's OS firewall rules
+  * Any security rules in any NSGs the instance's VNIC belongs to   * Any [SecurityLists] associated with the instance's subnet   * The instance's OS firewall rules
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -342,7 +342,7 @@ Each instance has a *primary private IP* that is automatically created and assig
 
 You can add *secondary private IPs* to a VNIC after it's created. For more information, see the `privateIp` operations and also [IP Addresses].
 
-**Note:** Only [ListPrivateIps] and [GetPrivateIp] work with *primary* private IPs. To create and update primary private IPs, you instead work with instance and VNIC operations. For example, a primary private IP's properties come from the values you specify in [CreateVnicDetails] when calling either [LaunchInstance] or [AttachVnic]. To update the hostname for a primary private IP, you use `[UpdateVnic]`.
+**Note:** Only [ListPrivateIps] and [GetPrivateIp] work with *primary* private IPs. To create and update primary private IPs, you instead work with instance and VNIC operations. For example, a primary private IP's properties come from the values you specify in [CreateVnicDetails] when calling either [LaunchInstance] or [AttachVnic]. To update the hostname for a primary private IP, you use [UpdateVnic].
 
 `PrivateIp` objects that are created for use with the Oracle Cloud VMware Solution are assigned to a VLAN and not a VNIC in a subnet. See the descriptions of the relevant attributes in the `PrivateIp` object. Also see [Vlan].
 
@@ -2185,6 +2185,8 @@ def create_byoasn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @byoip_range_group.command(name=cli_util.override('virtual_network.create_byoip_range.command_name', 'create'), help=u"""Creates a subrange of the BYOIP CIDR block. \n[Command Reference](createByoipRange)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the BYOIP CIDR block.""")
 @cli_util.option('--cidr-block', help=u"""The BYOIP CIDR block. You can assign some or all of it to a public IP pool after it is validated. Example: `10.0.1.0/24`""")
+@cli_util.option('--ip-anycast-id', help=u"""The [OCID] of the `IpAnycast` resource.""")
+@cli_util.option('--monitor-ip', help=u"""The IP address of the CIDR for Prefix Monitoring.""")
 @cli_util.option('--ipv6-cidr-block', help=u"""The BYOIPv6 prefix. You can assign some or all of it to a VCN after it is validated.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -2201,7 +2203,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'ByoipRange'})
 @cli_util.wrap_exceptions
-def create_byoip_range(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cidr_block, ipv6_cidr_block, defined_tags, display_name, freeform_tags):
+def create_byoip_range(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cidr_block, ip_anycast_id, monitor_ip, ipv6_cidr_block, defined_tags, display_name, freeform_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2211,6 +2213,12 @@ def create_byoip_range(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if cidr_block is not None:
         _details['cidrBlock'] = cidr_block
+
+    if ip_anycast_id is not None:
+        _details['ipAnycastId'] = ip_anycast_id
+
+    if monitor_ip is not None:
+        _details['monitorIp'] = monitor_ip
 
     if ipv6_cidr_block is not None:
         _details['ipv6CidrBlock'] = ipv6_cidr_block
@@ -3242,7 +3250,6 @@ def create_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 
 @ipv6_group.command(name=cli_util.override('virtual_network.create_ipv6.command_name', 'create'), help=u"""Creates an IPv6 for the specified VNIC. \n[Command Reference](createIpv6)""")
-@cli_util.option('--vnic-id', required=True, help=u"""The [OCID] of the VNIC to assign the IPv6 to. The IPv6 will be in the VNIC's subnet.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3253,7 +3260,10 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--ip-address', help=u"""An IPv6 address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns an IPv6 address from the subnet. The subnet is the one that contains the VNIC you specify in `vnicId`.
 
 Example: `2001:DB8::`""")
-@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the PrivateIp will use.""")
+@cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC to assign the IPv6 to. The IPv6 will be in the VNIC's subnet.""")
+@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet from which the IPv6 is to be drawn. The IP address, *if supplied*, must be valid for the given subnet, only valid for reserved IPs currently.""")
+@cli_util.option('--lifetime', type=custom_types.CliCaseInsensitiveChoice(["EPHEMERAL", "RESERVED"]), help=u"""Lifetime of the IP address. There are two types of IPv6 IPs:  - Ephemeral  - Reserved""")
+@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the IP address or VNIC will use. For more information, see [Source Based Routing].""")
 @cli_util.option('--ipv6-subnet-cidr', help=u"""The IPv6 prefix allocated to the subnet. This is required if more than one IPv6 prefix exists on the subnet.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3263,13 +3273,12 @@ Example: `2001:DB8::`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Ipv6'})
 @cli_util.wrap_exceptions
-def create_ipv6(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vnic_id, defined_tags, display_name, freeform_tags, ip_address, route_table_id, ipv6_subnet_cidr):
+def create_ipv6(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, defined_tags, display_name, freeform_tags, ip_address, vnic_id, subnet_id, lifetime, route_table_id, ipv6_subnet_cidr):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['vnicId'] = vnic_id
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -3282,6 +3291,15 @@ def create_ipv6(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if ip_address is not None:
         _details['ipAddress'] = ip_address
+
+    if vnic_id is not None:
+        _details['vnicId'] = vnic_id
+
+    if subnet_id is not None:
+        _details['subnetId'] = subnet_id
+
+    if lifetime is not None:
+        _details['lifetime'] = lifetime
 
     if route_table_id is not None:
         _details['routeTableId'] = route_table_id
@@ -3562,13 +3580,15 @@ Example: `10.0.3.3`""")
 @cli_util.option('--vlan-id', help=u"""Use this attribute only with the Oracle Cloud VMware Solution.
 
 The [OCID] of the VLAN from which the private IP is to be drawn. The IP address, *if supplied*, must be valid for the given VLAN. See [Vlan].""")
-@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the PrivateIp will use.""")
+@cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet from which the private IP is to be drawn. The IP address, *if supplied*, must be valid for the given subnet.""")
+@cli_util.option('--lifetime', type=custom_types.CliCaseInsensitiveChoice(["EPHEMERAL", "RESERVED"]), help=u"""Lifetime of the IP address. There are two types of IPv6 IPs:  - Ephemeral  - Reserved""")
+@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the IP address or VNIC will use. For more information, see [Source Based Routing].""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
-def create_private_ip(ctx, from_json, defined_tags, display_name, freeform_tags, hostname_label, ip_address, vnic_id, vlan_id, route_table_id):
+def create_private_ip(ctx, from_json, defined_tags, display_name, freeform_tags, hostname_label, ip_address, vnic_id, vlan_id, subnet_id, lifetime, route_table_id):
 
     kwargs = {}
 
@@ -3594,6 +3614,12 @@ def create_private_ip(ctx, from_json, defined_tags, display_name, freeform_tags,
 
     if vlan_id is not None:
         _details['vlanId'] = vlan_id
+
+    if subnet_id is not None:
+        _details['subnetId'] = subnet_id
+
+    if lifetime is not None:
+        _details['lifetime'] = lifetime
 
     if route_table_id is not None:
         _details['routeTableId'] = route_table_id
@@ -7977,6 +8003,57 @@ def get_vtap(ctx, from_json, vtap_id):
     cli_util.render_response(result, ctx)
 
 
+@ipv6_group.command(name=cli_util.override('virtual_network.ipv6_vnic_detach.command_name', 'ipv6-vnic-detach'), help=u"""Unassign the specified IPv6 address from Virtual Network Interface Card (VNIC). You must specify the IPv6 [OCID]. \n[Command Reference](ipv6VnicDetach)""")
+@cli_util.option('--ipv6-id', required=True, help=u"""The [OCID] of the IPv6.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Ipv6'})
+@cli_util.wrap_exceptions
+def ipv6_vnic_detach(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ipv6_id, if_match):
+
+    if isinstance(ipv6_id, six.string_types) and len(ipv6_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipv6-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.ipv6_vnic_detach(
+        ipv6_id=ipv6_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_ipv6') and callable(getattr(client, 'get_ipv6')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_ipv6(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @peer_region_for_remote_peering_group.command(name=cli_util.override('virtual_network.list_allowed_peer_regions_for_remote_peering.command_name', 'list-allowed-peer-regions-for-remote-peering'), help=u"""Lists the regions that support remote VCN peering (which is peering across regions). For more information, see [VCN Peering]. \n[Command Reference](listAllowedPeerRegionsForRemotePeering)""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -9513,6 +9590,8 @@ Example: `50`""")
 @cli_util.option('--ip-address', help=u"""An IP address. This could be either IPv4 or IPv6, depending on the resource. Example: `10.0.3.3`""")
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet.""")
 @cli_util.option('--vnic-id', help=u"""The OCID of the VNIC.""")
+@cli_util.option('--ip-state', help=u"""State of the IP address. If an IP address is assigned to a VNIC it is ASSIGNED otherwise AVAILABLE""")
+@cli_util.option('--lifetime', help=u"""Lifetime of the IP address. There are two types of IPs:  - Ephemeral  - Reserved""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -9520,7 +9599,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Ipv6]'})
 @cli_util.wrap_exceptions
-def list_ipv6s(ctx, from_json, all_pages, page_size, limit, page, ip_address, subnet_id, vnic_id):
+def list_ipv6s(ctx, from_json, all_pages, page_size, limit, page, ip_address, subnet_id, vnic_id, ip_state, lifetime):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -9536,6 +9615,10 @@ def list_ipv6s(ctx, from_json, all_pages, page_size, limit, page, ip_address, su
         kwargs['subnet_id'] = subnet_id
     if vnic_id is not None:
         kwargs['vnic_id'] = vnic_id
+    if ip_state is not None:
+        kwargs['ip_state'] = ip_state
+    if lifetime is not None:
+        kwargs['lifetime'] = lifetime
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
@@ -9879,6 +9962,8 @@ Example: `50`""")
 @cli_util.option('--ip-address', help=u"""An IP address. This could be either IPv4 or IPv6, depending on the resource. Example: `10.0.3.3`""")
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet.""")
 @cli_util.option('--vnic-id', help=u"""The OCID of the VNIC.""")
+@cli_util.option('--ip-state', help=u"""State of the IP address. If an IP address is assigned to a VNIC it is ASSIGNED otherwise AVAILABLE""")
+@cli_util.option('--lifetime', help=u"""Lifetime of the IP address. There are two types of IPs:  - Ephemeral  - Reserved""")
 @cli_util.option('--vlan-id', help=u"""The [OCID] of the VLAN.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -9887,7 +9972,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[PrivateIp]'})
 @cli_util.wrap_exceptions
-def list_private_ips(ctx, from_json, all_pages, page_size, limit, page, ip_address, subnet_id, vnic_id, vlan_id):
+def list_private_ips(ctx, from_json, all_pages, page_size, limit, page, ip_address, subnet_id, vnic_id, ip_state, lifetime, vlan_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -9903,6 +9988,10 @@ def list_private_ips(ctx, from_json, all_pages, page_size, limit, page, ip_addre
         kwargs['subnet_id'] = subnet_id
     if vnic_id is not None:
         kwargs['vnic_id'] = vnic_id
+    if ip_state is not None:
+        kwargs['ip_state'] = ip_state
+    if lifetime is not None:
+        kwargs['lifetime'] = lifetime
     if vlan_id is not None:
         kwargs['vlan_id'] = vlan_id
     client = cli_util.build_client('core', 'virtual_network', ctx)
@@ -10903,6 +10992,31 @@ def modify_vcn_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
+@private_ip_group.command(name=cli_util.override('virtual_network.private_ip_vnic_detach.command_name', 'private-ip-vnic-detach'), help=u"""Unassign the specified PrivateIP address from Virtual Network Interface Card (VNIC). You must specify the PrivateIP [OCID]. \n[Command Reference](privateIpVnicDetach)""")
+@cli_util.option('--private-ip-id', required=True, help=u"""The [OCID] of the private IP or IPv6.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'PrivateIp'})
+@cli_util.wrap_exceptions
+def private_ip_vnic_detach(ctx, from_json, private_ip_id, if_match):
+
+    if isinstance(private_ip_id, six.string_types) and len(private_ip_id.strip()) == 0:
+        raise click.UsageError('Parameter --private-ip-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.private_ip_vnic_detach(
+        private_ip_id=private_ip_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @drg_route_distribution_statement_group.command(name=cli_util.override('virtual_network.remove_drg_route_distribution_statements.command_name', 'remove'), help=u"""Removes one or more route distribution statements from the specified route distribution's map. \n[Command Reference](removeDrgRouteDistributionStatements)""")
 @cli_util.option('--drg-route-distribution-id', required=True, help=u"""The [OCID] of the route distribution.""")
 @cli_util.option('--statement-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The Oracle-assigned ID of each route distribution to remove.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -11544,6 +11658,8 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ip-anycast-id', help=u"""The [OCID] of the `IpAnycast` resource.""")
+@cli_util.option('--monitor-ip', help=u"""The IP address of the CIDR for Prefix Monitoring.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["INACTIVE", "UPDATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -11554,7 +11670,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'ByoipRange'})
 @cli_util.wrap_exceptions
-def update_byoip_range(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, byoip_range_id, defined_tags, display_name, freeform_tags, if_match):
+def update_byoip_range(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, byoip_range_id, defined_tags, display_name, freeform_tags, ip_anycast_id, monitor_ip, if_match):
 
     if isinstance(byoip_range_id, six.string_types) and len(byoip_range_id.strip()) == 0:
         raise click.UsageError('Parameter --byoip-range-id cannot be whitespace or empty string')
@@ -11578,6 +11694,12 @@ def update_byoip_range(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if ip_anycast_id is not None:
+        _details['ipAnycastId'] = ip_anycast_id
+
+    if monitor_ip is not None:
+        _details['monitorIp'] = monitor_ip
 
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_byoip_range(
@@ -12869,7 +12991,8 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC to reassign the IPv6 to. The VNIC must be in the same subnet as the current VNIC.""")
-@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the PrivateIp will use.""")
+@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the IP address or VNIC will use. For more information, see [Source Based Routing].""")
+@cli_util.option('--lifetime', type=custom_types.CliCaseInsensitiveChoice(["EPHEMERAL", "RESERVED"]), help=u"""Lifetime of the IP address. There are two types of IPv6 IPs:  - Ephemeral  - Reserved""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -12880,7 +13003,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Ipv6'})
 @cli_util.wrap_exceptions
-def update_ipv6(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ipv6_id, defined_tags, display_name, freeform_tags, vnic_id, route_table_id, if_match):
+def update_ipv6(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ipv6_id, defined_tags, display_name, freeform_tags, vnic_id, route_table_id, lifetime, if_match):
 
     if isinstance(ipv6_id, six.string_types) and len(ipv6_id.strip()) == 0:
         raise click.UsageError('Parameter --ipv6-id cannot be whitespace or empty string')
@@ -12910,6 +13033,9 @@ def update_ipv6(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 
     if route_table_id is not None:
         _details['routeTableId'] = route_table_id
+
+    if lifetime is not None:
+        _details['lifetime'] = lifetime
 
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_ipv6(
@@ -13244,7 +13370,8 @@ For more information, see [DNS in Your Virtual Cloud Network].
 
 Example: `bminstance1`""")
 @cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC to reassign the private IP to. The VNIC must be in the same subnet as the current VNIC.""")
-@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the PrivateIp will use.""")
+@cli_util.option('--lifetime', type=custom_types.CliCaseInsensitiveChoice(["EPHEMERAL", "RESERVED"]), help=u"""Lifetime of the IP address. There are two types of IPv6 IPs:  - Ephemeral  - Reserved""")
+@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the IP address or VNIC will use. For more information, see [Source Based Routing].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
@@ -13252,7 +13379,7 @@ Example: `bminstance1`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
-def update_private_ip(ctx, from_json, force, private_ip_id, defined_tags, display_name, freeform_tags, hostname_label, vnic_id, route_table_id, if_match):
+def update_private_ip(ctx, from_json, force, private_ip_id, defined_tags, display_name, freeform_tags, hostname_label, vnic_id, lifetime, route_table_id, if_match):
 
     if isinstance(private_ip_id, six.string_types) and len(private_ip_id.strip()) == 0:
         raise click.UsageError('Parameter --private-ip-id cannot be whitespace or empty string')
@@ -13281,6 +13408,9 @@ def update_private_ip(ctx, from_json, force, private_ip_id, defined_tags, displa
 
     if vnic_id is not None:
         _details['vnicId'] = vnic_id
+
+    if lifetime is not None:
+        _details['lifetime'] = lifetime
 
     if route_table_id is not None:
         _details['routeTableId'] = route_table_id
@@ -14291,7 +14421,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""[Security attributes] are labels for a resource that can be referenced in a [Zero Trust Packet Routing] (ZPR) policy to control access to ZPR-supported resources.
 
 Example: `{\"Oracle-DataSecurity-ZPR\": {\"MaxEgressCount\": {\"value\":\"42\",\"mode\":\"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--hostname-label', help=u"""The hostname for the VNIC's primary private IP. Used for DNS. The value is the hostname portion of the primary private IP's fully qualified domain name (FQDN) (for example, `bminstance1` in FQDN `bminstance1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123]. The value appears in the `[Vnic]` object and also the [PrivateIp] object returned by [ListPrivateIps] and [GetPrivateIp].
+@cli_util.option('--hostname-label', help=u"""The hostname for the VNIC's primary private IP. Used for DNS. The value is the hostname portion of the primary private IP's fully qualified domain name (FQDN) (for example, `bminstance1` in FQDN `bminstance1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123]. The value appears in the [Vnic] object and also the [PrivateIp] object returned by [ListPrivateIps] and [GetPrivateIp].
 
 For more information, see [DNS in Your Virtual Cloud Network].""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the OCIDs of the network security groups (NSGs) to add the VNIC to. Setting this as an empty array removes the VNIC from all network security groups.
@@ -14302,7 +14432,7 @@ For more information about NSGs, see [NetworkSecurityGroup].""" + custom_types.c
 @cli_util.option('--skip-source-dest-check', type=click.BOOL, help=u"""Whether the source/destination check is disabled on the VNIC. Defaults to `false`, which means the check is performed. For information about why you would skip the source/destination check, see [Using a Private IP as a Route Target].
 
 If the VNIC belongs to a VLAN as part of the Oracle Cloud VMware Solution (instead of belonging to a subnet), the value of the `skipSourceDestCheck` attribute is ignored. This is because the source/destination check is always disabled for VNICs in a VLAN. Example: `true`""")
-@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the PrivateIp will use.""")
+@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the IP address or VNIC will use. For more information, see [Source Based Routing].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")

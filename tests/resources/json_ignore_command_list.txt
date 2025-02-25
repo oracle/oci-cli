@@ -495,3 +495,7 @@ network, vnic, assign-ipv6
 db, database, create-standby-database
 stack-monitoring, resource-type, create-system-format-resource-type
 stack-monitoring, resource-type, update-system-format-resource-type
+os-management-hub, profile, list-profile-available-software-sources
+os-management-hub, profile, list-available-software-sources
+apm-synthetics, monitor, create-scripted-browser-monitor
+apm-synthetics, monitor, update-scripted-browser-monitor

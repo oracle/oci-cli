@@ -2761,7 +2761,7 @@ def enable_external_non_container_database_operations_insights_extended(ctx, **k
         kwargs.pop('external_db_connector_id')
 
     if 'external_non_cdb_id' in kwargs:
-        kwargs['external_database_connector_id'] = kwargs['external_non_cdb_id']
+        kwargs['external_non_container_database_id'] = kwargs['external_non_cdb_id']
         kwargs.pop('external_non_cdb_id')
 
     ctx.invoke(database_cli.enable_external_non_container_database_operations_insights, **kwargs)

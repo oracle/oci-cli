@@ -200,6 +200,7 @@ Avoid entering confidential information.
 
 Example: `mydomain-phx-20210228`""")
 @cli_util.option('--description', help=u"""A string that describes the details about the DKIM. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
+@cli_util.option('--private-key', help=u"""The DKIM RSA Private Key in Privacy-Enhanced Mail (PEM) format. It is a text-based representation of the private key used for signing email messages.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -214,7 +215,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'email', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'email', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'email', 'class': 'Dkim'})
 @cli_util.wrap_exceptions
-def create_dkim(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, email_domain_id, name, description, freeform_tags, defined_tags):
+def create_dkim(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, email_domain_id, name, description, private_key, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -227,6 +228,9 @@ def create_dkim(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if description is not None:
         _details['description'] = description
+
+    if private_key is not None:
+        _details['privateKey'] = private_key
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

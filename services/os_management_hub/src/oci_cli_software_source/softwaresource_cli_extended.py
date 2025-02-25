@@ -287,3 +287,31 @@ def list_all_software_packages_extended(ctx, **kwargs):
         kwargs.pop('package_version')
 
     ctx.invoke(softwaresource_cli.list_all_software_packages, **kwargs)
+
+
+# oci os-management-hub software-source create-software-source-create-private-software-source-details -> oci os-management-hub software-source create-private-swsrc
+cli_util.rename_command(softwaresource_cli, softwaresource_cli.software_source_group, softwaresource_cli.create_software_source_create_private_software_source_details, "create-private-swsrc")
+
+
+# oci os-management-hub software-source create-software-source-create-third-party-software-source-details -> oci os-management-hub software-source create-third-party-swsrc
+cli_util.rename_command(softwaresource_cli, softwaresource_cli.software_source_group, softwaresource_cli.create_software_source_create_third_party_software_source_details, "create-third-party-swsrc")
+
+
+# oci os-management-hub software-source remove -> oci os-management-hub software-source remove-packages
+cli_util.rename_command(softwaresource_cli, softwaresource_cli.software_source_group, softwaresource_cli.remove_packages_from_software_source, "remove-packages")
+
+
+# oci os-management-hub software-source replace-packages-in -> oci os-management-hub software-source replace-packages
+cli_util.rename_command(softwaresource_cli, softwaresource_cli.software_source_group, softwaresource_cli.replace_packages_in_software_source, "replace-packages")
+
+
+# oci os-management-hub software-source software-source-generate-metadata -> oci os-management-hub software-source generate-metadata
+cli_util.rename_command(softwaresource_cli, softwaresource_cli.software_source_group, softwaresource_cli.software_source_generate_metadata, "generate-metadata")
+
+
+# oci os-management-hub software-source update-software-source-update-private-software-source-details -> oci os-management-hub software-source update-private-swsrc
+cli_util.rename_command(softwaresource_cli, softwaresource_cli.software_source_group, softwaresource_cli.update_software_source_update_private_software_source_details, "update-private-swsrc")
+
+
+# oci os-management-hub software-source update-software-source-update-third-party-software-source-details -> oci os-management-hub software-source update-third-party-swsrc
+cli_util.rename_command(softwaresource_cli, softwaresource_cli.software_source_group, softwaresource_cli.update_software_source_update_third_party_software_source_details, "update-third-party-swsrc")

@@ -42,9 +42,9 @@ lifecycle_environment_root_group.add_command(lifecycle_environment_group)
 
 @lifecycle_stage_group.command(name=cli_util.override('lifecycle_environment.attach_managed_instances_to_lifecycle_stage.command_name', 'attach'), help=u"""Attaches (adds) managed instances to a lifecycle stage. Once added, you can apply operations to all managed instances in the lifecycle stage. \n[Command Reference](attachManagedInstancesToLifecycleStage)""")
 @cli_util.option('--lifecycle-stage-id', required=True, help=u"""The [OCID] of the lifecycle stage.""")
-@cli_util.option('--managed-instance-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--managed-instance-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'managed-instance-details': {'module': 'os_management_hub', 'class': 'ManagedInstancesDetails'}})
@@ -63,9 +63,7 @@ def attach_managed_instances_to_lifecycle_stage(ctx, from_json, wait_for_state, 
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-
-    if managed_instance_details is not None:
-        _details['managedInstanceDetails'] = cli_util.parse_json_parameter("managed_instance_details", managed_instance_details)
+    _details['managedInstanceDetails'] = cli_util.parse_json_parameter("managed_instance_details", managed_instance_details)
 
     client = cli_util.build_client('os_management_hub', 'lifecycle_environment', ctx)
     result = client.attach_managed_instances_to_lifecycle_stage(
@@ -140,7 +138,7 @@ def change_lifecycle_environment_compartment(ctx, from_json, lifecycle_environme
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the lifecycle environment.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the lifecycle environment. Does not have to be unique and you can change the name later. Avoid entering confidential information.""")
 @cli_util.option('--stages', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""User-specified list of ranked lifecycle stages used within the lifecycle environment.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--arch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC"]), help=u"""The CPU architecture of the managed instances in the lifecycle environment.""")
+@cli_util.option('--arch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386"]), help=u"""The CPU architecture of the managed instances in the lifecycle environment.""")
 @cli_util.option('--os-family', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), help=u"""The operating system of the managed instances in the lifecycle environment.""")
 @cli_util.option('--vendor-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLE", "MICROSOFT"]), help=u"""The vendor of the operating system used by the managed instances in the lifecycle environment.""")
 @cli_util.option('--description', help=u"""User-specified information about the lifecycle environment. Avoid entering confidential information.""")
@@ -277,9 +275,9 @@ def delete_lifecycle_environment(ctx, from_json, wait_for_state, max_wait_second
 
 @lifecycle_stage_group.command(name=cli_util.override('lifecycle_environment.detach_managed_instances_from_lifecycle_stage.command_name', 'detach'), help=u"""Detaches (removes) a managed instance from a lifecycle stage. \n[Command Reference](detachManagedInstancesFromLifecycleStage)""")
 @cli_util.option('--lifecycle-stage-id', required=True, help=u"""The [OCID] of the lifecycle stage.""")
-@cli_util.option('--managed-instance-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--managed-instance-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'managed-instance-details': {'module': 'os_management_hub', 'class': 'ManagedInstancesDetails'}})
@@ -298,9 +296,7 @@ def detach_managed_instances_from_lifecycle_stage(ctx, from_json, wait_for_state
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-
-    if managed_instance_details is not None:
-        _details['managedInstanceDetails'] = cli_util.parse_json_parameter("managed_instance_details", managed_instance_details)
+    _details['managedInstanceDetails'] = cli_util.parse_json_parameter("managed_instance_details", managed_instance_details)
 
     client = cli_util.build_client('os_management_hub', 'lifecycle_environment', ctx)
     result = client.detach_managed_instances_from_lifecycle_stage(
@@ -387,7 +383,7 @@ def get_lifecycle_stage(ctx, from_json, lifecycle_stage_id):
 @cli_util.option('--display-name', multiple=True, help=u"""A filter to return resources that match the given display names.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
 @cli_util.option('--lifecycle-environment-id', help=u"""The [OCID] of the lifecycle environment.""")
-@cli_util.option('--arch-type', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC"]), help=u"""A filter to return only profiles that match the given archType.""")
+@cli_util.option('--arch-type', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386"]), help=u"""A filter to return only profiles that match the given archType.""")
 @cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), help=u"""A filter to return only resources that match the given operating system family.""")
 @cli_util.option('--location', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help=u"""A filter to return only resources whose location matches the given value.""")
 @cli_util.option('--location-not-equal-to', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help=u"""A filter to return only resources whose location does not match the given value.""")
@@ -542,7 +538,7 @@ def list_lifecycle_stage_installed_packages(ctx, from_json, all_pages, page_size
 @cli_util.option('--display-name-contains', help=u"""A filter to return resources that may partially match the given display name.""")
 @cli_util.option('--lifecycle-stage-id', help=u"""The [OCID] of the lifecycle stage.""")
 @cli_util.option('--software-source-id', help=u"""The [OCID] of the software source. This filter returns resources associated with this software source.""")
-@cli_util.option('--arch-type', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC"]), help=u"""A filter to return only profiles that match the given archType.""")
+@cli_util.option('--arch-type', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64", "I686", "NOARCH", "SRC", "I386"]), help=u"""A filter to return only profiles that match the given archType.""")
 @cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_LINUX_9", "ORACLE_LINUX_8", "ORACLE_LINUX_7", "ORACLE_LINUX_6", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "ALL"]), help=u"""A filter to return only resources that match the given operating system family.""")
 @cli_util.option('--location', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help=u"""A filter to return only resources whose location matches the given value.""")
 @cli_util.option('--location-not-equal-to', type=custom_types.CliCaseInsensitiveChoice(["ON_PREMISE", "OCI_COMPUTE", "AZURE", "EC2", "GCP"]), multiple=True, help=u"""A filter to return only resources whose location does not match the given value.""")
@@ -625,7 +621,7 @@ def list_lifecycle_stages(ctx, from_json, all_pages, page_size, compartment_id, 
 @cli_util.option('--work-request-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--software-source-id', help=u"""The [OCID] of the software source. This filter returns resources associated with this software source.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
@@ -654,6 +650,73 @@ def promote_software_source_to_lifecycle_stage(ctx, from_json, wait_for_state, m
     result = client.promote_software_source_to_lifecycle_stage(
         lifecycle_stage_id=lifecycle_stage_id,
         promote_software_source_to_lifecycle_stage_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@lifecycle_stage_group.command(name=cli_util.override('lifecycle_environment.reboot_lifecycle_stage.command_name', 'reboot'), help=u"""Reboots all managed instances in the specified lifecycle stage. \n[Command Reference](rebootLifecycleStage)""")
+@cli_util.option('--lifecycle-stage-id', required=True, help=u"""The [OCID] of the lifecycle stage.""")
+@cli_util.option('--reboot-timeout-in-mins', type=click.INT, help=u"""The number of minutes the service waits for the reboot to complete. If the instances in the stage don't reboot within this time, the reboot job status is set to failed.""")
+@cli_util.option('--work-request-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["WAITING", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@cli_util.wrap_exceptions
+def reboot_lifecycle_stage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, lifecycle_stage_id, reboot_timeout_in_mins, work_request_details, if_match):
+
+    if isinstance(lifecycle_stage_id, six.string_types) and len(lifecycle_stage_id.strip()) == 0:
+        raise click.UsageError('Parameter --lifecycle-stage-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if reboot_timeout_in_mins is not None:
+        _details['rebootTimeoutInMins'] = reboot_timeout_in_mins
+
+    if work_request_details is not None:
+        _details['workRequestDetails'] = cli_util.parse_json_parameter("work_request_details", work_request_details)
+
+    client = cli_util.build_client('os_management_hub', 'lifecycle_environment', ctx)
+    result = client.reboot_lifecycle_stage(
+        lifecycle_stage_id=lifecycle_stage_id,
+        reboot_lifecycle_stage_details=_details,
         **kwargs
     )
     if wait_for_state:

@@ -640,6 +640,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--node-count', type=click.INT, help=u"""The number of nodes per shard in the cluster when clusterMode is SHARDED. This is the total number of nodes when clusterMode is NONSHARDED.""")
 @cli_util.option('--node-memory-in-gbs', type=click.FLOAT, help=u"""The amount of memory allocated to the cluster's nodes, in gigabytes.""")
+@cli_util.option('--software-version', help=u"""The OCI Cache engine version that the cluster is running.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of Network Security Group (NSG) [OCIDs] associated with this cluster. For more information, see [Using an NSG for Clusters].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -653,7 +654,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'redis', 'class': 'list[string]'}, 'freeform-tags': {'module': 'redis', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_redis_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, redis_cluster_id, shard_count, display_name, node_count, node_memory_in_gbs, nsg_ids, freeform_tags, defined_tags, if_match):
+def update_redis_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, redis_cluster_id, shard_count, display_name, node_count, node_memory_in_gbs, software_version, nsg_ids, freeform_tags, defined_tags, if_match):
 
     if isinstance(redis_cluster_id, six.string_types) and len(redis_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --redis-cluster-id cannot be whitespace or empty string')
@@ -680,6 +681,9 @@ def update_redis_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     if node_memory_in_gbs is not None:
         _details['nodeMemoryInGBs'] = node_memory_in_gbs
+
+    if software_version is not None:
+        _details['softwareVersion'] = software_version
 
     if nsg_ids is not None:
         _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)

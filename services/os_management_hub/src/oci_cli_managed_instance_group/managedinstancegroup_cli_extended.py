@@ -438,3 +438,18 @@ def switch_module_stream_on_managed_instance_group_extended(ctx, **kwargs):
         kwargs.pop('group_id')
 
     ctx.invoke(managedinstancegroup_cli.switch_module_stream_on_managed_instance_group, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(managedinstancegroup_cli.reboot_managed_instance_group, params_to_exclude=['managed_instance_group_id'])
+@managedinstancegroup_cli.managed_instance_group_group.command(name=managedinstancegroup_cli.reboot_managed_instance_group.name, help=managedinstancegroup_cli.reboot_managed_instance_group.help)
+@cli_util.option('--group-id', required=True, help=u"""The [OCID] of the managed instance group. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'work-request-details': {'module': 'os_management_hub', 'class': 'WorkRequestDetails'}})
+@cli_util.wrap_exceptions
+def reboot_managed_instance_group_extended(ctx, **kwargs):
+
+    if 'group_id' in kwargs:
+        kwargs['managed_instance_group_id'] = kwargs['group_id']
+        kwargs.pop('group_id')
+
+    ctx.invoke(managedinstancegroup_cli.reboot_managed_instance_group, **kwargs)

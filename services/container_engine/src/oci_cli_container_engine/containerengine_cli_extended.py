@@ -16,7 +16,6 @@ import os
 import yaml
 import base64
 from datetime import datetime, timedelta
-from timeit import default_timer as timer
 
 DEFAULT_KUBECONFIG_LOCATION = os.path.join('~', '.kube', 'config')
 cli_util.rename_command(containerengine_cli, containerengine_cli.work_request_log_entry_group, containerengine_cli.list_work_request_logs,
@@ -37,24 +36,21 @@ containerengine_cli.node_pool_group.commands.pop(containerengine_cli.update_node
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
 def generate_token(ctx, from_json, cluster_id):
-    start_time1 = timer()
     if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
     client = cli_util.build_client('container_engine', 'container_engine', ctx)
     signer = client.base_client.signer
-    end_time1 = timer()
 
     url = "https://containerengine.%s.oraclecloud.com/cluster_request/%s" % (ctx.obj['config']['region'], cluster_id)
 
     # Create the presigned request that we need to sign.
     # The output of this signed request will be used to build the token.
-    start_time2 = timer()
     request = signer.do_request_sign(Request(
         "GET",
         url,
     ).prepare())
-    end_time2 = timer()
+
     # Now that we have the signed request we need to turn it into
     # the base64 encoded token that OKE will authenticate.
 
@@ -66,43 +62,16 @@ def generate_token(ctx, from_json, cluster_id):
     if isinstance(signer, InstancePrincipalsDelegationTokenSigner):
         header_params['opc-obo-token'] = signer.delegation_token
 
-    start_time3 = timer()
     token_request = Request(
         "GET",
         url,
         params=header_params,
     ).prepare()
-    end_time3 = timer()
 
     # Generate the ExecCredential that the Kubernetes exec plugin provide requires.
     # https://kubernetes.io/docs/reference/access-authn-authz/authentication/#input-and-output-formats
 
-    # token = base64.urlsafe_b64encode(token_request.url.encode('utf-8')).decode('utf-8')
-    # Step 1: Encode URL to bytes (UTF-8)
-    start_step1 = timer()
-    encoded_url = token_request.url.encode('utf-8')
-    end_step1 = timer()
-
-    # Step 2: Base64 encode the byte object
-    start_step2 = timer()
-    base64_encoded = base64.urlsafe_b64encode(encoded_url)
-    end_step2 = timer()
-
-    # Step 3: Decode the Base64 result back into a string (UTF-8)
-    start_step3 = timer()
-    token = base64_encoded.decode('utf-8')
-    end_step3 = timer()
-
-    if ctx.obj['debug']:
-        # Print the time for each step
-        print('time elapsed for building client: {}'.format(str(end_time1 - start_time1)))
-        print('time elapsed for signing request: {}'.format(str(end_time2 - start_time2)))
-        print('time elapsed for making request obj: {}'.format(str(end_time3 - start_time3)))
-        print(f"Step 1 (Encoding to bytes): {end_step1 - start_step1} seconds")
-        print(f"Step 2 (Base64 encoding): {end_step2 - start_step2} seconds")
-        print(f"Step 3 (Decoding to string): {end_step3 - start_step3} seconds")
-        print(f"overhead time: {start_time1 - ctx.obj['start_time']}")
-        print(f"total time taken for token creation: {timer() - ctx.obj['start_time']}")
+    token = base64.urlsafe_b64encode(token_request.url.encode('utf-8')).decode('utf-8')
     # Get now+4 minutes in RFC3339 format.
     # This informs Kubernetes SDK/CLIs that it's time to refresh the token
     # before the token is actually expired.

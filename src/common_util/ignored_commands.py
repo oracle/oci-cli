@@ -257,7 +257,10 @@ IGNORED_COMMANDS = [
     ['jms', 'jms-plugin', 'list'],
     ['jms', 'performance-tuning-analysis-result', 'list'],
     ['jms', 'plugin-error-aggregation', 'summarize-plugin-errors'],
-    ['jms', 'plugin-error-summary', 'list-plugin-errors']
+    ['jms', 'plugin-error-summary', 'list-plugin-errors'],
+    ['os-management-hub', 'profile', 'list-available-software-sources'],
+    ['apm-synthetics', 'monitor', 'create-scripted-browser-monitor'],
+    ['apm-synthetics', 'monitor', 'update-scripted-browser-monitor']
 ]
 
 IGNORED_COMMANDS_DOCS = [
