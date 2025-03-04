@@ -116,6 +116,73 @@ psql_root_group.add_command(work_request_error_group)
 psql_root_group.add_command(backup_collection_group)
 
 
+@backup_group.command(name=cli_util.override('psql.backup_copy.command_name', 'backup-copy'), help=u"""Backup Copy Request to copy back up in remote region. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](backupCopy)""")
+@cli_util.option('--backup-id', required=True, help=u"""A unique identifier for the backup.""")
+@cli_util.option('--compartment-id', required=True, help=u"""target compartment to place a new backup""")
+@cli_util.option('--regions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of region names of the remote region""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--retention-period', type=click.INT, help=u"""Retention period in days of the backup copy.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'regions': {'module': 'psql', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'regions': {'module': 'psql', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def backup_copy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_id, compartment_id, regions, retention_period, if_match):
+
+    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+        raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['regions'] = cli_util.parse_json_parameter("regions", regions)
+
+    if retention_period is not None:
+        _details['retentionPeriod'] = retention_period
+
+    client = cli_util.build_client('psql', 'postgresql', ctx)
+    result = client.backup_copy(
+        backup_id=backup_id,
+        backup_copy_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @backup_group.command(name=cli_util.override('psql.change_backup_compartment.command_name', 'change-compartment'), help=u"""Moves a backup from one compartment to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeBackupCompartment)""")
 @cli_util.option('--backup-id', required=True, help=u"""A unique identifier for the backup.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the backup will be moved.""")
@@ -1364,6 +1431,7 @@ def list_backups(ctx, from_json, all_pages, page_size, compartment_id, time_star
 @configuration_collection_group.command(name=cli_util.override('psql.list_configurations.command_name', 'list-configurations'), help=u"""Returns a list of configurations. \n[Command Reference](listConfigurations)""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources if their `lifecycleState` matches the given `lifecycleState`.""")
+@cli_util.option('--config-type', type=custom_types.CliCaseInsensitiveChoice(["DEFAULT", "CUSTOM", "COPIED"]), help=u"""A filter to return only resources if their `configType` matches the given `configType`.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--db-version', help=u"""Version of the PostgreSQL database, such as 14.9.""")
 @cli_util.option('--shape', help=u"""The name of the shape for the configuration. Example: `VM.Standard.E4.Flex`""")
@@ -1379,7 +1447,7 @@ def list_backups(ctx, from_json, all_pages, page_size, compartment_id, time_star
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'psql', 'class': 'ConfigurationCollection'})
 @cli_util.wrap_exceptions
-def list_configurations(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, db_version, shape, configuration_id, limit, page, sort_order, sort_by):
+def list_configurations(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, config_type, display_name, db_version, shape, configuration_id, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1389,6 +1457,8 @@ def list_configurations(ctx, from_json, all_pages, page_size, compartment_id, li
         kwargs['compartment_id'] = compartment_id
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
+    if config_type is not None:
+        kwargs['config_type'] = config_type
     if display_name is not None:
         kwargs['display_name'] = display_name
     if db_version is not None:

@@ -21,6 +21,7 @@ opensearchcluster_cli.opensearch_cluster_root_group.add_command(opensearchcluste
 opensearchcluster_cli.opensearch_cluster_root_group.add_command(opensearchcluster_cli.resize_opensearch_cluster_vertical)
 opensearchcluster_cli.opensearch_cluster_root_group.add_command(opensearchcluster_cli.update_opensearch_cluster)
 opensearchcluster_cli.opensearch_cluster_root_group.add_command(opensearchcluster_cli.configure_outbound_cluster)
+opensearchcluster_cli.opensearch_cluster_root_group.add_command(opensearchcluster_cli.upgrade_open_search_cluster)
 
 
 # Move commands under 'oci opensearch cluster opensearch-cluster-collection' -> 'oci opensearch cluster'
@@ -54,6 +55,8 @@ cli_util.rename_command(opensearchcluster_cli, opensearchcluster_cli.opensearch_
 # oci opensearch cluster list-opensearch-versions -> oci opensearch cluster list-versions
 cli_util.rename_command(opensearchcluster_cli, opensearchcluster_cli.opensearch_cluster_root_group, opensearchcluster_cli.list_opensearch_versions, "list-versions")
 
+# oci opensearch cluster upgrade_open_search_cluster -> oci opensearch cluster upgrade
+cli_util.rename_command(opensearchcluster_cli, opensearchcluster_cli.opensearch_cluster_root_group, opensearchcluster_cli.upgrade_open_search_cluster, "upgrade")
 
 # oci opensearch cluster work-request-error-collection -> oci opensearch cluster work-request-error
 cli_util.rename_command(opensearchcluster_cli, opensearchcluster_cli.opensearch_cluster_root_group, opensearchcluster_cli.work_request_error_collection_group, "work-request-error")

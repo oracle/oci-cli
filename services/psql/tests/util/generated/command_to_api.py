@@ -2,6 +2,7 @@
 # Copyright (c) 2016, 2025, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
+    "psql.backup_copy": "oci.psql.PostgresqlClient.backup_copy",
     "psql.change_backup_compartment": "oci.psql.PostgresqlClient.change_backup_compartment",
     "psql.change_configuration_compartment": "oci.psql.PostgresqlClient.change_configuration_compartment",
     "psql.change_db_system_compartment": "oci.psql.PostgresqlClient.change_db_system_compartment",

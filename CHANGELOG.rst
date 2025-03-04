@@ -6,6 +6,84 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.52.0 - 2025-03-04
+--------------------
+Added
+~~~~~
+* File Storage service
+
+  * Support for User Quotas on FileSystem resource in the File Storage Service
+
+    * ``oci fs file-system create-quota-rule``
+    * ``oci fs file-system update-quota-rule``
+    * ``oci fs file-system delete-quota-rule``
+    * ``oci fs file-system get-quota-rule``
+    * ``oci fs file-system list-quota-rules``
+    * ``oci fs file-system toggle-quota-rules`
+
+* Database service
+
+  * Support for long term retention backup at Autonomous Recovery Service ("ZRCV").
+
+    * ``oci db backup create --retention-days <Retention value in days> --retention-years <Retention value in years>``
+    * ``oci db backup list --backup-destination-type <Backup destination type> --time-expiry-start <Start time of expiry> --time-expiry-end <End time of expiry> --type <Backup type> --db-version <Database version>``
+    * ``oci db backup update --retention-days <Retention value in days> --retention-years <Retention value in years>``
+
+  * Support for Subscription in the Exadata Database Service on Exascale Infrastructure
+
+    * ``oci db exascale-db-storage-vault --subscription-id``
+    * ``oci db exadb-vm-cluster create --subscription-id``
+    * ``oci db exascale-db-storage-vault change-exascale-db-storage-vault-subscription --exascale-db-storage-vault-id --subscription-id``
+    * ``oci db exadb-vm-cluster change-exadb-vm-cluster-subscription --exadb-vm-cluster-id --subscription-id``
+
+  * Support for Cluster Placement Group in the Exadata Database Service on Exascale Infrastructure
+
+    * ``oci db exascale-db-storage-vault create --cluster-placement-group-id``
+    * ``oci db exascale-db-storage-vault list --cluster-placement-group-id``
+    * ``oci db exadb-vm-cluster list --cluster-placement-group-id``
+
+  * Support for multiple standby databases for Autonomous Dataguard Association on ADB-D and ADB-D C@C
+
+    * ``oci db autonomous-container-database add --autonomous-container-database-id``
+    * ``oci db autonomous-container-database convert-standby --autonomous-container-database-id``
+    * ``oci db autonomous-container-database edit-autonomous-container-database-dataguard --autonomous-container-database-id``
+    * ``oci db autonomous-container-database failover-autonomous-container-database-dataguard --autonomous-container-database-id``
+    * ``oci db autonomous-container-database switchover-autonomous-container-database-dataguard --autonomous-container-database-id ``
+    * ``oci db autonomous-container-database reinstate-autonomous-container-database-dataguard --autonomous-container-database-id ``
+    * ``oci db autonomous-container-database-dataguard migrate --autonomous-container-database-id``
+
+* Open Search service
+
+  * Support for upgrade major version of cluster in OpenSearch
+
+    * ``oci opensearch cluster upgrade --opensearch-cluster-id --desired-software-version --original-cluster-display-name --upgrade-type --is-clone --endpoint``
+
+* PSQL service
+  
+  * Support for creating a backup copy
+  
+    * ``oci psql backup backup-copy --backup-id --compartment-id``
+
+Changed
+~~~~~~~
+* Tenant Manager Control Plane service
+
+  * [BREAKING] Changed the values accepted by the optional parameter --wait-for-state in the create command
+
+    * ``oci organizations subscription-mapping create --wait-for-state <A value from [CREATING, ACTIVE, INACTIVE, UPDATING, DELETING, DELETED, FAILED]>``
+
+* PSQL service
+
+  * Added new optional parameter --config-type to list-configurations
+
+    * ``oci psql configuration-collection list-configurations --config-type``
+
+* Compute Engine service
+
+  * Added new optional parameter --with-auth-context which reads the auth and profile attributes from the execution context and appends them to the oci command arguments in the kubeconfig file
+    
+    * ``oci ce cluster create-kubeconfig --with-auth-context``
+
 3.51.9 - 2025-02-25
 --------------------
 Fixed
