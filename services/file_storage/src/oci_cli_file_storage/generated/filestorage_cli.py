@@ -926,6 +926,7 @@ This option is a JSON list with items of type ResourceLock.  For documentation o
 @cli_util.option('--filesystem-snapshot-policy-id', help=u"""The [OCID] of the associated file system snapshot policy, which controls the frequency of snapshot creation and retention period of the taken snapshots.
 
 May be unset as a blank value.""")
+@cli_util.option('--are-quota-rules-enabled', type=click.BOOL, help=u"""Specifies the enforcement of quota rules on the file system.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -934,7 +935,7 @@ May be unset as a blank value.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'file_storage', 'class': 'list[ResourceLock]'}}, output_type={'module': 'file_storage', 'class': 'FileSystem'})
 @cli_util.wrap_exceptions
-def create_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, display_name, freeform_tags, defined_tags, locks, kms_key_id, source_snapshot_id, clone_attach_status, filesystem_snapshot_policy_id):
+def create_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, display_name, freeform_tags, defined_tags, locks, kms_key_id, source_snapshot_id, clone_attach_status, filesystem_snapshot_policy_id, are_quota_rules_enabled):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -966,6 +967,9 @@ def create_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if filesystem_snapshot_policy_id is not None:
         _details['filesystemSnapshotPolicyId'] = filesystem_snapshot_policy_id
+
+    if are_quota_rules_enabled is not None:
+        _details['areQuotaRulesEnabled'] = are_quota_rules_enabled
 
     client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.create_file_system(
@@ -1380,6 +1384,49 @@ def create_outbound_connector_create_ldap_bind_account_details(ctx, from_json, w
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@file_system_group.command(name=cli_util.override('fs.create_quota_rule.command_name', 'create-quota-rule'), help=u"""Create a file system, user, or group quota rule given the `fileSystemId`, `principalId`, `principalType` and `isHardQuota` parameters. \n[Command Reference](createQuotaRule)""")
+@cli_util.option('--principal-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FILE_SYSTEM_LEVEL", "DEFAULT_GROUP", "DEFAULT_USER", "INDIVIDUAL_GROUP", "INDIVIDUAL_USER"]), help=u"""The type of the owner of this quota rule and usage.""")
+@cli_util.option('--is-hard-quota', required=True, type=click.BOOL, help=u"""Whether the quota rule will be enforced. If `isHardQuota` is true, the quota rule is enforced so that the write is blocked if usage exceeds the hard quota limit. If `isHardQuota` is false, writes succeed even if usage exceeds the soft quota limit, but the quota rule is violated.""")
+@cli_util.option('--quota-limit-in-gigabytes', required=True, type=click.INT, help=u"""The value of the quota rule in gigabytes.""")
+@cli_util.option('--file-system-id', required=True, help=u"""The [OCID] of the file system.""")
+@cli_util.option('--principal-id', type=click.INT, help=u"""An identifier for the user or the group associated with quota rule and usage. UNIX-like operating systems use this integer value to identify a user or group to manage access control.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information. Example: `UserXYZ's quota`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'QuotaRule'})
+@cli_util.wrap_exceptions
+def create_quota_rule(ctx, from_json, principal_type, is_hard_quota, quota_limit_in_gigabytes, file_system_id, principal_id, display_name, if_match):
+
+    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['principalType'] = principal_type
+    _details['isHardQuota'] = is_hard_quota
+    _details['quotaLimitInGigabytes'] = quota_limit_in_gigabytes
+
+    if principal_id is not None:
+        _details['principalId'] = principal_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.create_quota_rule(
+        file_system_id=file_system_id,
+        create_quota_rule_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -1875,6 +1922,37 @@ def delete_outbound_connector(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
+@file_system_group.command(name=cli_util.override('fs.delete_quota_rule.command_name', 'delete-quota-rule'), help=u"""Remove a file system, user, or group quota rule given the `fileSystemId` and `quotaRuleId` parameters. \n[Command Reference](deleteQuotaRule)""")
+@cli_util.option('--file-system-id', required=True, help=u"""The [OCID] of the file system.""")
+@cli_util.option('--quota-rule-id', required=True, help=u"""The identifier of the quota rule. It is the base64 encoded string of the tuple <principalId, principalType, isHardQuota>.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_quota_rule(ctx, from_json, file_system_id, quota_rule_id, if_match):
+
+    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
+
+    if isinstance(quota_rule_id, six.string_types) and len(quota_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --quota-rule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.delete_quota_rule(
+        file_system_id=file_system_id,
+        quota_rule_id=quota_rule_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @replication_group.command(name=cli_util.override('fs.delete_replication.command_name', 'delete'), help=u"""Deletes the specified replication and the the associated replication target. \n[Command Reference](deleteReplication)""")
 @cli_util.option('--replication-id', required=True, help=u"""The [OCID] of the replication.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2259,6 +2337,36 @@ def get_outbound_connector(ctx, from_json, outbound_connector_id):
     client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.get_outbound_connector(
         outbound_connector_id=outbound_connector_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@file_system_group.command(name=cli_util.override('fs.get_quota_rule.command_name', 'get-quota-rule'), help=u"""Get a file system, user, or group quota rule given the `fileSystemId` and `quotaRuleId` parameters. \n[Command Reference](getQuotaRule)""")
+@cli_util.option('--file-system-id', required=True, help=u"""The [OCID] of the file system.""")
+@cli_util.option('--quota-rule-id', required=True, help=u"""The identifier of the quota rule. It is the base64 encoded string of the tuple <principalId, principalType, isHardQuota>.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'QuotaRule'})
+@cli_util.wrap_exceptions
+def get_quota_rule(ctx, from_json, file_system_id, quota_rule_id, if_match):
+
+    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
+
+    if isinstance(quota_rule_id, six.string_types) and len(quota_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --quota-rule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.get_quota_rule(
+        file_system_id=file_system_id,
+        quota_rule_id=quota_rule_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2803,6 +2911,79 @@ def list_outbound_connectors(ctx, from_json, all_pages, page_size, compartment_i
         result = client.list_outbound_connectors(
             compartment_id=compartment_id,
             availability_domain=availability_domain,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@file_system_group.command(name=cli_util.override('fs.list_quota_rules.command_name', 'list-quota-rules'), help=u"""List user or group usages and their quota rules by certain principal type. \n[Command Reference](listQuotaRules)""")
+@cli_util.option('--file-system-id', required=True, help=u"""The [OCID] of the file system.""")
+@cli_util.option('--principal-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FILE_SYSTEM_LEVEL", "DEFAULT_GROUP", "DEFAULT_USER", "INDIVIDUAL_GROUP", "INDIVIDUAL_USER"]), help=u"""The type of the owner of this quota rule and usage.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 4096 is the maximum.
+
+For important details about how pagination works, see [List Pagination].
+
+Example: `500`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--principal-id', type=click.INT, help=u"""An identifier for the user or the group associated with quota rule and usage. UNIX-like operating systems use this integer value to identify a user or group to manage access control.""")
+@cli_util.option('--are-violators-only', type=click.BOOL, help=u"""An option to display only the users or groups that violate their quota rules. If `areViolatorsOnly` is false, results report all the quota and usage. If `areViolatorsOnly` is true, results only report the quota and usage for the users or groups that violate their quota rules.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending. The default order is 'desc' except for numeric values.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'list[QuotaRuleSummary]'})
+@cli_util.wrap_exceptions
+def list_quota_rules(ctx, from_json, all_pages, page_size, file_system_id, principal_type, limit, page, principal_id, are_violators_only, sort_order, if_match):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if principal_id is not None:
+        kwargs['principal_id'] = principal_id
+    if are_violators_only is not None:
+        kwargs['are_violators_only'] = are_violators_only
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_quota_rules,
+            file_system_id=file_system_id,
+            principal_type=principal_type,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_quota_rules,
+            limit,
+            page_size,
+            file_system_id=file_system_id,
+            principal_type=principal_type,
+            **kwargs
+        )
+    else:
+        result = client.list_quota_rules(
+            file_system_id=file_system_id,
+            principal_type=principal_type,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -3639,6 +3820,37 @@ def schedule_downgrade_shape_mount_target(ctx, from_json, wait_for_state, max_wa
     cli_util.render_response(result, ctx)
 
 
+@file_system_group.command(name=cli_util.override('fs.toggle_quota_rules.command_name', 'toggle-quota-rules'), help=u"""Enable or disable quota enforcement for the file system. If `areQuotaRulesEnabled` = `true`, then the quota enforcement will be enabled. If `areQuotaRulesEnabled` = `false`, then the quota enforcement will be disabled. \n[Command Reference](toggleQuotaRules)""")
+@cli_util.option('--file-system-id', required=True, help=u"""The [OCID] of the file system.""")
+@cli_util.option('--are-quota-rules-enabled', required=True, type=click.BOOL, help=u"""Specifies the enforcement of quota rules on the file system.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def toggle_quota_rules(ctx, from_json, file_system_id, are_quota_rules_enabled, if_match):
+
+    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['areQuotaRulesEnabled'] = are_quota_rules_enabled
+
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.toggle_quota_rules(
+        file_system_id=file_system_id,
+        toggle_quota_rules_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @filesystem_snapshot_policy_group.command(name=cli_util.override('fs.unpause_filesystem_snapshot_policy.command_name', 'unpause'), help=u"""This operation unpauses a paused file system snapshot policy and updates the lifecycle state of the file system snapshot policy from INACTIVE to ACTIVE. By default, file system snapshot policies are in the ACTIVE state. When a file system snapshot policy is not paused, or in the ACTIVE state, file systems that are associated with the policy will have snapshots created and deleted according to the schedules defined in the policy.
 
 If the policy is already in the ACTIVE state, you cannot unpause it. You can't unpause a policy that is in a DELETING, DELETED, FAILED, CREATING, or ACTIVE state; attempts to unpause a policy in these states result in a 409 conflict error. \n[Command Reference](unpauseFilesystemSnapshotPolicy)""")
@@ -4188,6 +4400,48 @@ def update_outbound_connector(ctx, from_json, force, wait_for_state, max_wait_se
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@file_system_group.command(name=cli_util.override('fs.update_quota_rule.command_name', 'update-quota-rule'), help=u"""Edit a file system, user, or group quota rule given the `fileSystemId` and `quotaRuleId` parameters. \n[Command Reference](updateQuotaRule)""")
+@cli_util.option('--file-system-id', required=True, help=u"""The [OCID] of the file system.""")
+@cli_util.option('--quota-rule-id', required=True, help=u"""The identifier of the quota rule. It is the base64 encoded string of the tuple <principalId, principalType, isHardQuota>.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name that the quota rule will be renamed to. It does not have to be unique. Avoid entering confidential information. Example: `UserXYZ's quota`""")
+@cli_util.option('--quota-limit-in-gigabytes', type=click.INT, help=u"""An updated value of the quota rule in gigabytes.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'file_storage', 'class': 'QuotaRule'})
+@cli_util.wrap_exceptions
+def update_quota_rule(ctx, from_json, file_system_id, quota_rule_id, display_name, quota_limit_in_gigabytes, if_match):
+
+    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
+
+    if isinstance(quota_rule_id, six.string_types) and len(quota_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --quota-rule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if quota_limit_in_gigabytes is not None:
+        _details['quotaLimitInGigabytes'] = quota_limit_in_gigabytes
+
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
+    result = client.update_quota_rule(
+        file_system_id=file_system_id,
+        quota_rule_id=quota_rule_id,
+        update_quota_rule_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

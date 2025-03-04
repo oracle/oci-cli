@@ -588,10 +588,12 @@ def update_node_pool(ctx, **kwargs):
 @cli_util.option('--kube-endpoint', type=custom_types.CliCaseInsensitiveChoice(["LEGACY_KUBERNETES", "PUBLIC_ENDPOINT", "PRIVATE_ENDPOINT", "VCN_HOSTNAME"]), help=u"""The endpoint to target. A cluster may have multiple endpoints exposed but the kubeconfig can only target one at a time. Supported values LEGACY_KUBERNETES, PUBLIC_ENDPOINT, PRIVATE_ENDPOINT, VCN_HOSTNAME""")
 @cli_util.option('--overwrite', is_flag=True, help="""Overwrites the contents of kubeconfig file specified using --file\
  option or kubeconfig file at default location if --file is not used.""")
+@cli_util.option('--with-auth-context', default=False, is_flag=True, help="""Appends the current authentication context (values configured in --auth and --profile) of the OCI CLI command\
+ to the kubeconfig user exec command if --with-auth-context is used or not append those information if --with-auth-context is not used""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiration, kube_endpoint, overwrite):
+def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiration, kube_endpoint, overwrite, with_auth_context):
     if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
@@ -620,6 +622,22 @@ def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiratio
     new_kubeconfig = b''
     for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
         new_kubeconfig = b''.join([new_kubeconfig, chunk])
+
+    # enrich kubeconfig auth command with oci cli auth and profile
+    auth = ctx.obj.get('auth', '')
+    profile = ctx.obj.get('profile', '')
+    try:
+        temp_kubeconfig = yaml.safe_load(new_kubeconfig)
+        if with_auth_context and auth:
+            temp_kubeconfig['users'][0]['user']['exec']['args'].extend(['--auth', auth])
+        if with_auth_context and profile:
+            temp_kubeconfig['users'][0]['user']['exec']['args'].extend(['--profile', profile])
+        new_kubeconfig = yaml.dump(temp_kubeconfig, encoding=('utf-8'))
+    except yaml.YAMLError as e:
+        click.echo('Error parsing configuration file {}'.format(e))
+        return
+    except (KeyError, IndexError):
+        pass
 
     file = os.path.expandvars(os.path.expanduser(file))
     # If the user wants stdout; just print it after decoding in utf-8 format.

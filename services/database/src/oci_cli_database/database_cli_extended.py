@@ -1779,8 +1779,145 @@ def change_cloud_exadata_infrastructure_compartment(ctx, **kwargs):
     ctx.invoke(database_cli.change_cloud_exadata_infrastructure_compartment, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.list_backups, params_to_exclude=[])
+@cli_util.copy_params_from_generated_command(database_cli.list_backups, params_to_exclude=['time_expiry_scheduled_greater_than_or_equal_to', 'time_expiry_scheduled_less_than', 'version_parameterconflict'])
 @database_cli.backup_group.command('list', help=database_cli.list_backups.help)
+@cli_util.option('--time-expiry-start', type=custom_types.CLI_DATETIME, help="""The start of date-time range of expiration for the long term backups to be fetched.
+
+The following datetime formats are supported:
+
+UTC with microseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.ssssssTZD
+Example: 2017-09-15T20:30:00.123456Z
+
+UTC with milliseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.sssTZD
+Example: 2017-09-15T20:30:00.123Z
+
+UTC without milliseconds
+**************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example: 2017-09-15T20:30:00Z
+
+UTC with minute precision
+**************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example: 2017-09-15T20:30Z
+
+Timezone with microseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456789-08:00,
+2017-09-15T12:30:00.456789-0800
+
+Timezone with milliseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456-08:00,
+2017-09-15T12:30:00.456-0800
+
+Timezone without milliseconds
+*******************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00-08:00,
+2017-09-15T12:30:00-0800
+
+Timezone with minute precision
+*******************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example:
+2017-09-15T12:30-08:00,
+2017-09-15T12:30-0800
+
+Short date and time
+********************
+The timezone for this date and time will be taken as UTC (Needs to be surrounded by single or double quotes)
+Format: 'YYYY-MM-DD HH:mm' or "YYYY-MM-DD HH:mm"
+Example: '2017-09-15 17:25'
+
+Date Only
+*********
+This date will be taken as midnight UTC of that day
+Format: YYYY-MM-DD
+Example: 2017-09-15
+
+Epoch seconds
+**************
+Example: 1412195400
+    """)
+@cli_util.option('--time-expiry-end', type=custom_types.CLI_DATETIME, help="""The end of date-time range of expiration for the long term backups to be fetched.
+
+The following datetime formats are supported:
+
+UTC with microseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.ssssssTZD
+Example: 2017-09-15T20:30:00.123456Z
+
+UTC with milliseconds
+***********************
+Format: YYYY-MM-DDTHH:mm:ss.sssTZD
+Example: 2017-09-15T20:30:00.123Z
+
+UTC without milliseconds
+**************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example: 2017-09-15T20:30:00Z
+
+UTC with minute precision
+**************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example: 2017-09-15T20:30Z
+
+Timezone with microseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456789-08:00,
+2017-09-15T12:30:00.456789-0800
+
+Timezone with milliseconds
+***************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00.456-08:00,
+2017-09-15T12:30:00.456-0800
+
+Timezone without milliseconds
+*******************************
+Format: YYYY-MM-DDTHH:mm:ssTZD
+Example:
+2017-09-15T12:30:00-08:00,
+2017-09-15T12:30:00-0800
+
+Timezone with minute precision
+*******************************
+Format: YYYY-MM-DDTHH:mmTZD
+Example:
+2017-09-15T12:30-08:00,
+2017-09-15T12:30-0800
+
+Short date and time
+********************
+The timezone for this date and time will be taken as UTC (Needs to be surrounded by single or double quotes)
+Format: 'YYYY-MM-DD HH:mm' or "YYYY-MM-DD HH:mm"
+Example: '2017-09-15 17:25'
+
+Date Only
+*********
+This date will be taken as midnight UTC of that day
+Format: YYYY-MM-DD
+Example: 2017-09-15
+
+Epoch seconds
+**************
+Example: 1412195400
+    """)
+@cli_util.option('--db-version', help="""A filter to return only resources that match the given database version.""")
 @click.pass_context
 @cli_util.wrap_exceptions
 def list_backups_extended(ctx, **kwargs):
@@ -1792,7 +1929,55 @@ def list_backups_extended(ctx, **kwargs):
         raise click.UsageError(
             'You can only specify one of either --compartment-id or --database-id option'
         )
+    if 'time_expiry_start' in kwargs:
+        kwargs['time_expiry_scheduled_greater_than_or_equal_to'] = kwargs['time_expiry_start']
+        kwargs.pop('time_expiry_start')
+    if 'time_expiry_end' in kwargs:
+        kwargs['time_expiry_scheduled_less_than'] = kwargs['time_expiry_end']
+        kwargs.pop('time_expiry_end')
+    if 'db_version' in kwargs:
+        kwargs['version_parameterconflict'] = kwargs['db_version']
+        kwargs.pop('db_version')
+
     ctx.invoke(database_cli.list_backups, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.create_backup, params_to_exclude=['retention_period_in_days', 'retention_period_in_years'])
+@database_cli.backup_group.command(name=database_cli.create_backup.name, help=database_cli.create_backup.help)
+@cli_util.option('--retention-days', type=click.INT, help=u"""The retention period of the long term backup in days.""")
+@cli_util.option('--retention-years', type=click.INT, help=u"""The retention period of the long term backup in years.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Backup'})
+@cli_util.wrap_exceptions
+def create_backup_extended(ctx, **kwargs):
+
+    if 'retention_days' in kwargs:
+        kwargs['retention_period_in_days'] = kwargs['retention_days']
+        kwargs.pop('retention_days')
+    if 'retention_years' in kwargs:
+        kwargs['retention_period_in_years'] = kwargs['retention_years']
+        kwargs.pop('retention_years')
+
+    ctx.invoke(database_cli.create_backup, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.update_backup, params_to_exclude=['retention_period_in_days', 'retention_period_in_years'])
+@database_cli.backup_group.command(name=database_cli.update_backup.name, help=database_cli.update_backup.help)
+@cli_util.option('--retention-days', type=click.INT, help=u"""The retention period of the long term backup in days.""")
+@cli_util.option('--retention-years', type=click.INT, help=u"""The retention period of the long term backup in years.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Backup'})
+@cli_util.wrap_exceptions
+def update_backup_extended(ctx, **kwargs):
+
+    if 'retention_days' in kwargs:
+        kwargs['retention_period_in_days'] = kwargs['retention_days']
+        kwargs.pop('retention_days')
+    if 'retention_years' in kwargs:
+        kwargs['retention_period_in_years'] = kwargs['retention_years']
+        kwargs.pop('retention_years')
+
+    ctx.invoke(database_cli.update_backup, **kwargs)
 
 
 @cli_util.copy_params_from_generated_command(database_cli.list_cloud_vm_clusters, params_to_exclude=['cloud_exadata_infrastructure_id'])
