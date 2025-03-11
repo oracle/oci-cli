@@ -16,7 +16,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('security_attribute.security_attribute_root_group.command_name', 'security-attribute'), cls=CommandGroupWithAlias, help=cli_util.override('security_attribute.security_attribute_root_group.help', """Use the Security Attributes API to manage security attributes and security attribute namespaces. For more information, see the documentation for [Security Attributes] and [Security Attribute Nampespaces]."""), short_help=cli_util.override('security_attribute.security_attribute_root_group.short_help', """Security Attribute API"""))
+@cli.command(cli_util.override('security_attribute.security_attribute_root_group.command_name', 'security-attribute'), cls=CommandGroupWithAlias, help=cli_util.override('security_attribute.security_attribute_root_group.help', """Use the Security Attributes API to manage security attributes and security attribute namespaces. For more information, see the documentation for [Security Attributes] and [Security Attribute Namespaces]."""), short_help=cli_util.override('security_attribute.security_attribute_root_group.short_help', """Security Attribute API"""))
 @cli_util.help_option_group
 def security_attribute_root_group():
     pass
@@ -139,7 +139,7 @@ After all security attributes are removed, the state changes to DELETED. You can
 
 After you start this operation, you cannot start either the [DeleteSecurityAttribute] or the [BulkDeleteSecurityAttributes] operation until this process completes.
 
-To delete a security attribute namespace, you must first retire it. Use [UpdateTagNamespace] to retire a security attribute namespace. \n[Command Reference](cascadingDeleteSecurityAttributeNamespace)""")
+To delete a security attribute namespace, you must first retire it. Use [UpdateSecurityAttributeNamespace] to retire a security attribute namespace. \n[Command Reference](cascadingDeleteSecurityAttributeNamespace)""")
 @cli_util.option('--security-attribute-namespace-id', required=True, help=u"""The OCID of the security attribute namespace.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1145,7 +1145,7 @@ def update_security_attribute_default_security_attribute_validator(ctx, from_jso
 
 @security_attribute_namespace_group.command(name=cli_util.override('security_attribute.update_security_attribute_namespace.command_name', 'update'), help=u"""Updates the specified security attribute namespace. You can't update the namespace name.
 
-Updating `isRetired` to 'true' retires the namespace and all the security attributes in the namespace. Reactivating a namespace (changing `isRetired` from 'true' to 'false') does not reactivate security attributes. To reactivate the security attributes, you must reactivate each one individually *after* you reactivate the namespace, using [UpdateTag]. For more information about retiring security attribute namespaces, see [Managing Security Attribute Namespaces].
+Updating `isRetired` to 'true' retires the namespace and all the security attributes in the namespace. Reactivating a namespace (changing `isRetired` from 'true' to 'false') does not reactivate security attributes. To reactivate the security attributes, you must reactivate each one individually *after* you reactivate the namespace, using [UpdateSecurityAttribute]. For more information about retiring security attribute namespaces, see [Managing Security Attribute Namespaces].
 
 You can't add a namespace with the same name as a retired namespace in the same tenancy. \n[Command Reference](updateSecurityAttributeNamespace)""")
 @cli_util.option('--security-attribute-namespace-id', required=True, help=u"""The OCID of the security attribute namespace.""")

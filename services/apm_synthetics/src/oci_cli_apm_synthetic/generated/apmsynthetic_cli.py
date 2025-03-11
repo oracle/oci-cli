@@ -16,7 +16,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('apm_synthetics.apm_synthetics_root_group.command_name', 'apm-synthetics'), cls=CommandGroupWithAlias, help=cli_util.override('apm_synthetics.apm_synthetics_root_group.help', """Use the Application Performance Monitoring Synthetic Monitoring API to query synthetic scripts and monitors. For more information, see [Application Performance Monitoring]."""), short_help=cli_util.override('apm_synthetics.apm_synthetics_root_group.short_help', """Application Performance Monitoring Synthetic Monitoring API"""))
+@cli.command(cli_util.override('apm_synthetics.apm_synthetics_root_group.command_name', 'apm-synthetics'), cls=CommandGroupWithAlias, help=cli_util.override('apm_synthetics.apm_synthetics_root_group.help', """Use the APM Availability Monitoring API to query Scripts, Monitors, Dedicated Vantage Points and On-Premise Vantage Points resources. For more information, see [Application Performance Monitoring]."""), short_help=cli_util.override('apm_synthetics.apm_synthetics_root_group.short_help', """APM Availability Monitoring API"""))
 @cli_util.help_option_group
 def apm_synthetics_root_group():
     pass
@@ -353,7 +353,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.option('--configuration-dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-ftp-protocol', type=custom_types.CliCaseInsensitiveChoice(["FTP", "FTPS", "SFTP"]), help=u"""FTP protocol type.""")
 @cli_util.option('--configuration-ftp-request-type', type=custom_types.CliCaseInsensitiveChoice(["LIST", "UPLOAD", "DOWNLOAD"]), help=u"""FTP monitor request type.""")
-@cli_util.option('--configuration-is-active-mode', type=click.BOOL, help=u"""If enabled, Active mode will be used for the FTP connection.""")
+@cli_util.option('--configuration-is-active-mode', type=click.BOOL, help=u"""If enabled, Active mode will be used for the FTP connection. Not supported for SFTP protocol.""")
 @cli_util.option('--configuration-ftp-basic-authentication-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-download-size-limit-in-bytes', type=click.INT, help=u"""Download size limit in Bytes, at which to stop the transfer. Maximum download size limit is 5 MiB.""")
 @cli_util.option('--configuration-upload-file-size-in-bytes', type=click.INT, help=u"""File upload size in Bytes, at which to stop the transfer. Maximum upload size is 5 MiB.""")
@@ -2643,7 +2643,7 @@ This option is a JSON list with items of type MonitorScriptParameter.  For docum
 @cli_util.option('--configuration-dns-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-ftp-protocol', type=custom_types.CliCaseInsensitiveChoice(["FTP", "FTPS", "SFTP"]), help=u"""FTP protocol type.""")
 @cli_util.option('--configuration-ftp-request-type', type=custom_types.CliCaseInsensitiveChoice(["LIST", "UPLOAD", "DOWNLOAD"]), help=u"""FTP monitor request type.""")
-@cli_util.option('--configuration-is-active-mode', type=click.BOOL, help=u"""If enabled, Active mode will be used for the FTP connection.""")
+@cli_util.option('--configuration-is-active-mode', type=click.BOOL, help=u"""If enabled, Active mode will be used for the FTP connection. Not supported for SFTP protocol.""")
 @cli_util.option('--configuration-ftp-basic-authentication-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-download-size-limit-in-bytes', type=click.INT, help=u"""Download size limit in Bytes, at which to stop the transfer. Maximum download size limit is 5 MiB.""")
 @cli_util.option('--configuration-upload-file-size-in-bytes', type=click.INT, help=u"""File upload size in Bytes, at which to stop the transfer. Maximum upload size is 5 MiB.""")

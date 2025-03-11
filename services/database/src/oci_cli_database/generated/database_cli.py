@@ -4170,7 +4170,8 @@ def convert_to_standalone(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--cloud-vm-cluster-id', required=True, help=u"""The [OCID] of the cloud VM cluster associated with the application virtual IP (VIP) address.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet associated with the application virtual IP (VIP) address.""")
 @cli_util.option('--db-node-id', help=u"""The [OCID] of the DB node associated with the application virtual IP (VIP) address.""")
-@cli_util.option('--ip-address', help=u"""The application virtual IP (VIP) address.""")
+@cli_util.option('--ip-address', help=u"""The application virtual IP (VIP) IPv4 address.""")
+@cli_util.option('--ipv6-address', help=u"""The application virtual IP (VIP) IPv6 address.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -4179,7 +4180,7 @@ def convert_to_standalone(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ApplicationVip'})
 @cli_util.wrap_exceptions
-def create_application_vip(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, hostname_label, cloud_vm_cluster_id, subnet_id, db_node_id, ip_address):
+def create_application_vip(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, hostname_label, cloud_vm_cluster_id, subnet_id, db_node_id, ip_address, ipv6_address):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -4194,6 +4195,9 @@ def create_application_vip(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if ip_address is not None:
         _details['ipAddress'] = ip_address
+
+    if ipv6_address is not None:
+        _details['ipv6Address'] = ipv6_address
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_application_vip(
@@ -10218,6 +10222,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 This option is a JSON list with items of type FileSystemConfigurationDetail.  For documentation on FileSystemConfigurationDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/FileSystemConfigurationDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cloud-automation-update-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vm-cluster-type', type=custom_types.CliCaseInsensitiveChoice(["REGULAR", "DEVELOPER"]), help=u"""The vmcluster type for the VM cluster/Cloud VM cluster.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -10226,7 +10231,7 @@ This option is a JSON list with items of type FileSystemConfigurationDetail.  Fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-servers': {'module': 'database', 'class': 'list[string]'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}, 'file-system-configuration-details': {'module': 'database', 'class': 'list[FileSystemConfigurationDetail]'}, 'cloud-automation-update-details': {'module': 'database', 'class': 'CloudAutomationUpdateDetails'}}, output_type={'module': 'database', 'class': 'CloudVmCluster'})
 @cli_util.wrap_exceptions
-def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, backup_subnet_id, cpu_core_count, display_name, cloud_exadata_infrastructure_id, hostname, ssh_public_keys, gi_version, subscription_id, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, db_servers, cluster_name, data_storage_percentage, domain, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, scan_listener_port_tcp, scan_listener_port_tcp_ssl, private_zone_id, nsg_ids, backup_network_nsg_ids, freeform_tags, defined_tags, security_attributes, data_collection_options, system_version, file_system_configuration_details, cloud_automation_update_details):
+def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, backup_subnet_id, cpu_core_count, display_name, cloud_exadata_infrastructure_id, hostname, ssh_public_keys, gi_version, subscription_id, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, db_servers, cluster_name, data_storage_percentage, domain, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, scan_listener_port_tcp, scan_listener_port_tcp_ssl, private_zone_id, nsg_ids, backup_network_nsg_ids, freeform_tags, defined_tags, security_attributes, data_collection_options, system_version, file_system_configuration_details, cloud_automation_update_details, vm_cluster_type):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -10316,6 +10321,9 @@ def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if cloud_automation_update_details is not None:
         _details['cloudAutomationUpdateDetails'] = cli_util.parse_json_parameter("cloud_automation_update_details", cloud_automation_update_details)
+
+    if vm_cluster_type is not None:
+        _details['vmClusterType'] = vm_cluster_type
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_cloud_vm_cluster(
@@ -13817,6 +13825,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--file-system-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of the file system configuration of the VM cluster.
 
 This option is a JSON list with items of type FileSystemConfigurationDetail.  For documentation on FileSystemConfigurationDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/FileSystemConfigurationDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vm-cluster-type', type=custom_types.CliCaseInsensitiveChoice(["REGULAR", "DEVELOPER"]), help=u"""The vmcluster type for the VM cluster/Cloud VM cluster.""")
 @cli_util.option('--cloud-automation-update-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--exascale-db-storage-vault-id', help=u"""The [OCID] of the Exadata Database Storage Vault.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -13827,7 +13836,7 @@ This option is a JSON list with items of type FileSystemConfigurationDetail.  Fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'db-servers': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}, 'file-system-configuration-details': {'module': 'database', 'class': 'list[FileSystemConfigurationDetail]'}, 'cloud-automation-update-details': {'module': 'database', 'class': 'CloudAutomationUpdateDetails'}}, output_type={'module': 'database', 'class': 'VmCluster'})
 @cli_util.wrap_exceptions
-def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, exadata_infrastructure_id, cpu_core_count, ssh_public_keys, vm_cluster_network_id, gi_version, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, data_storage_size_in_gbs, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, db_servers, freeform_tags, defined_tags, data_collection_options, system_version, file_system_configuration_details, cloud_automation_update_details, exascale_db_storage_vault_id):
+def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, exadata_infrastructure_id, cpu_core_count, ssh_public_keys, vm_cluster_network_id, gi_version, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, data_storage_size_in_gbs, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, db_servers, freeform_tags, defined_tags, data_collection_options, system_version, file_system_configuration_details, vm_cluster_type, cloud_automation_update_details, exascale_db_storage_vault_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -13885,6 +13894,9 @@ def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if file_system_configuration_details is not None:
         _details['fileSystemConfigurationDetails'] = cli_util.parse_json_parameter("file_system_configuration_details", file_system_configuration_details)
+
+    if vm_cluster_type is not None:
+        _details['vmClusterType'] = vm_cluster_type
 
     if cloud_automation_update_details is not None:
         _details['cloudAutomationUpdateDetails'] = cli_util.parse_json_parameter("cloud_automation_update_details", cloud_automation_update_details)
@@ -22601,6 +22613,7 @@ def list_cloud_vm_cluster_updates(ctx, from_json, all_pages, page_size, cloud_vm
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), help=u"""A filter to return only cloud VM clusters that match the given lifecycle state exactly.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--vm-cluster-type', type=custom_types.CliCaseInsensitiveChoice(["REGULAR", "DEVELOPER"]), help=u"""A filter to return only cloud vmclusters that match the given cloud vmcluster type exactly.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -22608,7 +22621,7 @@ def list_cloud_vm_cluster_updates(ctx, from_json, all_pages, page_size, cloud_vm
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[CloudVmClusterSummary]'})
 @cli_util.wrap_exceptions
-def list_cloud_vm_clusters(ctx, from_json, all_pages, page_size, compartment_id, cloud_exadata_infrastructure_id, limit, page, sort_by, sort_order, lifecycle_state, display_name):
+def list_cloud_vm_clusters(ctx, from_json, all_pages, page_size, compartment_id, cloud_exadata_infrastructure_id, limit, page, sort_by, sort_order, lifecycle_state, display_name, vm_cluster_type):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -22628,6 +22641,8 @@ def list_cloud_vm_clusters(ctx, from_json, all_pages, page_size, compartment_id,
         kwargs['lifecycle_state'] = lifecycle_state
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if vm_cluster_type is not None:
+        kwargs['vm_cluster_type'] = vm_cluster_type
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
@@ -22858,6 +22873,7 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
 @cli_util.option('--image-type', type=custom_types.CliCaseInsensitiveChoice(["GRID_IMAGE", "DATABASE_IMAGE"]), help=u"""A filter to return only resources that match the given image type exactly.""")
 @cli_util.option('--image-shape-family', type=custom_types.CliCaseInsensitiveChoice(["VM_BM_SHAPE", "EXADATA_SHAPE", "EXACC_SHAPE", "EXADBXS_SHAPE"]), help=u"""A filter to return only resources that match the given image shape family exactly.""")
 @cli_util.option('--patch-set-greater-than-or-equal-to', help=u"""A filter to return only resources with `patchSet` greater than or equal to given value.""")
+@cli_util.option('--db-system-id', help=u"""The DB system [OCID]. If provided, filters the results to the set of database versions which are supported for the DB system.""")
 @cli_util.option('--is-upgrade-supported', type=click.BOOL, help=u"""If provided, filters the results to the set of database versions which are supported for Upgrade.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -22866,7 +22882,7 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DatabaseSoftwareImageSummary]'})
 @cli_util.wrap_exceptions
-def list_database_software_images(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, display_name, image_type, image_shape_family, patch_set_greater_than_or_equal_to, is_upgrade_supported):
+def list_database_software_images(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, display_name, image_type, image_shape_family, patch_set_greater_than_or_equal_to, db_system_id, is_upgrade_supported):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -22890,6 +22906,8 @@ def list_database_software_images(ctx, from_json, all_pages, page_size, compartm
         kwargs['image_shape_family'] = image_shape_family
     if patch_set_greater_than_or_equal_to is not None:
         kwargs['patch_set_greater_than_or_equal_to'] = patch_set_greater_than_or_equal_to
+    if db_system_id is not None:
+        kwargs['db_system_id'] = db_system_id
     if is_upgrade_supported is not None:
         kwargs['is_upgrade_supported'] = is_upgrade_supported
     client = cli_util.build_client('database', 'database', ctx)
@@ -25711,6 +25729,7 @@ def list_vm_cluster_updates(ctx, from_json, all_pages, page_size, vm_cluster_id,
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--vm-cluster-type', type=custom_types.CliCaseInsensitiveChoice(["REGULAR", "DEVELOPER"]), help=u"""A filter to return only vmclusters that match the given vmcluster type exactly.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -25718,7 +25737,7 @@ def list_vm_cluster_updates(ctx, from_json, all_pages, page_size, vm_cluster_id,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[VmClusterSummary]'})
 @cli_util.wrap_exceptions
-def list_vm_clusters(ctx, from_json, all_pages, page_size, compartment_id, exadata_infrastructure_id, limit, page, sort_by, sort_order, lifecycle_state, display_name):
+def list_vm_clusters(ctx, from_json, all_pages, page_size, compartment_id, exadata_infrastructure_id, limit, page, sort_by, sort_order, lifecycle_state, display_name, vm_cluster_type):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -25738,6 +25757,8 @@ def list_vm_clusters(ctx, from_json, all_pages, page_size, compartment_id, exada
         kwargs['lifecycle_state'] = lifecycle_state
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if vm_cluster_type is not None:
+        kwargs['vm_cluster_type'] = vm_cluster_type
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', 'database', ctx)
     if all_pages:

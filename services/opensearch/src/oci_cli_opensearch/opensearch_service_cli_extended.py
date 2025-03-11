@@ -7,6 +7,7 @@ import json  # noqa: F401
 from services.opensearch.src.oci_cli_opensearch.generated import opensearch_service_cli
 from services.opensearch.src.oci_cli_opensearch_cluster.generated import opensearchcluster_cli
 from services.opensearch.src.oci_cli_opensearch_cluster_backup.generated import opensearchclusterbackup_cli
+from services.opensearch.src.oci_cli_opensearch_cluster_pipeline.generated import opensearchclusterpipeline_cli
 
 from oci_cli import cli_util  # noqa: F401
 from oci_cli import custom_types  # noqa: F401
@@ -19,3 +20,6 @@ cli_util.rename_command(opensearch_service_cli, opensearch_service_cli.opensearc
 
 # oci opensearch opensearch-cluster-backup -> oci opensearch backup
 cli_util.rename_command(opensearch_service_cli, opensearch_service_cli.opensearch_service_group, opensearchclusterbackup_cli.opensearch_cluster_backup_root_group, "backup")
+
+# oci opensearch opensearch-cluster-pipeline -> oci opensearch pipeline
+cli_util.rename_command(opensearch_service_cli, opensearch_service_cli.opensearch_service_group, opensearchclusterpipeline_cli.opensearch_cluster_pipeline_root_group, "pipeline")

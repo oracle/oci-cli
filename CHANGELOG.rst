@@ -6,6 +6,118 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.52.1 - 2025-03-11
+--------------------
+Added
+~~~~~
+* Data Safe Service
+
+  * Support for Sensitive column Analytics in Data Safe service
+
+    * ``oci data-safe sensitive-data-model list-sensitive-column-analytics``
+
+  * Support for Sensitive type group in Data Safe service APIs
+
+    * ``oci data-safe sensitive-type-group create``
+    * ``oci data-safe sensitive-type-group patch-grouped-sensitive-types``
+    * ``oci data-safe sensitive-data-model create --sensitive-type-group-ids-for-discovery``
+    * ``oci data-safe sensitive-type-group list-grouped-sensitive-types``
+    * ``oci data-safe sensitive-type-group update``
+    * ``oci data-safe sensitive-type-group-summary list-sensitive-type-groups``
+    * ``oci data-safe sensitive-data-model update --sensitive-type-group-ids-for-discovery``
+    * ``oci data-safe discovery-job create --sensitive-type-group-ids-for-discovery``
+    * ``oci data-safe sensitive-type-group get``
+    * ``oci data-safe sensitive-type-group change-compartment``
+    * ``oci data-safe sensitive-type-group delete``
+
+  * Support for Masking rerun from specific step in Data Safe service
+
+    * ``oci data-safe masking-policy mask-data --re-run-from-step``
+
+  * Support for Masking report errors & delete in Data Safe service
+
+    * ``oci data-safe masking-error-summary list-masking-errors``
+    * ``oci data-safe masking-report delete``
+
+  * Support for optional parameter in listing findings in security assessment
+
+    * ``oci data-safe security-assessment list-findings --field --scim-query --sort-by``
+
+* Database Service
+
+  * Support for new optional parameter --vm-cluster-type in cloud vm cluster create
+
+    * ``oci db cloud-vm-cluster create --vm-cluster-type``
+
+  * Support for new optional parameter --vm-cluster-type in cloud vm cluster list
+
+    * ``oci db cloud-vm-cluster list --vm-cluster-type``
+
+  * Support for new optional parameter --db-system-id in database software image
+
+    * ``oci db database-software-image list --db-system-id``
+
+  * Support for new optional parameter --vm-cluster-type in vm cluster create
+
+    * ``oci db vm-cluster create --vm-cluster-type``
+
+  * Support for new optional parameter --vm-cluster-type in vm cluster list
+
+    * ``oci db vm-cluster list --vm-cluster-type``
+
+  * Support for new optional parameter in the Exadata Database Service on Dedicated Infrastructure service
+
+    * ``oci db application-vip create --ipv6-address``
+
+  * Support for new optional parameter ``--database-server-type`` and ``--storage-server-type``
+
+    * ``oci db cloud-exa-infra create --database-server-type, --storage-server-type``
+    * ``oci db exadata-infrastructure create --database-server-type, --storage-server-type``
+
+  * Support for new optional parameter --shape in flex component list
+
+    * ``oci db flex-component list --shape``
+
+* Data Science Service
+
+  * Support for optional parameter ``--category`` for following commands
+
+    * ``oci data-science model list --category``
+    * ``oci data-science model-version-set list --category``
+
+  * Support for model by reference via native API
+
+    * ``oci data-science model create-model-custom-metadatum-artifact``
+    * ``oci data-science model create-model-defined-metadatum-artifact``
+    * ``oci data-science model delete-model-custom-metadatum-artifact``
+    * ``oci data-science model delete-model-defined-metadatum-artifact``
+    * ``oci data-science model get-model-custom-metadatum-artifact-content``
+    * ``oci data-science model get-model-defined-metadatum-artifact-content``
+    * ``oci data-science model head-model-custom-metadatum-artifact``
+    * ``oci data-science model head-model-defined-metadatum-artifact``
+    * ``oci data-science model update-model-custom-metadatum-artifact``
+    * ``oci data-science model update-model-defined-metadatum-artifact``
+    * ``oci data-science register-model-artifact-reference-details register-model-artifact-reference``
+
+* Mysql Database Service
+
+  * Support for scheduling cross-region DB system backups in the HeatWave Service.
+
+    * ``oci mysql db-system create --backup-policy='{"copypolicies": [{ "copytoregion": "$region_name", "backupcopyretentionindays": $retention_in_days }]}'``
+    * ``oci mysql db-system update --backup-policy='{"copypolicies": [{ "copytoregion": "$region_name", "backupcopyretentionindays": $retention_in_days }]}'``
+
+  * Support for new optional parameter in the HeatWave Service
+
+    * ``oci mysql backup copy --backup-copy-retention-in-days``
+
+* Support for Pipelines in the OpenSearch service
+
+  * ``oci opensearch pipeline``
+
+* Support for new Open Id Connect Multi Authentication command in the OKE Control Plane service
+
+  * ``oci ce cluster create --oidc-configuration-file``
+
 3.52.0 - 2025-03-04
 --------------------
 Added

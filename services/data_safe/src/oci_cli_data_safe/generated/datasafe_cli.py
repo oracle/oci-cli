@@ -34,6 +34,12 @@ def sdm_masking_policy_difference_group():
     pass
 
 
+@click.command(cli_util.override('data_safe.sensitive_type_group_summary_group.command_name', 'sensitive-type-group-summary'), cls=CommandGroupWithAlias, help="""Summary of the sensitive type group.""")
+@cli_util.help_option_group
+def sensitive_type_group_summary_group():
+    pass
+
+
 @click.command(cli_util.override('data_safe.security_policy_collection_group.command_name', 'security-policy-collection'), cls=CommandGroupWithAlias, help="""Collection of security policy summary.""")
 @cli_util.help_option_group
 def security_policy_collection_group():
@@ -348,6 +354,12 @@ def audit_policy_collection_group():
     pass
 
 
+@click.command(cli_util.override('data_safe.masking_error_summary_group.command_name', 'masking-error-summary'), cls=CommandGroupWithAlias, help="""Summary of a masking error. A Masking error is an error seen during the masking run.""")
+@cli_util.help_option_group
+def masking_error_summary_group():
+    pass
+
+
 @click.command(cli_util.override('data_safe.masking_policy_health_report_group.command_name', 'masking-policy-health-report'), cls=CommandGroupWithAlias, help="""The masking policy health report.""")
 @cli_util.help_option_group
 def masking_policy_health_report_group():
@@ -438,6 +450,12 @@ def sensitive_column_group():
     pass
 
 
+@click.command(cli_util.override('data_safe.sensitive_type_group_group.command_name', 'sensitive-type-group'), cls=CommandGroupWithAlias, help="""The details of the sensitive type group.""")
+@cli_util.help_option_group
+def sensitive_type_group_group():
+    pass
+
+
 @click.command(cli_util.override('data_safe.audit_trail_group.command_name', 'audit-trail'), cls=CommandGroupWithAlias, help="""An audit trail represents the source of audit records that provides documentary evidence of the sequence of activities in the target database. Configuring audit trails in Data Safe, and enabling audit data collection on the audit trails copies the audit records from the target database's audit trail into the Data Safe repository.""")
 @cli_util.help_option_group
 def audit_trail_group():
@@ -500,6 +518,7 @@ def target_alert_policy_association_summary_group():
 
 data_safe_root_group.add_command(masked_column_summary_group)
 data_safe_root_group.add_command(sdm_masking_policy_difference_group)
+data_safe_root_group.add_command(sensitive_type_group_summary_group)
 data_safe_root_group.add_command(security_policy_collection_group)
 data_safe_root_group.add_command(data_safe_configuration_group)
 data_safe_root_group.add_command(database_view_access_entry_group)
@@ -552,6 +571,7 @@ data_safe_root_group.add_command(sql_collection_group)
 data_safe_root_group.add_command(alert_group)
 data_safe_root_group.add_command(sensitive_schema_collection_group)
 data_safe_root_group.add_command(audit_policy_collection_group)
+data_safe_root_group.add_command(masking_error_summary_group)
 data_safe_root_group.add_command(masking_policy_health_report_group)
 data_safe_root_group.add_command(role_grant_path_collection_group)
 data_safe_root_group.add_command(sensitive_object_collection_group)
@@ -567,6 +587,7 @@ data_safe_root_group.add_command(audit_trail_analytic_collection_group)
 data_safe_root_group.add_command(masking_policy_group)
 data_safe_root_group.add_command(target_alert_policy_association_group)
 data_safe_root_group.add_command(sensitive_column_group)
+data_safe_root_group.add_command(sensitive_type_group_group)
 data_safe_root_group.add_command(audit_trail_group)
 data_safe_root_group.add_command(audit_archive_retrieval_group)
 data_safe_root_group.add_command(discovery_job_group)
@@ -2451,6 +2472,37 @@ def change_sensitive_type_compartment(ctx, from_json, sensitive_type_id, compart
     cli_util.render_response(result, ctx)
 
 
+@sensitive_type_group_group.command(name=cli_util.override('data_safe.change_sensitive_type_group_compartment.command_name', 'change-compartment'), help=u"""Moves the sensitive type group to the specified compartment. \n[Command Reference](changeSensitiveTypeGroupCompartment)""")
+@cli_util.option('--sensitive-type-group-id', required=True, help=u"""The OCID of the sensitive type group.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to move the sensitive type group.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_sensitive_type_group_compartment(ctx, from_json, sensitive_type_group_id, compartment_id, if_match):
+
+    if isinstance(sensitive_type_group_id, six.string_types) and len(sensitive_type_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --sensitive-type-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.change_sensitive_type_group_compartment(
+        sensitive_type_group_id=sensitive_type_group_id,
+        change_sensitive_type_group_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @sensitive_types_export_group.command(name=cli_util.override('data_safe.change_sensitive_types_export_compartment.command_name', 'change-compartment'), help=u"""Moves the specified sensitive types export into a different compartment. \n[Command Reference](changeSensitiveTypesExportCompartment)""")
 @cli_util.option('--sensitive-types-export-id', required=True, help=u"""The OCID of the sensitive types export.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to move the sensitive types export.""")
@@ -3134,6 +3186,7 @@ def create_data_safe_private_endpoint(ctx, from_json, wait_for_state, max_wait_s
 
 This option is a JSON list with items of type TablesForDiscovery.  For documentation on TablesForDiscovery please see our API reference: https://docs.cloud.oracle.com/api/#/en/datasafe/20181201/datatypes/TablesForDiscovery.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sensitive-type-ids-for-discovery', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the sensitive types to be used by the discovery job. If not provided, the sensitiveTypeIdsForDiscovery attribute of the sensitive data model is used to get the list of sensitive types.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--sensitive-type-group-ids-for-discovery', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the sensitive type groups to be used by the discovery job. All the sensitive types present in sensitive type group will be used for discovery.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-sample-data-collection-enabled', type=click.BOOL, help=u"""Indicates if the discovery job should collect and store sample data values for the discovered columns. Sample data helps review the discovered columns and ensure that they actually contain sensitive data. As it collects original data from the target database, it's disabled by default and should be used only if it's acceptable to store sample data in Data Safe's repository in Oracle Cloud. Note that sample data values are not collected for columns with the following data types: LONG, LOB, RAW, XMLTYPE and BFILE.""")
 @cli_util.option('--is-app-defined-relation-discovery-enabled', type=click.BOOL, help=u"""Indicates if the discovery job should identify potential application-level (non-dictionary) referential relationships between columns. Note that data discovery automatically identifies and adds database-level (dictionary-defined) relationships. This option helps identify application-level relationships that are not defined in the database dictionary, which in turn, helps identify additional sensitive columns and preserve referential integrity during data masking. It's disabled by default and should be used only if there is a need to identify application-level relationships.""")
 @cli_util.option('--is-include-all-schemas', type=click.BOOL, help=u"""Indicates if all the schemas should be scanned by the discovery job. If it is set to true, sensitive data is discovered in all schemas (except for schemas maintained by Oracle). If both attributes are not provided, the configuration from the sensitive data model is used.""")
@@ -3145,12 +3198,12 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'tables-for-discovery': {'module': 'data_safe', 'class': 'list[TablesForDiscovery]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'tables-for-discovery': {'module': 'data_safe', 'class': 'list[TablesForDiscovery]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'sensitive-type-group-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'tables-for-discovery': {'module': 'data_safe', 'class': 'list[TablesForDiscovery]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'DiscoveryJob'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'tables-for-discovery': {'module': 'data_safe', 'class': 'list[TablesForDiscovery]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'sensitive-type-group-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'DiscoveryJob'})
 @cli_util.wrap_exceptions
-def create_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_data_model_id, compartment_id, discovery_type, display_name, schemas_for_discovery, tables_for_discovery, sensitive_type_ids_for_discovery, is_sample_data_collection_enabled, is_app_defined_relation_discovery_enabled, is_include_all_schemas, is_include_all_sensitive_types, freeform_tags, defined_tags):
+def create_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_data_model_id, compartment_id, discovery_type, display_name, schemas_for_discovery, tables_for_discovery, sensitive_type_ids_for_discovery, sensitive_type_group_ids_for_discovery, is_sample_data_collection_enabled, is_app_defined_relation_discovery_enabled, is_include_all_schemas, is_include_all_sensitive_types, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3173,6 +3226,9 @@ def create_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if sensitive_type_ids_for_discovery is not None:
         _details['sensitiveTypeIdsForDiscovery'] = cli_util.parse_json_parameter("sensitive_type_ids_for_discovery", sensitive_type_ids_for_discovery)
+
+    if sensitive_type_group_ids_for_discovery is not None:
+        _details['sensitiveTypeGroupIdsForDiscovery'] = cli_util.parse_json_parameter("sensitive_type_group_ids_for_discovery", sensitive_type_group_ids_for_discovery)
 
     if is_sample_data_collection_enabled is not None:
         _details['isSampleDataCollectionEnabled'] = is_sample_data_collection_enabled
@@ -4547,6 +4603,7 @@ def create_sensitive_column(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 This option is a JSON list with items of type TablesForDiscovery.  For documentation on TablesForDiscovery please see our API reference: https://docs.cloud.oracle.com/api/#/en/datasafe/20181201/datatypes/TablesForDiscovery.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sensitive-type-ids-for-discovery', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the sensitive types to be used by data discovery jobs. If OCID of a sensitive category is provided, all its child sensitive types are used for data discovery.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--sensitive-type-group-ids-for-discovery', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the sensitive type groups to be used by data discovery jobs. All the sensitive types present in sensitive type group will be used for discovery.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-sample-data-collection-enabled', type=click.BOOL, help=u"""Indicates if data discovery jobs should collect and store sample data values for the discovered columns. Sample data helps review the discovered columns and ensure that they actually contain sensitive data. As it collects original data from the target database, it's disabled by default and should be used only if it's acceptable to store sample data in Data Safe's repository in Oracle Cloud. Note that sample data values are not collected for columns with the following data types: LONG, LOB, RAW, XMLTYPE and BFILE.""")
 @cli_util.option('--is-app-defined-relation-discovery-enabled', type=click.BOOL, help=u"""Indicates if data discovery jobs should identify potential application-level (non-dictionary) referential relationships between columns. Note that data discovery automatically identifies and adds database-level (dictionary-defined) relationships. This option helps identify application-level relationships that are not defined in the database dictionary, which in turn, helps identify additional sensitive columns and preserve referential integrity during data masking. It's disabled by default and should be used only if there is a need to identify application-level relationships.""")
 @cli_util.option('--is-include-all-schemas', type=click.BOOL, help=u"""Indicates if all the schemas in the associated target database should be scanned by data discovery jobs. If it is set to true, sensitive data is discovered in all schemas (except for schemas maintained by Oracle).""")
@@ -4558,12 +4615,12 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'tables-for-discovery': {'module': 'data_safe', 'class': 'list[TablesForDiscovery]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'tables-for-discovery': {'module': 'data_safe', 'class': 'list[TablesForDiscovery]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'sensitive-type-group-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'tables-for-discovery': {'module': 'data_safe', 'class': 'list[TablesForDiscovery]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'SensitiveDataModel'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'tables-for-discovery': {'module': 'data_safe', 'class': 'list[TablesForDiscovery]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'sensitive-type-group-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'SensitiveDataModel'})
 @cli_util.wrap_exceptions
-def create_sensitive_data_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, target_id, display_name, app_suite_name, description, schemas_for_discovery, tables_for_discovery, sensitive_type_ids_for_discovery, is_sample_data_collection_enabled, is_app_defined_relation_discovery_enabled, is_include_all_schemas, is_include_all_sensitive_types, freeform_tags, defined_tags):
+def create_sensitive_data_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, target_id, display_name, app_suite_name, description, schemas_for_discovery, tables_for_discovery, sensitive_type_ids_for_discovery, sensitive_type_group_ids_for_discovery, is_sample_data_collection_enabled, is_app_defined_relation_discovery_enabled, is_include_all_schemas, is_include_all_sensitive_types, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -4589,6 +4646,9 @@ def create_sensitive_data_model(ctx, from_json, wait_for_state, max_wait_seconds
 
     if sensitive_type_ids_for_discovery is not None:
         _details['sensitiveTypeIdsForDiscovery'] = cli_util.parse_json_parameter("sensitive_type_ids_for_discovery", sensitive_type_ids_for_discovery)
+
+    if sensitive_type_group_ids_for_discovery is not None:
+        _details['sensitiveTypeGroupIdsForDiscovery'] = cli_util.parse_json_parameter("sensitive_type_group_ids_for_discovery", sensitive_type_group_ids_for_discovery)
 
     if is_sample_data_collection_enabled is not None:
         _details['isSampleDataCollectionEnabled'] = is_sample_data_collection_enabled
@@ -4874,6 +4934,77 @@ def create_sensitive_type_create_sensitive_type_pattern_details(ctx, from_json, 
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.create_sensitive_type(
         create_sensitive_type_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@sensitive_type_group_group.command(name=cli_util.override('data_safe.create_sensitive_type_group.command_name', 'create'), help=u"""Creates a new sensitive type group. \n[Command Reference](createSensitiveTypeGroup)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the sensitive type group should be created.""")
+@cli_util.option('--display-name', help=u"""The display name of the sensitive type group. The name does not have to be unique.""")
+@cli_util.option('--description', help=u"""The description of the sensitive type group.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags] Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_safe', 'class': 'SensitiveTypeGroup'})
+@cli_util.wrap_exceptions
+def create_sensitive_type_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.create_sensitive_type_group(
+        create_sensitive_type_group_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -6447,6 +6578,62 @@ def delete_masking_policy_health_report(ctx, from_json, wait_for_state, max_wait
     cli_util.render_response(result, ctx)
 
 
+@masking_report_group.command(name=cli_util.override('data_safe.delete_masking_report.command_name', 'delete'), help=u"""Deletes the specified masking report. \n[Command Reference](deleteMaskingReport)""")
+@cli_util.option('--masking-report-id', required=True, help=u"""The OCID of the masking report.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_masking_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_report_id, if_match):
+
+    if isinstance(masking_report_id, six.string_types) and len(masking_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --masking-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.delete_masking_report(
+        masking_report_id=masking_report_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @on_prem_connector_group.command(name=cli_util.override('data_safe.delete_on_prem_connector.command_name', 'delete'), help=u"""Deletes the specified on-premises connector. \n[Command Reference](deleteOnPremConnector)""")
 @cli_util.option('--on-prem-connector-id', required=True, help=u"""The OCID of the on-premises connector.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -6911,6 +7098,62 @@ def delete_sensitive_type(ctx, from_json, wait_for_state, max_wait_seconds, wait
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@sensitive_type_group_group.command(name=cli_util.override('data_safe.delete_sensitive_type_group.command_name', 'delete'), help=u"""Deletes the specified sensitive type group. \n[Command Reference](deleteSensitiveTypeGroup)""")
+@cli_util.option('--sensitive-type-group-id', required=True, help=u"""The OCID of the sensitive type group.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_sensitive_type_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_type_group_id, if_match):
+
+    if isinstance(sensitive_type_group_id, six.string_types) and len(sensitive_type_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --sensitive-type-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.delete_sensitive_type_group(
+        sensitive_type_group_id=sensitive_type_group_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -9504,6 +9747,28 @@ def get_sensitive_type(ctx, from_json, sensitive_type_id):
     cli_util.render_response(result, ctx)
 
 
+@sensitive_type_group_group.command(name=cli_util.override('data_safe.get_sensitive_type_group.command_name', 'get'), help=u"""Gets the details of the specified sensitive type group. \n[Command Reference](getSensitiveTypeGroup)""")
+@cli_util.option('--sensitive-type-group-id', required=True, help=u"""The OCID of the sensitive type group.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SensitiveTypeGroup'})
+@cli_util.wrap_exceptions
+def get_sensitive_type_group(ctx, from_json, sensitive_type_group_id):
+
+    if isinstance(sensitive_type_group_id, six.string_types) and len(sensitive_type_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --sensitive-type-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.get_sensitive_type_group(
+        sensitive_type_group_id=sensitive_type_group_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @sensitive_types_export_group.command(name=cli_util.override('data_safe.get_sensitive_types_export.command_name', 'get'), help=u"""Gets the details of the specified sensitive types export by identifier. \n[Command Reference](getSensitiveTypesExport)""")
 @cli_util.option('--sensitive-types-export-id', required=True, help=u"""The OCID of the sensitive types export.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -11558,6 +11823,13 @@ def list_finding_analytics(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
+@cli_util.option('--scim-query', help=u"""The scimQuery query parameter accepts filter expressions that use the syntax described in Section 3.2.2.2 of the System for Cross-Domain Identity Management (SCIM) specification, which is available at [RFC3339]. In SCIM filtering expressions, text, date, and time values must be enclosed in quotation marks, with date and time values using ISO-8601 format. (Numeric and boolean values should not be quoted.)
+
+**Example:** | scimQuery=(severity eq 'high') and (targetId eq 'target_1') scimQuery=(category eq \"Users\") and (targetId eq \"target_1\") scimQuery=(reference eq 'CIS') and (targetId eq 'target_1')
+
+Supported fields: severity findingKey reference targetId isTopFinding title category remarks details summary isRiskModified""")
+@cli_util.option('--field', type=custom_types.CliCaseInsensitiveChoice(["severity", "findingKey", "reference", "targetId", "isTopFinding", "title", "category", "remarks", "details", "summary", "isRiskModified"]), multiple=True, help=u"""Specifies a subset of fields to be returned in the response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["category", "findingKey", "severity"]), help=u"""The field to sort by. You can specify only one sort order(sortOrder). The default order for category is alphabetical.""")
 @cli_util.option('--finding-key', help=u"""Each finding in security assessment has an associated key (think of key as a finding's name). For a given finding, the key will be the same across targets. The user can use these keys to filter the findings.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -11566,7 +11838,7 @@ def list_finding_analytics(ctx, from_json, all_pages, page_size, compartment_id,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'list[FindingSummary]'})
 @cli_util.wrap_exceptions
-def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, is_top_finding, severity, lifecycle_state, references, limit, page, compartment_id_in_subtree, access_level, target_id, finding_key):
+def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, is_top_finding, severity, lifecycle_state, references, limit, page, compartment_id_in_subtree, access_level, target_id, scim_query, field, sort_by, finding_key):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -11593,6 +11865,12 @@ def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, 
         kwargs['access_level'] = access_level
     if target_id is not None:
         kwargs['target_id'] = target_id
+    if scim_query is not None:
+        kwargs['scim_query'] = scim_query
+    if field is not None and len(field) > 0:
+        kwargs['field'] = field
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
     if finding_key is not None:
         kwargs['finding_key'] = finding_key
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -11790,6 +12068,60 @@ def list_grants(ctx, from_json, all_pages, page_size, user_assessment_id, user_k
         result = client.list_grants(
             user_assessment_id=user_assessment_id,
             user_key=user_key,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@sensitive_type_group_group.command(name=cli_util.override('data_safe.list_grouped_sensitive_types.command_name', 'list-grouped-sensitive-types'), help=u"""Gets the list of sensitive type Ids present in the specified sensitive type group. \n[Command Reference](listGroupedSensitiveTypes)""")
+@cli_util.option('--sensitive-type-group-id', required=True, help=u"""The OCID of the sensitive type group.""")
+@cli_util.option('--sensitive-type-id', help=u"""A filter to return only items related to a specific sensitive type OCID.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'GroupedSensitiveTypeCollection'})
+@cli_util.wrap_exceptions
+def list_grouped_sensitive_types(ctx, from_json, all_pages, page_size, sensitive_type_group_id, sensitive_type_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(sensitive_type_group_id, six.string_types) and len(sensitive_type_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --sensitive-type-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if sensitive_type_id is not None:
+        kwargs['sensitive_type_id'] = sensitive_type_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_grouped_sensitive_types,
+            sensitive_type_group_id=sensitive_type_group_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_grouped_sensitive_types,
+            limit,
+            page_size,
+            sensitive_type_group_id=sensitive_type_group_id,
+            **kwargs
+        )
+    else:
+        result = client.list_grouped_sensitive_types(
+            sensitive_type_group_id=sensitive_type_group_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -12110,6 +12442,66 @@ def list_masking_columns(ctx, from_json, all_pages, page_size, masking_policy_id
     else:
         result = client.list_masking_columns(
             masking_policy_id=masking_policy_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@masking_error_summary_group.command(name=cli_util.override('data_safe.list_masking_errors.command_name', 'list-masking-errors'), help=u"""Gets a list of masking errors in a masking run based on the specified query parameters. \n[Command Reference](listMaskingErrors)""")
+@cli_util.option('--masking-report-id', required=True, help=u"""The OCID of the masking report.""")
+@cli_util.option('--step-name', type=custom_types.CliCaseInsensitiveChoice(["EXECUTE_MASKING", "PRE_MASKING", "POST_MASKING"]), help=u"""A filter to return only masking errors that match the specified step name.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["stepName", "timeCreated"]), help=u"""The field to sort by. The default order will be ascending.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'MaskingErrorCollection'})
+@cli_util.wrap_exceptions
+def list_masking_errors(ctx, from_json, all_pages, page_size, masking_report_id, step_name, sort_by, limit, page, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(masking_report_id, six.string_types) and len(masking_report_id.strip()) == 0:
+        raise click.UsageError('Parameter --masking-report-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if step_name is not None:
+        kwargs['step_name'] = step_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_masking_errors,
+            masking_report_id=masking_report_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_masking_errors,
+            limit,
+            page_size,
+            masking_report_id=masking_report_id,
+            **kwargs
+        )
+    else:
+        result = client.list_masking_errors(
+            masking_report_id=masking_report_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -13034,7 +13426,7 @@ def list_referential_relations(ctx, from_json, all_pages, page_size, sensitive_d
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME", "DISPLAYORDER"]), help=u"""The field used for sorting. Only one sorting parameter order (sortOrder) can be specified. The default order for TIMECREATED is descending. The default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--is-seeded', type=click.BOOL, help=u"""A boolean flag indicating to list seeded report definitions. Set this parameter to get list of seeded report definitions.""")
-@cli_util.option('--data-source', type=custom_types.CliCaseInsensitiveChoice(["EVENTS", "ALERTS", "VIOLATIONS", "ALLOWED_SQL"]), help=u"""Specifies the name of a resource that provides data for the report. For example  alerts, events.""")
+@cli_util.option('--data-source', type=custom_types.CliCaseInsensitiveChoice(["EVENTS", "ALERTS", "SECURITY_ASSESSMENT", "VIOLATIONS", "ALLOWED_SQL"]), help=u"""Specifies the name of a resource that provides data for the report. For example  alerts, events.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""An optional filter to return only resources that match the specified lifecycle state.""")
 @cli_util.option('--category', type=custom_types.CliCaseInsensitiveChoice(["CUSTOM_REPORTS", "SUMMARY", "ACTIVITY_AUDITING"]), help=u"""An optional filter to return only resources that match the specified category.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -13966,6 +14358,88 @@ def list_security_policy_reports(ctx, from_json, all_pages, page_size, compartme
     cli_util.render_response(result, ctx)
 
 
+@sensitive_data_model_group.command(name=cli_util.override('data_safe.list_sensitive_column_analytics.command_name', 'list-sensitive-column-analytics'), help=u"""Gets consolidated sensitive columns analytics data based on the specified query parameters.
+
+When you perform the ListSensitiveColumnAnalytics operation, if the parameter compartmentIdInSubtree is set to \"true,\" and if the parameter accessLevel is set to ACCESSIBLE, then the operation returns compartments in which the requestor has INSPECT permissions on at least one resource, directly or indirectly (in subcompartments). If the operation is performed at the root compartment and the requestor does not have access to at least one subcompartment of the compartment specified by compartmentId, then \"Not Authorized\" is returned.
+
+To use ListSensitiveColumnAnalytics to get a full list of all compartments and subcompartments in the tenancy from the root compartment, set the parameter compartmentIdInSubtree to true and accessLevel to ACCESSIBLE. \n[Command Reference](listSensitiveColumnAnalytics)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
+@cli_util.option('--sensitive-type-id', multiple=True, help=u"""A filter to return only the sensitive columns that are associated with one of the sensitive types identified by the specified OCIDs.""")
+@cli_util.option('--sensitive-type-group-id', help=u"""An optional filter to return only resources that match the specified OCID of the sensitive type group resource.""")
+@cli_util.option('--sensitive-data-model-id', help=u"""A filter to return only the resources that match the specified sensitive data model OCID.""")
+@cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["targetId", "sensitiveTypeId", "sensitiveDataModelId"]), multiple=True, help=u"""The group by parameter to summarize the sensitive columns.""")
+@cli_util.option('--schema-name', multiple=True, help=u"""A filter to return only items related to specific schema name.""")
+@cli_util.option('--object-name', multiple=True, help=u"""A filter to return only items related to a specific object name.""")
+@cli_util.option('--column-name', multiple=True, help=u"""A filter to return only a specific column based on column name.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'sensitive-type-id': {'module': 'data_safe', 'class': 'list[string]'}, 'schema-name': {'module': 'data_safe', 'class': 'list[string]'}, 'object-name': {'module': 'data_safe', 'class': 'list[string]'}, 'column-name': {'module': 'data_safe', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'sensitive-type-id': {'module': 'data_safe', 'class': 'list[string]'}, 'schema-name': {'module': 'data_safe', 'class': 'list[string]'}, 'object-name': {'module': 'data_safe', 'class': 'list[string]'}, 'column-name': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'SensitiveColumnAnalyticsCollection'})
+@cli_util.wrap_exceptions
+def list_sensitive_column_analytics(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, target_id, sensitive_type_id, sensitive_type_group_id, sensitive_data_model_id, group_by, schema_name, object_name, column_name, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if sensitive_type_id is not None and len(sensitive_type_id) > 0:
+        kwargs['sensitive_type_id'] = sensitive_type_id
+    if sensitive_type_group_id is not None:
+        kwargs['sensitive_type_group_id'] = sensitive_type_group_id
+    if sensitive_data_model_id is not None:
+        kwargs['sensitive_data_model_id'] = sensitive_data_model_id
+    if group_by is not None and len(group_by) > 0:
+        kwargs['group_by'] = group_by
+    if schema_name is not None and len(schema_name) > 0:
+        kwargs['schema_name'] = schema_name
+    if object_name is not None and len(object_name) > 0:
+        kwargs['object_name'] = object_name
+    if column_name is not None and len(column_name) > 0:
+        kwargs['column_name'] = column_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_sensitive_column_analytics,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_sensitive_column_analytics,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_sensitive_column_analytics(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @sensitive_column_group.command(name=cli_util.override('data_safe.list_sensitive_columns.command_name', 'list'), help=u"""Gets a list of sensitive columns present in the specified sensitive data model based on the specified query parameters. \n[Command Reference](listSensitiveColumns)""")
 @cli_util.option('--sensitive-data-model-id', required=True, help=u"""The OCID of the sensitive data model.""")
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return only the resources that were created after the specified date and time, as defined by [RFC3339]. Using TimeCreatedGreaterThanOrEqualToQueryParam parameter retrieves all resources created after that date.
@@ -14338,6 +14812,85 @@ def list_sensitive_schemas(ctx, from_json, all_pages, page_size, sensitive_data_
     else:
         result = client.list_sensitive_schemas(
             sensitive_data_model_id=sensitive_data_model_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@sensitive_type_group_summary_group.command(name=cli_util.override('data_safe.list_sensitive_type_groups.command_name', 'list-sensitive-type-groups'), help=u"""Gets a list of sensitive type groups based on the specified query parameters. \n[Command Reference](listSensitiveTypeGroups)""")
+@cli_util.option('--compartment-id', required=True, help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
+@cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only the resources that match the specified lifecycle state.""")
+@cli_util.option('--sensitive-type-group-id', help=u"""An optional filter to return only resources that match the specified OCID of the sensitive type group resource.""")
+@cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return only the resources that were created after the specified date and time, as defined by [RFC3339]. Using TimeCreatedGreaterThanOrEqualToQueryParam parameter retrieves all resources created after that date.
+
+**Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help=u"""Search for resources that were created before a specific date. Specifying this parameter corresponding `timeCreatedLessThan` parameter will retrieve all resources created before the specified created date, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by RFC 3339.
+
+**Example:** 2016-12-19T16:39:57.600Z""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. You can specify only one sorting parameter (sortOrder). The default order for timeCreated is descending. The default order for displayName is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'SensitiveTypeGroupCollection'})
+@cli_util.wrap_exceptions
+def list_sensitive_type_groups(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, display_name, limit, page, lifecycle_state, sensitive_type_group_id, time_created_greater_than_or_equal_to, time_created_less_than, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if sensitive_type_group_id is not None:
+        kwargs['sensitive_type_group_id'] = sensitive_type_group_id
+    if time_created_greater_than_or_equal_to is not None:
+        kwargs['time_created_greater_than_or_equal_to'] = time_created_greater_than_or_equal_to
+    if time_created_less_than is not None:
+        kwargs['time_created_less_than'] = time_created_less_than
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_sensitive_type_groups,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_sensitive_type_groups,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_sensitive_type_groups(
+            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -16000,6 +16553,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, ope
 @cli_util.option('--target-id', help=u"""The OCID of the target database to be masked. If it's not provided, the value of the targetId attribute in the MaskingPolicy resource is used. The OCID of the target database to be masked. If it's not provided, the value of the targetId attribute in the MaskingPolicy resource is used.""")
 @cli_util.option('--is-decrypt', type=click.BOOL, help=u"""Indicates if the masking request is to decrypt the data values previously encrypted using Deterministic Encryption. Note that, to correctly decrypt the encrypted data values, it requires the same seed value that was provided to encrypt those data values.""")
 @cli_util.option('--is-rerun', type=click.BOOL, help=u"""Indicates if the masking request is to rerun the previously failed masking steps. If a masking request is submitted with the isIgnoreErrorsEnabled attribute set to true, the masking process tracks the failed masking steps. Another masking request can be submitted with the isRun attribute set to true to rerun those failed masking steps. It helps save time by executing only the failed masking steps and not doing the whole masking again.""")
+@cli_util.option('--re-run-from-step', type=custom_types.CliCaseInsensitiveChoice(["PRE_MASKING_SCRIPT", "POST_MASKING_SCRIPT"]), help=u"""Specifies the step from which masking needs to be rerun. This param will be used only when isRerun attribute is true. If PRE_MASKING_SCRIPT is passed, it will rerun the pre-masking script, followed by masking, and then the post-masking script. If POST_MASKING_SCRIPT is passed, it will rerun only the post-masking script. If this field is not set and isRerun is set to true, then it will default to the last failed step.""")
 @cli_util.option('--tablespace', help=u"""The tablespace that should be used to create the mapping tables, DMASK objects, and other temporary tables for data masking. If no tablespace is provided, the DEFAULT tablespace is used.""")
 @cli_util.option('--is-ignore-errors-enabled', type=click.BOOL, help=u"""Indicates if the masking process should continue on hitting an error. It provides fault tolerance support and is enabled by default. In fault-tolerant mode, the masking process saves the failed step and continues. You can then submit another masking request (with isRerun attribute set to true) to execute only the failed steps.""")
 @cli_util.option('--seed', help=u"""The seed value to be used in case of Deterministic Encryption and Deterministic Substitution masking formats.""")
@@ -16018,7 +16572,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, ope
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def mask_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, target_id, is_decrypt, is_rerun, tablespace, is_ignore_errors_enabled, seed, is_move_interim_tables_enabled, is_execute_saved_script_enabled, is_drop_temp_tables_enabled, is_redo_logging_enabled, is_refresh_stats_enabled, parallel_degree, recompile):
+def mask_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, target_id, is_decrypt, is_rerun, re_run_from_step, tablespace, is_ignore_errors_enabled, seed, is_move_interim_tables_enabled, is_execute_saved_script_enabled, is_drop_temp_tables_enabled, is_redo_logging_enabled, is_refresh_stats_enabled, parallel_degree, recompile):
 
     if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
@@ -16036,6 +16590,9 @@ def mask_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_se
 
     if is_rerun is not None:
         _details['isRerun'] = is_rerun
+
+    if re_run_from_step is not None:
+        _details['reRunFromStep'] = re_run_from_step
 
     if tablespace is not None:
         _details['tablespace'] = tablespace
@@ -16271,6 +16828,71 @@ def patch_discovery_job_results(ctx, from_json, wait_for_state, max_wait_seconds
     result = client.patch_discovery_job_results(
         discovery_job_id=discovery_job_id,
         patch_discovery_job_result_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@sensitive_type_group_group.command(name=cli_util.override('data_safe.patch_grouped_sensitive_types.command_name', 'patch-grouped-sensitive-types'), help=u"""Patches one or more sensitive types in a sensitive type group. You can use this operation to add or remove sensitive type ids in a sensitive type group. \n[Command Reference](patchGroupedSensitiveTypes)""")
+@cli_util.option('--sensitive-type-group-id', required=True, help=u"""The OCID of the sensitive type group.""")
+@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of patch instructions.
+
+This option is a JSON list with items of type PatchInstruction.  For documentation on PatchInstruction please see our API reference: https://docs.cloud.oracle.com/api/#/en/datasafe/20181201/datatypes/PatchInstruction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'data_safe', 'class': 'list[PatchInstruction]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'data_safe', 'class': 'list[PatchInstruction]'}})
+@cli_util.wrap_exceptions
+def patch_grouped_sensitive_types(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_type_group_id, items, if_match):
+
+    if isinstance(sensitive_type_group_id, six.string_types) and len(sensitive_type_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --sensitive-type-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if items is not None:
+        _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.patch_grouped_sensitive_types(
+        sensitive_type_group_id=sensitive_type_group_id,
+        patch_grouped_sensitive_types_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -20378,6 +21000,7 @@ def update_sensitive_column(ctx, from_json, force, wait_for_state, max_wait_seco
 
 This option is a JSON list with items of type TablesForDiscovery.  For documentation on TablesForDiscovery please see our API reference: https://docs.cloud.oracle.com/api/#/en/datasafe/20181201/datatypes/TablesForDiscovery.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sensitive-type-ids-for-discovery', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the sensitive types to be used for future data discovery jobs. If OCID of a sensitive category is provided, all its child sensitive types are used for data discovery.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--sensitive-type-group-ids-for-discovery', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the sensitive type groups to be used by data discovery jobs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-sample-data-collection-enabled', type=click.BOOL, help=u"""Indicates if data discovery jobs should collect and store sample data values for the discovered columns. Sample data helps review the discovered columns and ensure that they actually contain sensitive data. As it collects original data from the target database, it's disabled by default and should be used only if it's acceptable to store sample data in Data Safe's repository in Oracle Cloud. Note that sample data values are not collected for columns with the following data types: LONG, LOB, RAW, XMLTYPE and BFILE.""")
 @cli_util.option('--is-app-defined-relation-discovery-enabled', type=click.BOOL, help=u"""Indicates if data discovery jobs should identify potential application-level (non-dictionary) referential relationships between columns. Note that data discovery automatically identifies and adds database-level (dictionary-defined) relationships. This option helps identify application-level relationships that are not defined in the database dictionary, which in turn, helps identify additional sensitive columns and preserve referential integrity during data masking. It's disabled by default and should be used only if there is a need to identify application-level relationships.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
@@ -20389,18 +21012,18 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'tables-for-discovery': {'module': 'data_safe', 'class': 'list[TablesForDiscovery]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'tables-for-discovery': {'module': 'data_safe', 'class': 'list[TablesForDiscovery]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'sensitive-type-group-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'tables-for-discovery': {'module': 'data_safe', 'class': 'list[TablesForDiscovery]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'tables-for-discovery': {'module': 'data_safe', 'class': 'list[TablesForDiscovery]'}, 'sensitive-type-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'sensitive-type-group-ids-for-discovery': {'module': 'data_safe', 'class': 'list[string]'}, 'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_sensitive_data_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_data_model_id, display_name, target_id, app_suite_name, description, schemas_for_discovery, tables_for_discovery, sensitive_type_ids_for_discovery, is_sample_data_collection_enabled, is_app_defined_relation_discovery_enabled, freeform_tags, defined_tags, if_match):
+def update_sensitive_data_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_data_model_id, display_name, target_id, app_suite_name, description, schemas_for_discovery, tables_for_discovery, sensitive_type_ids_for_discovery, sensitive_type_group_ids_for_discovery, is_sample_data_collection_enabled, is_app_defined_relation_discovery_enabled, freeform_tags, defined_tags, if_match):
 
     if isinstance(sensitive_data_model_id, six.string_types) and len(sensitive_data_model_id.strip()) == 0:
         raise click.UsageError('Parameter --sensitive-data-model-id cannot be whitespace or empty string')
     if not force:
-        if schemas_for_discovery or tables_for_discovery or sensitive_type_ids_for_discovery or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to schemas-for-discovery and tables-for-discovery and sensitive-type-ids-for-discovery and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if schemas_for_discovery or tables_for_discovery or sensitive_type_ids_for_discovery or sensitive_type_group_ids_for_discovery or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to schemas-for-discovery and tables-for-discovery and sensitive-type-ids-for-discovery and sensitive-type-group-ids-for-discovery and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -20430,6 +21053,9 @@ def update_sensitive_data_model(ctx, from_json, force, wait_for_state, max_wait_
 
     if sensitive_type_ids_for_discovery is not None:
         _details['sensitiveTypeIdsForDiscovery'] = cli_util.parse_json_parameter("sensitive_type_ids_for_discovery", sensitive_type_ids_for_discovery)
+
+    if sensitive_type_group_ids_for_discovery is not None:
+        _details['sensitiveTypeGroupIdsForDiscovery'] = cli_util.parse_json_parameter("sensitive_type_group_ids_for_discovery", sensitive_type_group_ids_for_discovery)
 
     if is_sample_data_collection_enabled is not None:
         _details['isSampleDataCollectionEnabled'] = is_sample_data_collection_enabled
@@ -20743,6 +21369,88 @@ def update_sensitive_type_update_sensitive_type_pattern_details(ctx, from_json, 
     result = client.update_sensitive_type(
         sensitive_type_id=sensitive_type_id,
         update_sensitive_type_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@sensitive_type_group_group.command(name=cli_util.override('data_safe.update_sensitive_type_group.command_name', 'update'), help=u"""Updates one or more attributes of the specified sensitive type group. \n[Command Reference](updateSensitiveTypeGroup)""")
+@cli_util.option('--sensitive-type-group-id', required=True, help=u"""The OCID of the sensitive type group.""")
+@cli_util.option('--display-name', help=u"""The display name of the sensitive type group. The name does not have to be unique, and it's changeable.""")
+@cli_util.option('--description', help=u"""The description of the sensitive type group.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags] Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "SUSPENDING", "SUSPENDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_safe', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_safe', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_sensitive_type_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sensitive_type_group_id, display_name, description, freeform_tags, defined_tags, if_match):
+
+    if isinstance(sensitive_type_group_id, six.string_types) and len(sensitive_type_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --sensitive-type-group-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
+    result = client.update_sensitive_type_group(
+        sensitive_type_group_id=sensitive_type_group_id,
+        update_sensitive_type_group_details=_details,
         **kwargs
     )
     if wait_for_state:
