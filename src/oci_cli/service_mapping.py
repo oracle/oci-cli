@@ -60,7 +60,7 @@ service_mapping = {
     ],
     "apm-synthetics": [
         "apm_synthetics",
-        "Application Performance Monitoring Synthetic Monitoring",
+        "APM Availability Monitoring",
         "Observability & Management"
     ],
     "apm-traces": [

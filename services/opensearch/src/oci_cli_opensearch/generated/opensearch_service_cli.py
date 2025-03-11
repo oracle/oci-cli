@@ -8,7 +8,7 @@ from oci_cli import cli_util
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('opensearch_cluster_backup.opensearch_service_group.command_name', 'opensearch'), cls=CommandGroupWithAlias, help=cli_util.override('opensearch_cluster_backup.opensearch_service_group.help', """The OpenSearch service API provides access to OCI Search Service with OpenSearch."""), short_help=cli_util.override('opensearch_cluster_backup.opensearch_service_group.short_help', """OpenSearch Service API"""))
+@cli.command(cli_util.override('opensearch_cluster_pipeline.opensearch_service_group.command_name', 'opensearch'), cls=CommandGroupWithAlias, help=cli_util.override('opensearch_cluster_pipeline.opensearch_service_group.help', """The OpenSearch service API provides access to OCI Search Service with OpenSearch."""), short_help=cli_util.override('opensearch_cluster_pipeline.opensearch_service_group.short_help', """OpenSearch Service API"""))
 @cli_util.help_option_group
 def opensearch_service_group():
     pass

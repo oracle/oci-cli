@@ -28,6 +28,12 @@ def container_group():
     pass
 
 
+@click.command(cli_util.override('data_science.register_model_artifact_reference_details_group.command_name', 'register-model-artifact-reference-details'), cls=CommandGroupWithAlias, help="""Parameters that are required to register a model artifact reference collection.""")
+@cli_util.help_option_group
+def register_model_artifact_reference_details_group():
+    pass
+
+
 @click.command(cli_util.override('data_science.model_deployment_shape_group.command_name', 'model-deployment-shape'), cls=CommandGroupWithAlias, help="""The compute shape used to launch a model deployment compute instance.""")
 @cli_util.help_option_group
 def model_deployment_shape_group():
@@ -125,6 +131,7 @@ def data_science_private_endpoint_group():
 
 
 data_science_root_group.add_command(container_group)
+data_science_root_group.add_command(register_model_artifact_reference_details_group)
 data_science_root_group.add_command(model_deployment_shape_group)
 data_science_root_group.add_command(job_shape_group)
 data_science_root_group.add_command(model_deployment_group)
@@ -1867,6 +1874,90 @@ def create_model_artifact(ctx, from_json, model_id, model_artifact, content_leng
     cli_util.render_response(result, ctx)
 
 
+@model_group.command(name=cli_util.override('data_science.create_model_custom_metadatum_artifact.command_name', 'create-model-custom-metadatum-artifact'), help=u"""Creates model custom metadata artifact for specified model. \n[Command Reference](createModelCustomMetadatumArtifact)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--metadatum-key-name', required=True, help=u"""The name of the model metadatum in the metadata.""")
+@cli_util.option('--model-custom-metadatum-artifact', required=True, help=u"""The model custom metadata artifact to upload.""")
+@cli_util.option('--content-length', type=click.INT, help=u"""The content length of the body.""")
+@cli_util.option('--content-disposition', help=u"""This header allows you to specify a filename during upload. This file name is used to dispose of the file contents while downloading the file. If this optional field is not populated in the request, then the OCID of the model is used for the file name when downloading. Example: `{\"Content-Disposition\": \"attachment\"            \"filename\"=\"model.tar.gz\"            \"Content-Length\": \"2347\"            \"Content-Type\": \"application/gzip\"}`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def create_model_custom_metadatum_artifact(ctx, from_json, model_id, metadatum_key_name, model_custom_metadatum_artifact, content_length, content_disposition, if_match):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+        raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if content_length is not None:
+        kwargs['content_length'] = content_length
+    if content_disposition is not None:
+        kwargs['content_disposition'] = content_disposition
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_model_custom_metadatum_artifact(
+        model_id=model_id,
+        metadatum_key_name=metadatum_key_name,
+        model_custom_metadatum_artifact=model_custom_metadatum_artifact,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@model_group.command(name=cli_util.override('data_science.create_model_defined_metadatum_artifact.command_name', 'create-model-defined-metadatum-artifact'), help=u"""Creates model defined metadata artifact for specified model. \n[Command Reference](createModelDefinedMetadatumArtifact)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--metadatum-key-name', required=True, help=u"""The name of the model metadatum in the metadata.""")
+@cli_util.option('--model-defined-metadatum-artifact', required=True, help=u"""The model defined metadata artifact to upload.""")
+@cli_util.option('--content-length', type=click.INT, help=u"""The content length of the body.""")
+@cli_util.option('--content-disposition', help=u"""This header allows you to specify a filename during upload. This file name is used to dispose of the file contents while downloading the file. If this optional field is not populated in the request, then the OCID of the model is used for the file name when downloading. Example: `{\"Content-Disposition\": \"attachment\"            \"filename\"=\"model.tar.gz\"            \"Content-Length\": \"2347\"            \"Content-Type\": \"application/gzip\"}`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def create_model_defined_metadatum_artifact(ctx, from_json, model_id, metadatum_key_name, model_defined_metadatum_artifact, content_length, content_disposition, if_match):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+        raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if content_length is not None:
+        kwargs['content_length'] = content_length
+    if content_disposition is not None:
+        kwargs['content_disposition'] = content_disposition
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_model_defined_metadatum_artifact(
+        model_id=model_id,
+        metadatum_key_name=metadatum_key_name,
+        model_defined_metadatum_artifact=model_defined_metadatum_artifact,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @model_deployment_group.command(name=cli_util.override('data_science.create_model_deployment.command_name', 'create'), help=u"""Creates a new model deployment. \n[Command Reference](createModelDeployment)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model deployment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the model deployment.""")
@@ -3596,6 +3687,68 @@ def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
+@model_group.command(name=cli_util.override('data_science.delete_model_custom_metadatum_artifact.command_name', 'delete-model-custom-metadatum-artifact'), help=u"""Deletes model custom metadata artifact for specified model metadata key. \n[Command Reference](deleteModelCustomMetadatumArtifact)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--metadatum-key-name', required=True, help=u"""The name of the model metadatum in the metadata.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_model_custom_metadatum_artifact(ctx, from_json, model_id, metadatum_key_name, if_match):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+        raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.delete_model_custom_metadatum_artifact(
+        model_id=model_id,
+        metadatum_key_name=metadatum_key_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@model_group.command(name=cli_util.override('data_science.delete_model_defined_metadatum_artifact.command_name', 'delete-model-defined-metadatum-artifact'), help=u"""Deletes model defined metadata artifact for specified model metadata key. \n[Command Reference](deleteModelDefinedMetadatumArtifact)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--metadatum-key-name', required=True, help=u"""The name of the model metadatum in the metadata.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_model_defined_metadatum_artifact(ctx, from_json, model_id, metadatum_key_name, if_match):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+        raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.delete_model_defined_metadatum_artifact(
+        model_id=model_id,
+        metadatum_key_name=metadatum_key_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @model_deployment_group.command(name=cli_util.override('data_science.delete_model_deployment.command_name', 'delete'), help=u"""Deletes the specified model deployment. Any unsaved work in this model deployment is lost. \n[Command Reference](deleteModelDeployment)""")
 @cli_util.option('--model-deployment-id', required=True, help=u"""The [OCID] of the model deployment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
@@ -4331,6 +4484,112 @@ def get_model_artifact_content(ctx, from_json, file, model_id, range):
         file.close()
 
 
+@model_group.command(name=cli_util.override('data_science.get_model_custom_metadatum_artifact_content.command_name', 'get-model-custom-metadatum-artifact-content'), help=u"""Downloads model custom metadata artifact content for specified model metadata key. \n[Command Reference](getModelCustomMetadatumArtifactContent)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--metadatum-key-name', required=True, help=u"""The name of the model metadatum in the metadata.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--range', help=u"""Optional byte range to fetch, as described in [RFC 7233], section 2.1. Note that only a single range of bytes is supported.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_model_custom_metadatum_artifact_content(ctx, from_json, file, model_id, metadatum_key_name, range):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+        raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if range is not None:
+        kwargs['range'] = range
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.get_model_custom_metadatum_artifact_content(
+        model_id=model_id,
+        metadatum_key_name=metadatum_key_name,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
+@model_group.command(name=cli_util.override('data_science.get_model_defined_metadatum_artifact_content.command_name', 'get-model-defined-metadatum-artifact-content'), help=u"""Downloads model defined metadata artifact content for specified model metadata key. \n[Command Reference](getModelDefinedMetadatumArtifactContent)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--metadatum-key-name', required=True, help=u"""The name of the model metadatum in the metadata.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--range', help=u"""Optional byte range to fetch, as described in [RFC 7233], section 2.1. Note that only a single range of bytes is supported.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_model_defined_metadatum_artifact_content(ctx, from_json, file, model_id, metadatum_key_name, range):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+        raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if range is not None:
+        kwargs['range'] = range
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.get_model_defined_metadatum_artifact_content(
+        model_id=model_id,
+        metadatum_key_name=metadatum_key_name,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
 @model_deployment_group.command(name=cli_util.override('data_science.get_model_deployment.command_name', 'get'), help=u"""Retrieves the model deployment for the specified `modelDeploymentId`. \n[Command Reference](getModelDeployment)""")
 @cli_util.option('--model-deployment-id', required=True, help=u"""The [OCID] of the model deployment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4621,6 +4880,60 @@ def head_model_artifact(ctx, from_json, model_id):
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.head_model_artifact(
         model_id=model_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@model_group.command(name=cli_util.override('data_science.head_model_custom_metadatum_artifact.command_name', 'head-model-custom-metadatum-artifact'), help=u"""Gets custom metadata artifact metadata for specified model metadata key. \n[Command Reference](headModelCustomMetadatumArtifact)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--metadatum-key-name', required=True, help=u"""The name of the model metadatum in the metadata.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def head_model_custom_metadatum_artifact(ctx, from_json, model_id, metadatum_key_name):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+        raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.head_model_custom_metadatum_artifact(
+        model_id=model_id,
+        metadatum_key_name=metadatum_key_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@model_group.command(name=cli_util.override('data_science.head_model_defined_metadatum_artifact.command_name', 'head-model-defined-metadatum-artifact'), help=u"""Gets defined metadata artifact metadata for specified model metadata key. \n[Command Reference](headModelDefinedMetadatumArtifact)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--metadatum-key-name', required=True, help=u"""The name of the model metadatum in the metadata.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def head_model_defined_metadatum_artifact(ctx, from_json, model_id, metadatum_key_name):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+        raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.head_model_defined_metadatum_artifact(
+        model_id=model_id,
+        metadatum_key_name=metadatum_key_name,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -5308,6 +5621,7 @@ def list_model_deployments(ctx, from_json, all_pages, page_size, compartment_id,
 
 @model_version_set_group.command(name=cli_util.override('data_science.list_model_version_sets.command_name', 'list'), help=u"""Lists model version sets in the specified compartment. \n[Command Reference](listModelVersionSets)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--category', type=custom_types.CliCaseInsensitiveChoice(["USER", "SERVICE"]), help=u"""Specifies the type of model version sets to list. By default, user model version sets are listed.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given.""")
@@ -5328,12 +5642,14 @@ See [List Pagination].""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[ModelVersionSetSummary]'})
 @cli_util.wrap_exceptions
-def list_model_version_sets(ctx, from_json, all_pages, page_size, compartment_id, id, project_id, name, lifecycle_state, created_by, limit, page, sort_order, sort_by):
+def list_model_version_sets(ctx, from_json, all_pages, page_size, compartment_id, category, id, project_id, name, lifecycle_state, created_by, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if category is not None:
+        kwargs['category'] = category
     if id is not None:
         kwargs['id'] = id
     if project_id is not None:
@@ -5383,6 +5699,7 @@ def list_model_version_sets(ctx, from_json, all_pages, page_size, compartment_id
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--model-version-set-name', help=u"""<b>Filter</b> results by the name of the model version set.""")
 @cli_util.option('--version-label', help=u"""<b>Filter</b> results by version label.""")
+@cli_util.option('--category', type=custom_types.CliCaseInsensitiveChoice(["USER", "SERVICE"]), help=u"""Specifies the type of models to list. By default, user models are listed.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
@@ -5403,7 +5720,7 @@ See [List Pagination].""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[ModelSummary]'})
 @cli_util.wrap_exceptions
-def list_models(ctx, from_json, all_pages, page_size, compartment_id, model_version_set_name, version_label, id, project_id, display_name, lifecycle_state, created_by, limit, page, sort_order, sort_by):
+def list_models(ctx, from_json, all_pages, page_size, compartment_id, model_version_set_name, version_label, category, id, project_id, display_name, lifecycle_state, created_by, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -5413,6 +5730,8 @@ def list_models(ctx, from_json, all_pages, page_size, compartment_id, model_vers
         kwargs['model_version_set_name'] = model_version_set_name
     if version_label is not None:
         kwargs['version_label'] = version_label
+    if category is not None:
+        kwargs['category'] = category
     if id is not None:
         kwargs['id'] = id
     if project_id is not None:
@@ -5982,7 +6301,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @work_request_group.command(name=cli_util.override('data_science.list_work_requests.command_name', 'list'), help=u"""Lists work requests in the specified compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
-@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODELVERSIONSET_DELETE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE", "PIPELINE_CREATE", "PIPELINE_DELETE", "PIPELINE_RUN_CREATE", "PIPELINE_RUN_CANCEL", "PIPELINE_RUN_DELETE", "PRIVATE_ENDPOINT_CREATE", "PRIVATE_ENDPOINT_DELETE", "PRIVATE_ENDPOINT_MOVE", "PRIVATE_ENDPOINT_UPDATE", "SCHEDULE_CREATE", "SCHEDULE_UPDATE", "SCHEDULE_DELETE", "SCHEDULE_MOVE", "SCHEDULE_ACTIVATE", "SCHEDULE_DEACTIVATE", "RESTORE_ARCHIVED_MODEL"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODELVERSIONSET_DELETE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE", "PIPELINE_CREATE", "PIPELINE_DELETE", "PIPELINE_RUN_CREATE", "PIPELINE_RUN_CANCEL", "PIPELINE_RUN_DELETE", "PRIVATE_ENDPOINT_CREATE", "PRIVATE_ENDPOINT_DELETE", "PRIVATE_ENDPOINT_MOVE", "PRIVATE_ENDPOINT_UPDATE", "SCHEDULE_CREATE", "SCHEDULE_UPDATE", "SCHEDULE_DELETE", "SCHEDULE_MOVE", "SCHEDULE_ACTIVATE", "SCHEDULE_DEACTIVATE", "REGISTER_MODEL_ARTIFACT", "RESTORE_ARCHIVED_MODEL"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""<b>Filter</b> results by work request status.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
@@ -6043,6 +6362,67 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, id,
             compartment_id=compartment_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@register_model_artifact_reference_details_group.command(name=cli_util.override('data_science.register_model_artifact_reference.command_name', 'register-model-artifact-reference'), help=u"""Registers model artifact reference metadata \n[Command Reference](registerModelArtifactReference)""")
+@cli_util.option('--model-artifact-references', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of model artifact references to register.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'model-artifact-references': {'module': 'data_science', 'class': 'list[ModelArtifactReferenceDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'model-artifact-references': {'module': 'data_science', 'class': 'list[ModelArtifactReferenceDetails]'}})
+@cli_util.wrap_exceptions
+def register_model_artifact_reference(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_artifact_references, model_id, if_match):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['modelArtifactReferences'] = cli_util.parse_json_parameter("model_artifact_references", model_artifact_references)
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.register_model_artifact_reference(
+        model_id=model_id,
+        register_model_artifact_reference_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -6635,6 +7015,90 @@ def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_group.command(name=cli_util.override('data_science.update_model_custom_metadatum_artifact.command_name', 'update-model-custom-metadatum-artifact'), help=u"""Updates model custom metadata artifact for specified model metadata key. \n[Command Reference](updateModelCustomMetadatumArtifact)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--metadatum-key-name', required=True, help=u"""The name of the model metadatum in the metadata.""")
+@cli_util.option('--model-custom-metadatum-artifact', required=True, help=u"""The model custom metadata artifact to upload.""")
+@cli_util.option('--content-length', type=click.INT, help=u"""The content length of the body.""")
+@cli_util.option('--content-disposition', help=u"""This header allows you to specify a filename during upload. This file name is used to dispose of the file contents while downloading the file. If this optional field is not populated in the request, then the OCID of the model is used for the file name when downloading. Example: `{\"Content-Disposition\": \"attachment\"            \"filename\"=\"model.tar.gz\"            \"Content-Length\": \"2347\"            \"Content-Type\": \"application/gzip\"}`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_model_custom_metadatum_artifact(ctx, from_json, model_id, metadatum_key_name, model_custom_metadatum_artifact, content_length, content_disposition, if_match):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+        raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if content_length is not None:
+        kwargs['content_length'] = content_length
+    if content_disposition is not None:
+        kwargs['content_disposition'] = content_disposition
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_model_custom_metadatum_artifact(
+        model_id=model_id,
+        metadatum_key_name=metadatum_key_name,
+        model_custom_metadatum_artifact=model_custom_metadatum_artifact,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@model_group.command(name=cli_util.override('data_science.update_model_defined_metadatum_artifact.command_name', 'update-model-defined-metadatum-artifact'), help=u"""Updates model defined metadata artifact for specified model metadata key. \n[Command Reference](updateModelDefinedMetadatumArtifact)""")
+@cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
+@cli_util.option('--metadatum-key-name', required=True, help=u"""The name of the model metadatum in the metadata.""")
+@cli_util.option('--model-defined-metadatum-artifact', required=True, help=u"""The model defined metadata artifact to upload.""")
+@cli_util.option('--content-length', type=click.INT, help=u"""The content length of the body.""")
+@cli_util.option('--content-disposition', help=u"""This header allows you to specify a filename during upload. This file name is used to dispose of the file contents while downloading the file. If this optional field is not populated in the request, then the OCID of the model is used for the file name when downloading. Example: `{\"Content-Disposition\": \"attachment\"            \"filename\"=\"model.tar.gz\"            \"Content-Length\": \"2347\"            \"Content-Type\": \"application/gzip\"}`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_model_defined_metadatum_artifact(ctx, from_json, model_id, metadatum_key_name, model_defined_metadatum_artifact, content_length, content_disposition, if_match):
+
+    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
+
+    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+        raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if content_length is not None:
+        kwargs['content_length'] = content_length
+    if content_disposition is not None:
+        kwargs['content_disposition'] = content_disposition
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_model_defined_metadatum_artifact(
+        model_id=model_id,
+        metadatum_key_name=metadatum_key_name,
+        model_defined_metadatum_artifact=model_defined_metadatum_artifact,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

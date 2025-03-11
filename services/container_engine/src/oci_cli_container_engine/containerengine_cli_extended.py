@@ -107,6 +107,7 @@ containerengine_cli.cluster_group.add_command(generate_token)
             Only URLs that use the https:// scheme are accepted. This is typically the provider's discovery URL,
             changed to have an empty path.""")
 @cli_util.option('--oidc-client-id', help="""A client id that all tokens must be issued for.""")
+@cli_util.option('--oidc-configuration-file', help="""A base64 encoded string of kubernetes oidc auth configuration file.""")
 @cli_util.option('--oidc-username-claim', help="""JWT claim to use as the user name. By default sub, which is expected to be a unique identifier of the end
             user. Admins can choose other claims, such as email or name, depending on their provider. However, claims
             other than email will be prefixed with the issuer URL to prevent naming clashes with other plugins.""")
@@ -239,6 +240,12 @@ def create_cluster(ctx, **kwargs):
             kwargs['options']['openIdConnectTokenAuthenticationConfig'] = {}
         kwargs['options']['openIdConnectTokenAuthenticationConfig']['caCertificate'] = kwargs['oidc_ca_certificate']
     kwargs.pop('oidc_ca_certificate', None)
+
+    if 'oidc_configuration_file' in kwargs and kwargs['oidc_configuration_file'] is not None:
+        if 'openIdConnectTokenAuthenticationConfig' not in kwargs['options']:
+            kwargs['options']['openIdConnectTokenAuthenticationConfig'] = {}
+        kwargs['options']['openIdConnectTokenAuthenticationConfig']['configurationFile'] = kwargs['oidc_configuration_file']
+    kwargs.pop('oidc_configuration_file', None)
 
     if 'oidc_signing_algorithms' in kwargs and kwargs['oidc_signing_algorithms'] is not None:
         if 'openIdConnectTokenAuthenticationConfig' not in kwargs['options']:
