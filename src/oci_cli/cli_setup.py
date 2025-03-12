@@ -475,16 +475,21 @@ def setup_autocomplete():
         setup_autocomplete_non_windows()
 
 
-def setup_autocomplete_windows():
-    oci_tab_completion_file = 'OciTabExpansion.ps1'
+oci_win_tab_completion_file = 'OciTabExpansion.ps1'
 
-    script_relative_path = os.path.join('bin', oci_tab_completion_file)
+
+def setup_autocomplete_windows_find_completion_script_file():
+    script_relative_path = os.path.join('bin', oci_win_tab_completion_file)
     path_to_install_dir = os.path.dirname(os.path.abspath(__file__))
     completion_script_file = os.path.join(path_to_install_dir, script_relative_path)
     if not os.path.exists(completion_script_file):
         click.echo('Could not locate autocomplete script at {}. Exiting script.'.format(completion_script_file))
         sys.exit(1)
+    return completion_script_file
 
+
+def setup_autocomplete_windows():
+    completion_script_file = setup_autocomplete_windows_find_completion_script_file()
     click.echo("Using tab completion script at: {}".format(completion_script_file))
 
     # subprocess.check_output looks like it comes back as a byte string, so coerce to a regular string
@@ -499,8 +504,8 @@ def setup_autocomplete_windows():
             f.seek(0)
             content = f.read()
 
-            if oci_tab_completion_file in content:
-                click.echo("It looks like tab completion for oci is already configured in {ps_profile_file_path}. If you want to re-run the setup command please remove any lines containing '{oci_tab_completion_file}' from {ps_profile_file_path}.".format(oci_tab_completion_file=oci_tab_completion_file, ps_profile_file_path=ps_profile_file_path))
+            if oci_win_tab_completion_file in content:
+                click.echo("It looks like tab completion for oci is already configured in {ps_profile_file_path}. If you want to re-run the setup command please remove any lines containing '{oci_win_tab_completion_file}' from {ps_profile_file_path}.".format(oci_win_tab_completion_file=oci_win_tab_completion_file, ps_profile_file_path=ps_profile_file_path))
                 return
 
             f.write('\n. {}\n'.format(completion_script_file))
@@ -582,6 +587,16 @@ def prompt_input_with_default(msg, default):
         return prompt_input('{}: '.format(msg))
 
 
+def setup_autocomplete_non_windows_completion_script_file():
+    script_relative_path = os.path.join('bin', 'oci_autocomplete.sh')
+    path_to_install_dir = os.path.dirname(os.path.abspath(__file__))
+    completion_script_file = os.path.join(path_to_install_dir, script_relative_path)
+    if not os.path.exists(completion_script_file):
+        click.echo('Could not locate autocomplete script at {}. Exiting script.'.format(completion_script_file))
+        sys.exit(1)
+    return completion_script_file
+
+
 def setup_autocomplete_non_windows():
     click.echo("To set up autocomplete, we would update few lines in rc/bash_profile file.")
     rc_file_path = get_rc_file_path()
@@ -589,12 +604,7 @@ def setup_autocomplete_non_windows():
         raise CLIInstallError('No suitable profile file found.')
 
     # source bash completion script in CLI install directory
-    script_relative_path = os.path.join('bin', 'oci_autocomplete.sh')
-    path_to_install_dir = os.path.dirname(os.path.abspath(__file__))
-    completion_script_file = os.path.join(path_to_install_dir, script_relative_path)
-    if not os.path.exists(completion_script_file):
-        click.echo('Could not locate autocomplete script at {}. Exiting script.'.format(completion_script_file))
-        sys.exit(1)
+    completion_script_file = setup_autocomplete_non_windows_completion_script_file()
 
     click.echo("Using tab completion script at: {}".format(completion_script_file))
     soft_link = os.path.expanduser("~/lib/oci_autocomplete.sh")
