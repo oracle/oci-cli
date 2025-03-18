@@ -2185,8 +2185,6 @@ def create_byoasn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @byoip_range_group.command(name=cli_util.override('virtual_network.create_byoip_range.command_name', 'create'), help=u"""Creates a subrange of the BYOIP CIDR block. \n[Command Reference](createByoipRange)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the BYOIP CIDR block.""")
 @cli_util.option('--cidr-block', help=u"""The BYOIP CIDR block. You can assign some or all of it to a public IP pool after it is validated. Example: `10.0.1.0/24`""")
-@cli_util.option('--ip-anycast-id', help=u"""The [OCID] of the `IpAnycast` resource.""")
-@cli_util.option('--monitor-ip', help=u"""The IP address of the CIDR for Prefix Monitoring.""")
 @cli_util.option('--ipv6-cidr-block', help=u"""The BYOIPv6 prefix. You can assign some or all of it to a VCN after it is validated.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -2203,7 +2201,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'ByoipRange'})
 @cli_util.wrap_exceptions
-def create_byoip_range(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cidr_block, ip_anycast_id, monitor_ip, ipv6_cidr_block, defined_tags, display_name, freeform_tags):
+def create_byoip_range(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cidr_block, ipv6_cidr_block, defined_tags, display_name, freeform_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2213,12 +2211,6 @@ def create_byoip_range(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if cidr_block is not None:
         _details['cidrBlock'] = cidr_block
-
-    if ip_anycast_id is not None:
-        _details['ipAnycastId'] = ip_anycast_id
-
-    if monitor_ip is not None:
-        _details['monitorIp'] = monitor_ip
 
     if ipv6_cidr_block is not None:
         _details['ipv6CidrBlock'] = ipv6_cidr_block
@@ -11658,8 +11650,6 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--ip-anycast-id', help=u"""The [OCID] of the `IpAnycast` resource.""")
-@cli_util.option('--monitor-ip', help=u"""The IP address of the CIDR for Prefix Monitoring.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["INACTIVE", "UPDATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -11670,7 +11660,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'ByoipRange'})
 @cli_util.wrap_exceptions
-def update_byoip_range(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, byoip_range_id, defined_tags, display_name, freeform_tags, ip_anycast_id, monitor_ip, if_match):
+def update_byoip_range(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, byoip_range_id, defined_tags, display_name, freeform_tags, if_match):
 
     if isinstance(byoip_range_id, six.string_types) and len(byoip_range_id.strip()) == 0:
         raise click.UsageError('Parameter --byoip-range-id cannot be whitespace or empty string')
@@ -11694,12 +11684,6 @@ def update_byoip_range(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if ip_anycast_id is not None:
-        _details['ipAnycastId'] = ip_anycast_id
-
-    if monitor_ip is not None:
-        _details['monitorIp'] = monitor_ip
 
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_byoip_range(
