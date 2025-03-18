@@ -6,6 +6,49 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.53.0 - 2025-03-18
+--------------------
+Added
+~~~~~
+* Managed Services for Mac Service
+
+  * Support for the Oracle Cloud Infrastructure - Managed Services for Mac service
+
+    * ``oci mngdmac``
+
+* Compute Service
+
+  * Support for the Compute GPU Memory Cluster and Compute GPU Memory Fabric services
+
+        * ``oci compute compute-gpu-memory-cluster``
+        * ``oci compute compute-gpu-memory-fabric``
+
+Changed
+~~~~~~~
+* GoldenGate Service
+
+  * Added new optional parameter --backup-schedule for scheduling customer-initiated backups in the GoldenGate Service
+ 
+    * ``oci goldengate deployment create --backup-schedule``
+    * ``oci goldengate deployment update --backup-schedule``
+
+* Network Service
+
+  * [BREAKING] Removed two optional parameters, monitor-ip and ip-anycast-id from the following commands
+
+    * ``oci network byoip-range create``
+    * ``oci network byoip-range update``
+
+* Tenant Manager Control Plane Service
+
+  * [BREAKING] Renamed the oci organizations work-request-error list-errors command
+  
+    * ``oci organizations work-request-error list``
+  
+  * [BREAKING] Renamed the oci organizations work-request-log list command
+
+    * ``oci organizations work-request-log-entry list``
+  
 3.52.1 - 2025-03-11
 --------------------
 Added

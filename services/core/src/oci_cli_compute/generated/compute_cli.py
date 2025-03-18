@@ -84,6 +84,12 @@ def instance_maintenance_event_group():
     pass
 
 
+@click.command(cli_util.override('compute.compute_gpu_memory_cluster_group.command_name', 'compute-gpu-memory-cluster'), cls=CommandGroupWithAlias, help="""The customer facing object includes GPU memory cluster details.""")
+@cli_util.help_option_group
+def compute_gpu_memory_cluster_group():
+    pass
+
+
 @click.command(cli_util.override('compute.instance_console_connection_group.command_name', 'instance-console-connection'), cls=CommandGroupWithAlias, help="""The `InstanceConsoleConnection` API provides you with console access to Compute instances, enabling you to troubleshoot malfunctioning instances remotely.
 
 For more information about instance console connections, see [Troubleshooting Instances Using Instance Console Connections].""")
@@ -104,6 +110,12 @@ def instance_credentials_group():
     pass
 
 
+@click.command(cli_util.override('compute.compute_gpu_memory_cluster_instance_summary_group.command_name', 'compute-gpu-memory-cluster-instance-summary'), cls=CommandGroupWithAlias, help="""The customer facing GPU memory cluster instance object details.""")
+@cli_util.help_option_group
+def compute_gpu_memory_cluster_instance_summary_group():
+    pass
+
+
 @click.command(cli_util.override('compute.capacity_reservation_instance_group.command_name', 'capacity-reservation-instance'), cls=CommandGroupWithAlias, help="""Condensed instance data when listing instances in a compute capacity reservation.""")
 @cli_util.help_option_group
 def capacity_reservation_instance_group():
@@ -119,6 +131,18 @@ def compute_hpc_island_group():
 @click.command(cli_util.override('compute.compute_capacity_reservation_instance_shape_group.command_name', 'compute-capacity-reservation-instance-shape'), cls=CommandGroupWithAlias, help="""An available shape used to launch instances in a compute capacity reservation.""")
 @cli_util.help_option_group
 def compute_capacity_reservation_instance_shape_group():
+    pass
+
+
+@click.command(cli_util.override('compute.compute_gpu_memory_fabric_group.command_name', 'compute-gpu-memory-fabric'), cls=CommandGroupWithAlias, help="""The customer facing object includes GPU memory fabric details.""")
+@cli_util.help_option_group
+def compute_gpu_memory_fabric_group():
+    pass
+
+
+@click.command(cli_util.override('compute.compute_gpu_memory_cluster_collection_group.command_name', 'compute-gpu-memory-cluster-collection'), cls=CommandGroupWithAlias, help="""A list of compute GPU memory clusters.""")
+@cli_util.help_option_group
+def compute_gpu_memory_cluster_collection_group():
     pass
 
 
@@ -282,12 +306,16 @@ compute_root_group.add_command(compute_capacity_reservation_group)
 compute_root_group.add_command(compute_bare_metal_host_group)
 compute_root_group.add_command(dedicated_vm_host_instance_group)
 compute_root_group.add_command(instance_maintenance_event_group)
+compute_root_group.add_command(compute_gpu_memory_cluster_group)
 compute_root_group.add_command(instance_console_connection_group)
 compute_root_group.add_command(compute_global_image_capability_schema_group)
 compute_root_group.add_command(instance_credentials_group)
+compute_root_group.add_command(compute_gpu_memory_cluster_instance_summary_group)
 compute_root_group.add_command(capacity_reservation_instance_group)
 compute_root_group.add_command(compute_hpc_island_group)
 compute_root_group.add_command(compute_capacity_reservation_instance_shape_group)
+compute_root_group.add_command(compute_gpu_memory_fabric_group)
+compute_root_group.add_command(compute_gpu_memory_cluster_collection_group)
 compute_root_group.add_command(dedicated_vm_host_group)
 compute_root_group.add_command(image_group)
 compute_root_group.add_command(instance_maintenance_reboot_group)
@@ -1091,6 +1119,68 @@ def change_compute_cluster_compartment(ctx, from_json, compute_cluster_id, compa
     cli_util.render_response(result, ctx)
 
 
+@compute_gpu_memory_cluster_group.command(name=cli_util.override('compute.change_compute_gpu_memory_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a compute GPU memory cluster into a different compartment. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeComputeGpuMemoryClusterCompartment)""")
+@cli_util.option('--compute-gpu-memory-cluster-id', required=True, help=u"""The OCID of the compute GPU memory cluster.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the compute GPU memory cluster to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_compute_gpu_memory_cluster_compartment(ctx, from_json, compute_gpu_memory_cluster_id, compartment_id, if_match):
+
+    if isinstance(compute_gpu_memory_cluster_id, six.string_types) and len(compute_gpu_memory_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-gpu-memory-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.change_compute_gpu_memory_cluster_compartment(
+        compute_gpu_memory_cluster_id=compute_gpu_memory_cluster_id,
+        change_compute_gpu_memory_cluster_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@compute_gpu_memory_fabric_group.command(name=cli_util.override('compute.change_compute_gpu_memory_fabric_compartment.command_name', 'change-compartment'), help=u"""Moves a compute GPU memory fabric into a different compartment. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeComputeGpuMemoryFabricCompartment)""")
+@cli_util.option('--compute-gpu-memory-fabric-id', required=True, help=u"""The OCID of the compute GPU memory fabric.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the compute GPU memory fabric to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_compute_gpu_memory_fabric_compartment(ctx, from_json, compute_gpu_memory_fabric_id, compartment_id, if_match):
+
+    if isinstance(compute_gpu_memory_fabric_id, six.string_types) and len(compute_gpu_memory_fabric_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-gpu-memory-fabric-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.change_compute_gpu_memory_fabric_compartment(
+        compute_gpu_memory_fabric_id=compute_gpu_memory_fabric_id,
+        change_compute_gpu_memory_fabric_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @compute_image_capability_schema_group.command(name=cli_util.override('compute.change_compute_image_capability_schema_compartment.command_name', 'change-compartment'), help=u"""Moves a compute image capability schema into a different compartment within the same tenancy. For information about moving resources between compartments, see         [Moving Resources to a Different Compartment]. \n[Command Reference](changeComputeImageCapabilitySchemaCompartment)""")
 @cli_util.option('--compute-image-capability-schema-id', required=True, help=u"""The id of the compute image capability schema or the image ocid""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the instance configuration to.""")
@@ -1657,6 +1747,85 @@ def create_compute_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_compute_cluster(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compute_gpu_memory_cluster_group.command(name=cli_util.override('compute.create_compute_gpu_memory_cluster.command_name', 'create'), help=u"""Create a compute GPU memory cluster instance on a specific compute GPU memory fabric \n[Command Reference](createComputeGpuMemoryCluster)""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the GPU memory cluster.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the compute GPU memory cluster. compartment.""")
+@cli_util.option('--compute-cluster-id', required=True, help=u"""The [OCID] of the compute cluster.""")
+@cli_util.option('--instance-configuration-id', required=True, help=u"""Instance Configuration to be used for this GPU Memory Cluster""")
+@cli_util.option('--gpu-memory-fabric-id', help=u"""The [OCID] of the GPU memory fabric.""")
+@cli_util.option('--size', type=click.INT, help=u"""The number of instances currently running in the GpuMemoryCluster""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'ComputeGpuMemoryCluster'})
+@cli_util.wrap_exceptions
+def create_compute_gpu_memory_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, compute_cluster_id, instance_configuration_id, gpu_memory_fabric_id, size, defined_tags, freeform_tags, display_name):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['computeClusterId'] = compute_cluster_id
+    _details['instanceConfigurationId'] = instance_configuration_id
+
+    if gpu_memory_fabric_id is not None:
+        _details['gpuMemoryFabricId'] = gpu_memory_fabric_id
+
+    if size is not None:
+        _details['size'] = size
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.create_compute_gpu_memory_cluster(
+        create_compute_gpu_memory_cluster_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_compute_gpu_memory_cluster') and callable(getattr(client, 'get_compute_gpu_memory_cluster')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_compute_gpu_memory_cluster(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -2364,6 +2533,63 @@ def delete_compute_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wai
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compute_gpu_memory_cluster_group.command(name=cli_util.override('compute.delete_compute_gpu_memory_cluster.command_name', 'delete'), help=u"""Terminates and deletes the specified compute GPU memory cluster and underlying instances. \n[Command Reference](deleteComputeGpuMemoryCluster)""")
+@cli_util.option('--compute-gpu-memory-cluster-id', required=True, help=u"""The OCID of the compute GPU memory cluster.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_compute_gpu_memory_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_gpu_memory_cluster_id, if_match):
+
+    if isinstance(compute_gpu_memory_cluster_id, six.string_types) and len(compute_gpu_memory_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-gpu-memory-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.delete_compute_gpu_memory_cluster(
+        compute_gpu_memory_cluster_id=compute_gpu_memory_cluster_id,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -3252,6 +3478,50 @@ def get_compute_global_image_capability_schema_version(ctx, from_json, compute_g
     result = client.get_compute_global_image_capability_schema_version(
         compute_global_image_capability_schema_id=compute_global_image_capability_schema_id,
         compute_global_image_capability_schema_version_name=compute_global_image_capability_schema_version_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@compute_gpu_memory_cluster_group.command(name=cli_util.override('compute.get_compute_gpu_memory_cluster.command_name', 'get'), help=u"""Gets information about the specified compute GPU memory cluster \n[Command Reference](getComputeGpuMemoryCluster)""")
+@cli_util.option('--compute-gpu-memory-cluster-id', required=True, help=u"""The OCID of the compute GPU memory cluster.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeGpuMemoryCluster'})
+@cli_util.wrap_exceptions
+def get_compute_gpu_memory_cluster(ctx, from_json, compute_gpu_memory_cluster_id):
+
+    if isinstance(compute_gpu_memory_cluster_id, six.string_types) and len(compute_gpu_memory_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-gpu-memory-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.get_compute_gpu_memory_cluster(
+        compute_gpu_memory_cluster_id=compute_gpu_memory_cluster_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@compute_gpu_memory_fabric_group.command(name=cli_util.override('compute.get_compute_gpu_memory_fabric.command_name', 'get'), help=u"""Gets information about the specified compute GPU memory fabric \n[Command Reference](getComputeGpuMemoryFabric)""")
+@cli_util.option('--compute-gpu-memory-fabric-id', required=True, help=u"""The OCID of the compute GPU memory fabric.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeGpuMemoryFabric'})
+@cli_util.wrap_exceptions
+def get_compute_gpu_memory_fabric(ctx, from_json, compute_gpu_memory_fabric_id):
+
+    if isinstance(compute_gpu_memory_fabric_id, six.string_types) and len(compute_gpu_memory_fabric_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-gpu-memory-fabric-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.get_compute_gpu_memory_fabric(
+        compute_gpu_memory_fabric_id=compute_gpu_memory_fabric_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -8164,6 +8434,224 @@ def list_compute_global_image_capability_schemas(ctx, from_json, all_pages, page
     cli_util.render_response(result, ctx)
 
 
+@compute_gpu_memory_cluster_instance_summary_group.command(name=cli_util.override('compute.list_compute_gpu_memory_cluster_instances.command_name', 'list-compute-gpu-memory-cluster-instances'), help=u"""List all of the GPU memory cluster instances. \n[Command Reference](listComputeGpuMemoryClusterInstances)""")
+@cli_util.option('--compute-gpu-memory-cluster-id', required=True, help=u"""The OCID of the compute GPU memory cluster.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeGpuMemoryClusterInstanceCollection'})
+@cli_util.wrap_exceptions
+def list_compute_gpu_memory_cluster_instances(ctx, from_json, all_pages, page_size, compute_gpu_memory_cluster_id, page, sort_by, sort_order, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(compute_gpu_memory_cluster_id, six.string_types) and len(compute_gpu_memory_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-gpu-memory-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compute_gpu_memory_cluster_instances,
+            compute_gpu_memory_cluster_id=compute_gpu_memory_cluster_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compute_gpu_memory_cluster_instances,
+            limit,
+            page_size,
+            compute_gpu_memory_cluster_id=compute_gpu_memory_cluster_id,
+            **kwargs
+        )
+    else:
+        result = client.list_compute_gpu_memory_cluster_instances(
+            compute_gpu_memory_cluster_id=compute_gpu_memory_cluster_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@compute_gpu_memory_cluster_collection_group.command(name=cli_util.override('compute.list_compute_gpu_memory_clusters.command_name', 'list-compute-gpu-memory-clusters'), help=u"""List all of the compute GPU memory clusters. \n[Command Reference](listComputeGpuMemoryClusters)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compute-gpu-memory-cluster-id', help=u"""A filter to return only the listings that matches the given GPU memory cluster id.""")
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the compute cluster. A [compute cluster] is a remote direct memory access (RDMA) network group.""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeGpuMemoryClusterCollection'})
+@cli_util.wrap_exceptions
+def list_compute_gpu_memory_clusters(ctx, from_json, all_pages, page_size, compartment_id, compute_gpu_memory_cluster_id, availability_domain, display_name, compute_cluster_id, page, sort_by, sort_order, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    kwargs = {}
+    if compute_gpu_memory_cluster_id is not None:
+        kwargs['compute_gpu_memory_cluster_id'] = compute_gpu_memory_cluster_id
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if compute_cluster_id is not None:
+        kwargs['compute_cluster_id'] = compute_cluster_id
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compute_gpu_memory_clusters,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compute_gpu_memory_clusters,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_compute_gpu_memory_clusters(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@compute_gpu_memory_fabric_group.command(name=cli_util.override('compute.list_compute_gpu_memory_fabrics.command_name', 'list'), help=u"""Lists the compute GPU memory fabrics that match the specified criteria and compartmentId. \n[Command Reference](listComputeGpuMemoryFabrics)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--compute-gpu-memory-fabric-id', help=u"""A filter to return only the listings that matches the given GPU memory fabric id.""")
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--compute-hpc-island-id', help=u"""The [OCID] of the compute HPC island.""")
+@cli_util.option('--compute-network-block-id', help=u"""The [OCID] of the compute network block.""")
+@cli_util.option('--compute-gpu-memory-fabric-lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "OCCUPIED", "PROVISIONING", "DEGRADED", "UNAVAILABLE"]), help=u"""A filter to return ComputeGpuMemoryFabricSummary resources that match the given lifecycle state.""")
+@cli_util.option('--compute-gpu-memory-fabric-health', type=custom_types.CliCaseInsensitiveChoice(["HEALTHY", "UNHEALTHY"]), help=u"""A filter to return ComputeGpuMemoryFabricSummary resources that match the given fabric health.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeGpuMemoryFabricCollection'})
+@cli_util.wrap_exceptions
+def list_compute_gpu_memory_fabrics(ctx, from_json, all_pages, page_size, compartment_id, compute_gpu_memory_fabric_id, availability_domain, display_name, compute_hpc_island_id, compute_network_block_id, compute_gpu_memory_fabric_lifecycle_state, compute_gpu_memory_fabric_health, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    kwargs = {}
+    if compute_gpu_memory_fabric_id is not None:
+        kwargs['compute_gpu_memory_fabric_id'] = compute_gpu_memory_fabric_id
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if compute_hpc_island_id is not None:
+        kwargs['compute_hpc_island_id'] = compute_hpc_island_id
+    if compute_network_block_id is not None:
+        kwargs['compute_network_block_id'] = compute_network_block_id
+    if compute_gpu_memory_fabric_lifecycle_state is not None:
+        kwargs['compute_gpu_memory_fabric_lifecycle_state'] = compute_gpu_memory_fabric_lifecycle_state
+    if compute_gpu_memory_fabric_health is not None:
+        kwargs['compute_gpu_memory_fabric_health'] = compute_gpu_memory_fabric_health
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compute_gpu_memory_fabrics,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compute_gpu_memory_fabrics,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_compute_gpu_memory_fabrics(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @compute_image_capability_schema_group.command(name=cli_util.override('compute.list_compute_image_capability_schemas.command_name', 'list'), help=u"""Lists Compute Image Capability Schema in the specified compartment. You can also query by a specific imageId. \n[Command Reference](listComputeImageCapabilitySchemas)""")
 @cli_util.option('--compartment-id', help=u"""A filter to return only resources that match the given compartment OCID exactly.""")
 @cli_util.option('--image-id', help=u"""The [OCID] of an image.""")
@@ -9604,6 +10092,166 @@ def update_compute_cluster(ctx, from_json, force, wait_for_state, max_wait_secon
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_compute_cluster(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compute_gpu_memory_cluster_group.command(name=cli_util.override('compute.update_compute_gpu_memory_cluster.command_name', 'update'), help=u"""Updates a compute gpu memory cluster resource. \n[Command Reference](updateComputeGpuMemoryCluster)""")
+@cli_util.option('--compute-gpu-memory-cluster-id', required=True, help=u"""The OCID of the compute GPU memory cluster.""")
+@cli_util.option('--instance-configuration-id', help=u"""Instance Configuration to be used for this GPU Memory Cluster""")
+@cli_util.option('--size', type=click.INT, help=u"""The number of instances currently running in the GpuMemoryCluster""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'ComputeGpuMemoryCluster'})
+@cli_util.wrap_exceptions
+def update_compute_gpu_memory_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_gpu_memory_cluster_id, instance_configuration_id, size, defined_tags, freeform_tags, display_name, if_match):
+
+    if isinstance(compute_gpu_memory_cluster_id, six.string_types) and len(compute_gpu_memory_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-gpu-memory-cluster-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if instance_configuration_id is not None:
+        _details['instanceConfigurationId'] = instance_configuration_id
+
+    if size is not None:
+        _details['size'] = size
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.update_compute_gpu_memory_cluster(
+        compute_gpu_memory_cluster_id=compute_gpu_memory_cluster_id,
+        update_compute_gpu_memory_cluster_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_compute_gpu_memory_cluster') and callable(getattr(client, 'get_compute_gpu_memory_cluster')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_compute_gpu_memory_cluster(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compute_gpu_memory_fabric_group.command(name=cli_util.override('compute.update_compute_gpu_memory_fabric.command_name', 'update'), help=u"""Customer can update displayName and tags for compute GPU memory fabric record \n[Command Reference](updateComputeGpuMemoryFabric)""")
+@cli_util.option('--compute-gpu-memory-fabric-id', required=True, help=u"""The OCID of the compute GPU memory fabric.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "OCCUPIED", "PROVISIONING", "DEGRADED", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'ComputeGpuMemoryFabric'})
+@cli_util.wrap_exceptions
+def update_compute_gpu_memory_fabric(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_gpu_memory_fabric_id, defined_tags, freeform_tags, display_name, if_match):
+
+    if isinstance(compute_gpu_memory_fabric_id, six.string_types) and len(compute_gpu_memory_fabric_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-gpu-memory-fabric-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.update_compute_gpu_memory_fabric(
+        compute_gpu_memory_fabric_id=compute_gpu_memory_fabric_id,
+        update_compute_gpu_memory_fabric_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_compute_gpu_memory_fabric') and callable(getattr(client, 'get_compute_gpu_memory_fabric')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_compute_gpu_memory_fabric(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

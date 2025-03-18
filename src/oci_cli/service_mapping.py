@@ -458,6 +458,11 @@ service_mapping = {
         "Media Services",
         "Others"
     ],
+    "mngdmac": [
+        "mngdmac",
+        "OCI Managed Services for Mac",
+        "Others"
+    ],
     "monitoring": [
         "monitoring",
         "Monitoring",
