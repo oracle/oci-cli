@@ -30,6 +30,12 @@ def generative_ai_agent_runtime_root_group():
     pass
 
 
+@click.command(cli_util.override('generative_ai_agent_runtime.knowledge_base_metadata_summary_group.command_name', 'knowledge-base-metadata-summary'), cls=CommandGroupWithAlias, help="""Represents metadata about a field including its name, type, supported operations, and possible values.""")
+@cli_util.help_option_group
+def knowledge_base_metadata_summary_group():
+    pass
+
+
 @click.command(cli_util.override('generative_ai_agent_runtime.session_group.command_name', 'session'), cls=CommandGroupWithAlias, help="""A session represents an interactive conversation initiated by a user through an API to engage with an agent. It involves a series of exchanges where the user sends queries or prompts, and the agent responds with relevant information, actions, or assistance based on the user's input. The session persists for the duration of the interaction, maintaining context and continuity to provide coherent and meaningful responses throughout the conversation.""")
 @cli_util.help_option_group
 def session_group():
@@ -42,22 +48,27 @@ def agent_endpoint_group():
     pass
 
 
+generative_ai_agent_runtime_root_group.add_command(knowledge_base_metadata_summary_group)
 generative_ai_agent_runtime_root_group.add_command(session_group)
 generative_ai_agent_runtime_root_group.add_command(agent_endpoint_group)
 
 
 @agent_endpoint_group.command(name=cli_util.override('generative_ai_agent_runtime.chat.command_name', 'chat'), help=u"""Chat on endpoint with provided messages. \n[Command Reference](chat)""")
 @cli_util.option('--agent-endpoint-id', required=True, help=u"""A unique ID for the endpoint.""")
-@cli_util.option('--user-message', required=True, help=u"""The input user message content for the chat.""")
+@cli_util.option('--user-message', help=u"""The input user message content for the chat.""")
 @cli_util.option('--should-stream', type=click.BOOL, help=u"""Whether to stream the response.""")
 @cli_util.option('--session-id', help=u"""Optional sessionId. If not provided, will chat without any prior context.""")
+@cli_util.option('--tool-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map where each key is a toolId and the value contains tool type and additional dynamic parameters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--performed-actions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of actions that have been performed based on prior required actions.
+
+This option is a JSON list with items of type PerformedAction.  For documentation on PerformedAction please see our API reference: https://docs.cloud.oracle.com/api/#/en/generativeaiagentruntime/20240531/datatypes/PerformedAction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'tool-parameters': {'module': 'generative_ai_agent_runtime', 'class': 'dict(str, string)'}, 'performed-actions': {'module': 'generative_ai_agent_runtime', 'class': 'list[PerformedAction]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'generative_ai_agent_runtime', 'class': 'ChatResult'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tool-parameters': {'module': 'generative_ai_agent_runtime', 'class': 'dict(str, string)'}, 'performed-actions': {'module': 'generative_ai_agent_runtime', 'class': 'list[PerformedAction]'}}, output_type={'module': 'generative_ai_agent_runtime', 'class': 'ChatResult'})
 @cli_util.wrap_exceptions
-def chat(ctx, from_json, agent_endpoint_id, user_message, should_stream, session_id, if_match):
+def chat(ctx, from_json, agent_endpoint_id, user_message, should_stream, session_id, tool_parameters, performed_actions, if_match):
 
     if isinstance(agent_endpoint_id, six.string_types) and len(agent_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-endpoint-id cannot be whitespace or empty string')
@@ -68,13 +79,21 @@ def chat(ctx, from_json, agent_endpoint_id, user_message, should_stream, session
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['userMessage'] = user_message
+
+    if user_message is not None:
+        _details['userMessage'] = user_message
 
     if should_stream is not None:
         _details['shouldStream'] = should_stream
 
     if session_id is not None:
         _details['sessionId'] = session_id
+
+    if tool_parameters is not None:
+        _details['toolParameters'] = cli_util.parse_json_parameter("tool_parameters", tool_parameters)
+
+    if performed_actions is not None:
+        _details['performedActions'] = cli_util.parse_json_parameter("performed_actions", performed_actions)
 
     client = cli_util.build_client('generative_ai_agent_runtime', 'generative_ai_agent_runtime', ctx)
     result = client.chat(
@@ -174,6 +193,41 @@ def get_session(ctx, from_json, agent_endpoint_id, session_id):
     result = client.get_session(
         agent_endpoint_id=agent_endpoint_id,
         session_id=session_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@knowledge_base_metadata_summary_group.command(name=cli_util.override('generative_ai_agent_runtime.retrieve_metadata.command_name', 'retrieve-metadata'), help=u"""Returns metadata of provided knowledgeBase. Return available metadata with information of field names, their types, supported operations, and possible values. \n[Command Reference](retrieveMetadata)""")
+@cli_util.option('--knowledge-base-id', required=True, help=u"""A unique ID for the Knowledge Base.""")
+@cli_util.option('--filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of metadata filters to narrow down the retrieved metadata
+
+This option is a JSON list with items of type MetadataFilter.  For documentation on MetadataFilter please see our API reference: https://docs.cloud.oracle.com/api/#/en/generativeaiagentruntime/20240531/datatypes/MetadataFilter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'filters': {'module': 'generative_ai_agent_runtime', 'class': 'list[MetadataFilter]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'filters': {'module': 'generative_ai_agent_runtime', 'class': 'list[MetadataFilter]'}}, output_type={'module': 'generative_ai_agent_runtime', 'class': 'list[KnowledgeBaseMetadataSummary]'})
+@cli_util.wrap_exceptions
+def retrieve_metadata(ctx, from_json, knowledge_base_id, filters, if_match):
+
+    if isinstance(knowledge_base_id, six.string_types) and len(knowledge_base_id.strip()) == 0:
+        raise click.UsageError('Parameter --knowledge-base-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if filters is not None:
+        _details['filters'] = cli_util.parse_json_parameter("filters", filters)
+
+    client = cli_util.build_client('generative_ai_agent_runtime', 'generative_ai_agent_runtime', ctx)
+    result = client.retrieve_metadata(
+        knowledge_base_id=knowledge_base_id,
+        retrieve_metadata_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

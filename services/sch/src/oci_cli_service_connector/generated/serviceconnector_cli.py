@@ -523,8 +523,8 @@ After you send your request, the new connector's state is temporarily CREATING. 
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--target', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--source-plugin-name', required=True, help=u"""The name of the connector plugin. This name indicates the service to be called by the connector plugin. For example, `QueueSource` indicates the Queue service. To find names of connector plugins, list the plugin using (ListConnectorPlugin)[#/en/serviceconnectors/latest/ConnectorPluginSummary/ListConnectorPlugins].""")
-@cli_util.option('--source-config-map', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The configuration map for the connector plugin. This map includes parameters specific to the connector plugin type. For example, for `QueueSource`, the map lists the OCID of the selected queue. To find the parameters for a connector plugin, get the plugin using (GetConnectorPlugin)[#/en/serviceconnectors/latest/ConnectorPlugin/GetConnectorPlugin] and review its schema value.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-plugin-name', required=True, help=u"""The name of the connector plugin. This name indicates the service to be called by the connector plugin. For example, `QueueSource` indicates the Queue service. To find names of connector plugins, list the plugin using [ListConnectorPlugin].""")
+@cli_util.option('--source-config-map', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The configuration map for the connector plugin. This map includes parameters specific to the connector plugin type. For example, for `QueueSource`, the map lists the OCID of the selected queue. To find the parameters for a connector plugin, get the plugin using [GetConnectorPlugin] and review its schema value.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
 @cli_util.option('--tasks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of tasks.
 
@@ -616,9 +616,7 @@ After you send your request, the new connector's state is temporarily CREATING. 
 This option is a JSON list with items of type TaskDetails.  For documentation on TaskDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/serviceconnector/20200909/datatypes/TaskDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--target-enable-formatted-messaging', type=click.BOOL, help=u"""Whether to apply a simplified, user-friendly format to the message. Applies only when friendly formatting is supported by the connector source and the subscription protocol.
-
-Example: `true`""")
+@cli_util.option('--target-enable-formatted-messaging', type=click.BOOL, help=u"""Whether to apply a simplified, user-friendly format to the message. Applies only when friendly formatting is supported by the connector source and the subscription protocol. Example: `true`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -800,12 +798,8 @@ After you send your request, the new connector's state is temporarily CREATING. 
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-compartment-id', required=True, help=u"""The [OCID] of the compartment containing the metric.""")
-@cli_util.option('--target-metric-namespace', required=True, help=u"""The namespace of the metric.
-
-Example: `oci_computeagent`""")
-@cli_util.option('--target-metric', required=True, help=u"""The name of the metric.
-
-Example: `CpuUtilization`""")
+@cli_util.option('--target-metric-namespace', required=True, help=u"""The namespace of the metric. Example: `oci_computeagent`""")
+@cli_util.option('--target-metric', required=True, help=u"""The name of the metric. Example: `CpuUtilization`""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
 @cli_util.option('--tasks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of tasks.
 
@@ -904,8 +898,8 @@ After you send your request, the new connector's state is temporarily CREATING. 
 This option is a JSON list with items of type TaskDetails.  For documentation on TaskDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/serviceconnector/20200909/datatypes/TaskDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--target-batch-size-in-kbs', type=click.INT, help=u"""The batch rollover size in kilobytes.""")
-@cli_util.option('--target-batch-size-in-num', type=click.INT, help=u"""The batch rollover size in number of messages.""")
+@cli_util.option('--target-batch-size-in-kbs', type=click.INT, help=u"""The batch rollover size in kilobytes. Only one size option can be specified: `batchSizeInKbs` or `batchSizeInNum`.""")
+@cli_util.option('--target-batch-size-in-num', type=click.INT, help=u"""The batch rollover size in number of messages. Only one size option can be specified: `batchSizeInKbs` or `batchSizeInNum`.""")
 @cli_util.option('--target-batch-time-in-sec', type=click.INT, help=u"""The batch rollover time in seconds.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1925,8 +1919,8 @@ def update_service_connector_streaming_source_details(ctx, from_json, force, wai
 
 After you send your request, the connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
 @cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the connector.""")
-@cli_util.option('--source-plugin-name', required=True, help=u"""The name of the connector plugin. This name indicates the service to be called by the connector plugin. For example, `QueueSource` indicates the Queue service. To find names of connector plugins, list the plugin using (ListConnectorPlugin)[#/en/serviceconnectors/latest/ConnectorPluginSummary/ListConnectorPlugins].""")
-@cli_util.option('--source-config-map', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The configuration map for the connector plugin. This map includes parameters specific to the connector plugin type. For example, for `QueueSource`, the map lists the OCID of the selected queue. To find the parameters for a connector plugin, get the plugin using (GetConnectorPlugin)[#/en/serviceconnectors/latest/ConnectorPlugin/GetConnectorPlugin] and review its schema value.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-plugin-name', required=True, help=u"""The name of the connector plugin. This name indicates the service to be called by the connector plugin. For example, `QueueSource` indicates the Queue service. To find names of connector plugins, list the plugin using [ListConnectorPlugin].""")
+@cli_util.option('--source-config-map', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The configuration map for the connector plugin. This map includes parameters specific to the connector plugin type. For example, for `QueueSource`, the map lists the OCID of the selected queue. To find the parameters for a connector plugin, get the plugin using [GetConnectorPlugin] and review its schema value.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
 @cli_util.option('--tasks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of the tasks.
@@ -2034,9 +2028,7 @@ This option is a JSON list with items of type TaskDetails.  For documentation on
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--target-enable-formatted-messaging', type=click.BOOL, help=u"""Whether to apply a simplified, user-friendly format to the message. Applies only when friendly formatting is supported by the connector source and the subscription protocol.
-
-Example: `true`""")
+@cli_util.option('--target-enable-formatted-messaging', type=click.BOOL, help=u"""Whether to apply a simplified, user-friendly format to the message. Applies only when friendly formatting is supported by the connector source and the subscription protocol. Example: `true`""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2241,12 +2233,8 @@ def update_service_connector_object_storage_target_details(ctx, from_json, force
 After you send your request, the connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
 @cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the connector.""")
 @cli_util.option('--target-compartment-id', required=True, help=u"""The [OCID] of the compartment containing the metric.""")
-@cli_util.option('--target-metric-namespace', required=True, help=u"""The namespace of the metric.
-
-Example: `oci_computeagent`""")
-@cli_util.option('--target-metric', required=True, help=u"""The name of the metric.
-
-Example: `CpuUtilization`""")
+@cli_util.option('--target-metric-namespace', required=True, help=u"""The namespace of the metric. Example: `oci_computeagent`""")
+@cli_util.option('--target-metric', required=True, help=u"""The name of the metric. Example: `CpuUtilization`""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
 @cli_util.option('--source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2361,8 +2349,8 @@ This option is a JSON list with items of type TaskDetails.  For documentation on
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--target-batch-size-in-kbs', type=click.INT, help=u"""The batch rollover size in kilobytes.""")
-@cli_util.option('--target-batch-size-in-num', type=click.INT, help=u"""The batch rollover size in number of messages.""")
+@cli_util.option('--target-batch-size-in-kbs', type=click.INT, help=u"""The batch rollover size in kilobytes. Only one size option can be specified: `batchSizeInKbs` or `batchSizeInNum`.""")
+@cli_util.option('--target-batch-size-in-num', type=click.INT, help=u"""The batch rollover size in number of messages. Only one size option can be specified: `batchSizeInKbs` or `batchSizeInNum`.""")
 @cli_util.option('--target-batch-time-in-sec', type=click.INT, help=u"""The batch rollover time in seconds.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")

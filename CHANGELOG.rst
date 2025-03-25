@@ -6,6 +6,86 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.54.0 - 2025-03-25
+--------------------
+Added
+~~~~~
+* Compute Service
+
+  * Support for Host API feature in Compute service
+
+    * ``oci compute compute-host change-compartment``
+    * ``oci compute compute-host get``
+    * ``oci compute compute-host list``
+    * ``oci compute compute-host update``
+
+* Stack Monitoring Service
+
+  * Support for a new Stack Monitoring configuration, enabling the automatic activation of the Management Agent on Compute instance launch
+
+    * ``oci stack-monitoring config create-compute-auto-activate-plugin-config``
+    * ``oci stack-monitoring config update-compute-auto-activate-plugin-config``
+
+  * Support for importing telegraf/collectd resources
+
+    * ``oci stack-monitoring resource-task update-agent-receiver --handler-type, --is-enable, --agent-id, --compartment-id, --receiver-properties``
+
+  * Support for updating the handler configuration for telegraf/collectd resources
+
+    * ``oci stack-monitoring resource-task update-resource-type-configs --handler-type, --compartment-id, --resource-types-config``
+
+  * Support search monitored resource types based on source type and resource category
+
+    * ``oci stack-monitoring resource-type list --resource-category, --source-type``
+
+  * Support for adding Tags in Stack Monitoring Maintenance Window resource
+
+    * ``oci stack-monitoring maintenance-window create --defined-tags, --freeform-tags``
+    * ``oci stack-monitoring maintenance-window update --defined-tags, --freeform-tags``
+
+* Generative AI Agent service
+
+  * Support for tools
+
+    * ``oci generative-ai-agent tool create``
+    * ``oci generative-ai-agent tool create-tool-function-calling-tool-config``
+    * ``oci generative-ai-agent tool create-tool-http-endpoint-tool-config``
+    * ``oci generative-ai-agent tool create-tool-rag-tool-config``
+    * ``oci generative-ai-agent tool create-tool-sql-tool-config``
+    * ``oci generative-ai-agent tool delete``
+    * ``oci generative-ai-agent tool get``
+    * ``oci generative-ai-agent tool list``
+    * ``oci generative-ai-agent tool update``
+    * ``oci generative-ai-agent tool update-tool-function-calling-tool-config``
+    * ``oci generative-ai-agent tool update-tool-http-endpoint-tool-config``
+    * ``oci generative-ai-agent tool update-tool-rag-tool-config``
+
+  * Support for metadata in data-source
+
+    * ``oci generative-ai-agent data-source update --metadata``
+    * ``oci generative-ai-agent data-source update-object-storage-ds  --metadata``
+
+* Generative AI Agent Runtime service
+
+  * Support for knowledge-base-metadata-summary
+
+    * ``oci generative-ai-agent-runtime knowledge-base-metadata-summary retrieve-metadata``
+
+Changed
+~~~~~~~
+* Delegate Access Control service
+
+  * [BREAKING] Command to create worklog request has been renamed
+
+    * ``oci delegate-access-control work-request work-request-log-entry list-work-request-logs`` renamed to ``oci delegate-access-control work-request work-request-log list``
+
+
+* Oracle Cloud VMware Solution service
+
+  * [BREAKING] Parameter list-error has been renamed to list
+
+    * ``oci ocvs work-request-error list-errors`` renamed to ``oci ocvs work-request-error list``
+
 3.53.0 - 2025-03-18
 --------------------
 Added

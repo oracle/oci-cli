@@ -715,6 +715,97 @@ def create_config_create_license_auto_assign_config_details(ctx, from_json, wait
     cli_util.render_response(result, ctx)
 
 
+@config_group.command(name=cli_util.override('stack_monitoring.create_config_create_onboard_config_details.command_name', 'create-config-create-onboard-config-details'), help=u"""Creates a configuration item, for example to define whether resources of a specific type should be discovered automatically.
+
+For example, when a new Management Agent gets registered in a certain compartment, this Management Agent can potentially get promoted to a HOST resource. The configuration item will determine if HOST resources in the selected compartment will be discovered automatically. \n[Command Reference](createConfig)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment in which the configuration is created.""")
+@cli_util.option('--is-manually-onboarded', required=True, type=click.BOOL, help=u"""True if customer decides marks configuration as manually configured.""")
+@cli_util.option('--display-name', help=u"""The display name of the configuration.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--version-parameterconflict', help=u"""Assigned version to given onboard configuration.""")
+@cli_util.option('--policy-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of policy names assigned for onboarding""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dynamic-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of dynamic groups dedicated for Stack Monitoring.
+
+This option is a JSON list with items of type DynamicGroupDetails.  For documentation on DynamicGroupDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/DynamicGroupDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--user-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of user groups dedicated for Stack Monitoring.
+
+This option is a JSON list with items of type GroupDetails.  For documentation on GroupDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/GroupDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-configurations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'policy-names': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'dynamic-groups': {'module': 'stack_monitoring', 'class': 'list[DynamicGroupDetails]'}, 'user-groups': {'module': 'stack_monitoring', 'class': 'list[GroupDetails]'}, 'additional-configurations': {'module': 'stack_monitoring', 'class': 'AdditionalConfigurationDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'policy-names': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'dynamic-groups': {'module': 'stack_monitoring', 'class': 'list[DynamicGroupDetails]'}, 'user-groups': {'module': 'stack_monitoring', 'class': 'list[GroupDetails]'}, 'additional-configurations': {'module': 'stack_monitoring', 'class': 'AdditionalConfigurationDetails'}}, output_type={'module': 'stack_monitoring', 'class': 'Config'})
+@cli_util.wrap_exceptions
+def create_config_create_onboard_config_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, is_manually_onboarded, display_name, freeform_tags, defined_tags, version_parameterconflict, policy_names, dynamic_groups, user_groups, additional_configurations):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['isManuallyOnboarded'] = is_manually_onboarded
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if version_parameterconflict is not None:
+        _details['version'] = version_parameterconflict
+
+    if policy_names is not None:
+        _details['policyNames'] = cli_util.parse_json_parameter("policy_names", policy_names)
+
+    if dynamic_groups is not None:
+        _details['dynamicGroups'] = cli_util.parse_json_parameter("dynamic_groups", dynamic_groups)
+
+    if user_groups is not None:
+        _details['userGroups'] = cli_util.parse_json_parameter("user_groups", user_groups)
+
+    if additional_configurations is not None:
+        _details['additionalConfigurations'] = cli_util.parse_json_parameter("additional_configurations", additional_configurations)
+
+    _details['configType'] = 'ONBOARD'
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.create_config(
+        create_config_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_config') and callable(getattr(client, 'get_config')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_config(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @config_group.command(name=cli_util.override('stack_monitoring.create_config_create_auto_promote_config_details.command_name', 'create-config-create-auto-promote-config-details'), help=u"""Creates a configuration item, for example to define whether resources of a specific type should be discovered automatically.
 
 For example, when a new Management Agent gets registered in a certain compartment, this Management Agent can potentially get promoted to a HOST resource. The configuration item will determine if HOST resources in the selected compartment will be discovered automatically. \n[Command Reference](createConfig)""")
@@ -752,6 +843,73 @@ def create_config_create_auto_promote_config_details(ctx, from_json, wait_for_st
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['configType'] = 'AUTO_PROMOTE'
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.create_config(
+        create_config_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_config') and callable(getattr(client, 'get_config')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_config(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@config_group.command(name=cli_util.override('stack_monitoring.create_config_create_compute_auto_activate_plugin_config_details.command_name', 'create-config-create-compute-auto-activate-plugin-config-details'), help=u"""Creates a configuration item, for example to define whether resources of a specific type should be discovered automatically.
+
+For example, when a new Management Agent gets registered in a certain compartment, this Management Agent can potentially get promoted to a HOST resource. The configuration item will determine if HOST resources in the selected compartment will be discovered automatically. \n[Command Reference](createConfig)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment in which the configuration is created.""")
+@cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""True if automatic activation of the Management Agent plugin is enabled, false if it is not enabled.""")
+@cli_util.option('--display-name', help=u"""The display name of the configuration.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'Config'})
+@cli_util.wrap_exceptions
+def create_config_create_compute_auto_activate_plugin_config_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, is_enabled, display_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['isEnabled'] = is_enabled
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['configType'] = 'COMPUTE_AUTO_ACTIVATE_PLUGIN'
 
     client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
     result = client.create_config(
@@ -928,15 +1086,17 @@ def create_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.option('--resources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of resource Ids which are part of the Maintenance Window""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schedule', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Maintenance Window description.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'schedule': {'module': 'stack_monitoring', 'class': 'MaintenanceWindowSchedule'}})
+@json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'schedule': {'module': 'stack_monitoring', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'schedule': {'module': 'stack_monitoring', 'class': 'MaintenanceWindowSchedule'}}, output_type={'module': 'stack_monitoring', 'class': 'MaintenanceWindow'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'schedule': {'module': 'stack_monitoring', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'MaintenanceWindow'})
 @cli_util.wrap_exceptions
-def create_maintenance_window(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, resources, schedule, description):
+def create_maintenance_window(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, resources, schedule, description, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -949,6 +1109,12 @@ def create_maintenance_window(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
     result = client.create_maintenance_window(
@@ -991,18 +1157,20 @@ def create_maintenance_window(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--resources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of resource Ids which are part of the Maintenance Window""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schedule-maintenance-window-recurrences', required=True, help=u"""A RFC5545 formatted recurrence string which represents the Maintenance Window Recurrence. Please refer this for details:https://datatracker.ietf.org/doc/html/rfc5545#section-3.3.10 FREQ: Frequency of the Maintenance Window. The supported values are: DAILY and WEEKLY. BYDAY: Comma separated days for Weekly Maintenance Window. BYHOUR: Specifies the start hour of each recurrence after `timeMaintenanceWindowStart` value. BYMINUTE: Specifies the start minute of each reccurrence after `timeMaintenanceWindowStart` value. The default value is 00 BYSECOND: Specifies the start second of each reccurrence after `timeMaintenanceWindowStart` value. The default value is 00 Other Rules are not supported.""")
 @cli_util.option('--description', help=u"""Maintenance Window description.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schedule-time-maintenance-window-start', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--schedule-time-maintenance-window-end', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--schedule-maintenance-window-duration', help=u"""Duration time of each recurrence of each Maintenance Window. It must be specified as a string in ISO 8601 extended format.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}}, output_type={'module': 'stack_monitoring', 'class': 'MaintenanceWindow'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'MaintenanceWindow'})
 @cli_util.wrap_exceptions
-def create_maintenance_window_recurrent_maintenance_window_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, resources, schedule_maintenance_window_recurrences, description, schedule_time_maintenance_window_start, schedule_time_maintenance_window_end, schedule_maintenance_window_duration):
+def create_maintenance_window_recurrent_maintenance_window_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, resources, schedule_maintenance_window_recurrences, description, freeform_tags, defined_tags, schedule_time_maintenance_window_start, schedule_time_maintenance_window_end, schedule_maintenance_window_duration):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1016,6 +1184,12 @@ def create_maintenance_window_recurrent_maintenance_window_schedule(ctx, from_js
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if schedule_time_maintenance_window_start is not None:
         _details['schedule']['timeMaintenanceWindowStart'] = schedule_time_maintenance_window_start
@@ -1068,17 +1242,19 @@ def create_maintenance_window_recurrent_maintenance_window_schedule(ctx, from_js
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--resources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of resource Ids which are part of the Maintenance Window""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Maintenance Window description.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schedule-time-maintenance-window-start', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--schedule-time-maintenance-window-end', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}}, output_type={'module': 'stack_monitoring', 'class': 'MaintenanceWindow'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'MaintenanceWindow'})
 @cli_util.wrap_exceptions
-def create_maintenance_window_one_time_maintenance_window_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, resources, description, schedule_time_maintenance_window_start, schedule_time_maintenance_window_end):
+def create_maintenance_window_one_time_maintenance_window_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, resources, description, freeform_tags, defined_tags, schedule_time_maintenance_window_start, schedule_time_maintenance_window_end):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1091,6 +1267,12 @@ def create_maintenance_window_one_time_maintenance_window_schedule(ctx, from_jso
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if schedule_time_maintenance_window_start is not None:
         _details['schedule']['timeMaintenanceWindowStart'] = schedule_time_maintenance_window_start
@@ -2128,7 +2310,7 @@ def create_monitored_resource_task(ctx, from_json, wait_for_state, max_wait_seco
 
 @monitored_resource_task_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_task_import_oci_telemetry_resources_task_details.command_name', 'create-monitored-resource-task-import-oci-telemetry-resources-task-details'), help=u"""Create a new stack monitoring resource task. \n[Command Reference](createMonitoredResourceTask)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment identifier.""")
-@cli_util.option('--task-details-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["OCI_TELEMETRY_NATIVE", "OCI_TELEMETRY_PROMETHEUS"]), help=u"""Source from where the metrics pushed to telemetry. Possible values:   * OCI_TELEMETRY_NATIVE      - The metrics are pushed to telemetry from OCI Native Services.   * OCI_TELEMETRY_PROMETHEUS  - The metrics are pushed to telemetry from Prometheus.""")
+@cli_util.option('--task-details-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["OCI_TELEMETRY_NATIVE", "OCI_TELEMETRY_PROMETHEUS", "OCI_TELEMETRY_TELEGRAF", "OCI_TELEMETRY_COLLECTD"]), help=u"""Source from where the metrics pushed to telemetry. Possible values:   * OCI_TELEMETRY_NATIVE      - The metrics are pushed to telemetry from OCI Native Services.   * OCI_TELEMETRY_PROMETHEUS  - The metrics are pushed to telemetry from Prometheus.   * OCI_TELEMETRY_TELEGRAF    - The metrics are pushed to telemetry from Telegraf receiver.   * OCI_TELEMETRY_COLLECTD    - The metrics are pushed to telemetry from CollectD receiver.""")
 @cli_util.option('--task-details-namespace', required=True, help=u"""Name space to be used for OCI Native service resources discovery.""")
 @cli_util.option('--name', help=u"""Name of the task. If not provided by default the following names will be taken OCI tasks - namespace plus timestamp.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2143,7 +2325,7 @@ def create_monitored_resource_task(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.option('--task-details-resource-type-mapping', help=u"""The resource type property in the metric dimensions. Resources imported will be using this property value for resource type. If not specified, namespace will be used for resource type.""")
 @cli_util.option('--task-details-resource-name-filter', help=u"""The resource name filter. Resources matching with the resource name filter will be imported. Regular expressions will be accepted.""")
 @cli_util.option('--task-details-resource-type-filter', help=u"""The resource type filter. Resources matching with the resource type filter will be imported. Regular expressions will be accepted.""")
-@cli_util.option('--task-details-availability-proxy-metrics', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of metrics to be used to calculate the availability of the resource. Resource is considered to be up if at least one of the specified metrics is available for the resource during the specified interval using the property 'availabilityProxyMetricCollectionIntervalInSeconds'. If no metrics are specified, availability will not be calculated for the resource.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--task-details-availability-proxy-metrics', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of metrics to be used to calculate the availability of the resource. Resource is considered to be up if at least one of the specified metrics is available for the resource during the specified interval using the property 'availabilityProxyMetricCollectionInterval'. If no metrics are specified, availability will not be calculated for the resource.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--task-details-availability-proxy-metric-collection-interval', type=click.INT, help=u"""Metrics collection interval in seconds used when calculating the availability of the resource based on metrics specified using the property 'availabilityProxyMetrics'.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2246,14 +2428,164 @@ def create_monitored_resource_task_import_oci_telemetry_resources_task_details(c
     cli_util.render_response(result, ctx)
 
 
+@monitored_resource_task_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_task_update_agent_receiver_task_details.command_name', 'create-monitored-resource-task-update-agent-receiver-task-details'), help=u"""Create a new stack monitoring resource task. \n[Command Reference](createMonitoredResourceTask)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment identifier.""")
+@cli_util.option('--task-details-agent-id', required=True, help=u"""Management Agent Identifier [OCID].""")
+@cli_util.option('--task-details-handler-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["TELEGRAF", "COLLECTD"]), help=u"""Type of the handler.""")
+@cli_util.option('--task-details-is-enable', required=True, type=click.BOOL, help=u"""True to enable the receiver and false to disable the receiver on the agent.""")
+@cli_util.option('--name', help=u"""Name of the task. If not provided by default the following names will be taken OCI tasks - namespace plus timestamp.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--task-details-receiver-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'task-details-receiver-properties': {'module': 'stack_monitoring', 'class': 'AgentReceiverProperties'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'task-details-receiver-properties': {'module': 'stack_monitoring', 'class': 'AgentReceiverProperties'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceTask'})
+@cli_util.wrap_exceptions
+def create_monitored_resource_task_update_agent_receiver_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, task_details_agent_id, task_details_handler_type, task_details_is_enable, name, freeform_tags, defined_tags, task_details_receiver_properties):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['taskDetails']['agentId'] = task_details_agent_id
+    _details['taskDetails']['handlerType'] = task_details_handler_type
+    _details['taskDetails']['isEnable'] = task_details_is_enable
+
+    if name is not None:
+        _details['name'] = name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if task_details_receiver_properties is not None:
+        _details['taskDetails']['receiverProperties'] = cli_util.parse_json_parameter("task_details_receiver_properties", task_details_receiver_properties)
+
+    _details['taskDetails']['type'] = 'UPDATE_AGENT_RECEIVER'
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.create_monitored_resource_task(
+        create_monitored_resource_task_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@monitored_resource_task_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_task_update_resource_type_config_task_details.command_name', 'create-monitored-resource-task-update-resource-type-config-task-details'), help=u"""Create a new stack monitoring resource task. \n[Command Reference](createMonitoredResourceTask)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment identifier.""")
+@cli_util.option('--task-details-handler-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["TELEGRAF", "COLLECTD"]), help=u"""Type of the handler.""")
+@cli_util.option('--task-details-resource-types-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A collection of resource type configuration details. User can provide availability proxy metrics list for resource types along with the telegraf/collectd handler configuration for the resource types.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--name', help=u"""Name of the task. If not provided by default the following names will be taken OCI tasks - namespace plus timestamp.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'task-details-resource-types-configuration': {'module': 'stack_monitoring', 'class': 'list[ResourceTypeConfigDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'task-details-resource-types-configuration': {'module': 'stack_monitoring', 'class': 'list[ResourceTypeConfigDetails]'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceTask'})
+@cli_util.wrap_exceptions
+def create_monitored_resource_task_update_resource_type_config_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, task_details_handler_type, task_details_resource_types_configuration, name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['taskDetails']['handlerType'] = task_details_handler_type
+    _details['taskDetails']['resourceTypesConfiguration'] = cli_util.parse_json_parameter("task_details_resource_types_configuration", task_details_resource_types_configuration)
+
+    if name is not None:
+        _details['name'] = name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['taskDetails']['type'] = 'UPDATE_RESOURCE_TYPE_CONFIGS'
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.create_monitored_resource_task(
+        create_monitored_resource_task_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @monitored_resource_type_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_type.command_name', 'create'), help=u"""Creates a new monitored resource type. \n[Command Reference](createMonitoredResourceType)""")
 @cli_util.option('--name', required=True, help=u"""A unique monitored resource type name. The name must be unique across tenancy. Name can not be changed.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the tenancy containing the resource type.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--display-name', help=u"""Monitored resource type display name.""")
 @cli_util.option('--description', help=u"""A friendly description.""")
 @cli_util.option('--metric-namespace', help=u"""Metric namespace for resource type.""")
 @cli_util.option('--source-type', type=custom_types.CliCaseInsensitiveChoice(["SM_MGMT_AGENT_MONITORED", "SM_REPO_ONLY", "OCI_NATIVE", "PROMETHEUS", "TELEGRAF", "COLLECTD"]), help=u"""Source type to indicate if the resource is stack monitoring discovered, OCI native resource, etc.""")
-@cli_util.option('--resource-category', type=custom_types.CliCaseInsensitiveChoice(["APPLICATION", "DATABASE", "MIDDLEWARE", "UNKNOWN"]), help=u"""Resource Category to indicate the kind of resource type.""")
+@cli_util.option('--resource-category', type=custom_types.CliCaseInsensitiveChoice(["APPLICATION", "DATABASE", "MIDDLEWARE", "INFRASTRUCTURE", "UNKNOWN"]), help=u"""Resource Category to indicate the kind of resource type.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2331,12 +2663,12 @@ def create_monitored_resource_type(ctx, from_json, wait_for_state, max_wait_seco
 
 @monitored_resource_type_group.command(name=cli_util.override('stack_monitoring.create_monitored_resource_type_system_format_resource_type_metadata_details.command_name', 'create-monitored-resource-type-system-format-resource-type-metadata-details'), help=u"""Creates a new monitored resource type. \n[Command Reference](createMonitoredResourceType)""")
 @cli_util.option('--name', required=True, help=u"""A unique monitored resource type name. The name must be unique across tenancy. Name can not be changed.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the tenancy containing the resource type.""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID].""")
 @cli_util.option('--display-name', help=u"""Monitored resource type display name.""")
 @cli_util.option('--description', help=u"""A friendly description.""")
 @cli_util.option('--metric-namespace', help=u"""Metric namespace for resource type.""")
 @cli_util.option('--source-type', type=custom_types.CliCaseInsensitiveChoice(["SM_MGMT_AGENT_MONITORED", "SM_REPO_ONLY", "OCI_NATIVE", "PROMETHEUS", "TELEGRAF", "COLLECTD"]), help=u"""Source type to indicate if the resource is stack monitoring discovered, OCI native resource, etc.""")
-@cli_util.option('--resource-category', type=custom_types.CliCaseInsensitiveChoice(["APPLICATION", "DATABASE", "MIDDLEWARE", "UNKNOWN"]), help=u"""Resource Category to indicate the kind of resource type.""")
+@cli_util.option('--resource-category', type=custom_types.CliCaseInsensitiveChoice(["APPLICATION", "DATABASE", "MIDDLEWARE", "INFRASTRUCTURE", "UNKNOWN"]), help=u"""Resource Category to indicate the kind of resource type.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata-required-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of required properties for resource type.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3935,7 +4267,7 @@ def list_baselineable_metrics(ctx, from_json, all_pages, page_size, resource_gro
 @config_collection_group.command(name=cli_util.override('stack_monitoring.list_configs.command_name', 'list-configs'), help=u"""Get a list of configurations in a compartment. \n[Command Reference](listConfigs)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which data is listed.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
-@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["AUTO_PROMOTE", "LICENSE_AUTO_ASSIGN", "LICENSE_ENTERPRISE_EXTENSIBILITY"]), help=u"""A filter to return only configuration items for a given config type.""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["AUTO_PROMOTE", "COMPUTE_AUTO_ACTIVATE_PLUGIN", "LICENSE_AUTO_ASSIGN", "LICENSE_ENTERPRISE_EXTENSIBILITY", "ONBOARD"]), help=u"""A filter to return only configuration items for a given config type.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current state of the Config.""")
@@ -4369,6 +4701,8 @@ def list_monitored_resource_tasks(ctx, from_json, all_pages, page_size, compartm
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that matches with lifecycleState given.""")
 @cli_util.option('--is-exclude-system-types', type=click.BOOL, help=u"""A filter to exclude system resource types. If set to true, system resource types will be excluded.""")
 @cli_util.option('--metric-namespace', help=u"""A filter to return monitored resource types that has the matching namespace.""")
+@cli_util.option('--source-type', type=custom_types.CliCaseInsensitiveChoice(["SM_MGMT_AGENT_MONITORED", "SM_REPO_ONLY", "OCI_NATIVE", "PROMETHEUS", "TELEGRAF", "COLLECTD"]), help=u"""A filter to return only resources with matching source type.""")
+@cli_util.option('--resource-category', type=custom_types.CliCaseInsensitiveChoice(["APPLICATION", "DATABASE", "MIDDLEWARE", "INFRASTRUCTURE", "UNKNOWN"]), help=u"""A filter to return only resources with matching resource category.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeUpdated", "name"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for 'timeUpdated' is descending. Default order for 'name' is ascending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -4384,7 +4718,7 @@ MonitoredResourceType Id, name and compartment will be added by default.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fields': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'exclude-fields': {'module': 'stack_monitoring', 'class': 'list[string]'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceTypesCollection'})
 @cli_util.wrap_exceptions
-def list_monitored_resource_types(ctx, from_json, all_pages, page_size, compartment_id, name, status, is_exclude_system_types, metric_namespace, sort_by, sort_order, limit, page, fields, exclude_fields):
+def list_monitored_resource_types(ctx, from_json, all_pages, page_size, compartment_id, name, status, is_exclude_system_types, metric_namespace, source_type, resource_category, sort_by, sort_order, limit, page, fields, exclude_fields):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4398,6 +4732,10 @@ def list_monitored_resource_types(ctx, from_json, all_pages, page_size, compartm
         kwargs['is_exclude_system_types'] = is_exclude_system_types
     if metric_namespace is not None:
         kwargs['metric_namespace'] = metric_namespace
+    if source_type is not None:
+        kwargs['source_type'] = source_type
+    if resource_category is not None:
+        kwargs['resource_category'] = resource_category
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
@@ -4441,7 +4779,7 @@ def list_monitored_resource_types(ctx, from_json, all_pages, page_size, compartm
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which data is listed.""")
 @cli_util.option('--name', help=u"""A filter to return resources that match exact resource name.""")
 @cli_util.option('--work-request-id', help=u"""A filter to return resources which were impacted as part of this work request identifier.""")
-@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources with matching lifecycleState.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources with matching lifecycleState.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "TIME_CREATED"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for resources is ascending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -4892,7 +5230,7 @@ def publish_metric_extension(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 @monitored_resource_group.command(name=cli_util.override('stack_monitoring.request_monitored_resources_summarized_count.command_name', 'request-monitored-resources-summarized-count'), help=u"""Gets resource count based on the aggregation criteria specified using \"groupBy\" parameter. \n[Command Reference](requestMonitoredResourcesSummarizedCount)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which data is listed.""")
-@cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["resourceType", "license", "parentResourceId"]), help=u"""The field to group by. Default group by is 'resourceType'.""")
+@cli_util.option('--group-by', type=custom_types.CliCaseInsensitiveChoice(["resourceType", "license", "parentResourceId", "namespace"]), help=u"""The field to group by. Default group by is 'resourceType'.""")
 @cli_util.option('--license', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_FOR_GPU_INFRASTRUCTURE"]), help=u"""Filter to return resource counts that match with the given licence edition.""")
 @cli_util.option('--resource-type', help=u"""A filter to return resource counts that match exact resource type.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["count"]), help=u"""If this query parameter is specified, the result is sorted by this query parameter value.""")
@@ -5273,7 +5611,7 @@ def search_monitored_resource_members(ctx, from_json, monitored_resource_id, des
 
 This option is a JSON list with items of type ResourceLifecycleState.  For documentation on ResourceLifecycleState please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/ResourceLifecycleState.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-type', type=custom_types.CliCaseInsensitiveChoice(["SM_MGMT_AGENT_MONITORED", "SM_REPO_ONLY", "OCI_NATIVE", "PROMETHEUS", "TELEGRAF", "COLLECTD"]), help=u"""Source type filter.""")
-@cli_util.option('--resource-category', type=custom_types.CliCaseInsensitiveChoice(["APPLICATION", "DATABASE", "MIDDLEWARE", "UNKNOWN"]), help=u"""Resource category filter.""")
+@cli_util.option('--resource-category', type=custom_types.CliCaseInsensitiveChoice(["APPLICATION", "DATABASE", "MIDDLEWARE", "INFRASTRUCTURE", "UNKNOWN"]), help=u"""Resource category filter.""")
 @cli_util.option('--name', help=u"""A filter to return resources that match exact resource name.""")
 @cli_util.option('--name-contains', help=u"""A filter to return resources that match resource name pattern given. The match is not case sensitive.""")
 @cli_util.option('--type', help=u"""A filter to return resources that match resource type.""")
@@ -5281,7 +5619,7 @@ This option is a JSON list with items of type ResourceLifecycleState.  For docum
 @cli_util.option('--external-id', help=u"""External resource is any OCI resource identifier [OCID] which is not a Stack Monitoring service resource. Currently supports only following resource types - Container database, non-container database, pluggable database and OCI compute instance.""")
 @cli_util.option('--host-name-contains', help=u"""A filter to return resources with host name pattern.""")
 @cli_util.option('--management-agent-id', help=u"""A filter to return resources with matching management agent id.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return resources with matching lifecycle state.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return resources with matching lifecycle state.""")
 @cli_util.option('--license', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_FOR_GPU_INFRASTRUCTURE"]), help=u"""License edition of the monitored resource.""")
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Search for resources that were created within a specific date range, using this parameter to specify the earliest creation date for the returned list (inclusive). Specifying this parameter without the corresponding `timeCreatedLessThan` parameter will retrieve resources created from the given `timeCreatedGreaterThanOrEqualTo` to the current time, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by [RFC 3339].
 
@@ -5915,6 +6253,84 @@ def update_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
+@config_group.command(name=cli_util.override('stack_monitoring.update_config_update_compute_auto_activate_plugin_config_details.command_name', 'update-config-update-compute-auto-activate-plugin-config-details'), help=u"""Updates the configuration identified by the id given. \n[Command Reference](updateConfig)""")
+@cli_util.option('--config-id', required=True, help=u"""Unique Config identifier.""")
+@cli_util.option('--display-name', help=u"""The display name of the configuration.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""True if automatic activation of the Management Agent plugin is enabled, false if it is not enabled.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'stack_monitoring', 'class': 'Config'})
+@cli_util.wrap_exceptions
+def update_config_update_compute_auto_activate_plugin_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, config_id, display_name, freeform_tags, defined_tags, is_enabled, if_match):
+
+    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+        raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if is_enabled is not None:
+        _details['isEnabled'] = is_enabled
+
+    _details['configType'] = 'COMPUTE_AUTO_ACTIVATE_PLUGIN'
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.update_config(
+        config_id=config_id,
+        update_config_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_config') and callable(getattr(client, 'get_config')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_config(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @config_group.command(name=cli_util.override('stack_monitoring.update_config_update_license_enterprise_extensibility_config_details.command_name', 'update-config-update-license-enterprise-extensibility-config-details'), help=u"""Updates the configuration identified by the id given. \n[Command Reference](updateConfig)""")
 @cli_util.option('--config-id', required=True, help=u"""Unique Config identifier.""")
 @cli_util.option('--display-name', help=u"""The display name of the configuration.""")
@@ -6149,6 +6565,108 @@ def update_config_update_license_auto_assign_config_details(ctx, from_json, forc
     cli_util.render_response(result, ctx)
 
 
+@config_group.command(name=cli_util.override('stack_monitoring.update_config_update_onboard_config_details.command_name', 'update-config-update-onboard-config-details'), help=u"""Updates the configuration identified by the id given. \n[Command Reference](updateConfig)""")
+@cli_util.option('--config-id', required=True, help=u"""Unique Config identifier.""")
+@cli_util.option('--display-name', help=u"""The display name of the configuration.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--version-parameterconflict', help=u"""Assigned version to given onboard configuration.""")
+@cli_util.option('--is-manually-onboarded', type=click.BOOL, help=u"""True if customer decides marks configuration as manually configured.""")
+@cli_util.option('--policy-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of policy names assigned for onboarding""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dynamic-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of dynamic groups dedicated for Stack Monitoring.
+
+This option is a JSON list with items of type DynamicGroupDetails.  For documentation on DynamicGroupDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/DynamicGroupDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--user-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of user groups dedicated for Stack Monitoring.
+
+This option is a JSON list with items of type GroupDetails.  For documentation on GroupDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/GroupDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--additional-configurations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'policy-names': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'dynamic-groups': {'module': 'stack_monitoring', 'class': 'list[DynamicGroupDetails]'}, 'user-groups': {'module': 'stack_monitoring', 'class': 'list[GroupDetails]'}, 'additional-configurations': {'module': 'stack_monitoring', 'class': 'AdditionalConfigurationDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'policy-names': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'dynamic-groups': {'module': 'stack_monitoring', 'class': 'list[DynamicGroupDetails]'}, 'user-groups': {'module': 'stack_monitoring', 'class': 'list[GroupDetails]'}, 'additional-configurations': {'module': 'stack_monitoring', 'class': 'AdditionalConfigurationDetails'}}, output_type={'module': 'stack_monitoring', 'class': 'Config'})
+@cli_util.wrap_exceptions
+def update_config_update_onboard_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, config_id, display_name, freeform_tags, defined_tags, version_parameterconflict, is_manually_onboarded, policy_names, dynamic_groups, user_groups, additional_configurations, if_match):
+
+    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+        raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags or policy_names or dynamic_groups or user_groups or additional_configurations:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and policy-names and dynamic-groups and user-groups and additional-configurations will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if version_parameterconflict is not None:
+        _details['version'] = version_parameterconflict
+
+    if is_manually_onboarded is not None:
+        _details['isManuallyOnboarded'] = is_manually_onboarded
+
+    if policy_names is not None:
+        _details['policyNames'] = cli_util.parse_json_parameter("policy_names", policy_names)
+
+    if dynamic_groups is not None:
+        _details['dynamicGroups'] = cli_util.parse_json_parameter("dynamic_groups", dynamic_groups)
+
+    if user_groups is not None:
+        _details['userGroups'] = cli_util.parse_json_parameter("user_groups", user_groups)
+
+    if additional_configurations is not None:
+        _details['additionalConfigurations'] = cli_util.parse_json_parameter("additional_configurations", additional_configurations)
+
+    _details['configType'] = 'ONBOARD'
+
+    client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
+    result = client.update_config(
+        config_id=config_id,
+        update_config_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_config') and callable(getattr(client, 'get_config')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_config(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @maintenance_window_group.command(name=cli_util.override('stack_monitoring.update_maintenance_window.command_name', 'update'), help=u"""Update maintenance window by the given identifier [OCID]. \n[Command Reference](updateMaintenanceWindow)""")
 @cli_util.option('--maintenance-window-id', required=True, help=u"""The [OCID] of maintenance window.""")
 @cli_util.option('--description', help=u"""Maintenance Window description.""")
@@ -6156,23 +6674,25 @@ def update_config_update_license_auto_assign_config_details(ctx, from_json, forc
 
 This option is a JSON list with items of type CreateMaintenanceWindowResourceDetails.  For documentation on CreateMaintenanceWindowResourceDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/CreateMaintenanceWindowResourceDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--schedule', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'schedule': {'module': 'stack_monitoring', 'class': 'MaintenanceWindowSchedule'}})
+@json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'schedule': {'module': 'stack_monitoring', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'schedule': {'module': 'stack_monitoring', 'class': 'MaintenanceWindowSchedule'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'schedule': {'module': 'stack_monitoring', 'class': 'MaintenanceWindowSchedule'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_maintenance_window(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, description, resources, schedule, if_match):
+def update_maintenance_window(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, description, resources, schedule, freeform_tags, defined_tags, if_match):
 
     if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
     if not force:
-        if resources or schedule:
-            if not click.confirm("WARNING: Updates to resources and schedule will replace any existing values. Are you sure you want to continue?"):
+        if resources or schedule or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to resources and schedule and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -6190,6 +6710,12 @@ def update_maintenance_window(ctx, from_json, force, wait_for_state, max_wait_se
 
     if schedule is not None:
         _details['schedule'] = cli_util.parse_json_parameter("schedule", schedule)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('stack_monitoring', 'stack_monitoring', ctx)
     result = client.update_maintenance_window(
@@ -6234,6 +6760,8 @@ def update_maintenance_window(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.option('--resources', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of resource Ids which are part of the Maintenance Window
 
 This option is a JSON list with items of type CreateMaintenanceWindowResourceDetails.  For documentation on CreateMaintenanceWindowResourceDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/CreateMaintenanceWindowResourceDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--schedule-time-maintenance-window-start', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--schedule-time-maintenance-window-end', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -6242,18 +6770,18 @@ This option is a JSON list with items of type CreateMaintenanceWindowResourceDet
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_maintenance_window_recurrent_maintenance_window_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, schedule_maintenance_window_recurrences, description, resources, if_match, schedule_time_maintenance_window_start, schedule_time_maintenance_window_end, schedule_maintenance_window_duration):
+def update_maintenance_window_recurrent_maintenance_window_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, schedule_maintenance_window_recurrences, description, resources, freeform_tags, defined_tags, if_match, schedule_time_maintenance_window_start, schedule_time_maintenance_window_end, schedule_maintenance_window_duration):
 
     if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
     if not force:
-        if resources:
-            if not click.confirm("WARNING: Updates to resources will replace any existing values. Are you sure you want to continue?"):
+        if resources or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to resources and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -6270,6 +6798,12 @@ def update_maintenance_window_recurrent_maintenance_window_schedule(ctx, from_js
 
     if resources is not None:
         _details['resources'] = cli_util.parse_json_parameter("resources", resources)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if schedule_time_maintenance_window_start is not None:
         _details['schedule']['timeMaintenanceWindowStart'] = schedule_time_maintenance_window_start
@@ -6324,6 +6858,8 @@ def update_maintenance_window_recurrent_maintenance_window_schedule(ctx, from_js
 @cli_util.option('--resources', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of resource Ids which are part of the Maintenance Window
 
 This option is a JSON list with items of type CreateMaintenanceWindowResourceDetails.  For documentation on CreateMaintenanceWindowResourceDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/stackmonitoring/20210330/datatypes/CreateMaintenanceWindowResourceDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--schedule-time-maintenance-window-start', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--schedule-time-maintenance-window-end', type=custom_types.CLI_DATETIME, help=u"""Start time of Maintenance window. A RFC3339 formatted datetime string""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -6331,18 +6867,18 @@ This option is a JSON list with items of type CreateMaintenanceWindowResourceDet
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources': {'module': 'stack_monitoring', 'class': 'list[CreateMaintenanceWindowResourceDetails]'}, 'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_maintenance_window_one_time_maintenance_window_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, description, resources, if_match, schedule_time_maintenance_window_start, schedule_time_maintenance_window_end):
+def update_maintenance_window_one_time_maintenance_window_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, description, resources, freeform_tags, defined_tags, if_match, schedule_time_maintenance_window_start, schedule_time_maintenance_window_end):
 
     if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
     if not force:
-        if resources:
-            if not click.confirm("WARNING: Updates to resources will replace any existing values. Are you sure you want to continue?"):
+        if resources or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to resources and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -6358,6 +6894,12 @@ def update_maintenance_window_one_time_maintenance_window_schedule(ctx, from_jso
 
     if resources is not None:
         _details['resources'] = cli_util.parse_json_parameter("resources", resources)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if schedule_time_maintenance_window_start is not None:
         _details['schedule']['timeMaintenanceWindowStart'] = schedule_time_maintenance_window_start
@@ -7464,7 +8006,7 @@ def update_monitored_resource_task(ctx, from_json, force, wait_for_state, max_wa
 @cli_util.option('--description', help=u"""A friendly description.""")
 @cli_util.option('--metric-namespace', help=u"""Metric namespace for resource type.""")
 @cli_util.option('--source-type', type=custom_types.CliCaseInsensitiveChoice(["SM_MGMT_AGENT_MONITORED", "SM_REPO_ONLY", "OCI_NATIVE", "PROMETHEUS", "TELEGRAF", "COLLECTD"]), help=u"""Source type to indicate if the resource is stack monitoring discovered, OCI native resource, etc.""")
-@cli_util.option('--resource-category', type=custom_types.CliCaseInsensitiveChoice(["APPLICATION", "DATABASE", "MIDDLEWARE", "UNKNOWN"]), help=u"""Resource Category to indicate the kind of resource type.""")
+@cli_util.option('--resource-category', type=custom_types.CliCaseInsensitiveChoice(["APPLICATION", "DATABASE", "MIDDLEWARE", "INFRASTRUCTURE", "UNKNOWN"]), help=u"""Resource Category to indicate the kind of resource type.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7556,7 +8098,7 @@ def update_monitored_resource_type(ctx, from_json, force, wait_for_state, max_wa
 @cli_util.option('--description', help=u"""A friendly description.""")
 @cli_util.option('--metric-namespace', help=u"""Metric namespace for resource type.""")
 @cli_util.option('--source-type', type=custom_types.CliCaseInsensitiveChoice(["SM_MGMT_AGENT_MONITORED", "SM_REPO_ONLY", "OCI_NATIVE", "PROMETHEUS", "TELEGRAF", "COLLECTD"]), help=u"""Source type to indicate if the resource is stack monitoring discovered, OCI native resource, etc.""")
-@cli_util.option('--resource-category', type=custom_types.CliCaseInsensitiveChoice(["APPLICATION", "DATABASE", "MIDDLEWARE", "UNKNOWN"]), help=u"""Resource Category to indicate the kind of resource type.""")
+@cli_util.option('--resource-category', type=custom_types.CliCaseInsensitiveChoice(["APPLICATION", "DATABASE", "MIDDLEWARE", "INFRASTRUCTURE", "UNKNOWN"]), help=u"""Resource Category to indicate the kind of resource type.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

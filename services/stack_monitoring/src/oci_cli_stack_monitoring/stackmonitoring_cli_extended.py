@@ -1246,6 +1246,79 @@ stackmonitoring_cli.maintenance_window_group.commands.pop(stackmonitoring_cli.up
 # Remove update-maintenance-window-recurrent-maintenance-window-schedule from oci stack-monitoring maintenance-window
 stackmonitoring_cli.maintenance_window_group.commands.pop(stackmonitoring_cli.update_maintenance_window_recurrent_maintenance_window_schedule.name)
 
+# oci stack-monitoring resource-task create-monitored-resource-task-update-agent-receiver-task-details -> oci stack-monitoring resource-task update-agent-receiver
+cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.monitored_resource_task_group, stackmonitoring_cli.create_monitored_resource_task_update_agent_receiver_task_details, "update-agent-receiver")
+
+
+# oci stack-monitoring resource-task create-monitored-resource-task-update-resource-type-config-task-details -> oci stack-monitoring resource-task update-resource-type-configs
+cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.monitored_resource_task_group, stackmonitoring_cli.create_monitored_resource_task_update_resource_type_config_task_details, "update-resource-type-configs")
+
+
+@cli_util.copy_params_from_generated_command(stackmonitoring_cli.create_monitored_resource_task_update_agent_receiver_task_details, params_to_exclude=['task_details_agent_id', 'task_details_handler_type', 'task_details_is_enable', 'task_details_receiver_properties'])
+@stackmonitoring_cli.monitored_resource_task_group.command(name=stackmonitoring_cli.create_monitored_resource_task_update_agent_receiver_task_details.name, help=stackmonitoring_cli.create_monitored_resource_task_update_agent_receiver_task_details.help)
+@cli_util.option('--agent-id', required=True, help=u"""Management Agent Identifier [OCID]. [required]""")
+@cli_util.option('--handler-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["TELEGRAF", "COLLECTD"]), help=u"""Type of the handler. [required]""")
+@cli_util.option('--is-enable', required=True, type=click.BOOL, help=u"""True to enable the receiver and false to disable the receiver on the agent. [required]""")
+@cli_util.option('--receiver-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'task-details-receiver-properties': {'module': 'stack_monitoring', 'class': 'AgentReceiverProperties'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceTask'})
+@cli_util.wrap_exceptions
+def create_monitored_resource_task_update_agent_receiver_task_details_extended(ctx, **kwargs):
+
+    if 'agent_id' in kwargs:
+        kwargs['task_details_agent_id'] = kwargs['agent_id']
+        kwargs.pop('agent_id')
+
+    if 'handler_type' in kwargs:
+        kwargs['task_details_handler_type'] = kwargs['handler_type']
+        kwargs.pop('handler_type')
+
+    if 'is_enable' in kwargs:
+        kwargs['task_details_is_enable'] = kwargs['is_enable']
+        kwargs.pop('is_enable')
+
+    if 'receiver_properties' in kwargs:
+        kwargs['task_details_receiver_properties'] = kwargs['receiver_properties']
+        kwargs.pop('receiver_properties')
+
+    ctx.invoke(stackmonitoring_cli.create_monitored_resource_task_update_agent_receiver_task_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(stackmonitoring_cli.create_monitored_resource_task_update_resource_type_config_task_details, params_to_exclude=['task_details_handler_type', 'task_details_resource_types_configuration'])
+@stackmonitoring_cli.monitored_resource_task_group.command(name=stackmonitoring_cli.create_monitored_resource_task_update_resource_type_config_task_details.name, help=stackmonitoring_cli.create_monitored_resource_task_update_resource_type_config_task_details.help)
+@cli_util.option('--handler-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["TELEGRAF", "COLLECTD"]), help=u"""Type of the handler. [required]""")
+@cli_util.option('--resource-types-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A collection of resource type configuration details. User can provide availability proxy metrics list for resource types along with the telegraf/collectd handler configuration for the resource types.
+This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.
+ [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'task-details-resource-types-configuration': {'module': 'stack_monitoring', 'class': 'list[ResourceTypeConfigDetails]'}}, output_type={'module': 'stack_monitoring', 'class': 'MonitoredResourceTask'})
+@cli_util.wrap_exceptions
+def create_monitored_resource_task_update_resource_type_config_task_details_extended(ctx, **kwargs):
+
+    if 'handler_type' in kwargs:
+        kwargs['task_details_handler_type'] = kwargs['handler_type']
+        kwargs.pop('handler_type')
+
+    if 'resource_types_config' in kwargs:
+        kwargs['task_details_resource_types_configuration'] = kwargs['resource_types_config']
+        kwargs.pop('resource_types_config')
+
+    ctx.invoke(stackmonitoring_cli.create_monitored_resource_task_update_resource_type_config_task_details, **kwargs)
+
+
+# oci stack-monitoring config create-config-create-compute-auto-activate-plugin-config-details -> oci stack-monitoring config create-compute-auto-activate-plugin-config
+cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.config_group, stackmonitoring_cli.create_config_create_compute_auto_activate_plugin_config_details, "create-compute-auto-activate-plugin-config")
+
+# oci stack-monitoring config update-config-update-compute-auto-activate-plugin-config-details -> oci stack-monitoring config update-compute-auto-activate-plugin-config
+cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.config_group, stackmonitoring_cli.update_config_update_compute_auto_activate_plugin_config_details, "update-compute-auto-activate-plugin-config")
 
 # oci stack-monitoring metric-extension create-metric-extension-http-query-properties -> oci stack-monitoring metric-extension create-http-metric-ext
 cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.metric_extension_group, stackmonitoring_cli.create_metric_extension_http_query_properties, "create-http-metric-ext")
@@ -1443,3 +1516,59 @@ def update_monitoring_template_extended(ctx, **kwargs):
         kwargs.pop('split_notif_enabled')
 
     ctx.invoke(stackmonitoring_cli.update_monitoring_template, **kwargs)
+
+
+# oci stack-monitoring config create-config-create-onboard-config-details -> oci stack-monitoring config create-onboard-config
+cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.config_group, stackmonitoring_cli.create_config_create_onboard_config_details, "create-onboard-config")
+
+
+# oci stack-monitoring config update-config-update-onboard-config-details -> oci stack-monitoring config update-onboard-config
+cli_util.rename_command(stackmonitoring_cli, stackmonitoring_cli.config_group, stackmonitoring_cli.update_config_update_onboard_config_details, "update-onboard-config")
+
+
+@cli_util.copy_params_from_generated_command(stackmonitoring_cli.create_config_create_onboard_config_details, params_to_exclude=['additional_configurations', 'version_parameterconflict'])
+@stackmonitoring_cli.config_group.command(name=stackmonitoring_cli.create_config_create_onboard_config_details.name, help=stackmonitoring_cli.create_config_create_onboard_config_details.help)
+@cli_util.option('--onboard-version', help="""Assigned version to given onboard configuration.""")
+@cli_util.option('--additional-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'policy-names': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'dynamic-groups': {'module': 'stack_monitoring', 'class': 'list[DynamicGroupDetails]'}, 'user-groups': {'module': 'stack_monitoring', 'class': 'list[GroupDetails]'}, 'additional-configs': {'module': 'stack_monitoring', 'class': 'AdditionalConfigurationDetails'}}, output_type={'module': 'stack_monitoring', 'class': 'Config'})
+@cli_util.wrap_exceptions
+def create_config_create_onboard_config_details_extended(ctx, **kwargs):
+
+    if 'onboard_version' in kwargs:
+        kwargs['version_parameterconflict'] = kwargs['onboard_version']
+        kwargs.pop('onboard_version')
+
+    if 'additional_configs' in kwargs:
+        kwargs['additional_configurations'] = kwargs['additional_configs']
+        kwargs.pop('additional_configs')
+
+    ctx.invoke(stackmonitoring_cli.create_config_create_onboard_config_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(stackmonitoring_cli.update_config_update_onboard_config_details, params_to_exclude=['additional_configurations', 'version_parameterconflict'])
+@stackmonitoring_cli.config_group.command(name=stackmonitoring_cli.update_config_update_onboard_config_details.name, help=stackmonitoring_cli.update_config_update_onboard_config_details.help)
+@cli_util.option('--onboard-version', help="""Assigned version to given onboard configuration.""")
+@cli_util.option('--additional-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""This is a complex type whose value must be valid JSON. The value can be provided as a string on the command line or passed in as a file using
+the file://path/to/file syntax.
+
+The --generate-param-json-input option can be used to generate an example of the JSON which must be provided. We recommend storing this example
+in a file, modifying it as needed and then passing it back in via the file:// syntax.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'stack_monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'stack_monitoring', 'class': 'dict(str, dict(str, object))'}, 'policy-names': {'module': 'stack_monitoring', 'class': 'list[string]'}, 'dynamic-groups': {'module': 'stack_monitoring', 'class': 'list[DynamicGroupDetails]'}, 'user-groups': {'module': 'stack_monitoring', 'class': 'list[GroupDetails]'}, 'additional-configs': {'module': 'stack_monitoring', 'class': 'AdditionalConfigurationDetails'}}, output_type={'module': 'stack_monitoring', 'class': 'Config'})
+@cli_util.wrap_exceptions
+def update_config_update_onboard_config_details_extended(ctx, **kwargs):
+
+    if 'onboard_version' in kwargs:
+        kwargs['version_parameterconflict'] = kwargs['onboard_version']
+        kwargs.pop('onboard_version')
+
+    if 'additional_configs' in kwargs:
+        kwargs['additional_configurations'] = kwargs['additional_configs']
+        kwargs.pop('additional_configs')
+
+    ctx.invoke(stackmonitoring_cli.update_config_update_onboard_config_details, **kwargs)
