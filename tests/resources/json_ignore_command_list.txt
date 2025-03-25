@@ -500,3 +500,5 @@ os-management-hub, profile, list-available-software-sources
 apm-synthetics, monitor, create-scripted-browser-monitor
 apm-synthetics, monitor, update-scripted-browser-monitor
 db, autonomous-container-database, add
+stack-monitoring, resource-task, update-agent-receiver
+stack-monitoring, resource-task, update-resource-type-configs
