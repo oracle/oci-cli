@@ -3352,7 +3352,8 @@ def create_operations_insights_private_endpoint(ctx, from_json, wait_for_state, 
 @operations_insights_warehouses_group.command(name=cli_util.override('opsi.create_operations_insights_warehouse.command_name', 'create'), help=u"""Create a Ops Insights Warehouse resource for the tenant in Ops Insights. New ADW will be provisioned for this tenant. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. If the 'opsi-warehouse-type' header is passed to the API, a warehouse resource without ADW or Schema provisioning is created. \n[Command Reference](createOperationsInsightsWarehouse)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""User-friedly name of Ops Insights Warehouse that does not have to be unique.""")
-@cli_util.option('--cpu-allocated', required=True, help=u"""Number of OCPUs allocated to OPSI Warehouse ADW.""")
+@cli_util.option('--cpu-allocated', required=True, help=u"""Number of CPUs allocated to OPSI Warehouse ADW.""")
+@cli_util.option('--compute-model', help=u"""The compute model for the OPSI warehouse ADW (OCPU or ECPU)""")
 @cli_util.option('--storage-allocated-in-gbs', help=u"""Storage allocated to OPSI Warehouse ADW.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3364,7 +3365,7 @@ def create_operations_insights_private_endpoint(ctx, from_json, wait_for_state, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'opsi', 'class': 'OperationsInsightsWarehouse'})
 @cli_util.wrap_exceptions
-def create_operations_insights_warehouse(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, cpu_allocated, storage_allocated_in_gbs, freeform_tags, defined_tags):
+def create_operations_insights_warehouse(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, cpu_allocated, compute_model, storage_allocated_in_gbs, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3373,6 +3374,9 @@ def create_operations_insights_warehouse(ctx, from_json, wait_for_state, max_wai
     _details['compartmentId'] = compartment_id
     _details['displayName'] = display_name
     _details['cpuAllocated'] = cpu_allocated
+
+    if compute_model is not None:
+        _details['computeModel'] = compute_model
 
     if storage_allocated_in_gbs is not None:
         _details['storageAllocatedInGBs'] = storage_allocated_in_gbs
@@ -15117,7 +15121,8 @@ def update_operations_insights_private_endpoint(ctx, from_json, force, wait_for_
 @operations_insights_warehouses_group.command(name=cli_util.override('opsi.update_operations_insights_warehouse.command_name', 'update'), help=u"""Updates the configuration of an Ops Insights Warehouse. There is only expected to be 1 warehouse per tenant. The warehouse is expected to be in the root compartment. \n[Command Reference](updateOperationsInsightsWarehouse)""")
 @cli_util.option('--operations-insights-warehouse-id', required=True, help=u"""Unique Ops Insights Warehouse identifier""")
 @cli_util.option('--display-name', help=u"""User-friedly name of Ops Insights Warehouse that does not have to be unique.""")
-@cli_util.option('--cpu-allocated', help=u"""Number of OCPUs allocated to OPSI Warehouse ADW.""")
+@cli_util.option('--cpu-allocated', help=u"""Number of CPUs allocated to OPSI Warehouse ADW.""")
+@cli_util.option('--compute-model', help=u"""The compute model for the OPSI warehouse ADW (OCPU or ECPU)""")
 @cli_util.option('--storage-allocated-in-gbs', help=u"""Storage allocated to OPSI Warehouse ADW.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -15131,7 +15136,7 @@ def update_operations_insights_private_endpoint(ctx, from_json, force, wait_for_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_operations_insights_warehouse(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_warehouse_id, display_name, cpu_allocated, storage_allocated_in_gbs, freeform_tags, defined_tags, if_match):
+def update_operations_insights_warehouse(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_warehouse_id, display_name, cpu_allocated, compute_model, storage_allocated_in_gbs, freeform_tags, defined_tags, if_match):
 
     if isinstance(operations_insights_warehouse_id, six.string_types) and len(operations_insights_warehouse_id.strip()) == 0:
         raise click.UsageError('Parameter --operations-insights-warehouse-id cannot be whitespace or empty string')
@@ -15152,6 +15157,9 @@ def update_operations_insights_warehouse(ctx, from_json, force, wait_for_state, 
 
     if cpu_allocated is not None:
         _details['cpuAllocated'] = cpu_allocated
+
+    if compute_model is not None:
+        _details['computeModel'] = compute_model
 
     if storage_allocated_in_gbs is not None:
         _details['storageAllocatedInGBs'] = storage_allocated_in_gbs

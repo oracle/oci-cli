@@ -6,6 +6,60 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.54.1 - 2025-04-01
+--------------------
+Added
+~~~~~
+* File Storage service
+
+    * Support for the Lustre File service
+
+      * ``oci lfs lustre-file-system change-compartment``
+      * ``oci lfs lustre-file-system create``
+      * ``oci lfs lustre-file-system delete``
+      * ``oci lfs lustre-file-system get``
+      * ``oci lfs lustre-file-system update``
+      * ``oci lfs lustre-file-system-collection list-lustre-file-systems``
+      * ``oci lfs work-request cancel``
+      * ``oci lfs work-request get``
+      * ``oci lfs work-request list``
+      * ``oci lfs work-request-error list``
+      * ``oci lfs work-request-log-entry list-work-request-logs``
+
+* Data Science Service
+
+    * Support for ML Applications in the Data Science service
+
+      * ``oci data-science ml-app``
+      * ``oci data-science ml-app-implementation``
+      * ``oci data-science ml-app-implementation-version``
+      * ``oci data-science ml-app-instance``
+      * ``oci data-science ml-app-instance-view``
+
+* Application Performance Monitoring Configuration Service
+
+    * Support for new Action end points to export and import configurations
+
+      * ``oci apm-config export-configuration copy``
+      * ``oci apm-config export-configuration export``
+      * ``oci apm-config export-configuration import``
+
+Changed
+~~~~~~~
+* Ops Insights Service
+
+    * Support for ECPU compute model based Ops Insights Warehouses by adding new compute-model field.
+
+      * ``oci opsi operations-insights-warehouses update --compute-model``
+      * ``oci opsi operations-insights-warehouses create --compute-model``
+
+
+Security
+~~~~~~~
+- updated requests dependency to `>= 2.32.0` for python version `>3.7`, `2.31.0` for `3.7` and `2.27.0` for `3.6` per: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-32681.
+- updated Jinja2 dependency to `>=3.1.5` for python version `>=3.7` and `<3.0.0` for `3.6` per: CVE-2024-56201 https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-56201 and https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-56326.
+- updated certifi dependency to `2025.1.31` per: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-39689.
+
 3.54.0 - 2025-03-25
 --------------------
 Added

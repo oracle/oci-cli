@@ -605,3 +605,709 @@ datascience_cli.schedule_group.commands.pop(datascience_cli.update_schedule_sche
 
 # Remove update-schedule-schedule-interval-trigger from oci data-science schedule
 datascience_cli.schedule_group.commands.pop(datascience_cli.update_schedule_schedule_interval_trigger.name)
+
+
+# oci data-science ml-application -> oci data-science ml-app
+cli_util.rename_command(datascience_cli, datascience_cli.data_science_root_group, datascience_cli.ml_application_group, "ml-app")
+
+
+# oci data-science ml-application-instance -> oci data-science ml-app-instance
+cli_util.rename_command(datascience_cli, datascience_cli.data_science_root_group, datascience_cli.ml_application_instance_group, "ml-app-instance")
+
+
+# oci data-science ml-app-instance trigger-ml-application-instance-flow -> oci data-science ml-app-instance trigger
+cli_util.rename_command(datascience_cli, datascience_cli.ml_application_instance_group, datascience_cli.trigger_ml_application_instance_flow, "trigger")
+
+
+# oci data-science ml-app-instance create-ml-application-instance-create-idcs-auth-configuration-details -> oci data-science ml-app-instance create-with-idcs-auth
+cli_util.rename_command(datascience_cli, datascience_cli.ml_application_instance_group, datascience_cli.create_ml_application_instance_create_idcs_auth_configuration_details, "create-with-idcs-auth")
+
+
+# oci data-science ml-app-instance create-ml-application-instance-create-iam-auth-configuration-create-details -> oci data-science ml-app-instance create-with-iam-auth
+cli_util.rename_command(datascience_cli, datascience_cli.ml_application_instance_group, datascience_cli.create_ml_application_instance_create_iam_auth_configuration_create_details, "create-with-iam-auth")
+
+
+# oci data-science ml-app-instance create-ml-application-instance-create-idcs-custom-service-auth-configuration-details -> oci data-science ml-app-instance create-with-custom-service-idcs-auth
+cli_util.rename_command(datascience_cli, datascience_cli.ml_application_instance_group, datascience_cli.create_ml_application_instance_create_idcs_custom_service_auth_configuration_details, "create-with-custom-service-idcs-auth")
+
+
+# oci data-science ml-application-implementation -> oci data-science ml-app-implementation
+cli_util.rename_command(datascience_cli, datascience_cli.data_science_root_group, datascience_cli.ml_application_implementation_group, "ml-app-implementation")
+
+
+# oci data-science ml-app-implementation get-ml-application-package-content -> oci data-science ml-app-implementation download-package
+cli_util.rename_command(datascience_cli, datascience_cli.ml_application_implementation_group, datascience_cli.get_ml_application_package_content, "download-package")
+
+
+# oci data-science ml-application-instance-view -> oci data-science ml-app-instance-view
+cli_util.rename_command(datascience_cli, datascience_cli.data_science_root_group, datascience_cli.ml_application_instance_view_group, "ml-app-instance-view")
+
+
+# oci data-science ml-app-instance-view trigger-ml-application-instance-flow -> oci data-science ml-app-instance-view trigger
+cli_util.rename_command(datascience_cli, datascience_cli.ml_application_instance_view_group, datascience_cli.trigger_ml_application_instance_view_flow, "trigger")
+
+
+# oci data-science ml-app-instance-view disable-ml-application-instance-view-trigger -> oci data-science ml-app-instance-view disable-trigger
+cli_util.rename_command(datascience_cli, datascience_cli.ml_application_instance_view_group, datascience_cli.disable_ml_application_instance_view_trigger, "disable-trigger")
+
+# oci data-science ml-app-instance-view enable-ml-application-instance-view-trigger -> oci data-science ml-app-instance-view enable-trigger
+cli_util.rename_command(datascience_cli, datascience_cli.ml_application_instance_view_group, datascience_cli.enable_ml_application_instance_view_trigger, "enable-trigger")
+
+
+# oci data-science ml-application-implementation-version -> oci data-science ml-app-implementation-version
+cli_util.rename_command(datascience_cli, datascience_cli.data_science_root_group, datascience_cli.ml_application_implementation_version_group, "ml-app-implementation-version")
+
+
+# oci data-science ml-app-instance-view get-ml-application-historical-package-content -> oci data-science ml-app-instance-view download-package
+cli_util.rename_command(datascience_cli, datascience_cli.ml_application_implementation_version_group, datascience_cli.get_ml_application_historical_package_content, "download-package")
+
+
+# Overriding put-ml-application-package to accept file for package on the ml-app-implementation resource
+@cli_util.copy_params_from_generated_command(datascience_cli.put_ml_application_package, params_to_exclude=['put_ml_application_package', 'ml_application_implementation_id'])
+@datascience_cli.ml_application_implementation_group.command(name=cli_util.override('data_science.put_ml_application_package.command_name', 'upload-package'), help=datascience_cli.put_ml_application_package.help)
+@cli_util.option('--ml-app-package-file', type=click.File(mode='rb'), required=True, help=u"""The package artifact to upload.""")
+@cli_util.option('--ml-app-implementation-id', required=True, help=u"""unique MlApplicationImplementation identifier""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def put_ml_application_package_extended(ctx, ml_app_implementation_id, from_json, **kwargs):
+
+    template_file = kwargs['ml_app_package_file']
+    del kwargs['ml_app_package_file']
+
+    if isinstance(ml_app_implementation_id, six.string_types) and len(
+            ml_app_implementation_id.strip()) == 0:
+        raise click.UsageError('Parameter --ml_app_implementation_id cannot be whitespace or empty string')
+
+    kwargs['ml_application_implementation_id'] = ml_app_implementation_id
+    kwargs['put_ml_application_package'] = template_file
+    ctx.invoke(datascience_cli.put_ml_application_package, **kwargs)
+
+
+# Remove put-ml-application-package from oci data-science model-deployment
+datascience_cli.ml_application_implementation_group.commands.pop(datascience_cli.put_ml_application_package.name)
+
+
+# Rename oci data-science ml-app change_ml_application_compartment --ml-application-id
+#   to oci data-science ml-app change_ml_application_compartment --ml-app-id
+@cli_util.copy_params_from_generated_command(datascience_cli.change_ml_application_compartment, params_to_exclude=['ml_application_id'])
+@datascience_cli.ml_application_group.command(name=datascience_cli.change_ml_application_compartment.name, help=datascience_cli.change_ml_application_compartment.help)
+@cli_util.option('--ml-app-id', required=True, help=u"""unique MlApplication identifier""")
+@click.pass_context
+def change_ml_application_compartment(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_id'], six.string_types) and len(kwargs['ml_app_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-id cannot be whitespace or empty string')
+
+    if 'ml_app_id' in kwargs:
+        kwargs['ml_application_id'] = kwargs['ml_app_id']
+        del kwargs['ml_app_id']
+
+    ctx.invoke(datascience_cli.change_ml_application_compartment, **kwargs)
+
+
+# Rename oci data-science ml-app-implementation change_ml_application_implementation_compartment --ml-application-implementation-id
+#   to oci data-science ml-app-implementation change_ml_application_implementation_compartment --ml-app-implementation-id
+@cli_util.copy_params_from_generated_command(datascience_cli.change_ml_application_implementation_compartment, params_to_exclude=['ml_application_implementation_id'])
+@datascience_cli.ml_application_implementation_group.command(name=datascience_cli.change_ml_application_implementation_compartment.name, help=datascience_cli.change_ml_application_implementation_compartment.help)
+@cli_util.option('--ml-app-implementation-id', required=True, help=u"""unique MlApplicationImplementation identifier""")
+@click.pass_context
+def change_ml_application_implementation_compartment(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_implementation_id'], six.string_types) and len(kwargs['ml_app_implementation_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-implementation-id cannot be whitespace or empty string')
+
+    if 'ml_app_implementation_id' in kwargs:
+        kwargs['ml_application_implementation_id'] = kwargs['ml_app_implementation_id']
+        del kwargs['ml_app_implementation_id']
+
+    ctx.invoke(datascience_cli.change_ml_application_implementation_compartment, **kwargs)
+
+
+# Rename oci data-science ml-app-instance change_ml_application_instance_compartment --ml-application-instance-id
+#   to oci data-science ml-app-instance change_ml_application_instance_compartment --ml-app-instance-id
+@cli_util.copy_params_from_generated_command(datascience_cli.change_ml_application_instance_compartment, params_to_exclude=['ml_application_instance_id'])
+@datascience_cli.ml_application_instance_group.command(name=datascience_cli.change_ml_application_instance_compartment.name, help=datascience_cli.change_ml_application_instance_compartment.help)
+@cli_util.option('--ml-app-instance-id', required=True, help=u"""unique MlApplicationInstance identifier""")
+@click.pass_context
+def change_ml_application_instance_compartment(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_instance_id'], six.string_types) and len(kwargs['ml_app_instance_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-instance-id cannot be whitespace or empty string')
+
+    if 'ml_app_instance_id' in kwargs:
+        kwargs['ml_application_instance_id'] = kwargs['ml_app_instance_id']
+        del kwargs['ml_app_instance_id']
+
+    ctx.invoke(datascience_cli.change_ml_application_instance_compartment, **kwargs)
+
+
+# Rename oci data-science ml-app-instance-view change_ml_application_instance_view_compartment --ml-application-instance-view-id
+#   to oci data-science ml-app-instance-view change_ml_application_instance_view_compartment --ml-app-instance-view-id
+@cli_util.copy_params_from_generated_command(datascience_cli.change_ml_application_instance_view_compartment, params_to_exclude=['ml_application_instance_view_id'])
+@datascience_cli.ml_application_instance_view_group.command(name=datascience_cli.change_ml_application_instance_view_compartment.name, help=datascience_cli.change_ml_application_instance_view_compartment.help)
+@cli_util.option('--ml-app-instance-view-id', required=True, help=u"""unique MlApplicationInstanceView identifier""")
+@click.pass_context
+def change_ml_application_instance_view_compartment(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_instance_view_id'], six.string_types) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-instance-view-id cannot be whitespace or empty string')
+
+    if 'ml_app_instance_view_id' in kwargs:
+        kwargs['ml_application_instance_view_id'] = kwargs['ml_app_instance_view_id']
+        del kwargs['ml_app_instance_view_id']
+
+    ctx.invoke(datascience_cli.change_ml_application_instance_view_compartment, **kwargs)
+
+
+# Rename oci data-science ml-app-implementation create_ml_application_implementation --ml-application-id
+#   to oci data-science ml-app-implementation create_ml_application_implementation --ml-app-id
+@cli_util.copy_params_from_generated_command(datascience_cli.create_ml_application_implementation, params_to_exclude=['ml_application_id'])
+@datascience_cli.ml_application_implementation_group.command(name=datascience_cli.create_ml_application_implementation.name, help=datascience_cli.create_ml_application_implementation.help)
+@cli_util.option('--ml-app-id', required=True, help=u"""The OCID of the ML Application implemented by this ML Application Implementation""")
+@click.pass_context
+def create_ml_application_implementation(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_id'], six.string_types) and len(kwargs['ml_app_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-id cannot be whitespace or empty string')
+
+    if 'ml_app_id' in kwargs:
+        kwargs['ml_application_id'] = kwargs['ml_app_id']
+        del kwargs['ml_app_id']
+
+    ctx.invoke(datascience_cli.create_ml_application_implementation, **kwargs)
+
+
+# Rename oci data-science ml-app-instance create_ml_application_instance --ml-application-id --ml-application-implementation-id
+#   to oci data-science ml-app-instance create_ml_application_instance --ml-app-id --ml-app-implementation-id
+@cli_util.copy_params_from_generated_command(datascience_cli.create_ml_application_instance, params_to_exclude=['ml_application_id', 'ml_application_implementation_id'])
+@datascience_cli.ml_application_instance_group.command(name=datascience_cli.create_ml_application_instance.name, help=datascience_cli.create_ml_application_instance.help)
+@cli_util.option('--ml-app-id', required=True, help=u"""The OCID of ML Application. This resource is an instance of ML Application referenced by this OCID.""")
+@cli_util.option('--ml-app-implementation-id', help=u"""The OCID of ML Application Implementation selected as a certain solution for a given ML problem (ML Application)""")
+@click.pass_context
+def create_ml_application_instance(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_id'], six.string_types) and len(kwargs['ml_app_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-id cannot be whitespace or empty string')
+
+    if 'ml_app_id' in kwargs:
+        kwargs['ml_application_id'] = kwargs['ml_app_id']
+        del kwargs['ml_app_id']
+    if 'ml_app_implementation_id' in kwargs:
+        kwargs['ml_application_implementation_id'] = kwargs['ml_app_implementation_id']
+        del kwargs['ml_app_implementation_id']
+
+    ctx.invoke(datascience_cli.create_ml_application_instance, **kwargs)
+
+
+# Rename oci data-science ml-app-instance create_ml_application_instance_create_idcs_auth_configuration_details --ml-application-id --ml-application-implementation-id
+#   to oci data-science ml-app-instance create_ml_application_instance_create_idcs_auth_configuration_details --ml-app-id --ml-app-implementation-id
+@cli_util.copy_params_from_generated_command(datascience_cli.create_ml_application_instance_create_idcs_auth_configuration_details, params_to_exclude=['ml_application_id', 'ml_application_implementation_id'])
+@datascience_cli.ml_application_instance_group.command(name=datascience_cli.create_ml_application_instance_create_idcs_auth_configuration_details.name, help=datascience_cli.create_ml_application_instance_create_idcs_auth_configuration_details.help)
+@cli_util.option('--ml-app-id', required=True, help=u"""The OCID of ML Application. This resource is an instance of ML Application referenced by this OCID.""")
+@cli_util.option('--ml-app-implementation-id', help=u"""The OCID of ML Application Implementation selected as a certain solution for a given ML problem (ML Application)""")
+@click.pass_context
+def create_ml_application_instance_create_idcs_auth_configuration_details(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_id'], six.string_types) and len(kwargs['ml_app_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-id cannot be whitespace or empty string')
+
+    if 'ml_app_id' in kwargs:
+        kwargs['ml_application_id'] = kwargs['ml_app_id']
+        del kwargs['ml_app_id']
+    if 'ml_app_implementation_id' in kwargs:
+        kwargs['ml_application_implementation_id'] = kwargs['ml_app_implementation_id']
+        del kwargs['ml_app_implementation_id']
+
+    ctx.invoke(datascience_cli.create_ml_application_instance_create_idcs_auth_configuration_details, **kwargs)
+
+
+# Rename oci data-science ml-app-instance create_ml_application_instance_create_idcs_custom_service_auth_configuration_details --ml-application-id --ml-application-implementation-id
+#   to oci data-science ml-app-instance create_ml_application_instance_create_idcs_custom_service_auth_configuration_details --ml-app-id --ml-app-implementation-id
+@cli_util.copy_params_from_generated_command(datascience_cli.create_ml_application_instance_create_idcs_custom_service_auth_configuration_details, params_to_exclude=['ml_application_id', 'ml_application_implementation_id'])
+@datascience_cli.ml_application_instance_group.command(name=datascience_cli.create_ml_application_instance_create_idcs_custom_service_auth_configuration_details.name, help=datascience_cli.create_ml_application_instance_create_idcs_custom_service_auth_configuration_details.help)
+@cli_util.option('--ml-app-id', required=True, help=u"""The OCID of ML Application. This resource is an instance of ML Application referenced by this OCID.""")
+@cli_util.option('--ml-app-implementation-id', help=u"""The OCID of ML Application Implementation selected as a certain solution for a given ML problem (ML Application)""")
+@click.pass_context
+def create_ml_application_instance_create_idcs_custom_service_auth_configuration_details(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_id'], six.string_types) and len(kwargs['ml_app_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-id cannot be whitespace or empty string')
+
+    if 'ml_app_id' in kwargs:
+        kwargs['ml_application_id'] = kwargs['ml_app_id']
+        del kwargs['ml_app_id']
+    if 'ml_app_implementation_id' in kwargs:
+        kwargs['ml_application_implementation_id'] = kwargs['ml_app_implementation_id']
+        del kwargs['ml_app_implementation_id']
+
+    ctx.invoke(datascience_cli.create_ml_application_instance_create_idcs_custom_service_auth_configuration_details, **kwargs)
+
+
+# Rename oci data-science ml-app-instance create_ml_application_instance_create_iam_auth_configuration_create_details --ml-application-id --ml-application-implementation-id
+#   to oci data-science ml-app-instance create_ml_application_instance_create_iam_auth_configuration_create_details --ml-app-id --ml-app-implementation-id
+@cli_util.copy_params_from_generated_command(datascience_cli.create_ml_application_instance_create_iam_auth_configuration_create_details, params_to_exclude=['ml_application_id', 'ml_application_implementation_id'])
+@datascience_cli.ml_application_instance_group.command(name=datascience_cli.create_ml_application_instance_create_iam_auth_configuration_create_details.name, help=datascience_cli.create_ml_application_instance_create_iam_auth_configuration_create_details.help)
+@cli_util.option('--ml-app-id', required=True, help=u"""The OCID of ML Application. This resource is an instance of ML Application referenced by this OCID.""")
+@cli_util.option('--ml-app-implementation-id', help=u"""The OCID of ML Application Implementation selected as a certain solution for a given ML problem (ML Application)""")
+@click.pass_context
+def create_ml_application_instance_create_iam_auth_configuration_create_details(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_id'], six.string_types) and len(kwargs['ml_app_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-id cannot be whitespace or empty string')
+
+    if 'ml_app_id' in kwargs:
+        kwargs['ml_application_id'] = kwargs['ml_app_id']
+        del kwargs['ml_app_id']
+    if 'ml_app_implementation_id' in kwargs:
+        kwargs['ml_application_implementation_id'] = kwargs['ml_app_implementation_id']
+        del kwargs['ml_app_implementation_id']
+
+    ctx.invoke(datascience_cli.create_ml_application_instance_create_iam_auth_configuration_create_details, **kwargs)
+
+
+# Rename oci data-science ml-app delete_ml_application --ml-application-id
+#   to oci data-science ml-app delete_ml_application --ml-app-id
+@cli_util.copy_params_from_generated_command(datascience_cli.delete_ml_application, params_to_exclude=['ml_application_id'])
+@datascience_cli.ml_application_group.command(name=datascience_cli.delete_ml_application.name, help=datascience_cli.delete_ml_application.help)
+@cli_util.option('--ml-app-id', required=True, help=u"""unique MlApplication identifier""")
+@click.pass_context
+def delete_ml_application(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_id'], six.string_types) and len(kwargs['ml_app_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-id cannot be whitespace or empty string')
+
+    if 'ml_app_id' in kwargs:
+        kwargs['ml_application_id'] = kwargs['ml_app_id']
+        del kwargs['ml_app_id']
+
+    ctx.invoke(datascience_cli.delete_ml_application, **kwargs)
+
+
+# Rename oci data-science ml-app-implementation delete_ml_application_implementation --ml-application-implementation-id
+#   to oci data-science ml-app-implementation delete_ml_application_implementation --ml-app-implementation-id
+@cli_util.copy_params_from_generated_command(datascience_cli.delete_ml_application_implementation, params_to_exclude=['ml_application_implementation_id'])
+@datascience_cli.ml_application_implementation_group.command(name=datascience_cli.delete_ml_application_implementation.name, help=datascience_cli.delete_ml_application_implementation.help)
+@cli_util.option('--ml-app-implementation-id', required=True, help=u"""unique MlApplicationImplementation identifier""")
+@click.pass_context
+def delete_ml_application_implementation(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_implementation_id'], six.string_types) and len(kwargs['ml_app_implementation_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-implementation-id cannot be whitespace or empty string')
+
+    if 'ml_app_implementation_id' in kwargs:
+        kwargs['ml_application_implementation_id'] = kwargs['ml_app_implementation_id']
+        del kwargs['ml_app_implementation_id']
+
+    ctx.invoke(datascience_cli.delete_ml_application_implementation, **kwargs)
+
+
+# Rename oci data-science ml-app-instance delete_ml_application_instance --ml-application-instance-id
+#   to oci data-science ml-app-instance delete_ml_application_instance --ml-app-instance-id
+@cli_util.copy_params_from_generated_command(datascience_cli.delete_ml_application_instance, params_to_exclude=['ml_application_instance_id'])
+@datascience_cli.ml_application_instance_group.command(name=datascience_cli.delete_ml_application_instance.name, help=datascience_cli.delete_ml_application_instance.help)
+@cli_util.option('--ml-app-instance-id', required=True, help=u"""unique MlApplicationInstance identifier""")
+@click.pass_context
+def delete_ml_application_instance(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_instance_id'], six.string_types) and len(kwargs['ml_app_instance_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-instance-id cannot be whitespace or empty string')
+
+    if 'ml_app_instance_id' in kwargs:
+        kwargs['ml_application_instance_id'] = kwargs['ml_app_instance_id']
+        del kwargs['ml_app_instance_id']
+
+    ctx.invoke(datascience_cli.delete_ml_application_instance, **kwargs)
+
+
+# Rename oci data-science ml-app-instance-view disable_ml_application_instance_view_trigger --ml-application-instance-view-id
+#   to oci data-science ml-app-instance-view disable_ml_application_instance_view_trigger --ml-app-instance-view-id
+@cli_util.copy_params_from_generated_command(datascience_cli.disable_ml_application_instance_view_trigger, params_to_exclude=['ml_application_instance_view_id'])
+@datascience_cli.ml_application_instance_view_group.command(name=datascience_cli.disable_ml_application_instance_view_trigger.name, help=datascience_cli.disable_ml_application_instance_view_trigger.help)
+@cli_util.option('--ml-app-instance-view-id', required=True, help=u"""unique MlApplicationInstanceView identifier""")
+@click.pass_context
+def disable_ml_application_instance_view_trigger(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_instance_view_id'], six.string_types) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-instance-view-id cannot be whitespace or empty string')
+
+    if 'ml_app_instance_view_id' in kwargs:
+        kwargs['ml_application_instance_view_id'] = kwargs['ml_app_instance_view_id']
+        del kwargs['ml_app_instance_view_id']
+
+    ctx.invoke(datascience_cli.disable_ml_application_instance_view_trigger, **kwargs)
+
+
+# Rename oci data-science ml-app-instance-view enable_ml_application_instance_view_trigger --ml-application-instance-view-id
+#   to oci data-science ml-app-instance-view enable_ml_application_instance_view_trigger --ml-app-instance-view-id
+@cli_util.copy_params_from_generated_command(datascience_cli.enable_ml_application_instance_view_trigger, params_to_exclude=['ml_application_instance_view_id'])
+@datascience_cli.ml_application_instance_view_group.command(name=datascience_cli.enable_ml_application_instance_view_trigger.name, help=datascience_cli.enable_ml_application_instance_view_trigger.help)
+@cli_util.option('--ml-app-instance-view-id', required=True, help=u"""unique MlApplicationInstanceView identifier""")
+@click.pass_context
+def enable_ml_application_instance_view_trigger(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_instance_view_id'], six.string_types) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-instance-view-id cannot be whitespace or empty string')
+
+    if 'ml_app_instance_view_id' in kwargs:
+        kwargs['ml_application_instance_view_id'] = kwargs['ml_app_instance_view_id']
+        del kwargs['ml_app_instance_view_id']
+
+    ctx.invoke(datascience_cli.enable_ml_application_instance_view_trigger, **kwargs)
+
+
+# Rename oci data-science ml-app get_ml_application --ml-application-id
+#   to oci data-science ml-app get_ml_application --ml-app-id
+@cli_util.copy_params_from_generated_command(datascience_cli.get_ml_application, params_to_exclude=['ml_application_id'])
+@datascience_cli.ml_application_group.command(name=datascience_cli.get_ml_application.name, help=datascience_cli.get_ml_application.help)
+@cli_util.option('--ml-app-id', required=True, help=u"""unique MlApplication identifier""")
+@click.pass_context
+def get_ml_application(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_id'], six.string_types) and len(kwargs['ml_app_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-id cannot be whitespace or empty string')
+
+    if 'ml_app_id' in kwargs:
+        kwargs['ml_application_id'] = kwargs['ml_app_id']
+        del kwargs['ml_app_id']
+
+    ctx.invoke(datascience_cli.get_ml_application, **kwargs)
+
+
+# Rename oci data-science ml-app-implementation-version get_ml_application_historical_package_content --ml-application-implementation-version-id
+#   to oci data-science ml-app-implementation-version get_ml_application_historical_package_content --ml-app-implementation-version-id
+@cli_util.copy_params_from_generated_command(datascience_cli.get_ml_application_historical_package_content, params_to_exclude=['ml_application_implementation_version_id'])
+@datascience_cli.ml_application_implementation_version_group.command(name=datascience_cli.get_ml_application_historical_package_content.name, help=datascience_cli.get_ml_application_historical_package_content.help)
+@cli_util.option('--ml-app-implementation-version-id', required=True, help=u"""unique MlApplicationImplementationVersion identifier""")
+@click.pass_context
+def get_ml_application_historical_package_content(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_implementation_version_id'], six.string_types) and len(kwargs['ml_app_implementation_version_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-implementation-version-id cannot be whitespace or empty string')
+
+    if 'ml_app_implementation_version_id' in kwargs:
+        kwargs['ml_application_implementation_version_id'] = kwargs['ml_app_implementation_version_id']
+        del kwargs['ml_app_implementation_version_id']
+
+    ctx.invoke(datascience_cli.get_ml_application_historical_package_content, **kwargs)
+
+
+# Rename oci data-science ml-app-implementation get_ml_application_implementation --ml-application-implementation-id
+#   to oci data-science ml-app-implementation get_ml_application_implementation --ml-app-implementation-id
+@cli_util.copy_params_from_generated_command(datascience_cli.get_ml_application_implementation, params_to_exclude=['ml_application_implementation_id'])
+@datascience_cli.ml_application_implementation_group.command(name=datascience_cli.get_ml_application_implementation.name, help=datascience_cli.get_ml_application_implementation.help)
+@cli_util.option('--ml-app-implementation-id', required=True, help=u"""unique MlApplicationImplementation identifier""")
+@click.pass_context
+def get_ml_application_implementation(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_implementation_id'], six.string_types) and len(kwargs['ml_app_implementation_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-implementation-id cannot be whitespace or empty string')
+
+    if 'ml_app_implementation_id' in kwargs:
+        kwargs['ml_application_implementation_id'] = kwargs['ml_app_implementation_id']
+        del kwargs['ml_app_implementation_id']
+
+    ctx.invoke(datascience_cli.get_ml_application_implementation, **kwargs)
+
+
+# Rename oci data-science ml-app-implementation-version get_ml_application_implementation_version --ml-application-implementation-version-id
+#   to oci data-science ml-app-implementation-version get_ml_application_implementation_version --ml-app-implementation-version-id
+@cli_util.copy_params_from_generated_command(datascience_cli.get_ml_application_implementation_version, params_to_exclude=['ml_application_implementation_version_id'])
+@datascience_cli.ml_application_implementation_version_group.command(name=datascience_cli.get_ml_application_implementation_version.name, help=datascience_cli.get_ml_application_implementation_version.help)
+@cli_util.option('--ml-app-implementation-version-id', required=True, help=u"""unique MlApplicationImplementationVersion identifier""")
+@click.pass_context
+def get_ml_application_implementation_version(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_implementation_version_id'], six.string_types) and len(kwargs['ml_app_implementation_version_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-implementation-version-id cannot be whitespace or empty string')
+
+    if 'ml_app_implementation_version_id' in kwargs:
+        kwargs['ml_application_implementation_version_id'] = kwargs['ml_app_implementation_version_id']
+        del kwargs['ml_app_implementation_version_id']
+
+    ctx.invoke(datascience_cli.get_ml_application_implementation_version, **kwargs)
+
+
+# Rename oci data-science ml-app-instance get_ml_application_instance --ml-application-instance-id
+#   to oci data-science ml-app-instance get_ml_application_instance --ml-app-instance-id
+@cli_util.copy_params_from_generated_command(datascience_cli.get_ml_application_instance, params_to_exclude=['ml_application_instance_id'])
+@datascience_cli.ml_application_instance_group.command(name=datascience_cli.get_ml_application_instance.name, help=datascience_cli.get_ml_application_instance.help)
+@cli_util.option('--ml-app-instance-id', required=True, help=u"""unique MlApplicationInstance identifier""")
+@click.pass_context
+def get_ml_application_instance(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_instance_id'], six.string_types) and len(kwargs['ml_app_instance_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-instance-id cannot be whitespace or empty string')
+
+    if 'ml_app_instance_id' in kwargs:
+        kwargs['ml_application_instance_id'] = kwargs['ml_app_instance_id']
+        del kwargs['ml_app_instance_id']
+
+    ctx.invoke(datascience_cli.get_ml_application_instance, **kwargs)
+
+
+# Rename oci data-science ml-app-instance-view get_ml_application_instance_view --ml-application-instance-view-id
+#   to oci data-science ml-app-instance-view get_ml_application_instance_view --ml-app-instance-view-id
+@cli_util.copy_params_from_generated_command(datascience_cli.get_ml_application_instance_view, params_to_exclude=['ml_application_instance_view_id'])
+@datascience_cli.ml_application_instance_view_group.command(name=datascience_cli.get_ml_application_instance_view.name, help=datascience_cli.get_ml_application_instance_view.help)
+@cli_util.option('--ml-app-instance-view-id', required=True, help=u"""unique MlApplicationInstanceView identifier""")
+@click.pass_context
+def get_ml_application_instance_view(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_instance_view_id'], six.string_types) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-instance-view-id cannot be whitespace or empty string')
+
+    if 'ml_app_instance_view_id' in kwargs:
+        kwargs['ml_application_instance_view_id'] = kwargs['ml_app_instance_view_id']
+        del kwargs['ml_app_instance_view_id']
+
+    ctx.invoke(datascience_cli.get_ml_application_instance_view, **kwargs)
+
+
+# Rename oci data-science ml-app-implementation get_ml_application_package_content --ml-application-implementation-id
+#   to oci data-science ml-app-implementation get_ml_application_package_content --ml-app-implementation-id
+@cli_util.copy_params_from_generated_command(datascience_cli.get_ml_application_package_content, params_to_exclude=['ml_application_implementation_id'])
+@datascience_cli.ml_application_implementation_group.command(name=datascience_cli.get_ml_application_package_content.name, help=datascience_cli.get_ml_application_package_content.help)
+@cli_util.option('--ml-app-implementation-id', required=True, help=u"""unique MlApplicationImplementation identifier""")
+@click.pass_context
+def get_ml_application_package_content(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_implementation_id'], six.string_types) and len(kwargs['ml_app_implementation_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-implementation-id cannot be whitespace or empty string')
+
+    if 'ml_app_implementation_id' in kwargs:
+        kwargs['ml_application_implementation_id'] = kwargs['ml_app_implementation_id']
+        del kwargs['ml_app_implementation_id']
+
+    ctx.invoke(datascience_cli.get_ml_application_package_content, **kwargs)
+
+
+# Rename oci data-science ml-app-implementation-version list_ml_application_implementation_versions --ml-application-implementation-id
+#   to oci data-science ml-app-implementation-version list_ml_application_implementation_versions --ml-app-implementation-id
+@cli_util.copy_params_from_generated_command(datascience_cli.list_ml_application_implementation_versions, params_to_exclude=['ml_application_implementation_id'])
+@datascience_cli.ml_application_implementation_version_group.command(name=datascience_cli.list_ml_application_implementation_versions.name, help=datascience_cli.list_ml_application_implementation_versions.help)
+@cli_util.option('--ml-app-implementation-id', help=u"""unique MlApplicationImplementation identifier""")
+@click.pass_context
+def list_ml_application_implementation_versions(ctx, **kwargs):
+
+    if 'ml_app_implementation_id' in kwargs:
+        kwargs['ml_application_implementation_id'] = kwargs['ml_app_implementation_id']
+        del kwargs['ml_app_implementation_id']
+
+    ctx.invoke(datascience_cli.list_ml_application_implementation_versions, **kwargs)
+
+
+# Rename oci data-science ml-app-implementation list_ml_application_implementations --ml-application-implementation-id --ml-application-id
+#   to oci data-science ml-app-implementation list_ml_application_implementations --ml-app-implementation-id --ml-app-id
+@cli_util.copy_params_from_generated_command(datascience_cli.list_ml_application_implementations, params_to_exclude=['ml_application_implementation_id', 'ml_application_id'])
+@datascience_cli.ml_application_implementation_group.command(name=datascience_cli.list_ml_application_implementations.name, help=datascience_cli.list_ml_application_implementations.help)
+@cli_util.option('--ml-app-implementation-id', help=u"""unique MlApplicationImplementation identifier""")
+@cli_util.option('--ml-app-id', help=u"""unique MlApplication identifier""")
+@click.pass_context
+def list_ml_application_implementations(ctx, **kwargs):
+
+    if 'ml_app_implementation_id' in kwargs:
+        kwargs['ml_application_implementation_id'] = kwargs['ml_app_implementation_id']
+        del kwargs['ml_app_implementation_id']
+    if 'ml_app_id' in kwargs:
+        kwargs['ml_application_id'] = kwargs['ml_app_id']
+        del kwargs['ml_app_id']
+
+    ctx.invoke(datascience_cli.list_ml_application_implementations, **kwargs)
+
+
+# Rename oci data-science ml-app-instance-view list_ml_application_instance_views --ml-application-id --ml-application-implementation-id
+#   to oci data-science ml-app-instance-view list_ml_application_instance_views --ml-app-id --ml-app-implementation-id
+@cli_util.copy_params_from_generated_command(datascience_cli.list_ml_application_instance_views, params_to_exclude=['ml_application_id', 'ml_application_implementation_id'])
+@datascience_cli.ml_application_instance_view_group.command(name=datascience_cli.list_ml_application_instance_views.name, help=datascience_cli.list_ml_application_instance_views.help)
+@cli_util.option('--ml-app-id', help=u"""unique MlApplication identifier""")
+@cli_util.option('--ml-app-implementation-id', help=u"""unique MlApplicationImplementation identifier""")
+@click.pass_context
+def list_ml_application_instance_views(ctx, **kwargs):
+
+    if 'ml_app_id' in kwargs:
+        kwargs['ml_application_id'] = kwargs['ml_app_id']
+        del kwargs['ml_app_id']
+    if 'ml_app_implementation_id' in kwargs:
+        kwargs['ml_application_implementation_id'] = kwargs['ml_app_implementation_id']
+        del kwargs['ml_app_implementation_id']
+
+    ctx.invoke(datascience_cli.list_ml_application_instance_views, **kwargs)
+
+
+# Rename oci data-science ml-app-instance list_ml_application_instances --ml-application-id
+#   to oci data-science ml-app-instance list_ml_application_instances --ml-app-id
+@cli_util.copy_params_from_generated_command(datascience_cli.list_ml_application_instances, params_to_exclude=['ml_application_id'])
+@datascience_cli.ml_application_instance_group.command(name=datascience_cli.list_ml_application_instances.name, help=datascience_cli.list_ml_application_instances.help)
+@cli_util.option('--ml-app-id', help=u"""unique MlApplication identifier""")
+@click.pass_context
+def list_ml_application_instances(ctx, **kwargs):
+
+    if 'ml_app_id' in kwargs:
+        kwargs['ml_application_id'] = kwargs['ml_app_id']
+        del kwargs['ml_app_id']
+
+    ctx.invoke(datascience_cli.list_ml_application_instances, **kwargs)
+
+
+# Rename oci data-science ml-app list_ml_applications --ml-application-id
+#   to oci data-science ml-app list_ml_applications --ml-app-id
+@cli_util.copy_params_from_generated_command(datascience_cli.list_ml_applications, params_to_exclude=['ml_application_id'])
+@datascience_cli.ml_application_group.command(name=datascience_cli.list_ml_applications.name, help=datascience_cli.list_ml_applications.help)
+@cli_util.option('--ml-app-id', help=u"""unique MlApplication identifier""")
+@click.pass_context
+def list_ml_applications(ctx, **kwargs):
+
+    if 'ml_app_id' in kwargs:
+        kwargs['ml_application_id'] = kwargs['ml_app_id']
+        del kwargs['ml_app_id']
+
+    ctx.invoke(datascience_cli.list_ml_applications, **kwargs)
+
+
+# Rename oci data-science ml-app-instance-view recover_ml_application_instance_view --ml-application-instance-view-id
+#   to oci data-science ml-app-instance-view recover_ml_application_instance_view --ml-app-instance-view-id
+@cli_util.copy_params_from_generated_command(datascience_cli.recover_ml_application_instance_view, params_to_exclude=['ml_application_instance_view_id'])
+@datascience_cli.ml_application_instance_view_group.command(name=datascience_cli.recover_ml_application_instance_view.name, help=datascience_cli.recover_ml_application_instance_view.help)
+@cli_util.option('--ml-app-instance-view-id', required=True, help=u"""unique MlApplicationInstanceView identifier""")
+@click.pass_context
+def recover_ml_application_instance_view(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_instance_view_id'], six.string_types) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-instance-view-id cannot be whitespace or empty string')
+
+    if 'ml_app_instance_view_id' in kwargs:
+        kwargs['ml_application_instance_view_id'] = kwargs['ml_app_instance_view_id']
+        del kwargs['ml_app_instance_view_id']
+
+    ctx.invoke(datascience_cli.recover_ml_application_instance_view, **kwargs)
+
+
+# Rename oci data-science ml-app-instance trigger_ml_application_instance_flow --ml-application-instance-id
+#   to oci data-science ml-app-instance trigger_ml_application_instance_flow --ml-app-instance-id
+@cli_util.copy_params_from_generated_command(datascience_cli.trigger_ml_application_instance_flow, params_to_exclude=['ml_application_instance_id'])
+@datascience_cli.ml_application_instance_group.command(name=datascience_cli.trigger_ml_application_instance_flow.name, help=datascience_cli.trigger_ml_application_instance_flow.help)
+@cli_util.option('--ml-app-instance-id', required=True, help=u"""unique MlApplicationInstance identifier""")
+@click.pass_context
+def trigger_ml_application_instance_flow(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_instance_id'], six.string_types) and len(kwargs['ml_app_instance_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-instance-id cannot be whitespace or empty string')
+
+    if 'ml_app_instance_id' in kwargs:
+        kwargs['ml_application_instance_id'] = kwargs['ml_app_instance_id']
+        del kwargs['ml_app_instance_id']
+
+    ctx.invoke(datascience_cli.trigger_ml_application_instance_flow, **kwargs)
+
+
+# Rename oci data-science ml-app-instance-view trigger_ml_application_instance_view_flow --ml-application-instance-view-id
+#   to oci data-science ml-app-instance-view trigger_ml_application_instance_view_flow --ml-app-instance-view-id
+@cli_util.copy_params_from_generated_command(datascience_cli.trigger_ml_application_instance_view_flow, params_to_exclude=['ml_application_instance_view_id'])
+@datascience_cli.ml_application_instance_view_group.command(name=datascience_cli.trigger_ml_application_instance_view_flow.name, help=datascience_cli.trigger_ml_application_instance_view_flow.help)
+@cli_util.option('--ml-app-instance-view-id', required=True, help=u"""unique MlApplicationInstanceView identifier""")
+@click.pass_context
+def trigger_ml_application_instance_view_flow(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_instance_view_id'], six.string_types) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-instance-view-id cannot be whitespace or empty string')
+
+    if 'ml_app_instance_view_id' in kwargs:
+        kwargs['ml_application_instance_view_id'] = kwargs['ml_app_instance_view_id']
+        del kwargs['ml_app_instance_view_id']
+
+    ctx.invoke(datascience_cli.trigger_ml_application_instance_view_flow, **kwargs)
+
+
+# Rename oci data-science ml-app update_ml_application --ml-application-id
+#   to oci data-science ml-app update_ml_application --ml-app-id
+@cli_util.copy_params_from_generated_command(datascience_cli.update_ml_application, params_to_exclude=['ml_application_id'])
+@datascience_cli.ml_application_group.command(name=datascience_cli.update_ml_application.name, help=datascience_cli.update_ml_application.help)
+@cli_util.option('--ml-app-id', required=True, help=u"""unique MlApplication identifier""")
+@click.pass_context
+def update_ml_application(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_id'], six.string_types) and len(kwargs['ml_app_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-id cannot be whitespace or empty string')
+
+    if 'ml_app_id' in kwargs:
+        kwargs['ml_application_id'] = kwargs['ml_app_id']
+        del kwargs['ml_app_id']
+
+    ctx.invoke(datascience_cli.update_ml_application, **kwargs)
+
+
+# Rename oci data-science ml-app-implementation update_ml_application_implementation --ml-application-implementation-id
+#   to oci data-science ml-app-implementation update_ml_application_implementation --ml-app-implementation-id
+@cli_util.copy_params_from_generated_command(datascience_cli.update_ml_application_implementation, params_to_exclude=['ml_application_implementation_id'])
+@datascience_cli.ml_application_implementation_group.command(name=datascience_cli.update_ml_application_implementation.name, help=datascience_cli.update_ml_application_implementation.help)
+@cli_util.option('--ml-app-implementation-id', required=True, help=u"""unique MlApplicationImplementation identifier""")
+@click.pass_context
+def update_ml_application_implementation(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_implementation_id'], six.string_types) and len(kwargs['ml_app_implementation_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-implementation-id cannot be whitespace or empty string')
+
+    if 'ml_app_implementation_id' in kwargs:
+        kwargs['ml_application_implementation_id'] = kwargs['ml_app_implementation_id']
+        del kwargs['ml_app_implementation_id']
+
+    ctx.invoke(datascience_cli.update_ml_application_implementation, **kwargs)
+
+
+# Rename oci data-science ml-app-implementation-version update_ml_application_implementation_version --ml-application-implementation-version-id
+#   to oci data-science ml-app-implementation-version update_ml_application_implementation_version --ml-app-implementation-version-id
+@cli_util.copy_params_from_generated_command(datascience_cli.update_ml_application_implementation_version, params_to_exclude=['ml_application_implementation_version_id'])
+@datascience_cli.ml_application_implementation_version_group.command(name=datascience_cli.update_ml_application_implementation_version.name, help=datascience_cli.update_ml_application_implementation_version.help)
+@cli_util.option('--ml-app-implementation-version-id', required=True, help=u"""unique MlApplicationImplementationVersion identifier""")
+@click.pass_context
+def update_ml_application_implementation_version(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_implementation_version_id'], six.string_types) and len(kwargs['ml_app_implementation_version_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-implementation-version-id cannot be whitespace or empty string')
+
+    if 'ml_app_implementation_version_id' in kwargs:
+        kwargs['ml_application_implementation_version_id'] = kwargs['ml_app_implementation_version_id']
+        del kwargs['ml_app_implementation_version_id']
+
+    ctx.invoke(datascience_cli.update_ml_application_implementation_version, **kwargs)
+
+
+# Rename oci data-science ml-app-instance update_ml_application_instance --ml-application-instance-id --ml-application-implementation-id
+#   to oci data-science ml-app-instance update_ml_application_instance --ml-app-instance-id --ml-app-implementation-id
+@cli_util.copy_params_from_generated_command(datascience_cli.update_ml_application_instance, params_to_exclude=['ml_application_instance_id', 'ml_application_implementation_id'])
+@datascience_cli.ml_application_instance_group.command(name=datascience_cli.update_ml_application_instance.name, help=datascience_cli.update_ml_application_instance.help)
+@cli_util.option('--ml-app-instance-id', required=True, help=u"""unique MlApplicationInstance identifier""")
+@cli_util.option('--ml-app-implementation-id', help=u"""The OCID of ML Application Implementation selected as a certain solution for a given ML problem (ML Application) used for the given instance.""")
+@click.pass_context
+def update_ml_application_instance(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_instance_id'], six.string_types) and len(kwargs['ml_app_instance_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-instance-id cannot be whitespace or empty string')
+
+    if 'ml_app_instance_id' in kwargs:
+        kwargs['ml_application_instance_id'] = kwargs['ml_app_instance_id']
+        del kwargs['ml_app_instance_id']
+    if 'ml_app_implementation_id' in kwargs:
+        kwargs['ml_application_implementation_id'] = kwargs['ml_app_implementation_id']
+        del kwargs['ml_app_implementation_id']
+
+    ctx.invoke(datascience_cli.update_ml_application_instance, **kwargs)
+
+
+# Rename oci data-science ml-app-instance-view update_ml_application_instance_view --ml-application-instance-view-id
+#   to oci data-science ml-app-instance-view update_ml_application_instance_view --ml-app-instance-view-id
+@cli_util.copy_params_from_generated_command(datascience_cli.update_ml_application_instance_view, params_to_exclude=['ml_application_instance_view_id'])
+@datascience_cli.ml_application_instance_view_group.command(name=datascience_cli.update_ml_application_instance_view.name, help=datascience_cli.update_ml_application_instance_view.help)
+@cli_util.option('--ml-app-instance-view-id', required=True, help=u"""unique MlApplicationInstanceView identifier""")
+@click.pass_context
+def update_ml_application_instance_view(ctx, **kwargs):
+
+    if isinstance(kwargs['ml_app_instance_view_id'], six.string_types) and len(kwargs['ml_app_instance_view_id'].strip()) == 0:
+        raise click.UsageError('Parameter --ml-app-instance-view-id cannot be whitespace or empty string')
+
+    if 'ml_app_instance_view_id' in kwargs:
+        kwargs['ml_application_instance_view_id'] = kwargs['ml_app_instance_view_id']
+        del kwargs['ml_app_instance_view_id']
+
+    ctx.invoke(datascience_cli.update_ml_application_instance_view, **kwargs)

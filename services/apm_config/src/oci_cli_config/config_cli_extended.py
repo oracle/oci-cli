@@ -76,3 +76,23 @@ cli_util.rename_command(config_cli, config_cli.test_output_group, config_cli.tes
 
 # oci apm-config test-output -> oci apm-config test
 cli_util.rename_command(config_cli, config_cli.apm_config_root_group, config_cli.test_output_group, "test")
+
+
+# oci apm-config export-configuration-details copy-configuration -> oci apm-config export-configuration-details copy
+cli_util.rename_command(config_cli, config_cli.export_configuration_details_group, config_cli.copy_configuration, "copy")
+
+
+# oci apm-config export-configuration-details export-configuration -> oci apm-config export-configuration-details export
+cli_util.rename_command(config_cli, config_cli.export_configuration_details_group, config_cli.export_configuration, "export")
+
+
+# oci apm-config import-configuration-details import-configuration -> oci apm-config import-configuration-details import
+cli_util.rename_command(config_cli, config_cli.import_configuration_details_group, config_cli.import_configuration, "import")
+
+
+# oci apm-config export-configuration-details -> oci apm-config export-configuration
+cli_util.rename_command(config_cli, config_cli.apm_config_root_group, config_cli.export_configuration_details_group, "export-configuration")
+
+
+# oci apm-config import-configuration-details -> oci apm-config import-configuration
+cli_util.rename_command(config_cli, config_cli.apm_config_root_group, config_cli.import_configuration_details_group, "import-configuration")
