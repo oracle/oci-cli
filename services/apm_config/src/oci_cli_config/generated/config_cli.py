@@ -29,6 +29,12 @@ def metric_group_group():
     pass
 
 
+@click.command(cli_util.override('apm_config.import_configuration_details_group.command_name', 'import-configuration-details'), cls=CommandGroupWithAlias, help="""Array of configuration items with dependencies to import.""")
+@cli_util.help_option_group
+def import_configuration_details_group():
+    pass
+
+
 @click.command(cli_util.override('apm_config.span_filter_group.command_name', 'span-filter'), cls=CommandGroupWithAlias, help="""A named setting that specifies the filter criteria to match a subset of the spans.""")
 @cli_util.help_option_group
 def span_filter_group():
@@ -38,6 +44,12 @@ def span_filter_group():
 @click.command(cli_util.override('apm_config.config_collection_group.command_name', 'config-collection'), cls=CommandGroupWithAlias, help="""A collection of configuration items.""")
 @cli_util.help_option_group
 def config_collection_group():
+    pass
+
+
+@click.command(cli_util.override('apm_config.export_configuration_details_group.command_name', 'export-configuration-details'), cls=CommandGroupWithAlias, help="""Array of configuration items with its dependencies to export.""")
+@cli_util.help_option_group
+def export_configuration_details_group():
     pass
 
 
@@ -54,10 +66,39 @@ def test_output_group():
 
 
 apm_config_root_group.add_command(metric_group_group)
+apm_config_root_group.add_command(import_configuration_details_group)
 apm_config_root_group.add_command(span_filter_group)
 apm_config_root_group.add_command(config_collection_group)
+apm_config_root_group.add_command(export_configuration_details_group)
 apm_config_root_group.add_command(config_group)
 apm_config_root_group.add_command(test_output_group)
+
+
+@export_configuration_details_group.command(name=cli_util.override('apm_config.copy_configuration.command_name', 'copy-configuration'), help=u"""Fast importing configuration items to a destination APM domain ID. \n[Command Reference](copyConfiguration)""")
+@cli_util.option('--configuration-map', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that has parameters related to the import process (EnableOcidSubstitution, DestinationDomainID, \u2026) and more. Example: `{\"parameter-key\": \"parameter-value\"}` Supported parameters: \u2014 Enable the OCIDs in instructions to be replaced, if set to \"true\" The Config Service replace any OCIDs it finds in the instructions. \u2014 Destination APM Domain ID where the configuration Item(s) will be fast imported to. \u2014 List of Configuration Type or Groups to be fast imported. \u2014 the compartment Id we will fast import to, if the compartment Id is not provided it will be the default destination domain compartmentId.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@cli_util.option('--apm-target-domain-id', required=True, help=u"""The Target APM Domain ID the request is intended for.""")
+@json_skeleton_utils.get_cli_json_input_option({'configuration-map': {'module': 'apm_config', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-map': {'module': 'apm_config', 'class': 'dict(str, string)'}}, output_type={'module': 'apm_config', 'class': 'ImportConfigurationFailedItemsCollection'})
+@cli_util.wrap_exceptions
+def copy_configuration(ctx, from_json, configuration_map, apm_domain_id, apm_target_domain_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configurationMap'] = cli_util.parse_json_parameter("configuration_map", configuration_map)
+
+    client = cli_util.build_client('apm_config', 'config', ctx)
+    result = client.copy_configuration(
+        apm_domain_id=apm_domain_id,
+        apm_target_domain_id=apm_target_domain_id,
+        copy_configuration_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @config_group.command(name=cli_util.override('apm_config.create_config.command_name', 'create'), help=u"""Creates a new configuration item. \n[Command Reference](createConfig)""")
@@ -312,6 +353,31 @@ def delete_config(ctx, from_json, apm_domain_id, config_id, if_match):
     cli_util.render_response(result, ctx)
 
 
+@export_configuration_details_group.command(name=cli_util.override('apm_config.export_configuration.command_name', 'export-configuration'), help=u"""Exports configurations for the whole domain by domainId. \n[Command Reference](exportConfiguration)""")
+@cli_util.option('--configuration-map', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that has parameters related to the export process (ConfigurationId, Skip, \u2026) and more. Example: `{\"parameter-key\": \"parameter-value\"}` Supported parameters: \u2014 List of the Configuration Type or Groups to Export to a destination domain.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@json_skeleton_utils.get_cli_json_input_option({'configuration-map': {'module': 'apm_config', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-map': {'module': 'apm_config', 'class': 'dict(str, string)'}}, output_type={'module': 'apm_config', 'class': 'ExportConfigurationResponseDetails'})
+@cli_util.wrap_exceptions
+def export_configuration(ctx, from_json, configuration_map, apm_domain_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configurationMap'] = cli_util.parse_json_parameter("configuration_map", configuration_map)
+
+    client = cli_util.build_client('apm_config', 'config', ctx)
+    result = client.export_configuration(
+        apm_domain_id=apm_domain_id,
+        export_configuration_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @config_group.command(name=cli_util.override('apm_config.get_config.command_name', 'get'), help=u"""Gets the configuration item identified by the OCID. \n[Command Reference](getConfig)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
 @cli_util.option('--config-id', required=True, help=u"""The [OCID] of the configuration item.""")
@@ -331,6 +397,33 @@ def get_config(ctx, from_json, apm_domain_id, config_id):
     result = client.get_config(
         apm_domain_id=apm_domain_id,
         config_id=config_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@import_configuration_details_group.command(name=cli_util.override('apm_config.import_configuration.command_name', 'import-configuration'), help=u"""Import configurations Item(s) with its dependencies into a destination domain. \n[Command Reference](importConfiguration)""")
+@cli_util.option('--configuration-items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of Configurations Details .""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--configuration-map', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that has parameters related to the import process (EnableOcidSubstitution, Skip, \u2026) and more. Example: `{\"parameter-key\": \"parameter-value\"}` Supported parameters: \u2014 Enable the OCIDs in instructions to be replaced, if set to \"true\" The Config Service replace any OCIDs it finds in the instructions, if set to true the Config Service will replace. \u2014 Compartment Id we want to import the configuration Items, if the compartment Id is not provided it will be the default destination domain compartmentId.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@json_skeleton_utils.get_cli_json_input_option({'configuration-items': {'module': 'apm_config', 'class': 'list[ExportImportConfigSummary]'}, 'configuration-map': {'module': 'apm_config', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-items': {'module': 'apm_config', 'class': 'list[ExportImportConfigSummary]'}, 'configuration-map': {'module': 'apm_config', 'class': 'dict(str, string)'}}, output_type={'module': 'apm_config', 'class': 'ImportConfigurationFailedItemsCollection'})
+@cli_util.wrap_exceptions
+def import_configuration(ctx, from_json, configuration_items, configuration_map, apm_domain_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['configurationItems'] = cli_util.parse_json_parameter("configuration_items", configuration_items)
+    _details['configurationMap'] = cli_util.parse_json_parameter("configuration_map", configuration_map)
+
+    client = cli_util.build_client('apm_config', 'config', ctx)
+    result = client.import_configuration(
+        apm_domain_id=apm_domain_id,
+        import_configuration_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

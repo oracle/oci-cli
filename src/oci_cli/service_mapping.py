@@ -398,6 +398,11 @@ service_mapping = {
         "Load Balancing",
         "Networking"
     ],
+    "lfs": [
+        "lustre_file_storage",
+        "File Storage with Lustre",
+        "Storage"
+    ],
     "license-manager": [
         "license_manager",
         "License Manager",
