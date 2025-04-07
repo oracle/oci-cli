@@ -213,7 +213,7 @@ case $key in
 esac
 done
 
-# If offline installation enabled, then use local install,py
+# If offline installation enabled, then use local install.py
 if [ "$OFFLINE_INSTALL" = true ]; then
   install_script="./install.py"
 fi
