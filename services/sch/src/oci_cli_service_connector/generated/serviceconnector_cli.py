@@ -1312,7 +1312,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
 @service_connector_group.command(name=cli_util.override('service_connector.list_service_connectors.command_name', 'list'), help=u"""Lists connectors in the specified compartment. For more information, see [Listing Connectors]. \n[Command Reference](listServiceConnectors)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for this request.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state.
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "NEEDS_ATTENTION", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state.
 
 Example: `ACTIVE`""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.

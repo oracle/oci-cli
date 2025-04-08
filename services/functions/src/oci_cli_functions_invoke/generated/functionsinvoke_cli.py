@@ -38,12 +38,13 @@ functions_invoke_root_group.add_command(function_group)
 @cli_util.option('--invoke-function-body', help=u"""The body of the function invocation. Note: The maximum size of the request is limited. This limit is currently 6MB and the endpoint will not accept requests that are bigger than this limit.""")
 @cli_util.option('--fn-intent', type=custom_types.CliCaseInsensitiveChoice(["httprequest", "cloudevent"]), help=u"""An optional intent header that indicates to the FDK the way the event should be interpreted. E.g. 'httprequest', 'cloudevent'.""")
 @cli_util.option('--fn-invoke-type', type=custom_types.CliCaseInsensitiveChoice(["detached", "sync"]), help=u"""Indicates whether Oracle Functions should execute the request and return the result ('sync') of the execution, or whether Oracle Functions should return as soon as processing has begun ('detached') and leave result handling to the function.""")
+@cli_util.option('--is-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not execute the function.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def invoke_function(ctx, from_json, file, function_id, invoke_function_body, fn_intent, fn_invoke_type):
+def invoke_function(ctx, from_json, file, function_id, invoke_function_body, fn_intent, fn_invoke_type, is_dry_run):
 
     if isinstance(function_id, six.string_types) and len(function_id.strip()) == 0:
         raise click.UsageError('Parameter --function-id cannot be whitespace or empty string')
@@ -55,6 +56,8 @@ def invoke_function(ctx, from_json, file, function_id, invoke_function_body, fn_
         kwargs['fn_intent'] = fn_intent
     if fn_invoke_type is not None:
         kwargs['fn_invoke_type'] = fn_invoke_type
+    if is_dry_run is not None:
+        kwargs['is_dry_run'] = is_dry_run
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     # do not automatically retry operations with binary inputs
