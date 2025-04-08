@@ -681,7 +681,7 @@ service_mapping = {
     "stack-monitoring": [
         "stack_monitoring",
         "Stack Monitoring",
-        "Developer Services"
+        "Observability & Management"
     ],
     "streaming": [
         "streaming",

@@ -141,3 +141,7 @@ def restore_from_file(ctx, **kwargs):
         ctx.invoke(kmsvault_cli.restore_vault_from_file, **kwargs)
     except Exception:
         click.echo("Can't open the file")
+
+
+# Remove create-vault-replica-replica-external-vault-metadata from oci kms management vault
+kmsvault_cli.vault_group.commands.pop(kmsvault_cli.create_vault_replica_replica_external_vault_metadata.name)
