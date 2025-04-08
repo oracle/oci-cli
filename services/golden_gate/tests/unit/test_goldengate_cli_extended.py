@@ -36,9 +36,6 @@ class TestGoldenGate(unittest.TestCase):
         assert 'display-name' in result.output
         assert 'compartment-id' in result.output
         assert 'subnet-id' in result.output
-        assert 'cpu-core-count' in result.output
-        assert 'is-auto-scaling-enabled' in result.output
-        assert 'deployment-type' in result.output
 
     def test_deployment_create_req_params1(self):
         result = util.invoke_command(['goldengate', 'deployment', 'create', '--deployment-name'])

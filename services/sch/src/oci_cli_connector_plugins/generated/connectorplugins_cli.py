@@ -65,7 +65,7 @@ def get_connector_plugin(ctx, from_json, connector_plugin_name):
 
 
 @connector_plugin_summary_group.command(name=cli_util.override('connector_plugins.list_connector_plugins.command_name', 'list-connector-plugins'), help=u"""Lists connector plugins according to the specified filter. \n[Command Reference](listConnectorPlugins)""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state.
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "NEEDS_ATTENTION", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state.
 
 Example: `ACTIVE`""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.

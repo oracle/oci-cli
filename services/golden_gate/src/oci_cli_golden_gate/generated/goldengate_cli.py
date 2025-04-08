@@ -40,6 +40,12 @@ def certificate_group():
     pass
 
 
+@click.command(cli_util.override('goldengate.deployment_peer_summary_group.command_name', 'deployment-peer-summary'), cls=CommandGroupWithAlias, help="""The summary of the deployment Peer.""")
+@cli_util.help_option_group
+def deployment_peer_summary_group():
+    pass
+
+
 @click.command(cli_util.override('goldengate.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from the execution of a work request.""")
 @cli_util.help_option_group
 def work_request_log_entry_group():
@@ -145,6 +151,7 @@ def deployment_group():
 goldengate_root_group.add_command(deployment_backup_group)
 goldengate_root_group.add_command(trail_file_summary_group)
 goldengate_root_group.add_command(certificate_group)
+goldengate_root_group.add_command(deployment_peer_summary_group)
 goldengate_root_group.add_command(work_request_log_entry_group)
 goldengate_root_group.add_command(work_request_group)
 goldengate_root_group.add_command(message_summary_group)
@@ -283,6 +290,73 @@ def add_deployment_backup_lock(ctx, from_json, wait_for_state, max_wait_seconds,
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@deployment_group.command(name=cli_util.override('goldengate.add_deployment_local_peer.command_name', 'add'), help=u"""Adds a new local peer to the deployment, this will add the given placement to deployment placement attribute. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](addDeploymentLocalPeer)""")
+@cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
+@cli_util.option('--availability-domain', help=u"""The availability domain of a placement.""")
+@cli_util.option('--fault-domain', help=u"""The fault domain of a placement.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def add_deployment_local_peer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, availability_domain, fault_domain, if_match):
+
+    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+        raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if availability_domain is not None:
+        _details['availabilityDomain'] = availability_domain
+
+    if fault_domain is not None:
+        _details['faultDomain'] = fault_domain
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.add_deployment_local_peer(
+        deployment_id=deployment_id,
+        add_deployment_local_peer_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -979,6 +1053,73 @@ def collect_deployment_diagnostic(ctx, from_json, wait_for_state, max_wait_secon
     result = client.collect_deployment_diagnostic(
         deployment_id=deployment_id,
         collect_deployment_diagnostic_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pipeline_group.command(name=cli_util.override('goldengate.collect_pipeline_diagnostic.command_name', 'collect-pipeline-diagnostic'), help=u"""Collects diagnostics for the pipeline \n[Command Reference](collectPipelineDiagnostic)""")
+@cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline created.""")
+@cli_util.option('--namespace-name', required=True, help=u"""Name of namespace that serves as a container for all of your buckets""")
+@cli_util.option('--bucket-name', required=True, help=u"""Name of the bucket where the object is to be uploaded in the object storage""")
+@cli_util.option('--diagnostic-name-prefix', help=u"""Name of the diagnostic collected and uploaded to object storage""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def collect_pipeline_diagnostic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, namespace_name, bucket_name, diagnostic_name_prefix, if_match):
+
+    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+        raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['namespaceName'] = namespace_name
+    _details['bucketName'] = bucket_name
+
+    if diagnostic_name_prefix is not None:
+        _details['diagnosticNamePrefix'] = diagnostic_name_prefix
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.collect_pipeline_diagnostic(
+        pipeline_id=pipeline_id,
+        collect_pipeline_diagnostic_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -5156,14 +5297,17 @@ def create_database_registration(ctx, from_json, wait_for_state, max_wait_second
 
 @deployment_group.command(name=cli_util.override('goldengate.create_deployment.command_name', 'create'), help=u"""Creates a new Deployment. \n[Command Reference](createDeployment)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
-@cli_util.option('--license-model', required=True, type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to a Deployment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet of the deployment's private endpoint. The subnet must be a private subnet. For backward compatibility, public subnets are allowed until May 31 2025, after which the private subnet will be enforced.""")
-@cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The Minimum number of OCPUs to be made available for this Deployment.""")
-@cli_util.option('--is-auto-scaling-enabled', required=True, type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Deployment's CPU core count.""")
-@cli_util.option('--deployment-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "GGSA", "DATA_TRANSFORMS"]), help=u"""The type of deployment, which can be any one of the Allowed values. NOTE: Use of the value 'OGG' is maintained for backward compatibility purposes.     Its use is discouraged in favor of 'DATABASE_ORACLE'.""")
+@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to a Deployment.""")
 @cli_util.option('--environment-type', type=custom_types.CliCaseInsensitiveChoice(["PRODUCTION", "DEVELOPMENT_OR_TESTING"]), help=u"""Specifies whether the deployment is used in a production or development/testing environment.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
+@cli_util.option('--source-deployment-id', help=u"""The [OCID] of the deployment being referenced.""")
+@cli_util.option('--availability-domain', help=u"""The availability domain of a placement.""")
+@cli_util.option('--fault-domain', help=u"""The fault domain of a placement.""")
+@cli_util.option('--placements', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of local peers of deployment
+
+This option is a JSON list with items of type DeploymentPlacementDetails.  For documentation on DeploymentPlacementDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/DeploymentPlacementDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
 
 Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5178,6 +5322,9 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--fqdn', help=u"""A three-label Fully Qualified Domain Name (FQDN) for a resource.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-public', type=click.BOOL, help=u"""True if this object is publicly available.""")
+@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The Minimum number of OCPUs to be made available for this Deployment.""")
+@cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Deployment's CPU core count.""")
+@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "GGSA", "DATA_TRANSFORMS"]), help=u"""The type of deployment, which can be any one of the Allowed values. NOTE: Use of the value 'OGG' is maintained for backward compatibility purposes.     Its use is discouraged in favor of 'DATABASE_ORACLE'.""")
 @cli_util.option('--ogg-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--maintenance-window', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--maintenance-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5185,30 +5332,41 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'ogg-data': {'module': 'golden_gate', 'class': 'CreateOggDeploymentDetails'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'CreateMaintenanceWindowDetails'}, 'maintenance-configuration': {'module': 'golden_gate', 'class': 'CreateMaintenanceConfigurationDetails'}, 'backup-schedule': {'module': 'golden_gate', 'class': 'CreateBackupScheduleDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'placements': {'module': 'golden_gate', 'class': 'list[DeploymentPlacementDetails]'}, 'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'ogg-data': {'module': 'golden_gate', 'class': 'CreateOggDeploymentDetails'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'CreateMaintenanceWindowDetails'}, 'maintenance-configuration': {'module': 'golden_gate', 'class': 'CreateMaintenanceConfigurationDetails'}, 'backup-schedule': {'module': 'golden_gate', 'class': 'CreateBackupScheduleDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'ogg-data': {'module': 'golden_gate', 'class': 'CreateOggDeploymentDetails'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'CreateMaintenanceWindowDetails'}, 'maintenance-configuration': {'module': 'golden_gate', 'class': 'CreateMaintenanceConfigurationDetails'}, 'backup-schedule': {'module': 'golden_gate', 'class': 'CreateBackupScheduleDetails'}}, output_type={'module': 'golden_gate', 'class': 'Deployment'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'placements': {'module': 'golden_gate', 'class': 'list[DeploymentPlacementDetails]'}, 'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'ogg-data': {'module': 'golden_gate', 'class': 'CreateOggDeploymentDetails'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'CreateMaintenanceWindowDetails'}, 'maintenance-configuration': {'module': 'golden_gate', 'class': 'CreateMaintenanceConfigurationDetails'}, 'backup-schedule': {'module': 'golden_gate', 'class': 'CreateBackupScheduleDetails'}}, output_type={'module': 'golden_gate', 'class': 'Deployment'})
 @cli_util.wrap_exceptions
-def create_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, license_model, compartment_id, subnet_id, cpu_core_count, is_auto_scaling_enabled, deployment_type, environment_type, description, freeform_tags, defined_tags, locks, deployment_backup_id, load_balancer_subnet_id, fqdn, nsg_ids, is_public, ogg_data, maintenance_window, maintenance_configuration, backup_schedule):
+def create_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, subnet_id, license_model, environment_type, description, source_deployment_id, availability_domain, fault_domain, placements, freeform_tags, defined_tags, locks, deployment_backup_id, load_balancer_subnet_id, fqdn, nsg_ids, is_public, cpu_core_count, is_auto_scaling_enabled, deployment_type, ogg_data, maintenance_window, maintenance_configuration, backup_schedule):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['displayName'] = display_name
-    _details['licenseModel'] = license_model
     _details['compartmentId'] = compartment_id
     _details['subnetId'] = subnet_id
-    _details['cpuCoreCount'] = cpu_core_count
-    _details['isAutoScalingEnabled'] = is_auto_scaling_enabled
-    _details['deploymentType'] = deployment_type
+
+    if license_model is not None:
+        _details['licenseModel'] = license_model
 
     if environment_type is not None:
         _details['environmentType'] = environment_type
 
     if description is not None:
         _details['description'] = description
+
+    if source_deployment_id is not None:
+        _details['sourceDeploymentId'] = source_deployment_id
+
+    if availability_domain is not None:
+        _details['availabilityDomain'] = availability_domain
+
+    if fault_domain is not None:
+        _details['faultDomain'] = fault_domain
+
+    if placements is not None:
+        _details['placements'] = cli_util.parse_json_parameter("placements", placements)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -5233,6 +5391,15 @@ def create_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if is_public is not None:
         _details['isPublic'] = is_public
+
+    if cpu_core_count is not None:
+        _details['cpuCoreCount'] = cpu_core_count
+
+    if is_auto_scaling_enabled is not None:
+        _details['isAutoScalingEnabled'] = is_auto_scaling_enabled
+
+    if deployment_type is not None:
+        _details['deploymentType'] = deployment_type
 
     if ogg_data is not None:
         _details['oggData'] = cli_util.parse_json_parameter("ogg_data", ogg_data)
@@ -6815,6 +6982,69 @@ def list_deployment_environments(ctx, from_json, all_pages, page_size, compartme
     cli_util.render_response(result, ctx)
 
 
+@deployment_peer_summary_group.command(name=cli_util.override('goldengate.list_deployment_peers.command_name', 'list-deployment-peers'), help=u"""Lists the local and remote peers in a deployment. \n[Command Reference](listDeploymentPeers)""")
+@cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "IN_PROGRESS", "CANCELING", "CANCELED", "SUCCEEDED", "WAITING"]), help=u"""A filter to return only the resources that match the 'lifecycleState' given.""")
+@cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order can be provided. Default order for 'timeCreated' is descending.  Default order for 'displayName' is ascending. If no value is specified timeCreated is the default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'DeploymentPeerCollection'})
+@cli_util.wrap_exceptions
+def list_deployment_peers(ctx, from_json, all_pages, page_size, deployment_id, lifecycle_state, display_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+        raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_deployment_peers,
+            deployment_id=deployment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_deployment_peers,
+            limit,
+            page_size,
+            deployment_id=deployment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_deployment_peers(
+            deployment_id=deployment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @deployment_type_collection_group.command(name=cli_util.override('goldengate.list_deployment_types.command_name', 'list-deployment-types'), help=u"""Returns an array of DeploymentTypeDescriptor \n[Command Reference](listDeploymentTypes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
 @cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "GGSA", "DATA_TRANSFORMS"]), help=u"""The type of deployment, the value determines the exact 'type' of the service executed in the deployment. Default value is DATABASE_ORACLE.""")
@@ -7207,7 +7437,7 @@ def list_pipeline_initialization_steps(ctx, from_json, all_pages, pipeline_id):
     cli_util.render_response(result, ctx)
 
 
-@pipeline_group.command(name=cli_util.override('goldengate.list_pipeline_running_processes.command_name', 'list-pipeline-running-processes'), help=u"""Retrieves a Pipeline's running replication process's status like extracts/replicats. \n[Command Reference](listPipelineRunningProcesses)""")
+@pipeline_group.command(name=cli_util.override('goldengate.list_pipeline_running_processes.command_name', 'list-pipeline-running-processes'), help=u"""Retrieves a Pipeline's running replication process's status like Capture/Apply. \n[Command Reference](listPipelineRunningProcesses)""")
 @cli_util.option('--pipeline-id', required=True, help=u"""The [OCID] of the pipeline created.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -8031,6 +8261,69 @@ def remove_deployment_backup_lock(ctx, from_json, wait_for_state, max_wait_secon
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@deployment_group.command(name=cli_util.override('goldengate.remove_deployment_local_peer.command_name', 'remove'), help=u"""Removes a local peer of the deployment, this will remove the given placement entry from the deployment placement attribute. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](removeDeploymentLocalPeer)""")
+@cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of a placement.""")
+@cli_util.option('--fault-domain', required=True, help=u"""The fault domain of a placement.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def remove_deployment_local_peer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, availability_domain, fault_domain, if_match):
+
+    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+        raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['faultDomain'] = fault_domain
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.remove_deployment_local_peer(
+        deployment_id=deployment_id,
+        remove_deployment_local_peer_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -9005,6 +9298,69 @@ def stop_pipeline_default_stop_pipeline_details(ctx, from_json, wait_for_state, 
     result = client.stop_pipeline(
         pipeline_id=pipeline_id,
         stop_pipeline_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@deployment_group.command(name=cli_util.override('goldengate.switchover_deployment_peer.command_name', 'switchover-deployment-peer'), help=u"""Switchover to the selected standby peer, which can be a local placement or a standby deployment in different region. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](switchoverDeploymentPeer)""")
+@cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of a placement.""")
+@cli_util.option('--fault-domain', required=True, help=u"""The fault domain of a placement.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def switchover_deployment_peer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, availability_domain, fault_domain, if_match):
+
+    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+        raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['faultDomain'] = fault_domain
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.switchover_deployment_peer(
+        deployment_id=deployment_id,
+        switchover_deployment_peer_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -13438,6 +13794,9 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--fqdn', help=u"""A three-label Fully Qualified Domain Name (FQDN) for a resource.""")
 @cli_util.option('--cpu-core-count', type=click.INT, help=u"""The Minimum number of OCPUs to be made available for this Deployment.""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Deployment's CPU core count.""")
+@cli_util.option('--placements', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of local peers of deployment
+
+This option is a JSON list with items of type DeploymentPlacementDetails.  For documentation on DeploymentPlacementDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/DeploymentPlacementDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ogg-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--maintenance-window', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--maintenance-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -13448,18 +13807,18 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'ogg-data': {'module': 'golden_gate', 'class': 'UpdateOggDeploymentDetails'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'UpdateMaintenanceWindowDetails'}, 'maintenance-configuration': {'module': 'golden_gate', 'class': 'UpdateMaintenanceConfigurationDetails'}, 'backup-schedule': {'module': 'golden_gate', 'class': 'UpdateBackupScheduleDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'placements': {'module': 'golden_gate', 'class': 'list[DeploymentPlacementDetails]'}, 'ogg-data': {'module': 'golden_gate', 'class': 'UpdateOggDeploymentDetails'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'UpdateMaintenanceWindowDetails'}, 'maintenance-configuration': {'module': 'golden_gate', 'class': 'UpdateMaintenanceConfigurationDetails'}, 'backup-schedule': {'module': 'golden_gate', 'class': 'UpdateBackupScheduleDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'ogg-data': {'module': 'golden_gate', 'class': 'UpdateOggDeploymentDetails'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'UpdateMaintenanceWindowDetails'}, 'maintenance-configuration': {'module': 'golden_gate', 'class': 'UpdateMaintenanceConfigurationDetails'}, 'backup-schedule': {'module': 'golden_gate', 'class': 'UpdateBackupScheduleDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'placements': {'module': 'golden_gate', 'class': 'list[DeploymentPlacementDetails]'}, 'ogg-data': {'module': 'golden_gate', 'class': 'UpdateOggDeploymentDetails'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'UpdateMaintenanceWindowDetails'}, 'maintenance-configuration': {'module': 'golden_gate', 'class': 'UpdateMaintenanceConfigurationDetails'}, 'backup-schedule': {'module': 'golden_gate', 'class': 'UpdateBackupScheduleDetails'}})
 @cli_util.wrap_exceptions
-def update_deployment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, display_name, license_model, environment_type, description, freeform_tags, defined_tags, nsg_ids, subnet_id, load_balancer_subnet_id, is_public, fqdn, cpu_core_count, is_auto_scaling_enabled, ogg_data, maintenance_window, maintenance_configuration, backup_schedule, if_match, is_lock_override):
+def update_deployment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, display_name, license_model, environment_type, description, freeform_tags, defined_tags, nsg_ids, subnet_id, load_balancer_subnet_id, is_public, fqdn, cpu_core_count, is_auto_scaling_enabled, placements, ogg_data, maintenance_window, maintenance_configuration, backup_schedule, if_match, is_lock_override):
 
     if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags or nsg_ids or ogg_data or maintenance_window or maintenance_configuration or backup_schedule:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and nsg-ids and ogg-data and maintenance-window and maintenance-configuration and backup-schedule will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or nsg_ids or placements or ogg_data or maintenance_window or maintenance_configuration or backup_schedule:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and nsg-ids and placements and ogg-data and maintenance-window and maintenance-configuration and backup-schedule will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -13509,6 +13868,9 @@ def update_deployment(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 
     if is_auto_scaling_enabled is not None:
         _details['isAutoScalingEnabled'] = is_auto_scaling_enabled
+
+    if placements is not None:
+        _details['placements'] = cli_util.parse_json_parameter("placements", placements)
 
     if ogg_data is not None:
         _details['oggData'] = cli_util.parse_json_parameter("ogg_data", ogg_data)
