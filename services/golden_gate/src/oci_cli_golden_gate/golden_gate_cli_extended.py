@@ -653,6 +653,14 @@ cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_backup_group, 
 cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_backup_group, goldengate_cli.remove_deployment_backup_lock, "remove-lock")
 
 
+# oci goldengate deployment add -> oci goldengate deployment add-deployment-local-peer
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.add_deployment_local_peer, "add-deployment-local-peer")
+
+
+# oci goldengate deployment remove -> oci goldengate deployment remove-deployment-local-peer
+cli_util.rename_command(goldengate_cli, goldengate_cli.deployment_group, goldengate_cli.remove_deployment_local_peer, "remove-deployment-local-peer")
+
+
 # oci goldengate connection create-connection-create-db2-connection-details -> oci goldengate connection create-db2-connection
 cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_db2_connection_details, "create-db2-connection")
 
@@ -803,3 +811,7 @@ def update_connection_update_microsoft_fabric_connection_details_extended(ctx, *
         kwargs.pop('connection_endpoint')
 
     ctx.invoke(goldengate_cli.update_connection_update_microsoft_fabric_connection_details, **kwargs)
+
+
+# oci goldengate pipeline collect-pipeline-diagnostic -> oci goldengate pipeline collect-diagnostic
+cli_util.rename_command(goldengate_cli, goldengate_cli.pipeline_group, goldengate_cli.collect_pipeline_diagnostic, "collect-diagnostic")

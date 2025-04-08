@@ -396,13 +396,14 @@ The API is a no-op if called for same region that a vault is already replicated 
 As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy. \n[Command Reference](createVaultReplica)""")
 @cli_util.option('--vault-id', required=True, help=u"""The OCID of the vault.""")
 @cli_util.option('--replica-region', required=True, help=u"""The region in the realm to which the vault need to be replicated to""")
+@cli_util.option('--replica-vault-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'replica-vault-metadata': {'module': 'key_management', 'class': 'ReplicaVaultMetadata'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'replica-vault-metadata': {'module': 'key_management', 'class': 'ReplicaVaultMetadata'}})
 @cli_util.wrap_exceptions
-def create_vault_replica(ctx, from_json, vault_id, replica_region, if_match):
+def create_vault_replica(ctx, from_json, vault_id, replica_region, replica_vault_metadata, if_match):
 
     if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
         raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
@@ -414,6 +415,51 @@ def create_vault_replica(ctx, from_json, vault_id, replica_region, if_match):
 
     _details = {}
     _details['replicaRegion'] = replica_region
+
+    if replica_vault_metadata is not None:
+        _details['replicaVaultMetadata'] = cli_util.parse_json_parameter("replica_vault_metadata", replica_vault_metadata)
+
+    client = cli_util.build_client('key_management', 'kms_vault', ctx)
+    result = client.create_vault_replica(
+        vault_id=vault_id,
+        create_vault_replica_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@vault_group.command(name=cli_util.override('kms_vault.create_vault_replica_replica_external_vault_metadata.command_name', 'create-vault-replica-replica-external-vault-metadata'), help=u"""Creates a replica for the vault in another region in the same realm
+
+The API is a no-op if called for same region that a vault is already replicated to. 409 if called on a vault that is already replicated to a different region. Users need to delete existing replica first before calling it with a different region.
+
+As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy. \n[Command Reference](createVaultReplica)""")
+@cli_util.option('--vault-id', required=True, help=u"""The OCID of the vault.""")
+@cli_util.option('--replica-region', required=True, help=u"""The region in the realm to which the vault need to be replicated to""")
+@cli_util.option('--replica-vault-metadata-private-endpoint-id', required=True, help=u"""OCID of the EKMS private endpoint in the replica region and must be in ACTIVE state""")
+@cli_util.option('--replica-vault-metadata-idcs-account-name-url', required=True, help=u"""Replica region URL of the IDCS domain""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def create_vault_replica_replica_external_vault_metadata(ctx, from_json, vault_id, replica_region, replica_vault_metadata_private_endpoint_id, replica_vault_metadata_idcs_account_name_url, if_match):
+
+    if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
+        raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['replicaVaultMetadata'] = {}
+    _details['replicaRegion'] = replica_region
+    _details['replicaVaultMetadata']['privateEndpointId'] = replica_vault_metadata_private_endpoint_id
+    _details['replicaVaultMetadata']['idcsAccountNameUrl'] = replica_vault_metadata_idcs_account_name_url
+
+    _details['replicaVaultMetadata']['vaultType'] = 'EXTERNAL'
 
     client = cli_util.build_client('key_management', 'kms_vault', ctx)
     result = client.create_vault_replica(

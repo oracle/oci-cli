@@ -6,6 +6,39 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.54.2 - 2025-04-08
+--------------------
+Added
+~~~~~
+* GoldenGate Service
+
+  * Support for new optional parameters to create and update deployment operation
+
+    * ``oci goldengate deployment create  --availability-domain, --fault-domain, --placements, --source-deployment-id``
+    * ``oci goldengate deployment update --placements``
+
+  * Support for new operations to goldengate deployment operation
+
+    * ``oci goldengate deployment add-deployment-local-peer``
+    * ``oci goldengate deployment remove-deployment-local-peer``
+    * ``oci goldengate deployment switchover-deployment-peer``
+
+  * Support for deploymentPeerSummary operation
+
+    * ``oci goldengate deployment-peer-summary list-deployment-peers``
+
+  * Support for collecting diagnostics for ZeroETL pipelines
+
+    * ``oci goldengate pipeline collect-diagnostic``
+
+* Support for new optional parameters for below command in the Key Management Service
+
+  * ``oci kms management vault create-vault-replica --replica-vault-metadata``
+
+* Support for Dry Run of Function Invocation in the Functions service
+
+  * ``oci fn function invoke  --is-dry-run``
+
 3.54.1 - 2025-04-01
 --------------------
 Added
