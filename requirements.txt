@@ -38,7 +38,7 @@ terminaltables==3.1.10
 tox==3.23.0
 vcrpy==1.13.0; python_version <= '3.9'
 vcrpy==4.2.1; python_version >= '3.10'
-virtualenv==20.13.0
+virtualenv==20.26.6
 pytest-xdist==1.22.2
 pytest-forked==1.0.2
 PyYAML>=5.4,<=6.0.1
