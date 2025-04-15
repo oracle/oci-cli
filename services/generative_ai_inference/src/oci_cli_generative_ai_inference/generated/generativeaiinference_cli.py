@@ -34,6 +34,12 @@ def generate_text_result_group():
     pass
 
 
+@click.command(cli_util.override('generative_ai_inference.apply_guardrails_result_group.command_name', 'apply-guardrails-result'), cls=CommandGroupWithAlias, help="""The result of applying guardrails to the input text.""")
+@cli_util.help_option_group
+def apply_guardrails_result_group():
+    pass
+
+
 @click.command(cli_util.override('generative_ai_inference.embed_text_result_group.command_name', 'embed-text-result'), cls=CommandGroupWithAlias, help="""The generated embedded result to return.""")
 @cli_util.help_option_group
 def embed_text_result_group():
@@ -59,10 +65,74 @@ def chat_result_group():
 
 
 generative_ai_inference_root_group.add_command(generate_text_result_group)
+generative_ai_inference_root_group.add_command(apply_guardrails_result_group)
 generative_ai_inference_root_group.add_command(embed_text_result_group)
 generative_ai_inference_root_group.add_command(summarize_text_result_group)
 generative_ai_inference_root_group.add_command(rerank_text_result_group)
 generative_ai_inference_root_group.add_command(chat_result_group)
+
+
+@apply_guardrails_result_group.command(name=cli_util.override('generative_ai_inference.apply_guardrails.command_name', 'apply-guardrails'), help=u"""Applies guardrails to the input text, including content moderation, PII detection, and prompt injection protection. \n[Command Reference](applyGuardrails)""")
+@cli_util.option('--input', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--guardrail-configs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to apply guardrails.""")
+@json_skeleton_utils.get_cli_json_input_option({'input': {'module': 'generative_ai_inference', 'class': 'GuardrailsInput'}, 'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'input': {'module': 'generative_ai_inference', 'class': 'GuardrailsInput'}, 'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}}, output_type={'module': 'generative_ai_inference', 'class': 'ApplyGuardrailsResult'})
+@cli_util.wrap_exceptions
+def apply_guardrails(ctx, from_json, input, guardrail_configs, compartment_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['input'] = cli_util.parse_json_parameter("input", input)
+    _details['guardrailConfigs'] = cli_util.parse_json_parameter("guardrail_configs", guardrail_configs)
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('generative_ai_inference', 'generative_ai_inference', ctx)
+    result = client.apply_guardrails(
+        apply_guardrails_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@apply_guardrails_result_group.command(name=cli_util.override('generative_ai_inference.apply_guardrails_guardrails_text_input.command_name', 'apply-guardrails-guardrails-text-input'), help=u"""Applies guardrails to the input text, including content moderation, PII detection, and prompt injection protection. \n[Command Reference](applyGuardrails)""")
+@cli_util.option('--guardrail-configs', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to apply guardrails.""")
+@cli_util.option('--input-content', help=u"""The actual input data.""")
+@cli_util.option('--input-language-code', help=u"""The language code of the input text. example - en | es | en-US | zh-CN""")
+@json_skeleton_utils.get_cli_json_input_option({'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'guardrail-configs': {'module': 'generative_ai_inference', 'class': 'GuardrailConfigs'}}, output_type={'module': 'generative_ai_inference', 'class': 'ApplyGuardrailsResult'})
+@cli_util.wrap_exceptions
+def apply_guardrails_guardrails_text_input(ctx, from_json, guardrail_configs, compartment_id, input_content, input_language_code):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['input'] = {}
+    _details['guardrailConfigs'] = cli_util.parse_json_parameter("guardrail_configs", guardrail_configs)
+    _details['compartmentId'] = compartment_id
+
+    if input_content is not None:
+        _details['input']['content'] = input_content
+
+    if input_language_code is not None:
+        _details['input']['languageCode'] = input_language_code
+
+    _details['input']['type'] = 'TEXT'
+
+    client = cli_util.build_client('generative_ai_inference', 'generative_ai_inference', ctx)
+    result = client.apply_guardrails(
+        apply_guardrails_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @chat_result_group.command(name=cli_util.override('generative_ai_inference.chat.command_name', 'chat'), help=u"""Creates a response for the given conversation. \n[Command Reference](chat)""")
@@ -302,12 +372,13 @@ This option is a JSON list with items of type CohereToolResult.  For documentati
 @cli_util.option('--chat-request-stop-sequences', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Stop the model generation when it reaches a stop sequence defined in this parameter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--chat-request-is-raw-prompting', type=click.BOOL, help=u"""When enabled, the user\u2019s `message` will be sent to the model without any preprocessing.""")
 @cli_util.option('--chat-request-citation-quality', type=custom_types.CliCaseInsensitiveChoice(["ACCURATE", "FAST"]), help=u"""When FAST is selected, citations are generated at the same time as the text output and the request will be completed sooner. May result in less accurate citations.""")
+@cli_util.option('--chat-request-safety-mode', type=custom_types.CliCaseInsensitiveChoice(["CONTEXTUAL", "STRICT", "OFF"]), help=u"""Used to select the safety instruction inserted into the prompt. When selected CONTEXTUAL mode, It is appropriate for wide-ranging interactions with fewer constraints on output while maintaining core protections by rejecting harmful or illegal suggestions. When selected STRICT mode, it aims to avoid all sensitive topics, such as violent or sexual acts and profanity. When selected OFF, the safety instruction will be omitted. Note: This parameter is only compatible with models Command R 08-2024, Command R+ 08-2024 and newer. Also, command-r7b-12-2024 only supports \"CONTEXTUAL\" and \"STRICT\" modes.""")
 @json_skeleton_utils.get_cli_json_input_option({'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-chat-history': {'module': 'generative_ai_inference', 'class': 'list[CohereMessage]'}, 'chat-request-documents': {'module': 'generative_ai_inference', 'class': 'list[object]'}, 'chat-request-response-format': {'module': 'generative_ai_inference', 'class': 'CohereResponseFormat'}, 'chat-request-tools': {'module': 'generative_ai_inference', 'class': 'list[CohereTool]'}, 'chat-request-tool-results': {'module': 'generative_ai_inference', 'class': 'list[CohereToolResult]'}, 'chat-request-stop-sequences': {'module': 'generative_ai_inference', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-chat-history': {'module': 'generative_ai_inference', 'class': 'list[CohereMessage]'}, 'chat-request-documents': {'module': 'generative_ai_inference', 'class': 'list[object]'}, 'chat-request-response-format': {'module': 'generative_ai_inference', 'class': 'CohereResponseFormat'}, 'chat-request-tools': {'module': 'generative_ai_inference', 'class': 'list[CohereTool]'}, 'chat-request-tool-results': {'module': 'generative_ai_inference', 'class': 'list[CohereToolResult]'}, 'chat-request-stop-sequences': {'module': 'generative_ai_inference', 'class': 'list[string]'}}, output_type={'module': 'generative_ai_inference', 'class': 'ChatResult'})
 @cli_util.wrap_exceptions
-def chat_cohere_chat_request(ctx, from_json, compartment_id, serving_mode, chat_request_message, chat_request_chat_history, chat_request_documents, chat_request_response_format, chat_request_is_search_queries_only, chat_request_preamble_override, chat_request_is_stream, chat_request_max_tokens, chat_request_max_input_tokens, chat_request_temperature, chat_request_top_k, chat_request_top_p, chat_request_prompt_truncation, chat_request_frequency_penalty, chat_request_presence_penalty, chat_request_seed, chat_request_is_echo, chat_request_tools, chat_request_tool_results, chat_request_is_force_single_step, chat_request_stop_sequences, chat_request_is_raw_prompting, chat_request_citation_quality):
+def chat_cohere_chat_request(ctx, from_json, compartment_id, serving_mode, chat_request_message, chat_request_chat_history, chat_request_documents, chat_request_response_format, chat_request_is_search_queries_only, chat_request_preamble_override, chat_request_is_stream, chat_request_max_tokens, chat_request_max_input_tokens, chat_request_temperature, chat_request_top_k, chat_request_top_p, chat_request_prompt_truncation, chat_request_frequency_penalty, chat_request_presence_penalty, chat_request_seed, chat_request_is_echo, chat_request_tools, chat_request_tool_results, chat_request_is_force_single_step, chat_request_stop_sequences, chat_request_is_raw_prompting, chat_request_citation_quality, chat_request_safety_mode):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -383,6 +454,9 @@ def chat_cohere_chat_request(ctx, from_json, compartment_id, serving_mode, chat_
 
     if chat_request_citation_quality is not None:
         _details['chatRequest']['citationQuality'] = chat_request_citation_quality
+
+    if chat_request_safety_mode is not None:
+        _details['chatRequest']['safetyMode'] = chat_request_safety_mode
 
     _details['chatRequest']['apiFormat'] = 'COHERE'
 
