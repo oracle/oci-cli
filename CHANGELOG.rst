@@ -6,6 +6,28 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.54.3 - 2025-04-15
+--------------------
+Added
+~~~~~
+* Generative Ai Service Inference
+
+  * Support for the ApplyGuardrails API, enabling capabilities for Content Moderation, Prompt Injection and PII detection
+
+    * ``oci generative-ai-inference apply-guardrails-result apply-guardrails``
+    * ``oci generative-ai-inference apply-guardrails-result apply-guardrails-guardrails-text-input``
+
+  * Added optional parameter chat-request-safety-mode in chat-cohere-chat-request command
+
+    * ``oci generative-ai-inference chat-result chat-cohere-chat-request  --chat-request-safety-mode``
+
+* Database service
+
+  * Added optional parameter customer contact for Operational Notifications (EXACCADBCC/EXACSADBD)
+
+    * ``oci db autonomous-container-database create ----customer-contacts``
+    * ``oci db autonomous-container-database update ----customer-contacts``
+
 3.54.2 - 2025-04-08
 --------------------
 Added
