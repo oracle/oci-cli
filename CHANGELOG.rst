@@ -6,6 +6,32 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.54.4 - 2025-04-22
+--------------------
+Added
+~~~~~
+*  Core Services
+
+  * Support iSCSI-3 Persistant Reservation for Block Volume
+
+    * ``oci bv volume create ----is-reservations-enabled``
+    * ``oci bv volume create-volume-source-from-volume-backup-delta --is-reservations-enabled``
+    * ``oci bv volume create-volume-volume-source-from-block-volume-replica-details``
+
+* Visual Builder Service
+
+  * Support for restricting public network access to a VB service instance in Visual builder
+
+    * ``oci visual-builder vb-instance update-vb-instance-update-public-endpoint-details --network-endpoint-details-allowlisted-http-ips --network-endpoint-details-allowlisted-http-vcns``
+    * ``oci visual-builder vb-instance update-vb-instance-public-endpoint-details --network-endpoint-details-allowlisted-http-ips --network-endpoint-details-allowlisted-http-vcns``
+
+* Database service
+
+  * Support for Database Lifecycle Management Patch Management
+      
+    * ``oci dblm dblm-patch-management get-patch-management``
+    * ``oci dblm patch-databases-collection list-databases``
+
 3.54.3 - 2025-04-15
 --------------------
 Added
