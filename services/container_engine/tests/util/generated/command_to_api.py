@@ -39,6 +39,8 @@ SDK_client_map = {
     "ce.list_work_request_logs": "oci.container_engine.ContainerEngineClient.list_work_request_logs",
     "ce.list_work_requests": "oci.container_engine.ContainerEngineClient.list_work_requests",
     "ce.list_workload_mappings": "oci.container_engine.ContainerEngineClient.list_workload_mappings",
+    "ce.reboot_cluster_node": "oci.container_engine.ContainerEngineClient.reboot_cluster_node",
+    "ce.replace_boot_volume_cluster_node": "oci.container_engine.ContainerEngineClient.replace_boot_volume_cluster_node",
     "ce.start_credential_rotation": "oci.container_engine.ContainerEngineClient.start_credential_rotation",
     "ce.update_addon": "oci.container_engine.ContainerEngineClient.update_addon",
     "ce.update_cluster": "oci.container_engine.ContainerEngineClient.update_cluster",

@@ -22,6 +22,12 @@ def dblm_root_group():
     pass
 
 
+@click.command(cli_util.override('dblm.dblm_patch_management_group.command_name', 'dblm-patch-management'), cls=CommandGroupWithAlias, help="""Description of PatchManagement.""")
+@cli_util.help_option_group
+def dblm_patch_management_group():
+    pass
+
+
 @click.command(cli_util.override('dblm.vulnerability_scan_collection_group.command_name', 'vulnerability-scan-collection'), cls=CommandGroupWithAlias, help="""Results of a VulnerabilityScan search. Contains list of VulnerabilityScanSummary items.""")
 @cli_util.help_option_group
 def vulnerability_scan_collection_group():
@@ -33,6 +39,12 @@ def vulnerability_scan_collection_group():
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def dblm_vulnerability_group():
+    pass
+
+
+@click.command(cli_util.override('dblm.patch_databases_collection_group.command_name', 'patch-databases-collection'), cls=CommandGroupWithAlias, help="""Results of a patchDatabases search. Contains items for databases, images and patch compliance information.""")
+@cli_util.help_option_group
+def patch_databases_collection_group():
     pass
 
 
@@ -74,8 +86,10 @@ def vulnerability_scan_group():
     pass
 
 
+dblm_root_group.add_command(dblm_patch_management_group)
 dblm_root_group.add_command(vulnerability_scan_collection_group)
 dblm_root_group.add_command(dblm_vulnerability_group)
+dblm_root_group.add_command(patch_databases_collection_group)
 dblm_root_group.add_command(notification_collection_group)
 dblm_root_group.add_command(work_request_error_group)
 dblm_root_group.add_command(work_request_log_entry_group)
@@ -136,6 +150,37 @@ def create_vulnerability_scan(ctx, from_json, wait_for_state, max_wait_seconds, 
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@dblm_patch_management_group.command(name=cli_util.override('dblm.get_patch_management.command_name', 'get-patch-management'), help=u"""Overview of Patch Management. \n[Command Reference](getPatchManagement)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The required ID of the compartment in which to list resources.""")
+@cli_util.option('--database-release', help=u"""A filter to return only database that match the given release version.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "NEEDS_ATTENTION", "DELETING", "DELETED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--time-started-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter to return only resources whose timeStarted is greater than or equal to the given date-time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-started-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter to return only resources whose timeStarted is less than the given date-time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dblm', 'class': 'DblmPatchManagement'})
+@cli_util.wrap_exceptions
+def get_patch_management(ctx, from_json, compartment_id, database_release, lifecycle_state, time_started_greater_than_or_equal_to, time_started_less_than):
+
+    kwargs = {}
+    if database_release is not None:
+        kwargs['database_release'] = database_release
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if time_started_greater_than_or_equal_to is not None:
+        kwargs['time_started_greater_than_or_equal_to'] = time_started_greater_than_or_equal_to
+    if time_started_less_than is not None:
+        kwargs['time_started_less_than'] = time_started_less_than
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('dblm', 'db_life_cycle_management', ctx)
+    result = client.get_patch_management(
+        compartment_id=compartment_id,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -262,6 +307,83 @@ def list_aggregated_vulnerability_data(ctx, from_json, all_pages, page_size, com
         )
     else:
         result = client.list_aggregated_vulnerability_data(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@patch_databases_collection_group.command(name=cli_util.override('dblm.list_databases.command_name', 'list-databases'), help=u"""Gets the list of databases \n[Command Reference](listDatabases)""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "NEEDS_ATTENTION", "DELETING", "DELETED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--database-release', help=u"""A filter to return only database that match the given release version.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["SI", "RAC"]), help=u"""Filter by database type. Possible values Single Instance or RAC.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "name", "resourceType", "release", "subscribedImage", "patchCompliance"]), help=u"""The field to sort by.""")
+@cli_util.option('--image-id', help=u"""Subscribed image""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--drifter-patch-id', type=click.INT, help=u"""A filter to return only database that have given patchId as additional patch (drifter from image version).""")
+@cli_util.option('--image-compliance', type=custom_types.CliCaseInsensitiveChoice(["NOT_SUBSCRIBED", "NOT_COMPLIANT_WITH_IMAGES", "ALL_DATABASES"]), help=u"""Filter databases by image compliance status.""")
+@cli_util.option('--severity-type', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO", "NONE"]), multiple=True, help=u"""Filter by one or more severity types. Possible values are critical, high, medium, low, info and none.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dblm', 'class': 'PatchDatabasesCollection'})
+@cli_util.wrap_exceptions
+def list_databases(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, database_release, database_type, limit, page, sort_order, sort_by, image_id, display_name, drifter_patch_id, image_compliance, severity_type):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if database_release is not None:
+        kwargs['database_release'] = database_release
+    if database_type is not None:
+        kwargs['database_type'] = database_type
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if image_id is not None:
+        kwargs['image_id'] = image_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if drifter_patch_id is not None:
+        kwargs['drifter_patch_id'] = drifter_patch_id
+    if image_compliance is not None:
+        kwargs['image_compliance'] = image_compliance
+    if severity_type is not None and len(severity_type) > 0:
+        kwargs['severity_type'] = severity_type
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('dblm', 'db_life_cycle_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_databases,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_databases,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_databases(
             **kwargs
         )
     cli_util.render_response(result, ctx)

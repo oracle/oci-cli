@@ -3,10 +3,12 @@
 
 SDK_client_map = {
     "dblm.create_vulnerability_scan": "oci.dblm.DbLifeCycleManagementClient.create_vulnerability_scan",
+    "dblm.get_patch_management": "oci.dblm.DbLifeCycleManagementClient.get_patch_management",
     "dblm.get_vulnerability": "oci.dblm.DbLifeCycleManagementClient.get_vulnerability",
     "dblm.get_vulnerability_scan": "oci.dblm.DbLifeCycleManagementClient.get_vulnerability_scan",
     "dblm.get_work_request": "oci.dblm.DbLifeCycleManagementClient.get_work_request",
     "dblm.list_aggregated_vulnerability_data": "oci.dblm.DbLifeCycleManagementClient.list_aggregated_vulnerability_data",
+    "dblm.list_databases": "oci.dblm.DbLifeCycleManagementClient.list_databases",
     "dblm.list_notifications": "oci.dblm.DbLifeCycleManagementClient.list_notifications",
     "dblm.list_vulnerabilities": "oci.dblm.DbLifeCycleManagementClient.list_vulnerabilities",
     "dblm.list_vulnerability_resources": "oci.dblm.DbLifeCycleManagementClient.list_vulnerability_resources",
