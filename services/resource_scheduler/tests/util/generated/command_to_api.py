@@ -4,6 +4,7 @@
 SDK_client_map = {
     "resource_scheduler.activate_schedule": "oci.resource_scheduler.ScheduleClient.activate_schedule",
     "resource_scheduler.cancel_work_request": "oci.resource_scheduler.ScheduleClient.cancel_work_request",
+    "resource_scheduler.change_schedule_compartment": "oci.resource_scheduler.ScheduleClient.change_schedule_compartment",
     "resource_scheduler.create_schedule": "oci.resource_scheduler.ScheduleClient.create_schedule",
     "resource_scheduler.deactivate_schedule": "oci.resource_scheduler.ScheduleClient.deactivate_schedule",
     "resource_scheduler.delete_schedule": "oci.resource_scheduler.ScheduleClient.delete_schedule",
