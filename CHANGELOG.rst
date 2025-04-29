@@ -6,6 +6,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.54.5 - 2025-04-29
+--------------------
+Added
+~~~~~
+* Resource Scheduler Service
+
+  * Support for updating compartment of a schedule
+
+    * ``oci resource-scheduler schedule change-compartment``
+
+  * Support for listing schedules by resource ID
+
+    * ``oci resource-scheduler schedule list --resource-id``
+
+* Support for new optional parameter chat-request-stream-options for cohere Chat in Generative Ai Inference Service
+
+  * ``oci generative-ai-inference chat-result chat-cohere-chat-request --chat-request-stream-options``
+
 3.54.4 - 2025-04-22
 --------------------
 Added
