@@ -292,6 +292,7 @@ def delete_log_analytics_entity_type_extended(ctx, **kwargs):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsEntityType'})
 @cli_util.wrap_exceptions
 def get_log_analytics_entity_type_extended(ctx, **kwargs):
+
     if 'name' in kwargs:
         kwargs['entity_type_name'] = kwargs['name']
         kwargs.pop('name')
@@ -372,13 +373,18 @@ def delete_log_analytics_entity_extended(ctx, **kwargs):
 
 
 # Rename log_analytics_entity_id to entity_id in get entity
-@cli_util.copy_params_from_generated_command(loganalytics_cli.get_log_analytics_entity, params_to_exclude=['log_analytics_entity_id'])
+@cli_util.copy_params_from_generated_command(loganalytics_cli.get_log_analytics_entity, params_to_exclude=['log_analytics_entity_id', 'is_show_associated_sources_count'])
 @loganalytics_cli.log_analytics_entity_group.command(name='get', help=loganalytics_cli.get_log_analytics_entity.help)
 @cli_util.option('--entity-id', required=True, help="""The log analytics entity OCID""")
+@cli_util.option('--is-show-assoc-src-count', type=click.BOOL, help="""Option to return count of associated log sources for log analytics entity(s).""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsEntity'})
 @cli_util.wrap_exceptions
 def get_log_analytics_entity_extended(ctx, **kwargs):
+
+    if 'is_show_assoc_src_count' in kwargs:
+        kwargs['is_show_associated_sources_count'] = kwargs['is_show_assoc_src_count']
+        kwargs.pop('is_show_assoc_src_count')
     if 'entity_id' in kwargs:
         kwargs['log_analytics_entity_id'] = kwargs['entity_id']
         kwargs.pop('entity_id')
@@ -386,13 +392,18 @@ def get_log_analytics_entity_extended(ctx, **kwargs):
 
 
 # Shorten is_management_agent_id_null to is_agent_id_null in list entities
-@cli_util.copy_params_from_generated_command(loganalytics_cli.list_log_analytics_entities, params_to_exclude=['is_management_agent_id_null'])
+@cli_util.copy_params_from_generated_command(loganalytics_cli.list_log_analytics_entities, params_to_exclude=['is_management_agent_id_null', 'is_show_associated_sources_count'])
 @loganalytics_cli.log_analytics_entity_group.command(name='list', help=loganalytics_cli.list_log_analytics_entities.help)
+@cli_util.option('--is-show-assoc-src-count', type=click.BOOL, help="""Option to return count of associated log sources for log analytics entity(s).""")
 @cli_util.option('--is-agent-id-null', type=custom_types.CliCaseInsensitiveChoice(["true", "false"]), required=False, help="""A filter to return only those log analytics entities whose managementAgentId is null or is not null""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'entity-type-name': {'module': 'log_analytics', 'class': 'list[string]'}}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsEntityCollection'})
 @cli_util.wrap_exceptions
 def list_log_analytics_entities_extended(ctx, **kwargs):
+
+    if 'is_show_assoc_src_count' in kwargs:
+        kwargs['is_show_associated_sources_count'] = kwargs['is_show_assoc_src_count']
+        kwargs.pop('is_show_assoc_src_count')
     if 'is_agent_id_null' in kwargs:
         kwargs['is_management_agent_id_null'] = kwargs['is_agent_id_null']
         kwargs.pop('is_agent_id_null')
@@ -1047,3 +1058,34 @@ cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_source_
 
 # Remove validate-endpoint from oci log-analytics source
 loganalytics_cli.log_analytics_source_group.commands.pop(loganalytics_cli.validate_endpoint.name)
+
+
+# oci log-analytics log-analytics-template get-template -> oci log-analytics log-analytics-template get
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_template_group, loganalytics_cli.get_template, "get")
+
+
+# oci log-analytics log-analytics-template list-templates -> oci log-analytics log-analytics-template list
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_template_group, loganalytics_cli.list_templates, "list")
+
+
+# oci log-analytics log-analytics-template -> oci log-analytics template
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_template_group, "template")
+
+
+# oci log-analytics field get-field-usages -> oci log-analytics field get-usages
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_field_group, loganalytics_cli.get_field_usages, "get-usages")
+
+
+@cli_util.copy_params_from_generated_command(loganalytics_cli.upload_otlp_logs, params_to_exclude=['upload_otlp_logs_details'])
+@loganalytics_cli.upload_group.command(name=loganalytics_cli.upload_otlp_logs.name, help=loganalytics_cli.upload_otlp_logs.help)
+@cli_util.option('--file', required=True, help=u"""Accepts log data in OTLP JSON-encoded Protobuf format. Sample format: https://github.com/open-telemetry/opentelemetry-proto/blob/v1.3.1/examples/logs.json [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def upload_otlp_logs_extended(ctx, **kwargs):
+
+    if 'file' in kwargs:
+        kwargs['upload_otlp_logs_details'] = kwargs['file']
+        kwargs.pop('file')
+
+    ctx.invoke(loganalytics_cli.upload_otlp_logs, **kwargs)

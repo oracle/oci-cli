@@ -4157,3 +4157,10 @@ def create_standby_database_for_multiple_standby(ctx, wait_for_state, max_wait_s
 # Multiple Stabdby : Migrate from Single Standby:  oci db data-guard-association migrate-data-guard-association-to-multi-data-guards -> oci db data-guard-association migrate-to-multiple-standby-model
 
 cli_util.rename_command(database_cli, database_cli.data_guard_association_group, database_cli.migrate_data_guard_association_to_multi_data_guards, "migrate-to-multiple-standby-model")
+
+# oci db system-version-minor-version-collection list-system-version-minor-versions -> oci db system-version-minor-version-collection list
+cli_util.rename_command(database_cli, database_cli.system_version_minor_version_collection_group, database_cli.list_system_version_minor_versions, "list")
+
+
+# oci db system-version-minor-version-collection -> oci db system-minor-version
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.system_version_minor_version_collection_group, "system-minor-version")
