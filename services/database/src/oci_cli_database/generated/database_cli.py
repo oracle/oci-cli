@@ -508,6 +508,12 @@ def autonomous_virtual_machine_group():
     pass
 
 
+@click.command(cli_util.override('db.system_version_minor_version_collection_group.command_name', 'system-version-minor-version-collection'), cls=CommandGroupWithAlias, help="""Results of the System minor version lists. Contains SystemVersionMinorVersionSummary items.""")
+@cli_util.help_option_group
+def system_version_minor_version_collection_group():
+    pass
+
+
 db_root_group.add_command(update_history_entry_group)
 db_root_group.add_command(backup_group)
 db_root_group.add_command(application_vip_group)
@@ -585,6 +591,7 @@ db_root_group.add_command(autonomous_db_preview_version_group)
 db_root_group.add_command(vm_cluster_group)
 db_root_group.add_command(vm_cluster_update_group)
 db_root_group.add_command(autonomous_virtual_machine_group)
+db_root_group.add_command(system_version_minor_version_collection_group)
 
 
 @exadata_infrastructure_group.command(name=cli_util.override('db.activate_exadata_infrastructure.command_name', 'activate'), help=u"""Activates the specified Exadata infrastructure resource. Applies to Exadata Cloud@Customer instances only. \n[Command Reference](activateExadataInfrastructure)""")
@@ -10103,6 +10110,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-server-type', help=u"""The database server type of the Exadata infrastructure.""")
 @cli_util.option('--storage-server-type', help=u"""The storage server type of the Exadata infrastructure.""")
+@cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -10111,9 +10119,11 @@ This option is a JSON list with items of type CustomerContact.  For documentatio
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}}, output_type={'module': 'database', 'class': 'CloudExadataInfrastructure'})
 @cli_util.wrap_exceptions
-def create_cloud_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, display_name, shape, compute_count, storage_count, maintenance_window, freeform_tags, defined_tags, cluster_placement_group_id, subscription_id, customer_contacts, database_server_type, storage_server_type):
+def create_cloud_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, display_name, shape, compute_count, storage_count, maintenance_window, freeform_tags, defined_tags, cluster_placement_group_id, subscription_id, customer_contacts, database_server_type, storage_server_type, opc_dry_run):
 
     kwargs = {}
+    if opc_dry_run is not None:
+        kwargs['opc_dry_run'] = opc_dry_run
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -10229,6 +10239,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 This option is a JSON list with items of type FileSystemConfigurationDetail.  For documentation on FileSystemConfigurationDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/FileSystemConfigurationDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cloud-automation-update-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vm-cluster-type', type=custom_types.CliCaseInsensitiveChoice(["REGULAR", "DEVELOPER"]), help=u"""The vmcluster type for the VM cluster/Cloud VM cluster.""")
+@cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -10237,9 +10248,11 @@ This option is a JSON list with items of type FileSystemConfigurationDetail.  Fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-servers': {'module': 'database', 'class': 'list[string]'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}, 'file-system-configuration-details': {'module': 'database', 'class': 'list[FileSystemConfigurationDetail]'}, 'cloud-automation-update-details': {'module': 'database', 'class': 'CloudAutomationUpdateDetails'}}, output_type={'module': 'database', 'class': 'CloudVmCluster'})
 @cli_util.wrap_exceptions
-def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, backup_subnet_id, cpu_core_count, display_name, cloud_exadata_infrastructure_id, hostname, ssh_public_keys, gi_version, subscription_id, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, db_servers, cluster_name, data_storage_percentage, domain, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, scan_listener_port_tcp, scan_listener_port_tcp_ssl, private_zone_id, nsg_ids, backup_network_nsg_ids, freeform_tags, defined_tags, security_attributes, data_collection_options, system_version, file_system_configuration_details, cloud_automation_update_details, vm_cluster_type):
+def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, backup_subnet_id, cpu_core_count, display_name, cloud_exadata_infrastructure_id, hostname, ssh_public_keys, gi_version, subscription_id, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, db_servers, cluster_name, data_storage_percentage, domain, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, scan_listener_port_tcp, scan_listener_port_tcp_ssl, private_zone_id, nsg_ids, backup_network_nsg_ids, freeform_tags, defined_tags, security_attributes, data_collection_options, system_version, file_system_configuration_details, cloud_automation_update_details, vm_cluster_type, opc_dry_run):
 
     kwargs = {}
+    if opc_dry_run is not None:
+        kwargs['opc_dry_run'] = opc_dry_run
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -24581,6 +24594,7 @@ def list_gi_version_minor_versions(ctx, from_json, all_pages, page_size, version
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--shape', help=u"""If provided, filters the results for the given shape.""")
 @cli_util.option('--availability-domain', help=u"""The target availability domain. Only passed if the limit is AD-specific.""")
+@cli_util.option('--resource-id', help=u"""If provided, filters the results for the specified resource Id.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -24588,7 +24602,7 @@ def list_gi_version_minor_versions(ctx, from_json, all_pages, page_size, version
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[GiVersionSummary]'})
 @cli_util.wrap_exceptions
-def list_gi_versions(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_order, shape, availability_domain):
+def list_gi_versions(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_order, shape, availability_domain, resource_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -24604,6 +24618,8 @@ def list_gi_versions(ctx, from_json, all_pages, page_size, compartment_id, limit
         kwargs['shape'] = shape
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
+    if resource_id is not None:
+        kwargs['resource_id'] = resource_id
     client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
@@ -25386,13 +25402,86 @@ def list_scheduling_windows(ctx, from_json, all_pages, page_size, scheduling_pol
     cli_util.render_response(result, ctx)
 
 
-@system_version_collection_group.command(name=cli_util.override('db.list_system_versions.command_name', 'list-system-versions'), help=u"""Gets a list of supported Exadata system versions for a given shape and GI version. \n[Command Reference](listSystemVersions)""")
+@system_version_minor_version_collection_group.command(name=cli_util.override('db.list_system_version_minor_versions.command_name', 'list-system-version-minor-versions'), help=u"""Retrieves a list of supported minor versions for the specified Exadata System Software major version. You must provide either a `shape` or `resourceId` value. \n[Command Reference](listSystemVersionMinorVersions)""")
+@cli_util.option('--major-version', required=True, help=u"""The System major version.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
-@cli_util.option('--shape', required=True, help=u"""Specifies shape query parameter.""")
 @cli_util.option('--gi-version', required=True, help=u"""Specifies gi version query parameter.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--shape', help=u"""If provided, filters the results for the given shape.""")
+@cli_util.option('--resource-id', help=u"""If provided, filters the results for the specified resource Id.""")
+@cli_util.option('--is-latest', type=click.BOOL, help=u"""If provided, return highest versions from each major version family.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'SystemVersionMinorVersionCollection'})
+@cli_util.wrap_exceptions
+def list_system_version_minor_versions(ctx, from_json, all_pages, page_size, major_version, compartment_id, gi_version, limit, page, sort_order, shape, resource_id, is_latest):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(major_version, six.string_types) and len(major_version.strip()) == 0:
+        raise click.UsageError('Parameter --major-version cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if shape is not None:
+        kwargs['shape'] = shape
+    if resource_id is not None:
+        kwargs['resource_id'] = resource_id
+    if is_latest is not None:
+        kwargs['is_latest'] = is_latest
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_system_version_minor_versions,
+            major_version=major_version,
+            compartment_id=compartment_id,
+            gi_version=gi_version,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_system_version_minor_versions,
+            limit,
+            page_size,
+            major_version=major_version,
+            compartment_id=compartment_id,
+            gi_version=gi_version,
+            **kwargs
+        )
+    else:
+        result = client.list_system_version_minor_versions(
+            major_version=major_version,
+            compartment_id=compartment_id,
+            gi_version=gi_version,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@system_version_collection_group.command(name=cli_util.override('db.list_system_versions.command_name', 'list-system-versions'), help=u"""Gets a list of supported Exadata system versions for a given shape and GI version. \n[Command Reference](listSystemVersions)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--gi-version', required=True, help=u"""Specifies gi version query parameter.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--shape', help=u"""If provided, filters the results for the given shape.""")
+@cli_util.option('--is-latest', type=click.BOOL, help=u"""If provided, return highest versions from each major version family.""")
+@cli_util.option('--resource-id', help=u"""If provided, filters the results for the specified resource Id.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -25400,7 +25489,7 @@ def list_scheduling_windows(ctx, from_json, all_pages, page_size, scheduling_pol
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'SystemVersionCollection'})
 @cli_util.wrap_exceptions
-def list_system_versions(ctx, from_json, all_pages, page_size, compartment_id, shape, gi_version, limit, page, sort_order):
+def list_system_versions(ctx, from_json, all_pages, page_size, compartment_id, gi_version, limit, page, sort_order, shape, is_latest, resource_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -25412,6 +25501,12 @@ def list_system_versions(ctx, from_json, all_pages, page_size, compartment_id, s
         kwargs['page'] = page
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if shape is not None:
+        kwargs['shape'] = shape
+    if is_latest is not None:
+        kwargs['is_latest'] = is_latest
+    if resource_id is not None:
+        kwargs['resource_id'] = resource_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
@@ -25421,7 +25516,6 @@ def list_system_versions(ctx, from_json, all_pages, page_size, compartment_id, s
         result = cli_util.list_call_get_all_results(
             client.list_system_versions,
             compartment_id=compartment_id,
-            shape=shape,
             gi_version=gi_version,
             **kwargs
         )
@@ -25431,14 +25525,12 @@ def list_system_versions(ctx, from_json, all_pages, page_size, compartment_id, s
             limit,
             page_size,
             compartment_id=compartment_id,
-            shape=shape,
             gi_version=gi_version,
             **kwargs
         )
     else:
         result = client.list_system_versions(
             compartment_id=compartment_id,
-            shape=shape,
             gi_version=gi_version,
             **kwargs
         )

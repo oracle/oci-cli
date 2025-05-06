@@ -6,6 +6,143 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.55.0 - 2025-05-06
+--------------------
+Added
+~~~~~
+* Database Service
+
+   * Support for new parameters to get latest versions.
+
+      * ``oci db system-version list --shape --is-latest --resource-id``
+
+   * Support for the dry run feature in creating Cloud Exadata Infrastructure / Cloud Exadata VM Cluster in Database service
+
+       * ``oci db cloud-exa-infra create --opc-dry-run``
+       * ``oci db cloud-vm-cluster create --opc-dry-run``
+
+* Log Analytics Service
+
+   * Support for Lookup Resources
+
+     * ``oci log-analytics lookup change-compartment``
+
+   * Support for additional recall and release attributes
+
+     * ``oci log-analytics storage list-recalled-info``
+
+   * Support for get templates
+
+     * ``oci log-analytics template list``
+     * ``oci log-analytics template get``
+
+   * Support for uploading otlp logs
+
+     * ``oci log-analytics upload upload-otlp-logs``
+
+* Database Migration
+
+  * Support for new ODMS phase: ODMS_METADATA_TRANSFER
+
+    * ``oci database-migration migration start --wait-after``
+
+* Fleet Application Management Service
+
+  * Support for change compartment in Fleet Application Management service
+
+    * ``oci fleet-apps-management fleet change-compartment``
+    * ``oci fleet-apps-management fleet-apps-management-admin platform-configuration change-compartment``
+    * ``oci fleet-apps-management fleet-apps-management-admin property change-compartment``
+    * ``oci fleet-apps-management fleet-apps-management-operations patch change-compartment``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks runbook change-compartment``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks task-record change-compartment``
+
+  * Support for platform configuration in the Fleet Application Management service
+
+    * ``oci fleet-apps-management fleet-apps-management-admin platform-configuration create-platform-configuration-lifecycle-operation-config-category-details``
+    * ``oci fleet-apps-management fleet-apps-management-admin platform-configuration create-platform-configuration-self-hosted-instance-config-category-details``
+
+  * Support for managing a runbook version in the Fleet Application Management service
+
+    * ``oci fleet-apps-management fleet-apps-management-runbooks runbook-version``
+
+  * Support for resource inventory in the Fleet Application Management service
+
+    * ``oci fleet-apps-management fleet-apps-management-operations inventory-record-collection list-inventory-records``
+
+  * Support for new optional parameters in the Fleet Application Management service
+
+    * ``oci fleet-apps-management fleet create --parent-fleet-id``
+
+Changed
+~~~~~~~
+* Fleet Application Management Service
+
+  * [BREAKING] --display-name and --resource-selection are now a required parameter in the Fleet Application Management service
+
+    * ``oci fleet-apps-management fleet create --compartment-id --display-name --resource-selection``
+
+  * [BREAKING] --fleet-type, --application-type, --group-type removed from fleet creation in the Fleet Application Management service
+
+    * ``oci fleet-apps-management fleet create --fleet-type --application-type --group-type``
+
+  * [BREAKING] --resource-selection-type, --rule-selection-criteria usage replaced with --resource-selection in fleet creation in the Fleet Application Management service
+
+    * ``oci fleet-apps-management fleet create --resource-selection``
+
+  * [BREAKING] oci fleet-apps-management work-request replaced with oci fleet-apps-management fleet-apps-management-work-request work-request in the Fleet Application Management service
+
+    * ``oci fleet-apps-management fleet-apps-management-work-request work-request``
+
+* Log Analytics Service
+
+  * Support for filtering log sources based on pattern and listing property
+
+    * ``oci log-analytics source list-sources --pattern-text``
+    * ``oci log-analytics field upsert-field --is-keep-duplicates``
+    * ``oci log-analytics category list-resource-category --compartment-id``
+    * ``oci log-analytics property list-effective-properties --pattern-id-long``
+
+  * Support for additional attributes in entity
+
+    * ``oci log-analytics entity list --defined-tag-equals, --defined-tag-exists, --freeform-tag-equals, --freeform-tag-exists, --is-show-assoc-src-count``
+    * ``oci log-analytics entity get --is-show-assoc-src-count``
+    * ``oci log-analytics entity delete --is-force-delete``
+    * ``oci log-analytics entity-topology list --context``
+
+  * Support for filtering on lookup Resources
+
+    * ``oci log-analytics lookup get-summary --compartment-id``
+    * ``oci log-analytics lookup list --compartment-id``
+    * ``oci log-analytics lookup register-lookup --compartment-id``
+    * ``oci log-analytics lookup update --defined-tags, --freeform-tags``
+
+  * Object Collection Rule
+
+    * ``oci log-analytics object-collection-rule create --log-source-name, --stream-cursor-time, --stream-cursor-type, --stream-id``
+    * ``oci log-analytics object-collection-rule update --stream-cursor-time, --stream-cursor-type, --stream-id``
+
+  * Support for additional recall attributes
+
+    * ``oci log-analytics storage recall-archived-data --collection-id``
+
+  * Support for filtering scheduled tasks based on template-id
+
+    * ``oci log-analytics scheduled-task list --template-id``
+    * ``oci log-analytics scheduled-task create-standard-task --schedules``
+
+* Network Service
+
+  * Add optional field lifetime to support reserve private ip feature
+
+    ``oci network vnic assign-private-ip --lifetime``
+
+Fixed
+~~~~~
+* `Github Issue #927 <https://github.com/oracle/oci-cli/issues/927>`_ for OCI Network Service
+
+* `Github Issue #914 <https://github.com/oracle/oci-cli/issues/914>`_ for OCI Network Service
+
 3.54.5 - 2025-04-29
 --------------------
 Added

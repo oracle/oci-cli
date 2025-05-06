@@ -22,7 +22,7 @@ virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.le
 virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.virtual_circuit_bandwidth_shape_group.name)
 virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.peer_region_for_remote_peering_group.name)
 
-virtualnetwork_cli.private_ip_group.commands.pop(virtualnetwork_cli.create_private_ip.name)
+# virtualnetwork_cli.private_ip_group.commands.pop(virtualnetwork_cli.create_private_ip.name)
 virtualnetwork_cli.private_ip_group.commands.pop(virtualnetwork_cli.update_private_ip.name)
 virtualnetwork_cli.public_ip_group.commands.pop(virtualnetwork_cli.get_public_ip_by_ip_address.name)
 virtualnetwork_cli.public_ip_group.commands.pop(virtualnetwork_cli.get_public_ip_by_private_ip_id.name)
@@ -112,7 +112,7 @@ If you're listing all the private IPs associated with a given subnet or VNIC, th
 cli_util.get_param(virtualnetwork_cli.update_vnic, 'skip_source_dest_check').type = click.BOOL
 
 
-@cli_util.copy_params_from_generated_command(virtualnetwork_cli.create_private_ip, params_to_exclude=['max_wait_seconds', 'wait_for_state', 'wait_interval_seconds'])
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.create_private_ip, params_to_exclude=['max_wait_seconds', 'wait_for_state', 'wait_interval_seconds', 'subnet_id'])
 @virtualnetwork_cli.vnic_group.command(name='assign-private-ip', help="""Assigns a secondary private IP address to the specified VNIC. The secondary private IP must be in the same subnet as the VNIC.
 This command can also be used to move an existing secondary private IP to the specified VNIC.
 
@@ -122,7 +122,7 @@ For more information about secondary private IPs, see [IP Addresses]
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
-def assign_private_ip(ctx, from_json, vnic_id, vlan_id, ip_address, display_name, hostname_label, unassign_if_already_assigned, defined_tags, freeform_tags, route_table_id):
+def assign_private_ip(ctx, from_json, vnic_id, vlan_id, ip_address, display_name, hostname_label, unassign_if_already_assigned, defined_tags, freeform_tags, route_table_id, lifetime):
     networking_client = cli_util.build_client('core', 'virtual_network', ctx)
     assign_private_ip_request_body = {}
     is_ip_reassignment = False
@@ -214,6 +214,9 @@ def assign_private_ip(ctx, from_json, vnic_id, vlan_id, ip_address, display_name
         assign_private_ip_request_body['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
     if freeform_tags is not None:
         assign_private_ip_request_body['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if lifetime is not None:
+        assign_private_ip_request_body['lifetime'] = lifetime
 
     # If we are here then either the IP address does not exist or it is a candidate to be moved
     if not is_ip_reassignment:

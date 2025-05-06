@@ -310,6 +310,7 @@ SDK_client_map = {
     "db.list_scheduling_plans": "oci.database.DatabaseClient.list_scheduling_plans",
     "db.list_scheduling_policies": "oci.database.DatabaseClient.list_scheduling_policies",
     "db.list_scheduling_windows": "oci.database.DatabaseClient.list_scheduling_windows",
+    "db.list_system_version_minor_versions": "oci.database.DatabaseClient.list_system_version_minor_versions",
     "db.list_system_versions": "oci.database.DatabaseClient.list_system_versions",
     "db.list_vm_cluster_networks": "oci.database.DatabaseClient.list_vm_cluster_networks",
     "db.list_vm_cluster_patch_history_entries": "oci.database.DatabaseClient.list_vm_cluster_patch_history_entries",
