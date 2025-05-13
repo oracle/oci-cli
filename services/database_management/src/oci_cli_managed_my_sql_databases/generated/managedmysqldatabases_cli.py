@@ -42,12 +42,6 @@ def managed_my_sql_database_group():
     pass
 
 
-@click.command(cli_util.override('managed_my_sql_databases.external_my_sql_database_group.command_name', 'external-my-sql-database'), cls=CommandGroupWithAlias, help="""External database.""")
-@cli_util.help_option_group
-def external_my_sql_database_group():
-    pass
-
-
 @click.command(cli_util.override('managed_my_sql_databases.managed_my_sql_database_collection_group.command_name', 'managed-my-sql-database-collection'), cls=CommandGroupWithAlias, help="""A collection of Managed MySQL Database objects.""")
 @cli_util.help_option_group
 def managed_my_sql_database_collection_group():
@@ -58,78 +52,7 @@ database_management_service_cli.database_management_service_group.add_command(ma
 managed_my_sql_databases_root_group.add_command(heat_wave_fleet_metrics_group)
 managed_my_sql_databases_root_group.add_command(my_sql_fleet_metrics_group)
 managed_my_sql_databases_root_group.add_command(managed_my_sql_database_group)
-managed_my_sql_databases_root_group.add_command(external_my_sql_database_group)
 managed_my_sql_databases_root_group.add_command(managed_my_sql_database_collection_group)
-
-
-@external_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.disable_external_mysql_associated_service.command_name', 'disable-external-mysql-associated-service'), help=u"""Disable an Associated Service for an external MySQL database resource. An Associated Service example is OPSI. \n[Command Reference](disableExternalMysqlAssociatedService)""")
-@cli_util.option('--external-my-sql-database-id', required=True, help=u"""The OCID of the External MySQL Database.""")
-@cli_util.option('--service-resource-id', required=True, help=u"""OCID of the Service Resource.""")
-@cli_util.option('--connector-id', required=True, help=u"""OCID of the External MySQL Database connector.""")
-@cli_util.option('--service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["OPERATIONS_INSIGHTS"]), help=u"""Name of the Associated Service.""")
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
-@cli_util.wrap_exceptions
-def disable_external_mysql_associated_service(ctx, from_json, external_my_sql_database_id, service_resource_id, connector_id, service_name, if_match):
-
-    if isinstance(external_my_sql_database_id, six.string_types) and len(external_my_sql_database_id.strip()) == 0:
-        raise click.UsageError('Parameter --external-my-sql-database-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    if if_match is not None:
-        kwargs['if_match'] = if_match
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['serviceResourceId'] = service_resource_id
-    _details['connectorId'] = connector_id
-    _details['serviceName'] = service_name
-
-    client = cli_util.build_client('database_management', 'managed_my_sql_databases', ctx)
-    result = client.disable_external_mysql_associated_service(
-        external_my_sql_database_id=external_my_sql_database_id,
-        disable_external_mysql_associated_service_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@external_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.enable_external_mysql_associated_service.command_name', 'enable-external-mysql-associated-service'), help=u"""Enable an Associated Service for an external MySQL database resource. An Associated Service example is OPSI. \n[Command Reference](enableExternalMysqlAssociatedService)""")
-@cli_util.option('--external-my-sql-database-id', required=True, help=u"""The OCID of the External MySQL Database.""")
-@cli_util.option('--service-resource-id', required=True, help=u"""OCID of the Service Resource.""")
-@cli_util.option('--connector-id', required=True, help=u"""OCID of the External MySQL Database connector.""")
-@cli_util.option('--service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["OPERATIONS_INSIGHTS"]), help=u"""Name of the Associated Service.""")
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
-@cli_util.wrap_exceptions
-def enable_external_mysql_associated_service(ctx, from_json, external_my_sql_database_id, service_resource_id, connector_id, service_name, if_match):
-
-    if isinstance(external_my_sql_database_id, six.string_types) and len(external_my_sql_database_id.strip()) == 0:
-        raise click.UsageError('Parameter --external-my-sql-database-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    if if_match is not None:
-        kwargs['if_match'] = if_match
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    _details = {}
-    _details['serviceResourceId'] = service_resource_id
-    _details['connectorId'] = connector_id
-    _details['serviceName'] = service_name
-
-    client = cli_util.build_client('database_management', 'managed_my_sql_databases', ctx)
-    result = client.enable_external_mysql_associated_service(
-        external_my_sql_database_id=external_my_sql_database_id,
-        enable_external_mysql_associated_service_details=_details,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
 
 
 @heat_wave_fleet_metrics_group.command(name=cli_util.override('managed_my_sql_databases.get_heat_wave_fleet_metric.command_name', 'get'), help=u"""Gets the health metrics for a fleet of HeatWave clusters in a compartment. \n[Command Reference](getHeatWaveFleetMetric)""")

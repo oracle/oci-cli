@@ -132,7 +132,7 @@ def job_execution_group():
     pass
 
 
-@click.command(cli_util.override('db_management.database_ha_backup_details_group.command_name', 'database-ha-backup-details'), cls=CommandGroupWithAlias, help="""The database ha and backup details.""")
+@click.command(cli_util.override('db_management.database_ha_backup_details_group.command_name', 'database-ha-backup-details'), cls=CommandGroupWithAlias, help="""The database HA and backup details.""")
 @cli_util.help_option_group
 def database_ha_backup_details_group():
     pass
@@ -180,7 +180,7 @@ def historic_addm_result_group():
     pass
 
 
-@click.command(cli_util.override('db_management.database_fleet_backup_metrics_group.command_name', 'database-fleet-backup-metrics'), cls=CommandGroupWithAlias, help="""fleet cloud database backup details.""")
+@click.command(cli_util.override('db_management.database_fleet_backup_metrics_group.command_name', 'database-fleet-backup-metrics'), cls=CommandGroupWithAlias, help="""The details of the backup metrics for the fleet of databases.""")
 @cli_util.help_option_group
 def database_fleet_backup_metrics_group():
     pass
@@ -192,7 +192,7 @@ def cluster_cache_metric_group():
     pass
 
 
-@click.command(cli_util.override('db_management.database_fleet_dataguard_metrics_group.command_name', 'database-fleet-dataguard-metrics'), cls=CommandGroupWithAlias, help="""List of databases in a dataguard fleet.""")
+@click.command(cli_util.override('db_management.database_fleet_dataguard_metrics_group.command_name', 'database-fleet-dataguard-metrics'), cls=CommandGroupWithAlias, help="""The list of Oracle Data Guard-enabled databases in the fleet.""")
 @cli_util.help_option_group
 def database_fleet_dataguard_metrics_group():
     pass
@@ -234,7 +234,7 @@ def external_exadata_storage_grid_group():
     pass
 
 
-@click.command(cli_util.override('db_management.database_fleet_ha_overview_metrics_group.command_name', 'database-fleet-ha-overview-metrics'), cls=CommandGroupWithAlias, help="""The details of the database fleet ha metrics.""")
+@click.command(cli_util.override('db_management.database_fleet_ha_overview_metrics_group.command_name', 'database-fleet-ha-overview-metrics'), cls=CommandGroupWithAlias, help="""The details of the HA metrics for the fleet of databases.""")
 @cli_util.help_option_group
 def database_fleet_ha_overview_metrics_group():
     pass
@@ -4837,6 +4837,7 @@ def disable_autonomous_database_management_feature(ctx, from_json, wait_for_stat
 @managed_database_group.command(name=cli_util.override('db_management.disable_database_management_feature.command_name', 'disable-database-management-feature'), help=u"""Disables a Database Management feature for the specified Oracle cloud database. \n[Command Reference](disableDatabaseManagementFeature)""")
 @cli_util.option('--database-id', required=True, help=u"""The [OCID] of the Database.""")
 @cli_util.option('--feature', required=True, type=custom_types.CliCaseInsensitiveChoice(["DIAGNOSTICS_AND_MANAGEMENT", "DB_LIFECYCLE_MANAGEMENT", "SQLWATCH"]), help=u"""The name of the Database Management feature.""")
+@cli_util.option('--can-disable-all-pdbs', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be disabled for the pluggable databases before disabling it for the container database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -4846,7 +4847,7 @@ def disable_autonomous_database_management_feature(ctx, from_json, wait_for_stat
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def disable_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, feature, if_match):
+def disable_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, feature, can_disable_all_pdbs, if_match):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -4858,6 +4859,9 @@ def disable_database_management_feature(ctx, from_json, wait_for_state, max_wait
 
     _details = {}
     _details['feature'] = feature
+
+    if can_disable_all_pdbs is not None:
+        _details['canDisableAllPdbs'] = can_disable_all_pdbs
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.disable_database_management_feature(
@@ -4898,6 +4902,7 @@ def disable_database_management_feature(ctx, from_json, wait_for_state, max_wait
 @managed_database_group.command(name=cli_util.override('db_management.disable_external_container_database_management_feature.command_name', 'disable-external-container-database-management-feature'), help=u"""Disables a Database Management feature for the specified external container database. \n[Command Reference](disableExternalContainerDatabaseManagementFeature)""")
 @cli_util.option('--external-container-database-id', required=True, help=u"""The [OCID] of the external container database.""")
 @cli_util.option('--feature', required=True, type=custom_types.CliCaseInsensitiveChoice(["DIAGNOSTICS_AND_MANAGEMENT", "DB_LIFECYCLE_MANAGEMENT", "SQLWATCH"]), help=u"""The name of the Database Management feature.""")
+@cli_util.option('--can-disable-all-pdbs', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be disabled for the pluggable databases before disabling it for the container database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -4907,7 +4912,7 @@ def disable_database_management_feature(ctx, from_json, wait_for_state, max_wait
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def disable_external_container_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, feature, if_match):
+def disable_external_container_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, feature, can_disable_all_pdbs, if_match):
 
     if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
@@ -4919,6 +4924,9 @@ def disable_external_container_database_management_feature(ctx, from_json, wait_
 
     _details = {}
     _details['feature'] = feature
+
+    if can_disable_all_pdbs is not None:
+        _details['canDisableAllPdbs'] = can_disable_all_pdbs
 
     client = cli_util.build_client('database_management', 'db_management', ctx)
     result = client.disable_external_container_database_management_feature(
@@ -7289,7 +7297,8 @@ def enable_database_management_feature(ctx, from_json, wait_for_state, max_wait_
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-management-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""The management type for the database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--feature-details-is-auto-enable-pluggable-database', type=click.BOOL, help=u"""Indicates whether the pluggable database can be enabled automatically.""")
+@cli_util.option('--feature-details-is-auto-enable-pluggable-database', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled automatically for all the pluggable databases in the container database.""")
+@cli_util.option('--feature-details-can-enable-all-current-pdbs', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled for all the current pluggable databases in the container database.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -7298,7 +7307,7 @@ def enable_database_management_feature(ctx, from_json, wait_for_state, max_wait_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details-database-connection-details': {'module': 'database_management', 'class': 'DatabaseConnectionDetails'}, 'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
 @cli_util.wrap_exceptions
-def enable_database_management_feature_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, feature_details_database_connection_details, feature_details_connector_details, feature_details_management_type, if_match, feature_details_is_auto_enable_pluggable_database):
+def enable_database_management_feature_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, feature_details_database_connection_details, feature_details_connector_details, feature_details_management_type, if_match, feature_details_is_auto_enable_pluggable_database, feature_details_can_enable_all_current_pdbs):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -7316,6 +7325,9 @@ def enable_database_management_feature_database_diagnostics_and_management_featu
 
     if feature_details_is_auto_enable_pluggable_database is not None:
         _details['featureDetails']['isAutoEnablePluggableDatabase'] = feature_details_is_auto_enable_pluggable_database
+
+    if feature_details_can_enable_all_current_pdbs is not None:
+        _details['featureDetails']['canEnableAllCurrentPdbs'] = feature_details_can_enable_all_current_pdbs
 
     _details['featureDetails']['feature'] = 'DIAGNOSTICS_AND_MANAGEMENT'
 
@@ -7683,6 +7695,8 @@ def enable_external_container_database_management_feature_external_database_sql_
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-license-model', required=True, type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the external database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--feature-details-can-enable-all-current-pdbs', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled for all the current pluggable databases in the container database.""")
+@cli_util.option('--feature-details-is-auto-enable-pluggable-database', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled automatically for all the pluggable databases in the container database.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -7691,7 +7705,7 @@ def enable_external_container_database_management_feature_external_database_sql_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
 @cli_util.wrap_exceptions
-def enable_external_container_database_management_feature_external_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, feature_details_connector_details, feature_details_license_model, if_match):
+def enable_external_container_database_management_feature_external_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, feature_details_connector_details, feature_details_license_model, if_match, feature_details_can_enable_all_current_pdbs, feature_details_is_auto_enable_pluggable_database):
 
     if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
@@ -7705,6 +7719,12 @@ def enable_external_container_database_management_feature_external_database_diag
     _details['featureDetails'] = {}
     _details['featureDetails']['connectorDetails'] = cli_util.parse_json_parameter("feature_details_connector_details", feature_details_connector_details)
     _details['featureDetails']['licenseModel'] = feature_details_license_model
+
+    if feature_details_can_enable_all_current_pdbs is not None:
+        _details['featureDetails']['canEnableAllCurrentPdbs'] = feature_details_can_enable_all_current_pdbs
+
+    if feature_details_is_auto_enable_pluggable_database is not None:
+        _details['featureDetails']['isAutoEnablePluggableDatabase'] = feature_details_is_auto_enable_pluggable_database
 
     _details['featureDetails']['feature'] = 'DIAGNOSTICS_AND_MANAGEMENT'
 
@@ -8190,6 +8210,8 @@ def enable_external_non_container_database_management_feature_external_database_
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-license-model', required=True, type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the external database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--feature-details-can-enable-all-current-pdbs', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled for all the current pluggable databases in the container database.""")
+@cli_util.option('--feature-details-is-auto-enable-pluggable-database', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled automatically for all the pluggable databases in the container database.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -8198,7 +8220,7 @@ def enable_external_non_container_database_management_feature_external_database_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
 @cli_util.wrap_exceptions
-def enable_external_non_container_database_management_feature_external_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_non_container_database_id, feature_details_connector_details, feature_details_license_model, if_match):
+def enable_external_non_container_database_management_feature_external_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_non_container_database_id, feature_details_connector_details, feature_details_license_model, if_match, feature_details_can_enable_all_current_pdbs, feature_details_is_auto_enable_pluggable_database):
 
     if isinstance(external_non_container_database_id, six.string_types) and len(external_non_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-non-container-database-id cannot be whitespace or empty string')
@@ -8212,6 +8234,12 @@ def enable_external_non_container_database_management_feature_external_database_
     _details['featureDetails'] = {}
     _details['featureDetails']['connectorDetails'] = cli_util.parse_json_parameter("feature_details_connector_details", feature_details_connector_details)
     _details['featureDetails']['licenseModel'] = feature_details_license_model
+
+    if feature_details_can_enable_all_current_pdbs is not None:
+        _details['featureDetails']['canEnableAllCurrentPdbs'] = feature_details_can_enable_all_current_pdbs
+
+    if feature_details_is_auto_enable_pluggable_database is not None:
+        _details['featureDetails']['isAutoEnablePluggableDatabase'] = feature_details_is_auto_enable_pluggable_database
 
     _details['featureDetails']['feature'] = 'DIAGNOSTICS_AND_MANAGEMENT'
 
@@ -8828,7 +8856,8 @@ def enable_pluggable_database_management_feature(ctx, from_json, wait_for_state,
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-management-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""The management type for the database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--feature-details-is-auto-enable-pluggable-database', type=click.BOOL, help=u"""Indicates whether the pluggable database can be enabled automatically.""")
+@cli_util.option('--feature-details-is-auto-enable-pluggable-database', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled automatically for all the pluggable databases in the container database.""")
+@cli_util.option('--feature-details-can-enable-all-current-pdbs', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled for all the current pluggable databases in the container database.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -8837,7 +8866,7 @@ def enable_pluggable_database_management_feature(ctx, from_json, wait_for_state,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details-database-connection-details': {'module': 'database_management', 'class': 'DatabaseConnectionDetails'}, 'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
 @cli_util.wrap_exceptions
-def enable_pluggable_database_management_feature_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, feature_details_database_connection_details, feature_details_connector_details, feature_details_management_type, if_match, feature_details_is_auto_enable_pluggable_database):
+def enable_pluggable_database_management_feature_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, feature_details_database_connection_details, feature_details_connector_details, feature_details_management_type, if_match, feature_details_is_auto_enable_pluggable_database, feature_details_can_enable_all_current_pdbs):
 
     if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
@@ -8855,6 +8884,9 @@ def enable_pluggable_database_management_feature_database_diagnostics_and_manage
 
     if feature_details_is_auto_enable_pluggable_database is not None:
         _details['featureDetails']['isAutoEnablePluggableDatabase'] = feature_details_is_auto_enable_pluggable_database
+
+    if feature_details_can_enable_all_current_pdbs is not None:
+        _details['featureDetails']['canEnableAllCurrentPdbs'] = feature_details_can_enable_all_current_pdbs
 
     _details['featureDetails']['feature'] = 'DIAGNOSTICS_AND_MANAGEMENT'
 
@@ -9429,8 +9461,8 @@ def get_cluster_cache_metric(ctx, from_json, managed_database_id, start_time, en
     cli_util.render_response(result, ctx)
 
 
-@database_fleet_backup_metrics_group.command(name=cli_util.override('db_management.get_database_fleet_backup_metrics.command_name', 'get'), help=u"""Gets the fleet of database and its backup details with backup metrics in a compartment or in a Managed Database Group. databaseHostedIn required query parameter to list either cloud or external databases(CLOUD, EXTERNAL). Either the CompartmentId or the ManagedDatabaseGroupId query parameters must be provided to retrieve the backup metrics. \n[Command Reference](getDatabaseFleetBackupMetrics)""")
-@cli_util.option('--database-hosted-in', required=True, type=custom_types.CliCaseInsensitiveChoice(["CLOUD", "EXTERNAL"]), help=u"""Whether the database is hosted in CLOUD or EXTERNAL infrastructure.""")
+@database_fleet_backup_metrics_group.command(name=cli_util.override('db_management.get_database_fleet_backup_metrics.command_name', 'get'), help=u"""Gets the fleet of container databases (CDBs) and their backup details and metrics, in a compartment or Database Group. The databaseHostedIn query parameter must be provided to list either cloud or external databases. Either the CompartmentId or the ManagedDatabaseGroupId query parameters must be provided to retrieve the HA and backup metrics. \n[Command Reference](getDatabaseFleetBackupMetrics)""")
+@cli_util.option('--database-hosted-in', required=True, type=custom_types.CliCaseInsensitiveChoice(["CLOUD", "EXTERNAL"]), help=u"""Indicates whether the database is a cloud database or an external database.""")
 @cli_util.option('--start-time', required=True, help=u"""The start time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @cli_util.option('--end-time', required=True, help=u"""The end time of the time range to retrieve the health metrics of a Managed Database in UTC in ISO-8601 format, which is \"yyyy-MM-dd'T'hh:mm:ss.sss'Z'\".""")
 @cli_util.option('--managed-database-group-id', help=u"""The [OCID] of the Managed Database Group.""")
@@ -9485,7 +9517,7 @@ def get_database_fleet_backup_metrics(ctx, from_json, database_hosted_in, start_
     cli_util.render_response(result, ctx)
 
 
-@database_fleet_dataguard_metrics_group.command(name=cli_util.override('db_management.get_database_fleet_dataguard_metrics.command_name', 'get'), help=u"""Gets the fleet of databases with dataguard enabled with dg metrics and its standby databases in a compartment or in a Managed Database Group. Either the CompartmentId or the ManagedDatabaseGroupId query parameters must be provided to retrieve the dg metrics and databases. \n[Command Reference](getDatabaseFleetDataguardMetrics)""")
+@database_fleet_dataguard_metrics_group.command(name=cli_util.override('db_management.get_database_fleet_dataguard_metrics.command_name', 'get'), help=u"""Gets the fleet of Oracle Data Guard-enabled container databases (CDBs) along with Data Guard metrics and standby databases, in a compartment or Database Group. Either the CompartmentId or the ManagedDatabaseGroupId query parameters must be provided to retrieve the list of databases and Data Guard metrics. \n[Command Reference](getDatabaseFleetDataguardMetrics)""")
 @cli_util.option('--managed-database-group-id', help=u"""The [OCID] of the Managed Database Group.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
@@ -9535,7 +9567,7 @@ def get_database_fleet_dataguard_metrics(ctx, from_json, managed_database_group_
     cli_util.render_response(result, ctx)
 
 
-@database_fleet_ha_overview_metrics_group.command(name=cli_util.override('db_management.get_database_fleet_ha_overview_metrics.command_name', 'get'), help=u"""Gets the fleet of databases (CDB) and there backup and HA usage metrics in a compartment or in a Managed Database Group. Either the CompartmentId or the ManagedDatabaseGroupId query parameters must be provided to retrieve the health metrics. \n[Command Reference](getDatabaseFleetHaOverviewMetrics)""")
+@database_fleet_ha_overview_metrics_group.command(name=cli_util.override('db_management.get_database_fleet_ha_overview_metrics.command_name', 'get'), help=u"""Gets the fleet of container databases (CDBs) and their HA and backup metrics in a compartment or in a Database Group. Either the CompartmentId or the ManagedDatabaseGroupId query parameters must be provided to retrieve the HA and backup metrics. \n[Command Reference](getDatabaseFleetHaOverviewMetrics)""")
 @cli_util.option('--managed-database-group-id', help=u"""The [OCID] of the Managed Database Group.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
@@ -9654,7 +9686,7 @@ def get_database_fleet_health_metrics(ctx, from_json, compare_baseline_time, com
     cli_util.render_response(result, ctx)
 
 
-@database_ha_backup_details_group.command(name=cli_util.override('db_management.get_database_ha_backup_details.command_name', 'get'), help=u"""Gets database ha and backup details with metrics and backup history. \n[Command Reference](getDatabaseHaBackupDetails)""")
+@database_ha_backup_details_group.command(name=cli_util.override('db_management.get_database_ha_backup_details.command_name', 'get'), help=u"""Gets HA and backup details with metrics and backup history for a single database. \n[Command Reference](getDatabaseHaBackupDetails)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -14961,7 +14993,8 @@ def modify_database_management_feature(ctx, from_json, wait_for_state, max_wait_
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-management-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""The management type for the database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--feature-details-is-auto-enable-pluggable-database', type=click.BOOL, help=u"""Indicates whether the pluggable database can be enabled automatically.""")
+@cli_util.option('--feature-details-is-auto-enable-pluggable-database', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled automatically for all the pluggable databases in the container database.""")
+@cli_util.option('--feature-details-can-enable-all-current-pdbs', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled for all the current pluggable databases in the container database.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -14970,7 +15003,7 @@ def modify_database_management_feature(ctx, from_json, wait_for_state, max_wait_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details-database-connection-details': {'module': 'database_management', 'class': 'DatabaseConnectionDetails'}, 'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
 @cli_util.wrap_exceptions
-def modify_database_management_feature_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, feature_details_database_connection_details, feature_details_connector_details, feature_details_management_type, if_match, feature_details_is_auto_enable_pluggable_database):
+def modify_database_management_feature_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, feature_details_database_connection_details, feature_details_connector_details, feature_details_management_type, if_match, feature_details_is_auto_enable_pluggable_database, feature_details_can_enable_all_current_pdbs):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -14988,6 +15021,9 @@ def modify_database_management_feature_database_diagnostics_and_management_featu
 
     if feature_details_is_auto_enable_pluggable_database is not None:
         _details['featureDetails']['isAutoEnablePluggableDatabase'] = feature_details_is_auto_enable_pluggable_database
+
+    if feature_details_can_enable_all_current_pdbs is not None:
+        _details['featureDetails']['canEnableAllCurrentPdbs'] = feature_details_can_enable_all_current_pdbs
 
     _details['featureDetails']['feature'] = 'DIAGNOSTICS_AND_MANAGEMENT'
 
@@ -15159,6 +15195,271 @@ def modify_database_management_feature_database_sql_watch_feature_details(ctx, f
     cli_util.render_response(result, ctx)
 
 
+@managed_database_group.command(name=cli_util.override('db_management.modify_external_container_database_management_feature.command_name', 'modify-external-container-database-management-feature'), help=u"""Modifies a Database Management feature for the specified external container database. \n[Command Reference](modifyExternalContainerDatabaseManagementFeature)""")
+@cli_util.option('--external-container-database-id', required=True, help=u"""The [OCID] of the external container database.""")
+@cli_util.option('--feature-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'feature-details': {'module': 'database_management', 'class': 'ExternalDatabaseFeatureDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details': {'module': 'database_management', 'class': 'ExternalDatabaseFeatureDetails'}})
+@cli_util.wrap_exceptions
+def modify_external_container_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, feature_details, if_match):
+
+    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['featureDetails'] = cli_util.parse_json_parameter("feature_details", feature_details)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.modify_external_container_database_management_feature(
+        external_container_database_id=external_container_database_id,
+        enable_external_container_database_management_feature_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.modify_external_container_database_management_feature_external_database_lifecycle_management_feature_details.command_name', 'modify-external-container-database-management-feature-external-database-lifecycle-management-feature-details'), help=u"""Modifies a Database Management feature for the specified external container database. \n[Command Reference](modifyExternalContainerDatabaseManagementFeature)""")
+@cli_util.option('--external-container-database-id', required=True, help=u"""The [OCID] of the external container database.""")
+@cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--feature-details-license-model', required=True, type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the external database.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
+@cli_util.wrap_exceptions
+def modify_external_container_database_management_feature_external_database_lifecycle_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, feature_details_connector_details, feature_details_license_model, if_match):
+
+    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['featureDetails'] = {}
+    _details['featureDetails']['connectorDetails'] = cli_util.parse_json_parameter("feature_details_connector_details", feature_details_connector_details)
+    _details['featureDetails']['licenseModel'] = feature_details_license_model
+
+    _details['featureDetails']['feature'] = 'DB_LIFECYCLE_MANAGEMENT'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.modify_external_container_database_management_feature(
+        external_container_database_id=external_container_database_id,
+        enable_external_container_database_management_feature_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.modify_external_container_database_management_feature_external_database_sql_watch_feature_details.command_name', 'modify-external-container-database-management-feature-external-database-sql-watch-feature-details'), help=u"""Modifies a Database Management feature for the specified external container database. \n[Command Reference](modifyExternalContainerDatabaseManagementFeature)""")
+@cli_util.option('--external-container-database-id', required=True, help=u"""The [OCID] of the external container database.""")
+@cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
+@cli_util.wrap_exceptions
+def modify_external_container_database_management_feature_external_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, feature_details_connector_details, if_match):
+
+    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['featureDetails'] = {}
+    _details['featureDetails']['connectorDetails'] = cli_util.parse_json_parameter("feature_details_connector_details", feature_details_connector_details)
+
+    _details['featureDetails']['feature'] = 'SQLWATCH'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.modify_external_container_database_management_feature(
+        external_container_database_id=external_container_database_id,
+        enable_external_container_database_management_feature_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@managed_database_group.command(name=cli_util.override('db_management.modify_external_container_database_management_feature_external_database_diagnostics_and_management_feature_details.command_name', 'modify-external-container-database-management-feature-external-database-diagnostics-and-management-feature-details'), help=u"""Modifies a Database Management feature for the specified external container database. \n[Command Reference](modifyExternalContainerDatabaseManagementFeature)""")
+@cli_util.option('--external-container-database-id', required=True, help=u"""The [OCID] of the external container database.""")
+@cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--feature-details-license-model', required=True, type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the external database.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--feature-details-can-enable-all-current-pdbs', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled for all the current pluggable databases in the container database.""")
+@cli_util.option('--feature-details-is-auto-enable-pluggable-database', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled automatically for all the pluggable databases in the container database.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
+@cli_util.wrap_exceptions
+def modify_external_container_database_management_feature_external_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, feature_details_connector_details, feature_details_license_model, if_match, feature_details_can_enable_all_current_pdbs, feature_details_is_auto_enable_pluggable_database):
+
+    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['featureDetails'] = {}
+    _details['featureDetails']['connectorDetails'] = cli_util.parse_json_parameter("feature_details_connector_details", feature_details_connector_details)
+    _details['featureDetails']['licenseModel'] = feature_details_license_model
+
+    if feature_details_can_enable_all_current_pdbs is not None:
+        _details['featureDetails']['canEnableAllCurrentPdbs'] = feature_details_can_enable_all_current_pdbs
+
+    if feature_details_is_auto_enable_pluggable_database is not None:
+        _details['featureDetails']['isAutoEnablePluggableDatabase'] = feature_details_is_auto_enable_pluggable_database
+
+    _details['featureDetails']['feature'] = 'DIAGNOSTICS_AND_MANAGEMENT'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.modify_external_container_database_management_feature(
+        external_container_database_id=external_container_database_id,
+        enable_external_container_database_management_feature_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @managed_database_group.command(name=cli_util.override('db_management.modify_pluggable_database_management_feature.command_name', 'modify-pluggable-database-management-feature'), help=u"""Modifies the Database Management feature for the specified Oracle cloud pluggable database. \n[Command Reference](modifyPluggableDatabaseManagementFeature)""")
 @cli_util.option('--pluggable-database-id', required=True, help=u"""The [OCID] of the Oracle cloud pluggable database.""")
 @cli_util.option('--feature-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -15226,7 +15527,8 @@ def modify_pluggable_database_management_feature(ctx, from_json, wait_for_state,
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-management-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""The management type for the database.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--feature-details-is-auto-enable-pluggable-database', type=click.BOOL, help=u"""Indicates whether the pluggable database can be enabled automatically.""")
+@cli_util.option('--feature-details-is-auto-enable-pluggable-database', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled automatically for all the pluggable databases in the container database.""")
+@cli_util.option('--feature-details-can-enable-all-current-pdbs', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled for all the current pluggable databases in the container database.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -15235,7 +15537,7 @@ def modify_pluggable_database_management_feature(ctx, from_json, wait_for_state,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details-database-connection-details': {'module': 'database_management', 'class': 'DatabaseConnectionDetails'}, 'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
 @cli_util.wrap_exceptions
-def modify_pluggable_database_management_feature_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, feature_details_database_connection_details, feature_details_connector_details, feature_details_management_type, if_match, feature_details_is_auto_enable_pluggable_database):
+def modify_pluggable_database_management_feature_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, feature_details_database_connection_details, feature_details_connector_details, feature_details_management_type, if_match, feature_details_is_auto_enable_pluggable_database, feature_details_can_enable_all_current_pdbs):
 
     if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
@@ -15253,6 +15555,9 @@ def modify_pluggable_database_management_feature_database_diagnostics_and_manage
 
     if feature_details_is_auto_enable_pluggable_database is not None:
         _details['featureDetails']['isAutoEnablePluggableDatabase'] = feature_details_is_auto_enable_pluggable_database
+
+    if feature_details_can_enable_all_current_pdbs is not None:
+        _details['featureDetails']['canEnableAllCurrentPdbs'] = feature_details_can_enable_all_current_pdbs
 
     _details['featureDetails']['feature'] = 'DIAGNOSTICS_AND_MANAGEMENT'
 

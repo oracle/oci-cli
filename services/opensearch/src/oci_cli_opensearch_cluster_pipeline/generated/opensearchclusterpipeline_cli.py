@@ -47,6 +47,7 @@ opensearch_cluster_pipeline_root_group.add_command(opensearch_cluster_pipeline_c
 @cli_util.option('--pipeline-configuration-body', required=True, help=u"""The pipeline configuration in YAML format. The command accepts the pipeline configuration as a string or within a .yaml file. If you provide the configuration as a string, each new line must be escaped with \\.""")
 @cli_util.option('--data-prepper-configuration-body', required=True, help=u"""The data prepper config in YAML format. The command accepts the data prepper config as a string or within a .yaml file. If you provide the configuration as a string, each new line must be escaped with \\.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to create the pipeline in.""")
+@cli_util.option('--node-shape', help=u"""The pipeline node shape.""")
 @cli_util.option('--vcn-id', help=u"""The OCID of the pipeline's VCN.""")
 @cli_util.option('--subnet-id', help=u"""The OCID of the pipeline's subnet.""")
 @cli_util.option('--vcn-compartment-id', help=u"""The OCID for the compartment where the pipeline's VCN is located.""")
@@ -66,7 +67,7 @@ This option is a JSON list with items of type OpensearchPipelineReverseConnectio
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'reverse-connection-endpoints': {'module': 'opensearch', 'class': 'list[OpensearchPipelineReverseConnectionEndpoint]'}, 'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_opensearch_cluster_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, ocpu_count, memory_gb, node_count, pipeline_configuration_body, data_prepper_configuration_body, compartment_id, vcn_id, subnet_id, vcn_compartment_id, subnet_compartment_id, nsg_id, reverse_connection_endpoints, freeform_tags, defined_tags, opc_dry_run):
+def create_opensearch_cluster_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, ocpu_count, memory_gb, node_count, pipeline_configuration_body, data_prepper_configuration_body, compartment_id, node_shape, vcn_id, subnet_id, vcn_compartment_id, subnet_compartment_id, nsg_id, reverse_connection_endpoints, freeform_tags, defined_tags, opc_dry_run):
 
     kwargs = {}
     if opc_dry_run is not None:
@@ -81,6 +82,9 @@ def create_opensearch_cluster_pipeline(ctx, from_json, wait_for_state, max_wait_
     _details['pipelineConfigurationBody'] = pipeline_configuration_body
     _details['dataPrepperConfigurationBody'] = data_prepper_configuration_body
     _details['compartmentId'] = compartment_id
+
+    if node_shape is not None:
+        _details['nodeShape'] = node_shape
 
     if vcn_id is not None:
         _details['vcnId'] = vcn_id
@@ -291,6 +295,7 @@ def list_opensearch_cluster_pipelines(ctx, from_json, all_pages, page_size, comp
 @cli_util.option('--ocpu-count', type=click.INT, help=u"""The number of OCPUs configured for each pipeline node.""")
 @cli_util.option('--memory-gb', type=click.INT, help=u"""The amount of memory in GB, for each pipeline node.""")
 @cli_util.option('--node-count', type=click.INT, help=u"""The number of nodes configured for the pipeline.""")
+@cli_util.option('--node-shape', help=u"""The pipeline node shape.""")
 @cli_util.option('--pipeline-configuration-body', help=u"""The pipeline configuration in YAML format. The command accepts the pipeline configuration as a string or within a .yaml file. If you provide the configuration as a string, each new line must be escaped with \\.""")
 @cli_util.option('--data-prepper-configuration-body', help=u"""The data prepper config in YAML format. The command accepts the data prepper config as a string or within a .yaml file. If you provide the configuration as a string, each new line must be escaped with \\.""")
 @cli_util.option('--vcn-id', help=u"""The OCID of the pipeline's VCN.""")
@@ -314,7 +319,7 @@ This option is a JSON list with items of type OpensearchPipelineReverseConnectio
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'reverse-connection-endpoints': {'module': 'opensearch', 'class': 'list[OpensearchPipelineReverseConnectionEndpoint]'}, 'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_opensearch_cluster_pipeline(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_pipeline_id, display_name, ocpu_count, memory_gb, node_count, pipeline_configuration_body, data_prepper_configuration_body, vcn_id, subnet_id, vcn_compartment_id, subnet_compartment_id, nsg_id, reverse_connection_endpoints, freeform_tags, defined_tags, if_match, opc_dry_run):
+def update_opensearch_cluster_pipeline(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_pipeline_id, display_name, ocpu_count, memory_gb, node_count, node_shape, pipeline_configuration_body, data_prepper_configuration_body, vcn_id, subnet_id, vcn_compartment_id, subnet_compartment_id, nsg_id, reverse_connection_endpoints, freeform_tags, defined_tags, if_match, opc_dry_run):
 
     if isinstance(opensearch_cluster_pipeline_id, six.string_types) and len(opensearch_cluster_pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --opensearch-cluster-pipeline-id cannot be whitespace or empty string')
@@ -341,6 +346,9 @@ def update_opensearch_cluster_pipeline(ctx, from_json, force, wait_for_state, ma
 
     if node_count is not None:
         _details['nodeCount'] = node_count
+
+    if node_shape is not None:
+        _details['nodeShape'] = node_shape
 
     if pipeline_configuration_body is not None:
         _details['pipelineConfigurationBody'] = pipeline_configuration_body

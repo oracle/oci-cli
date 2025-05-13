@@ -6,6 +6,53 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.56.0 - 2025-05-13
+--------------------
+Added
+~~~~~
+* Database Management Service
+
+  * Support for new operations for managed database
+
+    * ``oci database-management managed-database modify-external-container-database-management-feature``
+    * ``oci database-management managed-database modify-external-container-database-management-feature-external-database-diagnostics-and-management-feature-details``
+    * ``oci database-management managed-database modify-external-container-database-management-feature-external-database-lifecycle-management-feature-details``
+    * ``oci database-management managed-database modify-external-container-database-management-feature-external-database-sql-watch-feature-details``
+
+  * Support for bulk PDB enablement using optional parameter --can-disable-all-pdbs
+
+    * ``oci database-management managed-database enable-database-management-feature --can-disable-all-pdbs``
+    * ``oci database-management managed-database disable-database-management-feature --can-disable-all-pdbs``
+    * ``oci database-management managed-database enable-database-management-feature-database-diagnostics-and-management-feature-details --feature-details-is-auto-enable-pluggable-database feature-details-can-enable-all-current-pdbs``
+    * ``oci database-management managed-database enable-pluggable-database-management-feature-database-diagnostics-and-management-feature-details --feature-details-can-enable-all-current-pdbs``
+
+* Model Deployment Data Plane Service
+
+  * Support for the Model Deployment Inference calls
+
+    * ``oci model-deployment inference-result predict``
+    * ``oci model-deployment inference-result predict-with-response-stream``
+
+* Opensearch Service
+
+  * Adding Node Shape details to create and update vertical for cluster and pipeline and Search Node details to create and update for cluster
+
+    * ``oci opensearch pipeline create --node-shape``
+    * ``oci opensearch pipeline update --node-shape``
+    * ``oci opensearch cluster create --data-node-host-shape, --master-node-host-shape, --opendashboard-node-host-shape --search-node-count, --search-node-host-memory-gb, --search-node-host-ocpu-count, --search-node-host-shape, --search-node-host-type, --search-node-storage-gb``
+    * ``oci opensearch cluster resizevertical --data-node-host-shape, --master-node-host-shape, --opendashboard-node-host-shape --search-node-host-memory-gb, --search-node-host-ocpu-count, --search-node-host-shape, --search-node-storage-gb``
+    * ``oci opensearch cluster resizehorizontal --search-node-count``
+    * ``oci opensearch cluster shapes-details list``
+
+Changed
+~~~~~~~
+* Database Management Service
+
+  * [BREAKING] Following commands have been removed
+
+    * ``oci database-management managed-my-sql-databases external-my-sql-database disable-external-mysql-associated-service``
+    * ``oci database-management managed-my-sql-databases external-my-sql-database enable-external-mysql-associated-service``
+
 3.55.0 - 2025-05-06
 --------------------
 Added
