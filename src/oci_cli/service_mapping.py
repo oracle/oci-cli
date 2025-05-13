@@ -468,6 +468,11 @@ service_mapping = {
         "OCI Managed Services for Mac",
         "Others"
     ],
+    "model-deployment": [
+        "model_deployment",
+        "Model Deployment Data Plane",
+        "Others"
+    ],
     "monitoring": [
         "monitoring",
         "Monitoring",

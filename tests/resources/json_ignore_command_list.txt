@@ -531,3 +531,7 @@ data-science, ml-app-instance-view, get
 data-science, ml-app-instance-view, recover
 data-science, ml-app-instance-view, trigger
 data-science, ml-app-instance-view, update
+database-management, managed-my-sql-databases, external-my-sql-database, disable-external-mysql-associated-service
+database-management, managed-my-sql-databases, external-my-sql-database, enable-external-mysql-associated-service
+model-deployment, inference-result, predict
+model-deployment, inference-result, predict-with-response-stream

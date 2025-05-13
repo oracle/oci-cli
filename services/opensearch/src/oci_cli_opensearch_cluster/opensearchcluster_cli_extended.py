@@ -81,3 +81,6 @@ opensearchcluster_cli.work_request_group.add_command(opensearchcluster_cli.list_
 
 # oci opensearch cluster work-request list-work-requests -> oci opensearch cluster work-request list
 cli_util.rename_command(opensearchcluster_cli, opensearchcluster_cli.work_request_group, opensearchcluster_cli.list_work_requests, "list")
+
+# oci opensearch cluster shapes-details list-opensearch-cluster-shapes -> oci opensearch cluster shapes-details list
+cli_util.rename_command(opensearchcluster_cli, opensearchcluster_cli.shapes_details_group, opensearchcluster_cli.list_opensearch_cluster_shapes, "list")
