@@ -282,6 +282,7 @@ SDK_client_map = {
     "db.list_db_system_shapes": "oci.database.DatabaseClient.list_db_system_shapes",
     "db.list_db_system_storage_performances": "oci.database.DatabaseClient.list_db_system_storage_performances",
     "db.list_db_system_upgrade_history_entries": "oci.database.DatabaseClient.list_db_system_upgrade_history_entries",
+    "db.list_db_system_upgrades": "oci.database.DatabaseClient.list_db_system_upgrades",
     "db.list_db_systems": "oci.database.DatabaseClient.list_db_systems",
     "db.list_db_versions": "oci.database.DatabaseClient.list_db_versions",
     "db.list_exadata_infrastructures": "oci.database.DatabaseClient.list_exadata_infrastructures",

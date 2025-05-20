@@ -535,3 +535,6 @@ database-management, managed-my-sql-databases, external-my-sql-database, disable
 database-management, managed-my-sql-databases, external-my-sql-database, enable-external-mysql-associated-service
 model-deployment, inference-result, predict
 model-deployment, inference-result, predict-with-response-stream
+mysql, db-system, create
+mysql, db-system, clone
+mysql, db-system, update
