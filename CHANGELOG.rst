@@ -6,6 +6,69 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.56.1 - 2025-05-20
+--------------------
+Added
+~~~~~
+
+* Support for the Globally Distributed Database service
+ 
+  * ``oci distributed-database`` 
+
+* Support for Network Security Groups in MySQL HeatWave service
+
+  * ``oci mysql db-system clone --nsg-ids``
+  * ``oci mysql db-system create --nsg-ids`` 
+  * ``oci mysql db-system import --nsg-ids``
+  * ``oci mysql db-system update --nsg-ids``
+
+* Database Service
+
+  * Support for listing the available upgrades (OS & GI) for VM DB systems
+    
+      * ``oci db db-system-upgrade-summary list-db-system-upgrades``
+
+  * Support for running dry-run operations
+
+      * ``oci db autonomous-database change-autonomous-database-subscription --opc-dry-run``
+      * ``oci db autonomous-database change-compartment --opc-dry-run``
+      * ``oci db autonomous-database change-disaster-recovery-configuration --opc-dry-run``
+      * ``oci db autonomous-database configure-key --opc-dry-run``
+      * ``oci db autonomous-database configure-saas-admin-user --opc-dry-run``
+      * ``oci db autonomous-database create --opc-dry-run``
+      * ``oci db autonomous-database create-adb-cross-region-data-guard-details --opc-dry-run``
+      * ``oci db autonomous-database create-autonomous-database-create-cross-region-disaster-recovery-details --opc-dry-run``
+      * ``oci db autonomous-database create-autonomous-database-register-as-customer-owned-container-details --opc-dry-run``
+      * ``oci db autonomous-database create-autonomous-database-undelete-autonomous-database-details --opc-dry-run``
+      * ``oci db autonomous-database create-cross-tenancy-disaster-recovery-details --opc-dry-run``
+      * ``oci db autonomous-database create-from-backup-id --opc-dry-run``
+      * ``oci db autonomous-database create-from-backup-timestamp --opc-dry-run``
+      * ``oci db autonomous-database create-from-clone --opc-dry-run``
+      * ``oci db autonomous-database create-refreshable-clone --opc-dry-run``
+      * ``oci db autonomous-database create-virtual-clone --opc-dry-run``
+      * ``oci db autonomous-database data-safe deregister --opc-dry-run``
+      * ``oci db autonomous-database data-safe register --opc-dry-run``
+      * ``oci db autonomous-database delete --opc-dry-run``
+      * ``oci db autonomous-database disable-autonomous-database-management --opc-dry-run``
+      * ``oci db autonomous-database disable-operations-insights --opc-dry-run``
+      * ``oci db autonomous-database enable-autonomous-database-management --opc-dry-run``
+      * ``oci db autonomous-database enable-operations-insights --opc-dry-run``
+      * ``oci db autonomous-database fail-over --opc-dry-run``
+      * ``oci db autonomous-database generate-wallet --opc-dry-run``
+      * ``oci db autonomous-database manual-refresh --opc-dry-run``
+      * ``oci db autonomous-database restart --opc-dry-run``
+      * ``oci db autonomous-database restore --opc-dry-run``
+      * ``oci db autonomous-database shrink --opc-dry-run``
+      * ``oci db autonomous-database start --opc-dry-run``
+      * ``oci db autonomous-database stop --opc-dry-run``
+      * ``oci db autonomous-database switchover --opc-dry-run``
+      * ``oci db autonomous-database update --opc-dry-run``
+      * ``oci db autonomous-database-backup create --opc-dry-run``
+      * ``oci db autonomous-database-backup delete --opc-dry-run``
+      * ``oci db autonomous-database-backup update --opc-dry-run``
+      * ``oci db autonomous-database-wallet rotate --opc-dry-run``
+      * ``oci db autonomous-database-wallet rotate-regional-wallet --opc-dry-run``
+    
 3.56.0 - 2025-05-13
 --------------------
 Added

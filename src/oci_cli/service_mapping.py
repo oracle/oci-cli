@@ -263,6 +263,11 @@ service_mapping = {
         "Full Stack Disaster Recovery",
         "Others"
     ],
+    "distributed-database": [
+        "distributed_database",
+        "Globally Distributed Database",
+        "Others"
+    ],
     "dns": [
         "dns",
         "DNS",
