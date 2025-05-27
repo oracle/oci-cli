@@ -28,27 +28,9 @@ def node_backup_group():
     pass
 
 
-@click.command(cli_util.override('bds.bds_instance_group.command_name', 'bds-instance'), cls=CommandGroupWithAlias, help="""Description of the cluster.""")
+@click.command(cli_util.override('bds.bds_capacity_report_group.command_name', 'bds-capacity-report'), cls=CommandGroupWithAlias, help="""A report of the host capacity within an availability domain that is available for you to create bds clusters. Host capacity is the physical infrastructure that resources such as compute instances run on. Use the capacity report to determine whether sufficient capacity is available for a shape before you create a bds cluster or change the shape of a bds cluster.""")
 @cli_util.help_option_group
-def bds_instance_group():
-    pass
-
-
-@click.command(cli_util.override('bds.resource_principal_configuration_group.command_name', 'resource-principal-configuration'), cls=CommandGroupWithAlias, help="""Resource Principal Session Token Details.""")
-@cli_util.help_option_group
-def resource_principal_configuration_group():
-    pass
-
-
-@click.command(cli_util.override('bds.bds_api_key_group.command_name', 'bds-api-key'), cls=CommandGroupWithAlias, help="""The API key information.""")
-@cli_util.help_option_group
-def bds_api_key_group():
-    pass
-
-
-@click.command(cli_util.override('bds.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing a work request.""")
-@cli_util.help_option_group
-def work_request_error_group():
+def bds_capacity_report_group():
     pass
 
 
@@ -76,15 +58,39 @@ def work_request_group():
     pass
 
 
-@click.command(cli_util.override('bds.bds_cluster_version_group.command_name', 'bds-cluster-version'), cls=CommandGroupWithAlias, help="""Cluster version details including bds and odh version information.""")
-@cli_util.help_option_group
-def bds_cluster_version_group():
-    pass
-
-
 @click.command(cli_util.override('bds.bds_metastore_configuration_group.command_name', 'bds-metastore-configuration'), cls=CommandGroupWithAlias, help="""The metastore configuration information.""")
 @cli_util.help_option_group
 def bds_metastore_configuration_group():
+    pass
+
+
+@click.command(cli_util.override('bds.bds_instance_group.command_name', 'bds-instance'), cls=CommandGroupWithAlias, help="""Description of the cluster.""")
+@cli_util.help_option_group
+def bds_instance_group():
+    pass
+
+
+@click.command(cli_util.override('bds.resource_principal_configuration_group.command_name', 'resource-principal-configuration'), cls=CommandGroupWithAlias, help="""Resource Principal Session Token Details.""")
+@cli_util.help_option_group
+def resource_principal_configuration_group():
+    pass
+
+
+@click.command(cli_util.override('bds.bds_api_key_group.command_name', 'bds-api-key'), cls=CommandGroupWithAlias, help="""The API key information.""")
+@cli_util.help_option_group
+def bds_api_key_group():
+    pass
+
+
+@click.command(cli_util.override('bds.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing a work request.""")
+@cli_util.help_option_group
+def work_request_error_group():
+    pass
+
+
+@click.command(cli_util.override('bds.bds_cluster_version_group.command_name', 'bds-cluster-version'), cls=CommandGroupWithAlias, help="""Cluster version details including bds and odh version information.""")
+@cli_util.help_option_group
+def bds_cluster_version_group():
     pass
 
 
@@ -95,16 +101,17 @@ def node_backup_configuration_group():
 
 
 bds_root_group.add_command(node_backup_group)
-bds_root_group.add_command(bds_instance_group)
-bds_root_group.add_command(resource_principal_configuration_group)
-bds_root_group.add_command(bds_api_key_group)
-bds_root_group.add_command(work_request_error_group)
+bds_root_group.add_command(bds_capacity_report_group)
 bds_root_group.add_command(work_request_log_entry_group)
 bds_root_group.add_command(identity_configuration_group)
 bds_root_group.add_command(node_replace_configuration_group)
 bds_root_group.add_command(work_request_group)
-bds_root_group.add_command(bds_cluster_version_group)
 bds_root_group.add_command(bds_metastore_configuration_group)
+bds_root_group.add_command(bds_instance_group)
+bds_root_group.add_command(resource_principal_configuration_group)
+bds_root_group.add_command(bds_api_key_group)
+bds_root_group.add_command(work_request_error_group)
+bds_root_group.add_command(bds_cluster_version_group)
 bds_root_group.add_command(node_backup_configuration_group)
 
 
@@ -1594,6 +1601,31 @@ def create_bds_api_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@bds_capacity_report_group.command(name=cli_util.override('bds.create_bds_capacity_report.command_name', 'create'), help=u"""Create a detailed capacity report for BDS service \n[Command Reference](createBdsCapacityReport)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID for the compartment. This should always be the root compartment.""")
+@cli_util.option('--shape-availabilities', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information about the shapes in the capacity report.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'shape-availabilities': {'module': 'bds', 'class': 'list[CreateCapacityReportShapeAvailabilityDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-availabilities': {'module': 'bds', 'class': 'list[CreateCapacityReportShapeAvailabilityDetails]'}}, output_type={'module': 'bds', 'class': 'BdsCapacityReport'})
+@cli_util.wrap_exceptions
+def create_bds_capacity_report(ctx, from_json, compartment_id, shape_availabilities):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['shapeAvailabilities'] = cli_util.parse_json_parameter("shape_availabilities", shape_availabilities)
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.create_bds_capacity_report(
+        create_bds_capacity_report_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -3385,6 +3417,36 @@ def get_resource_principal_configuration(ctx, from_json, bds_instance_id, resour
     cli_util.render_response(result, ctx)
 
 
+@bds_instance_group.command(name=cli_util.override('bds.get_software_update.command_name', 'get-software-update'), help=u"""Get the details of the software update of the given SoftwareUpdateId \n[Command Reference](getSoftwareUpdate)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--software-update-key', required=True, help=u"""The unique identifier of the software update.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'bds', 'class': 'SoftwareUpdate'})
+@cli_util.wrap_exceptions
+def get_software_update(ctx, from_json, bds_instance_id, software_update_key, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    if isinstance(software_update_key, six.string_types) and len(software_update_key.strip()) == 0:
+        raise click.UsageError('Parameter --software-update-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.get_software_update(
+        bds_instance_id=bds_instance_id,
+        software_update_key=software_update_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @work_request_group.command(name=cli_util.override('bds.get_work_request.command_name', 'get'), help=u"""Returns the status of the work request identified by the given ID. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3412,6 +3474,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.option('--os-patch-version', required=True, help=u"""The target os patch version.""")
 @cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
 @cli_util.option('--patching-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-dry-run', type=click.BOOL, help=u"""Perform dry run for the patch and stop.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3421,7 +3484,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'patching-configs': {'module': 'bds', 'class': 'PatchingConfigs'}})
 @cli_util.wrap_exceptions
-def install_os_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, cluster_admin_password, patching_configs, if_match):
+def install_os_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, cluster_admin_password, patching_configs, is_dry_run, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -3437,6 +3500,9 @@ def install_os_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if patching_configs is not None:
         _details['patchingConfigs'] = cli_util.parse_json_parameter("patching_configs", patching_configs)
+
+    if is_dry_run is not None:
+        _details['isDryRun'] = is_dry_run
 
     client = cli_util.build_client('bds', 'bds', ctx)
     result = client.install_os_patch(
@@ -3481,6 +3547,7 @@ def install_os_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--patching-configs-batch-size', required=True, type=click.INT, help=u"""How many nodes to be patched and rebooted in each iteration.""")
 @cli_util.option('--patching-configs-wait-time-between-batch-in-seconds', required=True, type=click.INT, help=u"""The wait time between batches in seconds.""")
 @cli_util.option('--patching-configs-tolerance-threshold-per-batch', required=True, type=click.INT, help=u"""Acceptable number of failed-to-be-patched nodes in each batch. The maximum number of failed-to-patch nodes cannot exceed 20% of the number of nodes.""")
+@cli_util.option('--is-dry-run', type=click.BOOL, help=u"""Perform dry run for the patch and stop.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3490,7 +3557,7 @@ def install_os_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def install_os_patch_batching_based_patching_configs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, cluster_admin_password, patching_configs_batch_size, patching_configs_wait_time_between_batch_in_seconds, patching_configs_tolerance_threshold_per_batch, if_match):
+def install_os_patch_batching_based_patching_configs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, cluster_admin_password, patching_configs_batch_size, patching_configs_wait_time_between_batch_in_seconds, patching_configs_tolerance_threshold_per_batch, is_dry_run, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -3507,6 +3574,9 @@ def install_os_patch_batching_based_patching_configs(ctx, from_json, wait_for_st
     _details['patchingConfigs']['batchSize'] = patching_configs_batch_size
     _details['patchingConfigs']['waitTimeBetweenBatchInSeconds'] = patching_configs_wait_time_between_batch_in_seconds
     _details['patchingConfigs']['toleranceThresholdPerBatch'] = patching_configs_tolerance_threshold_per_batch
+
+    if is_dry_run is not None:
+        _details['isDryRun'] = is_dry_run
 
     _details['patchingConfigs']['patchingConfigStrategy'] = 'BATCHING_BASED'
 
@@ -3550,6 +3620,7 @@ def install_os_patch_batching_based_patching_configs(ctx, from_json, wait_for_st
 @cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--os-patch-version', required=True, help=u"""The target os patch version.""")
 @cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
+@cli_util.option('--is-dry-run', type=click.BOOL, help=u"""Perform dry run for the patch and stop.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3559,7 +3630,7 @@ def install_os_patch_batching_based_patching_configs(ctx, from_json, wait_for_st
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def install_os_patch_downtime_based_patching_configs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, cluster_admin_password, if_match):
+def install_os_patch_downtime_based_patching_configs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, cluster_admin_password, is_dry_run, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -3573,6 +3644,9 @@ def install_os_patch_downtime_based_patching_configs(ctx, from_json, wait_for_st
     _details['patchingConfigs'] = {}
     _details['osPatchVersion'] = os_patch_version
     _details['clusterAdminPassword'] = cluster_admin_password
+
+    if is_dry_run is not None:
+        _details['isDryRun'] = is_dry_run
 
     _details['patchingConfigs']['patchingConfigStrategy'] = 'DOWNTIME_BASED'
 
@@ -3618,6 +3692,7 @@ def install_os_patch_downtime_based_patching_configs(ctx, from_json, wait_for_st
 @cli_util.option('--cluster-admin-password', required=True, help=u"""Base-64 encoded password for the cluster admin user.""")
 @cli_util.option('--patching-configs-wait-time-between-domain-in-seconds', required=True, type=click.INT, help=u"""The wait time between AD/FD in seconds.""")
 @cli_util.option('--patching-configs-tolerance-threshold-per-domain', required=True, type=click.INT, help=u"""Acceptable number of failed-to-be-patched nodes in each domain. The maximum number of failed-to-patch nodes cannot exceed 20% of the number of nodes.""")
+@cli_util.option('--is-dry-run', type=click.BOOL, help=u"""Perform dry run for the patch and stop.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3627,7 +3702,7 @@ def install_os_patch_downtime_based_patching_configs(ctx, from_json, wait_for_st
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def install_os_patch_domain_based_patching_configs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, cluster_admin_password, patching_configs_wait_time_between_domain_in_seconds, patching_configs_tolerance_threshold_per_domain, if_match):
+def install_os_patch_domain_based_patching_configs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, cluster_admin_password, patching_configs_wait_time_between_domain_in_seconds, patching_configs_tolerance_threshold_per_domain, is_dry_run, if_match):
 
     if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
@@ -3643,6 +3718,9 @@ def install_os_patch_domain_based_patching_configs(ctx, from_json, wait_for_stat
     _details['clusterAdminPassword'] = cluster_admin_password
     _details['patchingConfigs']['waitTimeBetweenDomainInSeconds'] = patching_configs_wait_time_between_domain_in_seconds
     _details['patchingConfigs']['toleranceThresholdPerDomain'] = patching_configs_tolerance_threshold_per_domain
+
+    if is_dry_run is not None:
+        _details['isDryRun'] = is_dry_run
 
     _details['patchingConfigs']['patchingConfigStrategy'] = 'DOMAIN_BASED'
 
@@ -3929,6 +4007,67 @@ def install_patch_batching_based_odh_patching_config(ctx, from_json, wait_for_st
     result = client.install_patch(
         bds_instance_id=bds_instance_id,
         install_patch_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@bds_instance_group.command(name=cli_util.override('bds.install_software_updates.command_name', 'install-software-updates'), help=u"""Install the specified software update to this cluster. \n[Command Reference](installSoftwareUpdates)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--software-update-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of unique identifiers of target software updates.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'software-update-keys': {'module': 'bds', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'software-update-keys': {'module': 'bds', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def install_software_updates(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, software_update_keys, if_match):
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['softwareUpdateKeys'] = cli_util.parse_json_parameter("software_update_keys", software_update_keys)
+
+    client = cli_util.build_client('bds', 'bds', ctx)
+    result = client.install_software_updates(
+        bds_instance_id=bds_instance_id,
+        install_software_updates_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -4603,7 +4742,7 @@ def list_os_patches(ctx, from_json, all_pages, page_size, bds_instance_id, page,
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
-@cli_util.option('--patch-type', type=custom_types.CliCaseInsensitiveChoice(["ODH", "OS"]), help=u"""The type of a BDS patch history entity.""")
+@cli_util.option('--patch-type', type=custom_types.CliCaseInsensitiveChoice(["ODH", "OS", "BDS"]), help=u"""The type of a BDS patch history entity.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4769,6 +4908,66 @@ def list_resource_principal_configurations(ctx, from_json, all_pages, page_size,
         )
     else:
         result = client.list_resource_principal_configurations(
+            bds_instance_id=bds_instance_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@bds_instance_group.command(name=cli_util.override('bds.list_software_updates.command_name', 'list-software-updates'), help=u"""List all the available software updates for current cluster. \n[Command Reference](listSoftwareUpdates)""")
+@cli_util.option('--bds-instance-id', required=True, help=u"""The OCID of the cluster.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'bds', 'class': 'SoftwareUpdateCollection'})
+@cli_util.wrap_exceptions
+def list_software_updates(ctx, from_json, all_pages, page_size, bds_instance_id, page, limit, sort_by, sort_order, if_match):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('bds', 'bds', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_software_updates,
+            bds_instance_id=bds_instance_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_software_updates,
+            limit,
+            page_size,
+            bds_instance_id=bds_instance_id,
+            **kwargs
+        )
+    else:
+        result = client.list_software_updates(
             bds_instance_id=bds_instance_id,
             **kwargs
         )

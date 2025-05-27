@@ -285,13 +285,13 @@ def unassign_private_ip(ctx, from_json, vnic_id, ip_address):
     click.echo('Unassigned IP address {} from VNIC {}'.format(ip_address, vnic_id), err=True)
 
 
-@cli_util.copy_params_from_generated_command(virtualnetwork_cli.create_ipv6, params_to_exclude=['wait_for_state', 'max_wait_seconds', 'wait_interval_seconds'])
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.create_ipv6, params_to_exclude=['wait_for_state', 'max_wait_seconds', 'wait_interval_seconds', 'subnet_id'])
 @virtualnetwork_cli.vnic_group.command(name='assign-ipv6', help=virtualnetwork_cli.create_ipv6.help)
 @cli_util.option('--unassign-if-already-assigned', is_flag=True, default=False, help="""Force reassignment of the IP address if it's already assigned to another VNIC in the subnet. This is only relevant if an IP address is associated with this command.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
-def assign_ipv6(ctx, from_json, vnic_id, defined_tags, display_name, freeform_tags, ip_address, unassign_if_already_assigned, ipv6_subnet_cidr, route_table_id):
+def assign_ipv6(ctx, from_json, vnic_id, defined_tags, display_name, freeform_tags, ip_address, unassign_if_already_assigned, ipv6_subnet_cidr, route_table_id, lifetime):
     networking_client = cli_util.build_client('core', 'virtual_network', ctx)
 
     # First we get the VNIC because we need to know the subnet OCID for the ListIpv6s call
@@ -347,6 +347,9 @@ def assign_ipv6(ctx, from_json, vnic_id, defined_tags, display_name, freeform_ta
 
     if route_table_id is not None:
         assign_ip_request_body['routeTableId'] = route_table_id
+
+    if lifetime is not None:
+        assign_ip_request_body['lifetime'] = lifetime
 
     # If we are here then either the IP address does not exist or it is a candidate to be moved
     if not is_ip_reassignment:

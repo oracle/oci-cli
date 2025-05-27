@@ -559,6 +559,50 @@ def get_management_saved_search(ctx, from_json, management_saved_search_id):
     cli_util.render_response(result, ctx)
 
 
+@management_dashboard_group.command(name=cli_util.override('management_dashboard.get_oob_management_dashboard.command_name', 'get-oob'), help=u"""Gets an OOB dashboard and its saved searches by ID.  Deleted or unauthorized saved searches are marked by tile's state property. \n[Command Reference](getOobManagementDashboard)""")
+@cli_util.option('--management-dashboard-id', required=True, help=u"""A unique dashboard identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'management_dashboard', 'class': 'ManagementDashboard'})
+@cli_util.wrap_exceptions
+def get_oob_management_dashboard(ctx, from_json, management_dashboard_id):
+
+    if isinstance(management_dashboard_id, six.string_types) and len(management_dashboard_id.strip()) == 0:
+        raise click.UsageError('Parameter --management-dashboard-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('management_dashboard', 'dashx_apis', ctx)
+    result = client.get_oob_management_dashboard(
+        management_dashboard_id=management_dashboard_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@management_saved_search_group.command(name=cli_util.override('management_dashboard.get_oob_management_saved_search.command_name', 'get-oob'), help=u"""Gets a saved search by ID. \n[Command Reference](getOobManagementSavedSearch)""")
+@cli_util.option('--management-saved-search-id', required=True, help=u"""A unique saved search identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'management_dashboard', 'class': 'ManagementSavedSearch'})
+@cli_util.wrap_exceptions
+def get_oob_management_saved_search(ctx, from_json, management_saved_search_id):
+
+    if isinstance(management_saved_search_id, six.string_types) and len(management_saved_search_id.strip()) == 0:
+        raise click.UsageError('Parameter --management-saved-search-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('management_dashboard', 'dashx_apis', ctx)
+    result = client.get_oob_management_saved_search(
+        management_saved_search_id=management_saved_search_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @management_dashboard_import_details_group.command(name=cli_util.override('management_dashboard.import_dashboard.command_name', 'import-dashboard'), help=u"""Imports an array of dashboards and their saved searches. Here's an example of how you can use CLI to import a dashboard. For information on the details that must be passed to IMPORT, you can use the EXPORT API to obtain the Import.json file: `oci management-dashboard dashboard export --query data --export-dashboard-id \"{\\\"dashboardIds\\\":[\\\"ocid1.managementdashboard.oc1..dashboardId1\\\"]}\"  > Import.json`. Note that import API updates the resource if it already exists, and creates a new resource if it does not exist. To import to a different compartment, edit and change the compartmentId to the desired compartment OCID. Here's an example of how you can use CLI to import: `oci management-dashboard dashboard import --from-json file://Import.json` \n[Command Reference](importDashboard)""")
 @cli_util.option('--dashboards', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of dashboards.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -701,6 +745,120 @@ def list_management_saved_searches(ctx, from_json, all_pages, page_size, compart
         )
     else:
         result = client.list_management_saved_searches(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@management_dashboard_group.command(name=cli_util.override('management_dashboard.list_oob_management_dashboards.command_name', 'list-oob'), help=u"""Gets the list of OOB dashboards with pagination.  Returned properties are the summary. \n[Command Reference](listOobManagementDashboards)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page on which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is the default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'management_dashboard', 'class': 'ManagementDashboardCollection'})
+@cli_util.wrap_exceptions
+def list_oob_management_dashboards(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('management_dashboard', 'dashx_apis', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_oob_management_dashboards,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_oob_management_dashboards,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_oob_management_dashboards(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@management_saved_search_group.command(name=cli_util.override('management_dashboard.list_oob_management_saved_searches.command_name', 'list-oob'), help=u"""Gets the list of out-of-box saved searches in a compartment with pagination.  Returned properties are the summary. \n[Command Reference](listOobManagementSavedSearches)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page on which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified timeCreated is the default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'management_dashboard', 'class': 'ManagementSavedSearchCollection'})
+@cli_util.wrap_exceptions
+def list_oob_management_saved_searches(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('management_dashboard', 'dashx_apis', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_oob_management_saved_searches,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_oob_management_saved_searches,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_oob_management_saved_searches(
             compartment_id=compartment_id,
             **kwargs
         )

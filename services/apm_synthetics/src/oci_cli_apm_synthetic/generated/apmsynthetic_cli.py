@@ -1579,8 +1579,8 @@ def create_on_premise_vantage_point(ctx, from_json, apm_domain_id, name, type, d
 @script_group.command(name=cli_util.override('apm_synthetics.create_script.command_name', 'create'), help=u"""Creates a new script. \n[Command Reference](createScript)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--display-name', required=True, help=u"""Unique name that can be edited. The name should not contain any confidential information.""")
-@cli_util.option('--content-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SIDE", "JS"]), help=u"""Content type of script.""")
-@cli_util.option('--content', required=True, help=u"""The content of the script. It may contain custom-defined tags that can be used for setting dynamic parameters. The format to set dynamic parameters is: `<ORAP><ON>param name</ON><OV>param value</OV><OS>isParamValueSecret(true/false)</OS></ORAP>`. Param value and isParamValueSecret are optional, the default value for isParamValueSecret is false. Examples: With mandatory param name : `<ORAP><ON>param name</ON></ORAP>` With parameter name and value : `<ORAP><ON>param name</ON><OV>param value</OV></ORAP>` Note that the content is valid if it matches the given content type. For example, if the content type is SIDE, then the content should be in Side script format. If the content type is JS, then the content should be in JavaScript format.""")
+@cli_util.option('--content-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SIDE", "JS", "PLAYWRIGHT_TS"]), help=u"""Content type of script.""")
+@cli_util.option('--content', required=True, help=u"""The content of the script. It may contain custom-defined tags that can be used for setting dynamic parameters. The format to set dynamic parameters is: `<ORAP><ON>param name</ON><OV>param value</OV><OS>isParamValueSecret(true/false)</OS></ORAP>`. Param value and isParamValueSecret are optional, the default value for isParamValueSecret is false. Examples: With mandatory param name : `<ORAP><ON>param name</ON></ORAP>` With parameter name and value : `<ORAP><ON>param name</ON><OV>param value</OV></ORAP>` Note that the content is valid if it matches the given content type. For example, if the content type is SIDE, then the content should be in Side script format. If the content type is JS, then the content should be in JavaScript format. If the content type is PLAYWRIGHT_TS, then the content should be in TypeScript format.""")
 @cli_util.option('--content-file-name', help=u"""File name of uploaded script content.""")
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\", \"isSecret\": false}]`
 
@@ -1874,11 +1874,11 @@ def get_monitor(ctx, from_json, apm_domain_id, monitor_id):
     cli_util.render_response(result, ctx)
 
 
-@monitor_result_group.command(name=cli_util.override('apm_synthetics.get_monitor_result.command_name', 'get'), help=u"""Gets the results for a specific execution of a monitor identified by OCID. The results are in a HAR file, Screenshot, Console Log or Network details. \n[Command Reference](getMonitorResult)""")
+@monitor_result_group.command(name=cli_util.override('apm_synthetics.get_monitor_result.command_name', 'get'), help=u"""Gets the results for a specific execution of a monitor identified by OCID. The results are in a HAR file, Screenshot, Console Log, Network details, Diagnostics or Script Content. \n[Command Reference](getMonitorResult)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--monitor-id', required=True, help=u"""The OCID of the monitor.""")
 @cli_util.option('--vantage-point', required=True, help=u"""The vantagePoint name.""")
-@cli_util.option('--result-type', required=True, help=u"""The result type: har, screenshot, log, or network.""")
+@cli_util.option('--result-type', required=True, help=u"""The result type: har, screenshot, log, network, diagnostics or script.""")
 @cli_util.option('--result-content-type', required=True, help=u"""The result content type: zip or raw.""")
 @cli_util.option('--execution-time', required=True, help=u"""The time the object was posted.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4046,8 +4046,8 @@ def update_on_premise_vantage_point(ctx, from_json, force, apm_domain_id, on_pre
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM domain ID the request is intended for.""")
 @cli_util.option('--script-id', required=True, help=u"""The OCID of the script.""")
 @cli_util.option('--display-name', help=u"""Unique name that can be edited. The name should not contain any confidential information.""")
-@cli_util.option('--content-type', type=custom_types.CliCaseInsensitiveChoice(["SIDE", "JS"]), help=u"""Content type of script.""")
-@cli_util.option('--content', help=u"""The content of the script. It may contain custom-defined tags that can be used for setting dynamic parameters. The format to set dynamic parameters is: `<ORAP><ON>param name</ON><OV>param value</OV><OS>isParamValueSecret(true/false)</OS></ORAP>`. Param value and isParamValueSecret are optional, the default value for isParamValueSecret is false. Examples: With mandatory param name : `<ORAP><ON>param name</ON></ORAP>` With parameter name and value : `<ORAP><ON>param name</ON><OV>param value</OV></ORAP>` Note that the content is valid if it matches the given content type. For example, if the content type is SIDE, then the content should be in Side script format. If the content type is JS, then the content should be in JavaScript format.""")
+@cli_util.option('--content-type', type=custom_types.CliCaseInsensitiveChoice(["SIDE", "JS", "PLAYWRIGHT_TS"]), help=u"""Content type of script.""")
+@cli_util.option('--content', help=u"""The content of the script. It may contain custom-defined tags that can be used for setting dynamic parameters. The format to set dynamic parameters is: `<ORAP><ON>param name</ON><OV>param value</OV><OS>isParamValueSecret(true/false)</OS></ORAP>`. Param value and isParamValueSecret are optional, the default value for isParamValueSecret is false. Examples: With mandatory param name : `<ORAP><ON>param name</ON></ORAP>` With parameter name and value : `<ORAP><ON>param name</ON><OV>param value</OV></ORAP>` Note that the content is valid if it matches the given content type. For example, if the content type is SIDE, then the content should be in Side script format. If the content type is JS, then the content should be in JavaScript format. If the content type is PLAYWRIGHT_TS, then the content should be in TypeScript format.""")
 @cli_util.option('--content-file-name', help=u"""File name of uploaded script content.""")
 @cli_util.option('--parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of script parameters. Example: `[{\"paramName\": \"userid\", \"paramValue\":\"testuser\", \"isSecret\": false}]`
 

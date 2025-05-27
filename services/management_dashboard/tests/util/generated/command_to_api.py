@@ -11,9 +11,13 @@ SDK_client_map = {
     "management_dashboard.export_dashboard": "oci.management_dashboard.DashxApisClient.export_dashboard",
     "management_dashboard.get_management_dashboard": "oci.management_dashboard.DashxApisClient.get_management_dashboard",
     "management_dashboard.get_management_saved_search": "oci.management_dashboard.DashxApisClient.get_management_saved_search",
+    "management_dashboard.get_oob_management_dashboard": "oci.management_dashboard.DashxApisClient.get_oob_management_dashboard",
+    "management_dashboard.get_oob_management_saved_search": "oci.management_dashboard.DashxApisClient.get_oob_management_saved_search",
     "management_dashboard.import_dashboard": "oci.management_dashboard.DashxApisClient.import_dashboard",
     "management_dashboard.list_management_dashboards": "oci.management_dashboard.DashxApisClient.list_management_dashboards",
     "management_dashboard.list_management_saved_searches": "oci.management_dashboard.DashxApisClient.list_management_saved_searches",
+    "management_dashboard.list_oob_management_dashboards": "oci.management_dashboard.DashxApisClient.list_oob_management_dashboards",
+    "management_dashboard.list_oob_management_saved_searches": "oci.management_dashboard.DashxApisClient.list_oob_management_saved_searches",
     "management_dashboard.update_management_dashboard": "oci.management_dashboard.DashxApisClient.update_management_dashboard",
     "management_dashboard.update_management_saved_search": "oci.management_dashboard.DashxApisClient.update_management_saved_search",
 }

@@ -3501,7 +3501,7 @@ def update_data_guard_association(ctx, from_json, wait_for_state, max_wait_secon
 @database_cli.autonomous_database_group.command(name=database_cli.delete_autonomous_database.name, help=database_cli.delete_autonomous_database.help)
 @click.pass_context
 @cli_util.wrap_exceptions
-def delete_autonomous_database_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, if_match):
+def delete_autonomous_database_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, if_match, opc_dry_run):
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
@@ -3509,6 +3509,8 @@ def delete_autonomous_database_extended(ctx, from_json, wait_for_state, max_wait
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if opc_dry_run is not None:
+        kwargs['opc_dry_run'] = opc_dry_run
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', 'database', ctx)
     result = client.delete_autonomous_database(

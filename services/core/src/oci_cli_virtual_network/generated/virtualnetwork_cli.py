@@ -3254,8 +3254,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 Example: `2001:DB8::`""")
 @cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC to assign the IPv6 to. The IPv6 will be in the VNIC's subnet.""")
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet from which the IPv6 is to be drawn. The IP address, *if supplied*, must be valid for the given subnet, only valid for reserved IPs currently.""")
-@cli_util.option('--lifetime', type=custom_types.CliCaseInsensitiveChoice(["EPHEMERAL", "RESERVED"]), help=u"""Lifetime of the IP address. There are two types of IPv6 IPs:  - Ephemeral  - Reserved""")
-@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the IP address or VNIC will use. For more information, see [Source Based Routing].""")
+@cli_util.option('--lifetime', type=custom_types.CliCaseInsensitiveChoice(["EPHEMERAL", "RESERVED"]), help=u"""Lifetime of the IP address. There are two types of IPs:  - Ephemeral  - Reserved""")
+@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the IP address or VNIC will use. For more information, see [Per-resource Routing].""")
 @cli_util.option('--ipv6-subnet-cidr', help=u"""The IPv6 prefix allocated to the subnet. This is required if more than one IPv6 prefix exists on the subnet.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3340,6 +3340,9 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""[Security attributes] are labels for a resource that can be referenced in a [Zero Trust Packet Routing] (ZPR) policy to control access to ZPR-supported resources.
+
+Example: `{\"Oracle-DataSecurity-ZPR\": {\"MaxEgressCount\": {\"value\":\"42\",\"mode\":\"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the LPG will use.
 
 If you don't specify a route table here, the LPG is created without an associated route table. The Networking service does NOT automatically associate the attached VCN's default route table with the LPG.
@@ -3348,12 +3351,12 @@ For information about why you would associate a route table with an LPG, see [Tr
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'LocalPeeringGateway'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'core', 'class': 'LocalPeeringGateway'})
 @cli_util.wrap_exceptions
-def create_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vcn_id, defined_tags, display_name, freeform_tags, route_table_id):
+def create_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vcn_id, defined_tags, display_name, freeform_tags, security_attributes, route_table_id):
 
     kwargs = {}
 
@@ -3369,6 +3372,9 @@ def create_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_second
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     if route_table_id is not None:
         _details['routeTableId'] = route_table_id
@@ -3552,7 +3558,7 @@ def create_network_security_group(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@private_ip_group.command(name=cli_util.override('virtual_network.create_private_ip.command_name', 'create'), help=u"""Creates a secondary private IP for the specified VNIC. For more information about secondary private IPs, see [IP Addresses]. \n[Command Reference](createPrivateIp)""")
+@private_ip_group.command(name=cli_util.override('virtual_network.create_private_ip.command_name', 'create'), help=u"""Creates a private IP. For more information about private IPs, see [IP Addresses]. \n[Command Reference](createPrivateIp)""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3573,8 +3579,8 @@ Example: `10.0.3.3`""")
 
 The [OCID] of the VLAN from which the private IP is to be drawn. The IP address, *if supplied*, must be valid for the given VLAN. See [Vlan].""")
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet from which the private IP is to be drawn. The IP address, *if supplied*, must be valid for the given subnet.""")
-@cli_util.option('--lifetime', type=custom_types.CliCaseInsensitiveChoice(["EPHEMERAL", "RESERVED"]), help=u"""Lifetime of the IP address. There are two types of IPv6 IPs:  - Ephemeral  - Reserved""")
-@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the IP address or VNIC will use. For more information, see [Source Based Routing].""")
+@cli_util.option('--lifetime', type=custom_types.CliCaseInsensitiveChoice(["EPHEMERAL", "RESERVED"]), help=u"""Lifetime of the IP address. There are two types of IPs:  - Ephemeral  - Reserved""")
+@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the IP address or VNIC will use. For more information, see [Per-resource Routing].""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
@@ -4266,6 +4272,7 @@ Example: `{\"Oracle-DataSecurity-ZPR\": {\"MaxEgressCount\": {\"value\":\"42\",\
 @cli_util.option('--is-ipv6-enabled', type=click.BOOL, help=u"""Whether IPv6 is enabled for the VCN. Default is `false`. If enabled, Oracle will assign the VCN a IPv6 /56 CIDR block. You may skip having Oracle allocate the VCN a IPv6 /56 CIDR block by setting isOracleGuaAllocationEnabled to `false`. For important details about IPv6 addressing in a VCN, see [IPv6 Addresses].
 
 Example: `true`""")
+@cli_util.option('--is-zpr-only', type=click.BOOL, help=u"""Indicates whether Zpr Only Mode is enforced.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -4274,7 +4281,7 @@ Example: `true`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cidr-blocks': {'module': 'core', 'class': 'list[string]'}, 'ipv6-private-cidr-blocks': {'module': 'core', 'class': 'list[string]'}, 'byoipv6-cidr-details': {'module': 'core', 'class': 'list[Byoipv6CidrDetails]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'core', 'class': 'Vcn'})
 @cli_util.wrap_exceptions
-def create_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cidr_block, cidr_blocks, ipv6_private_cidr_blocks, is_oracle_gua_allocation_enabled, byoipv6_cidr_details, defined_tags, display_name, dns_label, freeform_tags, security_attributes, is_ipv6_enabled):
+def create_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cidr_block, cidr_blocks, ipv6_private_cidr_blocks, is_oracle_gua_allocation_enabled, byoipv6_cidr_details, defined_tags, display_name, dns_label, freeform_tags, security_attributes, is_ipv6_enabled, is_zpr_only):
 
     kwargs = {}
 
@@ -4313,6 +4320,9 @@ def create_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     if is_ipv6_enabled is not None:
         _details['isIpv6Enabled'] = is_ipv6_enabled
+
+    if is_zpr_only is not None:
+        _details['isZprOnly'] = is_zpr_only
 
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_vcn(
@@ -12975,8 +12985,8 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC to reassign the IPv6 to. The VNIC must be in the same subnet as the current VNIC.""")
-@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the IP address or VNIC will use. For more information, see [Source Based Routing].""")
-@cli_util.option('--lifetime', type=custom_types.CliCaseInsensitiveChoice(["EPHEMERAL", "RESERVED"]), help=u"""Lifetime of the IP address. There are two types of IPv6 IPs:  - Ephemeral  - Reserved""")
+@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the IP address or VNIC will use. For more information, see [Per-resource Routing].""")
+@cli_util.option('--lifetime', type=custom_types.CliCaseInsensitiveChoice(["EPHEMERAL", "RESERVED"]), help=u"""Lifetime of the IP address. There are two types of IPs:  - Ephemeral  - Reserved""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -13062,6 +13072,9 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""[Security attributes] are labels for a resource that can be referenced in a [Zero Trust Packet Routing] (ZPR) policy to control access to ZPR-supported resources.
+
+Example: `{\"Oracle-DataSecurity-ZPR\": {\"MaxEgressCount\": {\"value\":\"42\",\"mode\":\"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the LPG will use.
 
 For information about why you would associate a route table with an LPG, see [Transit Routing: Access to Multiple VCNs in Same Region].""")
@@ -13070,18 +13083,18 @@ For information about why you would associate a route table with an LPG, see [Tr
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'LocalPeeringGateway'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'core', 'class': 'LocalPeeringGateway'})
 @cli_util.wrap_exceptions
-def update_local_peering_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, local_peering_gateway_id, defined_tags, display_name, freeform_tags, route_table_id, if_match):
+def update_local_peering_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, local_peering_gateway_id, defined_tags, display_name, freeform_tags, security_attributes, route_table_id, if_match):
 
     if isinstance(local_peering_gateway_id, six.string_types) and len(local_peering_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --local-peering-gateway-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or security_attributes:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and security-attributes will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -13098,6 +13111,9 @@ def update_local_peering_gateway(ctx, from_json, force, wait_for_state, max_wait
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     if route_table_id is not None:
         _details['routeTableId'] = route_table_id
@@ -13354,8 +13370,8 @@ For more information, see [DNS in Your Virtual Cloud Network].
 
 Example: `bminstance1`""")
 @cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC to reassign the private IP to. The VNIC must be in the same subnet as the current VNIC.""")
-@cli_util.option('--lifetime', type=custom_types.CliCaseInsensitiveChoice(["EPHEMERAL", "RESERVED"]), help=u"""Lifetime of the IP address. There are two types of IPv6 IPs:  - Ephemeral  - Reserved""")
-@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the IP address or VNIC will use. For more information, see [Source Based Routing].""")
+@cli_util.option('--lifetime', type=custom_types.CliCaseInsensitiveChoice(["EPHEMERAL", "RESERVED"]), help=u"""Lifetime of the IP address. There are two types of IPs:  - Ephemeral  - Reserved""")
+@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the IP address or VNIC will use. For more information, see [Per-resource Routing].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
@@ -14085,6 +14101,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""[Security attributes] are labels for a resource that can be referenced in a [Zero Trust Packet Routing] (ZPR) policy to control access to ZPR-supported resources.
 
 Example: `{\"Oracle-DataSecurity-ZPR\": {\"MaxEgressCount\": {\"value\":\"42\",\"mode\":\"audit\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-zpr-only', type=click.BOOL, help=u"""Indicates whether Zpr Only Mode is enforced.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -14095,7 +14112,7 @@ Example: `{\"Oracle-DataSecurity-ZPR\": {\"MaxEgressCount\": {\"value\":\"42\",\
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'core', 'class': 'Vcn'})
 @cli_util.wrap_exceptions
-def update_vcn(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vcn_id, defined_tags, display_name, freeform_tags, security_attributes, if_match):
+def update_vcn(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vcn_id, defined_tags, display_name, freeform_tags, security_attributes, is_zpr_only, if_match):
 
     if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
@@ -14121,6 +14138,9 @@ def update_vcn(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 
     if security_attributes is not None:
         _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
+
+    if is_zpr_only is not None:
+        _details['isZprOnly'] = is_zpr_only
 
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_vcn(
@@ -14416,7 +14436,7 @@ For more information about NSGs, see [NetworkSecurityGroup].""" + custom_types.c
 @cli_util.option('--skip-source-dest-check', type=click.BOOL, help=u"""Whether the source/destination check is disabled on the VNIC. Defaults to `false`, which means the check is performed. For information about why you would skip the source/destination check, see [Using a Private IP as a Route Target].
 
 If the VNIC belongs to a VLAN as part of the Oracle Cloud VMware Solution (instead of belonging to a subnet), the value of the `skipSourceDestCheck` attribute is ignored. This is because the source/destination check is always disabled for VNICs in a VLAN. Example: `true`""")
-@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the IP address or VNIC will use. For more information, see [Source Based Routing].""")
+@cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the IP address or VNIC will use. For more information, see [Per-resource Routing].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")

@@ -210,12 +210,6 @@ def scheduling_window_group():
     pass
 
 
-@click.command(cli_util.override('db.cloud_exadata_infrastructure_unallocated_resources_group.command_name', 'cloud-exadata-infrastructure-unallocated-resources'), cls=CommandGroupWithAlias, help="""Details of unallocated resources of the Cloud Exadata infrastructure. Applies to Cloud Exadata infrastructure instances only.""")
-@cli_util.help_option_group
-def cloud_exadata_infrastructure_unallocated_resources_group():
-    pass
-
-
 @click.command(cli_util.override('db.autonomous_database_group.command_name', 'autonomous-database'), cls=CommandGroupWithAlias, help="""An Oracle Autonomous Database.""")
 @cli_util.help_option_group
 def autonomous_database_group():
@@ -550,7 +544,6 @@ db_root_group.add_command(cloud_exadata_infrastructure_group)
 db_root_group.add_command(backup_destination_group)
 db_root_group.add_command(maintenance_run_group)
 db_root_group.add_command(scheduling_window_group)
-db_root_group.add_command(cloud_exadata_infrastructure_unallocated_resources_group)
 db_root_group.add_command(autonomous_database_group)
 db_root_group.add_command(autonomous_database_dataguard_association_group)
 db_root_group.add_command(db_system_upgrade_summary_group)
@@ -655,7 +648,7 @@ def activate_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_group.command(name=cli_util.override('db.add_standby_autonomous_container_database.command_name', 'add'), help=u"""Create Standby Autonomous Container Database. For more information about changing Autonomous Container Databases Add Standby, see [Create Standby Autonomous Container Database] and [Convert Snapshot Standby to Physical Standby]. \n[Command Reference](addStandbyAutonomousContainerDatabase)""")
+@autonomous_container_database_group.command(name=cli_util.override('db.add_standby_autonomous_container_database.command_name', 'add'), help=u"""Add a standby Autonomous Container Database. For more information about Autonomous Data Guard,see [Protect Critical Databases from Failures and Disasters Using Autonomous Data Guard]. \n[Command Reference](addStandbyAutonomousContainerDatabase)""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--fast-start-fail-over-lag-limit-in-seconds', type=click.INT, help=u"""The lag time for my preference based on data loss tolerance in seconds.""")
 @cli_util.option('--is-automatic-failover-enabled', type=click.BOOL, help=u"""Indicates whether Automatic Failover is enabled for Autonomous Container Database Dataguard Association""")
@@ -2138,7 +2131,7 @@ def change_database_software_image_compartment(ctx, from_json, wait_for_state, m
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_group.command(name=cli_util.override('db.change_dataguard_role.command_name', 'change-dataguard-role'), help=u"""Switch the Autonomous Container Database role between Standby and Snapshot Standby. For more information about changing Autonomous Container Databases Dataguard Role, see [Convert Physical Standby to Snapshot Standby] and [Convert Snapshot Standby to Physical Standby]. \n[Command Reference](changeDataguardRole)""")
+@autonomous_container_database_group.command(name=cli_util.override('db.change_dataguard_role.command_name', 'change-dataguard-role'), help=u"""**Deprecated.** Use the [ConvertStandbyAutonomousContainerDatabase] operation to switch the Autonomous Container Database (ACD) role between Standby and Snapshot Standby. For more information about changing ACD Role, see [Convert Physical Standby to Snapshot Standby] and [Convert Snapshot Standby to Physical Standby]. \n[Command Reference](changeDataguardRole)""")
 @cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "STANDBY", "DISABLED_STANDBY", "BACKUP_COPY", "SNAPSHOT_STANDBY"]), help=u"""The Data Guard role of the Autonomous Container Database or Autonomous Database, if Autonomous Data Guard is enabled.""")
 @cli_util.option('--autonomous-container-database-dataguard-association-id', required=True, help=u"""The Autonomous Container Database-Autonomous Data Guard association [OCID].""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
@@ -3867,7 +3860,7 @@ def confirm_key_store_details_are_correct(ctx, from_json, wait_for_state, max_wa
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_group.command(name=cli_util.override('db.convert_standby_autonomous_container_database.command_name', 'convert-standby'), help=u"""Convert between and SnapshotStandby Standby Autonomous Container Database . For more information about changing Autonomous Container Databases Add Standby, see [Convert Standby Autonomous Container Database] and [Convert Snapshot Standby to Physical Standby]. \n[Command Reference](convertStandbyAutonomousContainerDatabase)""")
+@autonomous_container_database_group.command(name=cli_util.override('db.convert_standby_autonomous_container_database.command_name', 'convert-standby'), help=u"""Convert the standby Autonomous Container Database (ACD) between physical standby and snapshot standby ACD. For more information about converting standby ACDs, see [Convert Physical Standby to Snapshot Standby] and [Convert Snapshot Standby to Physical Standby]. \n[Command Reference](convertStandbyAutonomousContainerDatabase)""")
 @cli_util.option('--role', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "STANDBY", "DISABLED_STANDBY", "BACKUP_COPY", "SNAPSHOT_STANDBY"]), help=u"""The Data Guard role of the Autonomous Container Database or Autonomous Database, if Autonomous Data Guard is enabled.""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--connection-strings-type', type=custom_types.CliCaseInsensitiveChoice(["SNAPSHOT_SERVICES", "PRIMARY_SERVICES"]), help=u"""type of connection strings when converting database to snapshot mode""")
@@ -4456,9 +4449,7 @@ def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wai
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_dataguard_association_group.command(name=cli_util.override('db.create_autonomous_container_database_dataguard_association.command_name', 'create'), help=u"""Create a new Autonomous Data Guard association. An Autonomous Data Guard association represents the replication relationship between the specified Autonomous Container database and a peer Autonomous Container database. For more information, see [Using Oracle Data Guard].
-
-All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers]. \n[Command Reference](createAutonomousContainerDatabaseDataguardAssociation)""")
+@autonomous_container_database_dataguard_association_group.command(name=cli_util.override('db.create_autonomous_container_database_dataguard_association.command_name', 'create'), help=u"""**Deprecated.** Use the [AddStandbyAutonomousContainerDatabase] operation to create a new Autonomous Data Guard association. An Autonomous Data Guard association represents the replication relationship between the specified Autonomous Container database and a peer Autonomous Container database. For more information, see [Using Oracle Data Guard]. \n[Command Reference](createAutonomousContainerDatabaseDataguardAssociation)""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--peer-autonomous-container-database-display-name', required=True, help=u"""The display name for the peer Autonomous Container Database.""")
 @cli_util.option('--protection-mode', required=True, type=custom_types.CliCaseInsensitiveChoice(["MAXIMUM_AVAILABILITY", "MAXIMUM_PERFORMANCE"]), help=u"""The protection mode of this Autonomous Data Guard association. For more information, see [Oracle Data Guard Protection Modes] in the Oracle Data Guard documentation.""")
@@ -11200,8 +11191,8 @@ def create_data_guard_association_external_hsm_encryption_details(ctx, from_json
 
 
 @database_group.command(name=cli_util.override('db.create_database.command_name', 'create'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--source', required=True, type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP", "DATAGUARD"]), help=u"""The source of the database: Use `NONE` for creating a new database. Use `DB_BACKUP` for creating a new database by restoring from a backup. Use `DATAGUARD` for creating a new STANDBY database for a Data Guard setup.. The default is `NONE`.""")
+@cli_util.option('--db-home-id', help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
@@ -11215,14 +11206,16 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def create_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, source, db_version, kms_key_id, kms_key_version_id):
+def create_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, source, db_home_id, db_version, kms_key_id, kms_key_version_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['dbHomeId'] = db_home_id
     _details['source'] = source
+
+    if db_home_id is not None:
+        _details['dbHomeId'] = db_home_id
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -11265,8 +11258,8 @@ def create_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @database_group.command(name=cli_util.override('db.create_database_create_new_database_details.command_name', 'create-database-create-new-database-details'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--db-home-id', help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
@@ -11280,14 +11273,16 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateDatabaseDetails'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def create_database_create_new_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, database, db_version, kms_key_id, kms_key_version_id):
+def create_database_create_new_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database, db_home_id, db_version, kms_key_id, kms_key_version_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['dbHomeId'] = db_home_id
     _details['database'] = cli_util.parse_json_parameter("database", database)
+
+    if db_home_id is not None:
+        _details['dbHomeId'] = db_home_id
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -11332,8 +11327,8 @@ def create_database_create_new_database_details(ctx, from_json, wait_for_state, 
 
 
 @database_group.command(name=cli_util.override('db.create_database_create_stand_by_database_details.command_name', 'create-database-create-stand-by-database-details'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--db-home-id', help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
@@ -11347,14 +11342,16 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateStandbyDetails'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def create_database_create_stand_by_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, database, db_version, kms_key_id, kms_key_version_id):
+def create_database_create_stand_by_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database, db_home_id, db_version, kms_key_id, kms_key_version_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['dbHomeId'] = db_home_id
     _details['database'] = cli_util.parse_json_parameter("database", database)
+
+    if db_home_id is not None:
+        _details['dbHomeId'] = db_home_id
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -11399,8 +11396,8 @@ def create_database_create_stand_by_database_details(ctx, from_json, wait_for_st
 
 
 @database_group.command(name=cli_util.override('db.create_database_create_database_from_backup.command_name', 'create-database-create-database-from-backup'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
-@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--db-home-id', help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
@@ -11414,14 +11411,16 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateDatabaseFromBackupDetails'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def create_database_create_database_from_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, database, db_version, kms_key_id, kms_key_version_id):
+def create_database_create_database_from_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database, db_home_id, db_version, kms_key_id, kms_key_version_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
-    _details['dbHomeId'] = db_home_id
     _details['database'] = cli_util.parse_json_parameter("database", database)
+
+    if db_home_id is not None:
+        _details['dbHomeId'] = db_home_id
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -12598,7 +12597,7 @@ def create_execution_window(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--character-set', required=True, help=u"""The character set for the database.""")
 @cli_util.option('--ncharacter-set', required=True, help=u"""The national character set for the database.""")
 @cli_util.option('--database-mode', required=True, type=custom_types.CliCaseInsensitiveChoice(["SI", "RAC"]), help=u"""The mode (single instance or RAC) of the database being backed up.""")
-@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE"]), help=u"""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
+@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE", "ENTERPRISE_EDITION_DEVELOPER"]), help=u"""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
 @cli_util.option('--db-unique-name', help=u"""The `DB_UNIQUE_NAME` of the Oracle Database being backed up.""")
 @cli_util.option('--pdb-name', help=u"""The pluggable database name.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -17057,7 +17056,7 @@ def download_vm_cluster_network_config_file(ctx, from_json, file, exadata_infras
         file.close()
 
 
-@autonomous_container_database_group.command(name=cli_util.override('db.edit_autonomous_container_database_dataguard.command_name', 'edit-autonomous-container-database-dataguard'), help=u"""Edit Autonomous Container Database Dataguard. For more information about changing Autonomous Container Databases Add Standby, see [Update Autonomous Container Database Dataguard] and [Convert Snapshot Standby to Physical Standby]. \n[Command Reference](editAutonomousContainerDatabaseDataguard)""")
+@autonomous_container_database_group.command(name=cli_util.override('db.edit_autonomous_container_database_dataguard.command_name', 'edit-autonomous-container-database-dataguard'), help=u"""Modify Autonomous Container Database Data Guard settings such as protection mode, automatic failover, and fast start failover lag limit. For more information, see [Update Autonomous Container Database Dataguard]. \n[Command Reference](editAutonomousContainerDatabaseDataguard)""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--is-automatic-failover-enabled', type=click.BOOL, help=u"""Indicates whether Automatic Failover is enabled for Autonomous Container Database Dataguard Association""")
 @cli_util.option('--protection-mode', type=custom_types.CliCaseInsensitiveChoice(["MAXIMUM_AVAILABILITY", "MAXIMUM_PERFORMANCE"]), help=u"""The protection mode of this Autonomous Data Guard association. For more information, see [Oracle Data Guard Protection Modes] in the Oracle Data Guard documentation.""")
@@ -18021,7 +18020,7 @@ def fail_over_autonomous_database(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_group.command(name=cli_util.override('db.failover_autonomous_container_database_dataguard.command_name', 'failover-autonomous-container-database-dataguard'), help=u"""Failover Autonomous Container Database, identified by the autonomousContainerDatabaseId parameter, to an active standby Autonomous Container Database. \n[Command Reference](failoverAutonomousContainerDatabaseDataguard)""")
+@autonomous_container_database_group.command(name=cli_util.override('db.failover_autonomous_container_database_dataguard.command_name', 'failover-autonomous-container-database-dataguard'), help=u"""Performs failover to a standby Autonomous Container Database (ACD) identified by the autonomousContainerDatabaseId parameter. This standby ACD will become the new primary ACD when the failover completes successfully. For more information, see [Fail Over to the Standby in an Autonomous Data Guard Configuration]. \n[Command Reference](failoverAutonomousContainerDatabaseDataguard)""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "BACKUP_IN_PROGRESS", "RESTORING", "RESTORE_FAILED", "RESTARTING", "MAINTENANCE_IN_PROGRESS", "ROLE_CHANGE_IN_PROGRESS", "ENABLING_AUTONOMOUS_DATA_GUARD", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -18072,7 +18071,7 @@ def failover_autonomous_container_database_dataguard(ctx, from_json, wait_for_st
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_dataguard_association_group.command(name=cli_util.override('db.failover_autonomous_container_database_dataguard_association.command_name', 'failover'), help=u"""Fails over the standby Autonomous Container Database identified by the autonomousContainerDatabaseId parameter to the primary Autonomous Container Database after the existing primary Autonomous Container Database fails or becomes unreachable.
+@autonomous_container_database_dataguard_association_group.command(name=cli_util.override('db.failover_autonomous_container_database_dataguard_association.command_name', 'failover'), help=u"""**Deprecated.** Use the [FailoverAutonomousContainerDatabaseDataguard] operation to fail over the standby Autonomous Container Database (ACD) to the primary ACD after the existing primary ACD fails or becomes unreachable.
 
 A failover can result in data loss, depending on the protection mode in effect at the time the primary Autonomous Container Database fails. \n[Command Reference](failoverAutonomousContainerDatabaseDataguardAssociation)""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
@@ -18430,7 +18429,7 @@ def get_autonomous_container_database(ctx, from_json, autonomous_container_datab
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_dataguard_association_group.command(name=cli_util.override('db.get_autonomous_container_database_dataguard_association.command_name', 'get'), help=u"""Gets an Autonomous Container Database enabled with Autonomous Data Guard associated with the specified Autonomous Container Database. \n[Command Reference](getAutonomousContainerDatabaseDataguardAssociation)""")
+@autonomous_container_database_dataguard_association_group.command(name=cli_util.override('db.get_autonomous_container_database_dataguard_association.command_name', 'get'), help=u"""**Deprecated.** Use the [GetAutonomousContainerDatabase] operation to get the details of an Autonomous Container Database (ACD) enabled with Autonomous Data Guard associated with the specified ACD. \n[Command Reference](getAutonomousContainerDatabaseDataguardAssociation)""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--autonomous-container-database-dataguard-association-id', required=True, help=u"""The Autonomous Container Database-Autonomous Data Guard association [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -18522,7 +18521,7 @@ def get_autonomous_database_backup(ctx, from_json, autonomous_database_backup_id
     cli_util.render_response(result, ctx)
 
 
-@autonomous_database_dataguard_association_group.command(name=cli_util.override('db.get_autonomous_database_dataguard_association.command_name', 'get'), help=u"""Gets an Autonomous Data Guard-enabled database associated with the specified Autonomous Database. \n[Command Reference](getAutonomousDatabaseDataguardAssociation)""")
+@autonomous_database_dataguard_association_group.command(name=cli_util.override('db.get_autonomous_database_dataguard_association.command_name', 'get'), help=u"""*Deprecated.* Use the [GetAutonomousContainerDatabase] operation to gets an Autonomous Data Guard-enabled database associated with the specified Autonomous Database. \n[Command Reference](getAutonomousDatabaseDataguardAssociation)""")
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--autonomous-database-dataguard-association-id', required=True, help=u"""The Autonomous Container Database-Autonomous Data Guard association [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -18827,7 +18826,7 @@ def get_cloud_exadata_infrastructure(ctx, from_json, cloud_exadata_infrastructur
     cli_util.render_response(result, ctx)
 
 
-@cloud_exadata_infrastructure_unallocated_resources_group.command(name=cli_util.override('db.get_cloud_exadata_infrastructure_unallocated_resources.command_name', 'get'), help=u"""Gets unallocated resources information for the specified Cloud Exadata infrastructure. \n[Command Reference](getCloudExadataInfrastructureUnallocatedResources)""")
+@cloud_exadata_infrastructure_group.command(name=cli_util.override('db.get_cloud_exadata_infrastructure_unallocated_resources.command_name', 'get-cloud-exadata-infrastructure-unallocated-resources'), help=u"""Gets unallocated resources information for the specified Cloud Exadata infrastructure. \n[Command Reference](getCloudExadataInfrastructureUnallocatedResources)""")
 @cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The cloud Exadata infrastructure [OCID].""")
 @cli_util.option('--db-servers', multiple=True, help=u"""The list of [OCIDs] of the Db servers.""")
 @json_skeleton_utils.get_cli_json_input_option({'db-servers': {'module': 'database', 'class': 'list[string]'}})
@@ -20435,7 +20434,7 @@ The maximum length of the combined hostname and domain is 63 characters.
 
 This parameter is not used for INTEL virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
 @cli_util.option('--db-home', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE"]), help=u"""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
+@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE", "ENTERPRISE_EDITION_DEVELOPER"]), help=u"""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
 @cli_util.option('--fault-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A Fault Domain is a grouping of hardware and infrastructure within an availability domain. Fault Domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or maintenance that affects one Fault Domain does not affect DB systems in other Fault Domains.
 
 If you do not specify the Fault Domain, the system selects one for you. To change the Fault Domain for a DB system, terminate it and launch a new DB system in the preferred Fault Domain.
@@ -20827,7 +20826,7 @@ The maximum length of the combined hostname and domain is 63 characters.
 
 This parameter is not used for INTEL virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
 @cli_util.option('--db-home', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE"]), help=u"""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
+@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE", "ENTERPRISE_EDITION_DEVELOPER"]), help=u"""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
 @cli_util.option('--fault-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A Fault Domain is a grouping of hardware and infrastructure within an availability domain. Fault Domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or maintenance that affects one Fault Domain does not affect DB systems in other Fault Domains.
 
 If you do not specify the Fault Domain, the system selects one for you. To change the Fault Domain for a DB system, terminate it and launch a new DB system in the preferred Fault Domain.
@@ -21023,7 +21022,7 @@ The maximum length of the combined hostname and domain is 63 characters.
 
 This parameter is not used for INTEL virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
 @cli_util.option('--db-home', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE"]), help=u"""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
+@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE", "ENTERPRISE_EDITION_DEVELOPER"]), help=u"""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
 @cli_util.option('--fault-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A Fault Domain is a grouping of hardware and infrastructure within an availability domain. Fault Domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or maintenance that affects one Fault Domain does not affect DB systems in other Fault Domains.
 
 If you do not specify the Fault Domain, the system selects one for you. To change the Fault Domain for a DB system, terminate it and launch a new DB system in the preferred Fault Domain.
@@ -21249,7 +21248,7 @@ def list_application_vips(ctx, from_json, all_pages, page_size, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_dataguard_association_group.command(name=cli_util.override('db.list_autonomous_container_database_dataguard_associations.command_name', 'list'), help=u"""Gets a list of the Autonomous Container Databases with Autonomous Data Guard-enabled associated with the specified Autonomous Container Database. \n[Command Reference](listAutonomousContainerDatabaseDataguardAssociations)""")
+@autonomous_container_database_dataguard_association_group.command(name=cli_util.override('db.list_autonomous_container_database_dataguard_associations.command_name', 'list'), help=u"""**Deprecated.** Use the [ListAutonomousContainerDatabases] operation to get a list of the Autonomous Container Databases (ACDs)with Autonomous Data Guard-enabled associated with the specified ACD. \n[Command Reference](listAutonomousContainerDatabaseDataguardAssociations)""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -21601,7 +21600,7 @@ def list_autonomous_database_clones(ctx, from_json, all_pages, page_size, compar
     cli_util.render_response(result, ctx)
 
 
-@autonomous_database_dataguard_association_group.command(name=cli_util.override('db.list_autonomous_database_dataguard_associations.command_name', 'list'), help=u"""Gets a list of the Autonomous Data Guard-enabled databases associated with the specified Autonomous Database. \n[Command Reference](listAutonomousDatabaseDataguardAssociations)""")
+@autonomous_database_dataguard_association_group.command(name=cli_util.override('db.list_autonomous_database_dataguard_associations.command_name', 'list'), help=u"""*Deprecated.* Use the [GetAutonomousContainerDatabase] operation to get a list of the Autonomous Data Guard-enabled databases associated with the specified Autonomous Database. \n[Command Reference](listAutonomousDatabaseDataguardAssociations)""")
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -23354,7 +23353,7 @@ def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
     cli_util.render_response(result, ctx)
 
 
-@db_node_group.command(name=cli_util.override('db.list_db_nodes.command_name', 'list'), help=u"""Lists the database nodes in the specified DB system and compartment. A database node is a server running database software. \n[Command Reference](listDbNodes)""")
+@db_node_group.command(name=cli_util.override('db.list_db_nodes.command_name', 'list'), help=u"""Lists the database nodes in the specified DB system and compartment. In addition to the other required parameters, either '--db-system-id' or '--vm-cluster-id' also must be provided, depending on the service being accessed. \n[Command Reference](listDbNodes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--db-system-id', help=u"""The DB system [OCID]. If provided, filters the results to the set of database versions which are supported for the DB system.""")
 @cli_util.option('--vm-cluster-id', help=u"""The [OCID] of the VM cluster.""")
@@ -23657,17 +23656,20 @@ def list_db_system_shapes(ctx, from_json, all_pages, page_size, compartment_id, 
 @db_system_group.command(name=cli_util.override('db.list_db_system_storage_performances.command_name', 'list-db-system-storage-performances'), help=u"""Gets a list of possible expected storage performance parameters of a VMDB System based on Configuration. \n[Command Reference](listDbSystemStoragePerformances)""")
 @cli_util.option('--storage-management', required=True, type=custom_types.CliCaseInsensitiveChoice(["ASM", "LVM"]), help=u"""The DB system storage management option. Used to list database versions available for that storage manager. Valid values are `ASM` and `LVM`. * ASM specifies Oracle Automatic Storage Management * LVM specifies logical volume manager, sometimes called logical disk manager.""")
 @cli_util.option('--shape-type', help=u"""Optional. Filters the performance results by shape type.""")
+@cli_util.option('--database-edition', type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME", "ENTERPRISE_EDITION_DEVELOPER"]), help=u"""The database edition of quota (STANDARD_EDITION/ENTERPRISE_EDITION/ENTERPRISE_EDITION_HIGH_PERFORMANCE/ENTERPRISE_EDITION_EXTREME/ENTERPRISE_EDITION_DEVELOPER)""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DbSystemStoragePerformanceSummary]'})
 @cli_util.wrap_exceptions
-def list_db_system_storage_performances(ctx, from_json, all_pages, storage_management, shape_type):
+def list_db_system_storage_performances(ctx, from_json, all_pages, storage_management, shape_type, database_edition):
 
     kwargs = {}
     if shape_type is not None:
         kwargs['shape_type'] = shape_type
+    if database_edition is not None:
+        kwargs['database_edition'] = database_edition
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('database', 'database', ctx)
     result = client.list_db_system_storage_performances(
@@ -26682,7 +26684,7 @@ def register_autonomous_database_data_safe(ctx, from_json, wait_for_state, max_w
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_group.command(name=cli_util.override('db.reinstate_autonomous_container_database_dataguard.command_name', 'reinstate-autonomous-container-database-dataguard'), help=u"""Reinstates a disabled standby Autonomous Container Database, identified by the autonomousContainerDatabaseId parameter, to an active standby Autonomous Container Database. \n[Command Reference](reinstateAutonomousContainerDatabaseDataguard)""")
+@autonomous_container_database_group.command(name=cli_util.override('db.reinstate_autonomous_container_database_dataguard.command_name', 'reinstate-autonomous-container-database-dataguard'), help=u"""Reinstates a disabled standby Autonomous Container Database (ACD), identified by the autonomousContainerDatabaseId parameter to an active standby ACD. For more information, see [Reinstate the Disabled Standby in an Autonomous Data Guard Configuration]. \n[Command Reference](reinstateAutonomousContainerDatabaseDataguard)""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "BACKUP_IN_PROGRESS", "RESTORING", "RESTORE_FAILED", "RESTARTING", "MAINTENANCE_IN_PROGRESS", "ROLE_CHANGE_IN_PROGRESS", "ENABLING_AUTONOMOUS_DATA_GUARD", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -26733,7 +26735,7 @@ def reinstate_autonomous_container_database_dataguard(ctx, from_json, wait_for_s
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_dataguard_association_group.command(name=cli_util.override('db.reinstate_autonomous_container_database_dataguard_association.command_name', 'reinstate'), help=u"""Reinstates a disabled standby Autonomous Container Database, identified by the autonomousContainerDatabaseId parameter, to an active standby Autonomous Container Database. \n[Command Reference](reinstateAutonomousContainerDatabaseDataguardAssociation)""")
+@autonomous_container_database_dataguard_association_group.command(name=cli_util.override('db.reinstate_autonomous_container_database_dataguard_association.command_name', 'reinstate'), help=u"""**Deprecated.** Use the [ReinstateAutonomousContainerDatabaseDataguard] operation to reinstate a disabled standby Autonomous Container Database (ACD), identified by the autonomousContainerDatabaseId parameter, to an active standby ACD. \n[Command Reference](reinstateAutonomousContainerDatabaseDataguardAssociation)""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--autonomous-container-database-dataguard-association-id', required=True, help=u"""The Autonomous Container Database-Autonomous Data Guard association [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -28942,7 +28944,7 @@ def switch_over_data_guard(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_group.command(name=cli_util.override('db.switchover_autonomous_container_database_dataguard.command_name', 'switchover-autonomous-container-database-dataguard'), help=u"""Switchover Autonomous Container Database, identified by the autonomousContainerDatabaseId parameter, to an active standby Autonomous Container Database. \n[Command Reference](switchoverAutonomousContainerDatabaseDataguard)""")
+@autonomous_container_database_group.command(name=cli_util.override('db.switchover_autonomous_container_database_dataguard.command_name', 'switchover-autonomous-container-database-dataguard'), help=u"""Switchover an Autonomous Container Database (ACD), identified by the autonomousContainerDatabaseId parameter, to an active standby ACD. This standby ACD will become the new primary ACD when the switchover completes successfully. For more information, see [Switch Roles in an Autonomous Data Guard Configuration]. \n[Command Reference](switchoverAutonomousContainerDatabaseDataguard)""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "BACKUP_IN_PROGRESS", "RESTORING", "RESTORE_FAILED", "RESTARTING", "MAINTENANCE_IN_PROGRESS", "ROLE_CHANGE_IN_PROGRESS", "ENABLING_AUTONOMOUS_DATA_GUARD", "UNAVAILABLE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -28993,7 +28995,7 @@ def switchover_autonomous_container_database_dataguard(ctx, from_json, wait_for_
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_dataguard_association_group.command(name=cli_util.override('db.switchover_autonomous_container_database_dataguard_association.command_name', 'switchover'), help=u"""Switches over the primary Autonomous Container Database of an Autonomous Data Guard peer association to standby role. The standby Autonomous Container Database associated with autonomousContainerDatabaseDataguardAssociationId assumes the primary Autonomous Container Database role.
+@autonomous_container_database_dataguard_association_group.command(name=cli_util.override('db.switchover_autonomous_container_database_dataguard_association.command_name', 'switchover'), help=u"""**Deprecated.** Use the [SwitchoverAutonomousContainerDatabaseDataguard] operation to switches over the primary Autonomous Container Database (ACD) of an Autonomous Data Guard peer association to standby role. The standby ACD associated with autonomousContainerDatabaseDataguardAssociationId assumes the primary ACD role.
 
 A switchover incurs no data loss. \n[Command Reference](switchoverAutonomousContainerDatabaseDataguardAssociation)""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
@@ -29445,7 +29447,7 @@ def update_autonomous_container_database(ctx, from_json, force, wait_for_state, 
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_dataguard_association_group.command(name=cli_util.override('db.update_autonomous_container_database_dataguard_association.command_name', 'update'), help=u"""Update Autonomous Data Guard association. \n[Command Reference](updateAutonomousContainerDatabaseDataguardAssociation)""")
+@autonomous_container_database_dataguard_association_group.command(name=cli_util.override('db.update_autonomous_container_database_dataguard_association.command_name', 'update'), help=u"""**Deprecated.** Use the [EditAutonomousContainerDatabaseDataguard] operation to update an Autonomous Data Guard association. \n[Command Reference](updateAutonomousContainerDatabaseDataguardAssociation)""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--autonomous-container-database-dataguard-association-id', required=True, help=u"""The Autonomous Container Database-Autonomous Data Guard association [OCID].""")
 @cli_util.option('--is-automatic-failover-enabled', type=click.BOOL, help=u"""Indicates whether Automatic Failover is enabled for Autonomous Container Database Dataguard Association""")
