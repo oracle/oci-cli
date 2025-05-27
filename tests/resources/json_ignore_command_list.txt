@@ -538,3 +538,15 @@ model-deployment, inference-result, predict-with-response-stream
 mysql, db-system, create
 mysql, db-system, clone
 mysql, db-system, update
+network-firewall, nat-rule, create
+network-firewall, tunnel-inspection-rule, update
+network-firewall, tunnel-inspection-rule, create
+network-firewall, service, update
+network-firewall, nat-rule, update
+network-firewall, mapped-secret, update
+network-firewall, mapped-secret, create
+network-firewall, decryption-profile, update
+network-firewall, decryption-profile, create
+network-firewall, application, update
+network-firewall, application, create
+network-firewall, service, create

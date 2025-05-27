@@ -16,13 +16,13 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('usage_api.usage_api_root_group.command_name', 'usage-api'), cls=CommandGroupWithAlias, help=cli_util.override('usage_api.usage_api_root_group.help', """Use the Usage API to view your Oracle Cloud usage and costs. The API allows you to request data that meets the specified filter criteria, and to group that data by the chosen dimension. The Usage API is used by the Cost Analysis and Carbon Emissions Analysis tools in the Console. See [Cost Analysis Overview] and [Using the Usage API] for more information."""), short_help=cli_util.override('usage_api.usage_api_root_group.short_help', """Usage API"""))
+@cli.command(cli_util.override('usage_api.usage_api_root_group.command_name', 'usage-api'), cls=CommandGroupWithAlias, help=cli_util.override('usage_api.usage_api_root_group.help', """Use the Usage API to view your Oracle Cloud usage and costs. The API allows you to request data that meets the specified filter criteria, and to group that data by the chosen dimension. The Usage API is used by [Cost Analysis], [Scheduled Reports], and [Carbon Emissions Analysis] in the Console. Also see [Using the Usage API] for more information."""), short_help=cli_util.override('usage_api.usage_api_root_group.short_help', """Usage API"""))
 @cli_util.help_option_group
 def usage_api_root_group():
     pass
 
 
-@click.command(cli_util.override('usage_api.email_recipients_group_group.command_name', 'email-recipients-group'), cls=CommandGroupWithAlias, help="""The recipients group to receive usage statement email.""")
+@click.command(cli_util.override('usage_api.email_recipients_group_group.command_name', 'email-recipients-group'), cls=CommandGroupWithAlias, help="""The recipients group to receive usage statement emails.""")
 @cli_util.help_option_group
 def email_recipients_group_group():
     pass
@@ -40,7 +40,7 @@ def usage_summary_group():
     pass
 
 
-@click.command(cli_util.override('usage_api.usage_carbon_emissions_query_group.command_name', 'usage-carbon-emissions-query'), cls=CommandGroupWithAlias, help="""The usage carbon emissions saved query to filter and aggregate.""")
+@click.command(cli_util.override('usage_api.usage_carbon_emissions_query_group.command_name', 'usage-carbon-emissions-query'), cls=CommandGroupWithAlias, help="""The carbon emissions usage saved query to filter and aggregate.""")
 @cli_util.help_option_group
 def usage_carbon_emissions_query_group():
     pass
@@ -52,7 +52,7 @@ def configuration_group():
     pass
 
 
-@click.command(cli_util.override('usage_api.average_carbon_emission_group.command_name', 'average-carbon-emission'), cls=CommandGroupWithAlias, help="""Average carbon emission.""")
+@click.command(cli_util.override('usage_api.average_carbon_emission_group.command_name', 'average-carbon-emission'), cls=CommandGroupWithAlias, help="""Average carbon emissions.""")
 @cli_util.help_option_group
 def average_carbon_emission_group():
     pass
@@ -70,7 +70,7 @@ def scheduled_run_group():
     pass
 
 
-@click.command(cli_util.override('usage_api.usage_carbon_emission_summary_group.command_name', 'usage-carbon-emission-summary'), cls=CommandGroupWithAlias, help="""The usage carbon emission store result.""")
+@click.command(cli_util.override('usage_api.usage_carbon_emission_summary_group.command_name', 'usage-carbon-emission-summary'), cls=CommandGroupWithAlias, help="""The carbon emission usage store result.""")
 @cli_util.help_option_group
 def usage_carbon_emission_summary_group():
     pass
@@ -128,10 +128,10 @@ def create_custom_table(ctx, from_json, compartment_id, saved_report_id, saved_c
     cli_util.render_response(result, ctx)
 
 
-@email_recipients_group_group.command(name=cli_util.override('usage_api.create_email_recipients_group.command_name', 'create'), help=u"""Add a list of email recipients that can receive usage statements for the subscription. \n[Command Reference](createEmailRecipientsGroup)""")
+@email_recipients_group_group.command(name=cli_util.override('usage_api.create_email_recipients_group.command_name', 'create'), help=u"""Creates a list of email recipients that can receive usage statements for the subscription. \n[Command Reference](createEmailRecipientsGroup)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The customer tenancy.""")
-@cli_util.option('--recipients-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of recipient will receive the usage statement email.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--subscription-id', required=True, help=u"""The UsageStatement Subscription unique OCID.""")
+@cli_util.option('--recipients-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of recipients that will receive usage statement emails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subscription-id', required=True, help=u"""The usage statement subscription unique OCID.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -378,7 +378,7 @@ def create_schedule_object_storage_location(ctx, from_json, wait_for_state, max_
     cli_util.render_response(result, ctx)
 
 
-@usage_carbon_emissions_query_group.command(name=cli_util.override('usage_api.create_usage_carbon_emissions_query.command_name', 'create'), help=u"""Returns the created usage carbon emissions query. \n[Command Reference](createUsageCarbonEmissionsQuery)""")
+@usage_carbon_emissions_query_group.command(name=cli_util.override('usage_api.create_usage_carbon_emissions_query.command_name', 'create'), help=u"""Returns the created carbon emissions usage query. \n[Command Reference](createUsageCarbonEmissionsQuery)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID.""")
 @cli_util.option('--query-definition', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'query-definition': {'module': 'usage_api', 'class': 'UsageCarbonEmissionsQueryDefinition'}})
@@ -429,9 +429,9 @@ def delete_custom_table(ctx, from_json, custom_table_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@email_recipients_group_group.command(name=cli_util.override('usage_api.delete_email_recipients_group.command_name', 'delete'), help=u"""Delete the email recipients group for the usage statement subscription. \n[Command Reference](deleteEmailRecipientsGroup)""")
-@cli_util.option('--email-recipients-group-id', required=True, help=u"""The email recipient group OCID.""")
-@cli_util.option('--subscription-id', required=True, help=u"""The UsageStatement Subscription unique OCID.""")
+@email_recipients_group_group.command(name=cli_util.override('usage_api.delete_email_recipients_group.command_name', 'delete'), help=u"""Deletes the email recipients group for the usage statement subscription. \n[Command Reference](deleteEmailRecipientsGroup)""")
+@cli_util.option('--email-recipients-group-id', required=True, help=u"""The email recipients group OCID.""")
+@cli_util.option('--subscription-id', required=True, help=u"""The usage statement subscription unique OCID.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment ID in which to list resources.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted, only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -552,7 +552,7 @@ def delete_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@usage_carbon_emissions_query_group.command(name=cli_util.override('usage_api.delete_usage_carbon_emissions_query.command_name', 'delete'), help=u"""Delete a usage carbon emissions saved query by the OCID. \n[Command Reference](deleteUsageCarbonEmissionsQuery)""")
+@usage_carbon_emissions_query_group.command(name=cli_util.override('usage_api.delete_usage_carbon_emissions_query.command_name', 'delete'), help=u"""Delete a carbon emissions usage saved query by the OCID. \n[Command Reference](deleteUsageCarbonEmissionsQuery)""")
 @cli_util.option('--usage-carbon-emissions-query-id', required=True, help=u"""The query unique OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted, only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -600,9 +600,9 @@ def get_custom_table(ctx, from_json, custom_table_id):
     cli_util.render_response(result, ctx)
 
 
-@email_recipients_group_group.command(name=cli_util.override('usage_api.get_email_recipients_group.command_name', 'get'), help=u"""Return the saved usage statement email recipient group. \n[Command Reference](getEmailRecipientsGroup)""")
-@cli_util.option('--email-recipients-group-id', required=True, help=u"""The email recipient group OCID.""")
-@cli_util.option('--subscription-id', required=True, help=u"""The UsageStatement Subscription unique OCID.""")
+@email_recipients_group_group.command(name=cli_util.override('usage_api.get_email_recipients_group.command_name', 'get'), help=u"""Returns the saved usage statement email recipients group. \n[Command Reference](getEmailRecipientsGroup)""")
+@cli_util.option('--email-recipients-group-id', required=True, help=u"""The email recipients group OCID.""")
+@cli_util.option('--subscription-id', required=True, help=u"""The usage statement subscription unique OCID.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment ID in which to list resources.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -674,7 +674,7 @@ def get_schedule(ctx, from_json, schedule_id):
 
 
 @scheduled_run_group.command(name=cli_util.override('usage_api.get_scheduled_run.command_name', 'get'), help=u"""Returns the saved schedule run. \n[Command Reference](getScheduledRun)""")
-@cli_util.option('--scheduled-run-id', required=True, help=u"""The scheduledRun unique OCID""")
+@cli_util.option('--scheduled-run-id', required=True, help=u"""The scheduled run unique OCID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -695,7 +695,7 @@ def get_scheduled_run(ctx, from_json, scheduled_run_id):
     cli_util.render_response(result, ctx)
 
 
-@usage_carbon_emissions_query_group.command(name=cli_util.override('usage_api.get_usage_carbon_emissions_query.command_name', 'get'), help=u"""Returns the usage carbon emissions saved query. \n[Command Reference](getUsageCarbonEmissionsQuery)""")
+@usage_carbon_emissions_query_group.command(name=cli_util.override('usage_api.get_usage_carbon_emissions_query.command_name', 'get'), help=u"""Returns the carbon emissions usage saved query. \n[Command Reference](getUsageCarbonEmissionsQuery)""")
 @cli_util.option('--usage-carbon-emissions-query-id', required=True, help=u"""The query unique OCID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -720,7 +720,7 @@ def get_usage_carbon_emissions_query(ctx, from_json, usage_carbon_emissions_quer
 @custom_table_group.command(name=cli_util.override('usage_api.list_custom_tables.command_name', 'list'), help=u"""Returns the saved custom table list. \n[Command Reference](listCustomTables)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment ID in which to list resources.""")
 @cli_util.option('--saved-report-id', required=True, help=u"""The saved report ID in which to list resources.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximumimum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName"]), help=u"""The field to sort by. If not specified, the default is displayName.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, whether 'asc' or 'desc'.""")
@@ -775,10 +775,10 @@ def list_custom_tables(ctx, from_json, all_pages, page_size, compartment_id, sav
     cli_util.render_response(result, ctx)
 
 
-@email_recipients_group_group.command(name=cli_util.override('usage_api.list_email_recipients_groups.command_name', 'list'), help=u"""Return the saved usage statement email recipient group. \n[Command Reference](listEmailRecipientsGroups)""")
-@cli_util.option('--subscription-id', required=True, help=u"""The UsageStatement Subscription unique OCID.""")
+@email_recipients_group_group.command(name=cli_util.override('usage_api.list_email_recipients_groups.command_name', 'list'), help=u"""Returns the saved usage statement email recipients group. \n[Command Reference](listEmailRecipientsGroups)""")
+@cli_util.option('--subscription-id', required=True, help=u"""The usage statement subscription unique OCID.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment ID in which to list resources.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximumimum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName"]), help=u"""The field to sort by. If not specified, the default is displayName.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, whether 'asc' or 'desc'.""")
@@ -838,7 +838,7 @@ def list_email_recipients_groups(ctx, from_json, all_pages, page_size, subscript
 
 @query_group.command(name=cli_util.override('usage_api.list_queries.command_name', 'list'), help=u"""Returns the saved query list. \n[Command Reference](listQueries)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment ID in which to list resources.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximumimum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName"]), help=u"""The field to sort by. If not specified, the default is displayName.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, whether 'asc' or 'desc'.""")
@@ -890,10 +890,10 @@ def list_queries(ctx, from_json, all_pages, page_size, compartment_id, limit, pa
     cli_util.render_response(result, ctx)
 
 
-@scheduled_run_group.command(name=cli_util.override('usage_api.list_scheduled_runs.command_name', 'list'), help=u"""Returns schedule history list. \n[Command Reference](listScheduledRuns)""")
-@cli_util.option('--schedule-id', required=True, help=u"""The unique ID of a schedule.""")
+@scheduled_run_group.command(name=cli_util.override('usage_api.list_scheduled_runs.command_name', 'list'), help=u"""Returns the schedule history list. \n[Command Reference](listScheduledRuns)""")
+@cli_util.option('--schedule-id', required=True, help=u"""The schedule unique ID.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximumimum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field to sort by. If not specified, the default is timeCreated.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, whether 'asc' or 'desc'.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -947,10 +947,10 @@ def list_scheduled_runs(ctx, from_json, all_pages, page_size, schedule_id, page,
 @schedule_group.command(name=cli_util.override('usage_api.list_schedules.command_name', 'list'), help=u"""Returns the saved schedule list. \n[Command Reference](listSchedules)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment ID in which to list resources.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximumimum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "timeCreated"]), help=u"""The field to sort by. If not specified, the default is timeCreated.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, whether 'asc' or 'desc'.""")
-@cli_util.option('--name', help=u"""Query parameter for filtering by name""")
+@cli_util.option('--name', help=u"""The query parameter for filtering by name.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1001,9 +1001,9 @@ def list_schedules(ctx, from_json, all_pages, page_size, compartment_id, page, l
     cli_util.render_response(result, ctx)
 
 
-@usage_carbon_emissions_query_group.command(name=cli_util.override('usage_api.list_usage_carbon_emissions_queries.command_name', 'list'), help=u"""Returns the usage carbon emissions saved query list. \n[Command Reference](listUsageCarbonEmissionsQueries)""")
+@usage_carbon_emissions_query_group.command(name=cli_util.override('usage_api.list_usage_carbon_emissions_queries.command_name', 'list'), help=u"""Returns the carbon emissions usage saved query list. \n[Command Reference](listUsageCarbonEmissionsQueries)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment ID in which to list resources.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximumimum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName"]), help=u"""The field to sort by. If not specified, the default is displayName.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, whether 'asc' or 'desc'.""")
@@ -1126,17 +1126,17 @@ def request_summarized_configurations(ctx, from_json, tenant_id):
 @cli_util.option('--time-usage-started', required=True, type=custom_types.CLI_DATETIME, help=u"""The usage start time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-usage-ended', required=True, type=custom_types.CLI_DATETIME, help=u"""The usage end time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--granularity', required=True, type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "TOTAL"]), help=u"""The usage granularity. HOURLY - Hourly data aggregation. DAILY - Daily data aggregation. MONTHLY - Monthly data aggregation. TOTAL - Not yet supported.""")
-@cli_util.option('--is-aggregate-by-time', type=click.BOOL, help=u"""Whether aggregated by time. If isAggregateByTime is true, all usage/cost over the query time period will be added up.""")
+@cli_util.option('--is-aggregate-by-time', type=click.BOOL, help=u"""Specifies whether aggregated by time. If isAggregateByTime is true, all usage or cost over the query time period will be added up.""")
 @cli_util.option('--forecast', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--query-type', type=custom_types.CliCaseInsensitiveChoice(["USAGE", "COST", "CREDIT", "EXPIREDCREDIT", "ALLCREDIT"]), help=u"""The query usage type. COST by default if it is missing. Usage - Query the usage data. Cost - Query the cost/billing data. Credit - Query the credit adjustments data. ExpiredCredit - Query the expired credits data. AllCredit - Query the credit adjustments and expired credit.""")
-@cli_util.option('--group-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Aggregate the result by. example:   `[\"tagNamespace\", \"tagKey\", \"tagValue\", \"service\", \"skuName\", \"skuPartNumber\", \"unit\",     \"compartmentName\", \"compartmentPath\", \"compartmentId\", \"platform\", \"region\", \"logicalAd\",     \"resourceId\", \"tenantId\", \"tenantName\"]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--group-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Aggregate the result by. For example:   `[\"tagNamespace\", \"tagKey\", \"tagValue\", \"service\", \"skuName\", \"skuPartNumber\", \"unit\",     \"compartmentName\", \"compartmentPath\", \"compartmentId\", \"platform\", \"region\", \"logicalAd\",     \"resourceId\", \"tenantId\", \"tenantName\"]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--group-by-tag', type=custom_types.CLI_COMPLEX_TYPE, help=u"""GroupBy a specific tagKey. Provide the tagNamespace and tagKey in the tag object. Only supports one tag in the list. For example:   `[{\"namespace\":\"oracle\", \"key\":\"createdBy\"]`
 
 This option is a JSON list with items of type Tag.  For documentation on Tag please see our API reference: https://docs.cloud.oracle.com/api/#/en/usageapi/20200107/datatypes/Tag.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-depth', type=click.FLOAT, help=u"""The compartment depth level.""")
 @cli_util.option('--filter', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximumimum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @json_skeleton_utils.get_cli_json_input_option({'forecast': {'module': 'usage_api', 'class': 'Forecast'}, 'group-by': {'module': 'usage_api', 'class': 'list[string]'}, 'group-by-tag': {'module': 'usage_api', 'class': 'list[Tag]'}, 'filter': {'module': 'usage_api', 'class': 'Filter'}})
 @cli_util.help_option
 @click.pass_context
@@ -1186,7 +1186,7 @@ def request_summarized_usages(ctx, from_json, tenant_id, time_usage_started, tim
     cli_util.render_response(result, ctx)
 
 
-@configuration_group.command(name=cli_util.override('usage_api.request_usage_carbon_emission_config.command_name', 'request-usage-carbon-emission-config'), help=u"""Returns the configuration list for the UI drop-down list of carbon emission console. \n[Command Reference](requestUsageCarbonEmissionConfig)""")
+@configuration_group.command(name=cli_util.override('usage_api.request_usage_carbon_emission_config.command_name', 'request-usage-carbon-emission-config'), help=u"""Returns the configuration list for the Console's carbon emission user interface drop-down list. \n[Command Reference](requestUsageCarbonEmissionConfig)""")
 @cli_util.option('--tenant-id', required=True, help=u"""tenant id""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1205,11 +1205,14 @@ def request_usage_carbon_emission_config(ctx, from_json, tenant_id):
     cli_util.render_response(result, ctx)
 
 
-@usage_carbon_emission_summary_group.command(name=cli_util.override('usage_api.request_usage_carbon_emissions.command_name', 'request-usage-carbon-emissions'), help=u"""Returns usage carbon emission for the given account. \n[Command Reference](requestUsageCarbonEmissions)""")
+@usage_carbon_emission_summary_group.command(name=cli_util.override('usage_api.request_usage_carbon_emissions.command_name', 'request-usage-carbon-emissions'), help=u"""Returns carbon emission usage for the given account. \n[Command Reference](requestUsageCarbonEmissions)""")
 @cli_util.option('--tenant-id', required=True, help=u"""Tenant ID.""")
 @cli_util.option('--time-usage-started', required=True, type=custom_types.CLI_DATETIME, help=u"""The usage start time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-usage-ended', required=True, type=custom_types.CLI_DATETIME, help=u"""The usage end time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--is-aggregate-by-time', type=click.BOOL, help=u"""Specifies whether aggregated by time. If isAggregateByTime is true, all usage carbon emissions over the query time period will be added up.""")
+@cli_util.option('--emission-calculation-method', type=custom_types.CliCaseInsensitiveChoice(["SPEND_BASED", "POWER_BASED"]), help=u"""Specifies the method used for emission calculation, such as POWER_BASED or SPEND_BASED""")
+@cli_util.option('--emission-type', type=custom_types.CliCaseInsensitiveChoice(["MARKET_BASED", "LOCATION_BASED"]), help=u"""Specifies the type of emission, such as MARKET_BASED or LOCATION_BASED.""")
+@cli_util.option('--granularity', type=custom_types.CliCaseInsensitiveChoice(["DAILY", "MONTHLY"]), help=u"""The carbon emission granularity. DAILY - Daily data aggregation. MONTHLY - Monthly data aggregation.""")
+@cli_util.option('--is-aggregate-by-time', type=click.BOOL, help=u"""Specifies whether aggregated by time. If isAggregateByTime is true, all carbon emissions usage over the query time period are summed.""")
 @cli_util.option('--group-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Aggregate the result by. For example:   `[\"tagNamespace\", \"tagKey\", \"tagValue\", \"service\", \"skuName\", \"skuPartNumber\", \"unit\",     \"compartmentName\", \"compartmentPath\", \"compartmentId\", \"platform\", \"region\", \"logicalAd\",     \"resourceId\", \"resourceName\", \"tenantId\", \"tenantName\", \"subscriptionId\"]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--group-by-tag', type=custom_types.CLI_COMPLEX_TYPE, help=u"""GroupBy a specific tagKey. Provide the tagNamespace and tagKey in the tag object. Only supports one tag in the list. For example:   `[{\"namespace\":\"oracle\", \"key\":\"createdBy\"]`
 
@@ -1217,13 +1220,13 @@ This option is a JSON list with items of type Tag.  For documentation on Tag ple
 @cli_util.option('--compartment-depth', type=click.INT, help=u"""The compartment depth level.""")
 @cli_util.option('--filter', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximumimum number of items to return.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @json_skeleton_utils.get_cli_json_input_option({'group-by': {'module': 'usage_api', 'class': 'list[string]'}, 'group-by-tag': {'module': 'usage_api', 'class': 'list[Tag]'}, 'filter': {'module': 'usage_api', 'class': 'Filter'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'group-by': {'module': 'usage_api', 'class': 'list[string]'}, 'group-by-tag': {'module': 'usage_api', 'class': 'list[Tag]'}, 'filter': {'module': 'usage_api', 'class': 'Filter'}}, output_type={'module': 'usage_api', 'class': 'UsageCarbonEmissionAggregation'})
 @cli_util.wrap_exceptions
-def request_usage_carbon_emissions(ctx, from_json, tenant_id, time_usage_started, time_usage_ended, is_aggregate_by_time, group_by, group_by_tag, compartment_depth, filter, page, limit):
+def request_usage_carbon_emissions(ctx, from_json, tenant_id, time_usage_started, time_usage_ended, emission_calculation_method, emission_type, granularity, is_aggregate_by_time, group_by, group_by_tag, compartment_depth, filter, page, limit):
 
     kwargs = {}
     if page is not None:
@@ -1236,6 +1239,15 @@ def request_usage_carbon_emissions(ctx, from_json, tenant_id, time_usage_started
     _details['tenantId'] = tenant_id
     _details['timeUsageStarted'] = time_usage_started
     _details['timeUsageEnded'] = time_usage_ended
+
+    if emission_calculation_method is not None:
+        _details['emissionCalculationMethod'] = emission_calculation_method
+
+    if emission_type is not None:
+        _details['emissionType'] = emission_type
+
+    if granularity is not None:
+        _details['granularity'] = granularity
 
     if is_aggregate_by_time is not None:
         _details['isAggregateByTime'] = is_aggregate_by_time
@@ -1260,7 +1272,7 @@ def request_usage_carbon_emissions(ctx, from_json, tenant_id, time_usage_started
     cli_util.render_response(result, ctx)
 
 
-@custom_table_group.command(name=cli_util.override('usage_api.update_custom_table.command_name', 'update'), help=u"""Update a saved custom table by table id. \n[Command Reference](updateCustomTable)""")
+@custom_table_group.command(name=cli_util.override('usage_api.update_custom_table.command_name', 'update'), help=u"""Update a saved custom table by table ID. \n[Command Reference](updateCustomTable)""")
 @cli_util.option('--saved-custom-table', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--custom-table-id', required=True, help=u"""The custom table unique OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted, only if the etag you provide matches the resource's current etag value.""")
@@ -1296,10 +1308,10 @@ def update_custom_table(ctx, from_json, force, saved_custom_table, custom_table_
     cli_util.render_response(result, ctx)
 
 
-@email_recipients_group_group.command(name=cli_util.override('usage_api.update_email_recipients_group.command_name', 'update'), help=u"""Update a saved email recipients group. \n[Command Reference](updateEmailRecipientsGroup)""")
-@cli_util.option('--recipients-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of recipient will receive the usage statement email.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--email-recipients-group-id', required=True, help=u"""The email recipient group OCID.""")
-@cli_util.option('--subscription-id', required=True, help=u"""The UsageStatement Subscription unique OCID.""")
+@email_recipients_group_group.command(name=cli_util.override('usage_api.update_email_recipients_group.command_name', 'update'), help=u"""Updates a saved email recipients group. \n[Command Reference](updateEmailRecipientsGroup)""")
+@cli_util.option('--recipients-list', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of recipients will receive usage statement emails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--email-recipients-group-id', required=True, help=u"""The email recipients group OCID.""")
+@cli_util.option('--subscription-id', required=True, help=u"""The usage statement subscription unique OCID.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment ID in which to list resources.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted, only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -1401,7 +1413,7 @@ def update_query(ctx, from_json, force, query_definition, query_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@schedule_group.command(name=cli_util.override('usage_api.update_schedule.command_name', 'update'), help=u"""Update a saved schedule \n[Command Reference](updateSchedule)""")
+@schedule_group.command(name=cli_util.override('usage_api.update_schedule.command_name', 'update'), help=u"""Update a saved schedule. \n[Command Reference](updateSchedule)""")
 @cli_util.option('--schedule-id', required=True, help=u"""The schedule unique OCID.""")
 @cli_util.option('--description', help=u"""The description of the schedule.""")
 @cli_util.option('--output-file-format', type=custom_types.CliCaseInsensitiveChoice(["CSV", "PDF"]), help=u"""Specifies the supported output file format.""")
@@ -1481,7 +1493,7 @@ def update_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@schedule_group.command(name=cli_util.override('usage_api.update_schedule_object_storage_location.command_name', 'update-schedule-object-storage-location'), help=u"""Update a saved schedule \n[Command Reference](updateSchedule)""")
+@schedule_group.command(name=cli_util.override('usage_api.update_schedule_object_storage_location.command_name', 'update-schedule-object-storage-location'), help=u"""Update a saved schedule. \n[Command Reference](updateSchedule)""")
 @cli_util.option('--schedule-id', required=True, help=u"""The schedule unique OCID.""")
 @cli_util.option('--result-location-region', required=True, help=u"""The destination Object Store Region specified by the customer.""")
 @cli_util.option('--result-location-namespace', required=True, help=u"""The namespace needed to determine the object storage bucket.""")
@@ -1566,7 +1578,7 @@ def update_schedule_object_storage_location(ctx, from_json, force, wait_for_stat
     cli_util.render_response(result, ctx)
 
 
-@usage_carbon_emissions_query_group.command(name=cli_util.override('usage_api.update_usage_carbon_emissions_query.command_name', 'update'), help=u"""Update a usage carbon emissions saved query by the OCID. \n[Command Reference](updateUsageCarbonEmissionsQuery)""")
+@usage_carbon_emissions_query_group.command(name=cli_util.override('usage_api.update_usage_carbon_emissions_query.command_name', 'update'), help=u"""Update a carbon emissions usage saved query by the OCID. \n[Command Reference](updateUsageCarbonEmissionsQuery)""")
 @cli_util.option('--query-definition', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--usage-carbon-emissions-query-id', required=True, help=u"""The query unique OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted, only if the etag you provide matches the resource's current etag value.""")

@@ -106,6 +106,12 @@ def work_request_error_group():
     pass
 
 
+@click.command(cli_util.override('network_firewall.nat_rule_group.command_name', 'nat-rule'), cls=CommandGroupWithAlias, help="""A Nat Rule is used to define to which traffic NAT should be applied by the firewall.""")
+@cli_util.help_option_group
+def nat_rule_group():
+    pass
+
+
 @click.command(cli_util.override('network_firewall.service_list_group.command_name', 'service-list'), cls=CommandGroupWithAlias, help="""A group of services.""")
 @cli_util.help_option_group
 def service_list_group():
@@ -132,6 +138,7 @@ network_firewall_root_group.add_command(decryption_profile_group)
 network_firewall_root_group.add_command(mapped_secret_group)
 network_firewall_root_group.add_command(service_group)
 network_firewall_root_group.add_command(work_request_error_group)
+network_firewall_root_group.add_command(nat_rule_group)
 network_firewall_root_group.add_command(service_list_group)
 network_firewall_root_group.add_command(security_rule_group)
 
@@ -533,6 +540,67 @@ def bulk_upload_mapped_secrets(ctx, from_json, wait_for_state, max_wait_seconds,
     result = client.bulk_upload_mapped_secrets(
         network_firewall_policy_id=network_firewall_policy_id,
         bulk_upload_mapped_secrets_details=bulk_upload_mapped_secrets_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@nat_rule_group.command(name=cli_util.override('network_firewall.bulk_upload_nat_rules.command_name', 'bulk-upload'), help=u"""Creates a new NAT Rule at bulk for the Network Firewall Policy. \n[Command Reference](bulkUploadNatRules)""")
+@cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
+@cli_util.option('--bulk-upload-nat-rules-details', required=True, help=u"""Request Details to create the NAT Rule for the Network Firewall Policy Resource.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "NEEDS_ATTENTION", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def bulk_upload_nat_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_policy_id, bulk_upload_nat_rules_details, if_match):
+
+    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
+    client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
+    result = client.bulk_upload_nat_rules(
+        network_firewall_policy_id=network_firewall_policy_id,
+        bulk_upload_nat_rules_details=bulk_upload_nat_rules_details,
         **kwargs
     )
     if wait_for_state:
@@ -988,7 +1056,7 @@ def change_network_firewall_policy_compartment(ctx, from_json, network_firewall_
     cli_util.render_response(result, ctx)
 
 
-@network_firewall_policy_group.command(name=cli_util.override('network_firewall.clone_network_firewall_policy.command_name', 'clone'), help=u"""Moves a NetworkFirewallPolicy resource from one compartment identifier to another. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](cloneNetworkFirewallPolicy)""")
+@network_firewall_policy_group.command(name=cli_util.override('network_firewall.clone_network_firewall_policy.command_name', 'clone'), help=u"""Clones a NetworkFirewallPolicy resource from an existing Network Firewall Policy. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](cloneNetworkFirewallPolicy)""")
 @cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--display-name', help=u"""A user-friendly optional name for the cloned firewall policy. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment containing the NetworkFirewall Policy.""")
@@ -1485,6 +1553,90 @@ def create_mapped_secret_create_vault_mapped_secret_details(ctx, from_json, netw
     cli_util.render_response(result, ctx)
 
 
+@nat_rule_group.command(name=cli_util.override('network_firewall.create_nat_rule.command_name', 'create'), help=u"""Creates a new NAT Rule for the Network Firewall Policy. \n[Command Reference](createNatRule)""")
+@cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
+@cli_util.option('--name', required=True, help=u"""Name for the NAT rule, must be unique within the policy.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NATV4"]), help=u"""NAT type:
+
+* NATV4 - NATV4 type NAT.""")
+@cli_util.option('--description', help=u"""Description of a NAT rule. This field can be used to add additional info.""")
+@cli_util.option('--position', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'position': {'module': 'network_firewall', 'class': 'RulePosition'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'position': {'module': 'network_firewall', 'class': 'RulePosition'}}, output_type={'module': 'network_firewall', 'class': 'NatRule'})
+@cli_util.wrap_exceptions
+def create_nat_rule(ctx, from_json, network_firewall_policy_id, name, type, description, position):
+
+    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['type'] = type
+
+    if description is not None:
+        _details['description'] = description
+
+    if position is not None:
+        _details['position'] = cli_util.parse_json_parameter("position", position)
+
+    client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
+    result = client.create_nat_rule(
+        network_firewall_policy_id=network_firewall_policy_id,
+        create_nat_rule_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@nat_rule_group.command(name=cli_util.override('network_firewall.create_nat_rule_create_nat_v4_rule_details.command_name', 'create-nat-rule-create-nat-v4-rule-details'), help=u"""Creates a new NAT Rule for the Network Firewall Policy. \n[Command Reference](createNatRule)""")
+@cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
+@cli_util.option('--name', required=True, help=u"""Name for the NAT rule, must be unique within the policy.""")
+@cli_util.option('--condition', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["DIPP_SRC_NAT"]), help=u"""action:
+
+* DIPP_SRC_NAT - Dynamic-ip-port source NAT.""")
+@cli_util.option('--description', help=u"""Description of a NAT rule. This field can be used to add additional info.""")
+@cli_util.option('--position', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'position': {'module': 'network_firewall', 'class': 'RulePosition'}, 'condition': {'module': 'network_firewall', 'class': 'NatRuleMatchCriteria'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'position': {'module': 'network_firewall', 'class': 'RulePosition'}, 'condition': {'module': 'network_firewall', 'class': 'NatRuleMatchCriteria'}}, output_type={'module': 'network_firewall', 'class': 'NatRule'})
+@cli_util.wrap_exceptions
+def create_nat_rule_create_nat_v4_rule_details(ctx, from_json, network_firewall_policy_id, name, condition, action, description, position):
+
+    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['condition'] = cli_util.parse_json_parameter("condition", condition)
+    _details['action'] = action
+
+    if description is not None:
+        _details['description'] = description
+
+    if position is not None:
+        _details['position'] = cli_util.parse_json_parameter("position", position)
+
+    _details['type'] = 'NATV4'
+
+    client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
+    result = client.create_nat_rule(
+        network_firewall_policy_id=network_firewall_policy_id,
+        create_nat_rule_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @network_firewall_group.command(name=cli_util.override('network_firewall.create_network_firewall.command_name', 'create'), help=u"""Creates a new NetworkFirewall. \n[Command Reference](createNetworkFirewall)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the Network Firewall.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet associated with the Network Firewall.""")
@@ -1494,17 +1646,18 @@ def create_mapped_secret_create_vault_mapped_secret_details(ctx, from_json, netw
 @cli_util.option('--ipv4-address', help=u"""IPv4 address for the Network Firewall.""")
 @cli_util.option('--ipv6-address', help=u"""IPv6 address for the Network Firewall.""")
 @cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of network security groups [OCID] associated with the Network Firewall.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--nat-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "NEEDS_ATTENTION", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'network-security-group-ids': {'module': 'network_firewall', 'class': 'list[string]'}, 'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'network-security-group-ids': {'module': 'network_firewall', 'class': 'list[string]'}, 'nat-configuration': {'module': 'network_firewall', 'class': 'NatConfigurationRequest'}, 'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-security-group-ids': {'module': 'network_firewall', 'class': 'list[string]'}, 'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'network_firewall', 'class': 'NetworkFirewall'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-security-group-ids': {'module': 'network_firewall', 'class': 'list[string]'}, 'nat-configuration': {'module': 'network_firewall', 'class': 'NatConfigurationRequest'}, 'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'network_firewall', 'class': 'NetworkFirewall'})
 @cli_util.wrap_exceptions
-def create_network_firewall(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, network_firewall_policy_id, display_name, availability_domain, ipv4_address, ipv6_address, network_security_group_ids, freeform_tags, defined_tags):
+def create_network_firewall(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, network_firewall_policy_id, display_name, availability_domain, ipv4_address, ipv6_address, network_security_group_ids, nat_configuration, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1528,6 +1681,9 @@ def create_network_firewall(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if network_security_group_ids is not None:
         _details['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_security_group_ids", network_security_group_ids)
+
+    if nat_configuration is not None:
+        _details['natConfiguration'] = cli_util.parse_json_parameter("nat_configuration", nat_configuration)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -2109,6 +2265,37 @@ def delete_mapped_secret(ctx, from_json, network_firewall_policy_id, mapped_secr
     cli_util.render_response(result, ctx)
 
 
+@nat_rule_group.command(name=cli_util.override('network_firewall.delete_nat_rule.command_name', 'delete'), help=u"""Deletes a NAT Rule resource with the given identifier. \n[Command Reference](deleteNatRule)""")
+@cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
+@cli_util.option('--nat-rule-name', required=True, help=u"""Unique identifier for NAT Rules in the network firewall policy.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_nat_rule(ctx, from_json, network_firewall_policy_id, nat_rule_name, if_match):
+
+    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
+
+    if isinstance(nat_rule_name, six.string_types) and len(nat_rule_name.strip()) == 0:
+        raise click.UsageError('Parameter --nat-rule-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
+    result = client.delete_nat_rule(
+        network_firewall_policy_id=network_firewall_policy_id,
+        nat_rule_name=nat_rule_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @network_firewall_group.command(name=cli_util.override('network_firewall.delete_network_firewall.command_name', 'delete'), help=u"""Deletes a NetworkFirewall resource by identifier \n[Command Reference](deleteNetworkFirewall)""")
 @cli_util.option('--network-firewall-id', required=True, help=u"""The [OCID] of the Network Firewall resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2551,6 +2738,33 @@ def get_mapped_secret(ctx, from_json, network_firewall_policy_id, mapped_secret_
     result = client.get_mapped_secret(
         network_firewall_policy_id=network_firewall_policy_id,
         mapped_secret_name=mapped_secret_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@nat_rule_group.command(name=cli_util.override('network_firewall.get_nat_rule.command_name', 'get'), help=u"""Get NAT Rule by the given name in the context of network firewall policy. \n[Command Reference](getNatRule)""")
+@cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
+@cli_util.option('--nat-rule-name', required=True, help=u"""Unique identifier for NAT Rules in the network firewall policy.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'NatRule'})
+@cli_util.wrap_exceptions
+def get_nat_rule(ctx, from_json, network_firewall_policy_id, nat_rule_name):
+
+    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
+
+    if isinstance(nat_rule_name, six.string_types) and len(nat_rule_name.strip()) == 0:
+        raise click.UsageError('Parameter --nat-rule-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
+    result = client.get_nat_rule(
+        network_firewall_policy_id=network_firewall_policy_id,
+        nat_rule_name=nat_rule_name,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3126,13 +3340,76 @@ def list_mapped_secrets(ctx, from_json, all_pages, page_size, network_firewall_p
     cli_util.render_response(result, ctx)
 
 
+@nat_rule_group.command(name=cli_util.override('network_firewall.list_nat_rules.command_name', 'list'), help=u"""Returns a list of NAT Rules for the Network Firewall Policy. \n[Command Reference](listNatRules)""")
+@cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` or `opc-prev-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--nat-rule-priority-order', type=click.INT, help=u"""Unique priority order for NAT Rules in the network firewall policy.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'network_firewall', 'class': 'NatRuleCollection'})
+@cli_util.wrap_exceptions
+def list_nat_rules(ctx, from_json, all_pages, page_size, network_firewall_policy_id, limit, page, sort_order, sort_by, display_name, nat_rule_priority_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if nat_rule_priority_order is not None:
+        kwargs['nat_rule_priority_order'] = nat_rule_priority_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_nat_rules,
+            network_firewall_policy_id=network_firewall_policy_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_nat_rules,
+            limit,
+            page_size,
+            network_firewall_policy_id=network_firewall_policy_id,
+            **kwargs
+        )
+    else:
+        result = client.list_nat_rules(
+            network_firewall_policy_id=network_firewall_policy_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @network_firewall_policy_group.command(name=cli_util.override('network_firewall.list_network_firewall_policies.command_name', 'list'), help=u"""Returns a list of Network Firewall Policies. \n[Command Reference](listNetworkFirewallPolicies)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""Unique Network Firewall Policy identifier""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` or `opc-prev-page` header field of a previous response.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "ATTACHING", "DETACHING"]), help=u"""A filter to return only resources with a lifecycleState matching the given value.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources with a lifecycleState matching the given value.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -3197,7 +3474,7 @@ def list_network_firewall_policies(ctx, from_json, all_pages, page_size, compart
 @cli_util.option('--availability-domain', help=u"""A filter to return only resources that are present within the specified availability domain. To get a list of availability domains for a tenancy, use [ListAvailabilityDomains] operation. Example: `kIdk:PHX-AD-1`""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` or `opc-prev-page` header field of a previous response.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "ATTACHING", "DETACHING"]), help=u"""A filter to return only resources with a lifecycleState matching the given value.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources with a lifecycleState matching the given value.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -4378,11 +4655,118 @@ def update_mapped_secret_update_vault_mapped_secret_details(ctx, from_json, netw
     cli_util.render_response(result, ctx)
 
 
+@nat_rule_group.command(name=cli_util.override('network_firewall.update_nat_rule.command_name', 'update'), help=u"""Updates the NAT Rule with the given name in the network firewall policy. \n[Command Reference](updateNatRule)""")
+@cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
+@cli_util.option('--nat-rule-name', required=True, help=u"""Unique identifier for NAT Rules in the network firewall policy.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NATV4"]), help=u"""NAT type:
+
+* NATV4 - NATV4 type NAT.""")
+@cli_util.option('--description', help=u"""Description of a NAT rule. This field can be used to add additional info.""")
+@cli_util.option('--position', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'position': {'module': 'network_firewall', 'class': 'RulePosition'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'position': {'module': 'network_firewall', 'class': 'RulePosition'}}, output_type={'module': 'network_firewall', 'class': 'NatRule'})
+@cli_util.wrap_exceptions
+def update_nat_rule(ctx, from_json, force, network_firewall_policy_id, nat_rule_name, type, description, position, if_match):
+
+    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
+
+    if isinstance(nat_rule_name, six.string_types) and len(nat_rule_name.strip()) == 0:
+        raise click.UsageError('Parameter --nat-rule-name cannot be whitespace or empty string')
+    if not force:
+        if position:
+            if not click.confirm("WARNING: Updates to position will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if description is not None:
+        _details['description'] = description
+
+    if position is not None:
+        _details['position'] = cli_util.parse_json_parameter("position", position)
+
+    client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
+    result = client.update_nat_rule(
+        network_firewall_policy_id=network_firewall_policy_id,
+        nat_rule_name=nat_rule_name,
+        update_nat_rule_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@nat_rule_group.command(name=cli_util.override('network_firewall.update_nat_rule_update_nat_v4_rule_details.command_name', 'update-nat-rule-update-nat-v4-rule-details'), help=u"""Updates the NAT Rule with the given name in the network firewall policy. \n[Command Reference](updateNatRule)""")
+@cli_util.option('--network-firewall-policy-id', required=True, help=u"""Unique Network Firewall Policy identifier""")
+@cli_util.option('--nat-rule-name', required=True, help=u"""Unique identifier for NAT Rules in the network firewall policy.""")
+@cli_util.option('--condition', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["DIPP_SRC_NAT"]), help=u"""action:
+
+* DIPP_SRC_NAT - Dynamic-ip-port source NAT.""")
+@cli_util.option('--description', help=u"""Description of a NAT rule. This field can be used to add additional info.""")
+@cli_util.option('--position', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'position': {'module': 'network_firewall', 'class': 'RulePosition'}, 'condition': {'module': 'network_firewall', 'class': 'NatRuleMatchCriteria'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'position': {'module': 'network_firewall', 'class': 'RulePosition'}, 'condition': {'module': 'network_firewall', 'class': 'NatRuleMatchCriteria'}}, output_type={'module': 'network_firewall', 'class': 'NatRule'})
+@cli_util.wrap_exceptions
+def update_nat_rule_update_nat_v4_rule_details(ctx, from_json, force, network_firewall_policy_id, nat_rule_name, condition, action, description, position, if_match):
+
+    if isinstance(network_firewall_policy_id, six.string_types) and len(network_firewall_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-firewall-policy-id cannot be whitespace or empty string')
+
+    if isinstance(nat_rule_name, six.string_types) and len(nat_rule_name.strip()) == 0:
+        raise click.UsageError('Parameter --nat-rule-name cannot be whitespace or empty string')
+    if not force:
+        if position or condition:
+            if not click.confirm("WARNING: Updates to position and condition will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['condition'] = cli_util.parse_json_parameter("condition", condition)
+    _details['action'] = action
+
+    if description is not None:
+        _details['description'] = description
+
+    if position is not None:
+        _details['position'] = cli_util.parse_json_parameter("position", position)
+
+    _details['type'] = 'NATV4'
+
+    client = cli_util.build_client('network_firewall', 'network_firewall', ctx)
+    result = client.update_nat_rule(
+        network_firewall_policy_id=network_firewall_policy_id,
+        nat_rule_name=nat_rule_name,
+        update_nat_rule_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @network_firewall_group.command(name=cli_util.override('network_firewall.update_network_firewall.command_name', 'update'), help=u"""Updates the NetworkFirewall \n[Command Reference](updateNetworkFirewall)""")
 @cli_util.option('--network-firewall-id', required=True, help=u"""The [OCID] of the Network Firewall resource.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the Network Firewall. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--network-firewall-policy-id', help=u"""The [OCID] of the Network Firewall Policy.""")
 @cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of network security groups [OCID] associated with the Network Firewall.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--nat-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -4390,18 +4774,18 @@ def update_mapped_secret_update_vault_mapped_secret_details(ctx, from_json, netw
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "NEEDS_ATTENTION", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'network-security-group-ids': {'module': 'network_firewall', 'class': 'list[string]'}, 'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'network-security-group-ids': {'module': 'network_firewall', 'class': 'list[string]'}, 'nat-configuration': {'module': 'network_firewall', 'class': 'NatConfigurationRequest'}, 'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-security-group-ids': {'module': 'network_firewall', 'class': 'list[string]'}, 'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-security-group-ids': {'module': 'network_firewall', 'class': 'list[string]'}, 'nat-configuration': {'module': 'network_firewall', 'class': 'NatConfigurationRequest'}, 'freeform-tags': {'module': 'network_firewall', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'network_firewall', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_network_firewall(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_id, display_name, network_firewall_policy_id, network_security_group_ids, freeform_tags, defined_tags, if_match):
+def update_network_firewall(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_firewall_id, display_name, network_firewall_policy_id, network_security_group_ids, nat_configuration, freeform_tags, defined_tags, if_match):
 
     if isinstance(network_firewall_id, six.string_types) and len(network_firewall_id.strip()) == 0:
         raise click.UsageError('Parameter --network-firewall-id cannot be whitespace or empty string')
     if not force:
-        if network_security_group_ids or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to network-security-group-ids and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if network_security_group_ids or nat_configuration or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to network-security-group-ids and nat-configuration and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -4419,6 +4803,9 @@ def update_network_firewall(ctx, from_json, force, wait_for_state, max_wait_seco
 
     if network_security_group_ids is not None:
         _details['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_security_group_ids", network_security_group_ids)
+
+    if nat_configuration is not None:
+        _details['natConfiguration'] = cli_util.parse_json_parameter("nat_configuration", nat_configuration)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

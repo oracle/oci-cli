@@ -8,15 +8,15 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
-from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
+from services.capacity_management.src.oci_cli_capacity_management.generated import capacity_management_service_cli
 
 
-@cli.command(cli_util.override('capacity_management.capacity_management_root_group.command_name', 'capacity-management'), cls=CommandGroupWithAlias, help=cli_util.override('capacity_management.capacity_management_root_group.help', """OCI Control Center (OCC) Capacity Management enables you to manage capacity requests in realms where OCI Control Center Capacity Management is available. For more information, see [OCI Control Center]."""), short_help=cli_util.override('capacity_management.capacity_management_root_group.short_help', """OCI Control Center Capacity Management API"""))
+@click.command(cli_util.override('capacity_management.capacity_management_root_group.command_name', 'capacity-management'), cls=CommandGroupWithAlias, help=cli_util.override('capacity_management.capacity_management_root_group.help', """OCI Control Center (OCC) Capacity Management enables you to manage capacity requests in realms where OCI Control Center Capacity Management is available. For more information, see [OCI Control Center]."""), short_help=cli_util.override('capacity_management.capacity_management_root_group.short_help', """OCI Control Center Capacity Management API"""))
 @cli_util.help_option_group
 def capacity_management_root_group():
     pass
@@ -88,6 +88,7 @@ def occ_availability_collection_group():
     pass
 
 
+capacity_management_service_cli.capacity_management_service_group.add_command(capacity_management_root_group)
 capacity_management_root_group.add_command(occ_customer_group_collection_group)
 capacity_management_root_group.add_command(occ_capacity_request_group)
 capacity_management_root_group.add_command(occ_availability_catalog_group)
@@ -99,6 +100,19 @@ capacity_management_root_group.add_command(occ_customer_group_group)
 capacity_management_root_group.add_command(occ_handover_resource_block_detail_collection_group)
 capacity_management_root_group.add_command(occ_overview_collection_group)
 capacity_management_root_group.add_command(occ_availability_collection_group)
+# oci capacity_management capacity_management --> oci capacity_management
+capacity_management_service_cli.capacity_management_service_group.commands.pop(capacity_management_root_group.name)
+capacity_management_service_cli.capacity_management_service_group.add_command(occ_customer_group_collection_group)
+capacity_management_service_cli.capacity_management_service_group.add_command(occ_capacity_request_group)
+capacity_management_service_cli.capacity_management_service_group.add_command(occ_availability_catalog_group)
+capacity_management_service_cli.capacity_management_service_group.add_command(occ_capacity_request_collection_group)
+capacity_management_service_cli.capacity_management_service_group.add_command(occ_handover_resource_block_collection_group)
+capacity_management_service_cli.capacity_management_service_group.add_command(occ_availability_catalog_collection_group)
+capacity_management_service_cli.capacity_management_service_group.add_command(occ_customer_group)
+capacity_management_service_cli.capacity_management_service_group.add_command(occ_customer_group_group)
+capacity_management_service_cli.capacity_management_service_group.add_command(occ_handover_resource_block_detail_collection_group)
+capacity_management_service_cli.capacity_management_service_group.add_command(occ_overview_collection_group)
+capacity_management_service_cli.capacity_management_service_group.add_command(occ_availability_collection_group)
 
 
 @occ_availability_catalog_group.command(name=cli_util.override('capacity_management.create_occ_availability_catalog.command_name', 'create'), help=u"""Create availability catalog \n[Command Reference](createOccAvailabilityCatalog)""")

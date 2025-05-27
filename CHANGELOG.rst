@@ -6,6 +6,118 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.57.0 - 2025-05-27
+--------------------
+Added
+~~~~~
+* Big Data Service
+
+  * Support for new command
+
+    * ``oci bds bds-capacity-report create``
+    * ``oci bds instance get-software-update``
+    * ``oci bds instance install-software-updates``
+    * ``oci bds instance list-software-updates``
+
+  * Support for new optional parameter for below commands
+
+    * ``oci bds instance install-os-patch --is-dry-run``
+    * ``oci bds instance install-os-patch-batching-based-patching-configs --is-dry-run``
+    * ``oci bds instance install-os-patch-domain-based-patching-configs --is-dry-run``
+    * ``oci bds instance install-os-patch-downtime-based-patching-configs --is-dry-run``
+
+* Network Firewall Service
+
+  * Support for NAT Rule APIs
+
+    * ``oci network-firewall nat-rule``
+
+  * Support for new optional parameters in the network-firewall create and update commands
+
+    * ``oci network-firewall network-firewall create --nat-configuration``
+    * ``oci network-firewall network-firewall update --nat-configuration``
+
+* Core Service
+
+  * Support for Compute HostGroups APIs
+
+    * ``oci compute compute-host-group``
+
+  * Support for new commands
+
+    * ``oci compute compute-host detach``
+    * ``oci compute compute-host attach``
+    * ``oci compute dedicated-vm-host create-dedicated-vm-host-compute-bare-metal-host-placement-constraint-details``
+    * ``oci compute dedicated-vm-host create-dedicated-vm-host-host-group-placement-constraint-details``
+    * ``oci compute instance launch-instance-compute-bare-metal-host-placement-constraint-details``
+    * ``oci compute instance launch-instance-host-group-placement-constraint-details``
+
+  * Support for new optional parameter for below commands
+
+    * ``oci compute compute-host list --compute-host-group-id``
+    * ``oci compute instance launch --compute-host-group-id --placement-constraint-details``
+    * ``oci compute dedicated-vm-host create --placement-constraint-details``
+    * ``oci network local-peering-gateway create --security-attributes``
+    * ``oci network local-peering-gateway update --security-attributes``
+    * ``oci network vcn create --is-zpr-only``
+    * ``oci network vcn update --is-zpr-only``
+
+* Capacity Management Service
+
+  * Support for the Demand signal feature CRUD operations
+
+    * ``oci capacity-management demand-signal occm-demand-signal``
+    * ``oci capacity-management demand-signal occm-demand-signal-catalog-resource``
+    * ``oci capacity-management demand-signal occm-demand-signal-delivery-collection``
+    * ``oci capacity-management demand-signal occm-demand-signal-item``
+
+  * Support for Internal Demand signal feature CRUD operations
+
+    * ``oci capacity-management internal-demand-signal internal-occm-demand-signal``
+    * ``oci capacity-management internal-demand-signal internal-occm-demand-signal-catalog-resource``
+    * ``oci capacity-management internal-demand-signal internal-occm-demand-signal-delivery``
+    * ``oci capacity-management internal-demand-signal internal-occm-demand-signal-item-collection``
+    * ``oci capacity-management internal-demand-signal occm-demand-signal-catalog``
+
+* Support for new commands in the Management Dashboard Service
+
+  * ``oci management-dashboard dashboard get-oob``
+  * ``oci management-dashboard dashboard list-oob``
+  * ``oci management-dashboard saved-search get-oob``
+  * ``oci management-dashboard saved-search list-oob``
+
+* Support for REST in HeatWave MySQL Service
+
+  * ``oci mysql db-system clone --rest``
+  * ``oci mysql db-system create --rest``
+  * ``oci mysql db-system import --rest``
+  * ``oci mysql db-system update --rest``
+
+* Support for new optional parameters for below command in the Database Service
+
+  * ``oci db system list-db-system-storage-performances --database-edition``
+
+* Support for new optional parameters for below command in the Usage Service
+
+  * ``oci usage-api usage-carbon-emission-summary request-usage-carbon-emissions --emission-calculation-method --emission-type --granularity``
+
+Changed
+~~~~~~~
+* Database Service
+
+  * [BREAKING] Command to get cloud-exadata-infrastructure unallocated resources has been renamed in the Database Service
+
+    * ``oci db cloud-exadata-infrastructure-unallocated-resources get`` renamed to ``oci db cloud-exa-infra get-cloud-exadata-infrastructure-unallocated-resources``
+
+  * Required parameter --db-home-id is now a optional parameter for the below commands
+
+    * ``oci db database create-database-create-stand-by-database-details``
+    * ``oci db database create-database-from-backup``
+
+Fixed
+~~~~~
+* `Github Issue #949 <https://github.com/oracle/oci-cli/issues/949>`_ for OCI Database Service
+
 3.56.1 - 2025-05-20
 --------------------
 Added
