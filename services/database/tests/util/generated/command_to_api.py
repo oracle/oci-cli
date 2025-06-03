@@ -238,6 +238,7 @@ SDK_client_map = {
     "db.launch_autonomous_exadata_infrastructure": "oci.database.DatabaseClient.launch_autonomous_exadata_infrastructure",
     "db.launch_db_system": "oci.database.DatabaseClient.launch_db_system",
     "db.list_application_vips": "oci.database.DatabaseClient.list_application_vips",
+    "db.list_autonomous_container_database_backups": "oci.database.DatabaseClient.list_autonomous_container_database_backups",
     "db.list_autonomous_container_database_dataguard_associations": "oci.database.DatabaseClient.list_autonomous_container_database_dataguard_associations",
     "db.list_autonomous_container_database_versions": "oci.database.DatabaseClient.list_autonomous_container_database_versions",
     "db.list_autonomous_container_databases": "oci.database.DatabaseClient.list_autonomous_container_databases",

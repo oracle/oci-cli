@@ -1291,7 +1291,7 @@ def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @connection_group.command(name=cli_util.override('goldengate.create_connection.command_name', 'create'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
-@cli_util.option('--connection-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC"]), help=u"""The connection type.""")
+@cli_util.option('--connection-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "ICEBERG"]), help=u"""The connection type.""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
@@ -1424,9 +1424,9 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ssl-mode', help=u"""SSL modes for PostgreSQL.""")
-@cli_util.option('--ssl-ca', help=u"""The base64 encoded certificate of the trusted certificate authorities (Trusted CA) for PostgreSQL. The supported file formats are .pem and .crt.""")
-@cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA).""")
-@cli_util.option('--ssl-cert', help=u"""The base64 encoded certificate of the PostgreSQL server. The supported file formats are .pem and .crt.""")
+@cli_util.option('--ssl-ca', help=u"""The base64 encoded certificate of the trusted certificate authorities (Trusted CA) for PostgreSQL. The supported file formats are .pem and .crt. It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
+@cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA). It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
+@cli_util.option('--ssl-cert', help=u"""The base64 encoded certificate of the PostgreSQL server. The supported file formats are .pem and .crt. It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
 @cli_util.option('--ssl-key', help=u"""The base64 encoded private key of the PostgreSQL server. The supported file formats are .pem and .crt. Deprecated: This field is deprecated and replaced by \"sslKeySecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--ssl-key-secret-id', help=u"""The [OCID] of the Secret that stores the private key of the PostgreSQL server. The supported file formats are .pem and .crt. Note: When provided, 'sslKey' field must not be provided.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
@@ -1757,7 +1757,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--additional-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name-value pair attribute entries. Used as additional parameters in connection string.
 
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of a .pem or .crt file. containing the server public key (for 1-way SSL).""")
+@cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of a .pem or .crt file containing the server public key (for 1-way SSL).""")
 @cli_util.option('--should-validate-server-certificate', type=click.BOOL, help=u"""If set to true, the driver validates the certificate that is sent by the database server.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
@@ -2151,7 +2151,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which containing the credentials required to use Google PubSub. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
+@cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which contains the credentials required to use Google PubSub. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2245,7 +2245,7 @@ def create_connection_create_google_pub_sub_connection_details(ctx, from_json, w
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Hadoop Distributed File System technology type.""")
-@cli_util.option('--core-site-xml', required=True, help=u"""The base64 encoded content of the Hadoop Distributed File System configuration file (core-site.xml).""")
+@cli_util.option('--core-site-xml', required=True, help=u"""The base64 encoded content of the Hadoop Distributed File System configuration file (core-site.xml). It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
 
@@ -2792,7 +2792,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--service-account-key-file', help=u"""The base64 encoded content of the service account key file containing the credentials required to use Google Cloud Storage. Deprecated: This field is deprecated and replaced by \"serviceAccountKeyFileSecretId\". This field will be removed after February 15 2026.""")
-@cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which containing the credentials required to use Google Cloud Storage. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
+@cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which contains the credentials required to use Google Cloud Storage. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3430,7 +3430,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--service-account-key-file', help=u"""The base64 encoded content of the service account key file containing the credentials required to use Google BigQuery. Deprecated: This field is deprecated and replaced by \"serviceAccountKeyFileSecretId\". This field will be removed after February 15 2026.""")
-@cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which containing the credentials required to use Google BigQuery. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
+@cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which contains the credentials required to use Google BigQuery. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3528,6 +3528,7 @@ def create_connection_create_google_big_query_connection_details(ctx, from_json,
 @cli_util.option('--technology-type', required=True, help=u"""The Snowflake technology type.""")
 @cli_util.option('--connection-url', required=True, help=u"""JDBC connection URL. e.g.: 'jdbc:snowflake://<account_name>.snowflakecomputing.com/?warehouse=<warehouse-name>&db=<db-name>'""")
 @cli_util.option('--authentication-type', required=True, help=u"""Used authentication mechanism to access Snowflake.""")
+@cli_util.option('--username', required=True, help=u"""The username Oracle GoldenGate uses to connect to Snowflake. This username must already exist and be available by Snowflake platform to be connected to.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
 
@@ -3544,7 +3545,6 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect to Snowflake. This username must already exist and be available by Snowflake platform to be connected to.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect to Snowflake platform. Deprecated: This field is deprecated and replaced by \"passwordSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret where the password is stored. The password Oracle GoldenGate uses to connect the associated system of the given technology. It must conform to the specific security requirements including length, case sensitivity, and so on. If secretId is used plaintext field must not be provided. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--private-key-file', help=u"""The base64 encoded content of private key file in PEM format. Deprecated: This field is deprecated and replaced by \"privateKeyFileSecretId\". This field will be removed after February 15 2026.""")
@@ -3559,7 +3559,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_snowflake_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, connection_url, authentication_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, username, password, password_secret_id, private_key_file, private_key_file_secret_id, private_key_passphrase, private_key_passphrase_secret_id):
+def create_connection_create_snowflake_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, connection_url, authentication_type, username, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, password, password_secret_id, private_key_file, private_key_file_secret_id, private_key_passphrase, private_key_passphrase_secret_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3570,6 +3570,7 @@ def create_connection_create_snowflake_connection_details(ctx, from_json, wait_f
     _details['technologyType'] = technology_type
     _details['connectionUrl'] = connection_url
     _details['authenticationType'] = authentication_type
+    _details['username'] = username
 
     if description is not None:
         _details['description'] = description
@@ -3600,9 +3601,6 @@ def create_connection_create_snowflake_connection_details(ctx, from_json, wait_f
 
     if does_use_secret_ids is not None:
         _details['doesUseSecretIds'] = does_use_secret_ids
-
-    if username is not None:
-        _details['username'] = username
 
     if password is not None:
         _details['password'] = password
@@ -3685,7 +3683,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret that stores the password Oracle GoldenGate uses to connect the associated database. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--database-id', help=u"""The [OCID] of the Oracle Autonomous Json Database.""")
 @cli_util.option('--security-protocol', help=u"""Security Type for MongoDB.""")
-@cli_util.option('--tls-ca-file', help=u"""Database Certificate - The base64 encoded content of a .pem file, containing the server public key (for 1 and 2-way SSL).""")
+@cli_util.option('--tls-ca-file', help=u"""Database Certificate - The base64 encoded content of a .pem file, containing the server public key (for 1 and 2-way SSL). It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
 @cli_util.option('--tls-certificate-key-file', help=u"""Client Certificate - The base64 encoded content of a .pem file, containing the client public key (for 2-way SSL). Deprecated: This field is deprecated and replaced by \"tlsCertificateKeyFileSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--tls-certificate-key-file-secret-id', help=u"""The [OCID] of the Secret that stores the certificate key file of the mtls connection. - The content of a .pem file containing the client private key (for 2-way SSL). Note: When provided, 'tlsCertificateKeyFile' field must not be provided.""")
 @cli_util.option('--tls-certificate-key-file-password', help=u"""Client Certificate key file password. Deprecated: This field is deprecated and replaced by \"tlsCertificateKeyFilePasswordSecretId\". This field will be removed after February 15 2026.""")
@@ -3831,6 +3829,8 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--secret-access-key', help=u"""Secret access key to access the Amazon S3 bucket. e.g.: \"this-is-not-the-secret\" Deprecated: This field is deprecated and replaced by \"secretAccessKeySecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--secret-access-key-secret-id', help=u"""The [OCID] of the Secret where the Secret Access Key is stored. Note: When provided, 'secretAccessKey' field must not be provided.""")
+@cli_util.option('--endpoint-parameterconflict', help=u"""The Amazon Endpoint for S3. e.g.: 'https://my-bucket.s3.us-east-1.amazonaws.com'""")
+@cli_util.option('--region-parameterconflict', help=u"""The name of the region where the bucket is created.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3839,7 +3839,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_amazon_s3_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, access_key_id, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, secret_access_key, secret_access_key_secret_id):
+def create_connection_create_amazon_s3_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, access_key_id, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, secret_access_key, secret_access_key_secret_id, endpoint_parameterconflict, region_parameterconflict):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3885,6 +3885,12 @@ def create_connection_create_amazon_s3_connection_details(ctx, from_json, wait_f
 
     if secret_access_key_secret_id is not None:
         _details['secretAccessKeySecretId'] = secret_access_key_secret_id
+
+    if endpoint_parameterconflict is not None:
+        _details['endpoint'] = endpoint_parameterconflict
+
+    if region_parameterconflict is not None:
+        _details['region'] = region_parameterconflict
 
     _details['connectionType'] = 'AMAZON_S3'
 
@@ -4090,7 +4096,7 @@ This option is a JSON list with items of type NameValuePair.  For documentation 
 @cli_util.option('--ssl-client-keystoredb-secret-id', help=u"""The [OCID] of the Secret where the keystore file stored, which created at the client containing the server certificate / CA root certificate. Note: When provided, 'sslClientKeystoredb' field must not be provided.""")
 @cli_util.option('--ssl-client-keystash', help=u"""The base64 encoded keystash file which contains the encrypted password to the key database file. Deprecated: This field is deprecated and replaced by \"sslClientKeystashSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--ssl-client-keystash-secret-id', help=u"""The [OCID] of the Secret where the keystash file is stored, which contains the encrypted password to the key database file. Note: When provided, 'sslClientKeystash' field must not be provided.""")
-@cli_util.option('--ssl-server-certificate', help=u"""The base64 encoded file which contains the self-signed server certificate / Certificate Authority (CA) certificate.""")
+@cli_util.option('--ssl-server-certificate', help=u"""The base64 encoded file which contains the self-signed server certificate / Certificate Authority (CA) certificate. It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -4449,6 +4455,115 @@ def create_connection_create_azure_synapse_connection_details(ctx, from_json, wa
     cli_util.render_response(result, ctx)
 
 
+@connection_group.command(name=cli_util.override('goldengate.create_connection_create_iceberg_connection_details.command_name', 'create-connection-create-iceberg-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
+@cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
+@cli_util.option('--technology-type', required=True, help=u"""The Iceberg technology type.""")
+@cli_util.option('--catalog', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--storage', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""Metadata about this specific object.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
+
+Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'catalog': {'module': 'golden_gate', 'class': 'CreateIcebergCatalogDetails'}, 'storage': {'module': 'golden_gate', 'class': 'CreateIcebergStorageDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'catalog': {'module': 'golden_gate', 'class': 'CreateIcebergCatalogDetails'}, 'storage': {'module': 'golden_gate', 'class': 'CreateIcebergStorageDetails'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_iceberg_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, catalog, storage, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['technologyType'] = technology_type
+    _details['catalog'] = cli_util.parse_json_parameter("catalog", catalog)
+    _details['storage'] = cli_util.parse_json_parameter("storage", storage)
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
+
+    if vault_id is not None:
+        _details['vaultId'] = vault_id
+
+    if key_id is not None:
+        _details['keyId'] = key_id
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if subnet_id is not None:
+        _details['subnetId'] = subnet_id
+
+    if routing_method is not None:
+        _details['routingMethod'] = routing_method
+
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
+    _details['connectionType'] = 'ICEBERG'
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.create_connection(
+        create_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @connection_group.command(name=cli_util.override('goldengate.create_connection_create_mysql_connection_details.command_name', 'create-connection-create-mysql-connection-details'), help=u"""Creates a new Connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
@@ -4477,9 +4592,9 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--host', help=u"""The name or address of a host.""")
 @cli_util.option('--port', type=click.INT, help=u"""The port of an endpoint usually specified for a connection.""")
 @cli_util.option('--ssl-mode', help=u"""SSL modes for MySQL.""")
-@cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of a .pem or .crt file. containing the server public key (for 1 and 2-way SSL).""")
-@cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA). Note: This is an optional property and only applicable if TLS/MTLS option is selected.""")
-@cli_util.option('--ssl-cert', help=u"""Client Certificate - The base64 encoded content of a .pem or .crt file. containing the client public key (for 2-way SSL).""")
+@cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of a .pem or .crt file containing the server public key (for 1 and 2-way SSL). It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
+@cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA). Note: This is an optional property and only applicable if TLS/MTLS option is selected. It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
+@cli_util.option('--ssl-cert', help=u"""Client Certificate - The base64 encoded content of a .pem or .crt file containing the client public key (for 2-way SSL). It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
 @cli_util.option('--ssl-key', help=u"""Client Key - The base64 encoded content of a .pem or .crt file containing the client private key (for 2-way SSL). Deprecated: This field is deprecated and replaced by \"sslKeySecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--ssl-key-secret-id', help=u"""The [OCID] of the Secret that stores the Client Key - The content of a .pem or .crt file containing the client private key (for 2-way SSL). Note: When provided, 'sslKey' field must not be provided.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
@@ -5324,7 +5439,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--is-public', type=click.BOOL, help=u"""True if this object is publicly available.""")
 @cli_util.option('--cpu-core-count', type=click.INT, help=u"""The Minimum number of OCPUs to be made available for this Deployment.""")
 @cli_util.option('--is-auto-scaling-enabled', type=click.BOOL, help=u"""Indicates if auto scaling is enabled for the Deployment's CPU core count.""")
-@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "GGSA", "DATA_TRANSFORMS"]), help=u"""The type of deployment, which can be any one of the Allowed values. NOTE: Use of the value 'OGG' is maintained for backward compatibility purposes.     Its use is discouraged in favor of 'DATABASE_ORACLE'.""")
+@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "DATABASE_DB2I", "GGSA", "DATA_TRANSFORMS"]), help=u"""The type of deployment, which can be any one of the Allowed values. NOTE: Use of the value 'OGG' is maintained for backward compatibility purposes.     Its use is discouraged in favor of 'DATABASE_ORACLE'.""")
 @cli_util.option('--ogg-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--maintenance-window', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--maintenance-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6348,17 +6463,20 @@ def get_certificate(ctx, from_json, deployment_id, certificate_key):
 
 @connection_group.command(name=cli_util.override('goldengate.get_connection.command_name', 'get'), help=u"""Retrieves a Connection. \n[Command Reference](getConnection)""")
 @cli_util.option('--connection-id', required=True, help=u"""The [OCID] of a Connection.""")
+@cli_util.option('--view', type=custom_types.CliCaseInsensitiveChoice(["FULL", "COMPACT"]), help=u"""Selects the connection fields returned in connection details.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def get_connection(ctx, from_json, connection_id):
+def get_connection(ctx, from_json, connection_id, view):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if view is not None:
+        kwargs['view'] = view
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
     result = client.get_connection(
@@ -6732,11 +6850,11 @@ def list_connection_assignments(ctx, from_json, all_pages, page_size, compartmen
 
 @connection_group.command(name=cli_util.override('goldengate.list_connections.command_name', 'list'), help=u"""Lists the Connections in the compartment. \n[Command Reference](listConnections)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
-@cli_util.option('--technology-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "GENERIC", "OCI_AUTONOMOUS_DATABASE", "OCI_AUTONOMOUS_JSON_DATABASE", "OCI_CACHE_WITH_REDIS", "OCI_MYSQL", "OCI_OBJECT_STORAGE", "OCI_POSTGRESQL", "OCI_STREAMING", "ORACLE_DATABASE", "ORACLE_EXADATA", "ORACLE_EXADATA_DATABASE_AT_AZURE", "ORACLE_AUTONOMOUS_DATABASE_AT_AZURE", "ORACLE_JSON_COLLECTION", "ORACLE_EXADATA_DATABASE_AT_GOOGLE_CLOUD", "ORACLE_AUTONOMOUS_DATABASE_AT_GOOGLE_CLOUD", "ORACLE_EXADATA_DATABASE_AT_AWS", "ORACLE_AUTONOMOUS_DATABASE_AT_AWS", "ORACLE_NOSQL", "ORACLE_WEBLOGIC_JMS", "AMAZON_RDS_ORACLE", "AMAZON_RDS_SQLSERVER", "AMAZON_S3", "AMAZON_AURORA_MYSQL", "AMAZON_AURORA_POSTGRESQL", "AMAZON_DOCUMENT_DB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "AMAZON_RDS_MARIADB", "AMAZON_RDS_MYSQL", "AMAZON_RDS_POSTGRESQL", "APACHE_KAFKA", "AZURE_COSMOS_DB_FOR_MONGODB", "AZURE_COSMOS_DB_FOR_POSTGRESQL", "AZURE_DATA_LAKE_STORAGE", "AZURE_EVENT_HUBS", "AZURE_MYSQL", "AZURE_POSTGRESQL", "AZURE_SQLSERVER_MANAGED_INSTANCE", "AZURE_SQLSERVER_NON_MANAGED_INSTANCE", "AZURE_SYNAPSE_ANALYTICS", "CONFLUENT_KAFKA", "CONFLUENT_SCHEMA_REGISTRY", "DATABRICKS", "DB2_ZOS", "ELASTICSEARCH", "GOOGLE_ALLOY_DB_FOR_POSTGRESQL", "GOOGLE_BIGQUERY", "GOOGLE_CLOUD_STORAGE", "GOOGLE_CLOUD_SQL_MYSQL", "GOOGLE_CLOUD_SQL_POSTGRESQL", "GOOGLE_CLOUD_SQL_SQLSERVER", "GOOGLE_PUBSUB", "HDFS", "MARIADB", "MICROSOFT_SQLSERVER", "MICROSOFT_FABRIC_LAKEHOUSE", "MICROSOFT_FABRIC_MIRROR", "MONGODB", "MYSQL_SERVER", "MYSQL_HEATWAVE_ON_AZURE", "MYSQL_HEATWAVE_ON_AWS", "POSTGRESQL_SERVER", "REDIS", "SINGLESTOREDB", "SINGLESTOREDB_CLOUD", "SNOWFLAKE"]), multiple=True, help=u"""The array of technology types.""")
-@cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC"]), multiple=True, help=u"""The array of connection types.""")
+@cli_util.option('--technology-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "GENERIC", "OCI_AUTONOMOUS_DATABASE", "OCI_AUTONOMOUS_JSON_DATABASE", "OCI_CACHE_WITH_REDIS", "OCI_MYSQL", "OCI_OBJECT_STORAGE", "OCI_POSTGRESQL", "OCI_STREAMING", "ORACLE_DATABASE", "ORACLE_EXADATA", "ORACLE_EXADATA_DATABASE_AT_AZURE", "ORACLE_AUTONOMOUS_DATABASE_AT_AZURE", "ORACLE_JSON_COLLECTION", "ORACLE_EXADATA_DATABASE_AT_GOOGLE_CLOUD", "ORACLE_AUTONOMOUS_DATABASE_AT_GOOGLE_CLOUD", "ORACLE_EXADATA_DATABASE_AT_AWS", "ORACLE_AUTONOMOUS_DATABASE_AT_AWS", "ORACLE_NOSQL", "ORACLE_REST_DATA_SERVICES", "ORACLE_WEBLOGIC_JMS", "AMAZON_RDS_ORACLE", "AMAZON_RDS_SQLSERVER", "AMAZON_S3", "AMAZON_AURORA_MYSQL", "AMAZON_AURORA_POSTGRESQL", "AMAZON_DOCUMENT_DB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "AMAZON_RDS_MARIADB", "AMAZON_RDS_MYSQL", "AMAZON_RDS_POSTGRESQL", "APACHE_ICEBERG", "APACHE_KAFKA", "AZURE_COSMOS_DB_FOR_MONGODB", "AZURE_COSMOS_DB_FOR_POSTGRESQL", "AZURE_DATA_LAKE_STORAGE", "AZURE_EVENT_HUBS", "AZURE_MYSQL", "AZURE_POSTGRESQL", "AZURE_SQLSERVER_MANAGED_INSTANCE", "AZURE_SQLSERVER_NON_MANAGED_INSTANCE", "AZURE_SYNAPSE_ANALYTICS", "CONFLUENT_KAFKA", "CONFLUENT_SCHEMA_REGISTRY", "DATABRICKS", "DB2_I", "DB2_ZOS", "ELASTICSEARCH", "GOOGLE_ALLOY_DB_FOR_POSTGRESQL", "GOOGLE_BIGQUERY", "GOOGLE_CLOUD_STORAGE", "GOOGLE_CLOUD_SQL_MYSQL", "GOOGLE_CLOUD_SQL_POSTGRESQL", "GOOGLE_CLOUD_SQL_SQLSERVER", "GOOGLE_PUBSUB", "HDFS", "MARIADB", "MICROSOFT_SQLSERVER", "MICROSOFT_FABRIC_LAKEHOUSE", "MICROSOFT_FABRIC_MIRROR", "MONGODB", "MYSQL_SERVER", "MYSQL_HEATWAVE_ON_AZURE", "MYSQL_HEATWAVE_ON_AWS", "POSTGRESQL_SERVER", "REDIS", "SINGLESTOREDB", "SINGLESTOREDB_CLOUD", "SNOWFLAKE"]), multiple=True, help=u"""The array of technology types.""")
+@cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "ICEBERG"]), multiple=True, help=u"""The array of connection types.""")
 @cli_util.option('--assigned-deployment-id', help=u"""The OCID of the deployment which for the connection must be assigned.""")
 @cli_util.option('--assignable-deployment-id', help=u"""Filters for compatible connections which can be, but currently not assigned to the deployment specified by its id.""")
-@cli_util.option('--assignable-deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "GGSA", "DATA_TRANSFORMS"]), help=u"""Filters for connections which can be assigned to the latest version of the specified deployment type.""")
+@cli_util.option('--assignable-deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "DATABASE_DB2I", "GGSA", "DATA_TRANSFORMS"]), help=u"""Filters for connections which can be assigned to the latest version of the specified deployment type.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only connections having the 'lifecycleState' given.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -7047,7 +7165,7 @@ def list_deployment_peers(ctx, from_json, all_pages, page_size, deployment_id, l
 
 @deployment_type_collection_group.command(name=cli_util.override('goldengate.list_deployment_types.command_name', 'list-deployment-types'), help=u"""Returns an array of DeploymentTypeDescriptor \n[Command Reference](listDeploymentTypes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
-@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "GGSA", "DATA_TRANSFORMS"]), help=u"""The type of deployment, the value determines the exact 'type' of the service executed in the deployment. Default value is DATABASE_ORACLE.""")
+@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "DATABASE_DB2I", "GGSA", "DATA_TRANSFORMS"]), help=u"""The type of deployment, the value determines the exact 'type' of the service executed in the deployment. Default value is DATABASE_ORACLE.""")
 @cli_util.option('--ogg-version', help=u"""Allows to query by a specific GoldenGate version.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -7174,7 +7292,7 @@ def list_deployment_upgrades(ctx, from_json, all_pages, page_size, compartment_i
 @deployment_version_collection_group.command(name=cli_util.override('goldengate.list_deployment_versions.command_name', 'list-deployment-versions'), help=u"""Returns the list of available deployment versions. \n[Command Reference](listDeploymentVersions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
 @cli_util.option('--deployment-id', help=u"""The [OCID] of the deployment in which to list resources.""")
-@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "GGSA", "DATA_TRANSFORMS"]), help=u"""The type of deployment, the value determines the exact 'type' of the service executed in the deployment. Default value is DATABASE_ORACLE.""")
+@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "DATABASE_DB2I", "GGSA", "DATA_TRANSFORMS"]), help=u"""The type of deployment, the value determines the exact 'type' of the service executed in the deployment. Default value is DATABASE_ORACLE.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -7293,7 +7411,7 @@ def list_deployment_wallets_operations(ctx, from_json, all_pages, page_size, dep
 
 @deployment_group.command(name=cli_util.override('goldengate.list_deployments.command_name', 'list'), help=u"""Lists the Deployments in a compartment. \n[Command Reference](listDeployments)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the work request. Work requests should be scoped to the same compartment as the resource the work request affects. If the work request concerns multiple resources, and those resources are not in the same compartment, it is up to the service team to pick the primary resource whose compartment should be used.""")
-@cli_util.option('--supported-connection-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC"]), help=u"""The connection type which the deployment must support.""")
+@cli_util.option('--supported-connection-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "ICEBERG"]), help=u"""The connection type which the deployment must support.""")
 @cli_util.option('--assigned-connection-id', help=u"""The OCID of the connection which for the deployment must be assigned.""")
 @cli_util.option('--assignable-connection-id', help=u"""Return the deployments to which the specified connectionId may be assigned.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "IN_PROGRESS", "CANCELING", "CANCELED", "SUCCEEDED", "WAITING"]), help=u"""A filter to return only the resources that match the 'lifecycleState' given.""")
@@ -9521,7 +9639,7 @@ def test_pipeline_connection_default_test_pipeline_connection_details(ctx, from_
 
 @connection_group.command(name=cli_util.override('goldengate.update_connection.command_name', 'update'), help=u"""Updates the Connection. \n[Command Reference](updateConnection)""")
 @cli_util.option('--connection-id', required=True, help=u"""The [OCID] of a Connection.""")
-@cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC"]), help=u"""The connection type.""")
+@cli_util.option('--connection-type', type=custom_types.CliCaseInsensitiveChoice(["GOLDENGATE", "KAFKA", "KAFKA_SCHEMA_REGISTRY", "MYSQL", "JAVA_MESSAGE_SERVICE", "MICROSOFT_SQLSERVER", "OCI_OBJECT_STORAGE", "ORACLE", "AZURE_DATA_LAKE_STORAGE", "POSTGRESQL", "AZURE_SYNAPSE_ANALYTICS", "SNOWFLAKE", "AMAZON_S3", "HDFS", "ORACLE_NOSQL", "MONGODB", "AMAZON_KINESIS", "AMAZON_REDSHIFT", "DB2", "REDIS", "ELASTICSEARCH", "GENERIC", "GOOGLE_CLOUD_STORAGE", "GOOGLE_BIGQUERY", "DATABRICKS", "GOOGLE_PUBSUB", "MICROSOFT_FABRIC", "ICEBERG"]), help=u"""The connection type.""")
 @cli_util.option('--display-name', help=u"""An object's Display Name.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
@@ -9792,7 +9910,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--service-account-key-file', help=u"""The base64 encoded content of the service account key file containing the credentials required to use Google BigQuery. Deprecated: This field is deprecated and replaced by \"serviceAccountKeyFileSecretId\". This field will be removed after February 15 2026.""")
-@cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which containing the credentials required to use Google BigQuery. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
+@cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which contains the credentials required to use Google BigQuery. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -10524,7 +10642,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--password-secret-id', help=u"""The [OCID] of the Secret that stores the password Oracle GoldenGate uses to connect the associated database. Note: When provided, 'password' field must not be provided.""")
 @cli_util.option('--database-id', help=u"""The [OCID] of the Oracle Autonomous Json Database.""")
 @cli_util.option('--security-protocol', help=u"""Security Type for MongoDB.""")
-@cli_util.option('--tls-ca-file', help=u"""Database Certificate - The base64 encoded content of a .pem file, containing the server public key (for 1 and 2-way SSL).""")
+@cli_util.option('--tls-ca-file', help=u"""Database Certificate - The base64 encoded content of a .pem file, containing the server public key (for 1 and 2-way SSL). It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
 @cli_util.option('--tls-certificate-key-file', help=u"""Client Certificate - The base64 encoded content of a .pem file, containing the client public key (for 2-way SSL). Deprecated: This field is deprecated and replaced by \"tlsCertificateKeyFileSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--tls-certificate-key-file-secret-id', help=u"""The [OCID] of the Secret that stores the certificate key file of the mtls connection. - The content of a .pem file containing the client private key (for 2-way SSL). Note: When provided, 'tlsCertificateKeyFile' field must not be provided.""")
 @cli_util.option('--tls-certificate-key-file-password', help=u"""Client Certificate key file password. Deprecated: This field is deprecated and replaced by \"tlsCertificateKeyFilePasswordSecretId\". This field will be removed after February 15 2026.""")
@@ -10676,7 +10794,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--service-account-key-file', help=u"""The base64 encoded content of the service account key file containing the credentials required to use Google Cloud Storage. Deprecated: This field is deprecated and replaced by \"serviceAccountKeyFileSecretId\". This field will be removed after February 15 2026.""")
-@cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which containing the credentials required to use Google Cloud Storage. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
+@cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which contains the credentials required to use Google Cloud Storage. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -10940,9 +11058,9 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--security-protocol', help=u"""Security protocol for PostgreSQL.""")
 @cli_util.option('--ssl-mode', help=u"""SSL modes for PostgreSQL.""")
-@cli_util.option('--ssl-ca', help=u"""The base64 encoded certificate of the trusted certificate authorities (Trusted CA) for PostgreSQL. The supported file formats are .pem and .crt.""")
-@cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA).""")
-@cli_util.option('--ssl-cert', help=u"""The base64 encoded certificate of the PostgreSQL server. The supported file formats are .pem and .crt.""")
+@cli_util.option('--ssl-ca', help=u"""The base64 encoded certificate of the trusted certificate authorities (Trusted CA) for PostgreSQL. The supported file formats are .pem and .crt. It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
+@cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA). It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
+@cli_util.option('--ssl-cert', help=u"""The base64 encoded certificate of the PostgreSQL server. The supported file formats are .pem and .crt. It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
 @cli_util.option('--ssl-key', help=u"""The base64 encoded private key of the PostgreSQL server. The supported file formats are .pem and .crt. Deprecated: This field is deprecated and replaced by \"sslKeySecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--ssl-key-secret-id', help=u"""The [OCID] of the Secret that stores the private key of the PostgreSQL server. The supported file formats are .pem and .crt. Note: When provided, 'sslKey' field must not be provided.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
@@ -11120,7 +11238,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--security-protocol', help=u"""Security Type for Microsoft SQL Server.""")
-@cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of a .pem or .crt file. containing the server public key (for 1-way SSL).""")
+@cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of a .pem or .crt file containing the server public key (for 1-way SSL).""")
 @cli_util.option('--should-validate-server-certificate', type=click.BOOL, help=u"""If set to true, the driver validates the certificate that is sent by the database server.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
 
@@ -11420,7 +11538,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
-@cli_util.option('--core-site-xml', help=u"""The base64 encoded content of the Hadoop Distributed File System configuration file (core-site.xml).""")
+@cli_util.option('--core-site-xml', help=u"""The base64 encoded content of the Hadoop Distributed File System configuration file (core-site.xml). It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -12510,7 +12628,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--service-account-key-file', help=u"""The base64 encoded content of the service account key file containing the credentials required to use Google PubSub. Deprecated: This field is deprecated and replaced by \"serviceAccountKeyFileSecretId\". This field will be removed after February 15 2026.""")
-@cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which containing the credentials required to use Google PubSub. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
+@cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which contains the credentials required to use Google PubSub. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -12961,6 +13079,8 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--access-key-id', help=u"""Access key ID to access the Amazon S3 bucket. e.g.: \"this-is-not-the-secret\"""")
 @cli_util.option('--secret-access-key', help=u"""Secret access key to access the Amazon S3 bucket. e.g.: \"this-is-not-the-secret\" Deprecated: This field is deprecated and replaced by \"secretAccessKeySecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--secret-access-key-secret-id', help=u"""The [OCID] of the Secret where the Secret Access Key is stored. Note: When provided, 'secretAccessKey' field must not be provided.""")
+@cli_util.option('--endpoint-parameterconflict', help=u"""The Amazon Endpoint for S3. e.g.: 'https://my-bucket.s3.us-east-1.amazonaws.com'""")
+@cli_util.option('--region-parameterconflict', help=u"""The name of the region where the bucket is created.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -12972,7 +13092,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_amazon_s3_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, access_key_id, secret_access_key, secret_access_key_secret_id, if_match, is_lock_override):
+def update_connection_update_amazon_s3_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, access_key_id, secret_access_key, secret_access_key_secret_id, endpoint_parameterconflict, region_parameterconflict, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -13028,6 +13148,12 @@ def update_connection_update_amazon_s3_connection_details(ctx, from_json, force,
 
     if secret_access_key_secret_id is not None:
         _details['secretAccessKeySecretId'] = secret_access_key_secret_id
+
+    if endpoint_parameterconflict is not None:
+        _details['endpoint'] = endpoint_parameterconflict
+
+    if region_parameterconflict is not None:
+        _details['region'] = region_parameterconflict
 
     _details['connectionType'] = 'AMAZON_S3'
 
@@ -13091,9 +13217,9 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--database-name', help=u"""The name of the database.""")
 @cli_util.option('--security-protocol', help=u"""Security Type for MySQL.""")
 @cli_util.option('--ssl-mode', help=u"""SSL modes for MySQL.""")
-@cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of a .pem or .crt file. containing the server public key (for 1 and 2-way SSL).""")
-@cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA). Note: This is an optional property and only applicable if TLS/MTLS option is selected.""")
-@cli_util.option('--ssl-cert', help=u"""Client Certificate - The base64 encoded content of a .pem or .crt file. containing the client public key (for 2-way SSL).""")
+@cli_util.option('--ssl-ca', help=u"""Database Certificate - The base64 encoded content of a .pem or .crt file containing the server public key (for 1 and 2-way SSL). It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
+@cli_util.option('--ssl-crl', help=u"""The base64 encoded list of certificates revoked by the trusted certificate authorities (Trusted CA). Note: This is an optional property and only applicable if TLS/MTLS option is selected. It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
+@cli_util.option('--ssl-cert', help=u"""Client Certificate - The base64 encoded content of a .pem or .crt file containing the client public key (for 2-way SSL). It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
 @cli_util.option('--ssl-key', help=u"""Client Key - The base64 encoded content of a .pem or .crt file containing the client private key (for 2-way SSL). Deprecated: This field is deprecated and replaced by \"sslKeySecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--ssl-key-secret-id', help=u"""The [OCID] of the Secret that stores the Client Key - The content of a .pem or .crt file containing the client private key (for 2-way SSL). Note: When provided, 'sslKey' field must not be provided.""")
 @cli_util.option('--private-ip', help=u"""Deprecated: this field will be removed in future versions. Either specify the private IP in the connectionString or host field, or make sure the host name is resolvable in the target VCN.
@@ -13278,7 +13404,7 @@ This option is a JSON list with items of type NameValuePair.  For documentation 
 @cli_util.option('--ssl-client-keystoredb-secret-id', help=u"""The [OCID] of the Secret where the keystore file stored, which created at the client containing the server certificate / CA root certificate. Note: When provided, 'sslClientKeystoredb' field must not be provided.""")
 @cli_util.option('--ssl-client-keystash', help=u"""The base64 encoded keystash file which contains the encrypted password to the key database file. Deprecated: This field is deprecated and replaced by \"sslClientKeystashSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--ssl-client-keystash-secret-id', help=u"""The [OCID] of the Secret where the keystash file is stored, which contains the encrypted password to the key database file. Note: When provided, 'sslClientKeystash' field must not be provided.""")
-@cli_util.option('--ssl-server-certificate', help=u"""The base64 encoded file which contains the self-signed server certificate / Certificate Authority (CA) certificate.""")
+@cli_util.option('--ssl-server-certificate', help=u"""The base64 encoded file which contains the self-signed server certificate / Certificate Authority (CA) certificate. It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -13378,6 +13504,127 @@ def update_connection_update_db2_connection_details(ctx, from_json, force, wait_
         _details['sslServerCertificate'] = ssl_server_certificate
 
     _details['connectionType'] = 'DB2'
+
+    client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
+    result = client.update_connection(
+        connection_id=connection_id,
+        update_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@connection_group.command(name=cli_util.override('goldengate.update_connection_update_iceberg_connection_details.command_name', 'update-connection-update-iceberg-connection-details'), help=u"""Updates the Connection. \n[Command Reference](updateConnection)""")
+@cli_util.option('--connection-id', required=True, help=u"""The [OCID] of a Connection.""")
+@cli_util.option('--display-name', help=u"""An object's Display Name.""")
+@cli_util.option('--description', help=u"""Metadata about this specific object.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
+
+Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Tags defined for this resource. Each key is predefined and scoped to a namespace.
+
+Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vault-id', help=u"""Refers to the customer's vault OCID. If provided, it references a vault where GoldenGate can manage secrets. Customers must add policies to permit GoldenGate to manage secrets contained within this vault.""")
+@cli_util.option('--key-id', help=u"""Refers to the customer's master key OCID. If provided, it references a key to manage secrets. Customers must add policies to permit GoldenGate to use this key.""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of Network Security Group OCIDs used to define network access for either Deployments or Connections.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
+@cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
+@cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
+@cli_util.option('--catalog', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--storage', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'catalog': {'module': 'golden_gate', 'class': 'UpdateIcebergCatalogDetails'}, 'storage': {'module': 'golden_gate', 'class': 'UpdateIcebergStorageDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'catalog': {'module': 'golden_gate', 'class': 'UpdateIcebergCatalogDetails'}, 'storage': {'module': 'golden_gate', 'class': 'UpdateIcebergStorageDetails'}})
+@cli_util.wrap_exceptions
+def update_connection_update_iceberg_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, catalog, storage, if_match, is_lock_override):
+
+    if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags or nsg_ids or catalog or storage:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and nsg-ids and catalog and storage will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if vault_id is not None:
+        _details['vaultId'] = vault_id
+
+    if key_id is not None:
+        _details['keyId'] = key_id
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if subnet_id is not None:
+        _details['subnetId'] = subnet_id
+
+    if routing_method is not None:
+        _details['routingMethod'] = routing_method
+
+    if does_use_secret_ids is not None:
+        _details['doesUseSecretIds'] = does_use_secret_ids
+
+    if catalog is not None:
+        _details['catalog'] = cli_util.parse_json_parameter("catalog", catalog)
+
+    if storage is not None:
+        _details['storage'] = cli_util.parse_json_parameter("storage", storage)
+
+    _details['connectionType'] = 'ICEBERG'
 
     client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
     result = client.update_connection(

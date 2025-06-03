@@ -15,7 +15,7 @@ Jinja2>=3.1.5; python_version >= '3.7'
 jmespath==0.10.0
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.153.0
+oci==2.154.0
 packaging==20.2
 pluggy==0.13.0
 py==1.11.0
@@ -38,10 +38,11 @@ terminaltables==3.1.10
 tox==3.23.0
 vcrpy==1.13.0; python_version <= '3.9'
 vcrpy==4.2.1; python_version >= '3.10'
-virtualenv==20.13.0
+virtualenv==20.13.0; python_version <= '3.7'
+virtualenv>=20.26.6; python_version > '3.7'
 pytest-xdist==1.22.2
 pytest-forked==1.0.2
-PyYAML>=5.4,<=6.0.1
+PyYAML>=5.4,<=6.0.2
 docutils==0.15.2
 prompt-toolkit==3.0.29; python_version == '3.6'
 prompt-toolkit>=3.0.38,<=3.0.43; python_version > '3.6'

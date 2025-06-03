@@ -30,7 +30,7 @@ with open_relative("README.rst") as f:
     readme = f.read()
 
 requires = [
-    'oci==2.153.0',
+    'oci==2.154.0',
     'arrow>=1.0.0',
     'certifi>=2025.1.31',
     'click==8.0.4',
@@ -41,7 +41,7 @@ requires = [
     'six>=1.15.0',
     'terminaltables==3.1.10',
     'pyOpenSSL>=17.5.0,<25.0.0',
-    'PyYAML>=5.4,<=6.0.1',
+    'PyYAML>=5.4,<=6.0.2',
     'prompt-toolkit>=3.0.38,<=3.0.43; python_version > "3.6"',
     'prompt-toolkit==3.0.29; python_version == "3.6"',
     'setuptools>70.0.0; python_version == "3.12"'
