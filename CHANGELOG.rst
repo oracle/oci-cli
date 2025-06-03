@@ -6,6 +6,82 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.58.0 - 2025-06-03
+--------------------
+Added
+~~~~~
+* Database Service
+
+  * Enable Autonomous Container Database backup in a remote region
+
+    * ``oci db autonomous-container-database create-autonomous-container-database-create-autonomous-container-database-details``
+    * ``oci db autonomous-container-database create-autonomous-container-database-create-autonomous-container-database-from-backup-details``
+    * ``oci db autonomous-container-database-backup list``
+
+  * Support for new optional parameter in below command
+
+    * ``oci db autonomous-container-database create --source``
+
+* Database Management Service
+
+  * Support for MySQL Replication and SQL Query Detail APIs
+
+      * ``oci database-management managed-my-sql-databases managed-my-sql-database change-mysql-database-management-type``
+      * ``oci database-management managed-my-sql-databases managed-my-sql-database get-binary-log-information``
+      * ``oci database-management managed-my-sql-databases managed-my-sql-database get-general-replication-information``
+      * ``oci database-management managed-my-sql-databases managed-my-sql-database get-my-sql-query-details``
+      * ``oci database-management managed-my-sql-databases managed-my-sql-database list-high-availability-members``
+      * ``oci database-management managed-my-sql-databases managed-my-sql-database list-inbound-replications``
+      * ``oci database-management managed-my-sql-databases managed-my-sql-database list-my-sql-digest-errors``
+      * ``oci database-management managed-my-sql-databases managed-my-sql-database list-outbound-replications``
+
+* Database Migration Service
+
+  * Support for standby connection in DMS migration, --source-standby-database-connection-id
+
+    * ``oci database-migration migration clone-oracle-migration --source-standby-database-connection-id``
+    * ``oci database-migration migration create-oracle-migration --source-standby-database-connection-id``
+    * ``oci database-migration migration update-oracle-migration --source-standby-database-connection-id``
+
+* Golden Gate Service
+
+  * Add support for creating/updating new connection types
+
+    * ``oci goldengate connection create-connection-create-iceberg-connection-details``
+    * ``oci goldengate connection update-connection-update-iceberg-connection-details``
+
+  * Added new optional parameters to the following commands
+
+    * ``oci goldengate connection create-amazon-s3-connection --endpoint-parameterconflict --region-parameterconflict``
+    * ``oci goldengate connection update-amazon-s3-connection --endpoint-parameterconflict --region-parameterconflict``
+    * ``oci goldengate connection get --view``
+
+* MySQL Service
+
+  * Support for Soft Delete Backup in Heatwave Service by adding new optional parameter --soft-delete
+
+    * ``oci mysql backup create --soft-delete``
+    * ``oci mysql backup list --soft-delete``
+    * ``oci mysql backup update --soft-delete``
+    * ``oci mysql db-system create --backup-policy '{ "isEnabled": true, "softDelete": "DISABLED" }'``
+
+  * Added support to cancel backup deletion
+
+    * ``oci mysql backup cancel-backup-deletion``
+
+Changed
+~~~~~~~
+* Golden Gate Service
+
+  * [BREAKING] Changed --username parameter to be a required parameter
+
+    * ``oci goldengate connection create-databricks-connection --username``
+
+Security
+~~~~~~~
+- updated virtualenv dependency to >=20.26.6; python_version > '3.7' , 20.13.0 for <= '3.7' per: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-53899
+- updated PyYAML dependency to 6.0.2 to support py3.13 build
+
 3.57.0 - 2025-05-27
 --------------------
 Added

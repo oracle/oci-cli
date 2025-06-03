@@ -437,6 +437,7 @@ def clone_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {\"Department\": \"Finance\"}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the resource being referenced.""")
+@cli_util.option('--source-standby-database-connection-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -446,7 +447,7 @@ def clone_migration(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def clone_migration_oracle_clone_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, source_database_connection_id, target_database_connection_id, display_name, compartment_id, freeform_tags, defined_tags, source_container_database_connection_id, if_match):
+def clone_migration_oracle_clone_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, source_database_connection_id, target_database_connection_id, display_name, compartment_id, freeform_tags, defined_tags, source_container_database_connection_id, source_standby_database_connection_id, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
@@ -474,6 +475,9 @@ def clone_migration_oracle_clone_migration_details(ctx, from_json, wait_for_stat
 
     if source_container_database_connection_id is not None:
         _details['sourceContainerDatabaseConnectionId'] = source_container_database_connection_id
+
+    if source_standby_database_connection_id is not None:
+        _details['sourceStandbyDatabaseConnectionId'] = source_standby_database_connection_id
 
     _details['databaseCombination'] = 'ORACLE'
 
@@ -1180,6 +1184,7 @@ def create_migration_create_my_sql_migration_details(ctx, from_json, wait_for_st
 
 This option is a JSON list with items of type MigrationParameterDetails.  For documentation on MigrationParameterDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20230518/datatypes/MigrationParameterDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the resource being referenced.""")
+@cli_util.option('--source-standby-database-connection-id', help=u"""The OCID of the resource being referenced.""")
 @cli_util.option('--exclude-objects', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Database objects to exclude from migration, cannot be specified alongside 'includeObjects'
 
 This option is a JSON list with items of type OracleDatabaseObject.  For documentation on OracleDatabaseObject please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20230518/datatypes/OracleDatabaseObject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1195,7 +1200,7 @@ This option is a JSON list with items of type OracleDatabaseObject.  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'CreateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'CreateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'CreateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'CreateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'CreateOracleGgsDeploymentDetails'}, 'advanced-parameters': {'module': 'database_migration', 'class': 'list[MigrationParameterDetails]'}, 'exclude-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}, 'include-objects': {'module': 'database_migration', 'class': 'list[OracleDatabaseObject]'}}, output_type={'module': 'database_migration', 'class': 'Migration'})
 @cli_util.wrap_exceptions
-def create_migration_create_oracle_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, source_database_connection_id, target_database_connection_id, description, display_name, freeform_tags, defined_tags, data_transfer_medium_details, initial_load_settings, advisor_settings, hub_details, ggs_details, advanced_parameters, source_container_database_connection_id, exclude_objects, include_objects, bulk_include_exclude_data):
+def create_migration_create_oracle_migration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, source_database_connection_id, target_database_connection_id, description, display_name, freeform_tags, defined_tags, data_transfer_medium_details, initial_load_settings, advisor_settings, hub_details, ggs_details, advanced_parameters, source_container_database_connection_id, source_standby_database_connection_id, exclude_objects, include_objects, bulk_include_exclude_data):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1238,6 +1243,9 @@ def create_migration_create_oracle_migration_details(ctx, from_json, wait_for_st
 
     if source_container_database_connection_id is not None:
         _details['sourceContainerDatabaseConnectionId'] = source_container_database_connection_id
+
+    if source_standby_database_connection_id is not None:
+        _details['sourceStandbyDatabaseConnectionId'] = source_standby_database_connection_id
 
     if exclude_objects is not None:
         _details['excludeObjects'] = cli_util.parse_json_parameter("exclude_objects", exclude_objects)
@@ -3624,6 +3632,7 @@ def update_migration_update_my_sql_migration_details(ctx, from_json, force, wait
 
 This option is a JSON list with items of type MigrationParameterDetails.  For documentation on MigrationParameterDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/databasemigration/20230518/datatypes/MigrationParameterDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-container-database-connection-id', help=u"""The OCID of the resource being updated.""")
+@cli_util.option('--source-standby-database-connection-id', help=u"""The OCID of the resource being updated.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3634,7 +3643,7 @@ This option is a JSON list with items of type MigrationParameterDetails.  For do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}, 'data-transfer-medium-details': {'module': 'database_migration', 'class': 'UpdateOracleDataTransferMediumDetails'}, 'initial-load-settings': {'module': 'database_migration', 'class': 'UpdateOracleInitialLoadSettings'}, 'advisor-settings': {'module': 'database_migration', 'class': 'UpdateOracleAdvisorSettings'}, 'hub-details': {'module': 'database_migration', 'class': 'UpdateGoldenGateHubDetails'}, 'ggs-details': {'module': 'database_migration', 'class': 'UpdateOracleGgsDeploymentDetails'}, 'advanced-parameters': {'module': 'database_migration', 'class': 'list[MigrationParameterDetails]'}})
 @cli_util.wrap_exceptions
-def update_migration_update_oracle_migration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, description, type, display_name, source_database_connection_id, target_database_connection_id, freeform_tags, defined_tags, data_transfer_medium_details, initial_load_settings, advisor_settings, hub_details, ggs_details, advanced_parameters, source_container_database_connection_id, if_match):
+def update_migration_update_oracle_migration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, migration_id, description, type, display_name, source_database_connection_id, target_database_connection_id, freeform_tags, defined_tags, data_transfer_medium_details, initial_load_settings, advisor_settings, hub_details, ggs_details, advanced_parameters, source_container_database_connection_id, source_standby_database_connection_id, if_match):
 
     if isinstance(migration_id, six.string_types) and len(migration_id.strip()) == 0:
         raise click.UsageError('Parameter --migration-id cannot be whitespace or empty string')
@@ -3691,6 +3700,9 @@ def update_migration_update_oracle_migration_details(ctx, from_json, force, wait
 
     if source_container_database_connection_id is not None:
         _details['sourceContainerDatabaseConnectionId'] = source_container_database_connection_id
+
+    if source_standby_database_connection_id is not None:
+        _details['sourceStandbyDatabaseConnectionId'] = source_standby_database_connection_id
 
     _details['databaseCombination'] = 'ORACLE'
 
