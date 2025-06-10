@@ -6,6 +6,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.58.1 - 2025-06-10
+--------------------
+Added
+~~~~~
+* Database Service
+
+  * Support for new optional parameter in the Database service
+
+    * ``oci db database create-standby-database --opc-dry-run``
+
 3.58.0 - 2025-06-03
 --------------------
 Added
