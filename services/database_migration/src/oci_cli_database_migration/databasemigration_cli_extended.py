@@ -21,8 +21,12 @@
 # limitations under the License.
 # coding: utf-8
 from __future__ import print_function
+
+import os
+
 import click  # noqa: F401
 import json  # noqa: F401
+import base64
 from services.database_migration.src.oci_cli_database_migration.generated import databasemigration_cli
 from oci_cli import cli_util  # noqa: F401
 from oci_cli import custom_types  # noqa: F401
@@ -365,7 +369,7 @@ databasemigration_cli.connection_group.commands.pop(databasemigration_cli.update
 @cli_util.copy_params_from_generated_command(databasemigration_cli.create_connection_create_oracle_connection_details, params_to_exclude=[])
 @databasemigration_cli.connection_group.command(name=cli_util.override('database_migration.create_connection_create_oracle_connection_details.command_name', 'create-connection-create-oracle-connection-details'), help=databasemigration_cli.create_connection_create_oracle_connection_details.help)
 @cli_util.option('--technology-type', type=custom_types.CliCaseInsensitiveChoice(["AMAZON_RDS_ORACLE", "OCI_AUTONOMOUS_DATABASE", "ORACLE_DATABASE", "ORACLE_EXADATA"]), help="""The Oracle technology type. This value can only be specified for manual connections.""")
-@cli_util.option('--wallet', type=click.File('r'), help=u"""cwallet.sso fle path containing containing the TCPS/SSL certificate; base64 encoded String. Not required for source container database connections.""")
+@cli_util.option('--wallet', help=u"""File path to cwallet.sso containing containing the TCPS/SSL certificate.""")
 @cli_util.option('--sshkey-file', type=click.File('r'), help=u""" Private ssh key file.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_migration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_migration', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_migration', 'class': 'Connection'})
@@ -381,13 +385,13 @@ def create_connection_create_oracle_connection_details_extended(ctx, **kwargs):
             kwargs['ssh_key'] = sshkey_file.read()
     kwargs.pop('sshkey_file')
 
-    # create_connection read --tls-wallet using --tls-wallet-file
-    if kwargs.get('tls_wallet') and kwargs.get('tls_wallet_file'):
-        raise cli_exceptions.RequiredValueNotInDefaultOrUserInputError('Cannot specify both --tls-wallet and --tls-wallet-file.')
-
-    tls_wallet_file = kwargs.get('tls_wallet_file')
-    if tls_wallet_file:
-        kwargs['tls_wallet'] = tls_wallet_file.read()
-        kwargs.pop('tls_wallet_file')
+    if 'wallet' in kwargs and kwargs.get('wallet') is not None:
+        # if --wallet is a file, else it should be a base64 encoded string.
+        if os.path.exists(kwargs['wallet']) and os.path.isfile(kwargs['wallet']):
+            try:
+                binary_wallet_file = open(kwargs['wallet'], 'rb')
+                kwargs['wallet'] = base64.b64encode(binary_wallet_file.read()).decode('utf-8')
+            except Exception as e:
+                raise click.ClickException(str(e))
 
     ctx.invoke(databasemigration_cli.create_connection_create_oracle_connection_details, **kwargs)
