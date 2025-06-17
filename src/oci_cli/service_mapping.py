@@ -48,6 +48,11 @@ service_mapping = {
         "API Gateway",
         "Developer Services"
     ],
+    "apiaccesscontrol": [
+        "apiaccesscontrol",
+        "Oracle  Access Control",
+        "Oracle Database"
+    ],
     "apm-config": [
         "apm_config",
         "Application Performance Monitoring Configuration",
@@ -757,6 +762,11 @@ service_mapping = {
         "waf",
         "Web Application Firewall (WAF)",
         "Identity & Security"
+    ],
+    "wlms": [
+        "wlms",
+        "WebLogic Management Service",
+        "Observability & Management"
     ],
     "work-requests": [
         "work_requests",
