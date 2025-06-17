@@ -6,6 +6,34 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.59.0 - 2025-06-17
+--------------------
+Added
+~~~~~
+* Support for OCI API ACCESS CONTROL service
+
+  * ``oci apiaccesscontrol``
+
+* Support for command String in Complex param --content
+
+  * ``oci instance-agent command create --content``
+
+* Support for WebLogic Management service
+
+  * ``oci wlms``
+
+* Support for oci cache user in redis service
+
+  * ``oci redis oci-cache-user``
+
+Changed
+~~~~~~~
+* Redis Service
+
+  * [BREAKING] All previously-existing command in redis service are now grouped under redis-cluster
+
+    * ``oci redis redis-cluster``
+
 3.58.1 - 2025-06-10
 --------------------
 Added

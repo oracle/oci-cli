@@ -23,7 +23,7 @@ def pluginconfig_root_group():
     pass
 
 
-@click.command(cli_util.override('pluginconfig.plugin_group.command_name', 'plugin'), cls=CommandGroupWithAlias, help="""The agent plugin""")
+@click.command(cli_util.override('pluginconfig.plugin_group.command_name', 'plugin'), cls=CommandGroupWithAlias, help="""An Oracle Cloud Agent plugin.""")
 @cli_util.help_option_group
 def plugin_group():
     pass
@@ -33,17 +33,25 @@ instance_agent_service_cli.instance_agent_service_group.add_command(pluginconfig
 pluginconfig_root_group.add_command(plugin_group)
 
 
-@plugin_group.command(name=cli_util.override('pluginconfig.list_instanceagent_available_plugins.command_name', 'list-instanceagent-available'), help=u"""The API to get the list of plugins that are available. \n[Command Reference](listInstanceagentAvailablePlugins)""")
+@plugin_group.command(name=cli_util.override('pluginconfig.list_instanceagent_available_plugins.command_name', 'list-instanceagent-available'), help=u"""Lists the Oracle Cloud Agent plugins that are available for compute instances. \n[Command Reference](listInstanceagentAvailablePlugins)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--os-name', required=True, help=u"""The OS for which the plugin is supported. Examples of OperatingSystemQueryParam:OperatingSystemVersionQueryParam are as follows: 'CentOS' '6.10' , 'CentOS Linux' '7', 'CentOS Linux' '8', 'Oracle Linux Server' '6.10', 'Oracle Linux Server' '8.0', 'Red Hat Enterprise Linux Server' '7.8', 'Windows' '10', 'Windows' '2008ServerR2', 'Windows' '2012ServerR2', 'Windows' '7', 'Windows' '8.1'""")
-@cli_util.option('--os-version', required=True, help=u"""The OS version for which the plugin is supported.""")
+@cli_util.option('--os-name', required=True, help=u"""The image (OS) for the compute instance.
+
+If no match is found, all plugins are returned.
+
+Examples: `CentOS`, `Oracle Linux`, `Oracle Autonomous Linux`, `Canonical Ubuntu`, `Windows Server`""")
+@cli_util.option('--os-version', required=True, help=u"""The OS version for the instance.
+
+If no match is found, all plugins are returned.
+
+Examples: `7.9`, `8` for CentOS and Oracle Linux. `20.04`, `20.04 Minimal` for Canonical Ubuntu. `2012 R2 Datacenter`, `2019 Standard` for Windows Server.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for `TIMECREATED` is descending.
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The `DISPLAYNAME` sort order is case sensitive.""")
-@cli_util.option('--name', help=u"""The plugin name""")
+@cli_util.option('--name', help=u"""The plugin name.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})

@@ -2257,7 +2257,7 @@ def create_dedicated_vm_host(ctx, from_json, wait_for_state, max_wait_seconds, w
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--dedicated-vm-host-shape', required=True, help=u"""The dedicated virtual machine host shape. The shape determines the number of CPUs and other resources available for VM instances launched on the dedicated virtual machine host.""")
-@cli_util.option('--placement-constraint-details-compute-host-group-id', required=True, help=u"""The OCID of the compute host group.""")
+@cli_util.option('--placement-constraint-details-compute-host-group-id', required=True, help=u"""The OCID of the compute host group. This is only available for dedicated capacity customers.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2341,7 +2341,7 @@ def create_dedicated_vm_host_host_group_placement_constraint_details(ctx, from_j
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--dedicated-vm-host-shape', required=True, help=u"""The dedicated virtual machine host shape. The shape determines the number of CPUs and other resources available for VM instances launched on the dedicated virtual machine host.""")
-@cli_util.option('--placement-constraint-details-compute-bare-metal-host-id', required=True, help=u"""The OCID of the compute bare metal host.""")
+@cli_util.option('--placement-constraint-details-compute-bare-metal-host-id', required=True, help=u"""The OCID of the compute bare metal host. This is only available for dedicated capacity customers.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -8258,7 +8258,7 @@ To determine whether capacity is available for a specific shape before you creat
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--placement-constraint-details-compute-host-group-id', required=True, help=u"""The OCID of the compute host group.""")
+@cli_util.option('--placement-constraint-details-compute-host-group-id', required=True, help=u"""The OCID of the compute host group. This is only available for dedicated capacity customers.""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")
@@ -8513,7 +8513,7 @@ To determine whether capacity is available for a specific shape before you creat
 
 Example: `Uocm:PHX-AD-1`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--placement-constraint-details-compute-bare-metal-host-id', required=True, help=u"""The OCID of the compute bare metal host.""")
+@cli_util.option('--placement-constraint-details-compute-bare-metal-host-id', required=True, help=u"""The OCID of the compute bare metal host. This is only available for dedicated capacity customers.""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can opt out of all default reservations by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated virtual machine host to place the instance on.""")

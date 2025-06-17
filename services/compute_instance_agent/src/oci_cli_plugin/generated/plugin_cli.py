@@ -23,7 +23,7 @@ def plugin_root_group():
     pass
 
 
-@click.command(cli_util.override('plugin.plugin_group.command_name', 'plugin'), cls=CommandGroupWithAlias, help="""The agent plugin""")
+@click.command(cli_util.override('plugin.plugin_group.command_name', 'plugin'), cls=CommandGroupWithAlias, help="""An Oracle Cloud Agent plugin.""")
 @cli_util.help_option_group
 def plugin_group():
     pass
@@ -33,8 +33,8 @@ instance_agent_service_cli.instance_agent_service_group.add_command(plugin_root_
 plugin_root_group.add_command(plugin_group)
 
 
-@plugin_group.command(name=cli_util.override('plugin.get_instance_agent_plugin.command_name', 'get-instance-agent'), help=u"""The API to get information for a plugin. \n[Command Reference](getInstanceAgentPlugin)""")
-@cli_util.option('--instanceagent-id', required=True, help=u"""The OCID of the instance.""")
+@plugin_group.command(name=cli_util.override('plugin.get_instance_agent_plugin.command_name', 'get-instance-agent'), help=u"""Gets information about a specific Oracle Cloud Agent plugin on a compute instance. \n[Command Reference](getInstanceAgentPlugin)""")
+@cli_util.option('--instanceagent-id', required=True, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--plugin-name', required=True, help=u"""The name of the plugin.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -62,17 +62,17 @@ def get_instance_agent_plugin(ctx, from_json, instanceagent_id, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
-@plugin_group.command(name=cli_util.override('plugin.list_instance_agent_plugins.command_name', 'list-instance-agent'), help=u"""The API to get one or more plugin information. \n[Command Reference](listInstanceAgentPlugins)""")
+@plugin_group.command(name=cli_util.override('plugin.list_instance_agent_plugins.command_name', 'list-instance-agent'), help=u"""Gets information about the Oracle Cloud Agent plugins that are available on a specific compute instance. \n[Command Reference](listInstanceAgentPlugins)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--instanceagent-id', required=True, help=u"""The OCID of the instance.""")
-@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["RUNNING", "STOPPED", "NOT_SUPPORTED", "INVALID"]), help=u"""The plugin status""")
+@cli_util.option('--instanceagent-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["RUNNING", "STOPPED", "NOT_SUPPORTED", "INVALID"]), help=u"""The plugin status.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for `TIMECREATED` is descending.
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The `DISPLAYNAME` sort order is case sensitive.""")
-@cli_util.option('--name', help=u"""The plugin name""")
+@cli_util.option('--name', help=u"""The plugin name.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
