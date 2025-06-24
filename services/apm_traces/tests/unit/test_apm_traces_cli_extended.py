@@ -48,6 +48,7 @@ class TestAPMTraces(unittest.TestCase):
         result = util.invoke_command(['apm-traces', 'trace'])
         assert 'trace' in result.output
         assert 'span' in result.output
+        assert 'log' in result.output
         assert 'trace-snapshot' in result.output
         assert 'aggregated-snapshot' in result.output
         assert '--help' in result.output
@@ -61,6 +62,15 @@ class TestAPMTraces(unittest.TestCase):
         assert 'update-notes' in result.output
         assert 'auto-activate-status' in result.output
         assert 'update-auto-activate' in result.output
+        assert '--help' in result.output
+
+    def test_apm_traces_scheduled_query(self):
+        result = util.invoke_command(['apm-traces', 'scheduled-query'])
+        assert 'create' in result.output
+        assert 'delete' in result.output
+        assert 'get' in result.output
+        assert 'list' in result.output
+        assert 'update' in result.output
         assert '--help' in result.output
 
     def test_run_query_options(self):
@@ -96,6 +106,18 @@ class TestAPMTraces(unittest.TestCase):
         assert 'Error: Option \'--time-span-started-gte\' requires an argument' in result.output
         result = util.invoke_command(['apm-traces', 'trace', 'span', 'get', '--time-span-started-lt'])
         assert 'Error: Option \'--time-span-started-lt\' requires an argument' in result.output
+
+    def test_get_log_options(self):
+        result = util.invoke_command(['apm-traces', 'trace', 'log', 'get'])
+        assert 'Error: Missing option(s) --apm-domain-id, --log-key, --start-time-lt, --start-time-gte.' in result.output  # Validating the required attribute
+        result = util.invoke_command(['apm-traces', 'trace', 'log', 'get', '--apm-domain-id'])
+        assert 'Error: Option \'--apm-domain-id\' requires an argument' in result.output
+        result = util.invoke_command(['apm-traces', 'trace', 'log', 'get', '--log-key'])
+        assert 'Error: Option \'--log-key\' requires an argument' in result.output
+        result = util.invoke_command(['apm-traces', 'trace', 'log', 'get', '--start-time-gte'])
+        assert 'Error: Option \'--start-time-gte\' requires an argument' in result.output
+        result = util.invoke_command(['apm-traces', 'trace', 'log', 'get', '--start-time-lt'])
+        assert 'Error: Option \'--start-time-lt\' requires an argument' in result.output
 
     def test_get_trace_options(self):
         result = util.invoke_command(['apm-traces', 'trace', 'trace', 'get'])
@@ -202,3 +224,39 @@ class TestAPMTraces(unittest.TestCase):
         assert 'Error: Option \'--apm-domain-id\' requires an argument' in result.output
         result = util.invoke_command(['apm-traces', 'attributes', 'update-attribute', '--attribute-details'])
         assert 'Error: Option \'--attribute-details\' requires an argument' in result.output
+
+    def test_create_scheduled_query_options(self):
+        result = util.invoke_command(['apm-traces', 'scheduled-query', 'create'])
+        assert 'Error: Missing option(s) --apm-domain-id.' in result.output  # Validating the required attribute
+        result = util.invoke_command(['apm-traces', 'scheduled-query', 'create', '--apm-domain-id'])
+        assert 'Error: Option \'--apm-domain-id\' requires an argument' in result.output
+
+    def test_delete_scheduled_query_options(self):
+        result = util.invoke_command(['apm-traces', 'scheduled-query', 'delete'])
+        assert 'Error: Missing option(s) --apm-domain-id, --id.' in result.output  # Validating the required attribute
+        result = util.invoke_command(['apm-traces', 'scheduled-query', 'delete', '--apm-domain-id'])
+        assert 'Error: Option \'--apm-domain-id\' requires an argument' in result.output
+        result = util.invoke_command(['apm-traces', 'scheduled-query', 'delete', '--apm-domain-id', 'test', '--id'])
+        assert 'Error: Option \'--id\' requires an argument' in result.output
+
+    def test_get_scheduled_query_options(self):
+        result = util.invoke_command(['apm-traces', 'scheduled-query', 'get'])
+        assert 'Error: Missing option(s) --apm-domain-id, --id.' in result.output  # Validating the required attribute
+        result = util.invoke_command(['apm-traces', 'scheduled-query', 'get', '--apm-domain-id'])
+        assert 'Error: Option \'--apm-domain-id\' requires an argument' in result.output
+        result = util.invoke_command(['apm-traces', 'scheduled-query', 'get', '--apm-domain-id', 'test', '--id'])
+        assert 'Error: Option \'--id\' requires an argument' in result.output
+
+    def test_list_scheduled_query_options(self):
+        result = util.invoke_command(['apm-traces', 'scheduled-query', 'list'])
+        assert 'Error: Missing option(s) --apm-domain-id.' in result.output  # Validating the required attribute
+        result = util.invoke_command(['apm-traces', 'scheduled-query', 'list', '--apm-domain-id'])
+        assert 'Error: Option \'--apm-domain-id\' requires an argument' in result.output
+
+    def test_update_scheduled_query_options(self):
+        result = util.invoke_command(['apm-traces', 'scheduled-query', 'update'])
+        assert 'Error: Missing option(s) --apm-domain-id, --id.' in result.output  # Validating the required attribute
+        result = util.invoke_command(['apm-traces', 'scheduled-query', 'update', '--apm-domain-id'])
+        assert 'Error: Option \'--apm-domain-id\' requires an argument' in result.output
+        result = util.invoke_command(['apm-traces', 'scheduled-query', 'update', '--apm-domain-id', 'test', '--id'])
+        assert 'Error: Option \'--id\' requires an argument' in result.output

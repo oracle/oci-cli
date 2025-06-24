@@ -1268,7 +1268,7 @@ def create_fsu_collection_create_gi_fsu_collection_details(ctx, from_json, wait_
 
 @fsu_cycle_group.command(name=cli_util.override('fleet_software_update.create_fsu_cycle.command_name', 'create'), help=u"""Creates a new Exadata Fleet Update Cycle. \n[Command Reference](createFsuCycle)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
-@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PATCH"]), help=u"""Type of Exadata Fleet Update Cycle.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PATCH", "UPGRADE"]), help=u"""Type of Exadata Fleet Update Cycle.""")
 @cli_util.option('--fsu-collection-id', required=True, help=u"""OCID identifier for the Collection ID the Exadata Fleet Update Cycle will be assigned to.""")
 @cli_util.option('--goal-version-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Cycle display name.""")
@@ -1420,6 +1420,97 @@ def create_fsu_cycle_create_patch_fsu_cycle(ctx, from_json, wait_for_state, max_
         _details['isKeepPlacement'] = is_keep_placement
 
     _details['type'] = 'PATCH'
+
+    client = cli_util.build_client('fleet_software_update', 'fleet_software_update', ctx)
+    result = client.create_fsu_cycle(
+        create_fsu_cycle_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@fsu_cycle_group.command(name=cli_util.override('fleet_software_update.create_fsu_cycle_create_upgrade_fsu_cycle.command_name', 'create-fsu-cycle-create-upgrade-fsu-cycle'), help=u"""Creates a new Exadata Fleet Update Cycle. \n[Command Reference](createFsuCycle)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
+@cli_util.option('--fsu-collection-id', required=True, help=u"""OCID identifier for the Collection ID the Exadata Fleet Update Cycle will be assigned to.""")
+@cli_util.option('--goal-version-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""Exadata Fleet Update Cycle display name.""")
+@cli_util.option('--batching-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--stage-action-schedule', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--apply-action-schedule', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--diagnostics-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--upgrade-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'CreateBatchingStrategyDetails'}, 'stage-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'apply-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}, 'upgrade-details': {'module': 'fleet_software_update', 'class': 'UpgradeDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'CreateBatchingStrategyDetails'}, 'stage-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'apply-action-schedule': {'module': 'fleet_software_update', 'class': 'CreateScheduleDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}, 'upgrade-details': {'module': 'fleet_software_update', 'class': 'UpgradeDetails'}}, output_type={'module': 'fleet_software_update', 'class': 'FsuCycle'})
+@cli_util.wrap_exceptions
+def create_fsu_cycle_create_upgrade_fsu_cycle(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, fsu_collection_id, goal_version_details, display_name, batching_strategy, stage_action_schedule, apply_action_schedule, diagnostics_collection, freeform_tags, defined_tags, upgrade_details):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['fsuCollectionId'] = fsu_collection_id
+    _details['goalVersionDetails'] = cli_util.parse_json_parameter("goal_version_details", goal_version_details)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if batching_strategy is not None:
+        _details['batchingStrategy'] = cli_util.parse_json_parameter("batching_strategy", batching_strategy)
+
+    if stage_action_schedule is not None:
+        _details['stageActionSchedule'] = cli_util.parse_json_parameter("stage_action_schedule", stage_action_schedule)
+
+    if apply_action_schedule is not None:
+        _details['applyActionSchedule'] = cli_util.parse_json_parameter("apply_action_schedule", apply_action_schedule)
+
+    if diagnostics_collection is not None:
+        _details['diagnosticsCollection'] = cli_util.parse_json_parameter("diagnostics_collection", diagnostics_collection)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if upgrade_details is not None:
+        _details['upgradeDetails'] = cli_util.parse_json_parameter("upgrade_details", upgrade_details)
+
+    _details['type'] = 'UPGRADE'
 
     client = cli_util.build_client('fleet_software_update', 'fleet_software_update', ctx)
     result = client.create_fsu_cycle(
@@ -3770,7 +3861,7 @@ def update_fsu_collection(ctx, from_json, force, wait_for_state, max_wait_second
 
 @fsu_cycle_group.command(name=cli_util.override('fleet_software_update.update_fsu_cycle.command_name', 'update'), help=u"""Updates the Exadata Fleet Update Cycle identified by the ID. \n[Command Reference](updateFsuCycle)""")
 @cli_util.option('--fsu-cycle-id', required=True, help=u"""Unique Exadata Fleet Update Cycle identifier.""")
-@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PATCH"]), help=u"""Type of Exadata Fleet Update Cycle to update. This will not change the Maintenance Cycle type, it is to define the set of properties that can be updated depending on the Cycle type. Type value should match the Maintenance Cycle type.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PATCH", "UPGRADE"]), help=u"""Type of Exadata Fleet Update Cycle to update. This will not change the Maintenance Cycle type, it is to define the set of properties that can be updated depending on the Cycle type. Type value should match the Maintenance Cycle type.""")
 @cli_util.option('--display-name', help=u"""Exadata Fleet Update Cycle display name.""")
 @cli_util.option('--goal-version-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--batching-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3927,6 +4018,100 @@ def update_fsu_cycle_update_patch_fsu_cycle(ctx, from_json, force, wait_for_stat
         _details['isKeepPlacement'] = is_keep_placement
 
     _details['type'] = 'PATCH'
+
+    client = cli_util.build_client('fleet_software_update', 'fleet_software_update', ctx)
+    result = client.update_fsu_cycle(
+        fsu_cycle_id=fsu_cycle_id,
+        update_fsu_cycle_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@fsu_cycle_group.command(name=cli_util.override('fleet_software_update.update_fsu_cycle_update_upgrade_fsu_cycle.command_name', 'update-fsu-cycle-update-upgrade-fsu-cycle'), help=u"""Updates the Exadata Fleet Update Cycle identified by the ID. \n[Command Reference](updateFsuCycle)""")
+@cli_util.option('--fsu-cycle-id', required=True, help=u"""Unique Exadata Fleet Update Cycle identifier.""")
+@cli_util.option('--display-name', help=u"""Exadata Fleet Update Cycle display name.""")
+@cli_util.option('--goal-version-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--batching-strategy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--diagnostics-collection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--upgrade-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}, 'upgrade-details': {'module': 'fleet_software_update', 'class': 'UpgradeDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'goal-version-details': {'module': 'fleet_software_update', 'class': 'FsuGoalVersionDetails'}, 'batching-strategy': {'module': 'fleet_software_update', 'class': 'UpdateBatchingStrategyDetails'}, 'diagnostics-collection': {'module': 'fleet_software_update', 'class': 'DiagnosticsCollectionDetails'}, 'freeform-tags': {'module': 'fleet_software_update', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_software_update', 'class': 'dict(str, dict(str, object))'}, 'upgrade-details': {'module': 'fleet_software_update', 'class': 'UpgradeDetails'}})
+@cli_util.wrap_exceptions
+def update_fsu_cycle_update_upgrade_fsu_cycle(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, batching_strategy, diagnostics_collection, freeform_tags, defined_tags, upgrade_details, if_match):
+
+    if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
+        raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
+    if not force:
+        if goal_version_details or batching_strategy or diagnostics_collection or freeform_tags or defined_tags or upgrade_details:
+            if not click.confirm("WARNING: Updates to goal-version-details and batching-strategy and diagnostics-collection and freeform-tags and defined-tags and upgrade-details will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if goal_version_details is not None:
+        _details['goalVersionDetails'] = cli_util.parse_json_parameter("goal_version_details", goal_version_details)
+
+    if batching_strategy is not None:
+        _details['batchingStrategy'] = cli_util.parse_json_parameter("batching_strategy", batching_strategy)
+
+    if diagnostics_collection is not None:
+        _details['diagnosticsCollection'] = cli_util.parse_json_parameter("diagnostics_collection", diagnostics_collection)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if upgrade_details is not None:
+        _details['upgradeDetails'] = cli_util.parse_json_parameter("upgrade_details", upgrade_details)
+
+    _details['type'] = 'UPGRADE'
 
     client = cli_util.build_client('fleet_software_update', 'fleet_software_update', ctx)
     result = client.update_fsu_cycle(

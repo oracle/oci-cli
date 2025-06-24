@@ -6,6 +6,55 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.60.0 - 2025-06-24
+--------------------
+Added
+~~~~~
+* Database Service
+
+   * Support for AWS_S3 as backup destination type
+
+     * ``oci db backup get``
+     * ``oci db backup list``
+
+   * Support for AWS_S3 for cloud-vm-cluster
+
+      * ``oci db cloud-vm-cluster create``
+      * ``oci db cloud-vm-cluster get``
+      * ``oci db cloud-vm-cluster list``
+      * ``oci db cloud-vm-cluster update``
+
+* NoSql Service
+
+  * Support for customer managed encryption keys in hosted environments in the NoSQL Database Cloud service
+
+      * ``oci nosql configuration get --compartment-id | -c ``
+      * ``oci nosql update-hosted --compartment-id | -c, --kms-key, --force ``
+      * ``oci nosql configuration unassign-kms-key --compartment-id | -c``
+
+* Exadata Fleet Update Service
+
+  * Support for 23ai fleet upgrade of GI/DB (ExaDB-D/ExaC@C) collections in FPPCS
+
+    * ``oci fleet-software-update fsu-cycle update-fsu-cycle-update-upgrade-fsu-cycle``
+    * ``oci fleet-software-update fsu-cycle create-fsu-cycle-create-upgrade-fsu-cycle``
+
+* OCI Network Load Balancer Service
+
+    * BYoIPv6 support on LBaaS
+
+      * ``oci lb load-balancer create --ipv6-subnet-cidr``
+      * ``oci lb load-balancer update --ip-mode``
+
+Changed
+~~~~~~~
+* Database Service
+
+  * [BREAKING] Home id added as required parameter for below commands
+
+    * ``oci db database create-database-create-stand-by-database-details --db-home-id``
+    * ``oci db database create-database-from-backup --db-home-id``
+
 3.59.0 - 2025-06-17
 --------------------
 Added

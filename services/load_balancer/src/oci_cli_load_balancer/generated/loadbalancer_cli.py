@@ -312,7 +312,9 @@ Example: `example_backend_set`""")
 @cli_util.option('--weight', type=click.INT, help=u"""The load balancing policy weight assigned to the server. Backend servers with a higher weight receive a larger proportion of incoming traffic. For example, a server weighted '3' receives 3 times the number of new connections as a server weighted '1'. For more information on load balancing policies, see [How Load Balancing Policies Work].
 
 Example: `3`""")
-@cli_util.option('--max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to the backend. If this is not set then number of simultaneous connections the load balancer can make to the backend is unlimited.
+@cli_util.option('--max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to the backend. If this is not set or set to 0 then the maximum number of simultaneous connections the load balancer can make to the backend is unlimited.
+
+If setting maxConnections to some value other than 0 then that value must be greater or equal to 256.
 
 Example: `300`""")
 @cli_util.option('--backup', type=click.BOOL, help=u"""Whether the load balancer should treat this server as a backup unit. If `true`, the load balancer forwards no ingress traffic to this backend server unless all other backend servers not marked as \"backup\" fail the health check policy.
@@ -424,7 +426,9 @@ Example: `LEAST_CONNECTIONS`""")
 @cli_util.option('--backends', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON list with items of type BackendDetails.  For documentation on BackendDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/BackendDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--backend-max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to any backend in the backend set unless the backend has its own maxConnections setting. If this is not set then the number of simultaneous connections the load balancer can make to any backend in the backend set unless the backend has its own maxConnections setting is unlimited.
+@cli_util.option('--backend-max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to any backend in the backend set unless the backend has its own maxConnections setting. If this is not set or set to 0 then the number of simultaneous connections the load balancer can make to any backend in the backend set unless the backend has its own maxConnections setting is unlimited.
+
+If setting backendMaxConnections to some value other than 0 then that value must be greater or equal to 256.
 
 Example: `300`""")
 @cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -688,7 +692,7 @@ Example: `example_backend_set`""")
 @cli_util.option('--port', required=True, type=click.INT, help=u"""The communication port for the listener.
 
 Example: `80`""")
-@cli_util.option('--protocol', required=True, help=u"""The protocol on which the listener accepts connection requests. The supported protocols are HTTP, HTTP2, TCP, and GRPC. You can also use the [ListProtocols] operation to get a list of valid protocols.
+@cli_util.option('--protocol', required=True, help=u"""The protocol on which the listener accepts connection requests. To get a list of valid protocols, use the [ListProtocols] operation.
 
 Example: `HTTP`""")
 @cli_util.option('--name', required=True, help=u"""A friendly name for the listener. It must be unique and it cannot be changed. Avoid entering confidential information.
@@ -839,6 +843,11 @@ If \"IPV4\", the service assigns an IPv4 address and the load balancer supports 
 If \"IPV6\", the service assigns an IPv6 address and the load balancer supports IPv6 traffic.
 
 Example: \"ipMode\":\"IPV6\"""")
+@cli_util.option('--ipv6-subnet-cidr', help=u"""Applies to IPV6 LB creation only.
+
+Used to disambiguate which subnet prefix should be used to create an IPv6 LB.
+
+Example: \"2002::1234:abcd:ffff:c0a8:101/64\"""")
 @cli_util.option('--is-request-id-enabled', type=click.BOOL, help=u"""Whether or not the load balancer has the Request Id feature enabled for HTTP listeners.
 
 If \"true\", the load balancer will attach a unique request id header to every request passed through from the load balancer to load balancer backends. This same request id header also will be added to the response the lb received from the backend handling the request before the load balancer returns the response to the requestor. The name of the unique request id header is set the by value of requestIdHeader.
@@ -909,7 +918,7 @@ This option is a JSON dictionary of type dict(str, RuleSetDetails).  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'shape-details': {'module': 'load_balancer', 'class': 'ShapeDetails'}, 'reserved-ips': {'module': 'load_balancer', 'class': 'list[ReservedIP]'}, 'listeners': {'module': 'load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'hostnames': {'module': 'load_balancer', 'class': 'dict(str, HostnameDetails)'}, 'backend-sets': {'module': 'load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'network-security-group-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'subnet-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'certificates': {'module': 'load_balancer', 'class': 'dict(str, CertificateDetails)'}, 'ssl-cipher-suites': {'module': 'load_balancer', 'class': 'dict(str, SSLCipherSuiteDetails)'}, 'path-route-sets': {'module': 'load_balancer', 'class': 'dict(str, PathRouteSetDetails)'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'rule-sets': {'module': 'load_balancer', 'class': 'dict(str, RuleSetDetails)'}})
 @cli_util.wrap_exceptions
-def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape_name, subnet_ids, shape_details, is_private, is_delete_protection_enabled, ip_mode, is_request_id_enabled, request_id_header, reserved_ips, listeners, hostnames, backend_sets, network_security_group_ids, certificates, ssl_cipher_suites, path_route_sets, freeform_tags, defined_tags, security_attributes, rule_sets):
+def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape_name, subnet_ids, shape_details, is_private, is_delete_protection_enabled, ip_mode, ipv6_subnet_cidr, is_request_id_enabled, request_id_header, reserved_ips, listeners, hostnames, backend_sets, network_security_group_ids, certificates, ssl_cipher_suites, path_route_sets, freeform_tags, defined_tags, security_attributes, rule_sets):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -931,6 +940,9 @@ def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if ip_mode is not None:
         _details['ipMode'] = ip_mode
+
+    if ipv6_subnet_cidr is not None:
+        _details['ipv6SubnetCidr'] = ipv6_subnet_cidr
 
     if is_request_id_enabled is not None:
         _details['isRequestIdEnabled'] = is_request_id_enabled
@@ -3185,7 +3197,9 @@ Example: `example_backend_set`""")
 @cli_util.option('--backend-name', required=True, help=u"""The IP address and port of the backend server to update.
 
 Example: `10.0.0.3:8080`""")
-@cli_util.option('--max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to the backend. If this is not set then the maximum number of simultaneous connections the load balancer can make to the backend is unlimited.
+@cli_util.option('--max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to the backend. If this is not set or set to 0 then the maximum number of simultaneous connections the load balancer can make to the backend is unlimited.
+
+If setting maxConnections to some value other than 0 then that value must be greater or equal to 256.
 
 Example: `300`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the ETag for the load balancer. This value can be obtained from a GET or POST response for any resource of that load balancer.
@@ -3276,7 +3290,9 @@ Example: `LEAST_CONNECTIONS`""")
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set to update.
 
 Example: `example_backend_set`""")
-@cli_util.option('--backend-max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to any backend in the backend set unless the backend has its own maxConnections setting. If this is not set then the number of simultaneous connections the load balancer can make to any backend in the backend set unless the backend has its own maxConnections setting is unlimited.
+@cli_util.option('--backend-max-connections', type=click.INT, help=u"""The maximum number of simultaneous connections the load balancer can make to any backend in the backend set unless the backend has its own maxConnections setting. If this is not set or set to 0 then the number of simultaneous connections the load balancer can make to any backend in the backend set unless the backend has its own maxConnections setting is unlimited.
+
+If setting backendMaxConnections to some value other than 0 then that value must be greater or equal to 256.
 
 Example: `300`""")
 @cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3570,7 +3586,7 @@ Example: `example_backend_set`""")
 @cli_util.option('--port', required=True, type=click.INT, help=u"""The communication port for the listener.
 
 Example: `80`""")
-@cli_util.option('--protocol', required=True, help=u"""The protocol on which the listener accepts connection requests. The supported protocols are HTTP, HTTP2, TCP, and GRPC. You can also use the [ListProtocols] operation to get a list of valid protocols.
+@cli_util.option('--protocol', required=True, help=u"""The protocol on which the listener accepts connection requests. To get a list of valid protocols, use the [ListProtocols] operation.
 
 Example: `HTTP`""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the listener to update.""")
@@ -3689,6 +3705,13 @@ def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--display-name', help=u"""The user-friendly display name for the load balancer. It does not have to be unique, and it is changeable. Avoid entering confidential information.
 
 Example: `example_load_balancer`""")
+@cli_util.option('--ip-mode', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV6"]), help=u"""Whether the load balancer has an IPv4 or IPv6 IP address.
+
+  If \"IPV4\", the service assigns an IPv4 address and the load balancer supports IPv4 traffic.
+
+  If \"IPV6\", the service assigns an IPv6 address and the load balancer supports IPv6 traffic.
+
+  Example: \"ipMode\":\"IPV6\"""")
 @cli_util.option('--is-delete-protection-enabled', type=click.BOOL, help=u"""Whether or not the load balancer has delete protection enabled.
 
 If \"true\", the loadbalancer will be protected against deletion if configured to accept traffic.
@@ -3739,7 +3762,7 @@ Example: `example-etag`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, display_name, is_delete_protection_enabled, is_request_id_enabled, request_id_header, freeform_tags, defined_tags, security_attributes, if_match):
+def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, display_name, ip_mode, is_delete_protection_enabled, is_request_id_enabled, request_id_header, freeform_tags, defined_tags, security_attributes, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -3757,6 +3780,9 @@ def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if ip_mode is not None:
+        _details['ipMode'] = ip_mode
 
     if is_delete_protection_enabled is not None:
         _details['isDeleteProtectionEnabled'] = is_delete_protection_enabled
