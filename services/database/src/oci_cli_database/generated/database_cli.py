@@ -10666,9 +10666,9 @@ def create_cloud_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet associated with the cloud VM cluster.""")
 @cli_util.option('--backup-subnet-id', required=True, help=u"""The [OCID] of the backup network subnet associated with the cloud VM cluster.""")
-@cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU cores to enable for a cloud VM cluster. Valid values depend on the specified shape:
+@cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of ECPUs (X11M and higher) or number of OCPUs (X10M and earlier) to enable for the VM cluster.
 
-- Exadata.Base.48 - Specify a multiple of 2, from 0 to 48. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368.""")
+ - Exadata.Base.48 - Specify a multiple of 2, from 0 to 48.  - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84.  - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168.  - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336.  - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92.  - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184.  - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the cloud VM cluster. The name does not need to be unique.""")
 @cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The [OCID] of the cloud Exadata infrastructure resource.""")
 @cli_util.option('--hostname', required=True, help=u"""The hostname for the cloud VM cluster. The hostname must begin with an alphabetic character, and can contain alphanumeric characters and hyphens (-). The maximum length of the hostname is 16 characters for bare metal and virtual machine DB systems, and 12 characters for Exadata systems.
@@ -11596,8 +11596,8 @@ def create_data_guard_association_external_hsm_encryption_details(ctx, from_json
 
 
 @database_group.command(name=cli_util.override('db.create_database.command_name', 'create'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
+@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--source', required=True, type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP", "DATAGUARD"]), help=u"""The source of the database: Use `NONE` for creating a new database. Use `DB_BACKUP` for creating a new database by restoring from a backup. Use `DATAGUARD` for creating a new STANDBY database for a Data Guard setup.. The default is `NONE`.""")
-@cli_util.option('--db-home-id', help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
@@ -11611,16 +11611,14 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def create_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, source, db_home_id, db_version, kms_key_id, kms_key_version_id):
+def create_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, source, db_version, kms_key_id, kms_key_version_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
+    _details['dbHomeId'] = db_home_id
     _details['source'] = source
-
-    if db_home_id is not None:
-        _details['dbHomeId'] = db_home_id
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -11663,8 +11661,8 @@ def create_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
 
 @database_group.command(name=cli_util.override('db.create_database_create_new_database_details.command_name', 'create-database-create-new-database-details'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
+@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--db-home-id', help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
@@ -11678,16 +11676,14 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateDatabaseDetails'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def create_database_create_new_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database, db_home_id, db_version, kms_key_id, kms_key_version_id):
+def create_database_create_new_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, database, db_version, kms_key_id, kms_key_version_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
+    _details['dbHomeId'] = db_home_id
     _details['database'] = cli_util.parse_json_parameter("database", database)
-
-    if db_home_id is not None:
-        _details['dbHomeId'] = db_home_id
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -11732,8 +11728,8 @@ def create_database_create_new_database_details(ctx, from_json, wait_for_state, 
 
 
 @database_group.command(name=cli_util.override('db.create_database_create_stand_by_database_details.command_name', 'create-database-create-stand-by-database-details'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
+@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--db-home-id', help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
@@ -11747,16 +11743,14 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateStandbyDetails'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def create_database_create_stand_by_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database, db_home_id, db_version, kms_key_id, kms_key_version_id):
+def create_database_create_stand_by_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, database, db_version, kms_key_id, kms_key_version_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
+    _details['dbHomeId'] = db_home_id
     _details['database'] = cli_util.parse_json_parameter("database", database)
-
-    if db_home_id is not None:
-        _details['dbHomeId'] = db_home_id
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -11801,8 +11795,8 @@ def create_database_create_stand_by_database_details(ctx, from_json, wait_for_st
 
 
 @database_group.command(name=cli_util.override('db.create_database_create_database_from_backup.command_name', 'create-database-create-database-from-backup'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies to Exadata and Exadata Cloud@Customer systems. \n[Command Reference](createDatabase)""")
+@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--db-home-id', help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
@@ -11816,16 +11810,14 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateDatabaseFromBackupDetails'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def create_database_create_database_from_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database, db_home_id, db_version, kms_key_id, kms_key_version_id):
+def create_database_create_database_from_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, database, db_version, kms_key_id, kms_key_version_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
+    _details['dbHomeId'] = db_home_id
     _details['database'] = cli_util.parse_json_parameter("database", database)
-
-    if db_home_id is not None:
-        _details['dbHomeId'] = db_home_id
 
     if db_version is not None:
         _details['dbVersion'] = db_version
@@ -14298,7 +14290,7 @@ def create_scheduling_window(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the VM cluster. The name does not need to be unique.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The [OCID] of the Exadata infrastructure.""")
-@cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU cores to enable for the VM cluster.""")
+@cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of ECPUs (X11M and higher) or number of OCPUs (X10M and earlier) to enable for the VM cluster.""")
 @cli_util.option('--ssh-public-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The public key portion of one or more key pairs used for SSH access to the VM cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vm-cluster-network-id', required=True, help=u"""The [OCID] of the VM cluster network.""")
 @cli_util.option('--gi-version', required=True, help=u"""The Oracle Grid Infrastructure software version for the VM cluster.""")
