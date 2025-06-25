@@ -130,3 +130,15 @@ def delete_replica_extended(ctx, **kwargs):
         kwargs.pop('replica_region')
 
     ctx.invoke(nosql_cli.delete_replica, **kwargs)
+
+
+# oci nosql configuration update-configuration-update-hosted-configuration-details -> oci nosql configuration update-hosted
+cli_util.rename_command(nosql_cli, nosql_cli.configuration_group, nosql_cli.update_configuration_update_hosted_configuration_details, "update-hosted")
+
+
+# Remove update from oci nosql configuration
+nosql_cli.configuration_group.commands.pop(nosql_cli.update_configuration.name)
+
+
+# Remove update-configuration-update-multi-tenancy-configuration-details from oci nosql configuration
+nosql_cli.configuration_group.commands.pop(nosql_cli.update_configuration_update_multi_tenancy_configuration_details.name)

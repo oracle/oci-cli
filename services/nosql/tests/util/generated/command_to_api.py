@@ -11,6 +11,7 @@ SDK_client_map = {
     "nosql.delete_row": "oci.nosql.NosqlClient.delete_row",
     "nosql.delete_table": "oci.nosql.NosqlClient.delete_table",
     "nosql.delete_work_request": "oci.nosql.NosqlClient.delete_work_request",
+    "nosql.get_configuration": "oci.nosql.NosqlClient.get_configuration",
     "nosql.get_index": "oci.nosql.NosqlClient.get_index",
     "nosql.get_row": "oci.nosql.NosqlClient.get_row",
     "nosql.get_table": "oci.nosql.NosqlClient.get_table",
@@ -24,6 +25,8 @@ SDK_client_map = {
     "nosql.prepare_statement": "oci.nosql.NosqlClient.prepare_statement",
     "nosql.query": "oci.nosql.NosqlClient.query",
     "nosql.summarize_statement": "oci.nosql.NosqlClient.summarize_statement",
+    "nosql.unassign_kms_key": "oci.nosql.NosqlClient.unassign_kms_key",
+    "nosql.update_configuration": "oci.nosql.NosqlClient.update_configuration",
     "nosql.update_row": "oci.nosql.NosqlClient.update_row",
     "nosql.update_table": "oci.nosql.NosqlClient.update_table",
 }
