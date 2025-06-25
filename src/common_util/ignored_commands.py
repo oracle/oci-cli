@@ -261,7 +261,7 @@ IGNORED_COMMANDS = [
     ['os-management-hub', 'profile', 'list-available-software-sources'],
     ['apm-synthetics', 'monitor', 'create-scripted-browser-monitor'],
     ['apm-synthetics', 'monitor', 'update-scripted-browser-monitor'],
-    ['fleet-software-update', 'fsu-cycle', 'create-fsu-cycle-create-upgrade-fsu-cycle'], 
+    ['fleet-software-update', 'fsu-cycle', 'create-fsu-cycle-create-upgrade-fsu-cycle'],
     ['fleet-software-update', 'fsu-cycle', 'update-fsu-cycle-update-upgrade-fsu-cycle']
 ]
 

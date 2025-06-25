@@ -34,12 +34,6 @@ def aggregated_snapshot_group():
     pass
 
 
-@click.command(cli_util.override('trace.log_group.command_name', 'log'), cls=CommandGroupWithAlias, help="""Definition of a log object.""")
-@cli_util.help_option_group
-def log_group():
-    pass
-
-
 @click.command(cli_util.override('trace.trace_snapshot_group.command_name', 'trace-snapshot'), cls=CommandGroupWithAlias, help="""Definition of a trace snapshot object.""")
 @cli_util.help_option_group
 def trace_snapshot_group():
@@ -55,7 +49,6 @@ def span_group():
 apm_traces_service_cli.apm_traces_service_group.add_command(trace_root_group)
 trace_root_group.add_command(trace_group)
 trace_root_group.add_command(aggregated_snapshot_group)
-trace_root_group.add_command(log_group)
 trace_root_group.add_command(trace_snapshot_group)
 trace_root_group.add_command(span_group)
 
@@ -91,34 +84,6 @@ def get_aggregated_snapshot(ctx, from_json, apm_domain_id, trace_key, service_na
     result = client.get_aggregated_snapshot(
         apm_domain_id=apm_domain_id,
         trace_key=trace_key,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
-@log_group.command(name=cli_util.override('trace.get_log.command_name', 'get'), help=u"""Retrieve a log in the APM Domain. \n[Command Reference](getLog)""")
-@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID for the intended request.""")
-@cli_util.option('--log-key', required=True, help=u"""Log key.""")
-@cli_util.option('--time-log-started-greater-than-or-equal-to', required=True, type=custom_types.CLI_DATETIME, help=u"""Include logs with log time equal to or greater than this value.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-log-ended-less-than', required=True, type=custom_types.CLI_DATETIME, help=u"""Include logs with log time less than this value.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apm_traces', 'class': 'Log'})
-@cli_util.wrap_exceptions
-def get_log(ctx, from_json, apm_domain_id, log_key, time_log_started_greater_than_or_equal_to, time_log_ended_less_than):
-
-    if isinstance(log_key, six.string_types) and len(log_key.strip()) == 0:
-        raise click.UsageError('Parameter --log-key cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('apm_traces', 'trace', ctx)
-    result = client.get_log(
-        apm_domain_id=apm_domain_id,
-        log_key=log_key,
-        time_log_started_greater_than_or_equal_to=time_log_started_greater_than_or_equal_to,
-        time_log_ended_less_than=time_log_ended_less_than,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -165,8 +130,8 @@ def get_span(ctx, from_json, apm_domain_id, span_key, trace_key, time_span_start
 @trace_group.command(name=cli_util.override('trace.get_trace.command_name', 'get'), help=u"""Gets the trace details identified by traceId. \n[Command Reference](getTrace)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID for the intended request.""")
 @cli_util.option('--trace-key', required=True, help=u"""Unique Application Performance Monitoring trace identifier (traceId).""")
-@cli_util.option('--time-trace-started-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Include traces that have a minTraceStartTime equal to or greater than this value.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-trace-started-less-than', type=custom_types.CLI_DATETIME, help=u"""Include traces that have a minTraceStartTime less than this value.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-trace-started-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Include traces that have a `minTraceStartTime` equal to or greater than this value.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-trace-started-less-than', type=custom_types.CLI_DATETIME, help=u"""Include traces that have a `minTraceStartTime` less than this value.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--trace-namespace', type=custom_types.CliCaseInsensitiveChoice(["TRACES", "SYNTHETIC"]), help=u"""Name space from which the trace details need to be retrieved.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
