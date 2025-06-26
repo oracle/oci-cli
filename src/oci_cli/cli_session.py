@@ -230,16 +230,26 @@ def refresh(ctx):
     refresh_url = "{endpoint}/v1/authentication/refresh".format(endpoint=oci.regions.endpoint_for("auth", client_config.get('region')))
     click.echo("Attempting to refresh token from {refresh_url}".format(refresh_url=refresh_url), file=sys.stderr)
 
-    response = requests.post(
-        refresh_url,
-        headers={
+    request_params = {
+        'url': refresh_url,
+        'headers': {
             'content-type': 'application/json'
         },
-        data=json.dumps({
+        'data': json.dumps({
             'currentToken': token
         }),
-        auth=auth
-    )
+        'auth': auth
+    }
+
+    cert_bundle = ctx.obj.get('cert_bundle')
+    if cert_bundle:
+        cert_bundle = os.path.expanduser(cert_bundle)
+        if not os.path.isfile(cert_bundle):
+            raise click.BadParameter(param_hint='cert_bundle', message='Cannot find cert_bundle file: {}'.format(cert_bundle))
+        
+        request_params['verify'] = os.path.expanduser(cert_bundle)
+
+    response = requests.post(**request_params)
 
     if response.status_code == 200:
         refreshed_token = json.loads(response.content.decode('UTF-8'))['token']
