@@ -3,6 +3,7 @@
 
 SDK_client_map = {
     "trace.get_aggregated_snapshot": "oci.apm_traces.TraceClient.get_aggregated_snapshot",
+    "trace.get_log": "oci.apm_traces.TraceClient.get_log",
     "trace.get_span": "oci.apm_traces.TraceClient.get_span",
     "trace.get_trace": "oci.apm_traces.TraceClient.get_trace",
     "trace.get_trace_snapshot": "oci.apm_traces.TraceClient.get_trace_snapshot",

@@ -165,16 +165,17 @@ def change_backup_compartment(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--backup-copy-retention-in-days', type=click.INT, help=u"""Number of days to retain the copied DB system backup.
 
 **Note:** The maximum value for an automatic backup is 35, and the maximum value for a manual backup is 365.""")
+@cli_util.option('--encrypt-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'encrypt-data': {'module': 'mysql', 'class': 'EncryptDataDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'mysql', 'class': 'Backup'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'encrypt-data': {'module': 'mysql', 'class': 'EncryptDataDetails'}}, output_type={'module': 'mysql', 'class': 'Backup'})
 @cli_util.wrap_exceptions
-def copy_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_backup_id, source_region, description, display_name, backup_copy_retention_in_days, if_match):
+def copy_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, source_backup_id, source_region, description, display_name, backup_copy_retention_in_days, encrypt_data, if_match):
 
     kwargs = {}
     if if_match is not None:
@@ -194,6 +195,9 @@ def copy_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if backup_copy_retention_in_days is not None:
         _details['backupCopyRetentionInDays'] = backup_copy_retention_in_days
+
+    if encrypt_data is not None:
+        _details['encryptData'] = cli_util.parse_json_parameter("encrypt_data", encrypt_data)
 
     client = cli_util.build_client('mysql', 'db_backups', ctx)
     result = client.copy_backup(
