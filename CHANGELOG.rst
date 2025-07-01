@@ -6,6 +6,112 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+
+3.62.0 - 2025-07-01
+--------------------
+Added
+~~~~~
+* Database multicloud service
+
+  * Support for Multicloud Integration
+
+    * ``oci dbmulticloud multi-cloud-resource-discovery change-compartment``
+    * ``oci dbmulticloud multi-cloud-resource-discovery create``
+    * ``oci dbmulticloud multi-cloud-resource-discovery delete``
+    * ``oci dbmulticloud multi-cloud-resource-discovery get``
+    * ``oci dbmulticloud multi-cloud-resource-discovery list``
+    * ``oci dbmulticloud multi-cloud-resource-discovery update``
+    * ``oci dbmulticloud oracle-db-azure-blob-container change-compartment``
+    * ``oci dbmulticloud oracle-db-azure-blob-container create``
+    * ``oci dbmulticloud oracle-db-azure-blob-container delete``
+    * ``oci dbmulticloud oracle-db-azure-blob-container get``
+    * ``oci dbmulticloud oracle-db-azure-blob-container list``
+    * ``oci dbmulticloud oracle-db-azure-blob-container update``
+    * ``oci dbmulticloud oracle-db-azure-blob-mount change-compartment``
+    * ``oci dbmulticloud oracle-db-azure-blob-mount create``
+    * ``oci dbmulticloud oracle-db-azure-blob-mount delete``
+    * ``oci dbmulticloud oracle-db-azure-blob-mount get``
+    * ``oci dbmulticloud oracle-db-azure-blob-mount list``
+    * ``oci dbmulticloud oracle-db-azure-blob-mount update``
+    * ``oci dbmulticloud oracle-db-azure-connector change-compartment``
+    * ``oci dbmulticloud oracle-db-azure-connector create``
+    * ``oci dbmulticloud oracle-db-azure-connector delete``
+    * ``oci dbmulticloud oracle-db-azure-connector get``
+    * ``oci dbmulticloud oracle-db-azure-connector list``
+    * ``oci dbmulticloud oracle-db-azure-connector patch``
+    * ``oci dbmulticloud oracle-db-azure-connector update``
+    * ``oci dbmulticloud oracle-db-azure-key get``
+    * ``oci dbmulticloud oracle-db-azure-key list``
+    * ``oci dbmulticloud oracle-db-azure-vault change-compartment``
+    * ``oci dbmulticloud oracle-db-azure-vault create``
+    * ``oci dbmulticloud oracle-db-azure-vault delete``
+    * ``oci dbmulticloud oracle-db-azure-vault get``
+    * ``oci dbmulticloud oracle-db-azure-vault list``
+    * ``oci dbmulticloud oracle-db-azure-vault refresh``
+    * ``oci dbmulticloud oracle-db-azure-vault update``
+    * ``oci dbmulticloud oracle-db-azure-vault-association cascading-delete``
+    * ``oci dbmulticloud oracle-db-azure-vault-association change-compartment``
+    * ``oci dbmulticloud oracle-db-azure-vault-association create``
+    * ``oci dbmulticloud oracle-db-azure-vault-association delete``
+    * ``oci dbmulticloud oracle-db-azure-vault-association get``
+    * ``oci dbmulticloud oracle-db-azure-vault-association list``
+    * ``oci dbmulticloud oracle-db-azure-vault-association update``
+    * ``oci dbmulticloud work-request cancel``
+    * ``oci dbmulticloud work-request get``
+    * ``oci dbmulticloud work-request list``
+    * ``oci dbmulticloud work-request work-request-error list``
+    * ``oci dbmulticloud work-request work-request-log-entry list-work-request-logs``
+
+* APM traces service
+
+  * Support for managing scheduled queries
+
+    * ``oci apm-traces scheduled-query create --apmdomainid``
+    * ``oci apm-traces scheduled-query delete --apmdomainid``
+    * ``oci apm-traces scheduled-query update --apmdomainid``
+    * ``oci apm-traces scheduled-query get --apmdomainid  --id``
+    * ``oci apm-traces scheduled-query list --apmdomainid``
+    * ``oci apm-traces trace log get --apmdomainid --log-key, --start-time-lt, --start-time-gte``
+
+* Database service
+
+  * DG creation with azure, changing encryption key location to azure, and two new apis to register/unregister pkcs
+
+    * ``oci db data-guard-association create-data-guard-association-azure-encryption-key-details``
+    * ``oci db database change-encryption-key-location-azure-encryption-key-details``
+    * ``oci db cloud-vm-cluster register-cloud-vm-cluster-pkcs``
+    * ``oci db cloud-vm-cluster unregister-cloud-vm-cluster-pkcs``
+
+  * Support for Support for new optional parameters in the Database service
+
+    * ``oci db cloud-autonomous-vm-cluster create --opc-dry-run --subscription-id``
+    * ``oci db cloud-autonomous-vm-cluster update --opc-dry-run --subscription-id``
+
+  * Support for changing subscription Id in the Database service
+    * ``oci db change-cloud-autonomous-vm-cluster-subscription``
+
+* Database Migration service
+
+  * Support for customer-initiated collection of diagnostic information
+
+    * ``oci database-migration job collect-traces``
+
+* MySQL HeatWave service
+
+  * Support for Bring Your Own Key (BYOK)
+
+    * ``oci mysql backup copy --encrypt-data``
+    * ``oci mysql db-system clone --encrypt-data``
+    * ``oci mysql db-system create --encrypt-data``
+    * ``oci mysql db-system import --encrypt-data``
+    * ``oci mysql db-system update --encrypt-data``
+
+* Fixed "SyntaxWarnings" occurring when running the `oci` command
+
+Changed
+~~~~~~~
+* [BREAKING] Man page packaging is now removed from the PyPI source and wheel artifacts. It continues to be included as part of the GitHub and YUM artifacts.
+
 3.61.0 - 2025-06-25
 --------------------
 Added

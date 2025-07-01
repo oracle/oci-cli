@@ -7,6 +7,7 @@ SDK_client_map = {
     "database_migration.change_connection_compartment": "oci.database_migration.DatabaseMigrationClient.change_connection_compartment",
     "database_migration.change_migration_compartment": "oci.database_migration.DatabaseMigrationClient.change_migration_compartment",
     "database_migration.clone_migration": "oci.database_migration.DatabaseMigrationClient.clone_migration",
+    "database_migration.collect_traces": "oci.database_migration.DatabaseMigrationClient.collect_traces",
     "database_migration.connection_diagnostics": "oci.database_migration.DatabaseMigrationClient.connection_diagnostics",
     "database_migration.create_connection": "oci.database_migration.DatabaseMigrationClient.create_connection",
     "database_migration.create_migration": "oci.database_migration.DatabaseMigrationClient.create_migration",

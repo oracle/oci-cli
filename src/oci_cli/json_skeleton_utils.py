@@ -253,7 +253,7 @@ def translate_complex_param_to_example_object(complex_param_entry, visited):
 
     # For lists we produce an example 2 element list containing objects of whatever the list type is
     if cls.startswith('list['):
-        sub_kls = re.match('list\[(.*)\]', cls).group(1)  # noqa: W605
+        sub_kls = re.match(r'list\[(.*)\]', cls).group(1)  # noqa: W605
         return [
             translate_complex_param_to_example_object({'module': complex_param_entry['module'], 'class': sub_kls}, visited),
             translate_complex_param_to_example_object({'module': complex_param_entry['module'], 'class': sub_kls}, visited)
@@ -270,8 +270,8 @@ def translate_complex_param_to_example_object(complex_param_entry, visited):
             key_sub_kls = 'str'
             value_sub_kls = 'str'
         else:
-            key_sub_kls = re.match('dict\(([^,]*), (.*)\)', cls).group(1)    # noqa: W605
-            value_sub_kls = re.match('dict\(([^,]*), (.*)\)', cls).group(2)  # noqa: W605
+            key_sub_kls = re.match(r'dict\(([^,]*), (.*)\)', cls).group(1)    # noqa: W605
+            value_sub_kls = re.match(r'dict\(([^,]*), (.*)\)', cls).group(2)  # noqa: W605
 
         value = translate_complex_param_to_example_object({'module': complex_param_entry['module'], 'class': value_sub_kls}, visited)
         return {PRIMITIVE_TYPES_TO_EXAMPLE_KEY_VALUES[key_sub_kls][0]: value, PRIMITIVE_TYPES_TO_EXAMPLE_KEY_VALUES[key_sub_kls][1]: value}

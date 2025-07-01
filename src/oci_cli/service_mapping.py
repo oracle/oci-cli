@@ -238,6 +238,11 @@ service_mapping = {
         "Dblm",
         "Others"
     ],
+    "dbmulticloud": [
+        "dbmulticloud",
+        "Oracle Database MultiCloud Data plane Integration",
+        "Others"
+    ],
     "dbtools": [
         "database_tools",
         "Database Tools",
