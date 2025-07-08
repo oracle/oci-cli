@@ -4,6 +4,7 @@
 
 import click
 import json
+import os
 
 from oci_cli.cli_util import get_param
 from services.log_analytics.src.oci_cli_log_analytics.generated import loganalytics_cli
@@ -1083,9 +1084,19 @@ cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_field_g
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
 def upload_otlp_logs_extended(ctx, **kwargs):
-
-    if 'file' in kwargs:
-        kwargs['upload_otlp_logs_details'] = kwargs['file']
-        kwargs.pop('file')
-
-    ctx.invoke(loganalytics_cli.upload_otlp_logs, **kwargs)
+    # Set "--upload_otlp_logs_details" to file's "--file" handle
+    upload_file = kwargs['file']
+    del kwargs['file']
+    if os.path.exists(upload_file):
+        if kwargs['content_type'] == 'application/json':
+            with open(upload_file, 'r') as ufile:
+                file_content = ufile.read()
+                kwargs['upload_otlp_logs_details'] = file_content
+                ctx.invoke(loganalytics_cli.upload_otlp_logs, **kwargs)
+        else:
+            with open(upload_file, 'rb') as ufile:
+                kwargs['upload_otlp_logs_details'] = ufile
+                ctx.invoke(loganalytics_cli.upload_otlp_logs, **kwargs)
+    else:
+        kwargs['upload_otlp_logs_details'] = upload_file
+        ctx.invoke(loganalytics_cli.upload_otlp_logs, **kwargs)

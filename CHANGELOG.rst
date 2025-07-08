@@ -6,6 +6,43 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.62.1 - 2025-07-08
+--------------------
+Added
+~~~~~
+* Support file parameter for uploading otlp logs in the Logging Analytics service
+
+  * ``oci log-analytics upload upload-otlp-logs --from-json <path to the file>`` 
+
+* Support for ADB@ExaCC in the Ops Insights service
+
+  * ``oci opsi database-insights create-macs-managed-autonomous-database-insight``
+  * ``oci opsi database-insights enable-macs-managed-autonomous-database-insight``
+  * ``oci opsi database-insights update-macs-managed-autonomous-database-insight``
+
+* Support for Personal to Corporate conversation check in the OSP Gateway service
+
+  *  ``oci osp-gateway subscription-service subscription authorize-subscription-payment``
+  *  ``oci osp-gateway subscription-service subscription pay``
+  *  ``oci osp-gateway subscription-service subscription update``
+
+* Document Understanding Service
+    
+  * Support of page selection in analyze and processorJob commands
+
+    *  ``oci ai-document processor-job create-processor-job-inline-document-content --input-location-page-range``
+    *  ``oci ai-document analyze-document-result analyze-document-inline-document-details --document-page-range``
+    *  ``oci ai-document analyze-document-result analyze-document-object-storage-document-details --document-page-range``
+
+  * Support for new commands
+
+    *  ``oci ai-document processor-job create-processor-job-invoice-processor-config``
+    *  ``oci ai-document model-type-info get-model-type``
+    
+  * Support for new optional parameter in the following commands
+
+    *  ``oci ai-document model update --inference-units``
+    *  ``oci ai-document model create --inference-units --language --model-sub-type``
 
 3.62.0 - 2025-07-01
 --------------------
