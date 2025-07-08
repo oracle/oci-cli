@@ -548,7 +548,6 @@ operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_c
 
 @cli_util.copy_params_from_generated_command(operationsinsights_cli.change_autonomous_database_insight_advanced_features_credential_by_vault, params_to_exclude=['credential_details_credential_source_name', 'credential_details_password_secret_id', 'credential_details_role', 'credential_details_user_name'])
 @operationsinsights_cli.database_insights_group.command(name=operationsinsights_cli.change_autonomous_database_insight_advanced_features_credential_by_vault.name, help=operationsinsights_cli.change_autonomous_database_insight_advanced_features_credential_by_vault.help)
-@cli_util.option('--credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service. [required]""")
 @cli_util.option('--password-secret-id', help=u"""The secret [OCID] mapping to the database credentials.""")
 @cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL"]), help=u"""database user role.""")
 @cli_util.option('--user-name', help=u"""database user name.""")
@@ -556,10 +555,6 @@ operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_c
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'operationsinsights', 'class': 'ConnectionDetails'}})
 @cli_util.wrap_exceptions
 def change_autonomous_database_insight_advanced_features_credential_by_vault_extended(ctx, **kwargs):
-    if 'credential_source_name' in kwargs:
-        kwargs['credential_details_credential_source_name'] = kwargs['credential_source_name']
-        kwargs.pop('credential_source_name')
-
     if 'password_secret_id' in kwargs:
         kwargs['credential_details_password_secret_id'] = kwargs['password_secret_id']
         kwargs.pop('password_secret_id')
@@ -577,7 +572,6 @@ def change_autonomous_database_insight_advanced_features_credential_by_vault_ext
 
 @cli_util.copy_params_from_generated_command(operationsinsights_cli.enable_autonomous_database_insight_advanced_features_credential_by_vault, params_to_exclude=['credential_details_credential_source_name', 'credential_details_password_secret_id', 'credential_details_role', 'credential_details_user_name'])
 @operationsinsights_cli.database_insights_group.command(name=operationsinsights_cli.enable_autonomous_database_insight_advanced_features_credential_by_vault.name, help=operationsinsights_cli.enable_autonomous_database_insight_advanced_features_credential_by_vault.help)
-@cli_util.option('--credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service. [required]""")
 @cli_util.option('--password-secret-id', help=u"""The secret [OCID] mapping to the database credentials.""")
 @cli_util.option('--role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL"]), help=u"""database user role.""")
 @cli_util.option('--user-name', help=u"""database user name.""")
@@ -585,10 +579,6 @@ def change_autonomous_database_insight_advanced_features_credential_by_vault_ext
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'operationsinsights', 'class': 'ConnectionDetails'}})
 @cli_util.wrap_exceptions
 def enable_autonomous_database_insight_advanced_features_credential_by_vault_extended(ctx, **kwargs):
-    if 'credential_source_name' in kwargs:
-        kwargs['credential_details_credential_source_name'] = kwargs['credential_source_name']
-        kwargs.pop('credential_source_name')
-
     if 'password_secret_id' in kwargs:
         kwargs['credential_details_password_secret_id'] = kwargs['password_secret_id']
         kwargs.pop('password_secret_id')
@@ -893,3 +883,85 @@ cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_
 
 # oci opsi database-insights update-database-insight-update-external-mysql-database-insight-details -> oci opsi database-insights update-external-mysql-database-insight
 cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.update_database_insight_update_external_mysql_database_insight_details, "update-external-mysql-database-insight")
+
+
+# oci opsi database-insights create-database-insight-create-macs-managed-autonomous-database-insight-details -> oci opsi database-insights create-macs-managed-autonomous-database-insight
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.create_database_insight_create_macs_managed_autonomous_database_insight_details, "create-macs-managed-autonomous-database-insight")
+
+
+# oci opsi database-insights enable-database-insight-enable-macs-managed-autonomous-database-insight-details -> oci opsi database-insights enable-macs-managed-autonomous-database-insight
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.enable_database_insight_enable_macs_managed_autonomous_database_insight_details, "enable-macs-managed-autonomous-database-insight")
+
+
+# oci opsi database-insights update-database-insight-update-macs-managed-autonomous-database-insight-details -> oci opsi database-insights update-macs-managed-autonomous-database-insight
+cli_util.rename_command(operationsinsights_cli, operationsinsights_cli.database_insights_group, operationsinsights_cli.update_database_insight_update_macs_managed_autonomous_database_insight_details, "update-macs-managed-autonomous-database-insight")
+
+
+# Remove change-autonomous-database-insight-advanced-features-credential-by-named-credentials from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.change_autonomous_database_insight_advanced_features_credential_by_named_credentials.name)
+
+
+# Remove change-macs-managed-autonomous from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.change_macs_managed_autonomous_database_insight_connection.name)
+
+
+# Remove change-macs-managed-autonomous-database-insight-connection-credential-by-iam from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.change_macs_managed_autonomous_database_insight_connection_credential_by_iam.name)
+
+
+# Remove change-pe-comanaged-database-insight-credential-by-named-credentials from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.change_pe_comanaged_database_insight_credential_by_named_credentials.name)
+
+
+# Remove enable-autonomous-database-insight-advanced-features-credential-by-named-credentials from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.enable_autonomous_database_insight_advanced_features_credential_by_named_credentials.name)
+
+
+# Remove test-macs-managed-autonomous from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.test_macs_managed_autonomous_database_insight_connection.name)
+
+
+# Remove test-macs-managed-autonomous-database-insight-connection-credential-by-iam from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.test_macs_managed_autonomous_database_insight_connection_credential_by_iam.name)
+
+
+# Remove test-macs-managed-autonomous-database-insight-connection-credential-by-vault from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.test_macs_managed_autonomous_database_insight_connection_credential_by_vault.name)
+
+
+# Remove test-macs-managed-autonomous-database-insight-connection-credentials-by-source from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.test_macs_managed_autonomous_database_insight_connection_credentials_by_source.name)
+
+
+# Remove test-macs-managed-cloud-database-insight-connection-credential-by-named-credentials from oci opsi database-insights
+operationsinsights_cli.database_insights_group.commands.pop(operationsinsights_cli.test_macs_managed_cloud_database_insight_connection_credential_by_named_credentials.name)
+
+
+@cli_util.copy_params_from_generated_command(operationsinsights_cli.change_macs_managed_autonomous_database_insight_connection_credential_by_named_credentials, params_to_exclude=['connection_credential_details_named_credential_id', 'connection_credential_details_credential_source_name'])
+@operationsinsights_cli.database_insights_group.command(name=operationsinsights_cli.change_macs_managed_autonomous_database_insight_connection_credential_by_named_credentials.name, help=operationsinsights_cli.change_macs_managed_autonomous_database_insight_connection_credential_by_named_credentials.help)
+@cli_util.option('--named-credential-id', help=u"""The credential [OCID] stored in management agent.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.wrap_exceptions
+def change_macs_managed_autonomous_database_insight_connection_credential_by_named_credentials_extended(ctx, **kwargs):
+
+    if 'named_credential_id' in kwargs:
+        kwargs['connection_credential_details_named_credential_id'] = kwargs['named_credential_id']
+        kwargs.pop('named_credential_id')
+
+    ctx.invoke(operationsinsights_cli.change_macs_managed_autonomous_database_insight_connection_credential_by_named_credentials, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(operationsinsights_cli.test_macs_managed_autonomous_database_insight_connection_credential_by_named_credentials, params_to_exclude=['connection_credential_details_named_credential_id'])
+@operationsinsights_cli.database_insights_group.command(name=operationsinsights_cli.test_macs_managed_autonomous_database_insight_connection_credential_by_named_credentials.name, help=operationsinsights_cli.test_macs_managed_autonomous_database_insight_connection_credential_by_named_credentials.help)
+@cli_util.option('--named-credential-id', help=u"""The credential [OCID] stored in management agent.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.wrap_exceptions
+def test_macs_managed_autonomous_database_insight_connection_credential_by_named_credentials_extended(ctx, **kwargs):
+
+    if 'named_credential_id' in kwargs:
+        kwargs['connection_credential_details_named_credential_id'] = kwargs['named_credential_id']
+        kwargs.pop('named_credential_id')
+
+    ctx.invoke(operationsinsights_cli.test_macs_managed_autonomous_database_insight_connection_credential_by_named_credentials, **kwargs)

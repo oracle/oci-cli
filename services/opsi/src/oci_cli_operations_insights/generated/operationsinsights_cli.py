@@ -66,12 +66,6 @@ def opsi_warehouse_data_objects_group():
     pass
 
 
-@click.command(cli_util.override('opsi.news_report_group.command_name', 'news-report'), cls=CommandGroupWithAlias, help="""News report resource.""")
-@cli_util.help_option_group
-def news_report_group():
-    pass
-
-
 @click.command(cli_util.override('opsi.awr_hub_sources_group.command_name', 'awr-hub-sources'), cls=CommandGroupWithAlias, help="""Logical grouping used for Awr Hub Source operations.""")
 @cli_util.help_option_group
 def awr_hub_sources_group():
@@ -131,7 +125,6 @@ opsi_root_group.add_command(awr_hubs_group)
 opsi_root_group.add_command(news_reports_group)
 opsi_root_group.add_command(operations_insights_warehouse_users_group)
 opsi_root_group.add_command(opsi_warehouse_data_objects_group)
-opsi_root_group.add_command(news_report_group)
 opsi_root_group.add_command(awr_hub_sources_group)
 opsi_root_group.add_command(operations_insights_warehouses_group)
 opsi_root_group.add_command(awr_hub_objects_group)
@@ -471,12 +464,13 @@ def change_autonomous_database_insight_advanced_features(ctx, from_json, wait_fo
     cli_util.render_response(result, ctx)
 
 
-@database_insights_group.command(name=cli_util.override('opsi.change_autonomous_database_insight_advanced_features_credentials_by_source.command_name', 'change-autonomous-database-insight-advanced-features-credentials-by-source'), help=u"""Update connection detail for advanced features of Autonomous Database in Operations Insights. \n[Command Reference](changeAutonomousDatabaseInsightAdvancedFeatures)""")
+@database_insights_group.command(name=cli_util.override('opsi.change_autonomous_database_insight_advanced_features_credential_by_named_credentials.command_name', 'change-autonomous-database-insight-advanced-features-credential-by-named-credentials'), help=u"""Update connection detail for advanced features of Autonomous Database in Operations Insights. \n[Command Reference](changeAutonomousDatabaseInsightAdvancedFeatures)""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
-@cli_util.option('--credential-details-credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service.""")
 @cli_util.option('--opsi-private-endpoint-id', help=u"""The [OCID] of the OPSI private endpoint""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
+@cli_util.option('--credential-details-named-credential-id', help=u"""The credential [OCID] stored in management agent.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -485,7 +479,7 @@ def change_autonomous_database_insight_advanced_features(ctx, from_json, wait_fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
 @cli_util.wrap_exceptions
-def change_autonomous_database_insight_advanced_features_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, credential_details_credential_source_name, opsi_private_endpoint_id, if_match):
+def change_autonomous_database_insight_advanced_features_credential_by_named_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, opsi_private_endpoint_id, if_match, credential_details_credential_source_name, credential_details_named_credential_id):
 
     if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
@@ -498,10 +492,87 @@ def change_autonomous_database_insight_advanced_features_credentials_by_source(c
     _details = {}
     _details['credentialDetails'] = {}
     _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
-    _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
 
     if opsi_private_endpoint_id is not None:
         _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
+
+    if credential_details_credential_source_name is not None:
+        _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
+
+    if credential_details_named_credential_id is not None:
+        _details['credentialDetails']['namedCredentialId'] = credential_details_named_credential_id
+
+    _details['credentialDetails']['credentialType'] = 'CREDENTIALS_BY_NAMED_CREDS'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.change_autonomous_database_insight_advanced_features(
+        database_insight_id=database_insight_id,
+        change_autonomous_database_insight_advanced_features_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.change_autonomous_database_insight_advanced_features_credentials_by_source.command_name', 'change-autonomous-database-insight-advanced-features-credentials-by-source'), help=u"""Update connection detail for advanced features of Autonomous Database in Operations Insights. \n[Command Reference](changeAutonomousDatabaseInsightAdvancedFeatures)""")
+@cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
+@cli_util.option('--opsi-private-endpoint-id', help=u"""The [OCID] of the OPSI private endpoint""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.wrap_exceptions
+def change_autonomous_database_insight_advanced_features_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, opsi_private_endpoint_id, if_match, credential_details_credential_source_name):
+
+    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['credentialDetails'] = {}
+    _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+
+    if opsi_private_endpoint_id is not None:
+        _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
+
+    if credential_details_credential_source_name is not None:
+        _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
 
     _details['credentialDetails']['credentialType'] = 'CREDENTIALS_BY_SOURCE'
 
@@ -544,9 +615,9 @@ def change_autonomous_database_insight_advanced_features_credentials_by_source(c
 @database_insights_group.command(name=cli_util.override('opsi.change_autonomous_database_insight_advanced_features_credential_by_vault.command_name', 'change-autonomous-database-insight-advanced-features-credential-by-vault'), help=u"""Update connection detail for advanced features of Autonomous Database in Operations Insights. \n[Command Reference](changeAutonomousDatabaseInsightAdvancedFeatures)""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
-@cli_util.option('--credential-details-credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service.""")
 @cli_util.option('--opsi-private-endpoint-id', help=u"""The [OCID] of the OPSI private endpoint""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
 @cli_util.option('--credential-details-user-name', help=u"""database user name.""")
 @cli_util.option('--credential-details-password-secret-id', help=u"""The secret [OCID] mapping to the database credentials.""")
 @cli_util.option('--credential-details-wallet-secret-id', help=u"""The [OCID] of the Secret where the database keystore contents are stored. This is used for TCPS support in BM/VM/ExaCS cases.""")
@@ -559,7 +630,7 @@ def change_autonomous_database_insight_advanced_features_credentials_by_source(c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
 @cli_util.wrap_exceptions
-def change_autonomous_database_insight_advanced_features_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, credential_details_credential_source_name, opsi_private_endpoint_id, if_match, credential_details_user_name, credential_details_password_secret_id, credential_details_wallet_secret_id, credential_details_role):
+def change_autonomous_database_insight_advanced_features_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, opsi_private_endpoint_id, if_match, credential_details_credential_source_name, credential_details_user_name, credential_details_password_secret_id, credential_details_wallet_secret_id, credential_details_role):
 
     if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
@@ -572,10 +643,12 @@ def change_autonomous_database_insight_advanced_features_credential_by_vault(ctx
     _details = {}
     _details['credentialDetails'] = {}
     _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
-    _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
 
     if opsi_private_endpoint_id is not None:
         _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
+
+    if credential_details_credential_source_name is not None:
+        _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
 
     if credential_details_user_name is not None:
         _details['credentialDetails']['userName'] = credential_details_user_name
@@ -630,9 +703,9 @@ def change_autonomous_database_insight_advanced_features_credential_by_vault(ctx
 @database_insights_group.command(name=cli_util.override('opsi.change_autonomous_database_insight_advanced_features_credential_by_iam.command_name', 'change-autonomous-database-insight-advanced-features-credential-by-iam'), help=u"""Update connection detail for advanced features of Autonomous Database in Operations Insights. \n[Command Reference](changeAutonomousDatabaseInsightAdvancedFeatures)""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
-@cli_util.option('--credential-details-credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service.""")
 @cli_util.option('--opsi-private-endpoint-id', help=u"""The [OCID] of the OPSI private endpoint""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -641,7 +714,7 @@ def change_autonomous_database_insight_advanced_features_credential_by_vault(ctx
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
 @cli_util.wrap_exceptions
-def change_autonomous_database_insight_advanced_features_credential_by_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, credential_details_credential_source_name, opsi_private_endpoint_id, if_match):
+def change_autonomous_database_insight_advanced_features_credential_by_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, opsi_private_endpoint_id, if_match, credential_details_credential_source_name):
 
     if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
@@ -654,10 +727,12 @@ def change_autonomous_database_insight_advanced_features_credential_by_iam(ctx, 
     _details = {}
     _details['credentialDetails'] = {}
     _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
-    _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
 
     if opsi_private_endpoint_id is not None:
         _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
+
+    if credential_details_credential_source_name is not None:
+        _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
 
     _details['credentialDetails']['credentialType'] = 'CREDENTIALS_BY_IAM'
 
@@ -1063,6 +1138,371 @@ def change_host_insight_compartment(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
+@database_insights_group.command(name=cli_util.override('opsi.change_macs_managed_autonomous_database_insight_connection.command_name', 'change-macs-managed-autonomous'), help=u"""Change the connection details of a MACS-managed autonomous database insight. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMacsManagedAutonomousDatabaseInsightConnection)""")
+@cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
+@cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
+@cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}, 'connection-credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}, 'connection-credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}})
+@cli_util.wrap_exceptions
+def change_macs_managed_autonomous_database_insight_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, connection_credential_details, if_match):
+
+    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['managementAgentId'] = management_agent_id
+    _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+    _details['connectionCredentialDetails'] = cli_util.parse_json_parameter("connection_credential_details", connection_credential_details)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.change_macs_managed_autonomous_database_insight_connection(
+        database_insight_id=database_insight_id,
+        change_macs_managed_autonomous_database_insight_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.change_macs_managed_autonomous_database_insight_connection_credential_by_named_credentials.command_name', 'change-macs-managed-autonomous-database-insight-connection-credential-by-named-credentials'), help=u"""Change the connection details of a MACS-managed autonomous database insight. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMacsManagedAutonomousDatabaseInsightConnection)""")
+@cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
+@cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
+@cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
+@cli_util.option('--connection-credential-details-named-credential-id', help=u"""The credential [OCID] stored in management agent.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.wrap_exceptions
+def change_macs_managed_autonomous_database_insight_connection_credential_by_named_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, if_match, connection_credential_details_credential_source_name, connection_credential_details_named_credential_id):
+
+    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connectionCredentialDetails'] = {}
+    _details['managementAgentId'] = management_agent_id
+    _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+
+    if connection_credential_details_credential_source_name is not None:
+        _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
+
+    if connection_credential_details_named_credential_id is not None:
+        _details['connectionCredentialDetails']['namedCredentialId'] = connection_credential_details_named_credential_id
+
+    _details['connectionCredentialDetails']['credentialType'] = 'CREDENTIALS_BY_NAMED_CREDS'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.change_macs_managed_autonomous_database_insight_connection(
+        database_insight_id=database_insight_id,
+        change_macs_managed_autonomous_database_insight_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.change_macs_managed_autonomous_database_insight_connection_credentials_by_source.command_name', 'change-macs-managed-autonomous-database-insight-connection-credentials-by-source'), help=u"""Change the connection details of a MACS-managed autonomous database insight. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMacsManagedAutonomousDatabaseInsightConnection)""")
+@cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
+@cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
+@cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.wrap_exceptions
+def change_macs_managed_autonomous_database_insight_connection_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, if_match, connection_credential_details_credential_source_name):
+
+    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connectionCredentialDetails'] = {}
+    _details['managementAgentId'] = management_agent_id
+    _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+
+    if connection_credential_details_credential_source_name is not None:
+        _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
+
+    _details['connectionCredentialDetails']['credentialType'] = 'CREDENTIALS_BY_SOURCE'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.change_macs_managed_autonomous_database_insight_connection(
+        database_insight_id=database_insight_id,
+        change_macs_managed_autonomous_database_insight_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.change_macs_managed_autonomous_database_insight_connection_credential_by_vault.command_name', 'change-macs-managed-autonomous-database-insight-connection-credential-by-vault'), help=u"""Change the connection details of a MACS-managed autonomous database insight. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMacsManagedAutonomousDatabaseInsightConnection)""")
+@cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
+@cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
+@cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
+@cli_util.option('--connection-credential-details-user-name', help=u"""database user name.""")
+@cli_util.option('--connection-credential-details-password-secret-id', help=u"""The secret [OCID] mapping to the database credentials.""")
+@cli_util.option('--connection-credential-details-wallet-secret-id', help=u"""The [OCID] of the Secret where the database keystore contents are stored. This is used for TCPS support in BM/VM/ExaCS cases.""")
+@cli_util.option('--connection-credential-details-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL"]), help=u"""database user role.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.wrap_exceptions
+def change_macs_managed_autonomous_database_insight_connection_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, if_match, connection_credential_details_credential_source_name, connection_credential_details_user_name, connection_credential_details_password_secret_id, connection_credential_details_wallet_secret_id, connection_credential_details_role):
+
+    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connectionCredentialDetails'] = {}
+    _details['managementAgentId'] = management_agent_id
+    _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+
+    if connection_credential_details_credential_source_name is not None:
+        _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
+
+    if connection_credential_details_user_name is not None:
+        _details['connectionCredentialDetails']['userName'] = connection_credential_details_user_name
+
+    if connection_credential_details_password_secret_id is not None:
+        _details['connectionCredentialDetails']['passwordSecretId'] = connection_credential_details_password_secret_id
+
+    if connection_credential_details_wallet_secret_id is not None:
+        _details['connectionCredentialDetails']['walletSecretId'] = connection_credential_details_wallet_secret_id
+
+    if connection_credential_details_role is not None:
+        _details['connectionCredentialDetails']['role'] = connection_credential_details_role
+
+    _details['connectionCredentialDetails']['credentialType'] = 'CREDENTIALS_BY_VAULT'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.change_macs_managed_autonomous_database_insight_connection(
+        database_insight_id=database_insight_id,
+        change_macs_managed_autonomous_database_insight_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.change_macs_managed_autonomous_database_insight_connection_credential_by_iam.command_name', 'change-macs-managed-autonomous-database-insight-connection-credential-by-iam'), help=u"""Change the connection details of a MACS-managed autonomous database insight. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMacsManagedAutonomousDatabaseInsightConnection)""")
+@cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
+@cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
+@cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.wrap_exceptions
+def change_macs_managed_autonomous_database_insight_connection_credential_by_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, if_match, connection_credential_details_credential_source_name):
+
+    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connectionCredentialDetails'] = {}
+    _details['managementAgentId'] = management_agent_id
+    _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+
+    if connection_credential_details_credential_source_name is not None:
+        _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
+
+    _details['connectionCredentialDetails']['credentialType'] = 'CREDENTIALS_BY_IAM'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.change_macs_managed_autonomous_database_insight_connection(
+        database_insight_id=database_insight_id,
+        change_macs_managed_autonomous_database_insight_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @database_insights_group.command(name=cli_util.override('opsi.change_macs_managed_cloud_database_insight_connection.command_name', 'change-macs-managed-cloud'), help=u"""Change the connection details of a Cloud MACS-managed database insight. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMacsManagedCloudDatabaseInsightConnection)""")
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
@@ -1128,12 +1568,13 @@ def change_macs_managed_cloud_database_insight_connection(ctx, from_json, wait_f
     cli_util.render_response(result, ctx)
 
 
-@database_insights_group.command(name=cli_util.override('opsi.change_macs_managed_cloud_database_insight_connection_credentials_by_source.command_name', 'change-macs-managed-cloud-database-insight-connection-credentials-by-source'), help=u"""Change the connection details of a Cloud MACS-managed database insight. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMacsManagedCloudDatabaseInsightConnection)""")
+@database_insights_group.command(name=cli_util.override('opsi.change_macs_managed_cloud_database_insight_connection_credential_by_named_credentials.command_name', 'change-macs-managed-cloud-database-insight-connection-credential-by-named-credentials'), help=u"""Change the connection details of a Cloud MACS-managed database insight. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMacsManagedCloudDatabaseInsightConnection)""")
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-credential-details-credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
+@cli_util.option('--connection-credential-details-named-credential-id', help=u"""The credential [OCID] stored in management agent.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1142,7 +1583,7 @@ def change_macs_managed_cloud_database_insight_connection(ctx, from_json, wait_f
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
 @cli_util.wrap_exceptions
-def change_macs_managed_cloud_database_insight_connection_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, connection_credential_details_credential_source_name, if_match):
+def change_macs_managed_cloud_database_insight_connection_credential_by_named_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, if_match, connection_credential_details_credential_source_name, connection_credential_details_named_credential_id):
 
     if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
@@ -1156,7 +1597,82 @@ def change_macs_managed_cloud_database_insight_connection_credentials_by_source(
     _details['connectionCredentialDetails'] = {}
     _details['managementAgentId'] = management_agent_id
     _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
-    _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
+
+    if connection_credential_details_credential_source_name is not None:
+        _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
+
+    if connection_credential_details_named_credential_id is not None:
+        _details['connectionCredentialDetails']['namedCredentialId'] = connection_credential_details_named_credential_id
+
+    _details['connectionCredentialDetails']['credentialType'] = 'CREDENTIALS_BY_NAMED_CREDS'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.change_macs_managed_cloud_database_insight_connection(
+        database_insight_id=database_insight_id,
+        change_macs_managed_cloud_database_insight_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.change_macs_managed_cloud_database_insight_connection_credentials_by_source.command_name', 'change-macs-managed-cloud-database-insight-connection-credentials-by-source'), help=u"""Change the connection details of a Cloud MACS-managed database insight. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeMacsManagedCloudDatabaseInsightConnection)""")
+@cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
+@cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
+@cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.wrap_exceptions
+def change_macs_managed_cloud_database_insight_connection_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, if_match, connection_credential_details_credential_source_name):
+
+    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connectionCredentialDetails'] = {}
+    _details['managementAgentId'] = management_agent_id
+    _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+
+    if connection_credential_details_credential_source_name is not None:
+        _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
 
     _details['connectionCredentialDetails']['credentialType'] = 'CREDENTIALS_BY_SOURCE'
 
@@ -1200,8 +1716,8 @@ def change_macs_managed_cloud_database_insight_connection_credentials_by_source(
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-credential-details-credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
 @cli_util.option('--connection-credential-details-user-name', help=u"""database user name.""")
 @cli_util.option('--connection-credential-details-password-secret-id', help=u"""The secret [OCID] mapping to the database credentials.""")
 @cli_util.option('--connection-credential-details-wallet-secret-id', help=u"""The [OCID] of the Secret where the database keystore contents are stored. This is used for TCPS support in BM/VM/ExaCS cases.""")
@@ -1214,7 +1730,7 @@ def change_macs_managed_cloud_database_insight_connection_credentials_by_source(
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
 @cli_util.wrap_exceptions
-def change_macs_managed_cloud_database_insight_connection_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, connection_credential_details_credential_source_name, if_match, connection_credential_details_user_name, connection_credential_details_password_secret_id, connection_credential_details_wallet_secret_id, connection_credential_details_role):
+def change_macs_managed_cloud_database_insight_connection_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, if_match, connection_credential_details_credential_source_name, connection_credential_details_user_name, connection_credential_details_password_secret_id, connection_credential_details_wallet_secret_id, connection_credential_details_role):
 
     if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
@@ -1228,7 +1744,9 @@ def change_macs_managed_cloud_database_insight_connection_credential_by_vault(ct
     _details['connectionCredentialDetails'] = {}
     _details['managementAgentId'] = management_agent_id
     _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
-    _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
+
+    if connection_credential_details_credential_source_name is not None:
+        _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
 
     if connection_credential_details_user_name is not None:
         _details['connectionCredentialDetails']['userName'] = connection_credential_details_user_name
@@ -1284,8 +1802,8 @@ def change_macs_managed_cloud_database_insight_connection_credential_by_vault(ct
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-credential-details-credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1294,7 +1812,7 @@ def change_macs_managed_cloud_database_insight_connection_credential_by_vault(ct
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
 @cli_util.wrap_exceptions
-def change_macs_managed_cloud_database_insight_connection_credential_by_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, connection_credential_details_credential_source_name, if_match):
+def change_macs_managed_cloud_database_insight_connection_credential_by_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, if_match, connection_credential_details_credential_source_name):
 
     if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
@@ -1308,7 +1826,9 @@ def change_macs_managed_cloud_database_insight_connection_credential_by_iam(ctx,
     _details['connectionCredentialDetails'] = {}
     _details['managementAgentId'] = management_agent_id
     _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
-    _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
+
+    if connection_credential_details_credential_source_name is not None:
+        _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
 
     _details['connectionCredentialDetails']['credentialType'] = 'CREDENTIALS_BY_IAM'
 
@@ -1663,13 +2183,14 @@ def change_pe_comanaged_database_insight(ctx, from_json, wait_for_state, max_wai
     cli_util.render_response(result, ctx)
 
 
-@database_insights_group.command(name=cli_util.override('opsi.change_pe_comanaged_database_insight_credentials_by_source.command_name', 'change-pe-comanaged-database-insight-credentials-by-source'), help=u"""Change the connection details of a co-managed  database insight. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changePeComanagedDatabaseInsight)""")
+@database_insights_group.command(name=cli_util.override('opsi.change_pe_comanaged_database_insight_credential_by_named_credentials.command_name', 'change-pe-comanaged-database-insight-credential-by-named-credentials'), help=u"""Change the connection details of a co-managed  database insight. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changePeComanagedDatabaseInsight)""")
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
 @cli_util.option('--service-name', required=True, help=u"""Database service name used for connection requests.""")
 @cli_util.option('--opsi-private-endpoint-id', required=True, help=u"""The [OCID] of the OPSI private endpoint""")
-@cli_util.option('--credential-details-credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service.""")
 @cli_util.option('--connection-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
+@cli_util.option('--credential-details-named-credential-id', help=u"""The credential [OCID] stored in management agent.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1678,7 +2199,7 @@ def change_pe_comanaged_database_insight(ctx, from_json, wait_for_state, max_wai
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'PeComanagedDatabaseConnectionDetails'}})
 @cli_util.wrap_exceptions
-def change_pe_comanaged_database_insight_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, opsi_private_endpoint_id, credential_details_credential_source_name, connection_details, if_match):
+def change_pe_comanaged_database_insight_credential_by_named_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, opsi_private_endpoint_id, connection_details, if_match, credential_details_credential_source_name, credential_details_named_credential_id):
 
     if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
@@ -1692,10 +2213,89 @@ def change_pe_comanaged_database_insight_credentials_by_source(ctx, from_json, w
     _details['credentialDetails'] = {}
     _details['serviceName'] = service_name
     _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
-    _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
 
     if connection_details is not None:
         _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+
+    if credential_details_credential_source_name is not None:
+        _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
+
+    if credential_details_named_credential_id is not None:
+        _details['credentialDetails']['namedCredentialId'] = credential_details_named_credential_id
+
+    _details['credentialDetails']['credentialType'] = 'CREDENTIALS_BY_NAMED_CREDS'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.change_pe_comanaged_database_insight(
+        database_insight_id=database_insight_id,
+        change_pe_comanaged_database_insight_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.change_pe_comanaged_database_insight_credentials_by_source.command_name', 'change-pe-comanaged-database-insight-credentials-by-source'), help=u"""Change the connection details of a co-managed  database insight. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changePeComanagedDatabaseInsight)""")
+@cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
+@cli_util.option('--service-name', required=True, help=u"""Database service name used for connection requests.""")
+@cli_util.option('--opsi-private-endpoint-id', required=True, help=u"""The [OCID] of the OPSI private endpoint""")
+@cli_util.option('--connection-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-details': {'module': 'opsi', 'class': 'PeComanagedDatabaseConnectionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'PeComanagedDatabaseConnectionDetails'}})
+@cli_util.wrap_exceptions
+def change_pe_comanaged_database_insight_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, opsi_private_endpoint_id, connection_details, if_match, credential_details_credential_source_name):
+
+    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['credentialDetails'] = {}
+    _details['serviceName'] = service_name
+    _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
+
+    if connection_details is not None:
+        _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+
+    if credential_details_credential_source_name is not None:
+        _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
 
     _details['credentialDetails']['credentialType'] = 'CREDENTIALS_BY_SOURCE'
 
@@ -1739,9 +2339,9 @@ def change_pe_comanaged_database_insight_credentials_by_source(ctx, from_json, w
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
 @cli_util.option('--service-name', required=True, help=u"""Database service name used for connection requests.""")
 @cli_util.option('--opsi-private-endpoint-id', required=True, help=u"""The [OCID] of the OPSI private endpoint""")
-@cli_util.option('--credential-details-credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service.""")
 @cli_util.option('--connection-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
 @cli_util.option('--credential-details-user-name', help=u"""database user name.""")
 @cli_util.option('--credential-details-password-secret-id', help=u"""The secret [OCID] mapping to the database credentials.""")
 @cli_util.option('--credential-details-wallet-secret-id', help=u"""The [OCID] of the Secret where the database keystore contents are stored. This is used for TCPS support in BM/VM/ExaCS cases.""")
@@ -1754,7 +2354,7 @@ def change_pe_comanaged_database_insight_credentials_by_source(ctx, from_json, w
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'PeComanagedDatabaseConnectionDetails'}})
 @cli_util.wrap_exceptions
-def change_pe_comanaged_database_insight_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, opsi_private_endpoint_id, credential_details_credential_source_name, connection_details, if_match, credential_details_user_name, credential_details_password_secret_id, credential_details_wallet_secret_id, credential_details_role):
+def change_pe_comanaged_database_insight_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, opsi_private_endpoint_id, connection_details, if_match, credential_details_credential_source_name, credential_details_user_name, credential_details_password_secret_id, credential_details_wallet_secret_id, credential_details_role):
 
     if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
@@ -1768,10 +2368,12 @@ def change_pe_comanaged_database_insight_credential_by_vault(ctx, from_json, wai
     _details['credentialDetails'] = {}
     _details['serviceName'] = service_name
     _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
-    _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
 
     if connection_details is not None:
         _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+
+    if credential_details_credential_source_name is not None:
+        _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
 
     if credential_details_user_name is not None:
         _details['credentialDetails']['userName'] = credential_details_user_name
@@ -1827,9 +2429,9 @@ def change_pe_comanaged_database_insight_credential_by_vault(ctx, from_json, wai
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
 @cli_util.option('--service-name', required=True, help=u"""Database service name used for connection requests.""")
 @cli_util.option('--opsi-private-endpoint-id', required=True, help=u"""The [OCID] of the OPSI private endpoint""")
-@cli_util.option('--credential-details-credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service.""")
 @cli_util.option('--connection-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1838,7 +2440,7 @@ def change_pe_comanaged_database_insight_credential_by_vault(ctx, from_json, wai
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'PeComanagedDatabaseConnectionDetails'}})
 @cli_util.wrap_exceptions
-def change_pe_comanaged_database_insight_credential_by_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, opsi_private_endpoint_id, credential_details_credential_source_name, connection_details, if_match):
+def change_pe_comanaged_database_insight_credential_by_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, opsi_private_endpoint_id, connection_details, if_match, credential_details_credential_source_name):
 
     if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
@@ -1852,10 +2454,12 @@ def change_pe_comanaged_database_insight_credential_by_iam(ctx, from_json, wait_
     _details['credentialDetails'] = {}
     _details['serviceName'] = service_name
     _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
-    _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
 
     if connection_details is not None:
         _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+
+    if credential_details_credential_source_name is not None:
+        _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
 
     _details['credentialDetails']['credentialType'] = 'CREDENTIALS_BY_IAM'
 
@@ -2040,7 +2644,7 @@ def create_awr_hub_source(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 
 @database_insights_group.command(name=cli_util.override('opsi.create_database_insight.command_name', 'create'), help=u"""Create a Database Insight resource for a database in Operations Insights. The database will be enabled in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](createDatabaseInsight)""")
-@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["EM_MANAGED_EXTERNAL_DATABASE", "PE_COMANAGED_DATABASE", "MDS_MYSQL_DATABASE_SYSTEM", "EXTERNAL_MYSQL_DATABASE_SYSTEM", "MACS_MANAGED_CLOUD_DATABASE"]), help=u"""Source of the database entity.""")
+@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["EM_MANAGED_EXTERNAL_DATABASE", "PE_COMANAGED_DATABASE", "MDS_MYSQL_DATABASE_SYSTEM", "EXTERNAL_MYSQL_DATABASE_SYSTEM", "MACS_MANAGED_CLOUD_DATABASE", "MACS_MANAGED_AUTONOMOUS_DATABASE"]), help=u"""Source of the database entity.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of database""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2297,6 +2901,85 @@ def create_database_insight_create_autonomous_database_insight_details(ctx, from
         _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
 
     _details['entitySource'] = 'AUTONOMOUS_DATABASE'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.create_database_insight(
+        create_database_insight_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.create_database_insight_create_macs_managed_autonomous_database_insight_details.command_name', 'create-database-insight-create-macs-managed-autonomous-database-insight-details'), help=u"""Create a Database Insight resource for a database in Operations Insights. The database will be enabled in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](createDatabaseInsight)""")
+@cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier of database""")
+@cli_util.option('--database-id', required=True, help=u"""The [OCID] of the database.""")
+@cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
+@cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-resource-type', required=True, help=u"""OCI database resource type""")
+@cli_util.option('--deployment-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXACC"]), help=u"""Database Deployment Type""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""System tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}, 'connection-credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}, 'connection-credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'opsi', 'class': 'DatabaseInsight'})
+@cli_util.wrap_exceptions
+def create_database_insight_create_macs_managed_autonomous_database_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, database_id, management_agent_id, connection_details, connection_credential_details, database_resource_type, deployment_type, freeform_tags, defined_tags, system_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['databaseId'] = database_id
+    _details['managementAgentId'] = management_agent_id
+    _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+    _details['connectionCredentialDetails'] = cli_util.parse_json_parameter("connection_credential_details", connection_credential_details)
+    _details['databaseResourceType'] = database_resource_type
+    _details['deploymentType'] = deployment_type
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if system_tags is not None:
+        _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
+
+    _details['entitySource'] = 'MACS_MANAGED_AUTONOMOUS_DATABASE'
 
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.create_database_insight(
@@ -4729,12 +5412,13 @@ def enable_autonomous_database_insight_advanced_features(ctx, from_json, wait_fo
     cli_util.render_response(result, ctx)
 
 
-@database_insights_group.command(name=cli_util.override('opsi.enable_autonomous_database_insight_advanced_features_credentials_by_source.command_name', 'enable-autonomous-database-insight-advanced-features-credentials-by-source'), help=u"""Enables advanced features for an Autonomous Database in Operations Insights. A direct connection will be available for further collection. \n[Command Reference](enableAutonomousDatabaseInsightAdvancedFeatures)""")
+@database_insights_group.command(name=cli_util.override('opsi.enable_autonomous_database_insight_advanced_features_credential_by_named_credentials.command_name', 'enable-autonomous-database-insight-advanced-features-credential-by-named-credentials'), help=u"""Enables advanced features for an Autonomous Database in Operations Insights. A direct connection will be available for further collection. \n[Command Reference](enableAutonomousDatabaseInsightAdvancedFeatures)""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
-@cli_util.option('--credential-details-credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service.""")
 @cli_util.option('--opsi-private-endpoint-id', help=u"""The [OCID] of the OPSI private endpoint""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
+@cli_util.option('--credential-details-named-credential-id', help=u"""The credential [OCID] stored in management agent.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -4743,7 +5427,7 @@ def enable_autonomous_database_insight_advanced_features(ctx, from_json, wait_fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
 @cli_util.wrap_exceptions
-def enable_autonomous_database_insight_advanced_features_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, credential_details_credential_source_name, opsi_private_endpoint_id, if_match):
+def enable_autonomous_database_insight_advanced_features_credential_by_named_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, opsi_private_endpoint_id, if_match, credential_details_credential_source_name, credential_details_named_credential_id):
 
     if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
@@ -4756,10 +5440,87 @@ def enable_autonomous_database_insight_advanced_features_credentials_by_source(c
     _details = {}
     _details['credentialDetails'] = {}
     _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
-    _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
 
     if opsi_private_endpoint_id is not None:
         _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
+
+    if credential_details_credential_source_name is not None:
+        _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
+
+    if credential_details_named_credential_id is not None:
+        _details['credentialDetails']['namedCredentialId'] = credential_details_named_credential_id
+
+    _details['credentialDetails']['credentialType'] = 'CREDENTIALS_BY_NAMED_CREDS'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.enable_autonomous_database_insight_advanced_features(
+        database_insight_id=database_insight_id,
+        enable_autonomous_database_insight_advanced_features_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.enable_autonomous_database_insight_advanced_features_credentials_by_source.command_name', 'enable-autonomous-database-insight-advanced-features-credentials-by-source'), help=u"""Enables advanced features for an Autonomous Database in Operations Insights. A direct connection will be available for further collection. \n[Command Reference](enableAutonomousDatabaseInsightAdvancedFeatures)""")
+@cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
+@cli_util.option('--opsi-private-endpoint-id', help=u"""The [OCID] of the OPSI private endpoint""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.wrap_exceptions
+def enable_autonomous_database_insight_advanced_features_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, opsi_private_endpoint_id, if_match, credential_details_credential_source_name):
+
+    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['credentialDetails'] = {}
+    _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+
+    if opsi_private_endpoint_id is not None:
+        _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
+
+    if credential_details_credential_source_name is not None:
+        _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
 
     _details['credentialDetails']['credentialType'] = 'CREDENTIALS_BY_SOURCE'
 
@@ -4802,9 +5563,9 @@ def enable_autonomous_database_insight_advanced_features_credentials_by_source(c
 @database_insights_group.command(name=cli_util.override('opsi.enable_autonomous_database_insight_advanced_features_credential_by_vault.command_name', 'enable-autonomous-database-insight-advanced-features-credential-by-vault'), help=u"""Enables advanced features for an Autonomous Database in Operations Insights. A direct connection will be available for further collection. \n[Command Reference](enableAutonomousDatabaseInsightAdvancedFeatures)""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
-@cli_util.option('--credential-details-credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service.""")
 @cli_util.option('--opsi-private-endpoint-id', help=u"""The [OCID] of the OPSI private endpoint""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
 @cli_util.option('--credential-details-user-name', help=u"""database user name.""")
 @cli_util.option('--credential-details-password-secret-id', help=u"""The secret [OCID] mapping to the database credentials.""")
 @cli_util.option('--credential-details-wallet-secret-id', help=u"""The [OCID] of the Secret where the database keystore contents are stored. This is used for TCPS support in BM/VM/ExaCS cases.""")
@@ -4817,7 +5578,7 @@ def enable_autonomous_database_insight_advanced_features_credentials_by_source(c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
 @cli_util.wrap_exceptions
-def enable_autonomous_database_insight_advanced_features_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, credential_details_credential_source_name, opsi_private_endpoint_id, if_match, credential_details_user_name, credential_details_password_secret_id, credential_details_wallet_secret_id, credential_details_role):
+def enable_autonomous_database_insight_advanced_features_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, opsi_private_endpoint_id, if_match, credential_details_credential_source_name, credential_details_user_name, credential_details_password_secret_id, credential_details_wallet_secret_id, credential_details_role):
 
     if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
@@ -4830,10 +5591,12 @@ def enable_autonomous_database_insight_advanced_features_credential_by_vault(ctx
     _details = {}
     _details['credentialDetails'] = {}
     _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
-    _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
 
     if opsi_private_endpoint_id is not None:
         _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
+
+    if credential_details_credential_source_name is not None:
+        _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
 
     if credential_details_user_name is not None:
         _details['credentialDetails']['userName'] = credential_details_user_name
@@ -4888,9 +5651,9 @@ def enable_autonomous_database_insight_advanced_features_credential_by_vault(ctx
 @database_insights_group.command(name=cli_util.override('opsi.enable_autonomous_database_insight_advanced_features_credential_by_iam.command_name', 'enable-autonomous-database-insight-advanced-features-credential-by-iam'), help=u"""Enables advanced features for an Autonomous Database in Operations Insights. A direct connection will be available for further collection. \n[Command Reference](enableAutonomousDatabaseInsightAdvancedFeatures)""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
-@cli_util.option('--credential-details-credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service.""")
 @cli_util.option('--opsi-private-endpoint-id', help=u"""The [OCID] of the OPSI private endpoint""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -4899,7 +5662,7 @@ def enable_autonomous_database_insight_advanced_features_credential_by_vault(ctx
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
 @cli_util.wrap_exceptions
-def enable_autonomous_database_insight_advanced_features_credential_by_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, credential_details_credential_source_name, opsi_private_endpoint_id, if_match):
+def enable_autonomous_database_insight_advanced_features_credential_by_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, opsi_private_endpoint_id, if_match, credential_details_credential_source_name):
 
     if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
@@ -4912,10 +5675,12 @@ def enable_autonomous_database_insight_advanced_features_credential_by_iam(ctx, 
     _details = {}
     _details['credentialDetails'] = {}
     _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
-    _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
 
     if opsi_private_endpoint_id is not None:
         _details['opsiPrivateEndpointId'] = opsi_private_endpoint_id
+
+    if credential_details_credential_source_name is not None:
+        _details['credentialDetails']['credentialSourceName'] = credential_details_credential_source_name
 
     _details['credentialDetails']['credentialType'] = 'CREDENTIALS_BY_IAM'
 
@@ -5011,7 +5776,7 @@ def enable_awr_hub_source(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 
 @database_insights_group.command(name=cli_util.override('opsi.enable_database_insight.command_name', 'enable'), help=u"""Enables a database in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](enableDatabaseInsight)""")
-@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["EM_MANAGED_EXTERNAL_DATABASE", "PE_COMANAGED_DATABASE", "MDS_MYSQL_DATABASE_SYSTEM", "EXTERNAL_MYSQL_DATABASE_SYSTEM", "MACS_MANAGED_CLOUD_DATABASE"]), help=u"""Source of the database entity.""")
+@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["EM_MANAGED_EXTERNAL_DATABASE", "PE_COMANAGED_DATABASE", "MDS_MYSQL_DATABASE_SYSTEM", "EXTERNAL_MYSQL_DATABASE_SYSTEM", "MACS_MANAGED_CLOUD_DATABASE", "MACS_MANAGED_AUTONOMOUS_DATABASE"]), help=u"""Source of the database entity.""")
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -5156,6 +5921,87 @@ def enable_database_insight_enable_mds_my_sql_database_insight_details(ctx, from
     _details = {}
 
     _details['entitySource'] = 'MDS_MYSQL_DATABASE_SYSTEM'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.enable_database_insight(
+        database_insight_id=database_insight_id,
+        enable_database_insight_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.enable_database_insight_enable_macs_managed_autonomous_database_insight_details.command_name', 'enable-database-insight-enable-macs-managed-autonomous-database-insight-details'), help=u"""Enables a database in Operations Insights. Database metric collection and analysis will be started. \n[Command Reference](enableDatabaseInsight)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] of the Autonomous Database.""")
+@cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
+@cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""System tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}, 'connection-credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}, 'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}, 'connection-credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}, 'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def enable_database_insight_enable_macs_managed_autonomous_database_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, management_agent_id, connection_details, connection_credential_details, database_insight_id, freeform_tags, defined_tags, system_tags, if_match):
+
+    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['managementAgentId'] = management_agent_id
+    _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+    _details['connectionCredentialDetails'] = cli_util.parse_json_parameter("connection_credential_details", connection_credential_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if system_tags is not None:
+        _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
+
+    _details['entitySource'] = 'MACS_MANAGED_AUTONOMOUS_DATABASE'
 
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.enable_database_insight(
@@ -7772,7 +8618,7 @@ def list_awr_snapshots(ctx, from_json, all_pages, page_size, awr_hub_id, awr_sou
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
 @cli_util.option('--cdb-name', multiple=True, help=u"""Filter by one or more cdb name.""")
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -7863,7 +8709,7 @@ def list_database_configurations(ctx, from_json, all_pages, page_size, compartme
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION"]), multiple=True, help=u"""Lifecycle states""")
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["compartmentId", "databaseName", "databaseDisplayName", "databaseType", "databaseVersion", "databaseHostNames", "freeformTags", "definedTags"]), multiple=True, help=u"""Specifies the fields to return in a database summary response. By default all fields are returned if omitted.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination]. Example: `50`""")
@@ -8569,7 +9415,7 @@ def list_importable_enterprise_manager_entities(ctx, from_json, all_pages, page_
     cli_util.render_response(result, ctx)
 
 
-@news_report_group.command(name=cli_util.override('opsi.list_news_reports.command_name', 'list'), help=u"""Gets a list of news reports based on the query parameters specified. Either compartmentId or id query parameter must be specified. \n[Command Reference](listNewsReports)""")
+@news_reports_group.command(name=cli_util.override('opsi.list_news_reports.command_name', 'list'), help=u"""Gets a list of news reports based on the query parameters specified. Either compartmentId or id query parameter must be specified. \n[Command Reference](listNewsReports)""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--news-report-id', help=u"""Unique Ops Insights news report identifier""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["DISABLED", "ENABLED", "TERMINATED"]), multiple=True, help=u"""Resource Status""")
@@ -10802,7 +11648,7 @@ def summarize_configuration_items(ctx, from_json, compartment_id, opsi_config_ty
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
@@ -10892,7 +11738,7 @@ def summarize_database_insight_resource_capacity_trend(ctx, from_json, compartme
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
@@ -10988,7 +11834,7 @@ def summarize_database_insight_resource_forecast_trend(ctx, from_json, compartme
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
@@ -11084,7 +11930,7 @@ def summarize_database_insight_resource_statistics(ctx, from_json, compartment_i
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
@@ -11159,7 +12005,7 @@ def summarize_database_insight_resource_usage(ctx, from_json, compartment_id, re
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
@@ -11237,7 +12083,7 @@ def summarize_database_insight_resource_usage_trend(ctx, from_json, compartment_
 @cli_util.option('--analysis-time-interval', help=u"""Specify time period in ISO 8601 format with respect to current time. Default is last 30 days represented by P30D. If timeInterval is specified, then timeIntervalStart and timeIntervalEnd will be ignored. Examples  P90D (last 90 days), P4W (last 4 weeks), P2M (last 2 months), P1Y (last 12 months), . Maximum value allowed is 25 months prior to current time (P25M).""")
 @cli_util.option('--time-interval-start', type=custom_types.CLI_DATETIME, help=u"""Analysis start time in UTC in ISO 8601 format(inclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). The minimum allowed value is 2 years prior to the current day. timeIntervalStart and timeIntervalEnd parameters are used together. If analysisTimeInterval is specified, this parameter is ignored.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-interval-end', type=custom_types.CLI_DATETIME, help=u"""Analysis end time in UTC in ISO 8601 format(exclusive). Example 2019-10-30T00:00:00Z (yyyy-MM-ddThh:mm:ssZ). timeIntervalStart and timeIntervalEnd are used together. If timeIntervalEnd is not specified, current time is used as timeIntervalEnd.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
@@ -12737,7 +13583,7 @@ def summarize_operations_insights_warehouse_resource_usage(ctx, from_json, opera
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_sql_insights.command_name', 'summarize-sql-insights'), help=u"""Query SQL Warehouse to get the performance insights for SQLs taking greater than X% database time for a given time period across the given databases or database types in a compartment and in all sub-compartments if specified. \n[Command Reference](summarizeSqlInsights)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
@@ -12885,7 +13731,7 @@ def summarize_sql_response_time_distributions(ctx, from_json, compartment_id, sq
 
 @database_insights_group.command(name=cli_util.override('opsi.summarize_sql_statistics.command_name', 'summarize-sql-statistics'), help=u"""Query SQL Warehouse to get the performance statistics for SQLs taking greater than X% database time for a given time period across the given databases or database types in a compartment and in all sub-compartments if specified. \n[Command Reference](summarizeSqlStatistics)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
+@cli_util.option('--database-type', type=custom_types.CliCaseInsensitiveChoice(["ADW-S", "ATP-S", "ADW-D", "ATP-D", "EXTERNAL-PDB", "EXTERNAL-NONCDB", "COMANAGED-VM-CDB", "COMANAGED-VM-PDB", "COMANAGED-VM-NONCDB", "COMANAGED-BM-CDB", "COMANAGED-BM-PDB", "COMANAGED-BM-NONCDB", "COMANAGED-EXACS-CDB", "COMANAGED-EXACS-PDB", "COMANAGED-EXACS-NONCDB", "COMANAGED-EXACC-CDB", "COMANAGED-EXACC-PDB", "COMANAGED-EXACC-NONCDB", "MDS-MYSQL", "EXTERNAL-MYSQL", "ATP-EXACC", "ADW-EXACC", "EXTERNAL-ADW", "EXTERNAL-ATP"]), multiple=True, help=u"""Filter by one or more database type. Possible values are ADW-S, ATP-S, ADW-D, ATP-D, EXTERNAL-PDB, EXTERNAL-NONCDB.""")
 @cli_util.option('--database-id', multiple=True, help=u"""Optional list of database [OCIDs] of the associated DBaaS entity.""")
 @cli_util.option('--id', multiple=True, help=u"""Optional list of database insight resource [OCIDs].""")
 @cli_util.option('--exadata-insight-id', multiple=True, help=u"""Optional list of exadata insight resource [OCIDs].""")
@@ -13073,6 +13919,428 @@ def summarize_sql_statistics_time_series_by_plan(ctx, from_json, compartment_id,
     cli_util.render_response(result, ctx)
 
 
+@database_insights_group.command(name=cli_util.override('opsi.synchronize_autonomous_database_to_exadata.command_name', 'synchronize-autonomous-database-to-exadata'), help=u"""Synchronize infrastructure details that has been missing when autonomous database onboarded in Operations Insights. Onboarded Opsi ExadataInsight resource need to be provided with compartmentId for searching infrastruture details. The query parameters, DatabaseId and DatabaseInsightId, are mutually exclusive and provided for searching Opsi resources that have been onboarded. \n[Command Reference](synchronizeAutonomousDatabaseToExadata)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["AUTONOMOUS_DATABASE", "EM_MANAGED_EXTERNAL_DATABASE", "MACS_MANAGED_EXTERNAL_DATABASE", "PE_COMANAGED_DATABASE", "MDS_MYSQL_DATABASE_SYSTEM", "EXTERNAL_MYSQL_DATABASE_SYSTEM", "MACS_MANAGED_CLOUD_DATABASE", "MACS_MANAGED_AUTONOMOUS_DATABASE"]), help=u"""Source of the database entity. Currently only AUTONOMOUS_DATABASE source is supported.""")
+@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
+@cli_util.option('--exadata-insight-id', help=u"""[OCID] of exadata insight resource.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def synchronize_autonomous_database_to_exadata(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, entity_source, database_id, id, exadata_insight_id, if_match):
+
+    kwargs = {}
+    if database_id is not None:
+        kwargs['database_id'] = database_id
+    if id is not None:
+        kwargs['id'] = id
+    if exadata_insight_id is not None:
+        kwargs['exadata_insight_id'] = exadata_insight_id
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['entitySource'] = entity_source
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.synchronize_autonomous_database_to_exadata(
+        compartment_id=compartment_id,
+        synchronize_autonomous_database_to_exadata_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.test_macs_managed_autonomous_database_insight_connection.command_name', 'test-macs-managed-autonomous'), help=u"""Test the connection details of a MACS-managed autonomous database. \n[Command Reference](testMacsManagedAutonomousDatabaseInsightConnection)""")
+@cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
+@cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-credential-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}, 'connection-credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}, 'connection-credential-details': {'module': 'opsi', 'class': 'CredentialDetails'}})
+@cli_util.wrap_exceptions
+def test_macs_managed_autonomous_database_insight_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_id, connection_details, connection_credential_details, database_id, id):
+
+    kwargs = {}
+    if database_id is not None:
+        kwargs['database_id'] = database_id
+    if id is not None:
+        kwargs['id'] = id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['managementAgentId'] = management_agent_id
+    _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+    _details['connectionCredentialDetails'] = cli_util.parse_json_parameter("connection_credential_details", connection_credential_details)
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.test_macs_managed_autonomous_database_insight_connection(
+        test_macs_managed_autonomous_database_insight_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.test_macs_managed_autonomous_database_insight_connection_credential_by_named_credentials.command_name', 'test-macs-managed-autonomous-database-insight-connection-credential-by-named-credentials'), help=u"""Test the connection details of a MACS-managed autonomous database. \n[Command Reference](testMacsManagedAutonomousDatabaseInsightConnection)""")
+@cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
+@cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
+@cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
+@cli_util.option('--connection-credential-details-named-credential-id', help=u"""The credential [OCID] stored in management agent.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.wrap_exceptions
+def test_macs_managed_autonomous_database_insight_connection_credential_by_named_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_id, connection_details, database_id, id, connection_credential_details_credential_source_name, connection_credential_details_named_credential_id):
+
+    kwargs = {}
+    if database_id is not None:
+        kwargs['database_id'] = database_id
+    if id is not None:
+        kwargs['id'] = id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connectionCredentialDetails'] = {}
+    _details['managementAgentId'] = management_agent_id
+    _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+
+    if connection_credential_details_credential_source_name is not None:
+        _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
+
+    if connection_credential_details_named_credential_id is not None:
+        _details['connectionCredentialDetails']['namedCredentialId'] = connection_credential_details_named_credential_id
+
+    _details['connectionCredentialDetails']['credentialType'] = 'CREDENTIALS_BY_NAMED_CREDS'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.test_macs_managed_autonomous_database_insight_connection(
+        test_macs_managed_autonomous_database_insight_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.test_macs_managed_autonomous_database_insight_connection_credentials_by_source.command_name', 'test-macs-managed-autonomous-database-insight-connection-credentials-by-source'), help=u"""Test the connection details of a MACS-managed autonomous database. \n[Command Reference](testMacsManagedAutonomousDatabaseInsightConnection)""")
+@cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
+@cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
+@cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.wrap_exceptions
+def test_macs_managed_autonomous_database_insight_connection_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_id, connection_details, database_id, id, connection_credential_details_credential_source_name):
+
+    kwargs = {}
+    if database_id is not None:
+        kwargs['database_id'] = database_id
+    if id is not None:
+        kwargs['id'] = id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connectionCredentialDetails'] = {}
+    _details['managementAgentId'] = management_agent_id
+    _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+
+    if connection_credential_details_credential_source_name is not None:
+        _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
+
+    _details['connectionCredentialDetails']['credentialType'] = 'CREDENTIALS_BY_SOURCE'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.test_macs_managed_autonomous_database_insight_connection(
+        test_macs_managed_autonomous_database_insight_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.test_macs_managed_autonomous_database_insight_connection_credential_by_vault.command_name', 'test-macs-managed-autonomous-database-insight-connection-credential-by-vault'), help=u"""Test the connection details of a MACS-managed autonomous database. \n[Command Reference](testMacsManagedAutonomousDatabaseInsightConnection)""")
+@cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
+@cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
+@cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
+@cli_util.option('--connection-credential-details-user-name', help=u"""database user name.""")
+@cli_util.option('--connection-credential-details-password-secret-id', help=u"""The secret [OCID] mapping to the database credentials.""")
+@cli_util.option('--connection-credential-details-wallet-secret-id', help=u"""The [OCID] of the Secret where the database keystore contents are stored. This is used for TCPS support in BM/VM/ExaCS cases.""")
+@cli_util.option('--connection-credential-details-role', type=custom_types.CliCaseInsensitiveChoice(["NORMAL"]), help=u"""database user role.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.wrap_exceptions
+def test_macs_managed_autonomous_database_insight_connection_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_id, connection_details, database_id, id, connection_credential_details_credential_source_name, connection_credential_details_user_name, connection_credential_details_password_secret_id, connection_credential_details_wallet_secret_id, connection_credential_details_role):
+
+    kwargs = {}
+    if database_id is not None:
+        kwargs['database_id'] = database_id
+    if id is not None:
+        kwargs['id'] = id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connectionCredentialDetails'] = {}
+    _details['managementAgentId'] = management_agent_id
+    _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+
+    if connection_credential_details_credential_source_name is not None:
+        _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
+
+    if connection_credential_details_user_name is not None:
+        _details['connectionCredentialDetails']['userName'] = connection_credential_details_user_name
+
+    if connection_credential_details_password_secret_id is not None:
+        _details['connectionCredentialDetails']['passwordSecretId'] = connection_credential_details_password_secret_id
+
+    if connection_credential_details_wallet_secret_id is not None:
+        _details['connectionCredentialDetails']['walletSecretId'] = connection_credential_details_wallet_secret_id
+
+    if connection_credential_details_role is not None:
+        _details['connectionCredentialDetails']['role'] = connection_credential_details_role
+
+    _details['connectionCredentialDetails']['credentialType'] = 'CREDENTIALS_BY_VAULT'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.test_macs_managed_autonomous_database_insight_connection(
+        test_macs_managed_autonomous_database_insight_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.test_macs_managed_autonomous_database_insight_connection_credential_by_iam.command_name', 'test-macs-managed-autonomous-database-insight-connection-credential-by-iam'), help=u"""Test the connection details of a MACS-managed autonomous database. \n[Command Reference](testMacsManagedAutonomousDatabaseInsightConnection)""")
+@cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
+@cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
+@cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.wrap_exceptions
+def test_macs_managed_autonomous_database_insight_connection_credential_by_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_id, connection_details, database_id, id, connection_credential_details_credential_source_name):
+
+    kwargs = {}
+    if database_id is not None:
+        kwargs['database_id'] = database_id
+    if id is not None:
+        kwargs['id'] = id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connectionCredentialDetails'] = {}
+    _details['managementAgentId'] = management_agent_id
+    _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+
+    if connection_credential_details_credential_source_name is not None:
+        _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
+
+    _details['connectionCredentialDetails']['credentialType'] = 'CREDENTIALS_BY_IAM'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.test_macs_managed_autonomous_database_insight_connection(
+        test_macs_managed_autonomous_database_insight_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @database_insights_group.command(name=cli_util.override('opsi.test_macs_managed_cloud_database_insight_connection.command_name', 'test-macs-managed-cloud'), help=u"""Test the connection details of a Cloud MACS-managed database. \n[Command Reference](testMacsManagedCloudDatabaseInsightConnection)""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -13136,12 +14404,13 @@ def test_macs_managed_cloud_database_insight_connection(ctx, from_json, wait_for
     cli_util.render_response(result, ctx)
 
 
-@database_insights_group.command(name=cli_util.override('opsi.test_macs_managed_cloud_database_insight_connection_credentials_by_source.command_name', 'test-macs-managed-cloud-database-insight-connection-credentials-by-source'), help=u"""Test the connection details of a Cloud MACS-managed database. \n[Command Reference](testMacsManagedCloudDatabaseInsightConnection)""")
+@database_insights_group.command(name=cli_util.override('opsi.test_macs_managed_cloud_database_insight_connection_credential_by_named_credentials.command_name', 'test-macs-managed-cloud-database-insight-connection-credential-by-named-credentials'), help=u"""Test the connection details of a Cloud MACS-managed database. \n[Command Reference](testMacsManagedCloudDatabaseInsightConnection)""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-credential-details-credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service.""")
 @cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
+@cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
+@cli_util.option('--connection-credential-details-named-credential-id', help=u"""The credential [OCID] stored in management agent.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -13150,7 +14419,7 @@ def test_macs_managed_cloud_database_insight_connection(ctx, from_json, wait_for
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
 @cli_util.wrap_exceptions
-def test_macs_managed_cloud_database_insight_connection_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_id, connection_details, connection_credential_details_credential_source_name, database_id, id):
+def test_macs_managed_cloud_database_insight_connection_credential_by_named_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_id, connection_details, database_id, id, connection_credential_details_credential_source_name, connection_credential_details_named_credential_id):
 
     kwargs = {}
     if database_id is not None:
@@ -13163,7 +14432,80 @@ def test_macs_managed_cloud_database_insight_connection_credentials_by_source(ct
     _details['connectionCredentialDetails'] = {}
     _details['managementAgentId'] = management_agent_id
     _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
-    _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
+
+    if connection_credential_details_credential_source_name is not None:
+        _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
+
+    if connection_credential_details_named_credential_id is not None:
+        _details['connectionCredentialDetails']['namedCredentialId'] = connection_credential_details_named_credential_id
+
+    _details['connectionCredentialDetails']['credentialType'] = 'CREDENTIALS_BY_NAMED_CREDS'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.test_macs_managed_cloud_database_insight_connection(
+        test_macs_managed_cloud_database_insight_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.test_macs_managed_cloud_database_insight_connection_credentials_by_source.command_name', 'test-macs-managed-cloud-database-insight-connection-credentials-by-source'), help=u"""Test the connection details of a Cloud MACS-managed database. \n[Command Reference](testMacsManagedCloudDatabaseInsightConnection)""")
+@cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
+@cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
+@cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
+@cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
+@cli_util.wrap_exceptions
+def test_macs_managed_cloud_database_insight_connection_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_id, connection_details, database_id, id, connection_credential_details_credential_source_name):
+
+    kwargs = {}
+    if database_id is not None:
+        kwargs['database_id'] = database_id
+    if id is not None:
+        kwargs['id'] = id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connectionCredentialDetails'] = {}
+    _details['managementAgentId'] = management_agent_id
+    _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
+
+    if connection_credential_details_credential_source_name is not None:
+        _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
 
     _details['connectionCredentialDetails']['credentialType'] = 'CREDENTIALS_BY_SOURCE'
 
@@ -13205,9 +14547,9 @@ def test_macs_managed_cloud_database_insight_connection_credentials_by_source(ct
 @database_insights_group.command(name=cli_util.override('opsi.test_macs_managed_cloud_database_insight_connection_credential_by_vault.command_name', 'test-macs-managed-cloud-database-insight-connection-credential-by-vault'), help=u"""Test the connection details of a Cloud MACS-managed database. \n[Command Reference](testMacsManagedCloudDatabaseInsightConnection)""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-credential-details-credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service.""")
 @cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
+@cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
 @cli_util.option('--connection-credential-details-user-name', help=u"""database user name.""")
 @cli_util.option('--connection-credential-details-password-secret-id', help=u"""The secret [OCID] mapping to the database credentials.""")
 @cli_util.option('--connection-credential-details-wallet-secret-id', help=u"""The [OCID] of the Secret where the database keystore contents are stored. This is used for TCPS support in BM/VM/ExaCS cases.""")
@@ -13220,7 +14562,7 @@ def test_macs_managed_cloud_database_insight_connection_credentials_by_source(ct
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
 @cli_util.wrap_exceptions
-def test_macs_managed_cloud_database_insight_connection_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_id, connection_details, connection_credential_details_credential_source_name, database_id, id, connection_credential_details_user_name, connection_credential_details_password_secret_id, connection_credential_details_wallet_secret_id, connection_credential_details_role):
+def test_macs_managed_cloud_database_insight_connection_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_id, connection_details, database_id, id, connection_credential_details_credential_source_name, connection_credential_details_user_name, connection_credential_details_password_secret_id, connection_credential_details_wallet_secret_id, connection_credential_details_role):
 
     kwargs = {}
     if database_id is not None:
@@ -13233,7 +14575,9 @@ def test_macs_managed_cloud_database_insight_connection_credential_by_vault(ctx,
     _details['connectionCredentialDetails'] = {}
     _details['managementAgentId'] = management_agent_id
     _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
-    _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
+
+    if connection_credential_details_credential_source_name is not None:
+        _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
 
     if connection_credential_details_user_name is not None:
         _details['connectionCredentialDetails']['userName'] = connection_credential_details_user_name
@@ -13287,9 +14631,9 @@ def test_macs_managed_cloud_database_insight_connection_credential_by_vault(ctx,
 @database_insights_group.command(name=cli_util.override('opsi.test_macs_managed_cloud_database_insight_connection_credential_by_iam.command_name', 'test-macs-managed-cloud-database-insight-connection-credential-by-iam'), help=u"""Test the connection details of a Cloud MACS-managed database. \n[Command Reference](testMacsManagedCloudDatabaseInsightConnection)""")
 @cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent""")
 @cli_util.option('--connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--connection-credential-details-credential-source-name', required=True, help=u"""Credential source name that had been added in Management Agent wallet. This is supplied in the External Database Service.""")
 @cli_util.option('--database-id', help=u"""Optional [OCID] of the associated DBaaS entity.""")
 @cli_util.option('--id', help=u"""[OCID] of the database insight resource.""")
+@cli_util.option('--connection-credential-details-credential-source-name', help=u"""Credential source name that had been added in Management Agent wallet. This value is only required when Credential set by CREDENTIALS_BY_SOURCE and is optional properties for ther others.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -13298,7 +14642,7 @@ def test_macs_managed_cloud_database_insight_connection_credential_by_vault(ctx,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-details': {'module': 'opsi', 'class': 'ConnectionDetails'}})
 @cli_util.wrap_exceptions
-def test_macs_managed_cloud_database_insight_connection_credential_by_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_id, connection_details, connection_credential_details_credential_source_name, database_id, id):
+def test_macs_managed_cloud_database_insight_connection_credential_by_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_id, connection_details, database_id, id, connection_credential_details_credential_source_name):
 
     kwargs = {}
     if database_id is not None:
@@ -13311,7 +14655,9 @@ def test_macs_managed_cloud_database_insight_connection_credential_by_iam(ctx, f
     _details['connectionCredentialDetails'] = {}
     _details['managementAgentId'] = management_agent_id
     _details['connectionDetails'] = cli_util.parse_json_parameter("connection_details", connection_details)
-    _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
+
+    if connection_credential_details_credential_source_name is not None:
+        _details['connectionCredentialDetails']['credentialSourceName'] = connection_credential_details_credential_source_name
 
     _details['connectionCredentialDetails']['credentialType'] = 'CREDENTIALS_BY_IAM'
 
@@ -13504,7 +14850,7 @@ def update_awr_hub_source(ctx, from_json, force, wait_for_state, max_wait_second
 
 @database_insights_group.command(name=cli_util.override('opsi.update_database_insight.command_name', 'update'), help=u"""Updates configuration of a database insight. \n[Command Reference](updateDatabaseInsight)""")
 @cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
-@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["AUTONOMOUS_DATABASE", "EM_MANAGED_EXTERNAL_DATABASE", "MACS_MANAGED_EXTERNAL_DATABASE", "PE_COMANAGED_DATABASE", "MDS_MYSQL_DATABASE_SYSTEM", "EXTERNAL_MYSQL_DATABASE_SYSTEM", "MACS_MANAGED_CLOUD_DATABASE"]), help=u"""Source of the database entity.""")
+@cli_util.option('--entity-source', required=True, type=custom_types.CliCaseInsensitiveChoice(["AUTONOMOUS_DATABASE", "EM_MANAGED_EXTERNAL_DATABASE", "MACS_MANAGED_EXTERNAL_DATABASE", "PE_COMANAGED_DATABASE", "MDS_MYSQL_DATABASE_SYSTEM", "EXTERNAL_MYSQL_DATABASE_SYSTEM", "MACS_MANAGED_CLOUD_DATABASE", "MACS_MANAGED_AUTONOMOUS_DATABASE"]), help=u"""Source of the database entity.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -14057,6 +15403,80 @@ def update_database_insight_update_external_mysql_database_insight_details(ctx, 
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['entitySource'] = 'EXTERNAL_MYSQL_DATABASE_SYSTEM'
+
+    client = cli_util.build_client('opsi', 'operations_insights', ctx)
+    result = client.update_database_insight(
+        database_insight_id=database_insight_id,
+        update_database_insight_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_insights_group.command(name=cli_util.override('opsi.update_database_insight_update_macs_managed_autonomous_database_insight_details.command_name', 'update-database-insight-update-macs-managed-autonomous-database-insight-details'), help=u"""Updates configuration of a database insight. \n[Command Reference](updateDatabaseInsight)""")
+@cli_util.option('--database-insight-id', required=True, help=u"""Unique database insight identifier""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opsi', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opsi', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_database_insight_update_macs_managed_autonomous_database_insight_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['entitySource'] = 'MACS_MANAGED_AUTONOMOUS_DATABASE'
 
     client = cli_util.build_client('opsi', 'operations_insights', ctx)
     result = client.update_database_insight(

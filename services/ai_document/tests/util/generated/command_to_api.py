@@ -15,6 +15,7 @@ SDK_client_map = {
     "ai_document.delete_model": "oci.ai_document.AIServiceDocumentClient.delete_model",
     "ai_document.delete_project": "oci.ai_document.AIServiceDocumentClient.delete_project",
     "ai_document.get_model": "oci.ai_document.AIServiceDocumentClient.get_model",
+    "ai_document.get_model_type": "oci.ai_document.AIServiceDocumentClient.get_model_type",
     "ai_document.get_processor_job": "oci.ai_document.AIServiceDocumentClient.get_processor_job",
     "ai_document.get_project": "oci.ai_document.AIServiceDocumentClient.get_project",
     "ai_document.get_work_request": "oci.ai_document.AIServiceDocumentClient.get_work_request",
