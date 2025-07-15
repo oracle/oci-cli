@@ -434,6 +434,8 @@ def create_config_and_signer_based_on_click_context(ctx):
         # OCI_RESOURCE_PRINCIPAL_REGION
         # OCI_KUBERNETES_SERVICE_ACCOUNT_TOKEN_PATH or OCI_KUBERNETES_SERVICE_ACCOUNT_TOKEN_STRING in case token path other than default "/var/run/secrets/kubernetes.io/serviceaccount/token" or token string is used
 
+        if ctx.obj['region']:
+            client_config["region"] = ctx.obj['region']
         if ctx.obj['debug']:
             logger.debug("auth: oke_workload_identity")
 

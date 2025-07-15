@@ -6,6 +6,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.62.2 - 2025-07-15
+--------------------
+Added
+~~~~~
+* Support for calling Oracle Cloud Infrastructure services in the ap-delhi-1 region
+
+Changed
+~~~~~~~
+* Fixed `region` parameter not working when using --auth workload_identity
+
+    * ``oci os ns get --auth workload_identity``
+
+* Container Engine Service
+
+    * Fixed warning caused by duplicate parameters named `--token-version`. Removed one of the parameters.
+
+        * ``oci ce cluster create-kubeconfig --cluster-id --file --region --token-version --kube-endpoint``
+
 3.62.1 - 2025-07-08
 --------------------
 Added
