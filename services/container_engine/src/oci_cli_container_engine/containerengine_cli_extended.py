@@ -586,7 +586,7 @@ def update_node_pool(ctx, **kwargs):
 # new one, if it does not exist.
 # 3. Running CLI command to obtain new kubeconfig always sets the default context to the new cluster.
 # 4. A ‘merged’ kubeconfig file does not have any duplicates and the information is not lost or corrupted in any way.
-@cli_util.copy_params_from_generated_command(containerengine_cli.create_kubeconfig, params_to_exclude=['endpoint_parameterconflict', 'file', 'token-version'])
+@cli_util.copy_params_from_generated_command(containerengine_cli.create_kubeconfig, params_to_exclude=['endpoint_parameterconflict', 'file', 'token_version'])
 @containerengine_cli.cluster_group.command(name=cli_util.override('create_kubeconfig.command_name', 'create-kubeconfig'),
                                            help="""Create the Kubeconfig YAML for a cluster.""")
 @cli_util.option('--file', type=click.Path(), default=DEFAULT_KUBECONFIG_LOCATION, show_default=True,
