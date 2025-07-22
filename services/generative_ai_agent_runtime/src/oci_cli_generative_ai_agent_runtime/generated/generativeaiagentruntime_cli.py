@@ -58,17 +58,20 @@ generative_ai_agent_runtime_root_group.add_command(agent_endpoint_group)
 @cli_util.option('--user-message', help=u"""The input user message content for the chat.""")
 @cli_util.option('--should-stream', type=click.BOOL, help=u"""Whether to stream the response.""")
 @cli_util.option('--session-id', help=u"""Optional sessionId. If not provided, will chat without any prior context.""")
-@cli_util.option('--tool-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map where each key is a toolId and the value contains tool type and additional dynamic parameters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tool-parameters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map where each key is a toolId and the value contains tool type and additional dynamic parameters. This field is deprecated and will be removed after July 02 2026.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tool-inputs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of tool input objects, each specifying a tool's ID, type, and corresponding input parameters required for execution.
+
+This option is a JSON list with items of type ToolInput.  For documentation on ToolInput please see our API reference: https://docs.cloud.oracle.com/api/#/en/generativeaiagentruntime/20240531/datatypes/ToolInput.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--performed-actions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of actions that have been performed based on prior required actions.
 
 This option is a JSON list with items of type PerformedAction.  For documentation on PerformedAction please see our API reference: https://docs.cloud.oracle.com/api/#/en/generativeaiagentruntime/20240531/datatypes/PerformedAction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@json_skeleton_utils.get_cli_json_input_option({'tool-parameters': {'module': 'generative_ai_agent_runtime', 'class': 'dict(str, string)'}, 'performed-actions': {'module': 'generative_ai_agent_runtime', 'class': 'list[PerformedAction]'}})
+@json_skeleton_utils.get_cli_json_input_option({'tool-parameters': {'module': 'generative_ai_agent_runtime', 'class': 'dict(str, string)'}, 'tool-inputs': {'module': 'generative_ai_agent_runtime', 'class': 'list[ToolInput]'}, 'performed-actions': {'module': 'generative_ai_agent_runtime', 'class': 'list[PerformedAction]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tool-parameters': {'module': 'generative_ai_agent_runtime', 'class': 'dict(str, string)'}, 'performed-actions': {'module': 'generative_ai_agent_runtime', 'class': 'list[PerformedAction]'}}, output_type={'module': 'generative_ai_agent_runtime', 'class': 'ChatResult'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tool-parameters': {'module': 'generative_ai_agent_runtime', 'class': 'dict(str, string)'}, 'tool-inputs': {'module': 'generative_ai_agent_runtime', 'class': 'list[ToolInput]'}, 'performed-actions': {'module': 'generative_ai_agent_runtime', 'class': 'list[PerformedAction]'}}, output_type={'module': 'generative_ai_agent_runtime', 'class': 'ChatResult'})
 @cli_util.wrap_exceptions
-def chat(ctx, from_json, agent_endpoint_id, user_message, should_stream, session_id, tool_parameters, performed_actions, if_match):
+def chat(ctx, from_json, agent_endpoint_id, user_message, should_stream, session_id, tool_parameters, tool_inputs, performed_actions, if_match):
 
     if isinstance(agent_endpoint_id, six.string_types) and len(agent_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-endpoint-id cannot be whitespace or empty string')
@@ -91,6 +94,9 @@ def chat(ctx, from_json, agent_endpoint_id, user_message, should_stream, session
 
     if tool_parameters is not None:
         _details['toolParameters'] = cli_util.parse_json_parameter("tool_parameters", tool_parameters)
+
+    if tool_inputs is not None:
+        _details['toolInputs'] = cli_util.parse_json_parameter("tool_inputs", tool_inputs)
 
     if performed_actions is not None:
         _details['performedActions'] = cli_util.parse_json_parameter("performed_actions", performed_actions)

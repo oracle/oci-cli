@@ -6,6 +6,157 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.63.0 - 2025-07-22
+--------------------
+Added
+~~~~~
+* Autoscaling service
+
+    * Added support for custom metric based policies in Autoscaling service
+
+        * ``oci autoscaling configuration create``
+
+* Database service
+
+    * Added optional parameter `--okv-end-point-group-name` to Autonomous Container Database commands:
+
+        * ``oci db autonomous-container-database create --okv-end-point-group-name``
+        * ``oci db autonomous-container-database create-autonomous-container-database-create-autonomous-container-database-details --okv-end-point-group-name``
+        * ``oci db autonomous-container-database create-autonomous-container-database-create-autonomous-container-database-from-backup-details --okv-end-point-group-name``
+        * ``oci db autonomous-container-database update --okv-end-point-group-name``
+
+    * Added support for update autonomous database with schedule db version upgrade
+
+        * ``oci db autonomous-database update --is-disable-db-version-upgrade-schedule --is-schedule-db-version-upgrade-to-earliest --time-scheduled-db-version-upgrade``
+
+    * Support for new optional parameters in the Database service
+
+      * ``oci db database create-standby-database --freeform-tags --defined-tags``
+      * ``oci db database create-from-backup --freeform-tags --defined-tags``
+      * ``oci db database create-database-from-backup --database``
+      * ``oci db database create-database-create-stand-by-database-details --database``
+
+* Marketplace service
+
+    * Support for Stack, Image, Lead-gen and Service listings in Marketplace Service
+
+        * ``oci marketplace-publisher artifact create-artifact-create-machine-image-artifact-details``
+        * ``oci marketplace-publisher artifact create-artifact-create-stack-artifact-details``
+        * ``oci marketplace-publisher artifact update-artifact-update-machine-image-artifact-details``
+        * ``oci marketplace-publisher artifact update-artifact-update-stack-artifact-details``
+        * ``oci marketplace-publisher available-service-collection list-available-services``
+        * ``oci marketplace-publisher customer-instance-report-record-collection list-customer-instance-report-records``
+        * ``oci marketplace-publisher disbursement-report-record-collection list-disbursement-report-records``
+        * ``oci marketplace-publisher lead get``
+        * ``oci marketplace-publisher lead-collection list-leads``
+        * ``oci marketplace-publisher listing-revision create-listing-revision-create-lead-gen-listing-revision-details``
+        * ``oci marketplace-publisher listing-revision create-listing-revision-create-oci-listing-revision-details``
+        * ``oci marketplace-publisher listing-revision create-listing-revision-create-service-listing-revision-details``
+        * ``oci marketplace-publisher listing-revision get-listing-revision-icon-content``
+        * ``oci marketplace-publisher listing-revision update-listing-revision-update-lead-gen-listing-revision-details``
+        * ``oci marketplace-publisher listing-revision update-listing-revision-update-oci-listing-revision-details``
+        * ``oci marketplace-publisher listing-revision update-listing-revision-update-service-listing-revision-details``
+        * ``oci marketplace-publisher listing-revision-attachment create-listing-revision-attachment-create-customer-success-attachment``
+        * ``oci marketplace-publisher listing-revision-attachment create-listing-revision-attachment-create-review-support-document-attachment``
+        * ``oci marketplace-publisher listing-revision-attachment create-listing-revision-attachment-create-supported-service-attachment``
+        * ``oci marketplace-publisher listing-revision-attachment get-listing-revision-attachment-content``
+        * ``oci marketplace-publisher listing-revision-attachment update-listing-revision-attachment-update-customer-success-attachment``
+        * ``oci marketplace-publisher listing-revision-attachment update-listing-revision-attachment-update-review-support-document-attachment``
+        * ``oci marketplace-publisher listing-revision-attachment update-listing-revision-attachment-update-supported-service-attachment``
+        * ``oci marketplace-publisher listing-revision-note update``
+        * ``oci marketplace-publisher support-doc get``
+        * ``oci marketplace-publisher support-doc get-support-doc-content``
+        * ``oci marketplace-publisher support-doc-collection list-support-docs``
+        * ``oci marketplace-publisher supported-currency-collection list-supported-currencies``
+        * ``oci marketplace-publisher supported-shape-collection list-supported-shapes``
+
+    * Added new optional parameters in the following commands:
+
+        * ``oci marketplace-publisher listing-collection list-listings --listing-type``
+        * ``oci marketplace-publisher listing-revision submit-listing-revision-for-review --should-auto-publish-on-approval``
+        * ``oci marketplace-publisher market-collection list-markets --listing-id``
+        * ``oci marketplace-publisher product-collection list-products --product-group``
+
+    * [BREAKING] Added new required parameter `listing-type` to few commands
+
+        * ``oci marketplace-publisher listing-revision create --listing-type``
+        * ``oci marketplace-publisher listing-revision update --listing-type``
+
+* Generative AI Agent service
+
+   * Added new commands for creating and updating tool configuration
+
+        * ``oci generative-ai-agent tool create-tool-agent-tool-config``
+        * ``oci generative-ai-agent tool update-tool-agent-tool-config``
+
+* Generative AI Agent Runtime service
+
+    * Added new optional parameter `tool-inputs` to a command
+
+        * ``oci generative-ai-agent-runtime agent-endpoint chat --tool-inputs``
+
+* OCI Cache service
+
+    * Support for IAM in OCI cache service
+
+        * ``oci cache``
+
+* Management Agent Cloud service
+
+    * Support for Named Credentials in Management Agent Cloud Service
+
+        * ``oci management-agent named-credential create``
+        * ``oci management-agent agent update-named-credential``
+        * ``oci management-agent agent delete-named-credential``
+        * ``oci management-agent agent get-named-credential``
+        * ``oci management-agent named-credential get-named-cred-metadata``
+        * ``oci management-agent named-credential list``
+
+* Database Management service
+
+    * Support for cloud database system in the Database Management service
+
+        * ``oci database-management cloud-asm``
+        * ``oci database-management cloud-asm-instance``
+        * ``oci database-management cloud-cluster``
+        * ``oci database-management cloud-cluster-instance``
+        * ``oci database-management cloud-db-home``
+        * ``oci database-management cloud-db-node``
+        * ``oci database-management cloud-listener``
+        * ``oci database-management cloud-db-system``
+        * ``oci database-management cloud-db-system-connector``
+        * ``oci database-management cloud-db-system-discovery ``
+
+Changed
+~~~~~~~
+* Marketplace service
+
+    * [BREAKING] Removed some commands
+
+        * ``oci marketplace-publisher attachment attachment create``
+        * ``oci marketplace-publisher attachment attachment delete``
+        * ``oci marketplace-publisher attachment attachment get``
+        * ``oci marketplace-publisher attachment attachment get-attachment-content``
+        * ``oci marketplace-publisher attachment attachment-collection list-attachments``
+        * ``oci marketplace-publisher offer offer create``
+        * ``oci marketplace-publisher offer offer delete``
+        * ``oci marketplace-publisher offer offer get``
+        * ``oci marketplace-publisher offer offer get-offer-internal-detail``
+        * ``oci marketplace-publisher offer offer update``
+        * ``oci marketplace-publisher offer offer-collection list-offers``
+
+    * [BREAKING] Removed some parameters from a few commands
+
+        * ``oci marketplace-publisher listing-revision create --categories --pricing-type --markets --system-requirements --version-details``
+        * ``oci marketplace-publisher listing-revision update --categories --pricing-type --markets --system-requirements --version-details``
+
+* Generative AI Agent service
+
+    * Changed the parameter `--tool-config-database-schema` from a required to an optional parameter in two commands
+
+        * ``oci generative-ai-agent tool create-tool-sql-tool-config``
+        * ``oci generative-ai-agent tool update-tool-sql-tool-config``
+
 3.62.2 - 2025-07-15
 --------------------
 Added

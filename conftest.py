@@ -85,12 +85,12 @@ def move_cli_config_rc_file():
     moved_rc_file = False
     moved_rc_fallback_file = False
 
-    if os.path.exists(expanded_rc_location):
+    if os.path.lexists(expanded_rc_location):
         os.rename(expanded_rc_location, '{}.moved'.format(expanded_rc_location))
         print('Moved: {}'.format(expanded_rc_location))
         moved_rc_file = True
 
-    if os.path.exists(expanded_rc_fallback_location):
+    if os.path.lexists(expanded_rc_fallback_location):
         os.rename(expanded_rc_fallback_location, '{}.moved'.format(expanded_rc_fallback_location))
         print('Moved: {}'.format(expanded_rc_fallback_location))
         moved_rc_fallback_file = True

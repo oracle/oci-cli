@@ -4414,6 +4414,7 @@ def create_application_vip(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts. Setting this to an empty list removes all customer contacts.
 
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--okv-end-point-group-name', help=u"""The OKV End Point Group name for the Autonomous Container Database.""")
 @cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "BACKUP_FROM_ID"]), help=u"""The source of the database: Use `NONE` for creating a new Autonomous Container Database. Use `BACKUP_FROM_ID` for creating a new Autonomous Container Database from a specified backup.""")
 @cli_util.option('--db-unique-name', help=u"""**Deprecated.** The `DB_UNIQUE_NAME` value is set by Oracle Cloud Infrastructure.  Do not specify a value for this parameter. Specifying a value for this field will cause Terraform operations to fail.""")
 @cli_util.option('--db-name', help=u"""The Database name for the Autonomous Container Database. The name must be unique within the Cloud Autonomous VM Cluster, starting with an alphabetic character, followed by 1 to 7 alphanumeric characters.""")
@@ -4459,7 +4460,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'peer-autonomous-container-database-backup-config': {'module': 'database', 'class': 'PeerAutonomousContainerDatabaseBackupConfig'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, customer_contacts, source, db_unique_name, db_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, db_version, database_software_image_id, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, fast_start_fail_over_lag_limit_in_seconds, is_automatic_failover_enabled, peer_cloud_autonomous_vm_cluster_id, peer_autonomous_vm_cluster_id, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_backup_config, peer_db_unique_name, autonomous_vm_cluster_id, cloud_autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, is_dst_file_update_enabled, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id, db_split_threshold, vm_failover_reservation, distribution_affinity, net_services_architecture):
+def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, customer_contacts, okv_end_point_group_name, source, db_unique_name, db_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, db_version, database_software_image_id, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, fast_start_fail_over_lag_limit_in_seconds, is_automatic_failover_enabled, peer_cloud_autonomous_vm_cluster_id, peer_autonomous_vm_cluster_id, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_backup_config, peer_db_unique_name, autonomous_vm_cluster_id, cloud_autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, is_dst_file_update_enabled, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id, db_split_threshold, vm_failover_reservation, distribution_affinity, net_services_architecture):
 
     kwargs = {}
 
@@ -4469,6 +4470,9 @@ def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wai
 
     if customer_contacts is not None:
         _details['customerContacts'] = cli_util.parse_json_parameter("customer_contacts", customer_contacts)
+
+    if okv_end_point_group_name is not None:
+        _details['okvEndPointGroupName'] = okv_end_point_group_name
 
     if source is not None:
         _details['source'] = source
@@ -4612,6 +4616,7 @@ def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wai
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts. Setting this to an empty list removes all customer contacts.
 
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--okv-end-point-group-name', help=u"""The OKV End Point Group name for the Autonomous Container Database.""")
 @cli_util.option('--db-unique-name', help=u"""**Deprecated.** The `DB_UNIQUE_NAME` value is set by Oracle Cloud Infrastructure.  Do not specify a value for this parameter. Specifying a value for this field will cause Terraform operations to fail.""")
 @cli_util.option('--db-name', help=u"""The Database name for the Autonomous Container Database. The name must be unique within the Cloud Autonomous VM Cluster, starting with an alphabetic character, followed by 1 to 7 alphanumeric characters.""")
 @cli_util.option('--service-level-agreement-type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "AUTONOMOUS_DATAGUARD"]), help=u"""The service level agreement type of the Autonomous Container Database. The default is STANDARD. For an autonomous dataguard Autonomous Container Database, the specified Autonomous Exadata Infrastructure must be associated with a remote Autonomous Exadata Infrastructure.""")
@@ -4656,7 +4661,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'peer-autonomous-container-database-backup-config': {'module': 'database', 'class': 'PeerAutonomousContainerDatabaseBackupConfig'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_container_database_create_autonomous_container_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, customer_contacts, db_unique_name, db_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, db_version, database_software_image_id, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, fast_start_fail_over_lag_limit_in_seconds, is_automatic_failover_enabled, peer_cloud_autonomous_vm_cluster_id, peer_autonomous_vm_cluster_id, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_backup_config, peer_db_unique_name, autonomous_vm_cluster_id, cloud_autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, is_dst_file_update_enabled, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id, db_split_threshold, vm_failover_reservation, distribution_affinity, net_services_architecture):
+def create_autonomous_container_database_create_autonomous_container_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, customer_contacts, okv_end_point_group_name, db_unique_name, db_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, db_version, database_software_image_id, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, fast_start_fail_over_lag_limit_in_seconds, is_automatic_failover_enabled, peer_cloud_autonomous_vm_cluster_id, peer_autonomous_vm_cluster_id, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_backup_config, peer_db_unique_name, autonomous_vm_cluster_id, cloud_autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, is_dst_file_update_enabled, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id, db_split_threshold, vm_failover_reservation, distribution_affinity, net_services_architecture):
 
     kwargs = {}
 
@@ -4666,6 +4671,9 @@ def create_autonomous_container_database_create_autonomous_container_database_de
 
     if customer_contacts is not None:
         _details['customerContacts'] = cli_util.parse_json_parameter("customer_contacts", customer_contacts)
+
+    if okv_end_point_group_name is not None:
+        _details['okvEndPointGroupName'] = okv_end_point_group_name
 
     if db_unique_name is not None:
         _details['dbUniqueName'] = db_unique_name
@@ -4809,6 +4817,7 @@ def create_autonomous_container_database_create_autonomous_container_database_de
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts. Setting this to an empty list removes all customer contacts.
 
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--okv-end-point-group-name', help=u"""The OKV End Point Group name for the Autonomous Container Database.""")
 @cli_util.option('--db-unique-name', help=u"""**Deprecated.** The `DB_UNIQUE_NAME` value is set by Oracle Cloud Infrastructure.  Do not specify a value for this parameter. Specifying a value for this field will cause Terraform operations to fail.""")
 @cli_util.option('--db-name', help=u"""The Database name for the Autonomous Container Database. The name must be unique within the Cloud Autonomous VM Cluster, starting with an alphabetic character, followed by 1 to 7 alphanumeric characters.""")
 @cli_util.option('--service-level-agreement-type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "AUTONOMOUS_DATAGUARD"]), help=u"""The service level agreement type of the Autonomous Container Database. The default is STANDARD. For an autonomous dataguard Autonomous Container Database, the specified Autonomous Exadata Infrastructure must be associated with a remote Autonomous Exadata Infrastructure.""")
@@ -4853,7 +4862,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'peer-autonomous-container-database-backup-config': {'module': 'database', 'class': 'PeerAutonomousContainerDatabaseBackupConfig'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_container_database_create_autonomous_container_database_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, autonomous_container_database_backup_id, customer_contacts, db_unique_name, db_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, db_version, database_software_image_id, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, fast_start_fail_over_lag_limit_in_seconds, is_automatic_failover_enabled, peer_cloud_autonomous_vm_cluster_id, peer_autonomous_vm_cluster_id, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_backup_config, peer_db_unique_name, autonomous_vm_cluster_id, cloud_autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, is_dst_file_update_enabled, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id, db_split_threshold, vm_failover_reservation, distribution_affinity, net_services_architecture):
+def create_autonomous_container_database_create_autonomous_container_database_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, autonomous_container_database_backup_id, customer_contacts, okv_end_point_group_name, db_unique_name, db_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, db_version, database_software_image_id, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, fast_start_fail_over_lag_limit_in_seconds, is_automatic_failover_enabled, peer_cloud_autonomous_vm_cluster_id, peer_autonomous_vm_cluster_id, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_backup_config, peer_db_unique_name, autonomous_vm_cluster_id, cloud_autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, is_dst_file_update_enabled, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id, db_split_threshold, vm_failover_reservation, distribution_affinity, net_services_architecture):
 
     kwargs = {}
 
@@ -4864,6 +4873,9 @@ def create_autonomous_container_database_create_autonomous_container_database_fr
 
     if customer_contacts is not None:
         _details['customerContacts'] = cli_util.parse_json_parameter("customer_contacts", customer_contacts)
+
+    if okv_end_point_group_name is not None:
+        _details['okvEndPointGroupName'] = okv_end_point_group_name
 
     if db_unique_name is not None:
         _details['dbUniqueName'] = db_unique_name
@@ -30259,6 +30271,7 @@ def unregister_cloud_vm_cluster_pkcs(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.option('--customer-contacts', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Customer Contacts. Setting this to an empty list removes all customer contacts.
 
 This option is a JSON list with items of type CustomerContact.  For documentation on CustomerContact please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/CustomerContact.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--okv-end-point-group-name', help=u"""The OKV End Point Group name for the Autonomous Container Database.""")
 @cli_util.option('--patch-model', type=custom_types.CliCaseInsensitiveChoice(["RELEASE_UPDATES", "RELEASE_UPDATE_REVISIONS"]), help=u"""Database Patch model preference.""")
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--standby-maintenance-buffer-in-days', type=click.INT, help=u"""The scheduling detail for the quarterly maintenance window of the standby Autonomous Container Database. This value represents the number of days before schedlued maintenance of the primary database.""")
@@ -30279,7 +30292,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
 @cli_util.wrap_exceptions
-def update_autonomous_container_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, display_name, customer_contacts, patch_model, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, is_dst_file_update_enabled, freeform_tags, defined_tags, backup_config, if_match):
+def update_autonomous_container_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, display_name, customer_contacts, okv_end_point_group_name, patch_model, maintenance_window_details, standby_maintenance_buffer_in_days, version_preference, is_dst_file_update_enabled, freeform_tags, defined_tags, backup_config, if_match):
 
     if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
@@ -30299,6 +30312,9 @@ def update_autonomous_container_database(ctx, from_json, force, wait_for_state, 
 
     if customer_contacts is not None:
         _details['customerContacts'] = cli_util.parse_json_parameter("customer_contacts", customer_contacts)
+
+    if okv_end_point_group_name is not None:
+        _details['okvEndPointGroupName'] = okv_end_point_group_name
 
     if patch_model is not None:
         _details['patchModel'] = patch_model
@@ -30561,6 +30577,9 @@ Service Change: The default value of the isMTLSConnectionRequired attribute will
 @cli_util.option('--resource-pool-summary', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--autonomous-maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help=u"""The maintenance schedule type of the Autonomous Database Serverless. An EARLY maintenance schedule follows a schedule applying patches prior to the REGULAR schedule. A REGULAR maintenance schedule follows the normal cycle""")
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous Database is backup retention locked.""")
+@cli_util.option('--time-scheduled-db-version-upgrade', type=custom_types.CLI_DATETIME, help=u"""The date and time the Autonomous Database scheduled to upgrade to 23ai.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--is-disable-db-version-upgrade-schedule', type=click.BOOL, help=u"""True if user wants to disable Autonomous Database scheduled upgrade to 23ai.""")
+@cli_util.option('--is-schedule-db-version-upgrade-to-earliest', type=click.BOOL, help=u"""True if user wants to schedule Autonomous Database upgrade to the earliest available time.""")
 @cli_util.option('--scheduled-operations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of scheduled operations. Consists of values such as dayOfWeek, scheduledStartTime, scheduledStopTime.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.
@@ -30592,7 +30611,7 @@ To disconnect a cross region standby, please also provide the OCID of the standb
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'long-term-backup-schedule': {'module': 'database', 'class': 'LongTermBackUpScheduleDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'resource-pool-summary': {'module': 'database', 'class': 'ResourcePoolSummary'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}, 'db-tools-details': {'module': 'database', 'class': 'list[DatabaseTool]'}, 'encryption-key': {'module': 'database', 'class': 'AutonomousDatabaseEncryptionKeyDetails'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, backup_retention_period_in_days, compute_model, in_memory_percentage, local_adg_auto_failover_max_data_loss_limit, cpu_core_count, long_term_backup_schedule, is_dev_tier, compute_count, ocpu_count, data_storage_size_in_tbs, data_storage_size_in_gbs, display_name, is_free_tier, admin_password, db_name, freeform_tags, defined_tags, security_attributes, db_workload, license_model, byol_compute_count_limit, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_auto_scaling_enabled, is_refreshable_clone, refreshable_mode, is_local_data_guard_enabled, is_data_guard_enabled, peer_db_id, db_version, open_mode, permission_level, subnet_id, private_endpoint_label, private_endpoint_ip, nsg_ids, auto_refresh_frequency_in_seconds, auto_refresh_point_lag_in_seconds, time_of_auto_refresh_start, customer_contacts, is_mtls_connection_required, resource_pool_leader_id, resource_pool_summary, autonomous_maintenance_schedule_type, is_backup_retention_locked, scheduled_operations, is_auto_scaling_for_storage_enabled, database_edition, db_tools_details, secret_id, secret_version_number, encryption_key, is_disconnect_peer, if_match, opc_dry_run):
+def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, backup_retention_period_in_days, compute_model, in_memory_percentage, local_adg_auto_failover_max_data_loss_limit, cpu_core_count, long_term_backup_schedule, is_dev_tier, compute_count, ocpu_count, data_storage_size_in_tbs, data_storage_size_in_gbs, display_name, is_free_tier, admin_password, db_name, freeform_tags, defined_tags, security_attributes, db_workload, license_model, byol_compute_count_limit, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_auto_scaling_enabled, is_refreshable_clone, refreshable_mode, is_local_data_guard_enabled, is_data_guard_enabled, peer_db_id, db_version, open_mode, permission_level, subnet_id, private_endpoint_label, private_endpoint_ip, nsg_ids, auto_refresh_frequency_in_seconds, auto_refresh_point_lag_in_seconds, time_of_auto_refresh_start, customer_contacts, is_mtls_connection_required, resource_pool_leader_id, resource_pool_summary, autonomous_maintenance_schedule_type, is_backup_retention_locked, time_scheduled_db_version_upgrade, is_disable_db_version_upgrade_schedule, is_schedule_db_version_upgrade_to_earliest, scheduled_operations, is_auto_scaling_for_storage_enabled, database_edition, db_tools_details, secret_id, secret_version_number, encryption_key, is_disconnect_peer, if_match, opc_dry_run):
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
@@ -30750,6 +30769,15 @@ def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_s
 
     if is_backup_retention_locked is not None:
         _details['isBackupRetentionLocked'] = is_backup_retention_locked
+
+    if time_scheduled_db_version_upgrade is not None:
+        _details['timeScheduledDbVersionUpgrade'] = time_scheduled_db_version_upgrade
+
+    if is_disable_db_version_upgrade_schedule is not None:
+        _details['isDisableDbVersionUpgradeSchedule'] = is_disable_db_version_upgrade_schedule
+
+    if is_schedule_db_version_upgrade_to_earliest is not None:
+        _details['isScheduleDbVersionUpgradeToEarliest'] = is_schedule_db_version_upgrade_to_earliest
 
     if scheduled_operations is not None:
         _details['scheduledOperations'] = cli_util.parse_json_parameter("scheduled_operations", scheduled_operations)
@@ -30944,6 +30972,9 @@ Service Change: The default value of the isMTLSConnectionRequired attribute will
 @cli_util.option('--resource-pool-summary', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--autonomous-maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help=u"""The maintenance schedule type of the Autonomous Database Serverless. An EARLY maintenance schedule follows a schedule applying patches prior to the REGULAR schedule. A REGULAR maintenance schedule follows the normal cycle""")
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous Database is backup retention locked.""")
+@cli_util.option('--time-scheduled-db-version-upgrade', type=custom_types.CLI_DATETIME, help=u"""The date and time the Autonomous Database scheduled to upgrade to 23ai.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--is-disable-db-version-upgrade-schedule', type=click.BOOL, help=u"""True if user wants to disable Autonomous Database scheduled upgrade to 23ai.""")
+@cli_util.option('--is-schedule-db-version-upgrade-to-earliest', type=click.BOOL, help=u"""True if user wants to schedule Autonomous Database upgrade to the earliest available time.""")
 @cli_util.option('--scheduled-operations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of scheduled operations. Consists of values such as dayOfWeek, scheduledStartTime, scheduledStopTime.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.
@@ -30975,7 +31006,7 @@ To disconnect a cross region standby, please also provide the OCID of the standb
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'long-term-backup-schedule': {'module': 'database', 'class': 'LongTermBackUpScheduleDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'resource-pool-summary': {'module': 'database', 'class': 'ResourcePoolSummary'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}, 'db-tools-details': {'module': 'database', 'class': 'list[DatabaseTool]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def update_autonomous_database_okv_key_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, encryption_key_okv_uri, encryption_key_okv_kms_key, encryption_key_directory_name, encryption_key_certificate_directory_name, backup_retention_period_in_days, compute_model, in_memory_percentage, local_adg_auto_failover_max_data_loss_limit, cpu_core_count, long_term_backup_schedule, is_dev_tier, compute_count, ocpu_count, data_storage_size_in_tbs, data_storage_size_in_gbs, display_name, is_free_tier, admin_password, db_name, freeform_tags, defined_tags, security_attributes, db_workload, license_model, byol_compute_count_limit, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_auto_scaling_enabled, is_refreshable_clone, refreshable_mode, is_local_data_guard_enabled, is_data_guard_enabled, peer_db_id, db_version, open_mode, permission_level, subnet_id, private_endpoint_label, private_endpoint_ip, nsg_ids, auto_refresh_frequency_in_seconds, auto_refresh_point_lag_in_seconds, time_of_auto_refresh_start, customer_contacts, is_mtls_connection_required, resource_pool_leader_id, resource_pool_summary, autonomous_maintenance_schedule_type, is_backup_retention_locked, scheduled_operations, is_auto_scaling_for_storage_enabled, database_edition, db_tools_details, secret_id, secret_version_number, is_disconnect_peer, if_match, opc_dry_run, encryption_key_certificate_id):
+def update_autonomous_database_okv_key_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, encryption_key_okv_uri, encryption_key_okv_kms_key, encryption_key_directory_name, encryption_key_certificate_directory_name, backup_retention_period_in_days, compute_model, in_memory_percentage, local_adg_auto_failover_max_data_loss_limit, cpu_core_count, long_term_backup_schedule, is_dev_tier, compute_count, ocpu_count, data_storage_size_in_tbs, data_storage_size_in_gbs, display_name, is_free_tier, admin_password, db_name, freeform_tags, defined_tags, security_attributes, db_workload, license_model, byol_compute_count_limit, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_auto_scaling_enabled, is_refreshable_clone, refreshable_mode, is_local_data_guard_enabled, is_data_guard_enabled, peer_db_id, db_version, open_mode, permission_level, subnet_id, private_endpoint_label, private_endpoint_ip, nsg_ids, auto_refresh_frequency_in_seconds, auto_refresh_point_lag_in_seconds, time_of_auto_refresh_start, customer_contacts, is_mtls_connection_required, resource_pool_leader_id, resource_pool_summary, autonomous_maintenance_schedule_type, is_backup_retention_locked, time_scheduled_db_version_upgrade, is_disable_db_version_upgrade_schedule, is_schedule_db_version_upgrade_to_earliest, scheduled_operations, is_auto_scaling_for_storage_enabled, database_edition, db_tools_details, secret_id, secret_version_number, is_disconnect_peer, if_match, opc_dry_run, encryption_key_certificate_id):
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
@@ -31138,6 +31169,15 @@ def update_autonomous_database_okv_key_details(ctx, from_json, force, wait_for_s
 
     if is_backup_retention_locked is not None:
         _details['isBackupRetentionLocked'] = is_backup_retention_locked
+
+    if time_scheduled_db_version_upgrade is not None:
+        _details['timeScheduledDbVersionUpgrade'] = time_scheduled_db_version_upgrade
+
+    if is_disable_db_version_upgrade_schedule is not None:
+        _details['isDisableDbVersionUpgradeSchedule'] = is_disable_db_version_upgrade_schedule
+
+    if is_schedule_db_version_upgrade_to_earliest is not None:
+        _details['isScheduleDbVersionUpgradeToEarliest'] = is_schedule_db_version_upgrade_to_earliest
 
     if scheduled_operations is not None:
         _details['scheduledOperations'] = cli_util.parse_json_parameter("scheduled_operations", scheduled_operations)
@@ -31332,6 +31372,9 @@ Service Change: The default value of the isMTLSConnectionRequired attribute will
 @cli_util.option('--resource-pool-summary', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--autonomous-maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help=u"""The maintenance schedule type of the Autonomous Database Serverless. An EARLY maintenance schedule follows a schedule applying patches prior to the REGULAR schedule. A REGULAR maintenance schedule follows the normal cycle""")
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous Database is backup retention locked.""")
+@cli_util.option('--time-scheduled-db-version-upgrade', type=custom_types.CLI_DATETIME, help=u"""The date and time the Autonomous Database scheduled to upgrade to 23ai.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--is-disable-db-version-upgrade-schedule', type=click.BOOL, help=u"""True if user wants to disable Autonomous Database scheduled upgrade to 23ai.""")
+@cli_util.option('--is-schedule-db-version-upgrade-to-earliest', type=click.BOOL, help=u"""True if user wants to schedule Autonomous Database upgrade to the earliest available time.""")
 @cli_util.option('--scheduled-operations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of scheduled operations. Consists of values such as dayOfWeek, scheduledStartTime, scheduledStopTime.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.
@@ -31362,7 +31405,7 @@ To disconnect a cross region standby, please also provide the OCID of the standb
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'long-term-backup-schedule': {'module': 'database', 'class': 'LongTermBackUpScheduleDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'resource-pool-summary': {'module': 'database', 'class': 'ResourcePoolSummary'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}, 'db-tools-details': {'module': 'database', 'class': 'list[DatabaseTool]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def update_autonomous_database_azure_key_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, encryption_key_vault_uri, encryption_key_key_name, backup_retention_period_in_days, compute_model, in_memory_percentage, local_adg_auto_failover_max_data_loss_limit, cpu_core_count, long_term_backup_schedule, is_dev_tier, compute_count, ocpu_count, data_storage_size_in_tbs, data_storage_size_in_gbs, display_name, is_free_tier, admin_password, db_name, freeform_tags, defined_tags, security_attributes, db_workload, license_model, byol_compute_count_limit, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_auto_scaling_enabled, is_refreshable_clone, refreshable_mode, is_local_data_guard_enabled, is_data_guard_enabled, peer_db_id, db_version, open_mode, permission_level, subnet_id, private_endpoint_label, private_endpoint_ip, nsg_ids, auto_refresh_frequency_in_seconds, auto_refresh_point_lag_in_seconds, time_of_auto_refresh_start, customer_contacts, is_mtls_connection_required, resource_pool_leader_id, resource_pool_summary, autonomous_maintenance_schedule_type, is_backup_retention_locked, scheduled_operations, is_auto_scaling_for_storage_enabled, database_edition, db_tools_details, secret_id, secret_version_number, is_disconnect_peer, if_match, opc_dry_run):
+def update_autonomous_database_azure_key_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, encryption_key_vault_uri, encryption_key_key_name, backup_retention_period_in_days, compute_model, in_memory_percentage, local_adg_auto_failover_max_data_loss_limit, cpu_core_count, long_term_backup_schedule, is_dev_tier, compute_count, ocpu_count, data_storage_size_in_tbs, data_storage_size_in_gbs, display_name, is_free_tier, admin_password, db_name, freeform_tags, defined_tags, security_attributes, db_workload, license_model, byol_compute_count_limit, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_auto_scaling_enabled, is_refreshable_clone, refreshable_mode, is_local_data_guard_enabled, is_data_guard_enabled, peer_db_id, db_version, open_mode, permission_level, subnet_id, private_endpoint_label, private_endpoint_ip, nsg_ids, auto_refresh_frequency_in_seconds, auto_refresh_point_lag_in_seconds, time_of_auto_refresh_start, customer_contacts, is_mtls_connection_required, resource_pool_leader_id, resource_pool_summary, autonomous_maintenance_schedule_type, is_backup_retention_locked, time_scheduled_db_version_upgrade, is_disable_db_version_upgrade_schedule, is_schedule_db_version_upgrade_to_earliest, scheduled_operations, is_auto_scaling_for_storage_enabled, database_edition, db_tools_details, secret_id, secret_version_number, is_disconnect_peer, if_match, opc_dry_run):
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
@@ -31523,6 +31566,15 @@ def update_autonomous_database_azure_key_details(ctx, from_json, force, wait_for
 
     if is_backup_retention_locked is not None:
         _details['isBackupRetentionLocked'] = is_backup_retention_locked
+
+    if time_scheduled_db_version_upgrade is not None:
+        _details['timeScheduledDbVersionUpgrade'] = time_scheduled_db_version_upgrade
+
+    if is_disable_db_version_upgrade_schedule is not None:
+        _details['isDisableDbVersionUpgradeSchedule'] = is_disable_db_version_upgrade_schedule
+
+    if is_schedule_db_version_upgrade_to_earliest is not None:
+        _details['isScheduleDbVersionUpgradeToEarliest'] = is_schedule_db_version_upgrade_to_earliest
 
     if scheduled_operations is not None:
         _details['scheduledOperations'] = cli_util.parse_json_parameter("scheduled_operations", scheduled_operations)
@@ -31714,6 +31766,9 @@ Service Change: The default value of the isMTLSConnectionRequired attribute will
 @cli_util.option('--resource-pool-summary', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--autonomous-maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help=u"""The maintenance schedule type of the Autonomous Database Serverless. An EARLY maintenance schedule follows a schedule applying patches prior to the REGULAR schedule. A REGULAR maintenance schedule follows the normal cycle""")
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous Database is backup retention locked.""")
+@cli_util.option('--time-scheduled-db-version-upgrade', type=custom_types.CLI_DATETIME, help=u"""The date and time the Autonomous Database scheduled to upgrade to 23ai.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--is-disable-db-version-upgrade-schedule', type=click.BOOL, help=u"""True if user wants to disable Autonomous Database scheduled upgrade to 23ai.""")
+@cli_util.option('--is-schedule-db-version-upgrade-to-earliest', type=click.BOOL, help=u"""True if user wants to schedule Autonomous Database upgrade to the earliest available time.""")
 @cli_util.option('--scheduled-operations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of scheduled operations. Consists of values such as dayOfWeek, scheduledStartTime, scheduledStopTime.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.
@@ -31746,7 +31801,7 @@ To disconnect a cross region standby, please also provide the OCID of the standb
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'long-term-backup-schedule': {'module': 'database', 'class': 'LongTermBackUpScheduleDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'resource-pool-summary': {'module': 'database', 'class': 'ResourcePoolSummary'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}, 'db-tools-details': {'module': 'database', 'class': 'list[DatabaseTool]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def update_autonomous_database_aws_key_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, encryption_key_service_endpoint_uri, encryption_key_key_arn, backup_retention_period_in_days, compute_model, in_memory_percentage, local_adg_auto_failover_max_data_loss_limit, cpu_core_count, long_term_backup_schedule, is_dev_tier, compute_count, ocpu_count, data_storage_size_in_tbs, data_storage_size_in_gbs, display_name, is_free_tier, admin_password, db_name, freeform_tags, defined_tags, security_attributes, db_workload, license_model, byol_compute_count_limit, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_auto_scaling_enabled, is_refreshable_clone, refreshable_mode, is_local_data_guard_enabled, is_data_guard_enabled, peer_db_id, db_version, open_mode, permission_level, subnet_id, private_endpoint_label, private_endpoint_ip, nsg_ids, auto_refresh_frequency_in_seconds, auto_refresh_point_lag_in_seconds, time_of_auto_refresh_start, customer_contacts, is_mtls_connection_required, resource_pool_leader_id, resource_pool_summary, autonomous_maintenance_schedule_type, is_backup_retention_locked, scheduled_operations, is_auto_scaling_for_storage_enabled, database_edition, db_tools_details, secret_id, secret_version_number, is_disconnect_peer, if_match, opc_dry_run, encryption_key_arn_role, encryption_key_external_id):
+def update_autonomous_database_aws_key_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, encryption_key_service_endpoint_uri, encryption_key_key_arn, backup_retention_period_in_days, compute_model, in_memory_percentage, local_adg_auto_failover_max_data_loss_limit, cpu_core_count, long_term_backup_schedule, is_dev_tier, compute_count, ocpu_count, data_storage_size_in_tbs, data_storage_size_in_gbs, display_name, is_free_tier, admin_password, db_name, freeform_tags, defined_tags, security_attributes, db_workload, license_model, byol_compute_count_limit, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_auto_scaling_enabled, is_refreshable_clone, refreshable_mode, is_local_data_guard_enabled, is_data_guard_enabled, peer_db_id, db_version, open_mode, permission_level, subnet_id, private_endpoint_label, private_endpoint_ip, nsg_ids, auto_refresh_frequency_in_seconds, auto_refresh_point_lag_in_seconds, time_of_auto_refresh_start, customer_contacts, is_mtls_connection_required, resource_pool_leader_id, resource_pool_summary, autonomous_maintenance_schedule_type, is_backup_retention_locked, time_scheduled_db_version_upgrade, is_disable_db_version_upgrade_schedule, is_schedule_db_version_upgrade_to_earliest, scheduled_operations, is_auto_scaling_for_storage_enabled, database_edition, db_tools_details, secret_id, secret_version_number, is_disconnect_peer, if_match, opc_dry_run, encryption_key_arn_role, encryption_key_external_id):
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
@@ -31907,6 +31962,15 @@ def update_autonomous_database_aws_key_details(ctx, from_json, force, wait_for_s
 
     if is_backup_retention_locked is not None:
         _details['isBackupRetentionLocked'] = is_backup_retention_locked
+
+    if time_scheduled_db_version_upgrade is not None:
+        _details['timeScheduledDbVersionUpgrade'] = time_scheduled_db_version_upgrade
+
+    if is_disable_db_version_upgrade_schedule is not None:
+        _details['isDisableDbVersionUpgradeSchedule'] = is_disable_db_version_upgrade_schedule
+
+    if is_schedule_db_version_upgrade_to_earliest is not None:
+        _details['isScheduleDbVersionUpgradeToEarliest'] = is_schedule_db_version_upgrade_to_earliest
 
     if scheduled_operations is not None:
         _details['scheduledOperations'] = cli_util.parse_json_parameter("scheduled_operations", scheduled_operations)
@@ -32104,6 +32168,9 @@ Service Change: The default value of the isMTLSConnectionRequired attribute will
 @cli_util.option('--resource-pool-summary', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--autonomous-maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help=u"""The maintenance schedule type of the Autonomous Database Serverless. An EARLY maintenance schedule follows a schedule applying patches prior to the REGULAR schedule. A REGULAR maintenance schedule follows the normal cycle""")
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous Database is backup retention locked.""")
+@cli_util.option('--time-scheduled-db-version-upgrade', type=custom_types.CLI_DATETIME, help=u"""The date and time the Autonomous Database scheduled to upgrade to 23ai.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--is-disable-db-version-upgrade-schedule', type=click.BOOL, help=u"""True if user wants to disable Autonomous Database scheduled upgrade to 23ai.""")
+@cli_util.option('--is-schedule-db-version-upgrade-to-earliest', type=click.BOOL, help=u"""True if user wants to schedule Autonomous Database upgrade to the earliest available time.""")
 @cli_util.option('--scheduled-operations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of scheduled operations. Consists of values such as dayOfWeek, scheduledStartTime, scheduledStopTime.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.
@@ -32134,7 +32201,7 @@ To disconnect a cross region standby, please also provide the OCID of the standb
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'long-term-backup-schedule': {'module': 'database', 'class': 'LongTermBackUpScheduleDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'resource-pool-summary': {'module': 'database', 'class': 'ResourcePoolSummary'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}, 'db-tools-details': {'module': 'database', 'class': 'list[DatabaseTool]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def update_autonomous_database_oci_key_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, encryption_key_kms_key_id, encryption_key_vault_id, backup_retention_period_in_days, compute_model, in_memory_percentage, local_adg_auto_failover_max_data_loss_limit, cpu_core_count, long_term_backup_schedule, is_dev_tier, compute_count, ocpu_count, data_storage_size_in_tbs, data_storage_size_in_gbs, display_name, is_free_tier, admin_password, db_name, freeform_tags, defined_tags, security_attributes, db_workload, license_model, byol_compute_count_limit, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_auto_scaling_enabled, is_refreshable_clone, refreshable_mode, is_local_data_guard_enabled, is_data_guard_enabled, peer_db_id, db_version, open_mode, permission_level, subnet_id, private_endpoint_label, private_endpoint_ip, nsg_ids, auto_refresh_frequency_in_seconds, auto_refresh_point_lag_in_seconds, time_of_auto_refresh_start, customer_contacts, is_mtls_connection_required, resource_pool_leader_id, resource_pool_summary, autonomous_maintenance_schedule_type, is_backup_retention_locked, scheduled_operations, is_auto_scaling_for_storage_enabled, database_edition, db_tools_details, secret_id, secret_version_number, is_disconnect_peer, if_match, opc_dry_run):
+def update_autonomous_database_oci_key_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, encryption_key_kms_key_id, encryption_key_vault_id, backup_retention_period_in_days, compute_model, in_memory_percentage, local_adg_auto_failover_max_data_loss_limit, cpu_core_count, long_term_backup_schedule, is_dev_tier, compute_count, ocpu_count, data_storage_size_in_tbs, data_storage_size_in_gbs, display_name, is_free_tier, admin_password, db_name, freeform_tags, defined_tags, security_attributes, db_workload, license_model, byol_compute_count_limit, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_auto_scaling_enabled, is_refreshable_clone, refreshable_mode, is_local_data_guard_enabled, is_data_guard_enabled, peer_db_id, db_version, open_mode, permission_level, subnet_id, private_endpoint_label, private_endpoint_ip, nsg_ids, auto_refresh_frequency_in_seconds, auto_refresh_point_lag_in_seconds, time_of_auto_refresh_start, customer_contacts, is_mtls_connection_required, resource_pool_leader_id, resource_pool_summary, autonomous_maintenance_schedule_type, is_backup_retention_locked, time_scheduled_db_version_upgrade, is_disable_db_version_upgrade_schedule, is_schedule_db_version_upgrade_to_earliest, scheduled_operations, is_auto_scaling_for_storage_enabled, database_edition, db_tools_details, secret_id, secret_version_number, is_disconnect_peer, if_match, opc_dry_run):
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
@@ -32295,6 +32362,15 @@ def update_autonomous_database_oci_key_details(ctx, from_json, force, wait_for_s
 
     if is_backup_retention_locked is not None:
         _details['isBackupRetentionLocked'] = is_backup_retention_locked
+
+    if time_scheduled_db_version_upgrade is not None:
+        _details['timeScheduledDbVersionUpgrade'] = time_scheduled_db_version_upgrade
+
+    if is_disable_db_version_upgrade_schedule is not None:
+        _details['isDisableDbVersionUpgradeSchedule'] = is_disable_db_version_upgrade_schedule
+
+    if is_schedule_db_version_upgrade_to_earliest is not None:
+        _details['isScheduleDbVersionUpgradeToEarliest'] = is_schedule_db_version_upgrade_to_earliest
 
     if scheduled_operations is not None:
         _details['scheduledOperations'] = cli_util.parse_json_parameter("scheduled_operations", scheduled_operations)
@@ -32484,6 +32560,9 @@ Service Change: The default value of the isMTLSConnectionRequired attribute will
 @cli_util.option('--resource-pool-summary', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--autonomous-maintenance-schedule-type', type=custom_types.CliCaseInsensitiveChoice(["EARLY", "REGULAR"]), help=u"""The maintenance schedule type of the Autonomous Database Serverless. An EARLY maintenance schedule follows a schedule applying patches prior to the REGULAR schedule. A REGULAR maintenance schedule follows the normal cycle""")
 @cli_util.option('--is-backup-retention-locked', type=click.BOOL, help=u"""True if the Autonomous Database is backup retention locked.""")
+@cli_util.option('--time-scheduled-db-version-upgrade', type=custom_types.CLI_DATETIME, help=u"""The date and time the Autonomous Database scheduled to upgrade to 23ai.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--is-disable-db-version-upgrade-schedule', type=click.BOOL, help=u"""True if user wants to disable Autonomous Database scheduled upgrade to 23ai.""")
+@cli_util.option('--is-schedule-db-version-upgrade-to-earliest', type=click.BOOL, help=u"""True if user wants to schedule Autonomous Database upgrade to the earliest available time.""")
 @cli_util.option('--scheduled-operations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of scheduled operations. Consists of values such as dayOfWeek, scheduledStartTime, scheduledStopTime.
 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, dbVersion, isRefreshable, dbName, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.
@@ -32514,7 +32593,7 @@ To disconnect a cross region standby, please also provide the OCID of the standb
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'long-term-backup-schedule': {'module': 'database', 'class': 'LongTermBackUpScheduleDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'standby-whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'customer-contacts': {'module': 'database', 'class': 'list[CustomerContact]'}, 'resource-pool-summary': {'module': 'database', 'class': 'ResourcePoolSummary'}, 'scheduled-operations': {'module': 'database', 'class': 'list[ScheduledOperationDetails]'}, 'db-tools-details': {'module': 'database', 'class': 'list[DatabaseTool]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
 @cli_util.wrap_exceptions
-def update_autonomous_database_oracle_managed_key_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, backup_retention_period_in_days, compute_model, in_memory_percentage, local_adg_auto_failover_max_data_loss_limit, cpu_core_count, long_term_backup_schedule, is_dev_tier, compute_count, ocpu_count, data_storage_size_in_tbs, data_storage_size_in_gbs, display_name, is_free_tier, admin_password, db_name, freeform_tags, defined_tags, security_attributes, db_workload, license_model, byol_compute_count_limit, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_auto_scaling_enabled, is_refreshable_clone, refreshable_mode, is_local_data_guard_enabled, is_data_guard_enabled, peer_db_id, db_version, open_mode, permission_level, subnet_id, private_endpoint_label, private_endpoint_ip, nsg_ids, auto_refresh_frequency_in_seconds, auto_refresh_point_lag_in_seconds, time_of_auto_refresh_start, customer_contacts, is_mtls_connection_required, resource_pool_leader_id, resource_pool_summary, autonomous_maintenance_schedule_type, is_backup_retention_locked, scheduled_operations, is_auto_scaling_for_storage_enabled, database_edition, db_tools_details, secret_id, secret_version_number, is_disconnect_peer, if_match, opc_dry_run):
+def update_autonomous_database_oracle_managed_key_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, backup_retention_period_in_days, compute_model, in_memory_percentage, local_adg_auto_failover_max_data_loss_limit, cpu_core_count, long_term_backup_schedule, is_dev_tier, compute_count, ocpu_count, data_storage_size_in_tbs, data_storage_size_in_gbs, display_name, is_free_tier, admin_password, db_name, freeform_tags, defined_tags, security_attributes, db_workload, license_model, byol_compute_count_limit, is_access_control_enabled, whitelisted_ips, are_primary_whitelisted_ips_used, standby_whitelisted_ips, is_auto_scaling_enabled, is_refreshable_clone, refreshable_mode, is_local_data_guard_enabled, is_data_guard_enabled, peer_db_id, db_version, open_mode, permission_level, subnet_id, private_endpoint_label, private_endpoint_ip, nsg_ids, auto_refresh_frequency_in_seconds, auto_refresh_point_lag_in_seconds, time_of_auto_refresh_start, customer_contacts, is_mtls_connection_required, resource_pool_leader_id, resource_pool_summary, autonomous_maintenance_schedule_type, is_backup_retention_locked, time_scheduled_db_version_upgrade, is_disable_db_version_upgrade_schedule, is_schedule_db_version_upgrade_to_earliest, scheduled_operations, is_auto_scaling_for_storage_enabled, database_edition, db_tools_details, secret_id, secret_version_number, is_disconnect_peer, if_match, opc_dry_run):
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
@@ -32673,6 +32752,15 @@ def update_autonomous_database_oracle_managed_key_details(ctx, from_json, force,
 
     if is_backup_retention_locked is not None:
         _details['isBackupRetentionLocked'] = is_backup_retention_locked
+
+    if time_scheduled_db_version_upgrade is not None:
+        _details['timeScheduledDbVersionUpgrade'] = time_scheduled_db_version_upgrade
+
+    if is_disable_db_version_upgrade_schedule is not None:
+        _details['isDisableDbVersionUpgradeSchedule'] = is_disable_db_version_upgrade_schedule
+
+    if is_schedule_db_version_upgrade_to_earliest is not None:
+        _details['isScheduleDbVersionUpgradeToEarliest'] = is_schedule_db_version_upgrade_to_earliest
 
     if scheduled_operations is not None:
         _details['scheduledOperations'] = cli_util.parse_json_parameter("scheduled_operations", scheduled_operations)

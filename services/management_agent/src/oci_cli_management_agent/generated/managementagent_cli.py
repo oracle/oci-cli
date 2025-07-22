@@ -47,6 +47,12 @@ def management_agent_group():
     pass
 
 
+@click.command(cli_util.override('management_agent.named_credential_group.command_name', 'named-credential'), cls=CommandGroupWithAlias, help="""A representation of a named credential in the Management Agent.""")
+@cli_util.help_option_group
+def named_credential_group():
+    pass
+
+
 @click.command(cli_util.override('management_agent.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from the execution of a work request.""")
 @cli_util.help_option_group
 def work_request_log_entry_group():
@@ -69,6 +75,7 @@ management_agent_root_group.add_command(management_agent_install_key_group)
 management_agent_root_group.add_command(management_agent_plugin_group)
 management_agent_root_group.add_command(work_request_error_group)
 management_agent_root_group.add_command(management_agent_group)
+management_agent_root_group.add_command(named_credential_group)
 management_agent_root_group.add_command(work_request_log_entry_group)
 management_agent_root_group.add_command(work_request_group)
 management_agent_root_group.add_command(management_agent_image_group)
@@ -305,6 +312,80 @@ def create_management_agent_install_key(ctx, from_json, wait_for_state, max_wait
     cli_util.render_response(result, ctx)
 
 
+@named_credential_group.command(name=cli_util.override('management_agent.create_named_credential.command_name', 'create'), help=u"""Named credential creation request to given Management Agent. \n[Command Reference](createNamedCredential)""")
+@cli_util.option('--name', required=True, help=u"""Identifier for Named Credential. This is unique for the Management Agent.""")
+@cli_util.option('--type', required=True, help=u"""The type of the Named Credential.""")
+@cli_util.option('--management-agent-id', required=True, help=u"""The Management Agent parent resource to associate this named credential with.  This is the ManagementAgent resource OCID.""")
+@cli_util.option('--properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Properties for the named credential""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""Description of the Named Credential.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'management_agent', 'class': 'list[NamedCredentialProperty]'}, 'freeform-tags': {'module': 'management_agent', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_agent', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'management_agent', 'class': 'list[NamedCredentialProperty]'}, 'freeform-tags': {'module': 'management_agent', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_agent', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'management_agent', 'class': 'NamedCredential'})
+@cli_util.wrap_exceptions
+def create_named_credential(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, type, management_agent_id, properties, description, freeform_tags, defined_tags, if_match):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['type'] = type
+    _details['managementAgentId'] = management_agent_id
+    _details['properties'] = cli_util.parse_json_parameter("properties", properties)
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('management_agent', 'management_agent', ctx)
+    result = client.create_named_credential(
+        create_named_credential_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @management_agent_group.command(name=cli_util.override('management_agent.delete_data_source.command_name', 'delete-data-source'), help=u"""Datasource delete request to given Management Agent. \n[Command Reference](deleteDataSource)""")
 @cli_util.option('--management-agent-id', required=True, help=u"""Unique Management Agent identifier""")
 @cli_util.option('--data-source-key', required=True, help=u"""Data source type and name identifier.""")
@@ -491,6 +572,62 @@ def delete_management_agent_install_key(ctx, from_json, wait_for_state, max_wait
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@management_agent_group.command(name=cli_util.override('management_agent.delete_named_credential.command_name', 'delete-named-credential'), help=u"""Named credential delete request to sent to associated Management Agent. \n[Command Reference](deleteNamedCredential)""")
+@cli_util.option('--named-credential-id', required=True, help=u"""Named credential ID""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_named_credential(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, named_credential_id, if_match):
+
+    if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
+        raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('management_agent', 'management_agent', ctx)
+    result = client.delete_named_credential(
+        named_credential_id=named_credential_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -713,6 +850,50 @@ def get_management_agent_install_key_content(ctx, from_json, file, management_ag
         if bar:
             bar.render_finish()
         file.close()
+
+
+@management_agent_group.command(name=cli_util.override('management_agent.get_named_credential.command_name', 'get-named-credential'), help=u"""Get Named credential details for given Id and given Management Agent. \n[Command Reference](getNamedCredential)""")
+@cli_util.option('--named-credential-id', required=True, help=u"""Named credential ID""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'management_agent', 'class': 'NamedCredential'})
+@cli_util.wrap_exceptions
+def get_named_credential(ctx, from_json, named_credential_id):
+
+    if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
+        raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('management_agent', 'management_agent', ctx)
+    result = client.get_named_credential(
+        named_credential_id=named_credential_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@named_credential_group.command(name=cli_util.override('management_agent.get_named_credentials_metadatum.command_name', 'get-named-cred-metadata'), help=u"""Return the Metadata definition for Named Credentials supported by Management Agent. \n[Command Reference](getNamedCredentialsMetadatum)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to which a request will be scoped.""")
+@cli_util.option('--management-agent-id', help=u"""Filter the named credential metadata which is compatible with the given Management Agent identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'management_agent', 'class': 'NamedCredentialsMetadatum'})
+@cli_util.wrap_exceptions
+def get_named_credentials_metadatum(ctx, from_json, compartment_id, management_agent_id):
+
+    kwargs = {}
+    if management_agent_id is not None:
+        kwargs['management_agent_id'] = management_agent_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('management_agent', 'management_agent', ctx)
+    result = client.get_named_credentials_metadatum(
+        compartment_id=compartment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @work_request_group.command(name=cli_util.override('management_agent.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given ID. \n[Command Reference](getWorkRequest)""")
@@ -979,7 +1160,7 @@ def list_management_agent_install_keys(ctx, from_json, all_pages, compartment_id
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName"]), help=u"""The field to sort by. Default order for displayName is ascending. If no value is specified displayName is default.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "TERMINATED", "DELETING", "DELETED", "FAILED"]), help=u"""Filter to return only Management Agents in the particular lifecycle state.""")
-@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "SOLARIS", "MACOSX"]), multiple=True, help=u"""Filter to return only results having the particular platform type.""")
+@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "SOLARIS", "MACOSX", "AIX"]), multiple=True, help=u"""Filter to return only results having the particular platform type.""")
 @cli_util.option('--agent-id', help=u"""The ManagementAgentID of the agent from which the Management Agents to be filtered.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -1045,7 +1226,7 @@ def list_management_agent_plugins(ctx, from_json, all_pages, page_size, compartm
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "TERMINATED", "DELETING", "DELETED", "FAILED"]), help=u"""Filter to return only Management Agents in the particular lifecycle state.""")
 @cli_util.option('--availability-status', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "SILENT", "NOT_AVAILABLE"]), help=u"""Filter to return only Management Agents in the particular availability status.""")
 @cli_util.option('--host-id', help=u"""Filter to return only Management Agents having the particular agent host id.""")
-@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "SOLARIS", "MACOSX"]), multiple=True, help=u"""Filter to return only results having the particular platform type.""")
+@cli_util.option('--platform-type', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "SOLARIS", "MACOSX", "AIX"]), multiple=True, help=u"""Filter to return only results having the particular platform type.""")
 @cli_util.option('--is-customer-deployed', type=click.BOOL, help=u"""true, if the agent image is manually downloaded and installed. false, if the agent is deployed as a plugin in Oracle Cloud Agent.""")
 @cli_util.option('--install-type', type=custom_types.CliCaseInsensitiveChoice(["AGENT", "GATEWAY"]), help=u"""A filter to return either agents or gateway types depending upon install type selected by user. By default both install type will be returned.""")
 @cli_util.option('--gateway-id', multiple=True, help=u"""Filter to return only results having the particular gatewayId.""")
@@ -1128,6 +1309,72 @@ def list_management_agents(ctx, from_json, all_pages, page_size, compartment_id,
     else:
         result = client.list_management_agents(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@named_credential_group.command(name=cli_util.override('management_agent.list_named_credentials.command_name', 'list'), help=u"""A list of Management Agent Data Sources for the given Management Agent Id. \n[Command Reference](listNamedCredentials)""")
+@cli_util.option('--management-agent-id', required=True, help=u"""The ManagementAgentID of the agent from which the named credentials are associated.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "type", "timeCreated", "lifecycleState"]), help=u"""The field to sort by. Only one sort order may be provided. If no value is specified timeCreated is default.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help=u"""Filter to return only Management Agents in the particular lifecycle state.""")
+@cli_util.option('--name', multiple=True, help=u"""Filter list for these name items.""")
+@cli_util.option('--type', multiple=True, help=u"""Filter list for these type values.""")
+@cli_util.option('--id', multiple=True, help=u"""Filter list for these Named credentials identifiers (ocid) values.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'name': {'module': 'management_agent', 'class': 'list[string]'}, 'type': {'module': 'management_agent', 'class': 'list[string]'}, 'id': {'module': 'management_agent', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'name': {'module': 'management_agent', 'class': 'list[string]'}, 'type': {'module': 'management_agent', 'class': 'list[string]'}, 'id': {'module': 'management_agent', 'class': 'list[string]'}}, output_type={'module': 'management_agent', 'class': 'NamedCredentialCollection'})
+@cli_util.wrap_exceptions
+def list_named_credentials(ctx, from_json, all_pages, page_size, management_agent_id, page, limit, sort_order, sort_by, lifecycle_state, name, type, id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if lifecycle_state is not None and len(lifecycle_state) > 0:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if name is not None and len(name) > 0:
+        kwargs['name'] = name
+    if type is not None and len(type) > 0:
+        kwargs['type'] = type
+    if id is not None and len(id) > 0:
+        kwargs['id'] = id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('management_agent', 'management_agent', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_named_credentials,
+            management_agent_id=management_agent_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_named_credentials,
+            limit,
+            page_size,
+            management_agent_id=management_agent_id,
+            **kwargs
+        )
+    else:
+        result = client.list_named_credentials(
+            management_agent_id=management_agent_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -1253,7 +1500,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""The OperationStatus of the workRequest""")
-@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["DEPLOY_PLUGIN", "UPGRADE_PLUGIN", "CREATE_UPGRADE_PLUGINS", "AGENTIMAGE_UPGRADE", "CREATE_DATA_SOURCE", "UPDATE_DATA_SOURCE", "DELETE_DATA_SOURCE"]), multiple=True, help=u"""The OperationType of the workRequest""")
+@cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["DEPLOY_PLUGIN", "UPGRADE_PLUGIN", "CREATE_PLUGIN", "CREATE_UPGRADE_PLUGINS", "AGENTIMAGE_UPGRADE", "CREATE_DATA_SOURCE", "UPDATE_DATA_SOURCE", "DELETE_DATA_SOURCE", "CREATE_NAMEDCREDENTIALS", "UPDATE_NAMEDCREDENTIALS", "DELETE_NAMEDCREDENTIALS", "AGENT_UPGRADE"]), multiple=True, help=u"""The OperationType of the workRequest""")
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Filter for items with timeCreated greater or equal to provided value. given `timeCreatedGreaterThanOrEqualTo` to the current time, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by RFC 3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeAccepted"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeAccepted is descending. If no value is specified timeAccepted is default.""")
@@ -1703,4 +1950,82 @@ def update_management_agent_install_key(ctx, from_json, wait_for_state, max_wait
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@management_agent_group.command(name=cli_util.override('management_agent.update_named_credential.command_name', 'update-named-credential'), help=u"""Named credential update request to given Management Agent. \n[Command Reference](updateNamedCredential)""")
+@cli_util.option('--named-credential-id', required=True, help=u"""Named credential ID""")
+@cli_util.option('--properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Properties for the named credential""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""Description of the Named Credential.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'management_agent', 'class': 'list[NamedCredentialProperty]'}, 'freeform-tags': {'module': 'management_agent', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_agent', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'management_agent', 'class': 'list[NamedCredentialProperty]'}, 'freeform-tags': {'module': 'management_agent', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_agent', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'management_agent', 'class': 'NamedCredential'})
+@cli_util.wrap_exceptions
+def update_named_credential(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, named_credential_id, properties, description, freeform_tags, defined_tags, if_match):
+
+    if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
+        raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
+    if not force:
+        if properties or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to properties and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['properties'] = cli_util.parse_json_parameter("properties", properties)
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('management_agent', 'management_agent', ctx)
+    result = client.update_named_credential(
+        named_credential_id=named_credential_id,
+        update_named_credential_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
