@@ -120,7 +120,7 @@ def change_mysql_database_management_type(ctx, from_json, wait_for_state, max_wa
     cli_util.render_response(result, ctx)
 
 
-@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.get_binary_log_information.command_name', 'get-binary-log-information'), help=u"""Retrieves information pertaining to binary log of a specific MySQL server. \n[Command Reference](getBinaryLogInformation)""")
+@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.get_binary_log_information.command_name', 'get-binary-log-information'), help=u"""Retrieves information pertaining to the binary log of a specific MySQL server. \n[Command Reference](getBinaryLogInformation)""")
 @cli_util.option('--managed-my-sql-database-id', required=True, help=u"""The OCID of the Managed MySQL Database.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -142,7 +142,7 @@ def get_binary_log_information(ctx, from_json, managed_my_sql_database_id):
     cli_util.render_response(result, ctx)
 
 
-@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.get_general_replication_information.command_name', 'get-general-replication-information'), help=u"""Retrieves general information regarding replication of a specific MySQL server. \n[Command Reference](getGeneralReplicationInformation)""")
+@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.get_general_replication_information.command_name', 'get-general-replication-information'), help=u"""Retrieves general information regarding the replication of a specific MySQL server. \n[Command Reference](getGeneralReplicationInformation)""")
 @cli_util.option('--managed-my-sql-database-id', required=True, help=u"""The OCID of the Managed MySQL Database.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -289,7 +289,7 @@ def get_my_sql_query_details(ctx, from_json, managed_my_sql_database_id, digest)
     cli_util.render_response(result, ctx)
 
 
-@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.list_high_availability_members.command_name', 'list-high-availability-members'), help=u"""Information about high availability members of a specific MySQL server's replication group. \n[Command Reference](listHighAvailabilityMembers)""")
+@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.list_high_availability_members.command_name', 'list-high-availability-members'), help=u"""Retrieves information about the high availability members of a specific MySQL server's replication group. \n[Command Reference](listHighAvailabilityMembers)""")
 @cli_util.option('--managed-my-sql-database-id', required=True, help=u"""The OCID of the Managed MySQL Database.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
@@ -646,7 +646,7 @@ def list_my_sql_digest_errors(ctx, from_json, all_pages, page_size, managed_my_s
     cli_util.render_response(result, ctx)
 
 
-@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.list_outbound_replications.command_name', 'list-outbound-replications'), help=u"""Retrieves information pertaining to outbound replications of a specific MySQL server. \n[Command Reference](listOutboundReplications)""")
+@managed_my_sql_database_group.command(name=cli_util.override('managed_my_sql_databases.list_outbound_replications.command_name', 'list-outbound-replications'), help=u"""Retrieves information pertaining to the outbound replications of a specific MySQL server. \n[Command Reference](listOutboundReplications)""")
 @cli_util.option('--managed-my-sql-database-id', required=True, help=u"""The OCID of the Managed MySQL Database.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
 @cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")

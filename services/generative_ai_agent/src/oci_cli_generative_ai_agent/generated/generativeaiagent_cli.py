@@ -1164,7 +1164,6 @@ def create_tool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.option('--description', required=True, help=u"""Description about the Tool.""")
 @cli_util.option('--agent-id', required=True, help=u"""The OCID of the agent that this Tool is attached to.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--tool-config-database-schema', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--tool-config-dialect', required=True, type=custom_types.CliCaseInsensitiveChoice(["SQL_LITE", "ORACLE_SQL"]), help=u"""Dialect to be used for SQL generation.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Key-value pairs to allow additional configurations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1175,6 +1174,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--tool-config-icl-examples', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tool-config-database-schema', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--tool-config-should-enable-sql-execution', type=click.BOOL, help=u"""To enable/disable SQL execution.""")
 @cli_util.option('--tool-config-model-size', type=custom_types.CliCaseInsensitiveChoice(["SMALL", "LARGE"]), help=u"""Size of the model.""")
 @cli_util.option('--tool-config-should-enable-self-correction', type=click.BOOL, help=u"""To enable/disable self correction.""")
@@ -1189,7 +1189,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'generative_ai_agent', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'generative_ai_agent', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai_agent', 'class': 'dict(str, dict(str, object))'}, 'tool-config-icl-examples': {'module': 'generative_ai_agent', 'class': 'InputLocation'}, 'tool-config-database-schema': {'module': 'generative_ai_agent', 'class': 'InputLocation'}, 'tool-config-table-and-column-description': {'module': 'generative_ai_agent', 'class': 'InputLocation'}, 'tool-config-generation-llm-customization': {'module': 'generative_ai_agent', 'class': 'LlmCustomization'}, 'tool-config-database-connection': {'module': 'generative_ai_agent', 'class': 'DatabaseConnection'}}, output_type={'module': 'generative_ai_agent', 'class': 'Tool'})
 @cli_util.wrap_exceptions
-def create_tool_sql_tool_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, description, agent_id, compartment_id, tool_config_database_schema, tool_config_dialect, display_name, metadata, freeform_tags, defined_tags, tool_config_icl_examples, tool_config_should_enable_sql_execution, tool_config_model_size, tool_config_should_enable_self_correction, tool_config_table_and_column_description, tool_config_generation_llm_customization, tool_config_database_connection):
+def create_tool_sql_tool_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, description, agent_id, compartment_id, tool_config_dialect, display_name, metadata, freeform_tags, defined_tags, tool_config_icl_examples, tool_config_database_schema, tool_config_should_enable_sql_execution, tool_config_model_size, tool_config_should_enable_self_correction, tool_config_table_and_column_description, tool_config_generation_llm_customization, tool_config_database_connection):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1199,7 +1199,6 @@ def create_tool_sql_tool_config(ctx, from_json, wait_for_state, max_wait_seconds
     _details['description'] = description
     _details['agentId'] = agent_id
     _details['compartmentId'] = compartment_id
-    _details['toolConfig']['databaseSchema'] = cli_util.parse_json_parameter("tool_config_database_schema", tool_config_database_schema)
     _details['toolConfig']['dialect'] = tool_config_dialect
 
     if display_name is not None:
@@ -1216,6 +1215,9 @@ def create_tool_sql_tool_config(ctx, from_json, wait_for_state, max_wait_seconds
 
     if tool_config_icl_examples is not None:
         _details['toolConfig']['iclExamples'] = cli_util.parse_json_parameter("tool_config_icl_examples", tool_config_icl_examples)
+
+    if tool_config_database_schema is not None:
+        _details['toolConfig']['databaseSchema'] = cli_util.parse_json_parameter("tool_config_database_schema", tool_config_database_schema)
 
     if tool_config_should_enable_sql_execution is not None:
         _details['toolConfig']['shouldEnableSqlExecution'] = tool_config_should_enable_sql_execution
@@ -1404,6 +1406,88 @@ def create_tool_http_endpoint_tool_config(ctx, from_json, wait_for_state, max_wa
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['toolConfig']['toolConfigType'] = 'HTTP_ENDPOINT_TOOL_CONFIG'
+
+    client = cli_util.build_client('generative_ai_agent', 'generative_ai_agent', ctx)
+    result = client.create_tool(
+        create_tool_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@tool_group.command(name=cli_util.override('generative_ai_agent.create_tool_agent_tool_config.command_name', 'create-tool-agent-tool-config'), help=u"""Creates a tool. \n[Command Reference](createTool)""")
+@cli_util.option('--description', required=True, help=u"""Description about the Tool.""")
+@cli_util.option('--agent-id', required=True, help=u"""The OCID of the agent that this Tool is attached to.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--tool-config-agent-endpoint-id', required=True, help=u"""The AgentEndpoint OCID to be used as a tool in this agent.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Key-value pairs to allow additional configurations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'generative_ai_agent', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'generative_ai_agent', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai_agent', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'generative_ai_agent', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'generative_ai_agent', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai_agent', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai_agent', 'class': 'Tool'})
+@cli_util.wrap_exceptions
+def create_tool_agent_tool_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, description, agent_id, compartment_id, tool_config_agent_endpoint_id, display_name, metadata, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['toolConfig'] = {}
+    _details['description'] = description
+    _details['agentId'] = agent_id
+    _details['compartmentId'] = compartment_id
+    _details['toolConfig']['agentEndpointId'] = tool_config_agent_endpoint_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if metadata is not None:
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['toolConfig']['toolConfigType'] = 'AGENT_TOOL_CONFIG'
 
     client = cli_util.build_client('generative_ai_agent', 'generative_ai_agent', ctx)
     result = client.create_tool(
@@ -3469,7 +3553,6 @@ def update_tool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 
 @tool_group.command(name=cli_util.override('generative_ai_agent.update_tool_sql_tool_config.command_name', 'update-tool-sql-tool-config'), help=u"""Updates a tool. \n[Command Reference](updateTool)""")
 @cli_util.option('--tool-id', required=True, help=u"""The [OCID] of the Tool.""")
-@cli_util.option('--tool-config-database-schema', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--tool-config-dialect', required=True, type=custom_types.CliCaseInsensitiveChoice(["SQL_LITE", "ORACLE_SQL"]), help=u"""Dialect to be used for SQL generation.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Description about the Tool.""")
@@ -3482,6 +3565,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--tool-config-icl-examples', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--tool-config-database-schema', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--tool-config-should-enable-sql-execution', type=click.BOOL, help=u"""To enable/disable SQL execution.""")
 @cli_util.option('--tool-config-model-size', type=custom_types.CliCaseInsensitiveChoice(["SMALL", "LARGE"]), help=u"""Size of the model.""")
 @cli_util.option('--tool-config-should-enable-self-correction', type=click.BOOL, help=u"""To enable/disable self correction.""")
@@ -3497,7 +3581,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'generative_ai_agent', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'generative_ai_agent', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai_agent', 'class': 'dict(str, dict(str, object))'}, 'tool-config-icl-examples': {'module': 'generative_ai_agent', 'class': 'InputLocation'}, 'tool-config-database-schema': {'module': 'generative_ai_agent', 'class': 'InputLocation'}, 'tool-config-table-and-column-description': {'module': 'generative_ai_agent', 'class': 'InputLocation'}, 'tool-config-generation-llm-customization': {'module': 'generative_ai_agent', 'class': 'LlmCustomization'}, 'tool-config-database-connection': {'module': 'generative_ai_agent', 'class': 'DatabaseConnection'}})
 @cli_util.wrap_exceptions
-def update_tool_sql_tool_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tool_id, tool_config_database_schema, tool_config_dialect, display_name, description, metadata, freeform_tags, defined_tags, if_match, tool_config_icl_examples, tool_config_should_enable_sql_execution, tool_config_model_size, tool_config_should_enable_self_correction, tool_config_table_and_column_description, tool_config_generation_llm_customization, tool_config_database_connection):
+def update_tool_sql_tool_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tool_id, tool_config_dialect, display_name, description, metadata, freeform_tags, defined_tags, if_match, tool_config_icl_examples, tool_config_database_schema, tool_config_should_enable_sql_execution, tool_config_model_size, tool_config_should_enable_self_correction, tool_config_table_and_column_description, tool_config_generation_llm_customization, tool_config_database_connection):
 
     if isinstance(tool_id, six.string_types) and len(tool_id.strip()) == 0:
         raise click.UsageError('Parameter --tool-id cannot be whitespace or empty string')
@@ -3513,7 +3597,6 @@ def update_tool_sql_tool_config(ctx, from_json, force, wait_for_state, max_wait_
 
     _details = {}
     _details['toolConfig'] = {}
-    _details['toolConfig']['databaseSchema'] = cli_util.parse_json_parameter("tool_config_database_schema", tool_config_database_schema)
     _details['toolConfig']['dialect'] = tool_config_dialect
 
     if display_name is not None:
@@ -3533,6 +3616,9 @@ def update_tool_sql_tool_config(ctx, from_json, force, wait_for_state, max_wait_
 
     if tool_config_icl_examples is not None:
         _details['toolConfig']['iclExamples'] = cli_util.parse_json_parameter("tool_config_icl_examples", tool_config_icl_examples)
+
+    if tool_config_database_schema is not None:
+        _details['toolConfig']['databaseSchema'] = cli_util.parse_json_parameter("tool_config_database_schema", tool_config_database_schema)
 
     if tool_config_should_enable_sql_execution is not None:
         _details['toolConfig']['shouldEnableSqlExecution'] = tool_config_should_enable_sql_execution
@@ -3743,6 +3829,99 @@ def update_tool_http_endpoint_tool_config(ctx, from_json, force, wait_for_state,
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['toolConfig']['toolConfigType'] = 'HTTP_ENDPOINT_TOOL_CONFIG'
+
+    client = cli_util.build_client('generative_ai_agent', 'generative_ai_agent', ctx)
+    result = client.update_tool(
+        tool_id=tool_id,
+        update_tool_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@tool_group.command(name=cli_util.override('generative_ai_agent.update_tool_agent_tool_config.command_name', 'update-tool-agent-tool-config'), help=u"""Updates a tool. \n[Command Reference](updateTool)""")
+@cli_util.option('--tool-id', required=True, help=u"""The [OCID] of the Tool.""")
+@cli_util.option('--tool-config-agent-endpoint-id', required=True, help=u"""The AgentEndpoint OCID to be used as a tool in this agent.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""Description about the Tool.""")
+@cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Key-value pairs to allow additional configurations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'generative_ai_agent', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'generative_ai_agent', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai_agent', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'generative_ai_agent', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'generative_ai_agent', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai_agent', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_tool_agent_tool_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tool_id, tool_config_agent_endpoint_id, display_name, description, metadata, freeform_tags, defined_tags, if_match):
+
+    if isinstance(tool_id, six.string_types) and len(tool_id.strip()) == 0:
+        raise click.UsageError('Parameter --tool-id cannot be whitespace or empty string')
+    if not force:
+        if metadata or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to metadata and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['toolConfig'] = {}
+    _details['toolConfig']['agentEndpointId'] = tool_config_agent_endpoint_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if metadata is not None:
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['toolConfig']['toolConfigType'] = 'AGENT_TOOL_CONFIG'
 
     client = cli_util.build_client('generative_ai_agent', 'generative_ai_agent', ctx)
     result = client.update_tool(

@@ -30,33 +30,9 @@ def addm_tasks_collection_group():
     pass
 
 
-@click.command(cli_util.override('db_management.external_cluster_instance_group.command_name', 'external-cluster-instance'), cls=CommandGroupWithAlias, help="""The details of an external cluster instance.""")
+@click.command(cli_util.override('db_management.cloud_asm_instance_group.command_name', 'cloud-asm-instance'), cls=CommandGroupWithAlias, help="""The details of a cloud ASM instance.""")
 @cli_util.help_option_group
-def external_cluster_instance_group():
-    pass
-
-
-@click.command(cli_util.override('db_management.external_db_home_group.command_name', 'external-db-home'), cls=CommandGroupWithAlias, help="""The details of an external database home.""")
-@cli_util.help_option_group
-def external_db_home_group():
-    pass
-
-
-@click.command(cli_util.override('db_management.external_db_system_connector_group.command_name', 'external-db-system-connector'), cls=CommandGroupWithAlias, help="""The details of an external DB system connector.""")
-@cli_util.help_option_group
-def external_db_system_connector_group():
-    pass
-
-
-@click.command(cli_util.override('db_management.external_my_sql_database_connector_group.command_name', 'external-my-sql-database-connector'), cls=CommandGroupWithAlias, help="""Details of external database connector.""")
-@cli_util.help_option_group
-def external_my_sql_database_connector_group():
-    pass
-
-
-@click.command(cli_util.override('db_management.managed_database_group_group.command_name', 'managed-database-group'), cls=CommandGroupWithAlias, help="""The details of a Managed Database Group.""")
-@cli_util.help_option_group
-def managed_database_group_group():
+def cloud_asm_instance_group():
     pass
 
 
@@ -84,15 +60,15 @@ def external_database_collection_group():
     pass
 
 
-@click.command(cli_util.override('db_management.peer_database_metrics_group.command_name', 'peer-database-metrics'), cls=CommandGroupWithAlias, help="""The summary of resource usage metrics for the peer database.""")
-@cli_util.help_option_group
-def peer_database_metrics_group():
-    pass
-
-
 @click.command(cli_util.override('db_management.tablespace_group.command_name', 'tablespace'), cls=CommandGroupWithAlias, help="""The details of a tablespace.""")
 @cli_util.help_option_group
 def tablespace_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.cloud_listener_group.command_name', 'cloud-listener'), cls=CommandGroupWithAlias, help="""The details of a cloud listener.""")
+@cli_util.help_option_group
+def cloud_listener_group():
     pass
 
 
@@ -102,27 +78,9 @@ def work_request_error_group():
     pass
 
 
-@click.command(cli_util.override('db_management.db_management_private_endpoint_group.command_name', 'db-management-private-endpoint'), cls=CommandGroupWithAlias, help="""A Database Management private endpoint allows Database Management to connect to databases in a Virtual Cloud Network (VCN).""")
-@cli_util.help_option_group
-def db_management_private_endpoint_group():
-    pass
-
-
 @click.command(cli_util.override('db_management.external_exadata_infrastructure_group.command_name', 'external-exadata-infrastructure'), cls=CommandGroupWithAlias, help="""The details of the Exadata infrastructure.""")
 @cli_util.help_option_group
 def external_exadata_infrastructure_group():
-    pass
-
-
-@click.command(cli_util.override('db_management.job_run_group.command_name', 'job-run'), cls=CommandGroupWithAlias, help="""The details of a specific job run.""")
-@cli_util.help_option_group
-def job_run_group():
-    pass
-
-
-@click.command(cli_util.override('db_management.external_my_sql_database_group.command_name', 'external-my-sql-database'), cls=CommandGroupWithAlias, help="""External database.""")
-@cli_util.help_option_group
-def external_my_sql_database_group():
     pass
 
 
@@ -132,21 +90,9 @@ def job_execution_group():
     pass
 
 
-@click.command(cli_util.override('db_management.database_ha_backup_details_group.command_name', 'database-ha-backup-details'), cls=CommandGroupWithAlias, help="""The database HA and backup details.""")
-@cli_util.help_option_group
-def database_ha_backup_details_group():
-    pass
-
-
 @click.command(cli_util.override('db_management.external_exadata_storage_connector_group.command_name', 'external-exadata-storage-connector'), cls=CommandGroupWithAlias, help="""The details of the Exadata storage server connector.""")
 @cli_util.help_option_group
 def external_exadata_storage_connector_group():
-    pass
-
-
-@click.command(cli_util.override('db_management.external_my_sql_database_collection_group.command_name', 'external-my-sql-database-collection'), cls=CommandGroupWithAlias, help="""The collection of external MySQL Databases.""")
-@cli_util.help_option_group
-def external_my_sql_database_collection_group():
     pass
 
 
@@ -162,9 +108,9 @@ def my_sql_connector_collection_group():
     pass
 
 
-@click.command(cli_util.override('db_management.snapshot_details_group.command_name', 'snapshot-details'), cls=CommandGroupWithAlias, help="""The details of the newly generated AWR snapshot.""")
+@click.command(cli_util.override('db_management.cloud_db_node_group.command_name', 'cloud-db-node'), cls=CommandGroupWithAlias, help="""The details of a cloud database node.""")
 @cli_util.help_option_group
-def snapshot_details_group():
+def cloud_db_node_group():
     pass
 
 
@@ -198,6 +144,126 @@ def database_fleet_dataguard_metrics_group():
     pass
 
 
+@click.command(cli_util.override('db_management.database_fleet_ha_overview_metrics_group.command_name', 'database-fleet-ha-overview-metrics'), cls=CommandGroupWithAlias, help="""The details of the HA metrics for the fleet of databases.""")
+@cli_util.help_option_group
+def database_fleet_ha_overview_metrics_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.database_fleet_health_metrics_group.command_name', 'database-fleet-health-metrics'), cls=CommandGroupWithAlias, help="""The details of the fleet health metrics.""")
+@cli_util.help_option_group
+def database_fleet_health_metrics_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.external_cluster_group.command_name', 'external-cluster'), cls=CommandGroupWithAlias, help="""The details of an external cluster.""")
+@cli_util.help_option_group
+def external_cluster_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.managed_database_group.command_name', 'managed-database'), cls=CommandGroupWithAlias, help="""The details of a Managed Database.""")
+@cli_util.help_option_group
+def managed_database_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.job_group.command_name', 'job'), cls=CommandGroupWithAlias, help="""The details of the job.""")
+@cli_util.help_option_group
+def job_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.cloud_database_collection_group.command_name', 'cloud-database-collection'), cls=CommandGroupWithAlias, help="""A collection of cloud databases.""")
+@cli_util.help_option_group
+def cloud_database_collection_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.external_cluster_instance_group.command_name', 'external-cluster-instance'), cls=CommandGroupWithAlias, help="""The details of an external cluster instance.""")
+@cli_util.help_option_group
+def external_cluster_instance_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.external_db_home_group.command_name', 'external-db-home'), cls=CommandGroupWithAlias, help="""The details of an external database home.""")
+@cli_util.help_option_group
+def external_db_home_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.external_db_system_connector_group.command_name', 'external-db-system-connector'), cls=CommandGroupWithAlias, help="""The details of an external DB system connector.""")
+@cli_util.help_option_group
+def external_db_system_connector_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.external_my_sql_database_connector_group.command_name', 'external-my-sql-database-connector'), cls=CommandGroupWithAlias, help="""Details of external database connector.""")
+@cli_util.help_option_group
+def external_my_sql_database_connector_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.managed_database_group_group.command_name', 'managed-database-group'), cls=CommandGroupWithAlias, help="""The details of a Managed Database Group.""")
+@cli_util.help_option_group
+def managed_database_group_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.cloud_db_home_group.command_name', 'cloud-db-home'), cls=CommandGroupWithAlias, help="""The details of a cloud database home.""")
+@cli_util.help_option_group
+def cloud_db_home_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.peer_database_metrics_group.command_name', 'peer-database-metrics'), cls=CommandGroupWithAlias, help="""The summary of resource usage metrics for the peer database.""")
+@cli_util.help_option_group
+def peer_database_metrics_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.db_management_private_endpoint_group.command_name', 'db-management-private-endpoint'), cls=CommandGroupWithAlias, help="""A Database Management private endpoint allows Database Management to connect to databases in a Virtual Cloud Network (VCN).""")
+@cli_util.help_option_group
+def db_management_private_endpoint_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.cloud_db_system_discovery_group.command_name', 'cloud-db-system-discovery'), cls=CommandGroupWithAlias, help="""The details of a cloud DB system discovery.""")
+@cli_util.help_option_group
+def cloud_db_system_discovery_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.job_run_group.command_name', 'job-run'), cls=CommandGroupWithAlias, help="""The details of a specific job run.""")
+@cli_util.help_option_group
+def job_run_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.external_my_sql_database_group.command_name', 'external-my-sql-database'), cls=CommandGroupWithAlias, help="""External database.""")
+@cli_util.help_option_group
+def external_my_sql_database_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.database_ha_backup_details_group.command_name', 'database-ha-backup-details'), cls=CommandGroupWithAlias, help="""The database HA and backup details.""")
+@cli_util.help_option_group
+def database_ha_backup_details_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.external_my_sql_database_collection_group.command_name', 'external-my-sql-database-collection'), cls=CommandGroupWithAlias, help="""The collection of external MySQL Databases.""")
+@cli_util.help_option_group
+def external_my_sql_database_collection_group():
+    pass
+
+
+@click.command(cli_util.override('db_management.snapshot_details_group.command_name', 'snapshot-details'), cls=CommandGroupWithAlias, help="""The details of the newly generated AWR snapshot.""")
+@cli_util.help_option_group
+def snapshot_details_group():
+    pass
+
+
 @click.command(cli_util.override('db_management.dataguard_performance_metrics_group.command_name', 'dataguard-performance-metrics'), cls=CommandGroupWithAlias, help="""A summary of Data Guard performance metrics for Managed Databases.""")
 @cli_util.help_option_group
 def dataguard_performance_metrics_group():
@@ -222,6 +288,12 @@ def external_listener_group():
     pass
 
 
+@click.command(cli_util.override('db_management.cloud_cluster_group.command_name', 'cloud-cluster'), cls=CommandGroupWithAlias, help="""The details of a cloud cluster.""")
+@cli_util.help_option_group
+def cloud_cluster_group():
+    pass
+
+
 @click.command(cli_util.override('db_management.external_asm_group.command_name', 'external-asm'), cls=CommandGroupWithAlias, help="""The details of an external ASM.""")
 @cli_util.help_option_group
 def external_asm_group():
@@ -234,21 +306,15 @@ def external_exadata_storage_grid_group():
     pass
 
 
-@click.command(cli_util.override('db_management.database_fleet_ha_overview_metrics_group.command_name', 'database-fleet-ha-overview-metrics'), cls=CommandGroupWithAlias, help="""The details of the HA metrics for the fleet of databases.""")
+@click.command(cli_util.override('db_management.cloud_asm_group.command_name', 'cloud-asm'), cls=CommandGroupWithAlias, help="""The details of a cloud ASM.""")
 @cli_util.help_option_group
-def database_fleet_ha_overview_metrics_group():
+def cloud_asm_group():
     pass
 
 
-@click.command(cli_util.override('db_management.database_fleet_health_metrics_group.command_name', 'database-fleet-health-metrics'), cls=CommandGroupWithAlias, help="""The details of the fleet health metrics.""")
+@click.command(cli_util.override('db_management.cloud_cluster_instance_group.command_name', 'cloud-cluster-instance'), cls=CommandGroupWithAlias, help="""The details of a cloud cluster instance.""")
 @cli_util.help_option_group
-def database_fleet_health_metrics_group():
-    pass
-
-
-@click.command(cli_util.override('db_management.external_cluster_group.command_name', 'external-cluster'), cls=CommandGroupWithAlias, help="""The details of an external cluster.""")
-@cli_util.help_option_group
-def external_cluster_group():
+def cloud_cluster_instance_group():
     pass
 
 
@@ -264,9 +330,9 @@ def external_exadata_storage_server_group():
     pass
 
 
-@click.command(cli_util.override('db_management.managed_database_group.command_name', 'managed-database'), cls=CommandGroupWithAlias, help="""The details of a Managed Database.""")
+@click.command(cli_util.override('db_management.cloud_db_system_connector_group.command_name', 'cloud-db-system-connector'), cls=CommandGroupWithAlias, help="""The details of a cloud DB system connector.""")
 @cli_util.help_option_group
-def managed_database_group():
+def cloud_db_system_connector_group():
     pass
 
 
@@ -276,15 +342,15 @@ def job_executions_status_summary_collection_group():
     pass
 
 
-@click.command(cli_util.override('db_management.associated_database_summary_group.command_name', 'associated-database-summary'), cls=CommandGroupWithAlias, help="""The summary of a database currently using a Database Management private endpoint.""")
+@click.command(cli_util.override('db_management.cloud_db_system_group.command_name', 'cloud-db-system'), cls=CommandGroupWithAlias, help="""The details of a cloud DB system.""")
 @cli_util.help_option_group
-def associated_database_summary_group():
+def cloud_db_system_group():
     pass
 
 
-@click.command(cli_util.override('db_management.job_group.command_name', 'job'), cls=CommandGroupWithAlias, help="""The details of the job.""")
+@click.command(cli_util.override('db_management.associated_database_summary_group.command_name', 'associated-database-summary'), cls=CommandGroupWithAlias, help="""The summary of a database currently using a Database Management private endpoint.""")
 @cli_util.help_option_group
-def job_group():
+def associated_database_summary_group():
     pass
 
 
@@ -302,49 +368,60 @@ def preferred_credential_group():
 
 database_management_service_cli.database_management_service_group.add_command(db_management_root_group)
 db_management_root_group.add_command(addm_tasks_collection_group)
-db_management_root_group.add_command(external_cluster_instance_group)
-db_management_root_group.add_command(external_db_home_group)
-db_management_root_group.add_command(external_db_system_connector_group)
-db_management_root_group.add_command(external_my_sql_database_connector_group)
-db_management_root_group.add_command(managed_database_group_group)
+db_management_root_group.add_command(cloud_asm_instance_group)
 db_management_root_group.add_command(pdb_metrics_group)
 db_management_root_group.add_command(work_request_group)
 db_management_root_group.add_command(database_home_metrics_group)
 db_management_root_group.add_command(external_database_collection_group)
-db_management_root_group.add_command(peer_database_metrics_group)
 db_management_root_group.add_command(tablespace_group)
+db_management_root_group.add_command(cloud_listener_group)
 db_management_root_group.add_command(work_request_error_group)
-db_management_root_group.add_command(db_management_private_endpoint_group)
 db_management_root_group.add_command(external_exadata_infrastructure_group)
-db_management_root_group.add_command(job_run_group)
-db_management_root_group.add_command(external_my_sql_database_group)
 db_management_root_group.add_command(job_execution_group)
-db_management_root_group.add_command(database_ha_backup_details_group)
 db_management_root_group.add_command(external_exadata_storage_connector_group)
-db_management_root_group.add_command(external_my_sql_database_collection_group)
 db_management_root_group.add_command(external_db_system_discovery_group)
 db_management_root_group.add_command(my_sql_connector_collection_group)
-db_management_root_group.add_command(snapshot_details_group)
+db_management_root_group.add_command(cloud_db_node_group)
 db_management_root_group.add_command(external_asm_instance_group)
 db_management_root_group.add_command(historic_addm_result_group)
 db_management_root_group.add_command(database_fleet_backup_metrics_group)
 db_management_root_group.add_command(cluster_cache_metric_group)
 db_management_root_group.add_command(database_fleet_dataguard_metrics_group)
+db_management_root_group.add_command(database_fleet_ha_overview_metrics_group)
+db_management_root_group.add_command(database_fleet_health_metrics_group)
+db_management_root_group.add_command(external_cluster_group)
+db_management_root_group.add_command(managed_database_group)
+db_management_root_group.add_command(job_group)
+db_management_root_group.add_command(cloud_database_collection_group)
+db_management_root_group.add_command(external_cluster_instance_group)
+db_management_root_group.add_command(external_db_home_group)
+db_management_root_group.add_command(external_db_system_connector_group)
+db_management_root_group.add_command(external_my_sql_database_connector_group)
+db_management_root_group.add_command(managed_database_group_group)
+db_management_root_group.add_command(cloud_db_home_group)
+db_management_root_group.add_command(peer_database_metrics_group)
+db_management_root_group.add_command(db_management_private_endpoint_group)
+db_management_root_group.add_command(cloud_db_system_discovery_group)
+db_management_root_group.add_command(job_run_group)
+db_management_root_group.add_command(external_my_sql_database_group)
+db_management_root_group.add_command(database_ha_backup_details_group)
+db_management_root_group.add_command(external_my_sql_database_collection_group)
+db_management_root_group.add_command(snapshot_details_group)
 db_management_root_group.add_command(dataguard_performance_metrics_group)
 db_management_root_group.add_command(named_credential_group)
 db_management_root_group.add_command(work_request_log_entry_group)
 db_management_root_group.add_command(external_listener_group)
+db_management_root_group.add_command(cloud_cluster_group)
 db_management_root_group.add_command(external_asm_group)
 db_management_root_group.add_command(external_exadata_storage_grid_group)
-db_management_root_group.add_command(database_fleet_ha_overview_metrics_group)
-db_management_root_group.add_command(database_fleet_health_metrics_group)
-db_management_root_group.add_command(external_cluster_group)
+db_management_root_group.add_command(cloud_asm_group)
+db_management_root_group.add_command(cloud_cluster_instance_group)
 db_management_root_group.add_command(external_db_system_group)
 db_management_root_group.add_command(external_exadata_storage_server_group)
-db_management_root_group.add_command(managed_database_group)
+db_management_root_group.add_command(cloud_db_system_connector_group)
 db_management_root_group.add_command(job_executions_status_summary_collection_group)
+db_management_root_group.add_command(cloud_db_system_group)
 db_management_root_group.add_command(associated_database_summary_group)
-db_management_root_group.add_command(job_group)
 db_management_root_group.add_command(external_db_node_group)
 db_management_root_group.add_command(preferred_credential_group)
 
@@ -1789,6 +1866,57 @@ def change_sql_plan_baselines_attributes_database_password_credential_details(ct
     cli_util.render_response(result, ctx)
 
 
+@cloud_db_system_connector_group.command(name=cli_util.override('db_management.check_cloud_db_system_connector_connection_status.command_name', 'check-cloud-db-system-connector-connection-status'), help=u"""Checks the status of the cloud DB system component connection specified in this connector. This operation will refresh the connectionStatus and timeConnectionStatusLastUpdated fields. \n[Command Reference](checkCloudDbSystemConnectorConnectionStatus)""")
+@cli_util.option('--cloud-db-system-connector-id', required=True, help=u"""The [OCID] of the cloud connector.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NOT_CONNECTED", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudDbSystemConnector'})
+@cli_util.wrap_exceptions
+def check_cloud_db_system_connector_connection_status(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_connector_id, if_match):
+
+    if isinstance(cloud_db_system_connector_id, six.string_types) and len(cloud_db_system_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-system-connector-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.check_cloud_db_system_connector_connection_status(
+        cloud_db_system_connector_id=cloud_db_system_connector_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_cloud_db_system_connector') and callable(getattr(client, 'get_cloud_db_system_connector')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_cloud_db_system_connector(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @external_db_system_connector_group.command(name=cli_util.override('db_management.check_external_db_system_connector_connection_status.command_name', 'check-external-db-system-connector-connection-status'), help=u"""Checks the status of the external DB system component connection specified in this connector. This operation will refresh the connectionStatus and timeConnectionStatusLastUpdated fields. \n[Command Reference](checkExternalDbSystemConnectorConnectionStatus)""")
 @cli_util.option('--external-db-system-connector-id', required=True, help=u"""The [OCID] of the external connector.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2407,6 +2535,276 @@ def configure_automatic_spm_evolve_advisor_task_database_password_credential_det
         configure_automatic_spm_evolve_advisor_task_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_group.command(name=cli_util.override('db_management.create_cloud_db_system.command_name', 'create'), help=u"""Creates a cloud DB system and its related resources. \n[Command Reference](createCloudDbSystem)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the cloud DB system resides.""")
+@cli_util.option('--db-system-discovery-id', required=True, help=u"""The [OCID] of the DB system discovery.""")
+@cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
+@cli_util.option('--database-management-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--stack-monitoring-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'database-management-config': {'module': 'database_management', 'class': 'CloudDbSystemDatabaseManagementConfigDetails'}, 'stack-monitoring-config': {'module': 'database_management', 'class': 'CloudDbSystemStackMonitoringConfigDetails'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-management-config': {'module': 'database_management', 'class': 'CloudDbSystemDatabaseManagementConfigDetails'}, 'stack-monitoring-config': {'module': 'database_management', 'class': 'CloudDbSystemStackMonitoringConfigDetails'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'CloudDbSystem'})
+@cli_util.wrap_exceptions
+def create_cloud_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, db_system_discovery_id, display_name, database_management_config, stack_monitoring_config, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['dbSystemDiscoveryId'] = db_system_discovery_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if database_management_config is not None:
+        _details['databaseManagementConfig'] = cli_util.parse_json_parameter("database_management_config", database_management_config)
+
+    if stack_monitoring_config is not None:
+        _details['stackMonitoringConfig'] = cli_util.parse_json_parameter("stack_monitoring_config", stack_monitoring_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.create_cloud_db_system(
+        create_cloud_db_system_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_connector_group.command(name=cli_util.override('db_management.create_cloud_db_system_connector.command_name', 'create'), help=u"""Creates a new cloud connector. \n[Command Reference](createCloudDbSystemConnector)""")
+@cli_util.option('--connector-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["MACS"]), help=u"""The type of connector.""")
+@cli_util.option('--cloud-db-system-id', required=True, help=u"""The [OCID] of the cloud DB system.""")
+@cli_util.option('--display-name', help=u"""The user-friendly name for the cloud connector. The name does not have to be unique.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NOT_CONNECTED", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudDbSystemConnector'})
+@cli_util.wrap_exceptions
+def create_cloud_db_system_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connector_type, cloud_db_system_id, display_name):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connectorType'] = connector_type
+    _details['cloudDbSystemId'] = cloud_db_system_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.create_cloud_db_system_connector(
+        create_cloud_db_system_connector_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_cloud_db_system_connector') and callable(getattr(client, 'get_cloud_db_system_connector')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_cloud_db_system_connector(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_connector_group.command(name=cli_util.override('db_management.create_cloud_db_system_connector_create_cloud_db_system_macs_connector_details.command_name', 'create-cloud-db-system-connector-create-cloud-db-system-macs-connector-details'), help=u"""Creates a new cloud connector. \n[Command Reference](createCloudDbSystemConnector)""")
+@cli_util.option('--cloud-db-system-id', required=True, help=u"""The [OCID] of the cloud DB system.""")
+@cli_util.option('--agent-id', required=True, help=u"""The [OCID] of the management agent used for the cloud DB system connector.""")
+@cli_util.option('--display-name', help=u"""The user-friendly name for the cloud connector. The name does not have to be unique.""")
+@cli_util.option('--connection-info', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NOT_CONNECTED", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-info': {'module': 'database_management', 'class': 'CloudDbSystemConnectionInfo'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-info': {'module': 'database_management', 'class': 'CloudDbSystemConnectionInfo'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'CloudDbSystemConnector'})
+@cli_util.wrap_exceptions
+def create_cloud_db_system_connector_create_cloud_db_system_macs_connector_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_id, agent_id, display_name, connection_info, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['cloudDbSystemId'] = cloud_db_system_id
+    _details['agentId'] = agent_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if connection_info is not None:
+        _details['connectionInfo'] = cli_util.parse_json_parameter("connection_info", connection_info)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['connectorType'] = 'MACS'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.create_cloud_db_system_connector(
+        create_cloud_db_system_connector_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_cloud_db_system_connector') and callable(getattr(client, 'get_cloud_db_system_connector')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_cloud_db_system_connector(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_discovery_group.command(name=cli_util.override('db_management.create_cloud_db_system_discovery.command_name', 'create'), help=u"""Creates a cloud DB system discovery resource and initiates the discovery process. \n[Command Reference](createCloudDbSystemDiscovery)""")
+@cli_util.option('--agent-id', required=True, help=u"""The [OCID] of the management agent used for the cloud DB system discovery.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the cloud DB system resides.""")
+@cli_util.option('--dbaas-parent-infrastructure-id', required=True, help=u"""The [OCID] of the parent cloud DB Infrastructure. For VM Dbsystems , it will be the DBSystem Id. For ExaCS and ExaCC,  it will be the cloudVmClusterId and vmClusterId respectively.""")
+@cli_util.option('--deployment-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VM", "EXADATA", "EXADATA_CC", "EXADATA_XS"]), help=u"""The deployment type of cloud dbsystem.""")
+@cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'CloudDbSystemDiscovery'})
+@cli_util.wrap_exceptions
+def create_cloud_db_system_discovery(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, agent_id, compartment_id, dbaas_parent_infrastructure_id, deployment_type, display_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['agentId'] = agent_id
+    _details['compartmentId'] = compartment_id
+    _details['dbaasParentInfrastructureId'] = dbaas_parent_infrastructure_id
+    _details['deploymentType'] = deployment_type
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.create_cloud_db_system_discovery(
+        create_cloud_db_system_discovery_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -3600,6 +3998,190 @@ def create_tablespace(ctx, from_json, managed_database_id, name, credential_deta
         create_tablespace_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_group.command(name=cli_util.override('db_management.delete_cloud_db_system.command_name', 'delete'), help=u"""Deletes the cloud DB system specified by `cloudDbSystemId`. \n[Command Reference](deleteCloudDbSystem)""")
+@cli_util.option('--cloud-db-system-id', required=True, help=u"""The [OCID] of the cloud DB system.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_cloud_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_id, if_match):
+
+    if isinstance(cloud_db_system_id, six.string_types) and len(cloud_db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.delete_cloud_db_system(
+        cloud_db_system_id=cloud_db_system_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_connector_group.command(name=cli_util.override('db_management.delete_cloud_db_system_connector.command_name', 'delete'), help=u"""Deletes the cloud connector specified by `cloudDbSystemConnectorId`. \n[Command Reference](deleteCloudDbSystemConnector)""")
+@cli_util.option('--cloud-db-system-connector-id', required=True, help=u"""The [OCID] of the cloud connector.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "NOT_CONNECTED", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_cloud_db_system_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_connector_id, if_match):
+
+    if isinstance(cloud_db_system_connector_id, six.string_types) and len(cloud_db_system_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-system-connector-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.delete_cloud_db_system_connector(
+        cloud_db_system_connector_id=cloud_db_system_connector_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_cloud_db_system_connector') and callable(getattr(client, 'get_cloud_db_system_connector')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_cloud_db_system_connector(cloud_db_system_connector_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_discovery_group.command(name=cli_util.override('db_management.delete_cloud_db_system_discovery.command_name', 'delete'), help=u"""Deletes the cloud DB system discovery resource specified by `cloudDbSystemDiscoveryId`. \n[Command Reference](deleteCloudDbSystemDiscovery)""")
+@cli_util.option('--cloud-db-system-discovery-id', required=True, help=u"""The [OCID] of the cloud DB system discovery.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_cloud_db_system_discovery(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_discovery_id, if_match):
+
+    if isinstance(cloud_db_system_discovery_id, six.string_types) and len(cloud_db_system_discovery_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-system-discovery-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.delete_cloud_db_system_discovery(
+        cloud_db_system_discovery_id=cloud_db_system_discovery_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_cloud_db_system_discovery') and callable(getattr(client, 'get_cloud_db_system_discovery')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_cloud_db_system_discovery(cloud_db_system_discovery_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -4802,6 +5384,116 @@ def disable_autonomous_database_management_feature(ctx, from_json, wait_for_stat
     result = client.disable_autonomous_database_management_feature(
         autonomous_database_id=autonomous_database_id,
         disable_autonomous_database_management_feature_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_group.command(name=cli_util.override('db_management.disable_cloud_db_system_database_management.command_name', 'disable-cloud-db-system-database-management'), help=u"""Disables Database Management service for all the components of the specified cloud DB system (except databases). \n[Command Reference](disableCloudDbSystemDatabaseManagement)""")
+@cli_util.option('--cloud-db-system-id', required=True, help=u"""The [OCID] of the cloud DB system.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_cloud_db_system_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_id, if_match):
+
+    if isinstance(cloud_db_system_id, six.string_types) and len(cloud_db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.disable_cloud_db_system_database_management(
+        cloud_db_system_id=cloud_db_system_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_group.command(name=cli_util.override('db_management.disable_cloud_db_system_stack_monitoring.command_name', 'disable-cloud-db-system-stack-monitoring'), help=u"""Disables Stack Monitoring for all the components of the specified cloud DB system (except databases). \n[Command Reference](disableCloudDbSystemStackMonitoring)""")
+@cli_util.option('--cloud-db-system-id', required=True, help=u"""The [OCID] of the cloud DB system.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def disable_cloud_db_system_stack_monitoring(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_id, if_match):
+
+    if isinstance(cloud_db_system_id, six.string_types) and len(cloud_db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.disable_cloud_db_system_stack_monitoring(
+        cloud_db_system_id=cloud_db_system_id,
         **kwargs
     )
     if wait_for_state:
@@ -7230,6 +7922,136 @@ def enable_autonomous_database_management_feature_autonomous_database_diagnostic
     cli_util.render_response(result, ctx)
 
 
+@cloud_db_system_group.command(name=cli_util.override('db_management.enable_cloud_db_system_database_management.command_name', 'enable-cloud-db-system-database-management'), help=u"""Enables Database Management service for all the components of the specified cloud DB system (except databases). \n[Command Reference](enableCloudDbSystemDatabaseManagement)""")
+@cli_util.option('--cloud-db-system-id', required=True, help=u"""The [OCID] of the cloud DB system.""")
+@cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""The status of the associated service.""")
+@cli_util.option('--metadata', help=u"""The associated service-specific inputs in JSON string format, which Database Management can identify.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_cloud_db_system_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_id, is_enabled, metadata, if_match):
+
+    if isinstance(cloud_db_system_id, six.string_types) and len(cloud_db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['isEnabled'] = is_enabled
+
+    if metadata is not None:
+        _details['metadata'] = metadata
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.enable_cloud_db_system_database_management(
+        cloud_db_system_id=cloud_db_system_id,
+        enable_cloud_db_system_database_management_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_group.command(name=cli_util.override('db_management.enable_cloud_db_system_stack_monitoring.command_name', 'enable-cloud-db-system-stack-monitoring'), help=u"""Enables Stack Monitoring for all the components of the specified cloud DB system (except databases). \n[Command Reference](enableCloudDbSystemStackMonitoring)""")
+@cli_util.option('--cloud-db-system-id', required=True, help=u"""The [OCID] of the cloud DB system.""")
+@cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""The status of the associated service.""")
+@cli_util.option('--metadata', help=u"""The associated service-specific inputs in JSON string format, which Database Management can identify.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def enable_cloud_db_system_stack_monitoring(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_id, is_enabled, metadata, if_match):
+
+    if isinstance(cloud_db_system_id, six.string_types) and len(cloud_db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['isEnabled'] = is_enabled
+
+    if metadata is not None:
+        _details['metadata'] = metadata
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.enable_cloud_db_system_stack_monitoring(
+        cloud_db_system_id=cloud_db_system_id,
+        enable_cloud_db_system_stack_monitoring_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @managed_database_group.command(name=cli_util.override('db_management.enable_database_management_feature.command_name', 'enable-database-management-feature'), help=u"""Enables a Database Management feature for the specified cloud database. \n[Command Reference](enableDatabaseManagementFeature)""")
 @cli_util.option('--database-id', required=True, help=u"""The [OCID] of the Database.""")
 @cli_util.option('--feature-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7295,7 +8117,7 @@ def enable_database_management_feature(ctx, from_json, wait_for_state, max_wait_
 @cli_util.option('--database-id', required=True, help=u"""The [OCID] of the Database.""")
 @cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--feature-details-management-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""The management type for the database.""")
+@cli_util.option('--feature-details-management-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""The management type for the database. Use \"BASIC\" for basic management. Use \"ADVANCED\" for full management.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--feature-details-is-auto-enable-pluggable-database', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled automatically for all the pluggable databases in the container database.""")
 @cli_util.option('--feature-details-can-enable-all-current-pdbs', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled for all the current pluggable databases in the container database.""")
@@ -7438,6 +8260,8 @@ def enable_database_management_feature_database_lifecycle_management_feature_det
 @cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--feature-details-can-enable-all-current-pdbs', type=click.BOOL, help=u"""Indicates whether SQL Watch should be enabled for all the current pluggable databases in the container database.""")
+@cli_util.option('--feature-details-is-auto-enable-pluggable-database', type=click.BOOL, help=u"""Indicates whether SQL Watch should be enabled automatically for all the pluggable databases in the container database.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -7446,7 +8270,7 @@ def enable_database_management_feature_database_lifecycle_management_feature_det
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details-database-connection-details': {'module': 'database_management', 'class': 'DatabaseConnectionDetails'}, 'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
 @cli_util.wrap_exceptions
-def enable_database_management_feature_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, feature_details_database_connection_details, feature_details_connector_details, if_match):
+def enable_database_management_feature_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, feature_details_database_connection_details, feature_details_connector_details, if_match, feature_details_can_enable_all_current_pdbs, feature_details_is_auto_enable_pluggable_database):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -7460,6 +8284,12 @@ def enable_database_management_feature_database_sql_watch_feature_details(ctx, f
     _details['featureDetails'] = {}
     _details['featureDetails']['databaseConnectionDetails'] = cli_util.parse_json_parameter("feature_details_database_connection_details", feature_details_database_connection_details)
     _details['featureDetails']['connectorDetails'] = cli_util.parse_json_parameter("feature_details_connector_details", feature_details_connector_details)
+
+    if feature_details_can_enable_all_current_pdbs is not None:
+        _details['featureDetails']['canEnableAllCurrentPdbs'] = feature_details_can_enable_all_current_pdbs
+
+    if feature_details_is_auto_enable_pluggable_database is not None:
+        _details['featureDetails']['isAutoEnablePluggableDatabase'] = feature_details_is_auto_enable_pluggable_database
 
     _details['featureDetails']['feature'] = 'SQLWATCH'
 
@@ -8854,7 +9684,7 @@ def enable_pluggable_database_management_feature(ctx, from_json, wait_for_state,
 @cli_util.option('--pluggable-database-id', required=True, help=u"""The [OCID] of the Oracle cloud pluggable database.""")
 @cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--feature-details-management-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""The management type for the database.""")
+@cli_util.option('--feature-details-management-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""The management type for the database. Use \"BASIC\" for basic management. Use \"ADVANCED\" for full management.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--feature-details-is-auto-enable-pluggable-database', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled automatically for all the pluggable databases in the container database.""")
 @cli_util.option('--feature-details-can-enable-all-current-pdbs', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled for all the current pluggable databases in the container database.""")
@@ -8997,6 +9827,8 @@ def enable_pluggable_database_management_feature_database_lifecycle_management_f
 @cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--feature-details-can-enable-all-current-pdbs', type=click.BOOL, help=u"""Indicates whether SQL Watch should be enabled for all the current pluggable databases in the container database.""")
+@cli_util.option('--feature-details-is-auto-enable-pluggable-database', type=click.BOOL, help=u"""Indicates whether SQL Watch should be enabled automatically for all the pluggable databases in the container database.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -9005,7 +9837,7 @@ def enable_pluggable_database_management_feature_database_lifecycle_management_f
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details-database-connection-details': {'module': 'database_management', 'class': 'DatabaseConnectionDetails'}, 'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
 @cli_util.wrap_exceptions
-def enable_pluggable_database_management_feature_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, feature_details_database_connection_details, feature_details_connector_details, if_match):
+def enable_pluggable_database_management_feature_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, feature_details_database_connection_details, feature_details_connector_details, if_match, feature_details_can_enable_all_current_pdbs, feature_details_is_auto_enable_pluggable_database):
 
     if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
@@ -9019,6 +9851,12 @@ def enable_pluggable_database_management_feature_database_sql_watch_feature_deta
     _details['featureDetails'] = {}
     _details['featureDetails']['databaseConnectionDetails'] = cli_util.parse_json_parameter("feature_details_database_connection_details", feature_details_database_connection_details)
     _details['featureDetails']['connectorDetails'] = cli_util.parse_json_parameter("feature_details_connector_details", feature_details_connector_details)
+
+    if feature_details_can_enable_all_current_pdbs is not None:
+        _details['featureDetails']['canEnableAllCurrentPdbs'] = feature_details_can_enable_all_current_pdbs
+
+    if feature_details_is_auto_enable_pluggable_database is not None:
+        _details['featureDetails']['isAutoEnablePluggableDatabase'] = feature_details_is_auto_enable_pluggable_database
 
     _details['featureDetails']['feature'] = 'SQLWATCH'
 
@@ -9328,7 +10166,7 @@ def generate_awr_snapshot(ctx, from_json, managed_database_id, opc_named_credent
     cli_util.render_response(result, ctx)
 
 
-@managed_database_group.command(name=cli_util.override('db_management.get_awr_db_report.command_name', 'get-awr-db-report'), help=u"""Gets the AWR report for the specific database. \n[Command Reference](getAwrDbReport)""")
+@managed_database_group.command(name=cli_util.override('db_management.get_awr_db_report.command_name', 'get-awr-db-report'), help=u"""Gets the AWR report for the specified database. \n[Command Reference](getAwrDbReport)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs""")
 @cli_util.option('--inst-nums', multiple=True, help=u"""The optional multiple value query parameter to filter the database instance numbers.""")
@@ -9382,7 +10220,7 @@ def get_awr_db_report(ctx, from_json, managed_database_id, awr_db_id, inst_nums,
     cli_util.render_response(result, ctx)
 
 
-@managed_database_group.command(name=cli_util.override('db_management.get_awr_db_sql_report.command_name', 'get-awr-db-sql-report'), help=u"""Gets the SQL health check report for one SQL of the specific database. \n[Command Reference](getAwrDbSqlReport)""")
+@managed_database_group.command(name=cli_util.override('db_management.get_awr_db_sql_report.command_name', 'get-awr-db-sql-report'), help=u"""Gets the SQL health check report for one SQL of the specified database. \n[Command Reference](getAwrDbSqlReport)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @cli_util.option('--awr-db-id', required=True, help=u"""The parameter to filter the database by internal ID. Note that the internal ID of the database can be retrieved from the following endpoint: /managedDatabases/{managedDatabaseId}/awrDbs""")
 @cli_util.option('--sql-id', required=True, help=u"""The parameter to filter SQL by ID. Note that the SQL ID is generated internally by Oracle for each SQL statement and can be retrieved from AWR Report API (/managedDatabases/{managedDatabaseId}/awrDbs/{awrDbId}/awrDbReport) or Performance Hub API (/internal/managedDatabases/{managedDatabaseId}/actions/retrievePerformanceData)""")
@@ -9430,6 +10268,251 @@ def get_awr_db_sql_report(ctx, from_json, managed_database_id, awr_db_id, sql_id
         managed_database_id=managed_database_id,
         awr_db_id=awr_db_id,
         sql_id=sql_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_asm_group.command(name=cli_util.override('db_management.get_cloud_asm.command_name', 'get'), help=u"""Gets the details for the cloud ASM specified by `cloudAsmId`. \n[Command Reference](getCloudAsm)""")
+@cli_util.option('--cloud-asm-id', required=True, help=u"""The [OCID] of the cloud ASM.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudAsm'})
+@cli_util.wrap_exceptions
+def get_cloud_asm(ctx, from_json, cloud_asm_id):
+
+    if isinstance(cloud_asm_id, six.string_types) and len(cloud_asm_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-asm-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_cloud_asm(
+        cloud_asm_id=cloud_asm_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_asm_group.command(name=cli_util.override('db_management.get_cloud_asm_configuration.command_name', 'get-cloud-asm-configuration'), help=u"""Gets configuration details including disk groups for the cloud ASM specified by `cloudAsmId`. \n[Command Reference](getCloudAsmConfiguration)""")
+@cli_util.option('--cloud-asm-id', required=True, help=u"""The [OCID] of the cloud ASM.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudAsmConfiguration'})
+@cli_util.wrap_exceptions
+def get_cloud_asm_configuration(ctx, from_json, cloud_asm_id, opc_named_credential_id):
+
+    if isinstance(cloud_asm_id, six.string_types) and len(cloud_asm_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-asm-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_cloud_asm_configuration(
+        cloud_asm_id=cloud_asm_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_asm_instance_group.command(name=cli_util.override('db_management.get_cloud_asm_instance.command_name', 'get'), help=u"""Gets the details for the cloud ASM instance specified by `cloudAsmInstanceId`. \n[Command Reference](getCloudAsmInstance)""")
+@cli_util.option('--cloud-asm-instance-id', required=True, help=u"""The [OCID] of the cloud ASM instance.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudAsmInstance'})
+@cli_util.wrap_exceptions
+def get_cloud_asm_instance(ctx, from_json, cloud_asm_instance_id):
+
+    if isinstance(cloud_asm_instance_id, six.string_types) and len(cloud_asm_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-asm-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_cloud_asm_instance(
+        cloud_asm_instance_id=cloud_asm_instance_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_cluster_group.command(name=cli_util.override('db_management.get_cloud_cluster.command_name', 'get'), help=u"""Gets the details for the cloud cluster specified by `cloudClusterId`. \n[Command Reference](getCloudCluster)""")
+@cli_util.option('--cloud-cluster-id', required=True, help=u"""The [OCID] of the cloud cluster.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudCluster'})
+@cli_util.wrap_exceptions
+def get_cloud_cluster(ctx, from_json, cloud_cluster_id):
+
+    if isinstance(cloud_cluster_id, six.string_types) and len(cloud_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_cloud_cluster(
+        cloud_cluster_id=cloud_cluster_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_cluster_instance_group.command(name=cli_util.override('db_management.get_cloud_cluster_instance.command_name', 'get'), help=u"""Gets the details for the cloud cluster instance specified by `cloudClusterInstanceId`. \n[Command Reference](getCloudClusterInstance)""")
+@cli_util.option('--cloud-cluster-instance-id', required=True, help=u"""The [OCID] of the cloud cluster instance.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudClusterInstance'})
+@cli_util.wrap_exceptions
+def get_cloud_cluster_instance(ctx, from_json, cloud_cluster_instance_id):
+
+    if isinstance(cloud_cluster_instance_id, six.string_types) and len(cloud_cluster_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-cluster-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_cloud_cluster_instance(
+        cloud_cluster_instance_id=cloud_cluster_instance_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_home_group.command(name=cli_util.override('db_management.get_cloud_db_home.command_name', 'get'), help=u"""Gets the details for the cloud DB home specified by `cloudDbHomeId`. \n[Command Reference](getCloudDbHome)""")
+@cli_util.option('--cloud-db-home-id', required=True, help=u"""The [OCID] of the cloud database home.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudDbHome'})
+@cli_util.wrap_exceptions
+def get_cloud_db_home(ctx, from_json, cloud_db_home_id):
+
+    if isinstance(cloud_db_home_id, six.string_types) and len(cloud_db_home_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-home-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_cloud_db_home(
+        cloud_db_home_id=cloud_db_home_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_node_group.command(name=cli_util.override('db_management.get_cloud_db_node.command_name', 'get'), help=u"""Gets the details for the cloud DB node specified by `cloudDbNodeId`. \n[Command Reference](getCloudDbNode)""")
+@cli_util.option('--cloud-db-node-id', required=True, help=u"""The [OCID] of the cloud database node.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudDbNode'})
+@cli_util.wrap_exceptions
+def get_cloud_db_node(ctx, from_json, cloud_db_node_id):
+
+    if isinstance(cloud_db_node_id, six.string_types) and len(cloud_db_node_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-node-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_cloud_db_node(
+        cloud_db_node_id=cloud_db_node_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_group.command(name=cli_util.override('db_management.get_cloud_db_system.command_name', 'get'), help=u"""Gets the details for the cloud DB system specified by `cloudDbSystemId`. \n[Command Reference](getCloudDbSystem)""")
+@cli_util.option('--cloud-db-system-id', required=True, help=u"""The [OCID] of the cloud DB system.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudDbSystem'})
+@cli_util.wrap_exceptions
+def get_cloud_db_system(ctx, from_json, cloud_db_system_id):
+
+    if isinstance(cloud_db_system_id, six.string_types) and len(cloud_db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_cloud_db_system(
+        cloud_db_system_id=cloud_db_system_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_connector_group.command(name=cli_util.override('db_management.get_cloud_db_system_connector.command_name', 'get'), help=u"""Gets the details for the cloud connector specified by `cloudDbSystemConnectorId`. \n[Command Reference](getCloudDbSystemConnector)""")
+@cli_util.option('--cloud-db-system-connector-id', required=True, help=u"""The [OCID] of the cloud connector.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudDbSystemConnector'})
+@cli_util.wrap_exceptions
+def get_cloud_db_system_connector(ctx, from_json, cloud_db_system_connector_id):
+
+    if isinstance(cloud_db_system_connector_id, six.string_types) and len(cloud_db_system_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-system-connector-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_cloud_db_system_connector(
+        cloud_db_system_connector_id=cloud_db_system_connector_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_discovery_group.command(name=cli_util.override('db_management.get_cloud_db_system_discovery.command_name', 'get'), help=u"""Gets the details for the cloud DB system discovery resource specified by `cloudDbSystemDiscoveryId`. \n[Command Reference](getCloudDbSystemDiscovery)""")
+@cli_util.option('--cloud-db-system-discovery-id', required=True, help=u"""The [OCID] of the cloud DB system discovery.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudDbSystemDiscovery'})
+@cli_util.wrap_exceptions
+def get_cloud_db_system_discovery(ctx, from_json, cloud_db_system_discovery_id):
+
+    if isinstance(cloud_db_system_discovery_id, six.string_types) and len(cloud_db_system_discovery_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-system-discovery-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_cloud_db_system_discovery(
+        cloud_db_system_discovery_id=cloud_db_system_discovery_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_listener_group.command(name=cli_util.override('db_management.get_cloud_listener.command_name', 'get'), help=u"""Gets the details for the cloud listener specified by `cloudListenerId`. \n[Command Reference](getCloudListener)""")
+@cli_util.option('--cloud-listener-id', required=True, help=u"""The [OCID] of the cloud listener.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudListener'})
+@cli_util.wrap_exceptions
+def get_cloud_listener(ctx, from_json, cloud_listener_id):
+
+    if isinstance(cloud_listener_id, six.string_types) and len(cloud_listener_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-listener-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.get_cloud_listener(
+        cloud_listener_id=cloud_listener_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -10187,7 +11270,7 @@ def get_iorm_plan(ctx, from_json, external_exadata_storage_server_id):
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('db_management.get_job.command_name', 'get'), help=u"""Gets the details for the job specified by jobId. \n[Command Reference](getJob)""")
+@job_group.command(name=cli_util.override('db_management.get_job.command_name', 'get'), help=u"""Gets the details of the job specified by jobId. \n[Command Reference](getJob)""")
 @cli_util.option('--job-id', required=True, help=u"""The identifier of the job.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -10209,7 +11292,7 @@ def get_job(ctx, from_json, job_id):
     cli_util.render_response(result, ctx)
 
 
-@job_execution_group.command(name=cli_util.override('db_management.get_job_execution.command_name', 'get'), help=u"""Gets the details for the job execution specified by jobExecutionId. \n[Command Reference](getJobExecution)""")
+@job_execution_group.command(name=cli_util.override('db_management.get_job_execution.command_name', 'get'), help=u"""Gets the details of the job execution specified by jobExecutionId. \n[Command Reference](getJobExecution)""")
 @cli_util.option('--job-execution-id', required=True, help=u"""The identifier of the job execution.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -10231,7 +11314,7 @@ def get_job_execution(ctx, from_json, job_execution_id):
     cli_util.render_response(result, ctx)
 
 
-@job_run_group.command(name=cli_util.override('db_management.get_job_run.command_name', 'get'), help=u"""Gets the details for the job run specified by jobRunId. \n[Command Reference](getJobRun)""")
+@job_run_group.command(name=cli_util.override('db_management.get_job_run.command_name', 'get'), help=u"""Gets the details of the job run specified by jobRunId. \n[Command Reference](getJobRun)""")
 @cli_util.option('--job-run-id', required=True, help=u"""The identifier of the job run.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -10253,7 +11336,7 @@ def get_job_run(ctx, from_json, job_run_id):
     cli_util.render_response(result, ctx)
 
 
-@managed_database_group.command(name=cli_util.override('db_management.get_managed_database.command_name', 'get'), help=u"""Gets the details for the Managed Database specified by managedDatabaseId. \n[Command Reference](getManagedDatabase)""")
+@managed_database_group.command(name=cli_util.override('db_management.get_managed_database.command_name', 'get'), help=u"""Gets the details of the Managed Database specified by managedDatabaseId. \n[Command Reference](getManagedDatabase)""")
 @cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -10275,7 +11358,7 @@ def get_managed_database(ctx, from_json, managed_database_id):
     cli_util.render_response(result, ctx)
 
 
-@managed_database_group_group.command(name=cli_util.override('db_management.get_managed_database_group.command_name', 'get'), help=u"""Gets the details for the Managed Database Group specified by managedDatabaseGroupId. \n[Command Reference](getManagedDatabaseGroup)""")
+@managed_database_group_group.command(name=cli_util.override('db_management.get_managed_database_group.command_name', 'get'), help=u"""Gets the details of the Managed Database Group specified by managedDatabaseGroupId. \n[Command Reference](getManagedDatabaseGroup)""")
 @cli_util.option('--managed-database-group-id', required=True, help=u"""The [OCID] of the Managed Database Group.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -10669,7 +11752,7 @@ def get_user(ctx, from_json, managed_database_id, user_name, opc_named_credentia
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('db_management.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given Work Request ID \n[Command Reference](getWorkRequest)""")
+@work_request_group.command(name=cli_util.override('db_management.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given Work Request ID. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the asynchronous work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -10996,6 +12079,845 @@ def list_awr_dbs(ctx, from_json, all_pages, page_size, managed_database_id, name
     else:
         result = client.list_awr_dbs(
             managed_database_id=managed_database_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_asm_group.command(name=cli_util.override('db_management.list_cloud_asm_disk_groups.command_name', 'list-cloud-asm-disk-groups'), help=u"""Lists ASM disk groups for the cloud ASM specified by `cloudAsmId`. \n[Command Reference](listCloudAsmDiskGroups)""")
+@cli_util.option('--cloud-asm-id', required=True, help=u"""The [OCID] of the cloud ASM.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `NAME` is ascending and it is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudAsmDiskGroupCollection'})
+@cli_util.wrap_exceptions
+def list_cloud_asm_disk_groups(ctx, from_json, all_pages, page_size, cloud_asm_id, page, limit, sort_by, sort_order, opc_named_credential_id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(cloud_asm_id, six.string_types) and len(cloud_asm_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-asm-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_asm_disk_groups,
+            cloud_asm_id=cloud_asm_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_asm_disk_groups,
+            limit,
+            page_size,
+            cloud_asm_id=cloud_asm_id,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_asm_disk_groups(
+            cloud_asm_id=cloud_asm_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_asm_instance_group.command(name=cli_util.override('db_management.list_cloud_asm_instances.command_name', 'list'), help=u"""Lists the ASM instances in the specified cloud ASM. \n[Command Reference](listCloudAsmInstances)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--cloud-asm-id', help=u"""The [OCID] of the cloud ASM.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudAsmInstanceCollection'})
+@cli_util.wrap_exceptions
+def list_cloud_asm_instances(ctx, from_json, all_pages, page_size, compartment_id, cloud_asm_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if cloud_asm_id is not None:
+        kwargs['cloud_asm_id'] = cloud_asm_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_asm_instances,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_asm_instances,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_asm_instances(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_asm_group.command(name=cli_util.override('db_management.list_cloud_asm_users.command_name', 'list-cloud-asm-users'), help=u"""Lists ASM users for the cloud ASM specified by `cloudAsmId`. \n[Command Reference](listCloudAsmUsers)""")
+@cli_util.option('--cloud-asm-id', required=True, help=u"""The [OCID] of the cloud ASM.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `NAME` is ascending and it is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudAsmUserCollection'})
+@cli_util.wrap_exceptions
+def list_cloud_asm_users(ctx, from_json, all_pages, page_size, cloud_asm_id, page, limit, sort_by, sort_order, opc_named_credential_id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(cloud_asm_id, six.string_types) and len(cloud_asm_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-asm-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_asm_users,
+            cloud_asm_id=cloud_asm_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_asm_users,
+            limit,
+            page_size,
+            cloud_asm_id=cloud_asm_id,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_asm_users(
+            cloud_asm_id=cloud_asm_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_asm_group.command(name=cli_util.override('db_management.list_cloud_asms.command_name', 'list'), help=u"""Lists the ASMs in the specified cloud DB system. \n[Command Reference](listCloudAsms)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--cloud-db-system-id', help=u"""The [OCID] of the cloud DB system.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudAsmCollection'})
+@cli_util.wrap_exceptions
+def list_cloud_asms(ctx, from_json, all_pages, page_size, compartment_id, cloud_db_system_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if cloud_db_system_id is not None:
+        kwargs['cloud_db_system_id'] = cloud_db_system_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_asms,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_asms,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_asms(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_cluster_instance_group.command(name=cli_util.override('db_management.list_cloud_cluster_instances.command_name', 'list'), help=u"""Lists the cluster instances in the specified cloud cluster. \n[Command Reference](listCloudClusterInstances)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--cloud-cluster-id', help=u"""The [OCID] of the cloud cluster.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudClusterInstanceCollection'})
+@cli_util.wrap_exceptions
+def list_cloud_cluster_instances(ctx, from_json, all_pages, page_size, compartment_id, cloud_cluster_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if cloud_cluster_id is not None:
+        kwargs['cloud_cluster_id'] = cloud_cluster_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_cluster_instances,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_cluster_instances,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_cluster_instances(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_cluster_group.command(name=cli_util.override('db_management.list_cloud_clusters.command_name', 'list'), help=u"""Lists the clusters in the specified cloud DB system. \n[Command Reference](listCloudClusters)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--cloud-db-system-id', help=u"""The [OCID] of the cloud DB system.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudClusterCollection'})
+@cli_util.wrap_exceptions
+def list_cloud_clusters(ctx, from_json, all_pages, page_size, compartment_id, cloud_db_system_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if cloud_db_system_id is not None:
+        kwargs['cloud_db_system_id'] = cloud_db_system_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_clusters,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_clusters,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_clusters(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_database_collection_group.command(name=cli_util.override('db_management.list_cloud_databases.command_name', 'list-cloud-databases'), help=u"""Lists the cloud databases in the specified compartment or in the specified DB system. \n[Command Reference](listCloudDatabases)""")
+@cli_util.option('--cloud-db-system-id', required=True, help=u"""The [OCID] of the cloud DB system.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudDatabaseCollection'})
+@cli_util.wrap_exceptions
+def list_cloud_databases(ctx, from_json, all_pages, page_size, cloud_db_system_id, compartment_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_databases,
+            cloud_db_system_id=cloud_db_system_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_databases,
+            limit,
+            page_size,
+            cloud_db_system_id=cloud_db_system_id,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_databases(
+            cloud_db_system_id=cloud_db_system_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_home_group.command(name=cli_util.override('db_management.list_cloud_db_homes.command_name', 'list'), help=u"""Lists the DB homes in the specified cloud DB system. \n[Command Reference](listCloudDbHomes)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--cloud-db-system-id', help=u"""The [OCID] of the cloud DB system.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudDbHomeCollection'})
+@cli_util.wrap_exceptions
+def list_cloud_db_homes(ctx, from_json, all_pages, page_size, compartment_id, cloud_db_system_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if cloud_db_system_id is not None:
+        kwargs['cloud_db_system_id'] = cloud_db_system_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_db_homes,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_db_homes,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_db_homes(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_node_group.command(name=cli_util.override('db_management.list_cloud_db_nodes.command_name', 'list'), help=u"""Lists the cloud DB nodes in the specified cloud DB system. \n[Command Reference](listCloudDbNodes)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--cloud-db-system-id', help=u"""The [OCID] of the cloud DB system.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudDbNodeCollection'})
+@cli_util.wrap_exceptions
+def list_cloud_db_nodes(ctx, from_json, all_pages, page_size, compartment_id, cloud_db_system_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if cloud_db_system_id is not None:
+        kwargs['cloud_db_system_id'] = cloud_db_system_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_db_nodes,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_db_nodes,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_db_nodes(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_connector_group.command(name=cli_util.override('db_management.list_cloud_db_system_connectors.command_name', 'list'), help=u"""Lists the cloud connectors in the specified cloud DB system. \n[Command Reference](listCloudDbSystemConnectors)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--cloud-db-system-id', help=u"""The [OCID] of the cloud DB system.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudDbSystemConnectorCollection'})
+@cli_util.wrap_exceptions
+def list_cloud_db_system_connectors(ctx, from_json, all_pages, page_size, compartment_id, cloud_db_system_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if cloud_db_system_id is not None:
+        kwargs['cloud_db_system_id'] = cloud_db_system_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_db_system_connectors,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_db_system_connectors,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_db_system_connectors(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_discovery_group.command(name=cli_util.override('db_management.list_cloud_db_system_discoveries.command_name', 'list'), help=u"""Lists the cloud DB system discovery resources in the specified compartment. \n[Command Reference](listCloudDbSystemDiscoveries)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudDbSystemDiscoveryCollection'})
+@cli_util.wrap_exceptions
+def list_cloud_db_system_discoveries(ctx, from_json, all_pages, page_size, compartment_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_db_system_discoveries,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_db_system_discoveries,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_db_system_discoveries(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_group.command(name=cli_util.override('db_management.list_cloud_db_systems.command_name', 'list'), help=u"""Lists the cloud DB systems in the specified compartment. \n[Command Reference](listCloudDbSystems)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--dbaas-parent-infrastructure-id', help=u"""The [OCID] of the dbaas parent infrastructure of the cloud DB system.""")
+@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["VM", "EXADATA", "EXADATA_CC", "EXADATA_XS"]), help=u"""A filter to return cloud DB systems of the specified deployment type.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "INACTIVE"]), help=u"""The lifecycle state of a resource.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudDbSystemCollection'})
+@cli_util.wrap_exceptions
+def list_cloud_db_systems(ctx, from_json, all_pages, page_size, compartment_id, dbaas_parent_infrastructure_id, deployment_type, display_name, lifecycle_state, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if dbaas_parent_infrastructure_id is not None:
+        kwargs['dbaas_parent_infrastructure_id'] = dbaas_parent_infrastructure_id
+    if deployment_type is not None:
+        kwargs['deployment_type'] = deployment_type
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_db_systems,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_db_systems,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_db_systems(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_listener_group.command(name=cli_util.override('db_management.list_cloud_listener_services.command_name', 'list-cloud-listener-services'), help=u"""Lists the database services registered with the specified cloud listener for the specified Managed Database. \n[Command Reference](listCloudListenerServices)""")
+@cli_util.option('--cloud-listener-id', required=True, help=u"""The [OCID] of the cloud listener.""")
+@cli_util.option('--managed-database-id', required=True, help=u"""The [OCID] of the Managed Database.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `NAME` is ascending and it is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--opc-named-credential-id', help=u"""The OCID of the Named Credential.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudListenerServiceCollection'})
+@cli_util.wrap_exceptions
+def list_cloud_listener_services(ctx, from_json, all_pages, page_size, cloud_listener_id, managed_database_id, page, limit, sort_by, sort_order, opc_named_credential_id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(cloud_listener_id, six.string_types) and len(cloud_listener_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-listener-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if opc_named_credential_id is not None:
+        kwargs['opc_named_credential_id'] = opc_named_credential_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_listener_services,
+            cloud_listener_id=cloud_listener_id,
+            managed_database_id=managed_database_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_listener_services,
+            limit,
+            page_size,
+            cloud_listener_id=cloud_listener_id,
+            managed_database_id=managed_database_id,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_listener_services(
+            cloud_listener_id=cloud_listener_id,
+            managed_database_id=managed_database_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_listener_group.command(name=cli_util.override('db_management.list_cloud_listeners.command_name', 'list'), help=u"""Lists the listeners in the specified cloud DB system. \n[Command Reference](listCloudListeners)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--cloud-db-system-id', help=u"""The [OCID] of the cloud DB system.""")
+@cli_util.option('--display-name', help=u"""A filter to only return the resources that match the entire display name.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort information by. Only one sortOrder can be used. The default sort order for `TIMECREATED` is descending and the default sort order for `DISPLAYNAME` is ascending. The `DISPLAYNAME` sort order is case-sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The option to sort information in ascending (\u2018ASC\u2019) or descending (\u2018DESC\u2019) order. Ascending order is the default order.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'CloudListenerCollection'})
+@cli_util.wrap_exceptions
+def list_cloud_listeners(ctx, from_json, all_pages, page_size, compartment_id, cloud_db_system_id, display_name, page, limit, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if cloud_db_system_id is not None:
+        kwargs['cloud_db_system_id'] = cloud_db_system_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cloud_listeners,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cloud_listeners,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_cloud_listeners(
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -13828,7 +15750,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('db_management.list_work_requests.command_name', 'list'), help=u"""The list of work requests in a specific compartment was retrieved successfully. \n[Command Reference](listWorkRequests)""")
+@work_request_group.command(name=cli_util.override('db_management.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a specific compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource affected by the work request.""")
 @cli_util.option('--work-request-id', help=u"""The [OCID] of the asynchronous work request.""")
@@ -14991,7 +16913,7 @@ def modify_database_management_feature(ctx, from_json, wait_for_state, max_wait_
 @cli_util.option('--database-id', required=True, help=u"""The [OCID] of the Database.""")
 @cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--feature-details-management-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""The management type for the database.""")
+@cli_util.option('--feature-details-management-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""The management type for the database. Use \"BASIC\" for basic management. Use \"ADVANCED\" for full management.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--feature-details-is-auto-enable-pluggable-database', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled automatically for all the pluggable databases in the container database.""")
 @cli_util.option('--feature-details-can-enable-all-current-pdbs', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled for all the current pluggable databases in the container database.""")
@@ -15134,6 +17056,8 @@ def modify_database_management_feature_database_lifecycle_management_feature_det
 @cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--feature-details-can-enable-all-current-pdbs', type=click.BOOL, help=u"""Indicates whether SQL Watch should be enabled for all the current pluggable databases in the container database.""")
+@cli_util.option('--feature-details-is-auto-enable-pluggable-database', type=click.BOOL, help=u"""Indicates whether SQL Watch should be enabled automatically for all the pluggable databases in the container database.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -15142,7 +17066,7 @@ def modify_database_management_feature_database_lifecycle_management_feature_det
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details-database-connection-details': {'module': 'database_management', 'class': 'DatabaseConnectionDetails'}, 'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
 @cli_util.wrap_exceptions
-def modify_database_management_feature_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, feature_details_database_connection_details, feature_details_connector_details, if_match):
+def modify_database_management_feature_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, feature_details_database_connection_details, feature_details_connector_details, if_match, feature_details_can_enable_all_current_pdbs, feature_details_is_auto_enable_pluggable_database):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -15156,6 +17080,12 @@ def modify_database_management_feature_database_sql_watch_feature_details(ctx, f
     _details['featureDetails'] = {}
     _details['featureDetails']['databaseConnectionDetails'] = cli_util.parse_json_parameter("feature_details_database_connection_details", feature_details_database_connection_details)
     _details['featureDetails']['connectorDetails'] = cli_util.parse_json_parameter("feature_details_connector_details", feature_details_connector_details)
+
+    if feature_details_can_enable_all_current_pdbs is not None:
+        _details['featureDetails']['canEnableAllCurrentPdbs'] = feature_details_can_enable_all_current_pdbs
+
+    if feature_details_is_auto_enable_pluggable_database is not None:
+        _details['featureDetails']['isAutoEnablePluggableDatabase'] = feature_details_is_auto_enable_pluggable_database
 
     _details['featureDetails']['feature'] = 'SQLWATCH'
 
@@ -15525,7 +17455,7 @@ def modify_pluggable_database_management_feature(ctx, from_json, wait_for_state,
 @cli_util.option('--pluggable-database-id', required=True, help=u"""The [OCID] of the Oracle cloud pluggable database.""")
 @cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--feature-details-management-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""The management type for the database.""")
+@cli_util.option('--feature-details-management-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BASIC", "ADVANCED"]), help=u"""The management type for the database. Use \"BASIC\" for basic management. Use \"ADVANCED\" for full management.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--feature-details-is-auto-enable-pluggable-database', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled automatically for all the pluggable databases in the container database.""")
 @cli_util.option('--feature-details-can-enable-all-current-pdbs', type=click.BOOL, help=u"""Indicates whether Diagnostics & Management should be enabled for all the current pluggable databases in the container database.""")
@@ -15668,6 +17598,8 @@ def modify_pluggable_database_management_feature_database_lifecycle_management_f
 @cli_util.option('--feature-details-database-connection-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--feature-details-connector-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--feature-details-can-enable-all-current-pdbs', type=click.BOOL, help=u"""Indicates whether SQL Watch should be enabled for all the current pluggable databases in the container database.""")
+@cli_util.option('--feature-details-is-auto-enable-pluggable-database', type=click.BOOL, help=u"""Indicates whether SQL Watch should be enabled automatically for all the pluggable databases in the container database.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -15676,7 +17608,7 @@ def modify_pluggable_database_management_feature_database_lifecycle_management_f
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'feature-details-database-connection-details': {'module': 'database_management', 'class': 'DatabaseConnectionDetails'}, 'feature-details-connector-details': {'module': 'database_management', 'class': 'ConnectorDetails'}})
 @cli_util.wrap_exceptions
-def modify_pluggable_database_management_feature_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, feature_details_database_connection_details, feature_details_connector_details, if_match):
+def modify_pluggable_database_management_feature_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, feature_details_database_connection_details, feature_details_connector_details, if_match, feature_details_can_enable_all_current_pdbs, feature_details_is_auto_enable_pluggable_database):
 
     if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
@@ -15690,6 +17622,12 @@ def modify_pluggable_database_management_feature_database_sql_watch_feature_deta
     _details['featureDetails'] = {}
     _details['featureDetails']['databaseConnectionDetails'] = cli_util.parse_json_parameter("feature_details_database_connection_details", feature_details_database_connection_details)
     _details['featureDetails']['connectorDetails'] = cli_util.parse_json_parameter("feature_details_connector_details", feature_details_connector_details)
+
+    if feature_details_can_enable_all_current_pdbs is not None:
+        _details['featureDetails']['canEnableAllCurrentPdbs'] = feature_details_can_enable_all_current_pdbs
+
+    if feature_details_is_auto_enable_pluggable_database is not None:
+        _details['featureDetails']['isAutoEnablePluggableDatabase'] = feature_details_is_auto_enable_pluggable_database
 
     _details['featureDetails']['feature'] = 'SQLWATCH'
 
@@ -15726,6 +17664,41 @@ def modify_pluggable_database_management_feature_database_sql_watch_feature_deta
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_discovery_group.command(name=cli_util.override('db_management.patch_cloud_db_system_discovery.command_name', 'patch'), help=u"""Patches the cloud DB system discovery specified by `cloudDbSystemDiscoveryId`. \n[Command Reference](patchCloudDbSystemDiscovery)""")
+@cli_util.option('--cloud-db-system-discovery-id', required=True, help=u"""The [OCID] of the cloud DB system discovery.""")
+@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A sequence of instructions to apply to the resource.
+
+This option is a JSON list with items of type PatchInstruction.  For documentation on PatchInstruction please see our API reference: https://docs.cloud.oracle.com/api/#/en/dbmanagement/20201101/datatypes/PatchInstruction.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'database_management', 'class': 'list[PatchInstruction]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'database_management', 'class': 'list[PatchInstruction]'}}, output_type={'module': 'database_management', 'class': 'CloudDbSystemDiscovery'})
+@cli_util.wrap_exceptions
+def patch_cloud_db_system_discovery(ctx, from_json, cloud_db_system_discovery_id, items, if_match):
+
+    if isinstance(cloud_db_system_discovery_id, six.string_types) and len(cloud_db_system_discovery_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-system-discovery-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if items is not None:
+        _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.patch_cloud_db_system_discovery(
+        cloud_db_system_discovery_id=cloud_db_system_discovery_id,
+        patch_cloud_db_system_discovery_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -16925,6 +18898,181 @@ def summarize_awr_db_wait_events(ctx, from_json, managed_database_id, awr_db_id,
     cli_util.render_response(result, ctx)
 
 
+@cloud_asm_group.command(name=cli_util.override('db_management.summarize_cloud_asm_metrics.command_name', 'summarize-cloud-asm-metrics'), help=u"""Gets metrics for the cloud ASM specified by `cloudAsmId`. \n[Command Reference](summarizeCloudAsmMetrics)""")
+@cli_util.option('--cloud-asm-id', required=True, help=u"""The [OCID] of the cloud ASM.""")
+@cli_util.option('--start-time', required=True, help=u"""The beginning of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--end-time', required=True, help=u"""The end of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'MetricsAggregationRangeCollection'})
+@cli_util.wrap_exceptions
+def summarize_cloud_asm_metrics(ctx, from_json, cloud_asm_id, start_time, end_time, page, limit, filter_by_metric_names):
+
+    if isinstance(cloud_asm_id, six.string_types) and len(cloud_asm_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-asm-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if filter_by_metric_names is not None:
+        kwargs['filter_by_metric_names'] = filter_by_metric_names
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.summarize_cloud_asm_metrics(
+        cloud_asm_id=cloud_asm_id,
+        start_time=start_time,
+        end_time=end_time,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_cluster_group.command(name=cli_util.override('db_management.summarize_cloud_cluster_metrics.command_name', 'summarize-cloud-cluster-metrics'), help=u"""Gets metrics for the cloud cluster specified by `cloudClusterId`. \n[Command Reference](summarizeCloudClusterMetrics)""")
+@cli_util.option('--cloud-cluster-id', required=True, help=u"""The [OCID] of the cloud cluster.""")
+@cli_util.option('--start-time', required=True, help=u"""The beginning of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--end-time', required=True, help=u"""The end of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'MetricsAggregationRangeCollection'})
+@cli_util.wrap_exceptions
+def summarize_cloud_cluster_metrics(ctx, from_json, cloud_cluster_id, start_time, end_time, page, limit, filter_by_metric_names):
+
+    if isinstance(cloud_cluster_id, six.string_types) and len(cloud_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if filter_by_metric_names is not None:
+        kwargs['filter_by_metric_names'] = filter_by_metric_names
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.summarize_cloud_cluster_metrics(
+        cloud_cluster_id=cloud_cluster_id,
+        start_time=start_time,
+        end_time=end_time,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_node_group.command(name=cli_util.override('db_management.summarize_cloud_db_node_metrics.command_name', 'summarize-cloud-db-node-metrics'), help=u"""Gets metrics for the cloud DB node specified by `cloudDbNodeId`. \n[Command Reference](summarizeCloudDbNodeMetrics)""")
+@cli_util.option('--cloud-db-node-id', required=True, help=u"""The [OCID] of the cloud database node.""")
+@cli_util.option('--start-time', required=True, help=u"""The beginning of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--end-time', required=True, help=u"""The end of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'MetricsAggregationRangeCollection'})
+@cli_util.wrap_exceptions
+def summarize_cloud_db_node_metrics(ctx, from_json, cloud_db_node_id, start_time, end_time, page, limit, filter_by_metric_names):
+
+    if isinstance(cloud_db_node_id, six.string_types) and len(cloud_db_node_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-node-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if filter_by_metric_names is not None:
+        kwargs['filter_by_metric_names'] = filter_by_metric_names
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.summarize_cloud_db_node_metrics(
+        cloud_db_node_id=cloud_db_node_id,
+        start_time=start_time,
+        end_time=end_time,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_group.command(name=cli_util.override('db_management.summarize_cloud_db_system_availability_metrics.command_name', 'summarize-cloud-db-system-availability-metrics'), help=u"""Gets availability metrics for the components present in the cloud DB system specified by `cloudDbSystemId`. \n[Command Reference](summarizeCloudDbSystemAvailabilityMetrics)""")
+@cli_util.option('--cloud-db-system-id', required=True, help=u"""The [OCID] of the cloud DB system.""")
+@cli_util.option('--start-time', required=True, help=u"""The beginning of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--end-time', required=True, help=u"""The end of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--filter-by-component-types', help=u"""The filter used to retrieve metrics for a specific set of component types by passing the desired component types separated by a comma. Note that, by default, the service returns metrics for all DB system component types.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'MetricsAggregationRangeCollection'})
+@cli_util.wrap_exceptions
+def summarize_cloud_db_system_availability_metrics(ctx, from_json, cloud_db_system_id, start_time, end_time, page, limit, filter_by_component_types):
+
+    if isinstance(cloud_db_system_id, six.string_types) and len(cloud_db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if filter_by_component_types is not None:
+        kwargs['filter_by_component_types'] = filter_by_component_types
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.summarize_cloud_db_system_availability_metrics(
+        cloud_db_system_id=cloud_db_system_id,
+        start_time=start_time,
+        end_time=end_time,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_listener_group.command(name=cli_util.override('db_management.summarize_cloud_listener_metrics.command_name', 'summarize-cloud-listener-metrics'), help=u"""Gets metrics for the cloud listener specified by `cloudListenerId`. \n[Command Reference](summarizeCloudListenerMetrics)""")
+@cli_util.option('--cloud-listener-id', required=True, help=u"""The [OCID] of the cloud listener.""")
+@cli_util.option('--start-time', required=True, help=u"""The beginning of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--end-time', required=True, help=u"""The end of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
+@cli_util.option('--page', help=u"""The page token representing the page from where the next set of paginated results are retrieved. This is usually retrieved from a previous list call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of records returned in the paginated response.""")
+@cli_util.option('--filter-by-metric-names', help=u"""The filter used to retrieve a specific set of metrics by passing the desired metric names with a comma separator. Note that, by default, the service returns all supported metrics.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_management', 'class': 'MetricsAggregationRangeCollection'})
+@cli_util.wrap_exceptions
+def summarize_cloud_listener_metrics(ctx, from_json, cloud_listener_id, start_time, end_time, page, limit, filter_by_metric_names):
+
+    if isinstance(cloud_listener_id, six.string_types) and len(cloud_listener_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-listener-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if filter_by_metric_names is not None:
+        kwargs['filter_by_metric_names'] = filter_by_metric_names
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.summarize_cloud_listener_metrics(
+        cloud_listener_id=cloud_listener_id,
+        start_time=start_time,
+        end_time=end_time,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @external_asm_group.command(name=cli_util.override('db_management.summarize_external_asm_metrics.command_name', 'summarize-external-asm-metrics'), help=u"""Gets metrics for the external ASM specified by `externalAsmId`. \n[Command Reference](summarizeExternalAsmMetrics)""")
 @cli_util.option('--external-asm-id', required=True, help=u"""The [OCID] of the external ASM.""")
 @cli_util.option('--start-time', required=True, help=u"""The beginning of the time range set to retrieve metric data for the DB system and its members. Expressed in UTC in ISO-8601 format, which is `yyyy-MM-dd'T'hh:mm:ss.sss'Z'`.""")
@@ -17371,6 +19519,805 @@ def test_preferred_credential_test_basic_preferred_credential_details(ctx, from_
         test_preferred_credential_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@cloud_asm_group.command(name=cli_util.override('db_management.update_cloud_asm.command_name', 'update'), help=u"""Updates the cloud ASM specified by `cloudAsmId`. \n[Command Reference](updateCloudAsm)""")
+@cli_util.option('--cloud-asm-id', required=True, help=u"""The [OCID] of the cloud ASM.""")
+@cli_util.option('--cloud-connector-id', help=u"""The [OCID] of the cloud connector.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_cloud_asm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_asm_id, cloud_connector_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(cloud_asm_id, six.string_types) and len(cloud_asm_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-asm-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if cloud_connector_id is not None:
+        _details['cloudConnectorId'] = cloud_connector_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_cloud_asm(
+        cloud_asm_id=cloud_asm_id,
+        update_cloud_asm_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_asm_instance_group.command(name=cli_util.override('db_management.update_cloud_asm_instance.command_name', 'update'), help=u"""Updates the cloud ASM instance specified by `cloudAsmInstanceId`. \n[Command Reference](updateCloudAsmInstance)""")
+@cli_util.option('--cloud-asm-instance-id', required=True, help=u"""The [OCID] of the cloud ASM instance.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'CloudAsmInstance'})
+@cli_util.wrap_exceptions
+def update_cloud_asm_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_asm_instance_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(cloud_asm_instance_id, six.string_types) and len(cloud_asm_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-asm-instance-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_cloud_asm_instance(
+        cloud_asm_instance_id=cloud_asm_instance_id,
+        update_cloud_asm_instance_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_cloud_asm_instance') and callable(getattr(client, 'get_cloud_asm_instance')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_cloud_asm_instance(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_cluster_group.command(name=cli_util.override('db_management.update_cloud_cluster.command_name', 'update'), help=u"""Updates the cloud cluster specified by `cloudClusterId`. \n[Command Reference](updateCloudCluster)""")
+@cli_util.option('--cloud-cluster-id', required=True, help=u"""The [OCID] of the cloud cluster.""")
+@cli_util.option('--cloud-connector-id', help=u"""The [OCID] of the cloud connector.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_cloud_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_cluster_id, cloud_connector_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(cloud_cluster_id, six.string_types) and len(cloud_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-cluster-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if cloud_connector_id is not None:
+        _details['cloudConnectorId'] = cloud_connector_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_cloud_cluster(
+        cloud_cluster_id=cloud_cluster_id,
+        update_cloud_cluster_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_cluster_instance_group.command(name=cli_util.override('db_management.update_cloud_cluster_instance.command_name', 'update'), help=u"""Updates the cloud cluster instance specified by `cloudClusterInstanceId`. \n[Command Reference](updateCloudClusterInstance)""")
+@cli_util.option('--cloud-cluster-instance-id', required=True, help=u"""The [OCID] of the cloud cluster instance.""")
+@cli_util.option('--cloud-connector-id', help=u"""The [OCID] of the cloud connector.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_cloud_cluster_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_cluster_instance_id, cloud_connector_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(cloud_cluster_instance_id, six.string_types) and len(cloud_cluster_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-cluster-instance-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if cloud_connector_id is not None:
+        _details['cloudConnectorId'] = cloud_connector_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_cloud_cluster_instance(
+        cloud_cluster_instance_id=cloud_cluster_instance_id,
+        update_cloud_cluster_instance_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_home_group.command(name=cli_util.override('db_management.update_cloud_db_home.command_name', 'update'), help=u"""Updates the cloud DB home specified by `cloudDbHomeId`. \n[Command Reference](updateCloudDbHome)""")
+@cli_util.option('--cloud-db-home-id', required=True, help=u"""The [OCID] of the cloud database home.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'CloudDbHome'})
+@cli_util.wrap_exceptions
+def update_cloud_db_home(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_home_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(cloud_db_home_id, six.string_types) and len(cloud_db_home_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-home-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_cloud_db_home(
+        cloud_db_home_id=cloud_db_home_id,
+        update_cloud_db_home_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_cloud_db_home') and callable(getattr(client, 'get_cloud_db_home')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_cloud_db_home(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_node_group.command(name=cli_util.override('db_management.update_cloud_db_node.command_name', 'update'), help=u"""Updates the cloud DB node specified by `cloudDbNodeId`. \n[Command Reference](updateCloudDbNode)""")
+@cli_util.option('--cloud-db-node-id', required=True, help=u"""The [OCID] of the cloud database node.""")
+@cli_util.option('--cloud-connector-id', help=u"""The [OCID] of the cloud connector.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_cloud_db_node(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_node_id, cloud_connector_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(cloud_db_node_id, six.string_types) and len(cloud_db_node_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-node-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if cloud_connector_id is not None:
+        _details['cloudConnectorId'] = cloud_connector_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_cloud_db_node(
+        cloud_db_node_id=cloud_db_node_id,
+        update_cloud_db_node_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_group.command(name=cli_util.override('db_management.update_cloud_db_system.command_name', 'update'), help=u"""Updates the cloud DB system specified by `cloudDbSystemId`. \n[Command Reference](updateCloudDbSystem)""")
+@cli_util.option('--cloud-db-system-id', required=True, help=u"""The [OCID] of the cloud DB system.""")
+@cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'CloudDbSystem'})
+@cli_util.wrap_exceptions
+def update_cloud_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_id, display_name, freeform_tags, defined_tags, if_match):
+
+    if isinstance(cloud_db_system_id, six.string_types) and len(cloud_db_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-system-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_cloud_db_system(
+        cloud_db_system_id=cloud_db_system_id,
+        update_cloud_db_system_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_cloud_db_system') and callable(getattr(client, 'get_cloud_db_system')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_cloud_db_system(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_connector_group.command(name=cli_util.override('db_management.update_cloud_db_system_connector.command_name', 'update'), help=u"""Updates the cloud connector specified by `cloudDbSystemConnectorId`. \n[Command Reference](updateCloudDbSystemConnector)""")
+@cli_util.option('--cloud-db-system-connector-id', required=True, help=u"""The [OCID] of the cloud connector.""")
+@cli_util.option('--connector-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["MACS"]), help=u"""The type of connector.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_cloud_db_system_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_connector_id, connector_type, if_match):
+
+    if isinstance(cloud_db_system_connector_id, six.string_types) and len(cloud_db_system_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-system-connector-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['connectorType'] = connector_type
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_cloud_db_system_connector(
+        cloud_db_system_connector_id=cloud_db_system_connector_id,
+        update_cloud_db_system_connector_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_connector_group.command(name=cli_util.override('db_management.update_cloud_db_system_connector_update_cloud_db_system_macs_connector_details.command_name', 'update-cloud-db-system-connector-update-cloud-db-system-macs-connector-details'), help=u"""Updates the cloud connector specified by `cloudDbSystemConnectorId`. \n[Command Reference](updateCloudDbSystemConnector)""")
+@cli_util.option('--cloud-db-system-connector-id', required=True, help=u"""The [OCID] of the cloud connector.""")
+@cli_util.option('--connection-info', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'connection-info': {'module': 'database_management', 'class': 'CloudDbSystemConnectionInfo'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'connection-info': {'module': 'database_management', 'class': 'CloudDbSystemConnectionInfo'}, 'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_cloud_db_system_connector_update_cloud_db_system_macs_connector_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_connector_id, connection_info, freeform_tags, defined_tags, if_match):
+
+    if isinstance(cloud_db_system_connector_id, six.string_types) and len(cloud_db_system_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-system-connector-id cannot be whitespace or empty string')
+    if not force:
+        if connection_info or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to connection-info and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if connection_info is not None:
+        _details['connectionInfo'] = cli_util.parse_json_parameter("connection_info", connection_info)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['connectorType'] = 'MACS'
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_cloud_db_system_connector(
+        cloud_db_system_connector_id=cloud_db_system_connector_id,
+        update_cloud_db_system_connector_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_db_system_discovery_group.command(name=cli_util.override('db_management.update_cloud_db_system_discovery.command_name', 'update'), help=u"""Updates the cloud DB system discovery specified by `cloudDbSystemDiscoveryId`. \n[Command Reference](updateCloudDbSystemDiscovery)""")
+@cli_util.option('--cloud-db-system-discovery-id', required=True, help=u"""The [OCID] of the cloud DB system discovery.""")
+@cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database_management', 'class': 'CloudDbSystemDiscovery'})
+@cli_util.wrap_exceptions
+def update_cloud_db_system_discovery(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_discovery_id, display_name, freeform_tags, defined_tags, if_match):
+
+    if isinstance(cloud_db_system_discovery_id, six.string_types) and len(cloud_db_system_discovery_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-db-system-discovery-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_cloud_db_system_discovery(
+        cloud_db_system_discovery_id=cloud_db_system_discovery_id,
+        update_cloud_db_system_discovery_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_cloud_db_system_discovery') and callable(getattr(client, 'get_cloud_db_system_discovery')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_cloud_db_system_discovery(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cloud_listener_group.command(name=cli_util.override('db_management.update_cloud_listener.command_name', 'update'), help=u"""Updates the cloud listener specified by `cloudListenerId`. \n[Command Reference](updateCloudListener)""")
+@cli_util.option('--cloud-listener-id', required=True, help=u"""The [OCID] of the cloud listener.""")
+@cli_util.option('--cloud-connector-id', help=u"""The [OCID] of the cloud connector.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_cloud_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_listener_id, cloud_connector_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(cloud_listener_id, six.string_types) and len(cloud_listener_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-listener-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if cloud_connector_id is not None:
+        _details['cloudConnectorId'] = cloud_connector_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database_management', 'db_management', ctx)
+    result = client.update_cloud_listener(
+        cloud_listener_id=cloud_listener_id,
+        update_cloud_listener_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -18660,7 +21607,7 @@ def update_external_mysql_database_connector(ctx, from_json, force, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('db_management.update_job.command_name', 'update'), help=u"""Updates the details for the recurring scheduled job specified by jobId. Note that non-recurring (one time) jobs cannot be updated. \n[Command Reference](updateJob)""")
+@job_group.command(name=cli_util.override('db_management.update_job.command_name', 'update'), help=u"""Updates the details of the recurring scheduled job specified by jobId. Note that non-recurring (one time) jobs cannot be updated. \n[Command Reference](updateJob)""")
 @cli_util.option('--job-id', required=True, help=u"""The identifier of the job.""")
 @cli_util.option('--description', help=u"""The description of the job.""")
 @cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["SQL"]), help=u"""The type of job.""")
@@ -18740,7 +21687,7 @@ def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('db_management.update_job_update_sql_job_details.command_name', 'update-job-update-sql-job-details'), help=u"""Updates the details for the recurring scheduled job specified by jobId. Note that non-recurring (one time) jobs cannot be updated. \n[Command Reference](updateJob)""")
+@job_group.command(name=cli_util.override('db_management.update_job_update_sql_job_details.command_name', 'update-job-update-sql-job-details'), help=u"""Updates the details of the recurring scheduled job specified by jobId. Note that non-recurring (one time) jobs cannot be updated. \n[Command Reference](updateJob)""")
 @cli_util.option('--job-id', required=True, help=u"""The identifier of the job.""")
 @cli_util.option('--description', help=u"""The description of the job.""")
 @cli_util.option('--timeout', help=u"""The job timeout duration, which is expressed like \"1h 10m 15s\".""")
@@ -18862,7 +21809,7 @@ def update_job_update_sql_job_details(ctx, from_json, force, wait_for_state, max
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('db_management.update_job_object_storage_job_execution_result_location.command_name', 'update-job-object-storage-job-execution-result-location'), help=u"""Updates the details for the recurring scheduled job specified by jobId. Note that non-recurring (one time) jobs cannot be updated. \n[Command Reference](updateJob)""")
+@job_group.command(name=cli_util.override('db_management.update_job_object_storage_job_execution_result_location.command_name', 'update-job-object-storage-job-execution-result-location'), help=u"""Updates the details of the recurring scheduled job specified by jobId. Note that non-recurring (one time) jobs cannot be updated. \n[Command Reference](updateJob)""")
 @cli_util.option('--job-id', required=True, help=u"""The identifier of the job.""")
 @cli_util.option('--description', help=u"""The description of the job.""")
 @cli_util.option('--timeout', help=u"""The job timeout duration, which is expressed like \"1h 10m 15s\".""")
