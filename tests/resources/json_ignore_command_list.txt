@@ -550,3 +550,4 @@ network-firewall, decryption-profile, create
 network-firewall, application, update
 network-firewall, application, create
 network-firewall, service, create
+api-gateway, certificate, create

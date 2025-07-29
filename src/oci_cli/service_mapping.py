@@ -48,6 +48,11 @@ service_mapping = {
         "API Gateway",
         "Developer Services"
     ],
+    "api-platform": [
+        "api_platform",
+        "P Control Plane",
+        "Others"
+    ],
     "apiaccesscontrol": [
         "apiaccesscontrol",
         "Oracle  Access Control",

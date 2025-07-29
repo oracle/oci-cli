@@ -59,6 +59,12 @@ def config_group():
     pass
 
 
+@click.command(cli_util.override('apm_config.match_agents_with_attribute_key_group.command_name', 'match-agents-with-attribute-key'), cls=CommandGroupWithAlias, help="""The object representing the agent matching attribute keys.""")
+@cli_util.help_option_group
+def match_agents_with_attribute_key_group():
+    pass
+
+
 @click.command(cli_util.override('apm_config.test_output_group.command_name', 'test-output'), cls=CommandGroupWithAlias, help="""The result of running a test.""")
 @cli_util.help_option_group
 def test_output_group():
@@ -71,6 +77,7 @@ apm_config_root_group.add_command(span_filter_group)
 apm_config_root_group.add_command(config_collection_group)
 apm_config_root_group.add_command(export_configuration_details_group)
 apm_config_root_group.add_command(config_group)
+apm_config_root_group.add_command(match_agents_with_attribute_key_group)
 apm_config_root_group.add_command(test_output_group)
 
 
@@ -103,7 +110,7 @@ def copy_configuration(ctx, from_json, configuration_map, apm_domain_id, apm_tar
 
 @config_group.command(name=cli_util.override('apm_config.create_config.command_name', 'create'), help=u"""Creates a new configuration item. \n[Command Reference](createConfig)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
-@cli_util.option('--config-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SPAN_FILTER", "METRIC_GROUP", "APDEX", "OPTIONS"]), help=u"""The type of configuration item.""")
+@cli_util.option('--config-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SPAN_FILTER", "METRIC_GROUP", "APDEX", "OPTIONS", "AGENT", "MACS_APM_EXTENSION"]), help=u"""The type of configuration item.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--opc-dry-run', help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not modify the configuration item details and is used only to perform validation on the submitted data.""")
@@ -233,6 +240,52 @@ def create_config_create_metric_group_details(ctx, from_json, apm_domain_id, dis
     cli_util.render_response(result, ctx)
 
 
+@config_group.command(name=cli_util.override('apm_config.create_config_create_agent_config_details.command_name', 'create-config-create-agent-config-details'), help=u"""Creates a new configuration item. \n[Command Reference](createConfig)""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@cli_util.option('--match-agents-with-attribute-value', required=True, help=u"""The agent attribute VALUE by which an agent configuration is matched to an agent. Each agent configuration object must specify a different value. The attribute KEY corresponding to this VALUE is in the matchAgentsWithAttributeKey field.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--overrides', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--opc-dry-run', help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not modify the configuration item details and is used only to perform validation on the submitted data.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apm_config', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_config', 'class': 'dict(str, dict(str, object))'}, 'config': {'module': 'apm_config', 'class': 'AgentConfigMap'}, 'overrides': {'module': 'apm_config', 'class': 'AgentConfigOverrides'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apm_config', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_config', 'class': 'dict(str, dict(str, object))'}, 'config': {'module': 'apm_config', 'class': 'AgentConfigMap'}, 'overrides': {'module': 'apm_config', 'class': 'AgentConfigOverrides'}}, output_type={'module': 'apm_config', 'class': 'Config'})
+@cli_util.wrap_exceptions
+def create_config_create_agent_config_details(ctx, from_json, apm_domain_id, match_agents_with_attribute_value, freeform_tags, defined_tags, config, overrides, opc_dry_run):
+
+    kwargs = {}
+    if opc_dry_run is not None:
+        kwargs['opc_dry_run'] = opc_dry_run
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['matchAgentsWithAttributeValue'] = match_agents_with_attribute_value
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if config is not None:
+        _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if overrides is not None:
+        _details['overrides'] = cli_util.parse_json_parameter("overrides", overrides)
+
+    _details['configType'] = 'AGENT'
+
+    client = cli_util.build_client('apm_config', 'config', ctx)
+    result = client.create_config(
+        apm_domain_id=apm_domain_id,
+        create_config_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @config_group.command(name=cli_util.override('apm_config.create_config_create_options_details.command_name', 'create-config-create-options-details'), help=u"""Creates a new configuration item. \n[Command Reference](createConfig)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -275,6 +328,58 @@ def create_config_create_options_details(ctx, from_json, apm_domain_id, freeform
         _details['description'] = description
 
     _details['configType'] = 'OPTIONS'
+
+    client = cli_util.build_client('apm_config', 'config', ctx)
+    result = client.create_config(
+        apm_domain_id=apm_domain_id,
+        create_config_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@config_group.command(name=cli_util.override('apm_config.create_config_create_macs_apm_extension_details.command_name', 'create-config-create-macs-apm-extension-details'), help=u"""Creates a new configuration item. \n[Command Reference](createConfig)""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@cli_util.option('--management-agent-id', required=True, help=u"""The [OCID] of the Management Agent that will provision the APM Agent.""")
+@cli_util.option('--process-filter', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Filter patterns used to discover active Java processes for provisioning the APM Agent.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--run-as-user', required=True, help=u"""The OS user that should be used to discover Java processes.""")
+@cli_util.option('--service-name', required=True, help=u"""The name of the service being monitored. This argument enables you to filter by service and view traces and other signals in the APM Explorer user interface.""")
+@cli_util.option('--agent-version', required=True, help=u"""The version of the referenced agent bundle.""")
+@cli_util.option('--attach-install-dir', required=True, help=u"""The directory owned by runAsUser.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""The name by which a configuration entity is displayed to the end user.""")
+@cli_util.option('--opc-dry-run', help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not modify the configuration item details and is used only to perform validation on the submitted data.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apm_config', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_config', 'class': 'dict(str, dict(str, object))'}, 'process-filter': {'module': 'apm_config', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apm_config', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_config', 'class': 'dict(str, dict(str, object))'}, 'process-filter': {'module': 'apm_config', 'class': 'list[string]'}}, output_type={'module': 'apm_config', 'class': 'Config'})
+@cli_util.wrap_exceptions
+def create_config_create_macs_apm_extension_details(ctx, from_json, apm_domain_id, management_agent_id, process_filter, run_as_user, service_name, agent_version, attach_install_dir, freeform_tags, defined_tags, display_name, opc_dry_run):
+
+    kwargs = {}
+    if opc_dry_run is not None:
+        kwargs['opc_dry_run'] = opc_dry_run
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['managementAgentId'] = management_agent_id
+    _details['processFilter'] = cli_util.parse_json_parameter("process_filter", process_filter)
+    _details['runAsUser'] = run_as_user
+    _details['serviceName'] = service_name
+    _details['agentVersion'] = agent_version
+    _details['attachInstallDir'] = attach_install_dir
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    _details['configType'] = 'MACS_APM_EXTENSION'
 
     client = cli_util.build_client('apm_config', 'config', ctx)
     result = client.create_config(
@@ -402,6 +507,25 @@ def get_config(ctx, from_json, apm_domain_id, config_id):
     cli_util.render_response(result, ctx)
 
 
+@match_agents_with_attribute_key_group.command(name=cli_util.override('apm_config.get_match_agents_with_attribute_key.command_name', 'get'), help=u"""The domain-wide agents matching attribute key. \n[Command Reference](getMatchAgentsWithAttributeKey)""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apm_config', 'class': 'MatchAgentsWithAttributeKey'})
+@cli_util.wrap_exceptions
+def get_match_agents_with_attribute_key(ctx, from_json, apm_domain_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('apm_config', 'config', ctx)
+    result = client.get_match_agents_with_attribute_key(
+        apm_domain_id=apm_domain_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @import_configuration_details_group.command(name=cli_util.override('apm_config.import_configuration.command_name', 'import-configuration'), help=u"""Import configurations Item(s) with its dependencies into a destination domain. \n[Command Reference](importConfiguration)""")
 @cli_util.option('--configuration-items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of Configurations Details .""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration-map', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that has parameters related to the import process (EnableOcidSubstitution, Skip, \u2026) and more. Example: `{\"parameter-key\": \"parameter-value\"}` Supported parameters: \u2014 Enable the OCIDs in instructions to be replaced, if set to \"true\" The Config Service replace any OCIDs it finds in the instructions, if set to true the Config Service will replace. \u2014 Compartment Id we want to import the configuration Items, if the compartment Id is not provided it will be the default destination domain compartmentId.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -431,7 +555,7 @@ def import_configuration(ctx, from_json, configuration_items, configuration_map,
 
 @config_collection_group.command(name=cli_util.override('apm_config.list_configs.command_name', 'list-configs'), help=u"""Returns all configuration items, which can optionally be filtered by configuration type. \n[Command Reference](listConfigs)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
-@cli_util.option('--config-type', help=u"""A filter to match configuration items of a given type. Supported values are SPAN_FILTER, METRIC_GROUP, and APDEX.""")
+@cli_util.option('--config-type', help=u"""A filter to match configuration items of a given type. Supported values are SPAN_FILTER, METRIC_GROUP, APDEX, AGENT and MACS_APM_EXTENSION.""")
 @cli_util.option('--display-name', help=u"""A filter to return resources that match the given display name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The maximum number of results per page, or items to return in a paginated \"List\" call. For information on how pagination works, see [List Pagination]. Example: `50`""")
@@ -611,7 +735,7 @@ def test_test_span_enrichment_details(ctx, from_json, apm_domain_id, options, sp
 @config_group.command(name=cli_util.override('apm_config.update_config.command_name', 'update'), help=u"""Updates the details of the configuration item identified by the OCID. \n[Command Reference](updateConfig)""")
 @cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
 @cli_util.option('--config-id', required=True, help=u"""The [OCID] of the configuration item.""")
-@cli_util.option('--config-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SPAN_FILTER", "METRIC_GROUP", "APDEX", "OPTIONS"]), help=u"""The type of configuration item.""")
+@cli_util.option('--config-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SPAN_FILTER", "METRIC_GROUP", "APDEX", "OPTIONS", "AGENT", "MACS_APM_EXTENSION"]), help=u"""The type of configuration item.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -719,6 +843,136 @@ def update_config_update_metric_group_details(ctx, from_json, force, apm_domain_
         _details['metrics'] = cli_util.parse_json_parameter("metrics", metrics)
 
     _details['configType'] = 'METRIC_GROUP'
+
+    client = cli_util.build_client('apm_config', 'config', ctx)
+    result = client.update_config(
+        apm_domain_id=apm_domain_id,
+        config_id=config_id,
+        update_config_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@config_group.command(name=cli_util.override('apm_config.update_config_update_agent_config_details.command_name', 'update-config-update-agent-config-details'), help=u"""Updates the details of the configuration item identified by the OCID. \n[Command Reference](updateConfig)""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@cli_util.option('--config-id', required=True, help=u"""The [OCID] of the configuration item.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--overrides', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--opc-dry-run', help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not modify the configuration item details and is used only to perform validation on the submitted data.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apm_config', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_config', 'class': 'dict(str, dict(str, object))'}, 'config': {'module': 'apm_config', 'class': 'AgentConfigMap'}, 'overrides': {'module': 'apm_config', 'class': 'AgentConfigOverrides'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apm_config', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_config', 'class': 'dict(str, dict(str, object))'}, 'config': {'module': 'apm_config', 'class': 'AgentConfigMap'}, 'overrides': {'module': 'apm_config', 'class': 'AgentConfigOverrides'}}, output_type={'module': 'apm_config', 'class': 'Config'})
+@cli_util.wrap_exceptions
+def update_config_update_agent_config_details(ctx, from_json, force, apm_domain_id, config_id, freeform_tags, defined_tags, config, overrides, if_match, opc_dry_run):
+
+    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+        raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags or config or overrides:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and config and overrides will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if opc_dry_run is not None:
+        kwargs['opc_dry_run'] = opc_dry_run
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if config is not None:
+        _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if overrides is not None:
+        _details['overrides'] = cli_util.parse_json_parameter("overrides", overrides)
+
+    _details['configType'] = 'AGENT'
+
+    client = cli_util.build_client('apm_config', 'config', ctx)
+    result = client.update_config(
+        apm_domain_id=apm_domain_id,
+        config_id=config_id,
+        update_config_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@config_group.command(name=cli_util.override('apm_config.update_config_update_macs_apm_extension_details.command_name', 'update-config-update-macs-apm-extension-details'), help=u"""Updates the details of the configuration item identified by the OCID. \n[Command Reference](updateConfig)""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@cli_util.option('--config-id', required=True, help=u"""The [OCID] of the configuration item.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""The name by which a configuration entity is displayed to the end user.""")
+@cli_util.option('--process-filter', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Filter patterns used to discover active Java processes for provisioning the APM Agent.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--run-as-user', help=u"""The OS user that should be used to discover Java processes.""")
+@cli_util.option('--service-name', help=u"""The name of the service being monitored. This argument enables you to filter by service and view traces and other signals in the APM Explorer user interface.""")
+@cli_util.option('--agent-version', help=u"""The version of the referenced agent bundle.""")
+@cli_util.option('--attach-install-dir', help=u"""The directory owned by runAsUser.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--opc-dry-run', help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not modify the configuration item details and is used only to perform validation on the submitted data.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apm_config', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_config', 'class': 'dict(str, dict(str, object))'}, 'process-filter': {'module': 'apm_config', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apm_config', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apm_config', 'class': 'dict(str, dict(str, object))'}, 'process-filter': {'module': 'apm_config', 'class': 'list[string]'}}, output_type={'module': 'apm_config', 'class': 'Config'})
+@cli_util.wrap_exceptions
+def update_config_update_macs_apm_extension_details(ctx, from_json, force, apm_domain_id, config_id, freeform_tags, defined_tags, display_name, process_filter, run_as_user, service_name, agent_version, attach_install_dir, if_match, opc_dry_run):
+
+    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+        raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags or process_filter:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and process-filter will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if opc_dry_run is not None:
+        kwargs['opc_dry_run'] = opc_dry_run
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if process_filter is not None:
+        _details['processFilter'] = cli_util.parse_json_parameter("process_filter", process_filter)
+
+    if run_as_user is not None:
+        _details['runAsUser'] = run_as_user
+
+    if service_name is not None:
+        _details['serviceName'] = service_name
+
+    if agent_version is not None:
+        _details['agentVersion'] = agent_version
+
+    if attach_install_dir is not None:
+        _details['attachInstallDir'] = attach_install_dir
+
+    _details['configType'] = 'MACS_APM_EXTENSION'
 
     client = cli_util.build_client('apm_config', 'config', ctx)
     result = client.update_config(
@@ -906,6 +1160,38 @@ def update_config_update_options_details(ctx, from_json, force, apm_domain_id, c
         apm_domain_id=apm_domain_id,
         config_id=config_id,
         update_config_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@match_agents_with_attribute_key_group.command(name=cli_util.override('apm_config.update_match_agents_with_attribute_key.command_name', 'update'), help=u"""Updates the agent matching attribute key for the APM Domain. \n[Command Reference](updateMatchAgentsWithAttributeKey)""")
+@cli_util.option('--apm-domain-id', required=True, help=u"""The APM Domain ID the request is intended for.""")
+@cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of agent matching attribute keys to be updated.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'apm_config', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'apm_config', 'class': 'list[string]'}}, output_type={'module': 'apm_config', 'class': 'MatchAgentsWithAttributeKey'})
+@cli_util.wrap_exceptions
+def update_match_agents_with_attribute_key(ctx, from_json, force, apm_domain_id, items):
+    if not force:
+        if items:
+            if not click.confirm("WARNING: Updates to items will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if items is not None:
+        _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('apm_config', 'config', ctx)
+    result = client.update_match_agents_with_attribute_key(
+        apm_domain_id=apm_domain_id,
+        update_match_agents_with_attribute_key_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

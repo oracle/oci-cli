@@ -495,17 +495,20 @@ def delete_management_saved_search(ctx, from_json, wait_for_state, max_wait_seco
 
 @management_dashboard_import_details_group.command(name=cli_util.override('management_dashboard.export_dashboard.command_name', 'export-dashboard'), help=u"""Exports an array of dashboards and their saved searches. Export is designed to work with importDashboard. Here's an example of how you can use CLI to export a dashboard: `$oci management-dashboard dashboard export --query data --export-dashboard-id \"{\\\"dashboardIds\\\":[\\\"ocid1.managementdashboard.oc1..dashboardId1\\\"]}\"  > dashboards.json` \n[Command Reference](exportDashboard)""")
 @cli_util.option('--export-dashboard-id', required=True, help=u"""List of dashboardIds in plain text. The syntax is '{\"dashboardIds\":[\"dashboardId1\", \"dashboardId2\", ...]}'. Escaping is needed when using in OCI CLI. For example, \"{\\\"dashboardIds\\\":[\\\"ocid1.managementdashboard.oc1..dashboardId1\\\"]}\" .""")
+@cli_util.option('--export-tags', help=u"""Indicates whether tags must be included when exporting dashboards and saved searches. If this attribute is set to true, then both defined and free-form tags are included in the response. The default is false and tag fields are empty objects in the response. If set to true, NotAuthorizedException is returned if you do not have the permission to access tags, even if you have the permission to access dashboards and saved searches.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'management_dashboard', 'class': 'ManagementDashboardExportDetails'})
 @cli_util.wrap_exceptions
-def export_dashboard(ctx, from_json, export_dashboard_id):
+def export_dashboard(ctx, from_json, export_dashboard_id, export_tags):
 
     if isinstance(export_dashboard_id, six.string_types) and len(export_dashboard_id.strip()) == 0:
         raise click.UsageError('Parameter --export-dashboard-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if export_tags is not None:
+        kwargs['export_tags'] = export_tags
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('management_dashboard', 'dashx_apis', ctx)
     result = client.export_dashboard(
@@ -559,7 +562,7 @@ def get_management_saved_search(ctx, from_json, management_saved_search_id):
     cli_util.render_response(result, ctx)
 
 
-@management_dashboard_group.command(name=cli_util.override('management_dashboard.get_oob_management_dashboard.command_name', 'get-oob'), help=u"""Gets an OOB dashboard and its saved searches by ID.  Deleted or unauthorized saved searches are marked by tile's state property. \n[Command Reference](getOobManagementDashboard)""")
+@management_dashboard_group.command(name=cli_util.override('management_dashboard.get_oob_management_dashboard.command_name', 'get-oob'), help=u"""Gets an out-of-the-box dashboard and its saved searches by ID.  Deleted or unauthorized saved searches are marked by tile's state property. \n[Command Reference](getOobManagementDashboard)""")
 @cli_util.option('--management-dashboard-id', required=True, help=u"""A unique dashboard identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -581,7 +584,7 @@ def get_oob_management_dashboard(ctx, from_json, management_dashboard_id):
     cli_util.render_response(result, ctx)
 
 
-@management_saved_search_group.command(name=cli_util.override('management_dashboard.get_oob_management_saved_search.command_name', 'get-oob'), help=u"""Gets a saved search by ID. \n[Command Reference](getOobManagementSavedSearch)""")
+@management_saved_search_group.command(name=cli_util.override('management_dashboard.get_oob_management_saved_search.command_name', 'get-oob'), help=u"""Gets an out-of-the-box saved search by ID. \n[Command Reference](getOobManagementSavedSearch)""")
 @cli_util.option('--management-saved-search-id', required=True, help=u"""A unique saved search identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -608,16 +611,25 @@ def get_oob_management_saved_search(ctx, from_json, management_saved_search_id):
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--override-same-name', help=u"""By default, if a resource with the same OCID exists in the target compartment, it is updated during the import process, otherwise, a new resource is created. However, if this attribute is set to true, then during the import process if a resource with the same displayName exists in the compartment, then it is updated even if the OCIDs are different. This is useful when importing the same resource multiple times. If the compartment and displayName remain the same, the resource is only updated and multiple copies of a resource are not created.""")
+@cli_util.option('--override-dashboard-compartment-ocid', help=u"""If this attribute is set, the dashboard resources are created or updated in the compartment specified by OCID. If this attribute is not set, the compartment specified in the JSON metadata is used.""")
+@cli_util.option('--override-saved-search-compartment-ocid', help=u"""If this attribute is set, the saved search resources are created or updated in the compartment specified by OCID. If this attribute is not set, the compartment specified in the JSON metadata is used.""")
 @json_skeleton_utils.get_cli_json_input_option({'dashboards': {'module': 'management_dashboard', 'class': 'list[ManagementDashboardForImportExportDetails]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dashboards': {'module': 'management_dashboard', 'class': 'list[ManagementDashboardForImportExportDetails]'}, 'freeform-tags': {'module': 'management_dashboard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'management_dashboard', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def import_dashboard(ctx, from_json, dashboards, freeform_tags, defined_tags, if_match):
+def import_dashboard(ctx, from_json, dashboards, freeform_tags, defined_tags, if_match, override_same_name, override_dashboard_compartment_ocid, override_saved_search_compartment_ocid):
 
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if override_same_name is not None:
+        kwargs['override_same_name'] = override_same_name
+    if override_dashboard_compartment_ocid is not None:
+        kwargs['override_dashboard_compartment_ocid'] = override_dashboard_compartment_ocid
+    if override_saved_search_compartment_ocid is not None:
+        kwargs['override_saved_search_compartment_ocid'] = override_saved_search_compartment_ocid
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -751,7 +763,7 @@ def list_management_saved_searches(ctx, from_json, all_pages, page_size, compart
     cli_util.render_response(result, ctx)
 
 
-@management_dashboard_group.command(name=cli_util.override('management_dashboard.list_oob_management_dashboards.command_name', 'list-oob'), help=u"""Gets the list of OOB dashboards with pagination.  Returned properties are the summary. \n[Command Reference](listOobManagementDashboards)""")
+@management_dashboard_group.command(name=cli_util.override('management_dashboard.list_oob_management_dashboards.command_name', 'list-oob'), help=u"""Gets the list of out-of-the-box dashboards with pagination. Returned properties are the summary. \n[Command Reference](listOobManagementDashboards)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -808,7 +820,7 @@ def list_oob_management_dashboards(ctx, from_json, all_pages, page_size, compart
     cli_util.render_response(result, ctx)
 
 
-@management_saved_search_group.command(name=cli_util.override('management_dashboard.list_oob_management_saved_searches.command_name', 'list-oob'), help=u"""Gets the list of out-of-box saved searches in a compartment with pagination.  Returned properties are the summary. \n[Command Reference](listOobManagementSavedSearches)""")
+@management_saved_search_group.command(name=cli_util.override('management_dashboard.list_oob_management_saved_searches.command_name', 'list-oob'), help=u"""Gets the list of out-of-the-box saved searches in a compartment with pagination.  Returned properties are the summary. \n[Command Reference](listOobManagementSavedSearches)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")

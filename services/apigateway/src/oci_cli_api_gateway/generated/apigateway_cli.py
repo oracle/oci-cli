@@ -77,10 +77,194 @@ api_gateway_service_cli.api_gateway_service_group.add_command(api_group)
 api_gateway_service_cli.api_gateway_service_group.add_command(sdk_group)
 
 
+@api_group.command(name=cli_util.override('api_gateway.add_api_lock.command_name', 'add'), help=u"""Adds a lock to a Api resource. \n[Command Reference](addApiLock)""")
+@cli_util.option('--api-id', required=True, help=u"""The ocid of the API.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apigateway', 'class': 'Api'})
+@cli_util.wrap_exceptions
+def add_api_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, api_id, type, message, if_match):
+
+    if isinstance(api_id, six.string_types) and len(api_id.strip()) == 0:
+        raise click.UsageError('Parameter --api-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if message is not None:
+        _details['message'] = message
+
+    client = cli_util.build_client('apigateway', 'api_gateway', ctx)
+    result = client.add_api_lock(
+        api_id=api_id,
+        add_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_api') and callable(getattr(client, 'get_api')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_api(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@certificate_group.command(name=cli_util.override('api_gateway.add_certificate_lock.command_name', 'add'), help=u"""Adds a lock to a Certificate resource. \n[Command Reference](addCertificateLock)""")
+@cli_util.option('--certificate-id', required=True, help=u"""The ocid of the certificate.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apigateway', 'class': 'Certificate'})
+@cli_util.wrap_exceptions
+def add_certificate_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_id, type, message, if_match):
+
+    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+        raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if message is not None:
+        _details['message'] = message
+
+    client = cli_util.build_client('apigateway', 'api_gateway', ctx)
+    result = client.add_certificate_lock(
+        certificate_id=certificate_id,
+        add_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_certificate') and callable(getattr(client, 'get_certificate')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_certificate(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@sdk_group.command(name=cli_util.override('api_gateway.add_sdk_lock.command_name', 'add'), help=u"""Adds a lock to a Sdk resource. \n[Command Reference](addSdkLock)""")
+@cli_util.option('--sdk-id', required=True, help=u"""The ocid of the SDK.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apigateway', 'class': 'Sdk'})
+@cli_util.wrap_exceptions
+def add_sdk_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sdk_id, type, message, if_match):
+
+    if isinstance(sdk_id, six.string_types) and len(sdk_id.strip()) == 0:
+        raise click.UsageError('Parameter --sdk-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if message is not None:
+        _details['message'] = message
+
+    client = cli_util.build_client('apigateway', 'api_gateway', ctx)
+    result = client.add_sdk_lock(
+        sdk_id=sdk_id,
+        add_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_sdk') and callable(getattr(client, 'get_sdk')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_sdk(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @api_group.command(name=cli_util.override('api_gateway.change_api_compartment.command_name', 'change-compartment'), help=u"""Changes the API compartment. \n[Command Reference](changeApiCompartment)""")
 @cli_util.option('--api-id', required=True, help=u"""The ocid of the API.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -89,7 +273,7 @@ api_gateway_service_cli.api_gateway_service_group.add_command(sdk_group)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_api_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, api_id, compartment_id, if_match):
+def change_api_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, api_id, compartment_id, if_match, is_lock_override):
 
     if isinstance(api_id, six.string_types) and len(api_id.strip()) == 0:
         raise click.UsageError('Parameter --api-id cannot be whitespace or empty string')
@@ -97,6 +281,8 @@ def change_api_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wai
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -144,12 +330,13 @@ def change_api_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--certificate-id', required=True, help=u"""The ocid of the certificate.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_certificate_compartment(ctx, from_json, certificate_id, compartment_id, if_match):
+def change_certificate_compartment(ctx, from_json, certificate_id, compartment_id, if_match, is_lock_override):
 
     if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
@@ -157,6 +344,8 @@ def change_certificate_compartment(ctx, from_json, certificate_id, compartment_i
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -182,16 +371,19 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/apigateway/20190501/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--content', help=u"""API Specification content in json or yaml format""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'apigateway', 'class': 'list[AddResourceLockDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apigateway', 'class': 'Api'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'apigateway', 'class': 'list[AddResourceLockDetails]'}}, output_type={'module': 'apigateway', 'class': 'Api'})
 @cli_util.wrap_exceptions
-def create_api(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, freeform_tags, defined_tags, content):
+def create_api(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, freeform_tags, defined_tags, locks, content):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -207,6 +399,9 @@ def create_api(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     if content is not None:
         _details['content'] = content
@@ -262,15 +457,18 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/apigateway/20190501/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'apigateway', 'class': 'list[AddResourceLockDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apigateway', 'class': 'Certificate'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'apigateway', 'class': 'list[AddResourceLockDetails]'}}, output_type={'module': 'apigateway', 'class': 'Certificate'})
 @cli_util.wrap_exceptions
-def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, private_key, certificate, display_name, intermediate_certificates, freeform_tags, defined_tags):
+def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, private_key, certificate, display_name, intermediate_certificates, freeform_tags, defined_tags, locks):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -291,6 +489,9 @@ def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     client = cli_util.build_client('apigateway', 'api_gateway', ctx)
     result = client.create_certificate(
@@ -335,6 +536,9 @@ def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type AddResourceLockDetails.  For documentation on AddResourceLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/apigateway/20190501/datatypes/AddResourceLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -347,12 +551,12 @@ Example: `{\"configName\": \"configValue\"}`""" + custom_types.cli_complex_type.
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}, 'parameters': {'module': 'apigateway', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'locks': {'module': 'apigateway', 'class': 'list[AddResourceLockDetails]'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}, 'parameters': {'module': 'apigateway', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}, 'parameters': {'module': 'apigateway', 'class': 'dict(str, string)'}}, output_type={'module': 'apigateway', 'class': 'Sdk'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'locks': {'module': 'apigateway', 'class': 'list[AddResourceLockDetails]'}, 'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}, 'parameters': {'module': 'apigateway', 'class': 'dict(str, string)'}}, output_type={'module': 'apigateway', 'class': 'Sdk'})
 @cli_util.wrap_exceptions
-def create_sdk(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_language, api_id, display_name, freeform_tags, defined_tags, parameters):
+def create_sdk(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, target_language, api_id, display_name, locks, freeform_tags, defined_tags, parameters):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -363,6 +567,9 @@ def create_sdk(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -413,6 +620,7 @@ def create_sdk(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @api_group.command(name=cli_util.override('api_gateway.delete_api.command_name', 'delete'), help=u"""Deletes the API with the given identifier. \n[Command Reference](deleteApi)""")
 @cli_util.option('--api-id', required=True, help=u"""The ocid of the API.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -422,7 +630,7 @@ def create_sdk(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_api(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, api_id, if_match):
+def delete_api(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, api_id, if_match, is_lock_override):
 
     if isinstance(api_id, six.string_types) and len(api_id.strip()) == 0:
         raise click.UsageError('Parameter --api-id cannot be whitespace or empty string')
@@ -430,6 +638,8 @@ def delete_api(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('apigateway', 'api_gateway', ctx)
     result = client.delete_api(
@@ -471,6 +681,7 @@ def delete_api(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @certificate_group.command(name=cli_util.override('api_gateway.delete_certificate.command_name', 'delete'), help=u"""Deletes the certificate with the given identifier. \n[Command Reference](deleteCertificate)""")
 @cli_util.option('--certificate-id', required=True, help=u"""The ocid of the certificate.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -480,7 +691,7 @@ def delete_api(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_id, if_match):
+def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_id, if_match, is_lock_override):
 
     if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
@@ -488,6 +699,8 @@ def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('apigateway', 'api_gateway', ctx)
     result = client.delete_certificate(
@@ -529,6 +742,7 @@ def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @sdk_group.command(name=cli_util.override('api_gateway.delete_sdk.command_name', 'delete'), help=u"""Deletes provided SDK. \n[Command Reference](deleteSdk)""")
 @cli_util.option('--sdk-id', required=True, help=u"""The ocid of the SDK.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -538,7 +752,7 @@ def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_sdk(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sdk_id, if_match):
+def delete_sdk(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sdk_id, if_match, is_lock_override):
 
     if isinstance(sdk_id, six.string_types) and len(sdk_id.strip()) == 0:
         raise click.UsageError('Parameter --sdk-id cannot be whitespace or empty string')
@@ -546,6 +760,8 @@ def delete_sdk(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('apigateway', 'api_gateway', ctx)
     result = client.delete_sdk(
@@ -939,7 +1155,7 @@ def list_sdk_language_types(ctx, from_json, all_pages, page_size, compartment_id
 
 
 @sdk_group.command(name=cli_util.override('api_gateway.list_sdks.command_name', 'list'), help=u"""Returns list of generated SDKs. \n[Command Reference](listSdks)""")
-@cli_util.option('--sdk-id', help=u"""The ocid of the SDK.""")
+@cli_util.option('--sdk-id', help=u"""The ocid of the SDK. This value must be present unless apiId is present.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
@@ -950,7 +1166,7 @@ Example: `ACTIVE` or `DELETED`""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'. The default order depends on the sortBy value.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for `timeCreated` is descending. Default order for `displayName` is ascending. The `displayName` sort order is case sensitive.""")
-@cli_util.option('--api-id', help=u"""The ocid of the API.""")
+@cli_util.option('--api-id', help=u"""The ocid of the API. This value must be present unless sdkId is present.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1004,6 +1220,177 @@ def list_sdks(ctx, from_json, all_pages, page_size, sdk_id, display_name, lifecy
     cli_util.render_response(result, ctx)
 
 
+@api_group.command(name=cli_util.override('api_gateway.remove_api_lock.command_name', 'remove'), help=u"""Removes a lock from a Api resource. \n[Command Reference](removeApiLock)""")
+@cli_util.option('--api-id', required=True, help=u"""The ocid of the API.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apigateway', 'class': 'Api'})
+@cli_util.wrap_exceptions
+def remove_api_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, api_id, type, if_match):
+
+    if isinstance(api_id, six.string_types) and len(api_id.strip()) == 0:
+        raise click.UsageError('Parameter --api-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('apigateway', 'api_gateway', ctx)
+    result = client.remove_api_lock(
+        api_id=api_id,
+        remove_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_api') and callable(getattr(client, 'get_api')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_api(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@certificate_group.command(name=cli_util.override('api_gateway.remove_certificate_lock.command_name', 'remove'), help=u"""Removes a lock from a Certificate resource. \n[Command Reference](removeCertificateLock)""")
+@cli_util.option('--certificate-id', required=True, help=u"""The ocid of the certificate.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apigateway', 'class': 'Certificate'})
+@cli_util.wrap_exceptions
+def remove_certificate_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_id, type, if_match):
+
+    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+        raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('apigateway', 'api_gateway', ctx)
+    result = client.remove_certificate_lock(
+        certificate_id=certificate_id,
+        remove_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_certificate') and callable(getattr(client, 'get_certificate')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_certificate(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@sdk_group.command(name=cli_util.override('api_gateway.remove_sdk_lock.command_name', 'remove'), help=u"""Removes a lock from a Sdk resource. \n[Command Reference](removeSdkLock)""")
+@cli_util.option('--sdk-id', required=True, help=u"""The ocid of the SDK.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apigateway', 'class': 'Sdk'})
+@cli_util.wrap_exceptions
+def remove_sdk_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sdk_id, type, if_match):
+
+    if isinstance(sdk_id, six.string_types) and len(sdk_id.strip()) == 0:
+        raise click.UsageError('Parameter --sdk-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('apigateway', 'api_gateway', ctx)
+    result = client.remove_sdk_lock(
+        sdk_id=sdk_id,
+        remove_resource_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_sdk') and callable(getattr(client, 'get_sdk')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_sdk(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @api_group.command(name=cli_util.override('api_gateway.update_api.command_name', 'update'), help=u"""Updates the API with the given identifier. \n[Command Reference](updateApi)""")
 @cli_util.option('--api-id', required=True, help=u"""The ocid of the API.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
@@ -1017,6 +1404,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--content', help=u"""API Specification content in json or yaml format""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1026,7 +1414,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_api(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, api_id, display_name, freeform_tags, defined_tags, content, if_match):
+def update_api(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, api_id, display_name, freeform_tags, defined_tags, content, if_match, is_lock_override):
 
     if isinstance(api_id, six.string_types) and len(api_id.strip()) == 0:
         raise click.UsageError('Parameter --api-id cannot be whitespace or empty string')
@@ -1038,6 +1426,8 @@ def update_api(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -1104,6 +1494,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1113,7 +1504,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_certificate(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_id, display_name, freeform_tags, defined_tags, if_match):
+def update_certificate(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_id, display_name, freeform_tags, defined_tags, if_match, is_lock_override):
 
     if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
@@ -1125,6 +1516,8 @@ def update_certificate(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -1188,13 +1581,14 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_sdk(ctx, from_json, force, sdk_id, display_name, freeform_tags, defined_tags, if_match):
+def update_sdk(ctx, from_json, force, sdk_id, display_name, freeform_tags, defined_tags, if_match, is_lock_override):
 
     if isinstance(sdk_id, six.string_types) and len(sdk_id.strip()) == 0:
         raise click.UsageError('Parameter --sdk-id cannot be whitespace or empty string')
@@ -1206,6 +1600,8 @@ def update_sdk(ctx, from_json, force, sdk_id, display_name, freeform_tags, defin
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
