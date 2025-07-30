@@ -815,3 +815,47 @@ def update_connection_update_microsoft_fabric_connection_details_extended(ctx, *
 
 # oci goldengate pipeline collect-pipeline-diagnostic -> oci goldengate pipeline collect-diagnostic
 cli_util.rename_command(goldengate_cli, goldengate_cli.pipeline_group, goldengate_cli.collect_pipeline_diagnostic, "collect-diagnostic")
+
+# oci goldengate connection create-connection-create-iceberg-connection-details -> oci goldengate connection create-iceberg-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.create_connection_create_iceberg_connection_details, "create-iceberg-connection")
+
+# oci goldengate connection update-connection-update-iceberg-connection-details -> oci goldengate connection update-iceberg-connection
+cli_util.rename_command(goldengate_cli, goldengate_cli.connection_group, goldengate_cli.update_connection_update_iceberg_connection_details, "update-iceberg-connection")
+
+
+@cli_util.copy_params_from_generated_command(goldengate_cli.create_connection_create_amazon_s3_connection_details, params_to_exclude=['endpoint_parameterconflict', 'region_parameterconflict'])
+@goldengate_cli.connection_group.command(name=goldengate_cli.create_connection_create_amazon_s3_connection_details.name, help=goldengate_cli.create_connection_create_amazon_s3_connection_details.help)
+@cli_util.option('--connection-endpoint', help=u"""Optional Microsoft Fabric service endpoint. Default value: https://onelake.dfs.fabric.microsoft.com""")
+@cli_util.option('--connection-region', help=u"""The name of the region where the bucket is created.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
+@cli_util.wrap_exceptions
+def create_connection_create_amazon_s3_connection_details_extended(ctx, **kwargs):
+
+    if 'connection_endpoint' in kwargs:
+        kwargs['endpoint_parameterconflict'] = kwargs['connection_endpoint']
+        kwargs.pop('connection_endpoint')
+    if 'connection_region' in kwargs:
+        kwargs['region_parameterconflict'] = kwargs['connection_region']
+        kwargs.pop('connection_region')
+
+    ctx.invoke(goldengate_cli.create_connection_create_amazon_s3_connection_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(goldengate_cli.update_connection_update_amazon_s3_connection_details, params_to_exclude=['endpoint_parameterconflict', 'region_parameterconflict'])
+@goldengate_cli.connection_group.command(name=goldengate_cli.update_connection_update_amazon_s3_connection_details.name, help=goldengate_cli.update_connection_update_amazon_s3_connection_details.help)
+@cli_util.option('--connection-endpoint', help=u"""Optional Microsoft Fabric service endpoint. Default value: https://onelake.dfs.fabric.microsoft.com""")
+@cli_util.option('--connection-region', help=u"""The name of the region where the bucket is created.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def update_connection_update_amazon_s3_connection_details_extended(ctx, **kwargs):
+
+    if 'connection_endpoint' in kwargs:
+        kwargs['endpoint_parameterconflict'] = kwargs['connection_endpoint']
+        kwargs.pop('connection_endpoint')
+    if 'connection_region' in kwargs:
+        kwargs['region_parameterconflict'] = kwargs['connection_region']
+        kwargs.pop('connection_region')
+
+    ctx.invoke(goldengate_cli.update_connection_update_amazon_s3_connection_details, **kwargs)

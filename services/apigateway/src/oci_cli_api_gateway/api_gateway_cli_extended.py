@@ -120,3 +120,27 @@ def create_certificate(ctx, **kwargs):
             kwargs[key_mapping[key]] = kwargs.get(key).read()
         del kwargs[key]
     ctx.invoke(apigateway_cli.create_certificate, **kwargs)
+
+
+# oci api-gateway api add -> oci api-gateway api add-lock
+cli_util.rename_command(apigateway_cli, apigateway_cli.api_group, apigateway_cli.add_api_lock, "add-lock")
+
+
+# oci api-gateway api remove -> oci api-gateway api remove-lock
+cli_util.rename_command(apigateway_cli, apigateway_cli.api_group, apigateway_cli.remove_api_lock, "remove-lock")
+
+
+# oci api-gateway certificate add -> oci api-gateway certificate add-lock
+cli_util.rename_command(apigateway_cli, apigateway_cli.certificate_group, apigateway_cli.add_certificate_lock, "add-lock")
+
+
+# oci api-gateway certificate remove -> oci api-gateway certificate remove-lock
+cli_util.rename_command(apigateway_cli, apigateway_cli.certificate_group, apigateway_cli.remove_certificate_lock, "remove-lock")
+
+
+# oci api-gateway sdk add -> oci api-gateway sdk add-lock
+cli_util.rename_command(apigateway_cli, apigateway_cli.sdk_group, apigateway_cli.add_sdk_lock, "add-lock")
+
+
+# oci api-gateway sdk remove -> oci api-gateway sdk remove-lock
+cli_util.rename_command(apigateway_cli, apigateway_cli.sdk_group, apigateway_cli.remove_sdk_lock, "remove-lock")

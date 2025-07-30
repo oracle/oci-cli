@@ -413,9 +413,11 @@ def create_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name for the configuration. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the configuration.""")
 @cli_util.option('--db-version', required=True, help=u"""Version of the PostgreSQL database.""")
-@cli_util.option('--shape', required=True, help=u"""The name of the shape for the configuration. Example: `VM.Standard.E4.Flex`""")
 @cli_util.option('--db-configuration-overrides', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""Details about the configuration set.""")
+@cli_util.option('--shape', help=u"""The name of the shape for the configuration.
+
+For multi-shape enabled configurations, it is set to PostgreSQL.X86 or similar. Please use compatibleShapes property to set the list of supported shapes.""")
 @cli_util.option('--is-flexible', type=click.BOOL, help=u"""Whether the configuration supports flexible shapes.""")
 @cli_util.option('--instance-ocpu-count', type=click.INT, help=u"""CPU core count.
 
@@ -423,18 +425,19 @@ Skip or set it's value to 0 if configuration is for a flexible shape.""")
 @cli_util.option('--instance-memory-size-in-gbs', type=click.INT, help=u"""Memory size in gigabytes with 1GB increment.
 
 Skip or set it's value to 0 if configuration is for a flexible shape.""")
+@cli_util.option('--compatible-shapes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Indicates the collection of compatible shapes for this configuration.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""System tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'db-configuration-overrides': {'module': 'psql', 'class': 'DbConfigurationOverrideCollection'}, 'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'compatible-shapes': {'module': 'psql', 'class': 'list[string]'}, 'db-configuration-overrides': {'module': 'psql', 'class': 'DbConfigurationOverrideCollection'}, 'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-configuration-overrides': {'module': 'psql', 'class': 'DbConfigurationOverrideCollection'}, 'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'psql', 'class': 'Configuration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'compatible-shapes': {'module': 'psql', 'class': 'list[string]'}, 'db-configuration-overrides': {'module': 'psql', 'class': 'DbConfigurationOverrideCollection'}, 'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'psql', 'class': 'Configuration'})
 @cli_util.wrap_exceptions
-def create_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, db_version, shape, db_configuration_overrides, description, is_flexible, instance_ocpu_count, instance_memory_size_in_gbs, freeform_tags, defined_tags, system_tags):
+def create_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, db_version, db_configuration_overrides, description, shape, is_flexible, instance_ocpu_count, instance_memory_size_in_gbs, compatible_shapes, freeform_tags, defined_tags, system_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -443,11 +446,13 @@ def create_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     _details['displayName'] = display_name
     _details['compartmentId'] = compartment_id
     _details['dbVersion'] = db_version
-    _details['shape'] = shape
     _details['dbConfigurationOverrides'] = cli_util.parse_json_parameter("db_configuration_overrides", db_configuration_overrides)
 
     if description is not None:
         _details['description'] = description
+
+    if shape is not None:
+        _details['shape'] = shape
 
     if is_flexible is not None:
         _details['isFlexible'] = is_flexible
@@ -457,6 +462,9 @@ def create_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if instance_memory_size_in_gbs is not None:
         _details['instanceMemorySizeInGBs'] = instance_memory_size_in_gbs
+
+    if compatible_shapes is not None:
+        _details['compatibleShapes'] = cli_util.parse_json_parameter("compatible_shapes", compatible_shapes)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -1434,8 +1442,10 @@ def list_backups(ctx, from_json, all_pages, page_size, compartment_id, time_star
 @cli_util.option('--config-type', type=custom_types.CliCaseInsensitiveChoice(["DEFAULT", "CUSTOM", "COPIED"]), help=u"""A filter to return only resources if their `configType` matches the given `configType`.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--db-version', help=u"""Version of the PostgreSQL database, such as 14.9.""")
-@cli_util.option('--shape', help=u"""The name of the shape for the configuration. Example: `VM.Standard.E4.Flex`""")
+@cli_util.option('--shape', help=u"""The compute name of the shape for the configuration.""")
 @cli_util.option('--configuration-id', help=u"""A unique identifier for the configuration.""")
+@cli_util.option('--instance-ocpu-count', type=click.INT, help=u"""The instance ocpu count for the configuration.""")
+@cli_util.option('--instance-memory-size-in-gbs', type=click.INT, help=u"""The instance memory size in GBs for the configuration.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -1447,7 +1457,7 @@ def list_backups(ctx, from_json, all_pages, page_size, compartment_id, time_star
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'psql', 'class': 'ConfigurationCollection'})
 @cli_util.wrap_exceptions
-def list_configurations(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, config_type, display_name, db_version, shape, configuration_id, limit, page, sort_order, sort_by):
+def list_configurations(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, config_type, display_name, db_version, shape, configuration_id, instance_ocpu_count, instance_memory_size_in_gbs, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1467,6 +1477,10 @@ def list_configurations(ctx, from_json, all_pages, page_size, compartment_id, li
         kwargs['shape'] = shape
     if configuration_id is not None:
         kwargs['configuration_id'] = configuration_id
+    if instance_ocpu_count is not None:
+        kwargs['instance_ocpu_count'] = instance_ocpu_count
+    if instance_memory_size_in_gbs is not None:
+        kwargs['instance_memory_size_in_gbs'] = instance_memory_size_in_gbs
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -1565,7 +1579,9 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, lifecy
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources if their `lifecycleState` matches the given `lifecycleState`.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--db-version', help=u"""Version of the PostgreSQL database, such as 14.9.""")
-@cli_util.option('--shape', help=u"""The name of the shape for the configuration. Example: `VM.Standard.E4.Flex`""")
+@cli_util.option('--shape', help=u"""The compute name of the shape for the configuration.""")
+@cli_util.option('--instance-ocpu-count', type=click.INT, help=u"""The instance ocpu count for the configuration.""")
+@cli_util.option('--instance-memory-size-in-gbs', type=click.INT, help=u"""The instance memory size in GBs for the configuration.""")
 @cli_util.option('--configuration-id', help=u"""A unique identifier for the configuration.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
@@ -1578,7 +1594,7 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, lifecy
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'psql', 'class': 'DefaultConfigurationCollection'})
 @cli_util.wrap_exceptions
-def list_default_configurations(ctx, from_json, all_pages, page_size, lifecycle_state, display_name, db_version, shape, configuration_id, limit, page, sort_order, sort_by):
+def list_default_configurations(ctx, from_json, all_pages, page_size, lifecycle_state, display_name, db_version, shape, instance_ocpu_count, instance_memory_size_in_gbs, configuration_id, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1592,6 +1608,10 @@ def list_default_configurations(ctx, from_json, all_pages, page_size, lifecycle_
         kwargs['db_version'] = db_version
     if shape is not None:
         kwargs['shape'] = shape
+    if instance_ocpu_count is not None:
+        kwargs['instance_ocpu_count'] = instance_ocpu_count
+    if instance_memory_size_in_gbs is not None:
+        kwargs['instance_memory_size_in_gbs'] = instance_memory_size_in_gbs
     if configuration_id is not None:
         kwargs['configuration_id'] = configuration_id
     if limit is not None:
@@ -2328,23 +2348,24 @@ def update_backup(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 @cli_util.option('--description', help=u"""Details about the configuration set.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compatible-shapes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Indicates the collection of compatible shapes for this configuration.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}, 'compatible-shapes': {'module': 'psql', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'psql', 'class': 'Configuration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'psql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'psql', 'class': 'dict(str, dict(str, object))'}, 'compatible-shapes': {'module': 'psql', 'class': 'list[string]'}}, output_type={'module': 'psql', 'class': 'Configuration'})
 @cli_util.wrap_exceptions
-def update_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, configuration_id, display_name, description, freeform_tags, defined_tags, if_match):
+def update_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, configuration_id, display_name, description, freeform_tags, defined_tags, compatible_shapes, if_match):
 
     if isinstance(configuration_id, six.string_types) and len(configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --configuration-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or compatible_shapes:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and compatible-shapes will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -2365,6 +2386,9 @@ def update_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if compatible_shapes is not None:
+        _details['compatibleShapes'] = cli_util.parse_json_parameter("compatible_shapes", compatible_shapes)
 
     client = cli_util.build_client('psql', 'postgresql', ctx)
     result = client.update_configuration(

@@ -27,3 +27,11 @@ from oci_cli import cli_util
 cli_util.rename_command(deployment_cli, deployment_cli.deployment_group, deployment_cli.list_deployments, "list")
 api_gateway_service_cli.api_gateway_service_group.commands.pop(deployment_cli.deployment_root_group.name)
 api_gateway_service_cli.api_gateway_service_group.add_command(deployment_cli.deployment_group)
+
+
+# oci api-gateway deployment add -> oci api-gateway deployment add-lock
+cli_util.rename_command(deployment_cli, deployment_cli.deployment_group, deployment_cli.add_deployment_lock, "add-lock")
+
+
+# oci api-gateway deployment remove -> oci api-gateway deployment remove-lock
+cli_util.rename_command(deployment_cli, deployment_cli.deployment_group, deployment_cli.remove_deployment_lock, "remove-lock")
