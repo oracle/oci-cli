@@ -96,3 +96,19 @@ cli_util.rename_command(config_cli, config_cli.apm_config_root_group, config_cli
 
 # oci apm-config import-configuration-details -> oci apm-config import-configuration
 cli_util.rename_command(config_cli, config_cli.apm_config_root_group, config_cli.import_configuration_details_group, "import-configuration")
+
+
+# oci apm-config config create-config-create-agent-config-details -> oci apm-config config create-agent
+cli_util.rename_command(config_cli, config_cli.config_group, config_cli.create_config_create_agent_config_details, "create-agent")
+
+
+# oci apm-config config create-config-create-macs-apm-extension-details -> oci apm-config config create-macs-extension
+cli_util.rename_command(config_cli, config_cli.config_group, config_cli.create_config_create_macs_apm_extension_details, "create-macs-extension")
+
+
+# oci apm-config config update-config-update-agent-config-details -> oci apm-config config update-agent
+cli_util.rename_command(config_cli, config_cli.config_group, config_cli.update_config_update_agent_config_details, "update-agent")
+
+
+# oci apm-config config update-config-update-macs-apm-extension-details -> oci apm-config config update-macs-extension
+cli_util.rename_command(config_cli, config_cli.config_group, config_cli.update_config_update_macs_apm_extension_details, "update-macs-extension")

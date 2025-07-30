@@ -6,6 +6,122 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.63.2 - 2025-07-29
+--------------------
+Added
+~~~~~
+* PSQL service
+
+    * Support for CPU architecture agnostic configurations
+
+        * ``oci psql configuration create``
+        * ``oci psql configuration update``
+        * ``oci psql default-configuration-collection list-default-configurations``
+
+* Apip Control Plane Service
+
+    * Added support for API Platform Cloud Service
+
+      * ``oci api-platform api-platform-instance create``
+      * ``oci api-platform api-platform-instance update``
+
+* Vault Service
+
+    * Support for specifying replication configuration during secret creation and update operations
+
+        * ``oci vault secret create-base64 --replication-config``
+        * ``oci vault secret update --replication-config``
+
+* Data Science Service
+
+    * New OCI Data Science Resource, Model Group, to group the Data Science Model resource
+    * New OCI Data Science Resource, Model Group Version History, to track the linage of Model Groups
+    * Support for Model Group Create operation
+    * Support for Model Group Clone operation
+    * Support for GET, LIST, ACTIVATE, DEACTIVATE, Change Compartment operations for Model Group
+    * Support for uploading the Model Group Artifact
+    * Support to download the Model Group Artifact
+    * Support for CREATE, GET, LIST, UPDATE and DELETE operations for Data Science Model Group Version History resource
+    * Support for deploying the Model Group resource
+    * Support for updating the Model Group Deployment
+    * Support for listing the state of the deployed models which are associated with the Model Group resource
+        * ``oci data-science model-group create-model-group-create-model-group-details --compartment-id  --project-id --member-model-entries --model-group-details --description --display-name``
+        * ``oci data-science model-group create-model-group-clone-model-group-details --compartment-id  --project-id --model-group-clone-source-details ``
+        * ``oci data-science model-group get --model-group-id``
+        * ``oci data-science model-group list --compartment-id``
+        * ``oci data-science model-group list-model-group-models --compartment-id --model-group-id``
+        * ``oci data-science model-group update``
+        * ``oci data-science model-group delete --model-group-id``
+        * ``oci data-science model-group activate --model-group-id``
+        * ``oci data-science model-group deactivate --model-group-id``
+        * ``oci data-science model-group create-model-group-artifact --model-group-artifact --model-group-id --content-disposition``
+        * ``oci data-science model-group head-model-group-artifact --model-group-id``
+        * ``oci data-science model-group get --model-group-id``
+        * ``oci data-science model-group change-compartment --model-group-id --compartment-id``
+        * ``oci data-science model-group-version-history create --compartment-id --project-id``
+        * ``oci data-science model-group-version-history get --model-group-version-history-id``
+        * ``oci data-science model-group-version-history list --compartment-id``
+        * ``oci data-science model-group-version-history update --model-group-version-history-id``
+        * ``oci data-science model-group-version-history delete --model-group-version-history-id``
+        * ``oci data-science model-group-version-history change-compartment --model-group-version-history-id --compartment-id``
+        * ``oci data-science model-deployment-model-state list --compartment-id --model-deployment-id``
+        * ``oci data-science model-deployment create-model-deployment-model-group-deployment-configuration-details --compartment-id --project-id --model-deployment-configuration-details-infrastructure-configuration-details --model-deployment-configuration-details-model-group-configuration-details --category-log-details --description --display-name``
+        * ``oci data-science model-deployment update-model-deployment-update-model-group-deployment-configuration-details --model-deployment-id --category-log-details --display-name  --description  --model-deployment-configuration-details-environment-configuration-details --model-deployment-configuration-details-model-group-configuration-details --model-deployment-configuration-details-update-type``
+
+  * API Gateway Service
+
+    * Support for resource locking for all resources in Api Gateway service
+
+        * ``oci api-gateway api add-lock``
+        * ``oci api-gateway api remove-lock``
+        * ``oci api-gateway certificate add-lock``
+        * ``oci api-gateway certificate remove-lock``
+        * ``oci api-gateway deployment add-lock``
+        * ``oci api-gateway deployment remove-lock``
+        * ``oci api-gateway gateway add-lock``
+        * ``oci api-gateway gateway remove-lock``
+        * ``oci api-gateway sdk add-lock``
+        * ``oci api-gateway sdk remove-lock``
+        * ``oci api-gateway subscriber add-lock``
+        * ``oci api-gateway subscriber remove-lock``
+        * ``oci api-gateway usage-plan add-lock``
+        * ``oci api-gateway usage-plan remove-lock``
+
+* APM Service
+
+    * Support for new Agent Configuration in the APM service
+
+        * ``oci apm-config config create-agent``
+        * ``oci apm-config config update-agent``
+        * ``oci apm-config match-agents-with-attribute-key get``
+        * ``oci apm-config match-agents-with-attribute-key update``
+
+    * Support for new MACS Extension configuration in the APM Service
+
+        * ``oci apm-config config create-macs-extension``
+        * ``oci apm-config config update-macs-extension``
+
+* AI Speech Service
+
+    * Added Multilingual support in Text to speech (TTS) for 8 more languages which includes below languages.
+    
+        * en-GB: English - Great Britain
+        * es-ES: Spanish - Spain
+        * pt-BR: Portuguese - Brazil
+        * hi-IN: Hindi - India
+        * fr-FR: French - France
+        * it-IT: Italian - Italy
+        * ja-JP: Japanese - Japan
+        * cmn-CN: Mandarin - China
+        
+        * ``oci speech voice list  --language-code``
+
+* Management Dashboard service
+
+    * Enhance import and export features.
+
+        * ``oci management-dashboard dashboard import``
+
 3.63.0 - 2025-07-22
 --------------------
 Added

@@ -40,15 +40,9 @@ def model_deployment_shape_group():
     pass
 
 
-@click.command(cli_util.override('data_science.job_shape_group.command_name', 'job-shape'), cls=CommandGroupWithAlias, help="""The compute shape used to launch a job compute instance.""")
+@click.command(cli_util.override('data_science.model_group_group.command_name', 'model-group'), cls=CommandGroupWithAlias, help="""Model group is a collection of the models. Model groups are represented by their associated metadata.""")
 @cli_util.help_option_group
-def job_shape_group():
-    pass
-
-
-@click.command(cli_util.override('data_science.model_deployment_group.command_name', 'model-deployment'), cls=CommandGroupWithAlias, help="""Model deployments are used by data scientists to perform predictions from the model hosted on an HTTP server.""")
-@cli_util.help_option_group
-def model_deployment_group():
+def model_group_group():
     pass
 
 
@@ -70,12 +64,6 @@ def project_group():
     pass
 
 
-@click.command(cli_util.override('data_science.pipeline_run_group.command_name', 'pipeline-run'), cls=CommandGroupWithAlias, help="""Description of PipelineRun.""")
-@cli_util.help_option_group
-def pipeline_run_group():
-    pass
-
-
 @click.command(cli_util.override('data_science.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An asynchronous work request.""")
 @cli_util.help_option_group
 def work_request_group():
@@ -88,39 +76,15 @@ def notebook_session_group():
     pass
 
 
-@click.command(cli_util.override('data_science.ml_application_implementation_group.command_name', 'ml-application-implementation'), cls=CommandGroupWithAlias, help="""Resource representing solution for AI/ML use-case defined by ML Application""")
-@cli_util.help_option_group
-def ml_application_implementation_group():
-    pass
-
-
-@click.command(cli_util.override('data_science.pipeline_group.command_name', 'pipeline'), cls=CommandGroupWithAlias, help="""A Pipeline to orchestrate and execute machine learning workflows.""")
-@cli_util.help_option_group
-def pipeline_group():
-    pass
-
-
-@click.command(cli_util.override('data_science.schedule_group.command_name', 'schedule'), cls=CommandGroupWithAlias, help="""A repeating action. Examples: * Invoke a ML Pipeline Run once an hour. * Call ML Job Run every night at midnight.""")
-@cli_util.help_option_group
-def schedule_group():
-    pass
-
-
 @click.command(cli_util.override('data_science.ml_application_implementation_version_group.command_name', 'ml-application-implementation-version'), cls=CommandGroupWithAlias, help="""Read-only fully managed snapshot of MlApplicationImplementation taken when MlApplicationImplementation was updated with new ML Application package.""")
 @cli_util.help_option_group
 def ml_application_implementation_version_group():
     pass
 
 
-@click.command(cli_util.override('data_science.ml_application_group.command_name', 'ml-application'), cls=CommandGroupWithAlias, help="""Resource representing a definition of an AI/ML use-case""")
+@click.command(cli_util.override('data_science.model_deployment_model_state_group.command_name', 'model-deployment-model-state'), cls=CommandGroupWithAlias, help="""Status of the model in a model group deployment.""")
 @cli_util.help_option_group
-def ml_application_group():
-    pass
-
-
-@click.command(cli_util.override('data_science.model_version_set_group.command_name', 'model-version-set'), cls=CommandGroupWithAlias, help="""A model version set to associate different versions of machine learning models.""")
-@cli_util.help_option_group
-def model_version_set_group():
+def model_deployment_model_state_group():
     pass
 
 
@@ -142,15 +106,69 @@ def model_group():
     pass
 
 
-@click.command(cli_util.override('data_science.job_group.command_name', 'job'), cls=CommandGroupWithAlias, help="""A job for training models.""")
-@cli_util.help_option_group
-def job_group():
-    pass
-
-
 @click.command(cli_util.override('data_science.notebook_session_shape_group.command_name', 'notebook-session-shape'), cls=CommandGroupWithAlias, help="""The compute shape used to launch a notebook session compute instance.""")
 @cli_util.help_option_group
 def notebook_session_shape_group():
+    pass
+
+
+@click.command(cli_util.override('data_science.model_group_version_history_group.command_name', 'model-group-version-history'), cls=CommandGroupWithAlias, help="""Model Group Version history to associate different versions of Model Group resource.""")
+@cli_util.help_option_group
+def model_group_version_history_group():
+    pass
+
+
+@click.command(cli_util.override('data_science.job_shape_group.command_name', 'job-shape'), cls=CommandGroupWithAlias, help="""The compute shape used to launch a job compute instance.""")
+@cli_util.help_option_group
+def job_shape_group():
+    pass
+
+
+@click.command(cli_util.override('data_science.model_deployment_group.command_name', 'model-deployment'), cls=CommandGroupWithAlias, help="""Model deployments are used by data scientists to perform predictions from the model hosted on an HTTP server.""")
+@cli_util.help_option_group
+def model_deployment_group():
+    pass
+
+
+@click.command(cli_util.override('data_science.pipeline_run_group.command_name', 'pipeline-run'), cls=CommandGroupWithAlias, help="""Description of PipelineRun.""")
+@cli_util.help_option_group
+def pipeline_run_group():
+    pass
+
+
+@click.command(cli_util.override('data_science.ml_application_implementation_group.command_name', 'ml-application-implementation'), cls=CommandGroupWithAlias, help="""Resource representing solution for AI/ML use-case defined by ML Application""")
+@cli_util.help_option_group
+def ml_application_implementation_group():
+    pass
+
+
+@click.command(cli_util.override('data_science.pipeline_group.command_name', 'pipeline'), cls=CommandGroupWithAlias, help="""A Pipeline to orchestrate and execute machine learning workflows.""")
+@cli_util.help_option_group
+def pipeline_group():
+    pass
+
+
+@click.command(cli_util.override('data_science.schedule_group.command_name', 'schedule'), cls=CommandGroupWithAlias, help="""A repeating action. Examples: * Invoke a ML Pipeline Run once an hour. * Call ML Job Run every night at midnight.""")
+@cli_util.help_option_group
+def schedule_group():
+    pass
+
+
+@click.command(cli_util.override('data_science.ml_application_group.command_name', 'ml-application'), cls=CommandGroupWithAlias, help="""Resource representing a definition of an AI/ML use-case""")
+@cli_util.help_option_group
+def ml_application_group():
+    pass
+
+
+@click.command(cli_util.override('data_science.model_version_set_group.command_name', 'model-version-set'), cls=CommandGroupWithAlias, help="""A model version set to associate different versions of machine learning models.""")
+@cli_util.help_option_group
+def model_version_set_group():
+    pass
+
+
+@click.command(cli_util.override('data_science.job_group.command_name', 'job'), cls=CommandGroupWithAlias, help="""A job for training models.""")
+@cli_util.help_option_group
+def job_group():
     pass
 
 
@@ -163,25 +181,28 @@ def data_science_private_endpoint_group():
 data_science_root_group.add_command(container_group)
 data_science_root_group.add_command(register_model_artifact_reference_details_group)
 data_science_root_group.add_command(model_deployment_shape_group)
-data_science_root_group.add_command(job_shape_group)
-data_science_root_group.add_command(model_deployment_group)
+data_science_root_group.add_command(model_group_group)
 data_science_root_group.add_command(ml_application_instance_group)
 data_science_root_group.add_command(ml_application_instance_view_group)
 data_science_root_group.add_command(project_group)
-data_science_root_group.add_command(pipeline_run_group)
 data_science_root_group.add_command(work_request_group)
 data_science_root_group.add_command(notebook_session_group)
-data_science_root_group.add_command(ml_application_implementation_group)
-data_science_root_group.add_command(pipeline_group)
-data_science_root_group.add_command(schedule_group)
 data_science_root_group.add_command(ml_application_implementation_version_group)
-data_science_root_group.add_command(ml_application_group)
-data_science_root_group.add_command(model_version_set_group)
+data_science_root_group.add_command(model_deployment_model_state_group)
 data_science_root_group.add_command(job_run_group)
 data_science_root_group.add_command(fast_launch_job_config_group)
 data_science_root_group.add_command(model_group)
-data_science_root_group.add_command(job_group)
 data_science_root_group.add_command(notebook_session_shape_group)
+data_science_root_group.add_command(model_group_version_history_group)
+data_science_root_group.add_command(job_shape_group)
+data_science_root_group.add_command(model_deployment_group)
+data_science_root_group.add_command(pipeline_run_group)
+data_science_root_group.add_command(ml_application_implementation_group)
+data_science_root_group.add_command(pipeline_group)
+data_science_root_group.add_command(schedule_group)
+data_science_root_group.add_command(ml_application_group)
+data_science_root_group.add_command(model_version_set_group)
+data_science_root_group.add_command(job_group)
 data_science_root_group.add_command(data_science_private_endpoint_group)
 
 
@@ -288,6 +309,57 @@ def activate_model_deployment(ctx, from_json, wait_for_state, max_wait_seconds, 
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_group_group.command(name=cli_util.override('data_science.activate_model_group.command_name', 'activate'), help=u"""Activates the model group. \n[Command Reference](activateModelGroup)""")
+@cli_util.option('--model-group-id', required=True, help=u"""The [OCID] of the modelGroup.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'ModelGroup'})
+@cli_util.wrap_exceptions
+def activate_model_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_group_id, if_match):
+
+    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.activate_model_group(
+        model_group_id=model_group_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_model_group') and callable(getattr(client, 'get_model_group')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_model_group(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -874,6 +946,68 @@ def change_model_deployment_compartment(ctx, from_json, model_deployment_id, com
     result = client.change_model_deployment_compartment(
         model_deployment_id=model_deployment_id,
         change_model_deployment_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@model_group_group.command(name=cli_util.override('data_science.change_model_group_compartment.command_name', 'change-compartment'), help=u"""Moves a model group resource into a different compartment. \n[Command Reference](changeModelGroupCompartment)""")
+@cli_util.option('--model-group-id', required=True, help=u"""The [OCID] of the modelGroup.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_model_group_compartment(ctx, from_json, model_group_id, compartment_id, if_match):
+
+    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.change_model_group_compartment(
+        model_group_id=model_group_id,
+        change_model_group_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@model_group_version_history_group.command(name=cli_util.override('data_science.change_model_group_version_history_compartment.command_name', 'change-compartment'), help=u"""Moves a model Group Version History resource into a different compartment. \n[Command Reference](changeModelGroupVersionHistoryCompartment)""")
+@cli_util.option('--model-group-version-history-id', required=True, help=u"""The [OCID] of the modelGroupVersionHistory.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_model_group_version_history_compartment(ctx, from_json, model_group_version_history_id, compartment_id, if_match):
+
+    if isinstance(model_group_version_history_id, six.string_types) and len(model_group_version_history_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-group-version-history-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.change_model_group_version_history_compartment(
+        model_group_version_history_id=model_group_version_history_id,
+        change_model_group_version_history_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2849,6 +2983,404 @@ def create_model_deployment_single_model_deployment_configuration_details(ctx, f
     cli_util.render_response(result, ctx)
 
 
+@model_deployment_group.command(name=cli_util.override('data_science.create_model_deployment_model_group_deployment_configuration_details.command_name', 'create-model-deployment-model-group-deployment-configuration-details'), help=u"""Creates a new model deployment. \n[Command Reference](createModelDeployment)""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model deployment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the model deployment.""")
+@cli_util.option('--model-deployment-configuration-details-model-group-configuration-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-deployment-configuration-details-infrastructure-configuration-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. Does not have to be unique, and can be modified. Avoid entering confidential information. Example: `My ModelDeployment`""")
+@cli_util.option('--description', help=u"""A short description of the model deployment.""")
+@cli_util.option('--category-log-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--opc-parent-rpt-url', help=u"""URL to fetch the Resource Principal Token from the parent resource.""")
+@cli_util.option('--model-deployment-configuration-details-environment-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'category-log-details': {'module': 'data_science', 'class': 'CategoryLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'model-deployment-configuration-details-model-group-configuration-details': {'module': 'data_science', 'class': 'ModelGroupConfigurationDetails'}, 'model-deployment-configuration-details-infrastructure-configuration-details': {'module': 'data_science', 'class': 'InfrastructureConfigurationDetails'}, 'model-deployment-configuration-details-environment-configuration-details': {'module': 'data_science', 'class': 'ModelDeploymentEnvironmentConfigurationDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'category-log-details': {'module': 'data_science', 'class': 'CategoryLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'model-deployment-configuration-details-model-group-configuration-details': {'module': 'data_science', 'class': 'ModelGroupConfigurationDetails'}, 'model-deployment-configuration-details-infrastructure-configuration-details': {'module': 'data_science', 'class': 'InfrastructureConfigurationDetails'}, 'model-deployment-configuration-details-environment-configuration-details': {'module': 'data_science', 'class': 'ModelDeploymentEnvironmentConfigurationDetails'}}, output_type={'module': 'data_science', 'class': 'ModelDeployment'})
+@cli_util.wrap_exceptions
+def create_model_deployment_model_group_deployment_configuration_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, compartment_id, model_deployment_configuration_details_model_group_configuration_details, model_deployment_configuration_details_infrastructure_configuration_details, display_name, description, category_log_details, freeform_tags, defined_tags, opc_parent_rpt_url, model_deployment_configuration_details_environment_configuration_details):
+
+    kwargs = {}
+    if opc_parent_rpt_url is not None:
+        kwargs['opc_parent_rpt_url'] = opc_parent_rpt_url
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['modelDeploymentConfigurationDetails'] = {}
+    _details['projectId'] = project_id
+    _details['compartmentId'] = compartment_id
+    _details['modelDeploymentConfigurationDetails']['modelGroupConfigurationDetails'] = cli_util.parse_json_parameter("model_deployment_configuration_details_model_group_configuration_details", model_deployment_configuration_details_model_group_configuration_details)
+    _details['modelDeploymentConfigurationDetails']['infrastructureConfigurationDetails'] = cli_util.parse_json_parameter("model_deployment_configuration_details_infrastructure_configuration_details", model_deployment_configuration_details_infrastructure_configuration_details)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if category_log_details is not None:
+        _details['categoryLogDetails'] = cli_util.parse_json_parameter("category_log_details", category_log_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if model_deployment_configuration_details_environment_configuration_details is not None:
+        _details['modelDeploymentConfigurationDetails']['environmentConfigurationDetails'] = cli_util.parse_json_parameter("model_deployment_configuration_details_environment_configuration_details", model_deployment_configuration_details_environment_configuration_details)
+
+    _details['modelDeploymentConfigurationDetails']['deploymentType'] = 'MODEL_GROUP'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_model_deployment(
+        create_model_deployment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_group_group.command(name=cli_util.override('data_science.create_model_group.command_name', 'create'), help=u"""Create a new Model Group resource. \n[Command Reference](createModelGroup)""")
+@cli_util.option('--create-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["CREATE", "CLONE"]), help=u"""The type of the model group create operation.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the modelGroup in.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the modelGroup.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'ModelGroup'})
+@cli_util.wrap_exceptions
+def create_model_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, create_type, compartment_id, project_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['createType'] = create_type
+    _details['compartmentId'] = compartment_id
+    _details['projectId'] = project_id
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_model_group(
+        create_base_model_group_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_group_group.command(name=cli_util.override('data_science.create_model_group_clone_model_group_details.command_name', 'create-model-group-clone-model-group-details'), help=u"""Create a new Model Group resource. \n[Command Reference](createModelGroup)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the modelGroup in.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the modelGroup.""")
+@cli_util.option('--model-group-clone-source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'model-group-clone-source-details': {'module': 'data_science', 'class': 'ModelGroupCloneSourceDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'model-group-clone-source-details': {'module': 'data_science', 'class': 'ModelGroupCloneSourceDetails'}}, output_type={'module': 'data_science', 'class': 'ModelGroup'})
+@cli_util.wrap_exceptions
+def create_model_group_clone_model_group_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, model_group_clone_source_details):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['projectId'] = project_id
+    _details['modelGroupCloneSourceDetails'] = cli_util.parse_json_parameter("model_group_clone_source_details", model_group_clone_source_details)
+
+    _details['createType'] = 'CLONE'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_model_group(
+        create_base_model_group_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_group_group.command(name=cli_util.override('data_science.create_model_group_create_model_group_details.command_name', 'create-model-group-create-model-group-details'), help=u"""Create a new Model Group resource. \n[Command Reference](createModelGroup)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the modelGroup in.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the modelGroup.""")
+@cli_util.option('--model-group-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--member-model-entries', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information. Example: `My ModelGroup`""")
+@cli_util.option('--description', help=u"""A short description of the modelGroup.""")
+@cli_util.option('--model-group-version-history-id', help=u"""The [OCID] of the model group version history to which the modelGroup is associated.""")
+@cli_util.option('--version-label', help=u"""An additional description of the lifecycle state of the model group.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'model-group-details': {'module': 'data_science', 'class': 'ModelGroupDetails'}, 'member-model-entries': {'module': 'data_science', 'class': 'MemberModelEntries'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'model-group-details': {'module': 'data_science', 'class': 'ModelGroupDetails'}, 'member-model-entries': {'module': 'data_science', 'class': 'MemberModelEntries'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'ModelGroup'})
+@cli_util.wrap_exceptions
+def create_model_group_create_model_group_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, model_group_details, member_model_entries, display_name, description, model_group_version_history_id, version_label, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['projectId'] = project_id
+    _details['modelGroupDetails'] = cli_util.parse_json_parameter("model_group_details", model_group_details)
+    _details['memberModelEntries'] = cli_util.parse_json_parameter("member_model_entries", member_model_entries)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if model_group_version_history_id is not None:
+        _details['modelGroupVersionHistoryId'] = model_group_version_history_id
+
+    if version_label is not None:
+        _details['versionLabel'] = version_label
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['createType'] = 'CREATE'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_model_group(
+        create_base_model_group_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_group_group.command(name=cli_util.override('data_science.create_model_group_artifact.command_name', 'create-model-group-artifact'), help=u"""Creates artifact for the Model Group. \n[Command Reference](createModelGroupArtifact)""")
+@cli_util.option('--model-group-id', required=True, help=u"""The [OCID] of the modelGroup.""")
+@cli_util.option('--model-group-artifact', required=True, help=u"""The model group artifact to upload.""")
+@cli_util.option('--content-length', type=click.INT, help=u"""The content length of the body.""")
+@cli_util.option('--content-disposition', help=u"""This header allows you to specify a filename during upload. This file name is used to dispose of the file contents while downloading the file. If this optional field is not populated in the request, then the OCID of the model is used for the file name when downloading. Example: `{\"Content-Disposition\": \"attachment\"            \"filename\"=\"model.tar.gz\"            \"Content-Length\": \"2347\"            \"Content-Type\": \"application/gzip\"}`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def create_model_group_artifact(ctx, from_json, model_group_id, model_group_artifact, content_length, content_disposition, if_match):
+
+    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if content_length is not None:
+        kwargs['content_length'] = content_length
+    if content_disposition is not None:
+        kwargs['content_disposition'] = content_disposition
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_model_group_artifact(
+        model_group_id=model_group_id,
+        model_group_artifact=model_group_artifact,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@model_group_version_history_group.command(name=cli_util.override('data_science.create_model_group_version_history.command_name', 'create'), help=u"""Creates a new modelGroupVersionHistory. \n[Command Reference](createModelGroupVersionHistory)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the model group version history in.""")
+@cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model group version history.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the resource. It must be unique and can't be modified. Avoid entering confidential information. Example: `My model version history`""")
+@cli_util.option('--description', help=u"""A short description of the model version history.""")
+@cli_util.option('--latest-model-group-id', help=u"""The [OCID] of the latest version of the model group to be associated.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'ModelGroupVersionHistory'})
+@cli_util.wrap_exceptions
+def create_model_group_version_history(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, project_id, display_name, description, latest_model_group_id, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['projectId'] = project_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if latest_model_group_id is not None:
+        _details['latestModelGroupId'] = latest_model_group_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.create_model_group_version_history(
+        create_model_group_version_history_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_model_group_version_history') and callable(getattr(client, 'get_model_group_version_history')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_model_group_version_history(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @model_group.command(name=cli_util.override('data_science.create_model_provenance.command_name', 'create-model-provenance'), help=u"""Creates provenance information for the specified model. \n[Command Reference](createModelProvenance)""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
 @cli_util.option('--repository-url', help=u"""For model reproducibility purposes. URL of the git repository associated with model training.""")
@@ -4058,6 +4590,57 @@ def deactivate_model_deployment(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
+@model_group_group.command(name=cli_util.override('data_science.deactivate_model_group.command_name', 'deactivate'), help=u"""Deactivates the model group. \n[Command Reference](deactivateModelGroup)""")
+@cli_util.option('--model-group-id', required=True, help=u"""The [OCID] of the modelGroup.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'ModelGroup'})
+@cli_util.wrap_exceptions
+def deactivate_model_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_group_id, if_match):
+
+    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.deactivate_model_group(
+        model_group_id=model_group_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_model_group') and callable(getattr(client, 'get_model_group')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_model_group(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @notebook_session_group.command(name=cli_util.override('data_science.deactivate_notebook_session.command_name', 'deactivate'), help=u"""Deactivates the notebook session. \n[Command Reference](deactivateNotebookSession)""")
 @cli_util.option('--notebook-session-id', required=True, help=u"""The [OCID] of the notebook session.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
@@ -4673,6 +5256,118 @@ def delete_model_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wa
     client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.delete_model_deployment(
         model_deployment_id=model_deployment_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_group_group.command(name=cli_util.override('data_science.delete_model_group.command_name', 'delete'), help=u"""Deletes the specified Model Group. \n[Command Reference](deleteModelGroup)""")
+@cli_util.option('--model-group-id', required=True, help=u"""The [OCID] of the modelGroup.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_model_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_group_id, if_match):
+
+    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.delete_model_group(
+        model_group_id=model_group_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_group_version_history_group.command(name=cli_util.override('data_science.delete_model_group_version_history.command_name', 'delete'), help=u"""Deletes the specified modelGroupVersionHistory. \n[Command Reference](deleteModelGroupVersionHistory)""")
+@cli_util.option('--model-group-version-history-id', required=True, help=u"""The [OCID] of the modelGroupVersionHistory.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_model_group_version_history(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_group_version_history_id, if_match):
+
+    if isinstance(model_group_version_history_id, six.string_types) and len(model_group_version_history_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-group-version-history-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.delete_model_group_version_history(
+        model_group_version_history_id=model_group_version_history_id,
         **kwargs
     )
     if wait_for_state:
@@ -5826,6 +6521,98 @@ def get_model_deployment(ctx, from_json, model_deployment_id):
     cli_util.render_response(result, ctx)
 
 
+@model_group_group.command(name=cli_util.override('data_science.get_model_group.command_name', 'get'), help=u"""Retrieves the Model Group resource based on the specified modelGroup id. \n[Command Reference](getModelGroup)""")
+@cli_util.option('--model-group-id', required=True, help=u"""The [OCID] of the modelGroup.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'ModelGroup'})
+@cli_util.wrap_exceptions
+def get_model_group(ctx, from_json, model_group_id):
+
+    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.get_model_group(
+        model_group_id=model_group_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@model_group_group.command(name=cli_util.override('data_science.get_model_group_artifact_content.command_name', 'get-model-group-artifact-content'), help=u"""Downloads the model artifact for the specified model group. \n[Command Reference](getModelGroupArtifactContent)""")
+@cli_util.option('--model-group-id', required=True, help=u"""The [OCID] of the modelGroup.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--range', help=u"""Optional byte range to fetch, as described in [RFC 7233], section 2.1. Note that only a single range of bytes is supported.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_model_group_artifact_content(ctx, from_json, file, model_group_id, range):
+
+    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if range is not None:
+        kwargs['range'] = range
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.get_model_group_artifact_content(
+        model_group_id=model_group_id,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
+@model_group_version_history_group.command(name=cli_util.override('data_science.get_model_group_version_history.command_name', 'get'), help=u"""Gets the specified modelGroupVersionHistory's information. \n[Command Reference](getModelGroupVersionHistory)""")
+@cli_util.option('--model-group-version-history-id', required=True, help=u"""The [OCID] of the modelGroupVersionHistory.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'ModelGroupVersionHistory'})
+@cli_util.wrap_exceptions
+def get_model_group_version_history(ctx, from_json, model_group_version_history_id):
+
+    if isinstance(model_group_version_history_id, six.string_types) and len(model_group_version_history_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-group-version-history-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.get_model_group_version_history(
+        model_group_version_history_id=model_group_version_history_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @model_group.command(name=cli_util.override('data_science.get_model_provenance.command_name', 'get-model-provenance'), help=u"""Gets provenance information for specified model. \n[Command Reference](getModelProvenance)""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -6148,6 +6935,28 @@ def head_model_defined_metadatum_artifact(ctx, from_json, model_id, metadatum_ke
     result = client.head_model_defined_metadatum_artifact(
         model_id=model_id,
         metadatum_key_name=metadatum_key_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@model_group_group.command(name=cli_util.override('data_science.head_model_group_artifact.command_name', 'head-model-group-artifact'), help=u"""Gets model group artifact metadata for a specified model group. \n[Command Reference](headModelGroupArtifact)""")
+@cli_util.option('--model-group-id', required=True, help=u"""The [OCID] of the modelGroup.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def head_model_group_artifact(ctx, from_json, model_group_id):
+
+    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.head_model_group_artifact(
+        model_group_id=model_group_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -7049,6 +7858,83 @@ def list_ml_applications(ctx, from_json, all_pages, page_size, compartment_id, m
     cli_util.render_response(result, ctx)
 
 
+@model_deployment_model_state_group.command(name=cli_util.override('data_science.list_model_deployment_model_states.command_name', 'list'), help=u"""Lists the status of models in a model group deployment. \n[Command Reference](listModelDeploymentModelStates)""")
+@cli_util.option('--model-deployment-id', required=True, help=u"""The [OCID] of the model deployment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
+@cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
+@cli_util.option('--inference-key', help=u"""<b>Filter</b> results by the inference key.""")
+@cli_util.option('--model-id', help=u"""<b>Filter</b> results by the model ocid.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+See [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by `timeCreated`, results are shown in descending order. When you sort by `displayName`, results are shown in ascending order. Sort order for the `displayName` field is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[ModelDeploymentModelStateSummary]'})
+@cli_util.wrap_exceptions
+def list_model_deployment_model_states(ctx, from_json, all_pages, page_size, model_deployment_id, compartment_id, project_id, display_name, inference_key, model_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(model_deployment_id, six.string_types) and len(model_deployment_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-deployment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if project_id is not None:
+        kwargs['project_id'] = project_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if inference_key is not None:
+        kwargs['inference_key'] = inference_key
+    if model_id is not None:
+        kwargs['model_id'] = model_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_model_deployment_model_states,
+            model_deployment_id=model_deployment_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_model_deployment_model_states,
+            limit,
+            page_size,
+            model_deployment_id=model_deployment_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_model_deployment_model_states(
+            model_deployment_id=model_deployment_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @model_deployment_shape_group.command(name=cli_util.override('data_science.list_model_deployment_shapes.command_name', 'list'), help=u"""Lists the valid model deployment shapes. \n[Command Reference](listModelDeploymentShapes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
@@ -7168,6 +8054,232 @@ def list_model_deployments(ctx, from_json, all_pages, page_size, compartment_id,
         )
     else:
         result = client.list_model_deployments(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@model_group_group.command(name=cli_util.override('data_science.list_model_group_models.command_name', 'list-model-group-models'), help=u"""Lists all models associated with the modelGroup in the specified compartment. \n[Command Reference](listModelGroupModels)""")
+@cli_util.option('--model-group-id', required=True, help=u"""The [OCID] of the modelGroup.""")
+@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
+@cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "INACTIVE"]), help=u"""<b>Filter</b> results by the specified lifecycle state. Must be a valid state for the resource type.""")
+@cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+See [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName", "lifecycleState"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by `timeCreated`, the results are shown in descending order. All other fields default to ascending order. Sort order for the `displayName` field is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[ModelGroupModelSummary]'})
+@cli_util.wrap_exceptions
+def list_model_group_models(ctx, from_json, all_pages, page_size, model_group_id, compartment_id, id, display_name, lifecycle_state, created_by, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if id is not None:
+        kwargs['id'] = id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if created_by is not None:
+        kwargs['created_by'] = created_by
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_model_group_models,
+            model_group_id=model_group_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_model_group_models,
+            limit,
+            page_size,
+            model_group_id=model_group_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_model_group_models(
+            model_group_id=model_group_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@model_group_version_history_group.command(name=cli_util.override('data_science.list_model_group_version_histories.command_name', 'list'), help=u"""List all modelGroupVersionHistories in the specified compartment. The query must include compartmentId. \n[Command Reference](listModelGroupVersionHistories)""")
+@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
+@cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
+@cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "DELETING"]), help=u"""A filter to return resources matching the given lifecycleState.""")
+@cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+See [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName", "lifecycleState"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by `timeCreated`, the results are shown in descending order. All other fields default to ascending order. Sort order for the `displayName` field is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[ModelGroupVersionHistorySummary]'})
+@cli_util.wrap_exceptions
+def list_model_group_version_histories(ctx, from_json, all_pages, page_size, compartment_id, project_id, id, display_name, lifecycle_state, created_by, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if project_id is not None:
+        kwargs['project_id'] = project_id
+    if id is not None:
+        kwargs['id'] = id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if created_by is not None:
+        kwargs['created_by'] = created_by
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_model_group_version_histories,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_model_group_version_histories,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_model_group_version_histories(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@model_group_group.command(name=cli_util.override('data_science.list_model_groups.command_name', 'list'), help=u"""Lists all the modelGroups in the specified compartment. The query must include compartmentId. \n[Command Reference](listModelGroups)""")
+@cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
+@cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
+@cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
+@cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "INACTIVE", "DELETING", "DELETED"]), help=u"""A filter to return resources matching the given lifecycleState.""")
+@cli_util.option('--created-by', help=u"""<b>Filter</b> results by the [OCID] of the user who created the resource.""")
+@cli_util.option('--model-group-version-history-id', help=u"""The [OCID] of the modelGroupVersionHistory.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
+
+See [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order to use, either `ASC` (ascending) or `DESC` (descending).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName", "lifecycleState"]), help=u"""Specifies the field to sort by. Accepts only one field. By default, when you sort by `timeCreated`, the results are shown in descending order. All other fields default to ascending order. Sort order for the `displayName` field is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_science', 'class': 'list[ModelGroupSummary]'})
+@cli_util.wrap_exceptions
+def list_model_groups(ctx, from_json, all_pages, page_size, compartment_id, project_id, id, display_name, lifecycle_state, created_by, model_group_version_history_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if project_id is not None:
+        kwargs['project_id'] = project_id
+    if id is not None:
+        kwargs['id'] = id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if created_by is not None:
+        kwargs['created_by'] = created_by
+    if model_group_version_history_id is not None:
+        kwargs['model_group_version_history_id'] = model_group_version_history_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_model_groups,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_model_groups,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_model_groups(
             compartment_id=compartment_id,
             **kwargs
         )
@@ -7856,7 +8968,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @work_request_group.command(name=cli_util.override('data_science.list_work_requests.command_name', 'list'), help=u"""Lists work requests in the specified compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
-@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODELVERSIONSET_DELETE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE", "PIPELINE_CREATE", "PIPELINE_DELETE", "PIPELINE_RUN_CREATE", "PIPELINE_RUN_CANCEL", "PIPELINE_RUN_DELETE", "ML_APPLICATION_PACKAGE_UPLOAD", "ML_APPLICATION_TRIGGER_START", "ML_APPLICATION_IMPLEMENTATION_DELETE", "ML_APPLICATION_IMPLEMENTATION_UPDATE", "ML_APPLICATION_IMPLEMENTATION_MOVE", "ML_APPLICATION_INSTANCE_CREATE", "ML_APPLICATION_INSTANCE_UPDATE", "ML_APPLICATION_INSTANCE_DELETE", "ML_APPLICATION_INSTANCE_MOVE", "ML_APPLICATION_INSTANCE_VIEW_CREATE", "ML_APPLICATION_INSTANCE_VIEW_UPDATE", "ML_APPLICATION_INSTANCE_VIEW_DELETE", "ML_APPLICATION_INSTANCE_VIEW_UPGRADE", "ML_APPLICATION_INSTANCE_VIEW_MOVE", "PRIVATE_ENDPOINT_CREATE", "PRIVATE_ENDPOINT_DELETE", "PRIVATE_ENDPOINT_MOVE", "PRIVATE_ENDPOINT_UPDATE", "SCHEDULE_CREATE", "SCHEDULE_UPDATE", "SCHEDULE_DELETE", "SCHEDULE_MOVE", "SCHEDULE_ACTIVATE", "SCHEDULE_DEACTIVATE", "REGISTER_MODEL_ARTIFACT", "RESTORE_ARCHIVED_MODEL"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "MODELVERSIONSET_DELETE", "EXPORT_MODEL_ARTIFACT", "IMPORT_MODEL_ARTIFACT", "MODEL_DEPLOYMENT_CREATE", "MODEL_DEPLOYMENT_DELETE", "MODEL_DEPLOYMENT_ACTIVATE", "MODEL_DEPLOYMENT_DEACTIVATE", "MODEL_DEPLOYMENT_UPDATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL", "JOB_DELETE", "PIPELINE_CREATE", "PIPELINE_DELETE", "PIPELINE_RUN_CREATE", "PIPELINE_RUN_CANCEL", "PIPELINE_RUN_DELETE", "ML_APPLICATION_PACKAGE_UPLOAD", "ML_APPLICATION_TRIGGER_START", "ML_APPLICATION_IMPLEMENTATION_DELETE", "ML_APPLICATION_IMPLEMENTATION_UPDATE", "ML_APPLICATION_IMPLEMENTATION_MOVE", "ML_APPLICATION_INSTANCE_CREATE", "ML_APPLICATION_INSTANCE_UPDATE", "ML_APPLICATION_INSTANCE_DELETE", "ML_APPLICATION_INSTANCE_MOVE", "ML_APPLICATION_INSTANCE_VIEW_CREATE", "ML_APPLICATION_INSTANCE_VIEW_UPDATE", "ML_APPLICATION_INSTANCE_VIEW_DELETE", "ML_APPLICATION_INSTANCE_VIEW_UPGRADE", "ML_APPLICATION_INSTANCE_VIEW_MOVE", "PRIVATE_ENDPOINT_CREATE", "PRIVATE_ENDPOINT_DELETE", "PRIVATE_ENDPOINT_MOVE", "PRIVATE_ENDPOINT_UPDATE", "SCHEDULE_CREATE", "SCHEDULE_UPDATE", "SCHEDULE_DELETE", "SCHEDULE_MOVE", "SCHEDULE_ACTIVATE", "SCHEDULE_DEACTIVATE", "REGISTER_MODEL_ARTIFACT", "RESTORE_ARCHIVED_MODEL", "MODEL_GROUP_CREATE", "MODEL_GROUP_UPDATE", "MODEL_GROUP_DELETE", "MODEL_GROUP_VERSION_HISTORY_DELETE"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""<b>Filter</b> results by work request status.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum. See [List Pagination].
 
@@ -9363,6 +10475,109 @@ def update_model_deployment(ctx, from_json, force, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
+@model_deployment_group.command(name=cli_util.override('data_science.update_model_deployment_update_model_group_deployment_configuration_details.command_name', 'update-model-deployment-update-model-group-deployment-configuration-details'), help=u"""Updates the properties of a model deployment. Some of the properties of `modelDeploymentConfigurationDetails` or `CategoryLogDetails` can also be updated with zero down time when the model deployment's lifecycle state is ACTIVE or NEEDS_ATTENTION i.e `instanceShapeName`, `instanceCount` and `modelId`, separately `loadBalancerShape` or `CategoryLogDetails` can also be updated independently. All of the fields can be updated when the deployment is in the INACTIVE lifecycle state. Changes will take effect the next time the model deployment is activated. \n[Command Reference](updateModelDeployment)""")
+@cli_util.option('--model-deployment-id', required=True, help=u"""The [OCID] of the model deployment.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. Does not have to be unique, and can be modified. Avoid entering confidential information. Example: `My ModelDeployment`""")
+@cli_util.option('--description', help=u"""A short description of the model deployment.""")
+@cli_util.option('--category-log-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--model-deployment-configuration-details-update-type', type=custom_types.CliCaseInsensitiveChoice(["ZDT", "LIVE"]), help=u"""The type of update operation.""")
+@cli_util.option('--model-deployment-configuration-details-model-group-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-deployment-configuration-details-infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--model-deployment-configuration-details-environment-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'category-log-details': {'module': 'data_science', 'class': 'UpdateCategoryLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'model-deployment-configuration-details-model-group-configuration-details': {'module': 'data_science', 'class': 'UpdateModelGroupConfigurationDetails'}, 'model-deployment-configuration-details-infrastructure-configuration-details': {'module': 'data_science', 'class': 'UpdateInfrastructureConfigurationDetails'}, 'model-deployment-configuration-details-environment-configuration-details': {'module': 'data_science', 'class': 'UpdateModelDeploymentEnvironmentConfigurationDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'category-log-details': {'module': 'data_science', 'class': 'UpdateCategoryLogDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}, 'model-deployment-configuration-details-model-group-configuration-details': {'module': 'data_science', 'class': 'UpdateModelGroupConfigurationDetails'}, 'model-deployment-configuration-details-infrastructure-configuration-details': {'module': 'data_science', 'class': 'UpdateInfrastructureConfigurationDetails'}, 'model-deployment-configuration-details-environment-configuration-details': {'module': 'data_science', 'class': 'UpdateModelDeploymentEnvironmentConfigurationDetails'}})
+@cli_util.wrap_exceptions
+def update_model_deployment_update_model_group_deployment_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_deployment_id, display_name, description, category_log_details, freeform_tags, defined_tags, if_match, model_deployment_configuration_details_update_type, model_deployment_configuration_details_model_group_configuration_details, model_deployment_configuration_details_infrastructure_configuration_details, model_deployment_configuration_details_environment_configuration_details):
+
+    if isinstance(model_deployment_id, six.string_types) and len(model_deployment_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-deployment-id cannot be whitespace or empty string')
+    if not force:
+        if category_log_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to category-log-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['modelDeploymentConfigurationDetails'] = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if category_log_details is not None:
+        _details['categoryLogDetails'] = cli_util.parse_json_parameter("category_log_details", category_log_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if model_deployment_configuration_details_update_type is not None:
+        _details['modelDeploymentConfigurationDetails']['updateType'] = model_deployment_configuration_details_update_type
+
+    if model_deployment_configuration_details_model_group_configuration_details is not None:
+        _details['modelDeploymentConfigurationDetails']['modelGroupConfigurationDetails'] = cli_util.parse_json_parameter("model_deployment_configuration_details_model_group_configuration_details", model_deployment_configuration_details_model_group_configuration_details)
+
+    if model_deployment_configuration_details_infrastructure_configuration_details is not None:
+        _details['modelDeploymentConfigurationDetails']['infrastructureConfigurationDetails'] = cli_util.parse_json_parameter("model_deployment_configuration_details_infrastructure_configuration_details", model_deployment_configuration_details_infrastructure_configuration_details)
+
+    if model_deployment_configuration_details_environment_configuration_details is not None:
+        _details['modelDeploymentConfigurationDetails']['environmentConfigurationDetails'] = cli_util.parse_json_parameter("model_deployment_configuration_details_environment_configuration_details", model_deployment_configuration_details_environment_configuration_details)
+
+    _details['modelDeploymentConfigurationDetails']['deploymentType'] = 'MODEL_GROUP'
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_model_deployment(
+        model_deployment_id=model_deployment_id,
+        update_model_deployment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @model_deployment_group.command(name=cli_util.override('data_science.update_model_deployment_update_single_model_deployment_configuration_details.command_name', 'update-model-deployment-update-single-model-deployment-configuration-details'), help=u"""Updates the properties of a model deployment. Some of the properties of `modelDeploymentConfigurationDetails` or `CategoryLogDetails` can also be updated with zero down time when the model deployment's lifecycle state is ACTIVE or NEEDS_ATTENTION i.e `instanceShapeName`, `instanceCount` and `modelId`, separately `loadBalancerShape` or `CategoryLogDetails` can also be updated independently. All of the fields can be updated when the deployment is in the INACTIVE lifecycle state. Changes will take effect the next time the model deployment is activated. \n[Command Reference](updateModelDeployment)""")
 @cli_util.option('--model-deployment-id', required=True, help=u"""The [OCID] of the model deployment.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. Does not have to be unique, and can be modified. Avoid entering confidential information. Example: `My ModelDeployment`""")
@@ -9455,6 +10670,170 @@ def update_model_deployment_update_single_model_deployment_configuration_details
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_group_group.command(name=cli_util.override('data_science.update_model_group.command_name', 'update'), help=u"""Updates the properties of the Model Group. \n[Command Reference](updateModelGroup)""")
+@cli_util.option('--model-group-id', required=True, help=u"""The [OCID] of the modelGroup.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It does not have to be unique and can be modified. Avoid entering confidential information.  Example: `My ModelGroup`""")
+@cli_util.option('--description', help=u"""A short description of the modelGroup.""")
+@cli_util.option('--version-label', help=u"""An additional description of the lifecycle state of the model group.""")
+@cli_util.option('--model-group-version-history-id', help=u"""The [OCID] of the model group version history to which the modelGroup will be associated.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'ModelGroup'})
+@cli_util.wrap_exceptions
+def update_model_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_group_id, display_name, description, version_label, model_group_version_history_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if version_label is not None:
+        _details['versionLabel'] = version_label
+
+    if model_group_version_history_id is not None:
+        _details['modelGroupVersionHistoryId'] = model_group_version_history_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_model_group(
+        model_group_id=model_group_id,
+        update_model_group_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_model_group') and callable(getattr(client, 'get_model_group')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_model_group(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@model_group_version_history_group.command(name=cli_util.override('data_science.update_model_group_version_history.command_name', 'update'), help=u"""Updates the properties of a modelGroupVersionHistory. \n[Command Reference](updateModelGroupVersionHistory)""")
+@cli_util.option('--model-group-version-history-id', required=True, help=u"""The [OCID] of the modelGroupVersionHistory.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name for the resource.""")
+@cli_util.option('--description', help=u"""A short description of the model group version history.""")
+@cli_util.option('--latest-model-group-id', help=u"""The OCID of the latest version of the model group associated.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. See [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource is updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'ModelGroupVersionHistory'})
+@cli_util.wrap_exceptions
+def update_model_group_version_history(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_group_version_history_id, display_name, description, latest_model_group_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(model_group_version_history_id, six.string_types) and len(model_group_version_history_id.strip()) == 0:
+        raise click.UsageError('Parameter --model-group-version-history-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if latest_model_group_id is not None:
+        _details['latestModelGroupId'] = latest_model_group_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('data_science', 'data_science', ctx)
+    result = client.update_model_group_version_history(
+        model_group_version_history_id=model_group_version_history_id,
+        update_model_group_version_history_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_model_group_version_history') and callable(getattr(client, 'get_model_group_version_history')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_model_group_version_history(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

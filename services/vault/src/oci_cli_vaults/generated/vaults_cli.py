@@ -163,6 +163,7 @@ This operation is not supported by the Oracle Cloud Infrastructure Terraform Pro
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata that you can use to provide context about how to use the secret during rotation or other administrative tasks. For example, for a secret that you use to connect to a database, the additional metadata might specify the connection endpoint and the connection string. Provide additional metadata as key-value pairs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-content', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--replication-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--rotation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules to control how the secret is used and managed.
 
@@ -172,12 +173,12 @@ This option is a JSON list with items of type SecretRule.  For documentation on 
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}, 'secret-generation-context': {'module': 'vault', 'class': 'SecretGenerationContext'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}, 'secret-generation-context': {'module': 'vault', 'class': 'SecretGenerationContext'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}, 'secret-generation-context': {'module': 'vault', 'class': 'SecretGenerationContext'}}, output_type={'module': 'vault', 'class': 'Secret'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}, 'secret-generation-context': {'module': 'vault', 'class': 'SecretGenerationContext'}}, output_type={'module': 'vault', 'class': 'Secret'})
 @cli_util.wrap_exceptions
-def create_secret(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, key_id, secret_name, vault_id, defined_tags, description, freeform_tags, metadata, secret_content, rotation_config, secret_rules, secret_generation_context, enable_auto_generation):
+def create_secret(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, key_id, secret_name, vault_id, defined_tags, description, freeform_tags, metadata, secret_content, replication_config, rotation_config, secret_rules, secret_generation_context, enable_auto_generation):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -202,6 +203,9 @@ def create_secret(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if secret_content is not None:
         _details['secretContent'] = cli_util.parse_json_parameter("secret_content", secret_content)
+
+    if replication_config is not None:
+        _details['replicationConfig'] = cli_util.parse_json_parameter("replication_config", replication_config)
 
     if rotation_config is not None:
         _details['rotationConfig'] = cli_util.parse_json_parameter("rotation_config", rotation_config)
@@ -257,6 +261,7 @@ This operation is not supported by the Oracle Cloud Infrastructure Terraform Pro
 @cli_util.option('--description', help=u"""A brief description of the secret. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata that you can use to provide context about how to use the secret during rotation or other administrative tasks. For example, for a secret that you use to connect to a database, the additional metadata might specify the connection endpoint and the connection string. Provide additional metadata as key-value pairs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--replication-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--rotation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules to control how the secret is used and managed.
 
@@ -269,12 +274,12 @@ This option is a JSON list with items of type SecretRule.  For documentation on 
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}, 'secret-generation-context': {'module': 'vault', 'class': 'SecretGenerationContext'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}, 'secret-generation-context': {'module': 'vault', 'class': 'SecretGenerationContext'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}, 'secret-generation-context': {'module': 'vault', 'class': 'SecretGenerationContext'}}, output_type={'module': 'vault', 'class': 'Secret'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}, 'secret-generation-context': {'module': 'vault', 'class': 'SecretGenerationContext'}}, output_type={'module': 'vault', 'class': 'Secret'})
 @cli_util.wrap_exceptions
-def create_secret_base64_secret_content_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, key_id, secret_name, vault_id, defined_tags, description, freeform_tags, metadata, rotation_config, secret_rules, secret_generation_context, enable_auto_generation, secret_content_name, secret_content_stage, secret_content_content):
+def create_secret_base64_secret_content_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, key_id, secret_name, vault_id, defined_tags, description, freeform_tags, metadata, replication_config, rotation_config, secret_rules, secret_generation_context, enable_auto_generation, secret_content_name, secret_content_stage, secret_content_content):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -297,6 +302,9 @@ def create_secret_base64_secret_content_details(ctx, from_json, wait_for_state, 
 
     if metadata is not None:
         _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+
+    if replication_config is not None:
+        _details['replicationConfig'] = cli_util.parse_json_parameter("replication_config", replication_config)
 
     if rotation_config is not None:
         _details['rotationConfig'] = cli_util.parse_json_parameter("rotation_config", rotation_config)
@@ -365,6 +373,7 @@ This operation is not supported by the Oracle Cloud Infrastructure Terraform Pro
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata that you can use to provide context about how to use the secret during rotation or other administrative tasks. For example, for a secret that you use to connect to a database, the additional metadata might specify the connection endpoint and the connection string. Provide additional metadata as key-value pairs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-content', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--replication-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--rotation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules to control how the secret is used and managed.
 
@@ -375,12 +384,12 @@ This option is a JSON list with items of type SecretRule.  For documentation on 
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}}, output_type={'module': 'vault', 'class': 'Secret'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}}, output_type={'module': 'vault', 'class': 'Secret'})
 @cli_util.wrap_exceptions
-def create_secret_passphrase_generation_context(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, key_id, secret_name, vault_id, secret_generation_context_generation_template, defined_tags, description, freeform_tags, metadata, secret_content, rotation_config, secret_rules, enable_auto_generation, secret_generation_context_secret_template, secret_generation_context_passphrase_length):
+def create_secret_passphrase_generation_context(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, key_id, secret_name, vault_id, secret_generation_context_generation_template, defined_tags, description, freeform_tags, metadata, secret_content, replication_config, rotation_config, secret_rules, enable_auto_generation, secret_generation_context_secret_template, secret_generation_context_passphrase_length):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -407,6 +416,9 @@ def create_secret_passphrase_generation_context(ctx, from_json, wait_for_state, 
 
     if secret_content is not None:
         _details['secretContent'] = cli_util.parse_json_parameter("secret_content", secret_content)
+
+    if replication_config is not None:
+        _details['replicationConfig'] = cli_util.parse_json_parameter("replication_config", replication_config)
 
     if rotation_config is not None:
         _details['rotationConfig'] = cli_util.parse_json_parameter("rotation_config", rotation_config)
@@ -469,6 +481,7 @@ This operation is not supported by the Oracle Cloud Infrastructure Terraform Pro
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata that you can use to provide context about how to use the secret during rotation or other administrative tasks. For example, for a secret that you use to connect to a database, the additional metadata might specify the connection endpoint and the connection string. Provide additional metadata as key-value pairs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-content', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--replication-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--rotation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules to control how the secret is used and managed.
 
@@ -478,12 +491,12 @@ This option is a JSON list with items of type SecretRule.  For documentation on 
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}}, output_type={'module': 'vault', 'class': 'Secret'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}}, output_type={'module': 'vault', 'class': 'Secret'})
 @cli_util.wrap_exceptions
-def create_secret_ssh_key_generation_context(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, key_id, secret_name, vault_id, secret_generation_context_generation_template, defined_tags, description, freeform_tags, metadata, secret_content, rotation_config, secret_rules, enable_auto_generation, secret_generation_context_secret_template):
+def create_secret_ssh_key_generation_context(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, key_id, secret_name, vault_id, secret_generation_context_generation_template, defined_tags, description, freeform_tags, metadata, secret_content, replication_config, rotation_config, secret_rules, enable_auto_generation, secret_generation_context_secret_template):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -510,6 +523,9 @@ def create_secret_ssh_key_generation_context(ctx, from_json, wait_for_state, max
 
     if secret_content is not None:
         _details['secretContent'] = cli_util.parse_json_parameter("secret_content", secret_content)
+
+    if replication_config is not None:
+        _details['replicationConfig'] = cli_util.parse_json_parameter("replication_config", replication_config)
 
     if rotation_config is not None:
         _details['rotationConfig'] = cli_util.parse_json_parameter("rotation_config", rotation_config)
@@ -569,6 +585,7 @@ This operation is not supported by the Oracle Cloud Infrastructure Terraform Pro
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata that you can use to provide context about how to use the secret during rotation or other administrative tasks. For example, for a secret that you use to connect to a database, the additional metadata might specify the connection endpoint and the connection string. Provide additional metadata as key-value pairs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-content', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--replication-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--rotation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules to control how the secret is used and managed.
 
@@ -578,12 +595,12 @@ This option is a JSON list with items of type SecretRule.  For documentation on 
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}}, output_type={'module': 'vault', 'class': 'Secret'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}}, output_type={'module': 'vault', 'class': 'Secret'})
 @cli_util.wrap_exceptions
-def create_secret_bytes_generation_context(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, key_id, secret_name, vault_id, secret_generation_context_generation_template, defined_tags, description, freeform_tags, metadata, secret_content, rotation_config, secret_rules, enable_auto_generation, secret_generation_context_secret_template):
+def create_secret_bytes_generation_context(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, key_id, secret_name, vault_id, secret_generation_context_generation_template, defined_tags, description, freeform_tags, metadata, secret_content, replication_config, rotation_config, secret_rules, enable_auto_generation, secret_generation_context_secret_template):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -610,6 +627,9 @@ def create_secret_bytes_generation_context(ctx, from_json, wait_for_state, max_w
 
     if secret_content is not None:
         _details['secretContent'] = cli_util.parse_json_parameter("secret_content", secret_content)
+
+    if replication_config is not None:
+        _details['replicationConfig'] = cli_util.parse_json_parameter("replication_config", replication_config)
 
     if rotation_config is not None:
         _details['rotationConfig'] = cli_util.parse_json_parameter("rotation_config", rotation_config)
@@ -969,6 +989,7 @@ This operation is not supported by the Oracle Cloud Infrastructure Terraform Pro
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata that you can use to provide context about how to use the secret or during rotation or other administrative tasks. For example, for a secret that you use to connect to a database, the additional metadata might specify the connection endpoint and the connection string. Provide additional metadata as key-value pairs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-content', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--replication-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--rotation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules to control how the secret is used and managed.
 
@@ -980,18 +1001,18 @@ This option is a JSON list with items of type SecretRule.  For documentation on 
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}, 'secret-generation-context': {'module': 'vault', 'class': 'SecretGenerationContext'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}, 'secret-generation-context': {'module': 'vault', 'class': 'SecretGenerationContext'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}, 'secret-generation-context': {'module': 'vault', 'class': 'SecretGenerationContext'}}, output_type={'module': 'vault', 'class': 'Secret'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}, 'secret-generation-context': {'module': 'vault', 'class': 'SecretGenerationContext'}}, output_type={'module': 'vault', 'class': 'Secret'})
 @cli_util.wrap_exceptions
-def update_secret(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, secret_id, current_version_number, defined_tags, description, freeform_tags, metadata, secret_content, rotation_config, secret_rules, secret_generation_context, enable_auto_generation, if_match):
+def update_secret(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, secret_id, current_version_number, defined_tags, description, freeform_tags, metadata, secret_content, replication_config, rotation_config, secret_rules, secret_generation_context, enable_auto_generation, if_match):
 
     if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags or metadata or secret_content or rotation_config or secret_rules or secret_generation_context:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and metadata and secret-content and rotation-config and secret-rules and secret-generation-context will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or metadata or secret_content or replication_config or rotation_config or secret_rules or secret_generation_context:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and metadata and secret-content and replication-config and rotation-config and secret-rules and secret-generation-context will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1018,6 +1039,9 @@ def update_secret(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 
     if secret_content is not None:
         _details['secretContent'] = cli_util.parse_json_parameter("secret_content", secret_content)
+
+    if replication_config is not None:
+        _details['replicationConfig'] = cli_util.parse_json_parameter("replication_config", replication_config)
 
     if rotation_config is not None:
         _details['rotationConfig'] = cli_util.parse_json_parameter("rotation_config", rotation_config)
@@ -1072,6 +1096,7 @@ This operation is not supported by the Oracle Cloud Infrastructure Terraform Pro
 @cli_util.option('--description', help=u"""A brief description of the secret. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata that you can use to provide context about how to use the secret or during rotation or other administrative tasks. For example, for a secret that you use to connect to a database, the additional metadata might specify the connection endpoint and the connection string. Provide additional metadata as key-value pairs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--replication-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--rotation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules to control how the secret is used and managed.
 
@@ -1086,18 +1111,18 @@ This option is a JSON list with items of type SecretRule.  For documentation on 
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}, 'secret-generation-context': {'module': 'vault', 'class': 'SecretGenerationContext'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}, 'secret-generation-context': {'module': 'vault', 'class': 'SecretGenerationContext'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}, 'secret-generation-context': {'module': 'vault', 'class': 'SecretGenerationContext'}}, output_type={'module': 'vault', 'class': 'Secret'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}, 'secret-generation-context': {'module': 'vault', 'class': 'SecretGenerationContext'}}, output_type={'module': 'vault', 'class': 'Secret'})
 @cli_util.wrap_exceptions
-def update_secret_base64_secret_content_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, secret_id, current_version_number, defined_tags, description, freeform_tags, metadata, rotation_config, secret_rules, secret_generation_context, enable_auto_generation, if_match, secret_content_name, secret_content_stage, secret_content_content):
+def update_secret_base64_secret_content_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, secret_id, current_version_number, defined_tags, description, freeform_tags, metadata, replication_config, rotation_config, secret_rules, secret_generation_context, enable_auto_generation, if_match, secret_content_name, secret_content_stage, secret_content_content):
 
     if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags or metadata or rotation_config or secret_rules or secret_generation_context:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and metadata and rotation-config and secret-rules and secret-generation-context will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or metadata or replication_config or rotation_config or secret_rules or secret_generation_context:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and metadata and replication-config and rotation-config and secret-rules and secret-generation-context will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1122,6 +1147,9 @@ def update_secret_base64_secret_content_details(ctx, from_json, force, wait_for_
 
     if metadata is not None:
         _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+
+    if replication_config is not None:
+        _details['replicationConfig'] = cli_util.parse_json_parameter("replication_config", replication_config)
 
     if rotation_config is not None:
         _details['rotationConfig'] = cli_util.parse_json_parameter("rotation_config", rotation_config)
@@ -1189,6 +1217,7 @@ This operation is not supported by the Oracle Cloud Infrastructure Terraform Pro
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata that you can use to provide context about how to use the secret or during rotation or other administrative tasks. For example, for a secret that you use to connect to a database, the additional metadata might specify the connection endpoint and the connection string. Provide additional metadata as key-value pairs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-content', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--replication-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--rotation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules to control how the secret is used and managed.
 
@@ -1201,18 +1230,18 @@ This option is a JSON list with items of type SecretRule.  For documentation on 
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}}, output_type={'module': 'vault', 'class': 'Secret'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}}, output_type={'module': 'vault', 'class': 'Secret'})
 @cli_util.wrap_exceptions
-def update_secret_passphrase_generation_context(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, secret_id, secret_generation_context_generation_template, current_version_number, defined_tags, description, freeform_tags, metadata, secret_content, rotation_config, secret_rules, enable_auto_generation, if_match, secret_generation_context_secret_template, secret_generation_context_passphrase_length):
+def update_secret_passphrase_generation_context(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, secret_id, secret_generation_context_generation_template, current_version_number, defined_tags, description, freeform_tags, metadata, secret_content, replication_config, rotation_config, secret_rules, enable_auto_generation, if_match, secret_generation_context_secret_template, secret_generation_context_passphrase_length):
 
     if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags or metadata or secret_content or rotation_config or secret_rules:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and metadata and secret-content and rotation-config and secret-rules will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or metadata or secret_content or replication_config or rotation_config or secret_rules:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and metadata and secret-content and replication-config and rotation-config and secret-rules will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1241,6 +1270,9 @@ def update_secret_passphrase_generation_context(ctx, from_json, force, wait_for_
 
     if secret_content is not None:
         _details['secretContent'] = cli_util.parse_json_parameter("secret_content", secret_content)
+
+    if replication_config is not None:
+        _details['replicationConfig'] = cli_util.parse_json_parameter("replication_config", replication_config)
 
     if rotation_config is not None:
         _details['rotationConfig'] = cli_util.parse_json_parameter("rotation_config", rotation_config)
@@ -1302,6 +1334,7 @@ This operation is not supported by the Oracle Cloud Infrastructure Terraform Pro
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata that you can use to provide context about how to use the secret or during rotation or other administrative tasks. For example, for a secret that you use to connect to a database, the additional metadata might specify the connection endpoint and the connection string. Provide additional metadata as key-value pairs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-content', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--replication-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--rotation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules to control how the secret is used and managed.
 
@@ -1313,18 +1346,18 @@ This option is a JSON list with items of type SecretRule.  For documentation on 
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}}, output_type={'module': 'vault', 'class': 'Secret'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}}, output_type={'module': 'vault', 'class': 'Secret'})
 @cli_util.wrap_exceptions
-def update_secret_ssh_key_generation_context(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, secret_id, secret_generation_context_generation_template, current_version_number, defined_tags, description, freeform_tags, metadata, secret_content, rotation_config, secret_rules, enable_auto_generation, if_match, secret_generation_context_secret_template):
+def update_secret_ssh_key_generation_context(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, secret_id, secret_generation_context_generation_template, current_version_number, defined_tags, description, freeform_tags, metadata, secret_content, replication_config, rotation_config, secret_rules, enable_auto_generation, if_match, secret_generation_context_secret_template):
 
     if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags or metadata or secret_content or rotation_config or secret_rules:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and metadata and secret-content and rotation-config and secret-rules will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or metadata or secret_content or replication_config or rotation_config or secret_rules:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and metadata and secret-content and replication-config and rotation-config and secret-rules will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1353,6 +1386,9 @@ def update_secret_ssh_key_generation_context(ctx, from_json, force, wait_for_sta
 
     if secret_content is not None:
         _details['secretContent'] = cli_util.parse_json_parameter("secret_content", secret_content)
+
+    if replication_config is not None:
+        _details['replicationConfig'] = cli_util.parse_json_parameter("replication_config", replication_config)
 
     if rotation_config is not None:
         _details['rotationConfig'] = cli_util.parse_json_parameter("rotation_config", rotation_config)
@@ -1411,6 +1447,7 @@ This operation is not supported by the Oracle Cloud Infrastructure Terraform Pro
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata that you can use to provide context about how to use the secret or during rotation or other administrative tasks. For example, for a secret that you use to connect to a database, the additional metadata might specify the connection endpoint and the connection string. Provide additional metadata as key-value pairs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-content', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--replication-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--rotation-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of rules to control how the secret is used and managed.
 
@@ -1422,18 +1459,18 @@ This option is a JSON list with items of type SecretRule.  For documentation on 
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "SCHEDULING_DELETION", "PENDING_DELETION", "CANCELLING_DELETION", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}}, output_type={'module': 'vault', 'class': 'Secret'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'vault', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'vault', 'class': 'dict(str, string)'}, 'metadata': {'module': 'vault', 'class': 'dict(str, object)'}, 'secret-content': {'module': 'vault', 'class': 'SecretContentDetails'}, 'replication-config': {'module': 'vault', 'class': 'ReplicationConfig'}, 'rotation-config': {'module': 'vault', 'class': 'RotationConfig'}, 'secret-rules': {'module': 'vault', 'class': 'list[SecretRule]'}}, output_type={'module': 'vault', 'class': 'Secret'})
 @cli_util.wrap_exceptions
-def update_secret_bytes_generation_context(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, secret_id, secret_generation_context_generation_template, current_version_number, defined_tags, description, freeform_tags, metadata, secret_content, rotation_config, secret_rules, enable_auto_generation, if_match, secret_generation_context_secret_template):
+def update_secret_bytes_generation_context(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, secret_id, secret_generation_context_generation_template, current_version_number, defined_tags, description, freeform_tags, metadata, secret_content, replication_config, rotation_config, secret_rules, enable_auto_generation, if_match, secret_generation_context_secret_template):
 
     if isinstance(secret_id, six.string_types) and len(secret_id.strip()) == 0:
         raise click.UsageError('Parameter --secret-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags or metadata or secret_content or rotation_config or secret_rules:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and metadata and secret-content and rotation-config and secret-rules will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or metadata or secret_content or replication_config or rotation_config or secret_rules:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and metadata and secret-content and replication-config and rotation-config and secret-rules will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1462,6 +1499,9 @@ def update_secret_bytes_generation_context(ctx, from_json, force, wait_for_state
 
     if secret_content is not None:
         _details['secretContent'] = cli_util.parse_json_parameter("secret_content", secret_content)
+
+    if replication_config is not None:
+        _details['replicationConfig'] = cli_util.parse_json_parameter("replication_config", replication_config)
 
     if rotation_config is not None:
         _details['rotationConfig'] = cli_util.parse_json_parameter("rotation_config", rotation_config)

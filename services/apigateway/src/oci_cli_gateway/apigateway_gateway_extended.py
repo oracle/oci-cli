@@ -3,10 +3,10 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
+from oci_cli import cli_util
 
 from services.apigateway.src.oci_cli_apigateway.generated import api_gateway_service_cli
 from services.apigateway.src.oci_cli_gateway.generated import gateway_cli
-from oci_cli import cli_util
 
 # Changing from the following:
 # oci api-gateway gateway gateway create --compartment-id, --display-name, --endpoint-type, --subnet-id, --defined-tags, --freeform-tags
@@ -43,3 +43,11 @@ gateway_cli.gateway_group.commands.pop(gateway_cli.update_gateway_external_resp_
 
 # Remove update-gateway-no-cache from oci api-gateway gateway
 gateway_cli.gateway_group.commands.pop(gateway_cli.update_gateway_no_cache.name)
+
+
+# oci api-gateway gateway add -> oci api-gateway gateway add-lock
+cli_util.rename_command(gateway_cli, gateway_cli.gateway_group, gateway_cli.add_gateway_lock, "add-lock")
+
+
+# oci api-gateway gateway remove -> oci api-gateway gateway remove-lock
+cli_util.rename_command(gateway_cli, gateway_cli.gateway_group, gateway_cli.remove_gateway_lock, "remove-lock")

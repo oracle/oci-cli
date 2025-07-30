@@ -1091,7 +1091,8 @@ def list_transcription_tasks(ctx, from_json, all_pages, page_size, transcription
 
 @voice_group.command(name=cli_util.override('speech.list_voices.command_name', 'list'), help=u"""Returns a list of speakers available to the user to choose from based on language code and voice type provided. \n[Command Reference](listVoices)""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
-@cli_util.option('--model-name', type=custom_types.CliCaseInsensitiveChoice(["TTS_1_STANDARD", "TTS_2_NATURAL"]), help=u"""The model the user wants to run the inference on.""")
+@cli_util.option('--model-name', type=custom_types.CliCaseInsensitiveChoice(["TTS_1_STANDARD", "TTS_2_NATURAL"]), help=u"""The model name to filter voices for given model name.""")
+@cli_util.option('--language-code', help=u"""The Code or Id of the language to filter voices for given language code.""")
 @cli_util.option('--display-name', help=u"""The name of the speaker voice in which the user wants tts inference to be.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1099,13 +1100,15 @@ def list_transcription_tasks(ctx, from_json, all_pages, page_size, transcription
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_speech', 'class': 'VoiceCollection'})
 @cli_util.wrap_exceptions
-def list_voices(ctx, from_json, all_pages, compartment_id, model_name, display_name):
+def list_voices(ctx, from_json, all_pages, compartment_id, model_name, language_code, display_name):
 
     kwargs = {}
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     if model_name is not None:
         kwargs['model_name'] = model_name
+    if language_code is not None:
+        kwargs['language_code'] = language_code
     if display_name is not None:
         kwargs['display_name'] = display_name
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
