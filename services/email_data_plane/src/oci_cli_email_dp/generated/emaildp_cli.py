@@ -29,7 +29,14 @@ def email_submitted_response_group():
     pass
 
 
+@click.command(cli_util.override('email_data_plane.email_raw_submitted_response_group.command_name', 'email-raw-submitted-response'), cls=CommandGroupWithAlias, help="""Response object that is returned to sender upon successfully submitting the email request.""")
+@cli_util.help_option_group
+def email_raw_submitted_response_group():
+    pass
+
+
 email_data_plane_root_group.add_command(email_submitted_response_group)
+email_data_plane_root_group.add_command(email_raw_submitted_response_group)
 
 
 @email_submitted_response_group.command(name=cli_util.override('email_data_plane.submit_email.command_name', 'submit-email'), help=u"""Submits a formatted email. \n[Command Reference](submitEmail)""")
@@ -76,6 +83,40 @@ def submit_email(ctx, from_json, sender, recipients, subject, message_id, body_h
     client = cli_util.build_client('email_data_plane', 'email_dp', ctx)
     result = client.submit_email(
         submit_email_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@email_raw_submitted_response_group.command(name=cli_util.override('email_data_plane.submit_raw_email.command_name', 'submit-raw-email'), help=u"""Submits a raw email. \n[Command Reference](submitRawEmail)""")
+@cli_util.option('--content-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["message/rfc822", "message/global"]), help=u"""The media type of the body.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the approved sender resource.""")
+@cli_util.option('--sender', required=True, help=u"""The envelope and the header from email address, that is sending the email. Email address must be an approved sender.""")
+@cli_util.option('--recipients', required=True, multiple=True, help=u"""The destination for the email, all recipients including to, cc and bcc addresses.""")
+@cli_util.option('--raw-message', required=True, help=u"""This should be formatted in valid MIME format. Message can include attachments. MIME libraries should be used to convert the content into the appropriate format.""")
+@cli_util.option('--content-length', type=click.INT, help=u"""The content length of the body.""")
+@json_skeleton_utils.get_cli_json_input_option({'recipients': {'module': 'email_data_plane', 'class': ''}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'recipients': {'module': 'email_data_plane', 'class': ''}}, output_type={'module': 'email_data_plane', 'class': 'EmailRawSubmittedResponse'})
+@cli_util.wrap_exceptions
+def submit_raw_email(ctx, from_json, content_type, compartment_id, sender, recipients, raw_message, content_length):
+
+    kwargs = {}
+    if content_length is not None:
+        kwargs['content_length'] = content_length
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
+    client = cli_util.build_client('email_data_plane', 'email_dp', ctx)
+    result = client.submit_raw_email(
+        content_type=content_type,
+        compartment_id=compartment_id,
+        sender=sender,
+        recipients=recipients,
+        raw_message=raw_message,
         **kwargs
     )
     cli_util.render_response(result, ctx)

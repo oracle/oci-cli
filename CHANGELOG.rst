@@ -6,6 +6,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.63.3 - 2025-08-05
+--------------------
+Added
+~~~~~
+* Support for Oracle Multicloud Hub service
+
+  * ``oci multicloud``
+
+* Support for SubmitRawEmail API in Email Delivery service
+
+  * ``oci email-data-plane email-raw-submitted-response submit-raw-email``
+
 3.63.2 - 2025-07-29
 --------------------
 Added
