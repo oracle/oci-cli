@@ -498,6 +498,11 @@ service_mapping = {
         "Monitoring",
         "Others"
     ],
+    "multicloud": [
+        "multicloud",
+        "Oracle Multicloud",
+        "Others"
+    ],
     "mysql": [
         "mysql",
         "MySQL Database Service",

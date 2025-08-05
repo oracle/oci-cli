@@ -550,4 +550,5 @@ network-firewall, decryption-profile, create
 network-firewall, application, update
 network-firewall, application, create
 network-firewall, service, create
+email-data-plane, email-raw-submitted-response, submit-raw-email
 api-gateway, certificate, create

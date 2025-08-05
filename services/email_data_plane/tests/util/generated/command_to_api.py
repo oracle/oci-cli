@@ -3,4 +3,5 @@
 
 SDK_client_map = {
     "email_data_plane.submit_email": "oci.email_data_plane.EmailDPClient.submit_email",
+    "email_data_plane.submit_raw_email": "oci.email_data_plane.EmailDPClient.submit_raw_email",
 }

@@ -881,6 +881,12 @@ def create_database_from_backup(ctx, wait_for_state, max_wait_seconds, wait_inte
     if 'sid_prefix' in kwargs and kwargs['sid_prefix']:
         create_database_details.sid_prefix = kwargs['sid_prefix']
 
+    if 'freeform_tags' in kwargs and kwargs['freeform_tags']:
+        create_database_details.freeform_tags = cli_util.parse_json_parameter('freeform_tags', kwargs['freeform_tags'])
+
+    if 'defined_tags' in kwargs and kwargs['defined_tags']:
+        create_database_details.defined_tags = cli_util.parse_json_parameter('defined_tags', kwargs['defined_tags'])
+
     if 'database_software_image_id' in kwargs and kwargs['database_software_image_id']:
         create_db_home_with_system_details.database_software_image_id = kwargs['database_software_image_id']
 
@@ -4058,7 +4064,7 @@ cli_util.rename_command(database_cli, database_cli.database_group, database_cli.
 # database_cli.database_group.commands.pop(database_cli.create_database_create_stand_by_database_details.name)
 
 
-# @cli_util.copy_params_from_generated_command(database_cli.create_database_create_stand_by_database_details, params_to_exclude=['database'])
+@cli_util.copy_params_from_generated_command(database_cli.create_database_create_stand_by_database_details, params_to_exclude=['database'])
 @database_cli.database_group.command(name='create-standby-database', help="""Creates a new standby database for the given source database id.""")
 @cli_util.option('--database-admin-password', required=True, help=u"""The administrator password of the primary database in this Data Guard association.
 
@@ -4076,8 +4082,11 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @cli_util.option('--source-database-id', required=True, help=u"""The [OCID] of the source (primary) database for the Data Guard group.""")
 @cli_util.option('--source-tde-wallet-password', help=u"""The existing TDE wallet password of the source (primary) database.""")
 @cli_util.option('--sid-prefix', help=u"""Specifies a prefix for the `Oracle SID` of the standby database to be created.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].\n\nExample: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.help_option
 @click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
 def create_standby_database_for_multiple_standby(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds, **kwargs):
 
@@ -4111,6 +4120,12 @@ def create_standby_database_for_multiple_standby(ctx, wait_for_state, max_wait_s
 
     if 'sid_prefix' in kwargs and kwargs['sid_prefix']:
         create_standby_details.sid_prefix = kwargs['sid_prefix']
+
+    if 'freeform_tags' in kwargs and kwargs['freeform_tags']:
+        create_standby_details.freeform_tags = cli_util.parse_json_parameter('freeform_tags', kwargs['freeform_tags'])
+
+    if 'defined_tags' in kwargs and kwargs['defined_tags']:
+        create_standby_details.defined_tags = cli_util.parse_json_parameter('defined_tags', kwargs['defined_tags'])
 
     _details['database'] = create_standby_details
 
