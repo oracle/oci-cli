@@ -22,39 +22,39 @@ def ai_vision_root_group():
     pass
 
 
+@click.command(cli_util.override('ai_vision.stream_source_group.command_name', 'stream-source'), cls=CommandGroupWithAlias, help="""Stream source information""")
+@cli_util.help_option_group
+def stream_source_group():
+    pass
+
+
+@click.command(cli_util.override('ai_vision.stream_source_collection_group.command_name', 'stream-source-collection'), cls=CommandGroupWithAlias, help="""The results of a streamSource search.""")
+@cli_util.help_option_group
+def stream_source_collection_group():
+    pass
+
+
 @click.command(cli_util.override('ai_vision.video_job_group.command_name', 'video-job'), cls=CommandGroupWithAlias, help="""Job details for a video analysis.""")
 @cli_util.help_option_group
 def video_job_group():
     pass
 
 
-@click.command(cli_util.override('ai_vision.image_job_group.command_name', 'image-job'), cls=CommandGroupWithAlias, help="""The job details for a batch image analysis.""")
+@click.command(cli_util.override('ai_vision.stream_job_collection_group.command_name', 'stream-job-collection'), cls=CommandGroupWithAlias, help="""The results of a stream job search.""")
 @cli_util.help_option_group
-def image_job_group():
+def stream_job_collection_group():
     pass
 
 
-@click.command(cli_util.override('ai_vision.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing a work request.""")
+@click.command(cli_util.override('ai_vision.vision_private_endpoint_group.command_name', 'vision-private-endpoint'), cls=CommandGroupWithAlias, help="""Vision private endpoint.""")
 @cli_util.help_option_group
-def work_request_error_group():
+def vision_private_endpoint_group():
     pass
 
 
 @click.command(cli_util.override('ai_vision.project_group.command_name', 'project'), cls=CommandGroupWithAlias, help="""A Vision Project containing models.""")
 @cli_util.help_option_group
 def project_group():
-    pass
-
-
-@click.command(cli_util.override('ai_vision.analyze_document_result_group.command_name', 'analyze-document-result'), cls=CommandGroupWithAlias, help="""The document analysis results.""")
-@cli_util.help_option_group
-def analyze_document_result_group():
-    pass
-
-
-@click.command(cli_util.override('ai_vision.model_group.command_name', 'model'), cls=CommandGroupWithAlias, help="""Machine-learned Model.""")
-@cli_util.help_option_group
-def model_group():
     pass
 
 
@@ -76,12 +76,6 @@ def work_request_group():
     pass
 
 
-@click.command(cli_util.override('ai_vision.analyze_image_result_group.command_name', 'analyze-image-result'), cls=CommandGroupWithAlias, help="""The image analysis results.""")
-@cli_util.help_option_group
-def analyze_image_result_group():
-    pass
-
-
 @click.command(cli_util.override('ai_vision.document_job_group.command_name', 'document-job'), cls=CommandGroupWithAlias, help="""The job details for a batch document analysis.""")
 @cli_util.help_option_group
 def document_job_group():
@@ -94,18 +88,80 @@ def model_collection_group():
     pass
 
 
+@click.command(cli_util.override('ai_vision.stream_job_group.command_name', 'stream-job'), cls=CommandGroupWithAlias, help="""Job details for a stream analysis.""")
+@cli_util.help_option_group
+def stream_job_group():
+    pass
+
+
+@click.command(cli_util.override('ai_vision.image_job_group.command_name', 'image-job'), cls=CommandGroupWithAlias, help="""The job details for a batch image analysis.""")
+@cli_util.help_option_group
+def image_job_group():
+    pass
+
+
+@click.command(cli_util.override('ai_vision.stream_group_collection_group.command_name', 'stream-group-collection'), cls=CommandGroupWithAlias, help="""The results of a streamGroup search.""")
+@cli_util.help_option_group
+def stream_group_collection_group():
+    pass
+
+
+@click.command(cli_util.override('ai_vision.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing a work request.""")
+@cli_util.help_option_group
+def work_request_error_group():
+    pass
+
+
+@click.command(cli_util.override('ai_vision.stream_group_group.command_name', 'stream-group'), cls=CommandGroupWithAlias, help="""Details for a Stream Group""")
+@cli_util.help_option_group
+def stream_group_group():
+    pass
+
+
+@click.command(cli_util.override('ai_vision.analyze_document_result_group.command_name', 'analyze-document-result'), cls=CommandGroupWithAlias, help="""The document analysis results.""")
+@cli_util.help_option_group
+def analyze_document_result_group():
+    pass
+
+
+@click.command(cli_util.override('ai_vision.model_group.command_name', 'model'), cls=CommandGroupWithAlias, help="""Machine-learned Model.""")
+@cli_util.help_option_group
+def model_group():
+    pass
+
+
+@click.command(cli_util.override('ai_vision.analyze_image_result_group.command_name', 'analyze-image-result'), cls=CommandGroupWithAlias, help="""The image analysis results.""")
+@cli_util.help_option_group
+def analyze_image_result_group():
+    pass
+
+
+@click.command(cli_util.override('ai_vision.vision_private_endpoint_collection_group.command_name', 'vision-private-endpoint-collection'), cls=CommandGroupWithAlias, help="""The results of a visionPrivateEndpoint search.""")
+@cli_util.help_option_group
+def vision_private_endpoint_collection_group():
+    pass
+
+
+ai_vision_root_group.add_command(stream_source_group)
+ai_vision_root_group.add_command(stream_source_collection_group)
 ai_vision_root_group.add_command(video_job_group)
-ai_vision_root_group.add_command(image_job_group)
-ai_vision_root_group.add_command(work_request_error_group)
+ai_vision_root_group.add_command(stream_job_collection_group)
+ai_vision_root_group.add_command(vision_private_endpoint_group)
 ai_vision_root_group.add_command(project_group)
-ai_vision_root_group.add_command(analyze_document_result_group)
-ai_vision_root_group.add_command(model_group)
 ai_vision_root_group.add_command(work_request_log_entry_group)
 ai_vision_root_group.add_command(project_collection_group)
 ai_vision_root_group.add_command(work_request_group)
-ai_vision_root_group.add_command(analyze_image_result_group)
 ai_vision_root_group.add_command(document_job_group)
 ai_vision_root_group.add_command(model_collection_group)
+ai_vision_root_group.add_command(stream_job_group)
+ai_vision_root_group.add_command(image_job_group)
+ai_vision_root_group.add_command(stream_group_collection_group)
+ai_vision_root_group.add_command(work_request_error_group)
+ai_vision_root_group.add_command(stream_group_group)
+ai_vision_root_group.add_command(analyze_document_result_group)
+ai_vision_root_group.add_command(model_group)
+ai_vision_root_group.add_command(analyze_image_result_group)
+ai_vision_root_group.add_command(vision_private_endpoint_collection_group)
 
 
 @analyze_document_result_group.command(name=cli_util.override('ai_vision.analyze_document.command_name', 'analyze-document'), help=u"""Perform different types of image analysis. \n[Command Reference](analyzeDocument)""")
@@ -496,6 +552,220 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
     result = client.change_project_compartment(
         project_id=project_id,
         change_project_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@stream_group_group.command(name=cli_util.override('ai_vision.change_stream_group_compartment.command_name', 'change-compartment'), help=u"""Move a streamGroup from one compartment to another. When provided, If-Match is checked against the ETag values of the resource. \n[Command Reference](changeStreamGroupCompartment)""")
+@cli_util.option('--stream-group-id', required=True, help=u"""StreamGroup Id.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the streamGroup should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_stream_group_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_group_id, compartment_id, if_match):
+
+    if isinstance(stream_group_id, six.string_types) and len(stream_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.change_stream_group_compartment(
+        stream_group_id=stream_group_id,
+        change_stream_group_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_job_group.command(name=cli_util.override('ai_vision.change_stream_job_compartment.command_name', 'change-compartment'), help=u"""Move a streamJob from one compartment to another. When provided, If-Match is checked against the ETag values of the resource. \n[Command Reference](changeStreamJobCompartment)""")
+@cli_util.option('--stream-job-id', required=True, help=u"""Stream job id.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the streamJob should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_stream_job_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_job_id, compartment_id, if_match):
+
+    if isinstance(stream_job_id, six.string_types) and len(stream_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.change_stream_job_compartment(
+        stream_job_id=stream_job_id,
+        change_stream_job_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_source_group.command(name=cli_util.override('ai_vision.change_stream_source_compartment.command_name', 'change-compartment'), help=u"""Move a streamSource from one compartment to another. When provided, If-Match is checked against the ETag values of the resource. \n[Command Reference](changeStreamSourceCompartment)""")
+@cli_util.option('--stream-source-id', required=True, help=u"""StreamSource Id.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the streamSource should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_stream_source_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_source_id, compartment_id, if_match):
+
+    if isinstance(stream_source_id, six.string_types) and len(stream_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-source-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.change_stream_source_compartment(
+        stream_source_id=stream_source_id,
+        change_stream_source_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@vision_private_endpoint_group.command(name=cli_util.override('ai_vision.change_vision_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Move a visionPrivateEndpoint from one compartment to another. When provided, If-Match is checked against the ETag values of the resource. \n[Command Reference](changeVisionPrivateEndpointCompartment)""")
+@cli_util.option('--vision-private-endpoint-id', required=True, help=u"""Vision private endpoint Id.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the visionPrivateEndpoint should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_vision_private_endpoint_compartment(ctx, from_json, vision_private_endpoint_id, compartment_id, if_match):
+
+    if isinstance(vision_private_endpoint_id, six.string_types) and len(vision_private_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --vision-private-endpoint-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.change_vision_private_endpoint_compartment(
+        vision_private_endpoint_id=vision_private_endpoint_id,
+        change_vision_private_endpoint_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -947,6 +1217,377 @@ def create_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
+@stream_group_group.command(name=cli_util.override('ai_vision.create_stream_group.command_name', 'create'), help=u"""Registration of new streamGroup \n[Command Reference](createStreamGroup)""")
+@cli_util.option('--compartment-id', required=True, help=u"""[OCID] of compartment""")
+@cli_util.option('--display-name', help=u"""A human-friendly name for the streamGroup.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Stream""")
+@cli_util.option('--stream-source-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of streamSource OCIDs associated with the stream group""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--stream-overlaps', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of streamSource OCIDs where the streamSource overlaps in field of view.
+
+This option is a JSON list with items of type StreamGroupOverlap.  For documentation on StreamGroupOverlap please see our API reference: https://docs.cloud.oracle.com/api/#/en/aiservicevision/20220125/datatypes/StreamGroupOverlap.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'stream-source-ids': {'module': 'ai_vision', 'class': 'list[string]'}, 'stream-overlaps': {'module': 'ai_vision', 'class': 'list[StreamGroupOverlap]'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stream-source-ids': {'module': 'ai_vision', 'class': 'list[string]'}, 'stream-overlaps': {'module': 'ai_vision', 'class': 'list[StreamGroupOverlap]'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_vision', 'class': 'StreamGroup'})
+@cli_util.wrap_exceptions
+def create_stream_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, is_enabled, stream_source_ids, stream_overlaps, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if is_enabled is not None:
+        _details['isEnabled'] = is_enabled
+
+    if stream_source_ids is not None:
+        _details['streamSourceIds'] = cli_util.parse_json_parameter("stream_source_ids", stream_source_ids)
+
+    if stream_overlaps is not None:
+        _details['streamOverlaps'] = cli_util.parse_json_parameter("stream_overlaps", stream_overlaps)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.create_stream_group(
+        create_stream_group_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_job_group.command(name=cli_util.override('ai_vision.create_stream_job.command_name', 'create'), help=u"""Create a stream analysis job with given inputs and features. \n[Command Reference](createStreamJob)""")
+@cli_util.option('--stream-source-id', required=True, help=u"""[OCID] of streamSource.""")
+@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""a list of stream analysis features.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--stream-output-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""[OCID] of the compartment""")
+@cli_util.option('--display-name', help=u"""Stream job display name.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_vision', 'class': 'list[VideoStreamFeature]'}, 'stream-output-location': {'module': 'ai_vision', 'class': 'StreamOutputLocation'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'features': {'module': 'ai_vision', 'class': 'list[VideoStreamFeature]'}, 'stream-output-location': {'module': 'ai_vision', 'class': 'StreamOutputLocation'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_vision', 'class': 'StreamJob'})
+@cli_util.wrap_exceptions
+def create_stream_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_source_id, features, stream_output_location, compartment_id, display_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['streamSourceId'] = stream_source_id
+    _details['features'] = cli_util.parse_json_parameter("features", features)
+    _details['streamOutputLocation'] = cli_util.parse_json_parameter("stream_output_location", stream_output_location)
+    _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.create_stream_job(
+        create_stream_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_job_group.command(name=cli_util.override('ai_vision.create_stream_job_object_storage_output_location.command_name', 'create-stream-job-object-storage-output-location'), help=u"""Create a stream analysis job with given inputs and features. \n[Command Reference](createStreamJob)""")
+@cli_util.option('--stream-source-id', required=True, help=u"""[OCID] of streamSource.""")
+@cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""a list of stream analysis features.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""[OCID] of the compartment""")
+@cli_util.option('--stream-output-location-namespace-name', required=True, help=u"""The Object Storage namespace.""")
+@cli_util.option('--stream-output-location-bucket-name', required=True, help=u"""The Object Storage bucket name.""")
+@cli_util.option('--stream-output-location-prefix', required=True, help=u"""The Object Storage folder name.""")
+@cli_util.option('--display-name', help=u"""Stream job display name.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_vision', 'class': 'list[VideoStreamFeature]'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'features': {'module': 'ai_vision', 'class': 'list[VideoStreamFeature]'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_vision', 'class': 'StreamJob'})
+@cli_util.wrap_exceptions
+def create_stream_job_object_storage_output_location(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_source_id, features, compartment_id, stream_output_location_namespace_name, stream_output_location_bucket_name, stream_output_location_prefix, display_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['streamOutputLocation'] = {}
+    _details['streamSourceId'] = stream_source_id
+    _details['features'] = cli_util.parse_json_parameter("features", features)
+    _details['compartmentId'] = compartment_id
+    _details['streamOutputLocation']['namespaceName'] = stream_output_location_namespace_name
+    _details['streamOutputLocation']['bucketName'] = stream_output_location_bucket_name
+    _details['streamOutputLocation']['prefix'] = stream_output_location_prefix
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['streamOutputLocation']['outputLocationType'] = 'OBJECT_STORAGE'
+
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.create_stream_job(
+        create_stream_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_source_group.command(name=cli_util.override('ai_vision.create_stream_source.command_name', 'create'), help=u"""Registration of new streamSource \n[Command Reference](createStreamSource)""")
+@cli_util.option('--stream-source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""[OCID] of compartment""")
+@cli_util.option('--display-name', help=u"""A human-friendly name for the streamSource.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'stream-source-details': {'module': 'ai_vision', 'class': 'StreamSourceDetails'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stream-source-details': {'module': 'ai_vision', 'class': 'StreamSourceDetails'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_vision', 'class': 'StreamSource'})
+@cli_util.wrap_exceptions
+def create_stream_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_source_details, compartment_id, display_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['streamSourceDetails'] = cli_util.parse_json_parameter("stream_source_details", stream_source_details)
+    _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.create_stream_source(
+        create_stream_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_source_group.command(name=cli_util.override('ai_vision.create_stream_source_rtsp_source_details.command_name', 'create-stream-source-rtsp-source-details'), help=u"""Registration of new streamSource \n[Command Reference](createStreamSource)""")
+@cli_util.option('--compartment-id', required=True, help=u"""[OCID] of compartment""")
+@cli_util.option('--stream-source-details-stream-network-access-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--stream-source-details-camera-url', required=True, help=u"""url of camera""")
+@cli_util.option('--display-name', help=u"""A human-friendly name for the streamSource.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--stream-source-details-secret-id', help=u"""[OCID] of secret where credentials are stored in username:password format.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}, 'stream-source-details-stream-network-access-details': {'module': 'ai_vision', 'class': 'StreamNetworkAccessDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}, 'stream-source-details-stream-network-access-details': {'module': 'ai_vision', 'class': 'StreamNetworkAccessDetails'}}, output_type={'module': 'ai_vision', 'class': 'StreamSource'})
+@cli_util.wrap_exceptions
+def create_stream_source_rtsp_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, stream_source_details_stream_network_access_details, stream_source_details_camera_url, display_name, freeform_tags, defined_tags, stream_source_details_secret_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['streamSourceDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['streamSourceDetails']['streamNetworkAccessDetails'] = cli_util.parse_json_parameter("stream_source_details_stream_network_access_details", stream_source_details_stream_network_access_details)
+    _details['streamSourceDetails']['cameraUrl'] = stream_source_details_camera_url
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if stream_source_details_secret_id is not None:
+        _details['streamSourceDetails']['secretId'] = stream_source_details_secret_id
+
+    _details['streamSourceDetails']['sourceType'] = 'RTSP'
+
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.create_stream_source(
+        create_stream_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @video_job_group.command(name=cli_util.override('ai_vision.create_video_job.command_name', 'create'), help=u"""Create a video analysis job with given inputs and features. \n[Command Reference](createVideoJob)""")
 @cli_util.option('--input-location', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--features', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""a list of video analysis features.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1088,6 +1729,77 @@ def create_video_job_object_list_inline_input_location(ctx, from_json, wait_for_
     cli_util.render_response(result, ctx)
 
 
+@vision_private_endpoint_group.command(name=cli_util.override('ai_vision.create_vision_private_endpoint.command_name', 'create'), help=u"""Create a new visionPrivateEndpoint. \n[Command Reference](createVisionPrivateEndpoint)""")
+@cli_util.option('--subnet-id', required=True, help=u"""[OCID] of subnet""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment identifier.""")
+@cli_util.option('--display-name', help=u"""A human-friendly name for the visionPrivateEndpoint, that can be changed.""")
+@cli_util.option('--description', help=u"""An optional description of the visionPrivateEndpoint.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_vision', 'class': 'VisionPrivateEndpoint'})
+@cli_util.wrap_exceptions
+def create_vision_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subnet_id, compartment_id, display_name, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['subnetId'] = subnet_id
+    _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.create_vision_private_endpoint(
+        create_vision_private_endpoint_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @model_group.command(name=cli_util.override('ai_vision.delete_model.command_name', 'delete'), help=u"""Delete a model by identifier. \n[Command Reference](deleteModel)""")
 @cli_util.option('--model-id', required=True, help=u"""A unique model identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1168,6 +1880,230 @@ def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
     result = client.delete_project(
         project_id=project_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_group_group.command(name=cli_util.override('ai_vision.delete_stream_group.command_name', 'delete'), help=u"""Delete a  streamGroup \n[Command Reference](deleteStreamGroup)""")
+@cli_util.option('--stream-group-id', required=True, help=u"""StreamGroup Id.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_stream_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_group_id, if_match):
+
+    if isinstance(stream_group_id, six.string_types) and len(stream_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.delete_stream_group(
+        stream_group_id=stream_group_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_job_group.command(name=cli_util.override('ai_vision.delete_stream_job.command_name', 'delete'), help=u"""Get details of a stream analysis job. \n[Command Reference](deleteStreamJob)""")
+@cli_util.option('--stream-job-id', required=True, help=u"""Stream job id.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_stream_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_job_id, if_match):
+
+    if isinstance(stream_job_id, six.string_types) and len(stream_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.delete_stream_job(
+        stream_job_id=stream_job_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_source_group.command(name=cli_util.override('ai_vision.delete_stream_source.command_name', 'delete'), help=u"""Delete a  streamSource \n[Command Reference](deleteStreamSource)""")
+@cli_util.option('--stream-source-id', required=True, help=u"""StreamSource Id.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_stream_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_source_id, if_match):
+
+    if isinstance(stream_source_id, six.string_types) and len(stream_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-source-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.delete_stream_source(
+        stream_source_id=stream_source_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@vision_private_endpoint_group.command(name=cli_util.override('ai_vision.delete_vision_private_endpoint.command_name', 'delete'), help=u"""Delete a visionPrivateEndpoint by identifier. \n[Command Reference](deleteVisionPrivateEndpoint)""")
+@cli_util.option('--vision-private-endpoint-id', required=True, help=u"""Vision private endpoint Id.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_vision_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vision_private_endpoint_id, if_match):
+
+    if isinstance(vision_private_endpoint_id, six.string_types) and len(vision_private_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --vision-private-endpoint-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.delete_vision_private_endpoint(
+        vision_private_endpoint_id=vision_private_endpoint_id,
         **kwargs
     )
     if wait_for_state:
@@ -1288,6 +2224,72 @@ def get_project(ctx, from_json, project_id):
     cli_util.render_response(result, ctx)
 
 
+@stream_group_group.command(name=cli_util.override('ai_vision.get_stream_group.command_name', 'get'), help=u"""Get a  streamGroup \n[Command Reference](getStreamGroup)""")
+@cli_util.option('--stream-group-id', required=True, help=u"""StreamGroup Id.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_vision', 'class': 'StreamGroup'})
+@cli_util.wrap_exceptions
+def get_stream_group(ctx, from_json, stream_group_id):
+
+    if isinstance(stream_group_id, six.string_types) and len(stream_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.get_stream_group(
+        stream_group_id=stream_group_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@stream_job_group.command(name=cli_util.override('ai_vision.get_stream_job.command_name', 'get'), help=u"""Get details of a stream analysis job. \n[Command Reference](getStreamJob)""")
+@cli_util.option('--stream-job-id', required=True, help=u"""Stream job id.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_vision', 'class': 'StreamJob'})
+@cli_util.wrap_exceptions
+def get_stream_job(ctx, from_json, stream_job_id):
+
+    if isinstance(stream_job_id, six.string_types) and len(stream_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.get_stream_job(
+        stream_job_id=stream_job_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@stream_source_group.command(name=cli_util.override('ai_vision.get_stream_source.command_name', 'get'), help=u"""Get a  streamSource \n[Command Reference](getStreamSource)""")
+@cli_util.option('--stream-source-id', required=True, help=u"""StreamSource Id.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_vision', 'class': 'StreamSource'})
+@cli_util.wrap_exceptions
+def get_stream_source(ctx, from_json, stream_source_id):
+
+    if isinstance(stream_source_id, six.string_types) and len(stream_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-source-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.get_stream_source(
+        stream_source_id=stream_source_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @video_job_group.command(name=cli_util.override('ai_vision.get_video_job.command_name', 'get'), help=u"""Get details of a video analysis job. \n[Command Reference](getVideoJob)""")
 @cli_util.option('--video-job-id', required=True, help=u"""Video job id.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1305,6 +2307,28 @@ def get_video_job(ctx, from_json, video_job_id):
     client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
     result = client.get_video_job(
         video_job_id=video_job_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@vision_private_endpoint_group.command(name=cli_util.override('ai_vision.get_vision_private_endpoint.command_name', 'get'), help=u"""Get a visionPrivateEndpoint by identifier. \n[Command Reference](getVisionPrivateEndpoint)""")
+@cli_util.option('--vision-private-endpoint-id', required=True, help=u"""Vision private endpoint Id.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_vision', 'class': 'VisionPrivateEndpoint'})
+@cli_util.wrap_exceptions
+def get_vision_private_endpoint(ctx, from_json, vision_private_endpoint_id):
+
+    if isinstance(vision_private_endpoint_id, six.string_types) and len(vision_private_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --vision-private-endpoint-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.get_vision_private_endpoint(
+        vision_private_endpoint_id=vision_private_endpoint_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1454,6 +2478,251 @@ def list_projects(ctx, from_json, all_pages, page_size, compartment_id, lifecycl
         )
     else:
         result = client.list_projects(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@stream_group_collection_group.command(name=cli_util.override('ai_vision.list_stream_groups.command_name', 'list-stream-groups'), help=u"""Gets a list of the streamGroups in the specified compartment. \n[Command Reference](listStreamGroups)""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--id', help=u"""The filter to find the device with the given identifier.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. The default order for timeCreated is descending. The default order for displayName is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_vision', 'class': 'StreamGroupCollection'})
+@cli_util.wrap_exceptions
+def list_stream_groups(ctx, from_json, all_pages, page_size, compartment_id, id, display_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if id is not None:
+        kwargs['id'] = id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_stream_groups,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_stream_groups,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_stream_groups(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@stream_job_collection_group.command(name=cli_util.override('ai_vision.list_stream_jobs.command_name', 'list-stream-jobs'), help=u"""Get list of stream jobs \n[Command Reference](listStreamJobs)""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "INACTIVE", "NEEDS_ATTENTION"]), help=u"""The filter to match projects with the given lifecycleState.""")
+@cli_util.option('--id', help=u"""The filter to find the streamjob with the given identifier.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. The default order for timeCreated is descending. The default order for displayName is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_vision', 'class': 'StreamJobCollection'})
+@cli_util.wrap_exceptions
+def list_stream_jobs(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, id, display_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if id is not None:
+        kwargs['id'] = id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_stream_jobs,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_stream_jobs,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_stream_jobs(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@stream_source_collection_group.command(name=cli_util.override('ai_vision.list_stream_sources.command_name', 'list-stream-sources'), help=u"""Gets a list of the streamSources in the specified compartment. \n[Command Reference](listStreamSources)""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The filter to match projects with the given lifecycleState.""")
+@cli_util.option('--id', help=u"""The filter to find the device with the given identifier.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. The default order for timeCreated is descending. The default order for displayName is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_vision', 'class': 'StreamSourceCollection'})
+@cli_util.wrap_exceptions
+def list_stream_sources(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, id, display_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if id is not None:
+        kwargs['id'] = id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_stream_sources,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_stream_sources,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_stream_sources(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@vision_private_endpoint_collection_group.command(name=cli_util.override('ai_vision.list_vision_private_endpoints.command_name', 'list-vision-private-endpoints'), help=u"""Returns a list of visionPrivateEndpoints. \n[Command Reference](listVisionPrivateEndpoints)""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The filter to match projects with the given lifecycleState.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
+@cli_util.option('--id', help=u"""The filter to find the device with the given identifier.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. The default order for timeCreated is descending. The default order for displayName is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'ai_vision', 'class': 'VisionPrivateEndpointCollection'})
+@cli_util.wrap_exceptions
+def list_vision_private_endpoints(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_vision_private_endpoints,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_vision_private_endpoints,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_vision_private_endpoints(
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -1635,6 +2904,116 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
     cli_util.render_response(result, ctx)
 
 
+@stream_job_group.command(name=cli_util.override('ai_vision.start_stream_job.command_name', 'start'), help=u"""End a stream analysis Run. \n[Command Reference](startStreamJob)""")
+@cli_util.option('--stream-job-id', required=True, help=u"""Stream job id.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def start_stream_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_job_id, if_match):
+
+    if isinstance(stream_job_id, six.string_types) and len(stream_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.start_stream_job(
+        stream_job_id=stream_job_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_job_group.command(name=cli_util.override('ai_vision.stop_stream_job.command_name', 'stop'), help=u"""End a stream analysis Run. \n[Command Reference](stopStreamJob)""")
+@cli_util.option('--stream-job-id', required=True, help=u"""Stream job id.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def stop_stream_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_job_id, if_match):
+
+    if isinstance(stream_job_id, six.string_types) and len(stream_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.stop_stream_job(
+        stream_job_id=stream_job_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @model_group.command(name=cli_util.override('ai_vision.update_model.command_name', 'update'), help=u"""Updates the model metadata. \n[Command Reference](updateModel)""")
 @cli_util.option('--model-id', required=True, help=u"""A unique model identifier.""")
 @cli_util.option('--display-name', help=u"""A human-friendly name of the model, which can be changed.""")
@@ -1763,6 +3142,528 @@ def update_project(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
     result = client.update_project(
         project_id=project_id,
         update_project_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_group_group.command(name=cli_util.override('ai_vision.update_stream_group.command_name', 'update'), help=u"""Update a streamGroup \n[Command Reference](updateStreamGroup)""")
+@cli_util.option('--stream-group-id', required=True, help=u"""StreamGroup Id.""")
+@cli_util.option('--display-name', help=u"""A human-friendly name for the streamGroup.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Stream""")
+@cli_util.option('--stream-source-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of streamSource OCIDs associated with the stream group""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--stream-overlaps', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of streamSource OCIDs where the streamSource overlaps in field of view.
+
+This option is a JSON list with items of type StreamGroupOverlap.  For documentation on StreamGroupOverlap please see our API reference: https://docs.cloud.oracle.com/api/#/en/aiservicevision/20220125/datatypes/StreamGroupOverlap.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'stream-source-ids': {'module': 'ai_vision', 'class': 'list[string]'}, 'stream-overlaps': {'module': 'ai_vision', 'class': 'list[StreamGroupOverlap]'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stream-source-ids': {'module': 'ai_vision', 'class': 'list[string]'}, 'stream-overlaps': {'module': 'ai_vision', 'class': 'list[StreamGroupOverlap]'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_stream_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_group_id, display_name, is_enabled, stream_source_ids, stream_overlaps, freeform_tags, defined_tags, if_match):
+
+    if isinstance(stream_group_id, six.string_types) and len(stream_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-group-id cannot be whitespace or empty string')
+    if not force:
+        if stream_source_ids or stream_overlaps or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to stream-source-ids and stream-overlaps and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if is_enabled is not None:
+        _details['isEnabled'] = is_enabled
+
+    if stream_source_ids is not None:
+        _details['streamSourceIds'] = cli_util.parse_json_parameter("stream_source_ids", stream_source_ids)
+
+    if stream_overlaps is not None:
+        _details['streamOverlaps'] = cli_util.parse_json_parameter("stream_overlaps", stream_overlaps)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.update_stream_group(
+        stream_group_id=stream_group_id,
+        update_stream_group_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_job_group.command(name=cli_util.override('ai_vision.update_stream_job.command_name', 'update'), help=u"""Create a stream analysis job with given inputs and features. \n[Command Reference](updateStreamJob)""")
+@cli_util.option('--stream-job-id', required=True, help=u"""Stream job id.""")
+@cli_util.option('--stream-source-id', help=u"""[OCID] of streamSource""")
+@cli_util.option('--features', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of stream analysis features.
+
+This option is a JSON list with items of type VideoStreamFeature.  For documentation on VideoStreamFeature please see our API reference: https://docs.cloud.oracle.com/api/#/en/aiservicevision/20220125/datatypes/VideoStreamFeature.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--stream-output-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""Stream job display name.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_vision', 'class': 'list[VideoStreamFeature]'}, 'stream-output-location': {'module': 'ai_vision', 'class': 'StreamOutputLocation'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'features': {'module': 'ai_vision', 'class': 'list[VideoStreamFeature]'}, 'stream-output-location': {'module': 'ai_vision', 'class': 'StreamOutputLocation'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_stream_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_job_id, stream_source_id, features, stream_output_location, display_name, freeform_tags, defined_tags, if_match):
+
+    if isinstance(stream_job_id, six.string_types) and len(stream_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-job-id cannot be whitespace or empty string')
+    if not force:
+        if features or stream_output_location or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to features and stream-output-location and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if stream_source_id is not None:
+        _details['streamSourceId'] = stream_source_id
+
+    if features is not None:
+        _details['features'] = cli_util.parse_json_parameter("features", features)
+
+    if stream_output_location is not None:
+        _details['streamOutputLocation'] = cli_util.parse_json_parameter("stream_output_location", stream_output_location)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.update_stream_job(
+        stream_job_id=stream_job_id,
+        update_stream_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_job_group.command(name=cli_util.override('ai_vision.update_stream_job_object_storage_output_location.command_name', 'update-stream-job-object-storage-output-location'), help=u"""Create a stream analysis job with given inputs and features. \n[Command Reference](updateStreamJob)""")
+@cli_util.option('--stream-job-id', required=True, help=u"""Stream job id.""")
+@cli_util.option('--stream-output-location-namespace-name', required=True, help=u"""The Object Storage namespace.""")
+@cli_util.option('--stream-output-location-bucket-name', required=True, help=u"""The Object Storage bucket name.""")
+@cli_util.option('--stream-output-location-prefix', required=True, help=u"""The Object Storage folder name.""")
+@cli_util.option('--stream-source-id', help=u"""[OCID] of streamSource""")
+@cli_util.option('--features', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of stream analysis features.
+
+This option is a JSON list with items of type VideoStreamFeature.  For documentation on VideoStreamFeature please see our API reference: https://docs.cloud.oracle.com/api/#/en/aiservicevision/20220125/datatypes/VideoStreamFeature.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""Stream job display name.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'features': {'module': 'ai_vision', 'class': 'list[VideoStreamFeature]'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'features': {'module': 'ai_vision', 'class': 'list[VideoStreamFeature]'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_stream_job_object_storage_output_location(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_job_id, stream_output_location_namespace_name, stream_output_location_bucket_name, stream_output_location_prefix, stream_source_id, features, display_name, freeform_tags, defined_tags, if_match):
+
+    if isinstance(stream_job_id, six.string_types) and len(stream_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-job-id cannot be whitespace or empty string')
+    if not force:
+        if features or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to features and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['streamOutputLocation'] = {}
+    _details['streamOutputLocation']['namespaceName'] = stream_output_location_namespace_name
+    _details['streamOutputLocation']['bucketName'] = stream_output_location_bucket_name
+    _details['streamOutputLocation']['prefix'] = stream_output_location_prefix
+
+    if stream_source_id is not None:
+        _details['streamSourceId'] = stream_source_id
+
+    if features is not None:
+        _details['features'] = cli_util.parse_json_parameter("features", features)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['streamOutputLocation']['outputLocationType'] = 'OBJECT_STORAGE'
+
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.update_stream_job(
+        stream_job_id=stream_job_id,
+        update_stream_job_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_source_group.command(name=cli_util.override('ai_vision.update_stream_source.command_name', 'update'), help=u"""Update a streamSource \n[Command Reference](updateStreamSource)""")
+@cli_util.option('--stream-source-id', required=True, help=u"""StreamSource Id.""")
+@cli_util.option('--stream-source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A human-friendly name for the streamSource, that can be changed.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'stream-source-details': {'module': 'ai_vision', 'class': 'StreamSourceDetails'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'stream-source-details': {'module': 'ai_vision', 'class': 'StreamSourceDetails'}, 'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_stream_source(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_source_id, stream_source_details, display_name, freeform_tags, defined_tags, if_match):
+
+    if isinstance(stream_source_id, six.string_types) and len(stream_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-source-id cannot be whitespace or empty string')
+    if not force:
+        if stream_source_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to stream-source-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if stream_source_details is not None:
+        _details['streamSourceDetails'] = cli_util.parse_json_parameter("stream_source_details", stream_source_details)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.update_stream_source(
+        stream_source_id=stream_source_id,
+        update_stream_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@stream_source_group.command(name=cli_util.override('ai_vision.update_stream_source_rtsp_source_details.command_name', 'update-stream-source-rtsp-source-details'), help=u"""Update a streamSource \n[Command Reference](updateStreamSource)""")
+@cli_util.option('--stream-source-id', required=True, help=u"""StreamSource Id.""")
+@cli_util.option('--stream-source-details-stream-network-access-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--stream-source-details-camera-url', required=True, help=u"""url of camera""")
+@cli_util.option('--display-name', help=u"""A human-friendly name for the streamSource, that can be changed.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--stream-source-details-secret-id', help=u"""[OCID] of secret where credentials are stored in username:password format.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}, 'stream-source-details-stream-network-access-details': {'module': 'ai_vision', 'class': 'StreamNetworkAccessDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}, 'stream-source-details-stream-network-access-details': {'module': 'ai_vision', 'class': 'StreamNetworkAccessDetails'}})
+@cli_util.wrap_exceptions
+def update_stream_source_rtsp_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_source_id, stream_source_details_stream_network_access_details, stream_source_details_camera_url, display_name, freeform_tags, defined_tags, if_match, stream_source_details_secret_id):
+
+    if isinstance(stream_source_id, six.string_types) and len(stream_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-source-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['streamSourceDetails'] = {}
+    _details['streamSourceDetails']['streamNetworkAccessDetails'] = cli_util.parse_json_parameter("stream_source_details_stream_network_access_details", stream_source_details_stream_network_access_details)
+    _details['streamSourceDetails']['cameraUrl'] = stream_source_details_camera_url
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if stream_source_details_secret_id is not None:
+        _details['streamSourceDetails']['secretId'] = stream_source_details_secret_id
+
+    _details['streamSourceDetails']['sourceType'] = 'RTSP'
+
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.update_stream_source(
+        stream_source_id=stream_source_id,
+        update_stream_source_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@vision_private_endpoint_group.command(name=cli_util.override('ai_vision.update_vision_private_endpoint.command_name', 'update'), help=u"""Update the visionPrivateEndpoint metadata. \n[Command Reference](updateVisionPrivateEndpoint)""")
+@cli_util.option('--vision-private-endpoint-id', required=True, help=u"""Vision private endpoint Id.""")
+@cli_util.option('--display-name', help=u"""A human-friendly name for the visionPrivateEndpoint, that can be changed.""")
+@cli_util.option('--description', help=u"""An optional description of the visionPrivateEndpoint.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. It exists for cross-compatibility only. For example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ai_vision', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_vision', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_vision_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vision_private_endpoint_id, display_name, description, freeform_tags, defined_tags, if_match):
+
+    if isinstance(vision_private_endpoint_id, six.string_types) and len(vision_private_endpoint_id.strip()) == 0:
+        raise click.UsageError('Parameter --vision-private-endpoint-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('ai_vision', 'ai_service_vision', ctx)
+    result = client.update_vision_private_endpoint(
+        vision_private_endpoint_id=vision_private_endpoint_id,
+        update_vision_private_endpoint_details=_details,
         **kwargs
     )
     if wait_for_state:

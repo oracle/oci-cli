@@ -140,12 +140,6 @@ def compute_gpu_memory_fabric_group():
     pass
 
 
-@click.command(cli_util.override('compute.compute_gpu_memory_cluster_collection_group.command_name', 'compute-gpu-memory-cluster-collection'), cls=CommandGroupWithAlias, help="""A list of compute GPU memory clusters.""")
-@cli_util.help_option_group
-def compute_gpu_memory_cluster_collection_group():
-    pass
-
-
 @click.command(cli_util.override('compute.dedicated_vm_host_group.command_name', 'dedicated-vm-host'), cls=CommandGroupWithAlias, help="""A dedicated virtual machine host lets you host multiple VM instances on a dedicated server that is not shared with other tenancies.""")
 @cli_util.help_option_group
 def dedicated_vm_host_group():
@@ -327,7 +321,6 @@ compute_root_group.add_command(capacity_reservation_instance_group)
 compute_root_group.add_command(compute_hpc_island_group)
 compute_root_group.add_command(compute_capacity_reservation_instance_shape_group)
 compute_root_group.add_command(compute_gpu_memory_fabric_group)
-compute_root_group.add_command(compute_gpu_memory_cluster_collection_group)
 compute_root_group.add_command(dedicated_vm_host_group)
 compute_root_group.add_command(image_group)
 compute_root_group.add_command(instance_maintenance_reboot_group)
@@ -4867,7 +4860,6 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-host-group-id', help=u"""The OCID of the compute host group attached to the host where the bare metal instance will be launched.""")
 @cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
@@ -4940,7 +4932,7 @@ This option is a JSON list with items of type LaunchInstanceLicensingConfig.  Fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_host_group_id, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, placement_constraint_details, instance_configuration_id, licensing_configs):
+def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, placement_constraint_details, instance_configuration_id, licensing_configs):
 
     kwargs = {}
 
@@ -4977,9 +4969,6 @@ def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if compute_host_group_id is not None:
-        _details['computeHostGroupId'] = compute_host_group_id
 
     if compute_cluster_id is not None:
         _details['computeClusterId'] = compute_cluster_id
@@ -5121,7 +5110,6 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-host-group-id', help=u"""The OCID of the compute host group attached to the host where the bare metal instance will be launched.""")
 @cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
@@ -5207,7 +5195,7 @@ For volumes with the auto-tuned performance feature enabled, this is set to the 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}, 'source-details-instance-source-image-filter-details': {'module': 'core', 'class': 'InstanceSourceImageFilterDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_host_group_id, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, placement_constraint_details, instance_configuration_id, licensing_configs, source_details_boot_volume_size_in_gbs, source_details_image_id, source_details_boot_volume_vpus_per_gb, source_details_instance_source_image_filter_details):
+def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, placement_constraint_details, instance_configuration_id, licensing_configs, source_details_boot_volume_size_in_gbs, source_details_image_id, source_details_boot_volume_vpus_per_gb, source_details_instance_source_image_filter_details):
 
     kwargs = {}
 
@@ -5245,9 +5233,6 @@ def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_s
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if compute_host_group_id is not None:
-        _details['computeHostGroupId'] = compute_host_group_id
 
     if compute_cluster_id is not None:
         _details['computeClusterId'] = compute_cluster_id
@@ -5401,7 +5386,6 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-host-group-id', help=u"""The OCID of the compute host group attached to the host where the bare metal instance will be launched.""")
 @cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
@@ -5473,7 +5457,7 @@ This option is a JSON list with items of type LaunchInstanceLicensingConfig.  Fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_boot_volume_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_host_group_id, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, placement_constraint_details, instance_configuration_id, licensing_configs):
+def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_boot_volume_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, placement_constraint_details, instance_configuration_id, licensing_configs):
 
     kwargs = {}
 
@@ -5512,9 +5496,6 @@ def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if compute_host_group_id is not None:
-        _details['computeHostGroupId'] = compute_host_group_id
 
     if compute_cluster_id is not None:
         _details['computeClusterId'] = compute_cluster_id
@@ -5655,7 +5636,6 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-host-group-id', help=u"""The OCID of the compute host group attached to the host where the bare metal instance will be launched.""")
 @cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
@@ -5739,7 +5719,7 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_host_group_id, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_config_map):
+def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -5777,9 +5757,6 @@ def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_js
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if compute_host_group_id is not None:
-        _details['computeHostGroupId'] = compute_host_group_id
 
     if compute_cluster_id is not None:
         _details['computeClusterId'] = compute_cluster_id
@@ -5950,7 +5927,6 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-host-group-id', help=u"""The OCID of the compute host group attached to the host where the bare metal instance will be launched.""")
 @cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
@@ -6037,7 +6013,7 @@ If the applications that you run on the instance use a core-based licensing mode
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_host_group_id, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
+def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -6075,9 +6051,6 @@ def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, 
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if compute_host_group_id is not None:
-        _details['computeHostGroupId'] = compute_host_group_id
 
     if compute_cluster_id is not None:
         _details['computeClusterId'] = compute_cluster_id
@@ -6251,7 +6224,6 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-host-group-id', help=u"""The OCID of the compute host group attached to the host where the bare metal instance will be launched.""")
 @cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
@@ -6336,7 +6308,7 @@ If the applications that you run on the instance use a core-based licensing mode
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_host_group_id, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
+def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -6374,9 +6346,6 @@ def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_j
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if compute_host_group_id is not None:
-        _details['computeHostGroupId'] = compute_host_group_id
 
     if compute_cluster_id is not None:
         _details['computeClusterId'] = compute_cluster_id
@@ -6544,7 +6513,6 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-host-group-id', help=u"""The OCID of the compute host group attached to the host where the bare metal instance will be launched.""")
 @cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
@@ -6623,7 +6591,7 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_host_group_id, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_is_symmetric_multi_threading_enabled):
+def launch_instance_amd_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_is_symmetric_multi_threading_enabled):
 
     kwargs = {}
 
@@ -6661,9 +6629,6 @@ def launch_instance_amd_vm_launch_instance_platform_config(ctx, from_json, wait_
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if compute_host_group_id is not None:
-        _details['computeHostGroupId'] = compute_host_group_id
 
     if compute_cluster_id is not None:
         _details['computeClusterId'] = compute_cluster_id
@@ -6819,7 +6784,6 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-host-group-id', help=u"""The OCID of the compute host group attached to the host where the bare metal instance will be launched.""")
 @cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
@@ -6898,7 +6862,7 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_intel_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_host_group_id, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_is_symmetric_multi_threading_enabled):
+def launch_instance_intel_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_is_symmetric_multi_threading_enabled):
 
     kwargs = {}
 
@@ -6936,9 +6900,6 @@ def launch_instance_intel_vm_launch_instance_platform_config(ctx, from_json, wai
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if compute_host_group_id is not None:
-        _details['computeHostGroupId'] = compute_host_group_id
 
     if compute_cluster_id is not None:
         _details['computeClusterId'] = compute_cluster_id
@@ -7094,7 +7055,6 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-host-group-id', help=u"""The OCID of the compute host group attached to the host where the bare metal instance will be launched.""")
 @cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
@@ -7179,7 +7139,7 @@ If the applications that you run on the instance use a core-based licensing mode
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_host_group_id, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
+def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -7217,9 +7177,6 @@ def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_j
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if compute_host_group_id is not None:
-        _details['computeHostGroupId'] = compute_host_group_id
 
     if compute_cluster_id is not None:
         _details['computeClusterId'] = compute_cluster_id
@@ -7387,7 +7344,6 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-host-group-id', help=u"""The OCID of the compute host group attached to the host where the bare metal instance will be launched.""")
 @cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
@@ -7474,7 +7430,7 @@ If the applications that you run on the instance use a core-based licensing mode
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_host_group_id, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
+def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -7512,9 +7468,6 @@ def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json,
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if compute_host_group_id is not None:
-        _details['computeHostGroupId'] = compute_host_group_id
 
     if compute_cluster_id is not None:
         _details['computeClusterId'] = compute_cluster_id
@@ -7688,7 +7641,6 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-host-group-id', help=u"""The OCID of the compute host group attached to the host where the bare metal instance will be launched.""")
 @cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
@@ -7775,7 +7727,7 @@ If the applications that you run on the instance use a core-based licensing mode
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_generic_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_host_group_id, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
+def launch_instance_generic_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -7813,9 +7765,6 @@ def launch_instance_generic_bm_launch_instance_platform_config(ctx, from_json, w
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if compute_host_group_id is not None:
-        _details['computeHostGroupId'] = compute_host_group_id
 
     if compute_cluster_id is not None:
         _details['computeClusterId'] = compute_cluster_id
@@ -7989,7 +7938,6 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-host-group-id', help=u"""The OCID of the compute host group attached to the host where the bare metal instance will be launched.""")
 @cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
@@ -8073,7 +8021,7 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_milan_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_host_group_id, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_config_map):
+def launch_instance_amd_milan_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -8111,9 +8059,6 @@ def launch_instance_amd_milan_bm_gpu_launch_instance_platform_config(ctx, from_j
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if compute_host_group_id is not None:
-        _details['computeHostGroupId'] = compute_host_group_id
 
     if compute_cluster_id is not None:
         _details['computeClusterId'] = compute_cluster_id
@@ -8285,7 +8230,6 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-host-group-id', help=u"""The OCID of the compute host group attached to the host where the bare metal instance will be launched.""")
 @cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
@@ -8357,7 +8301,7 @@ This option is a JSON list with items of type LaunchInstanceLicensingConfig.  Fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_host_group_placement_constraint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, placement_constraint_details_compute_host_group_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_host_group_id, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, instance_configuration_id, licensing_configs):
+def launch_instance_host_group_placement_constraint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, placement_constraint_details_compute_host_group_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, instance_configuration_id, licensing_configs):
 
     kwargs = {}
 
@@ -8396,9 +8340,6 @@ def launch_instance_host_group_placement_constraint_details(ctx, from_json, wait
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if compute_host_group_id is not None:
-        _details['computeHostGroupId'] = compute_host_group_id
 
     if compute_cluster_id is not None:
         _details['computeClusterId'] = compute_cluster_id
@@ -8540,7 +8481,6 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compute-host-group-id', help=u"""The OCID of the compute host group attached to the host where the bare metal instance will be launched.""")
 @cli_util.option('--compute-cluster-id', help=u"""The [OCID] of the [compute cluster] that the instance will be created in.""")
 @cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
 @cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
@@ -8612,7 +8552,7 @@ This option is a JSON list with items of type LaunchInstanceLicensingConfig.  Fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_compute_bare_metal_host_placement_constraint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, placement_constraint_details_compute_bare_metal_host_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_host_group_id, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, instance_configuration_id, licensing_configs):
+def launch_instance_compute_bare_metal_host_placement_constraint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, placement_constraint_details_compute_bare_metal_host_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, instance_configuration_id, licensing_configs):
 
     kwargs = {}
 
@@ -8651,9 +8591,6 @@ def launch_instance_compute_bare_metal_host_placement_constraint_details(ctx, fr
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if compute_host_group_id is not None:
-        _details['computeHostGroupId'] = compute_host_group_id
 
     if compute_cluster_id is not None:
         _details['computeClusterId'] = compute_cluster_id
@@ -9734,7 +9671,7 @@ def list_compute_gpu_memory_cluster_instances(ctx, from_json, all_pages, page_si
     cli_util.render_response(result, ctx)
 
 
-@compute_gpu_memory_cluster_collection_group.command(name=cli_util.override('compute.list_compute_gpu_memory_clusters.command_name', 'list-compute-gpu-memory-clusters'), help=u"""List all of the compute GPU memory clusters. \n[Command Reference](listComputeGpuMemoryClusters)""")
+@compute_gpu_memory_cluster_group.command(name=cli_util.override('compute.list_compute_gpu_memory_clusters.command_name', 'list'), help=u"""List all of the compute GPU memory clusters. \n[Command Reference](listComputeGpuMemoryClusters)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--compute-gpu-memory-cluster-id', help=u"""A filter to return only the listings that matches the given GPU memory cluster id.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
@@ -11048,6 +10985,7 @@ This is an asynchronous operation. The instance's `lifecycleState` changes to TE
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--preserve-boot-volume', type=click.BOOL, help=u"""Specifies whether to delete or preserve the boot volume when terminating an instance. When set to `true`, the boot volume is preserved. The default value is `false`.""")
 @cli_util.option('--preserve-data-volumes-created-at-launch', type=click.BOOL, help=u"""Specifies whether to delete or preserve the data volumes created during launch when terminating an instance. When set to `true`, the data volumes are preserved. The default value is `true`.""")
+@cli_util.option('--recycle-level', type=custom_types.CliCaseInsensitiveChoice(["FULL_RECYCLE"]), help=u"""This optional parameter overrides recycle level for hosts. The parameter can be used when hosts are associated with a Capacity Reservation. * `FULL_RECYCLE` - Does not skip host wipe. This is the default behavior.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -11057,7 +10995,7 @@ This is an asynchronous operation. The instance's `lifecycleState` changes to TE
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def terminate_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, if_match, preserve_boot_volume, preserve_data_volumes_created_at_launch):
+def terminate_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, if_match, preserve_boot_volume, preserve_data_volumes_created_at_launch, recycle_level):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
@@ -11069,6 +11007,8 @@ def terminate_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
         kwargs['preserve_boot_volume'] = preserve_boot_volume
     if preserve_data_volumes_created_at_launch is not None:
         kwargs['preserve_data_volumes_created_at_launch'] = preserve_data_volumes_created_at_launch
+    if recycle_level is not None:
+        kwargs['recycle_level'] = recycle_level
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.terminate_instance(
         instance_id=instance_id,

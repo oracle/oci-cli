@@ -6,6 +6,145 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.64.0 - 2025-08-12
+--------------------
+Added
+~~~~~
+* Golden Gate service
+
+  * Added new parameters for creating/updating Amazon Kinesis connection: --connection-endpoint --connection-region
+  
+    * ``oci goldengate connection create-amazon-kinesis-connection --connection-endpoint --connection-region``
+    * ``oci goldengate connection update-amazon-kinesis-connection --connection-endpoint --connection-region``
+
+  * Added new parameter for creating/updating Azure Data Lake Storage connection: --azure-authority-host
+  
+    * ``oci goldengate connection create-azure-data-lake-storage-connection --azure-authority-host``
+    * ``oci goldengate connection update-azure-data-lake-storage-connection --azure-authority-host``
+
+* CIMS service
+
+  * Support for adding additional contact to CMOS SR in Cloud Incident Management Service.
+    
+    * ``oci support incident update ----activity-type, --compartment-id | -c, --comments, --incident-key, --type,  --bearertoken, --bearertokentype, --csi, --domainid, --contact, -? | -h | --help, --homeregion, --idtoken, --ocid, --problemtype``
+
+  * Support for Upload attachment API in Cloud Incident Management Service.
+    
+    * ``oci support incident put-attachment  --ocid, --is-restricted-flag, --file,  --compartment-id | -c, --incident-key,   --bearertoken, --bearertokentype, --csi, --domainid, -? | -h | --help, --homeregion, --idtoken, --problemtype``
+
+* AI Vision service
+
+  * Support of Stream Video Analysis in OCI Vision Service
+    
+    * ``oci ai-vision stream-source create``
+    * ``oci ai-vision stream-source update``
+    * ``oci ai-vision stream-source create-stream-source-rtsp-source-details``
+    * ``oci ai-vision stream-source update-stream-source-rtsp-source-detail``
+    * ``oci ai-vision stream-source delete``
+    * ``oci ai-vision stream-source get``
+    * ``oci ai-vision stream-source change-compartment``
+    * ``oci ai-vision stream-source-collection list-stream-sources``
+    * ``oci ai-vision stream-job create``
+    * ``oci ai-vision stream-job update``
+    * ``oci ai-vision stream-job delete``
+    * ``oci ai-vision stream-job get``
+    * ``oci ai-vision stream-job change-compartment``
+    * ``oci ai-vision stream-job start``
+    * ``oci ai-vision stream-job stop``
+    * ``oci ai-vision stream-job create-stream-job-object-storage-output-location``
+    * ``oci ai-vision stream-job update-stream-job-object-storage-output-location``
+    * ``oci ai-vision stream-job-collection list-stream-jobs``
+    * ``oci ai-vision stream-group create``
+    * ``oci ai-vision stream-group update``
+    * ``oci ai-vision stream-group delete``
+    * ``oci ai-vision stream-group get``
+    * ``oci ai-vision stream-group change-compartment``
+    * ``oci ai-vision stream-group-collection list-stream-groups``
+    * ``oci ai-vision vision-private-endpoint create``
+    * ``oci ai-vision vision-private-endpoint update``
+    * ``oci ai-vision vision-private-endpoint delete``
+    * ``oci ai-vision vision-private-endpoint get``
+    * ``oci ai-vision vision-private-endpoint change-compartment``
+    * ``oci ai-vision vision-private-endpoint-collection list-vision-private-endpoints``
+
+* Redis service
+
+  * Support for the OCI Cache Config Sets
+
+    * ``oci redis oci-cache-config-set``
+
+* Devops service
+
+  * Added commands for pull request reopen and resolve
+
+    * ``oci devops pull-request reopen-pull-request-comment``
+    * ``oci devops pull-request resolve-pull-request-comment``
+    
+* Datascience service
+
+  * Support for Distributed Training V2 (DTv2) as a part of the Data Science Service
+    
+    * ``oci data-science pipeline-run create --infrastructure-configuration-override-details``
+    * ``oci data-science job create --job-node-configuration-details``
+    * ``oci data-science job-run create --job-node-configuration-override-details``
+    * ``oci data-science job-run create --job-infrastructure-configuration-override-details``
+
+* DataSafe service
+
+  * Added multiple commands related to security assessment
+    
+    * ``oci data-safe security-assessment apply-security-assessment-template --security-assessment-id, -? | -h | --help, --template-assessment-id``
+    * ``oci data-safe security-assessment compare-to-template-baseline --comparison-security-assessment-id, --security-assessment-id, -? | -h | --help``
+    * ``oci data-safe security-assessment get-template-baseline-comparison --comparison-security-assessment-id, --security-assessment-id, -? | -h | --help``
+    * ``oci data-safe security-assessment list-checks --security-assessment-id, --all, -? | -h | --help, --key, --scim-query``
+    * ``oci data-safe security-assessment list-template-analytics --compartment-id | -c, --access-level, --all, --compartment-id-in-subtree, --group-by, -? | -h | --help, --is-group, --target-database-group-id, --target-id, --template-assessment-id, --template-baseline-assessment-id``
+    * ``oci data-safe security-assessment patch-checks --security-assessment-id, -? | -h | --help, --items``
+    * ``oci data-safe security-assessment patch-findings --security-assessment-id, -? | -h | --help, --items``
+    * ``oci data-safe security-assessment remove --security-assessment-id, -? | -h | --help, --template-assessment-id``
+    * ``oci data-safe target-database-group change-compartment --compartment-id | -c, --target-database-group-id, -? | -h | --help``
+    * ``oci data-safe target-database-group create --compartment-id | -c, --display-name, --matching-criteria, --defined-tags, --description, --freeform-tags, -? | -h | --help``
+    * ``oci data-safe target-database-group delete --target-database-group-id, --force, -? | -h | --help``
+    * ``oci data-safe target-database-group get --target-database-group-id, -? | -h | --help``
+    * ``oci data-safe target-database-group get-group-members --target-database-group-id, -? | -h | --help, --target-database-id``
+    * ``oci data-safe target-database-group update --target-database-group-id, --defined-tags, --description, --display-name, --force, --freeform-tags, -? | -h | --help, --matching-criteria``
+    * ``oci data-safe target-database-group-audit-profile calculate-target-database-group-audit-profile-deviations --target-database-group-audit-profile-id, -? | -h | --help``
+    * ``oci data-safe target-database-group-audit-profile change-compartment --compartment-id | -c, --target-database-group-audit-profile-id, -? | -h | --help``
+    * ``oci data-safe target-database-group-audit-profile create --compartment-id | -c, --target-database-group-id, --defined-tags, --description, --display-name, --freeform-tags, -? | -h | --help, --is-paid-usage-enabled, --offline-months, --online-months``
+    * ``oci data-safe target-database-group-audit-profile delete --target-database-group-audit-profile-id, --force, -? | -h | --help``
+    * ``oci data-safe target-database-group-audit-profile get --target-database-group-audit-profile-id, -? | -h | --help``
+    * ``oci data-safe target-database-group-audit-profile list --compartment-id | -c, --access-level, --all, --compartment-id-in-subtree, --display-name, -? | -h | --help, --is-paid-usage-enabled, --target-database-group-audit-profile-id, --target-database-group-id``
+    * ``oci data-safe target-database-group-audit-profile list-target-database-group-audit-profile-deviations --target-database-group-audit-profile-id, --work-request-id, --all, --display-name, -? | -h | --help``
+    * ``oci data-safe target-database-group-audit-profile update --target-database-group-audit-profile-id, --defined-tags, --description, --display-name, --force, --freeform-tags, -? | -h | --help, --is-paid-usage-enabled, --offline-months, --online-months``
+    * ``oci data-safe target-database-group-summary list-target-database-groups --compartment-id | -c, --access-level, --all, --compartment-id-in-subtree, --display-name, --filter, -? | -h | --help, --target-database-group-id, --time-created-greater-than-or-equal-to, --time-created-less-than``
+
+Modified
+~~~~~~~~
+* DataSafe Service
+
+  * Support for adding scim query support to finding analytics
+
+    * ``oci data-safe security-assessment list-finding-analytics --scim-query``
+
+  * [BREAKING] Moved one parameter from optional to required
+
+    * ``oci data-safe security-assessment create --target-id``
+
+* Core service
+
+  * [BREAKING] Removed parameter compute-host-group-id from multiple launch instance commands.
+
+    * ``oci compute instance launch``
+    * ``oci compute instance launch-instance-compute-bare-metal-host-placement-constraint-details``
+    * ``oci compute instance launch-instance-host-group-placement-constraint-details``
+
+  * Changed static-routes required parameter to optional parameter from ip-sec-connection command
+
+    * ``oci network ip-sec-connection create``
+
+  * [BREAKING] Renamed command oci compute compute-gpu-memory-cluster-collection list-compute-gpu-memory-clusters to the below command
+
+    * ``oci compute compute-gpu-memory-cluster list``
+
 3.63.3 - 2025-08-05
 --------------------
 Added
