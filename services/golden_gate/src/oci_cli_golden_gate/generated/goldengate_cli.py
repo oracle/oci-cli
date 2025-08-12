@@ -1893,6 +1893,8 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--secret-access-key', help=u"""Secret access key to access the Amazon Kinesis. Deprecated: This field is deprecated and replaced by \"secretAccessKeySecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--secret-access-key-secret-id', help=u"""The [OCID] of the Secret where the secret access key is stored. Note: When provided, 'secretAccessKey' field must not be provided.""")
+@cli_util.option('--endpoint-parameterconflict', help=u"""The endpoint URL of the Amazon Kinesis service. e.g.: 'https://kinesis.us-east-1.amazonaws.com' If not provided, GoldenGate will default to 'https://kinesis.<region>.amazonaws.com'.""")
+@cli_util.option('--region-parameterconflict', help=u"""The name of the AWS region. If not provided, GoldenGate will default to 'us-west-1'. Note: this property will become mandatory after July 30, 2026.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1901,7 +1903,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_amazon_kinesis_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, access_key_id, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, secret_access_key, secret_access_key_secret_id):
+def create_connection_create_amazon_kinesis_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, access_key_id, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, secret_access_key, secret_access_key_secret_id, endpoint_parameterconflict, region_parameterconflict):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1947,6 +1949,12 @@ def create_connection_create_amazon_kinesis_connection_details(ctx, from_json, w
 
     if secret_access_key_secret_id is not None:
         _details['secretAccessKeySecretId'] = secret_access_key_secret_id
+
+    if endpoint_parameterconflict is not None:
+        _details['endpoint'] = endpoint_parameterconflict
+
+    if region_parameterconflict is not None:
+        _details['region'] = region_parameterconflict
 
     _details['connectionType'] = 'AMAZON_KINESIS'
 
@@ -2016,6 +2024,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--client-secret', help=u"""Azure client secret (aka application password) for authentication. This property is required when 'authenticationType' is set to 'AZURE_ACTIVE_DIRECTORY'. e.g.: dO29Q~F5-VwnA.lZdd11xFF_t5NAXCaGwDl9NbT1 Deprecated: This field is deprecated and replaced by \"clientSecretSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--client-secret-secret-id', help=u"""The [OCID] of the Secret where the client secret is stored. Note: When provided, 'clientSecret' field must not be provided.""")
 @cli_util.option('--endpoint-parameterconflict', help=u"""Azure Storage service endpoint. e.g: https://test.blob.core.windows.net""")
+@cli_util.option('--azure-authority-host', help=u"""The endpoint used for authentication with Microsoft Entra ID (formerly Azure Active Directory). Default value: https://login.microsoftonline.com When connecting to a non-public Azure Cloud, the endpoint must be provided, eg: * Azure China: https://login.chinacloudapi.cn/ * Azure US Government: https://login.microsoftonline.us/""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2024,7 +2033,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_azure_data_lake_storage_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, authentication_type, account_name, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, account_key, account_key_secret_id, sas_token, sas_token_secret_id, azure_tenant_id, client_id, client_secret, client_secret_secret_id, endpoint_parameterconflict):
+def create_connection_create_azure_data_lake_storage_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, authentication_type, account_name, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, account_key, account_key_secret_id, sas_token, sas_token_secret_id, azure_tenant_id, client_id, client_secret, client_secret_secret_id, endpoint_parameterconflict, azure_authority_host):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2093,6 +2102,9 @@ def create_connection_create_azure_data_lake_storage_connection_details(ctx, fro
     if endpoint_parameterconflict is not None:
         _details['endpoint'] = endpoint_parameterconflict
 
+    if azure_authority_host is not None:
+        _details['azureAuthorityHost'] = azure_authority_host
+
     _details['connectionType'] = 'AZURE_DATA_LAKE_STORAGE'
 
     client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
@@ -2134,7 +2146,6 @@ def create_connection_create_azure_data_lake_storage_connection_details(ctx, fro
 @cli_util.option('--display-name', required=True, help=u"""An object's Display Name.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--technology-type', required=True, help=u"""The Google PubSub technology type.""")
-@cli_util.option('--service-account-key-file', required=True, help=u"""The base64 encoded content of the service account key file containing the credentials required to use Google PubSub. Deprecated: This field is deprecated and replaced by \"serviceAccountKeyFileSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
 
@@ -2151,6 +2162,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the target subnet of the dedicated connection.""")
 @cli_util.option('--routing-method', type=custom_types.CliCaseInsensitiveChoice(["SHARED_SERVICE_ENDPOINT", "SHARED_DEPLOYMENT_ENDPOINT", "DEDICATED_ENDPOINT"]), help=u"""Controls the network traffic direction to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through the Goldengate Service's network to public hosts. Cannot be used for private targets. SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows from the assigned deployment's private endpoint through the deployment's subnet. DEDICATED_ENDPOINT: A dedicated private endpoint is created in the target VCN subnet for the connection. The subnetId is required when DEDICATED_ENDPOINT networking is selected.""")
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
+@cli_util.option('--service-account-key-file', help=u"""The base64 encoded content of the service account key file containing the credentials required to use Google PubSub. Deprecated: This field is deprecated and replaced by \"serviceAccountKeyFileSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--service-account-key-file-secret-id', help=u"""The [OCID] of the Secret where the content of the service account key file is stored, which contains the credentials required to use Google PubSub. Note: When provided, 'serviceAccountKeyFile' field must not be provided.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2160,7 +2172,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}}, output_type={'module': 'golden_gate', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection_create_google_pub_sub_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, service_account_key_file, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, service_account_key_file_secret_id):
+def create_connection_create_google_pub_sub_connection_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, technology_type, description, freeform_tags, defined_tags, locks, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, service_account_key_file, service_account_key_file_secret_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2169,7 +2181,6 @@ def create_connection_create_google_pub_sub_connection_details(ctx, from_json, w
     _details['displayName'] = display_name
     _details['compartmentId'] = compartment_id
     _details['technologyType'] = technology_type
-    _details['serviceAccountKeyFile'] = service_account_key_file
 
     if description is not None:
         _details['description'] = description
@@ -2200,6 +2211,9 @@ def create_connection_create_google_pub_sub_connection_details(ctx, from_json, w
 
     if does_use_secret_ids is not None:
         _details['doesUseSecretIds'] = does_use_secret_ids
+
+    if service_account_key_file is not None:
+        _details['serviceAccountKeyFile'] = service_account_key_file
 
     if service_account_key_file_secret_id is not None:
         _details['serviceAccountKeyFileSecretId'] = service_account_key_file_secret_id
@@ -2376,7 +2390,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--private-key-passphrase', help=u"""The passphrase of the private key. Deprecated: This field is deprecated and replaced by \"privateKeyPassphraseSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--private-key-passphrase-secret-id', help=u"""The [OCID] of the Secret that stores the passphrase of the private key. Note: When provided, 'privateKeyPassphrase' field must not be provided.""")
 @cli_util.option('--public-key-fingerprint', help=u"""The fingerprint of the API Key of the user specified by the userId. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm""")
-@cli_util.option('--should-use-resource-principal', type=click.BOOL, help=u"""Indicates that the user intents to connect to the instance through resource principal.""")
+@cli_util.option('--should-use-resource-principal', type=click.BOOL, help=u"""Specifies that the user intends to authenticate to the instance using a resource principal. Default: false""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3091,7 +3105,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--private-key-passphrase', help=u"""The passphrase of the private key. Deprecated: This field is deprecated and replaced by \"privateKeyPassphraseSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--private-key-passphrase-secret-id', help=u"""The [OCID] of the Secret that stores the passphrase of the private key. Note: When provided, 'privateKeyPassphrase' field must not be provided.""")
 @cli_util.option('--public-key-fingerprint', help=u"""The fingerprint of the API Key of the user specified by the userId. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm""")
-@cli_util.option('--should-use-resource-principal', type=click.BOOL, help=u"""Indicates that the user intents to connect to the instance through resource principal.""")
+@cli_util.option('--should-use-resource-principal', type=click.BOOL, help=u"""Specifies that the user intends to authenticate to the instance using a resource principal. Default: false""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3231,7 +3245,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--jndi-security-principal', help=u"""Specifies the identity of the principal (user) to be authenticated. e.g.: 'admin2'""")
 @cli_util.option('--jndi-security-credentials', help=u"""The password associated to the principal. Deprecated: This field is deprecated and replaced by \"jndiSecurityCredentialsSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--jndi-security-credentials-secret-id', help=u"""The [OCID] of the Secret where the security credentials are stored associated to the principal. Note: When provided, 'jndiSecurityCredentials' field must not be provided.""")
-@cli_util.option('--connection-url', help=u"""Connectin URL of the Java Message Service, specifying the protocol, host, and port. e.g.: 'mq://myjms.host.domain:7676'""")
+@cli_util.option('--connection-url', help=u"""Connection URL of the Java Message Service, specifying the protocol, host, and port. e.g.: 'mq://myjms.host.domain:7676'""")
 @cli_util.option('--connection-factory', help=u"""The of Java class implementing javax.jms.ConnectionFactory interface supplied by the Java Message Service provider. e.g.: 'com.stc.jmsjca.core.JConnectionFactoryXA'""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect to the Java Message Service. This username must already exist and be available by the Java Message Service to be connected to.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated Java Message Service. Deprecated: This field is deprecated and replaced by \"passwordSecretId\". This field will be removed after February 15 2026.""")
@@ -3829,8 +3843,8 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--does-use-secret-ids', type=click.BOOL, help=u"""Indicates that sensitive attributes are provided via Secrets.""")
 @cli_util.option('--secret-access-key', help=u"""Secret access key to access the Amazon S3 bucket. e.g.: \"this-is-not-the-secret\" Deprecated: This field is deprecated and replaced by \"secretAccessKeySecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--secret-access-key-secret-id', help=u"""The [OCID] of the Secret where the Secret Access Key is stored. Note: When provided, 'secretAccessKey' field must not be provided.""")
-@cli_util.option('--endpoint-parameterconflict', help=u"""The Amazon Endpoint for S3. e.g.: 'https://my-bucket.s3.us-east-1.amazonaws.com'""")
-@cli_util.option('--region-parameterconflict', help=u"""The name of the region where the bucket is created.""")
+@cli_util.option('--endpoint-parameterconflict', help=u"""The Amazon Endpoint for S3. e.g.: 'https://my-bucket.s3.us-east-1.amazonaws.com' If not provided, GoldenGate will default to 'https://s3.<region>.amazonaws.com'.""")
+@cli_util.option('--region-parameterconflict', help=u"""The name of the AWS region where the bucket is created. If not provided, GoldenGate will default to 'us-west-2'. Note: this property will become mandatory after May 20, 2026.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -4092,10 +4106,18 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @cli_util.option('--additional-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of name-value pair attribute entries. Used as additional parameters in connection string.
 
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--ssl-client-keystoredb', help=u"""The base64 encoded keystore file created at the client containing the server certificate / CA root certificate. Deprecated: This field is deprecated and replaced by \"sslClientKeystoredbSecretId\". This field will be removed after February 15 2026.""")
-@cli_util.option('--ssl-client-keystoredb-secret-id', help=u"""The [OCID] of the Secret where the keystore file stored, which created at the client containing the server certificate / CA root certificate. Note: When provided, 'sslClientKeystoredb' field must not be provided.""")
-@cli_util.option('--ssl-client-keystash', help=u"""The base64 encoded keystash file which contains the encrypted password to the key database file. Deprecated: This field is deprecated and replaced by \"sslClientKeystashSecretId\". This field will be removed after February 15 2026.""")
-@cli_util.option('--ssl-client-keystash-secret-id', help=u"""The [OCID] of the Secret where the keystash file is stored, which contains the encrypted password to the key database file. Note: When provided, 'sslClientKeystash' field must not be provided.""")
+@cli_util.option('--ssl-client-keystoredb', help=u"""The base64 encoded keystore file created at the client containing the server certificate / CA root certificate. This property is not supported for IBM Db2 for i, as client TLS mode is not available.
+
+Deprecated: This field is deprecated and replaced by \"sslClientKeystoredbSecretId\". This field will be removed after February 15 2026.""")
+@cli_util.option('--ssl-client-keystoredb-secret-id', help=u"""The [OCID] of the Secret where the keystore file stored, which created at the client containing the server certificate / CA root certificate. This property is not supported for IBM Db2 for i, as client TLS mode is not available.
+
+Note: When provided, 'sslClientKeystoredb' field must not be provided.""")
+@cli_util.option('--ssl-client-keystash', help=u"""The base64 encoded keystash file which contains the encrypted password to the key database file. This property is not supported for IBM Db2 for i, as client TLS mode is not available.
+
+Deprecated: This field is deprecated and replaced by \"sslClientKeystashSecretId\". This field will be removed after February 15 2026.""")
+@cli_util.option('--ssl-client-keystash-secret-id', help=u"""The [OCID] of the Secret where the keystash file is stored, which contains the encrypted password to the key database file. This property is not supported for IBM Db2 for i, as client TLS mode is not available.
+
+Note: When provided, 'sslClientKeystash' field must not be provided.""")
 @cli_util.option('--ssl-server-certificate', help=u"""The base64 encoded file which contains the self-signed server certificate / Certificate Authority (CA) certificate. It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -10322,7 +10344,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--private-key-passphrase', help=u"""The passphrase of the private key. Deprecated: This field is deprecated and replaced by \"privateKeyPassphraseSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--private-key-passphrase-secret-id', help=u"""The [OCID] of the Secret that stores the passphrase of the private key. Note: When provided, 'privateKeyPassphrase' field must not be provided.""")
 @cli_util.option('--public-key-fingerprint', help=u"""The fingerprint of the API Key of the user specified by the userId. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm""")
-@cli_util.option('--should-use-resource-principal', type=click.BOOL, help=u"""Indicates that the user intents to connect to the instance through resource principal.""")
+@cli_util.option('--should-use-resource-principal', type=click.BOOL, help=u"""Specifies that the user intends to authenticate to the instance using a resource principal. Default: false""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -11998,6 +12020,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--client-secret', help=u"""Azure client secret (aka application password) for authentication. This property is required when 'authenticationType' is set to 'AZURE_ACTIVE_DIRECTORY'. e.g.: dO29Q~F5-VwnA.lZdd11xFF_t5NAXCaGwDl9NbT1 Deprecated: This field is deprecated and replaced by \"clientSecretSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--client-secret-secret-id', help=u"""The [OCID] of the Secret where the client secret is stored. Note: When provided, 'clientSecret' field must not be provided.""")
 @cli_util.option('--endpoint-parameterconflict', help=u"""Azure Storage service endpoint. e.g: https://test.blob.core.windows.net""")
+@cli_util.option('--azure-authority-host', help=u"""The endpoint used for authentication with Microsoft Entra ID (formerly Azure Active Directory). Default value: https://login.microsoftonline.com When connecting to a non-public Azure Cloud, the endpoint must be provided, eg: * Azure China: https://login.chinacloudapi.cn/ * Azure US Government: https://login.microsoftonline.us/""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -12009,7 +12032,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_azure_data_lake_storage_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, authentication_type, account_name, account_key, account_key_secret_id, sas_token, sas_token_secret_id, azure_tenant_id, client_id, client_secret, client_secret_secret_id, endpoint_parameterconflict, if_match, is_lock_override):
+def update_connection_update_azure_data_lake_storage_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, authentication_type, account_name, account_key, account_key_secret_id, sas_token, sas_token_secret_id, azure_tenant_id, client_id, client_secret, client_secret_secret_id, endpoint_parameterconflict, azure_authority_host, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -12090,6 +12113,9 @@ def update_connection_update_azure_data_lake_storage_connection_details(ctx, fro
     if endpoint_parameterconflict is not None:
         _details['endpoint'] = endpoint_parameterconflict
 
+    if azure_authority_host is not None:
+        _details['azureAuthorityHost'] = azure_authority_host
+
     _details['connectionType'] = 'AZURE_DATA_LAKE_STORAGE'
 
     client = cli_util.build_client('golden_gate', 'golden_gate', ctx)
@@ -12147,6 +12173,8 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--access-key-id', help=u"""Access key ID to access the Amazon Kinesis.""")
 @cli_util.option('--secret-access-key', help=u"""Secret access key to access the Amazon Kinesis. Deprecated: This field is deprecated and replaced by \"secretAccessKeySecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--secret-access-key-secret-id', help=u"""The [OCID] of the Secret where the secret access key is stored. Note: When provided, 'secretAccessKey' field must not be provided.""")
+@cli_util.option('--endpoint-parameterconflict', help=u"""The endpoint URL of the Amazon Kinesis service. e.g.: 'https://kinesis.us-east-1.amazonaws.com' If not provided, GoldenGate will default to 'https://kinesis.<region>.amazonaws.com'.""")
+@cli_util.option('--region-parameterconflict', help=u"""The name of the AWS region. If not provided, GoldenGate will default to 'us-west-1'. Note: this property will become mandatory after July 30, 2026.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -12158,7 +12186,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def update_connection_update_amazon_kinesis_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, access_key_id, secret_access_key, secret_access_key_secret_id, if_match, is_lock_override):
+def update_connection_update_amazon_kinesis_connection_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_id, display_name, description, freeform_tags, defined_tags, vault_id, key_id, nsg_ids, subnet_id, routing_method, does_use_secret_ids, access_key_id, secret_access_key, secret_access_key_secret_id, endpoint_parameterconflict, region_parameterconflict, if_match, is_lock_override):
 
     if isinstance(connection_id, six.string_types) and len(connection_id.strip()) == 0:
         raise click.UsageError('Parameter --connection-id cannot be whitespace or empty string')
@@ -12214,6 +12242,12 @@ def update_connection_update_amazon_kinesis_connection_details(ctx, from_json, f
 
     if secret_access_key_secret_id is not None:
         _details['secretAccessKeySecretId'] = secret_access_key_secret_id
+
+    if endpoint_parameterconflict is not None:
+        _details['endpoint'] = endpoint_parameterconflict
+
+    if region_parameterconflict is not None:
+        _details['region'] = region_parameterconflict
 
     _details['connectionType'] = 'AMAZON_KINESIS'
 
@@ -12276,7 +12310,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--jndi-security-principal', help=u"""Specifies the identity of the principal (user) to be authenticated. e.g.: 'admin2'""")
 @cli_util.option('--jndi-security-credentials', help=u"""The password associated to the principal. Deprecated: This field is deprecated and replaced by \"jndiSecurityCredentialsSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--jndi-security-credentials-secret-id', help=u"""The [OCID] of the Secret where the security credentials are stored associated to the principal. Note: When provided, 'jndiSecurityCredentials' field must not be provided.""")
-@cli_util.option('--connection-url', help=u"""Connectin URL of the Java Message Service, specifying the protocol, host, and port. e.g.: 'mq://myjms.host.domain:7676'""")
+@cli_util.option('--connection-url', help=u"""Connection URL of the Java Message Service, specifying the protocol, host, and port. e.g.: 'mq://myjms.host.domain:7676'""")
 @cli_util.option('--connection-factory', help=u"""The of Java class implementing javax.jms.ConnectionFactory interface supplied by the Java Message Service provider. e.g.: 'com.stc.jmsjca.core.JConnectionFactoryXA'""")
 @cli_util.option('--username', help=u"""The username Oracle GoldenGate uses to connect to the Java Message Service. This username must already exist and be available by the Java Message Service to be connected to.""")
 @cli_util.option('--password', help=u"""The password Oracle GoldenGate uses to connect the associated Java Message Service. Deprecated: This field is deprecated and replaced by \"passwordSecretId\". This field will be removed after February 15 2026.""")
@@ -12756,7 +12790,7 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--private-key-passphrase', help=u"""The passphrase of the private key. Deprecated: This field is deprecated and replaced by \"privateKeyPassphraseSecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--private-key-passphrase-secret-id', help=u"""The [OCID] of the Secret that stores the passphrase of the private key. Note: When provided, 'privateKeyPassphrase' field must not be provided.""")
 @cli_util.option('--public-key-fingerprint', help=u"""The fingerprint of the API Key of the user specified by the userId. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm""")
-@cli_util.option('--should-use-resource-principal', type=click.BOOL, help=u"""Indicates that the user intents to connect to the instance through resource principal.""")
+@cli_util.option('--should-use-resource-principal', type=click.BOOL, help=u"""Specifies that the user intends to authenticate to the instance using a resource principal. Default: false""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -13079,8 +13113,8 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 @cli_util.option('--access-key-id', help=u"""Access key ID to access the Amazon S3 bucket. e.g.: \"this-is-not-the-secret\"""")
 @cli_util.option('--secret-access-key', help=u"""Secret access key to access the Amazon S3 bucket. e.g.: \"this-is-not-the-secret\" Deprecated: This field is deprecated and replaced by \"secretAccessKeySecretId\". This field will be removed after February 15 2026.""")
 @cli_util.option('--secret-access-key-secret-id', help=u"""The [OCID] of the Secret where the Secret Access Key is stored. Note: When provided, 'secretAccessKey' field must not be provided.""")
-@cli_util.option('--endpoint-parameterconflict', help=u"""The Amazon Endpoint for S3. e.g.: 'https://my-bucket.s3.us-east-1.amazonaws.com'""")
-@cli_util.option('--region-parameterconflict', help=u"""The name of the region where the bucket is created.""")
+@cli_util.option('--endpoint-parameterconflict', help=u"""The Amazon Endpoint for S3. e.g.: 'https://my-bucket.s3.us-east-1.amazonaws.com' If not provided, GoldenGate will default to 'https://s3.<region>.amazonaws.com'.""")
+@cli_util.option('--region-parameterconflict', help=u"""The name of the AWS region where the bucket is created. If not provided, GoldenGate will default to 'us-west-2'. Note: this property will become mandatory after May 20, 2026.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -13400,10 +13434,18 @@ Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_c
 
 This option is a JSON list with items of type NameValuePair.  For documentation on NameValuePair please see our API reference: https://docs.cloud.oracle.com/api/#/en/goldengate/20200407/datatypes/NameValuePair.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--security-protocol', help=u"""Security protocol for the DB2 database.""")
-@cli_util.option('--ssl-client-keystoredb', help=u"""The base64 encoded keystore file created at the client containing the server certificate / CA root certificate. Deprecated: This field is deprecated and replaced by \"sslClientKeystoredbSecretId\". This field will be removed after February 15 2026.""")
-@cli_util.option('--ssl-client-keystoredb-secret-id', help=u"""The [OCID] of the Secret where the keystore file stored, which created at the client containing the server certificate / CA root certificate. Note: When provided, 'sslClientKeystoredb' field must not be provided.""")
-@cli_util.option('--ssl-client-keystash', help=u"""The base64 encoded keystash file which contains the encrypted password to the key database file. Deprecated: This field is deprecated and replaced by \"sslClientKeystashSecretId\". This field will be removed after February 15 2026.""")
-@cli_util.option('--ssl-client-keystash-secret-id', help=u"""The [OCID] of the Secret where the keystash file is stored, which contains the encrypted password to the key database file. Note: When provided, 'sslClientKeystash' field must not be provided.""")
+@cli_util.option('--ssl-client-keystoredb', help=u"""The base64 encoded keystore file created at the client containing the server certificate / CA root certificate. This property is not supported for IBM Db2 for i, as client TLS mode is not available.
+
+Deprecated: This field is deprecated and replaced by \"sslClientKeystoredbSecretId\". This field will be removed after February 15 2026.""")
+@cli_util.option('--ssl-client-keystoredb-secret-id', help=u"""The [OCID] of the Secret where the keystore file stored, which created at the client containing the server certificate / CA root certificate. This property is not supported for IBM Db2 for i, as client TLS mode is not available.
+
+Note: When provided, 'sslClientKeystoredb' field must not be provided.""")
+@cli_util.option('--ssl-client-keystash', help=u"""The base64 encoded keystash file which contains the encrypted password to the key database file. This property is not supported for IBM Db2 for i, as client TLS mode is not available.
+
+Deprecated: This field is deprecated and replaced by \"sslClientKeystashSecretId\". This field will be removed after February 15 2026.""")
+@cli_util.option('--ssl-client-keystash-secret-id', help=u"""The [OCID] of the Secret where the keystash file is stored, which contains the encrypted password to the key database file. This property is not supported for IBM Db2 for i, as client TLS mode is not available.
+
+Note: When provided, 'sslClientKeystash' field must not be provided.""")
 @cli_util.option('--ssl-server-certificate', help=u"""The base64 encoded file which contains the self-signed server certificate / Certificate Authority (CA) certificate. It is not included in GET responses if the `view=COMPACT` query parameter is specified.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource is updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")

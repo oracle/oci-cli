@@ -166,8 +166,8 @@ def create_job_artifact_extended(ctx, job_id, from_json, **kwargs):
 # oci data-science job create --configuration-details --infrastructure-configuration-details --log-configuration-details
 @cli_util.copy_params_from_generated_command(datascience_cli.create_job, params_to_exclude=['job_configuration_details', 'job_infrastructure_configuration_details', 'job_log_configuration_details'])
 @datascience_cli.job_group.command(name=cli_util.override('create_job.command_name', 'create'), help=datascience_cli.create_job.help)
-@cli_util.option('--configuration-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--infrastructure-configuration-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--infrastructure-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--log-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'configuration-details': {'module': 'data_science', 'class': 'JobConfigurationDetails'}, 'infrastructure-configuration-details': {'module': 'data_science', 'class': 'JobInfrastructureConfigurationDetails'}, 'log-configuration-details': {'module': 'data_science', 'class': 'JobLogConfigurationDetails'}, 'freeform-tags': {'module': 'data_science', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_science', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'data_science', 'class': 'Job'})
@@ -452,18 +452,59 @@ datascience_cli.job_group.commands.pop(datascience_cli.update_job_managed_egress
 # Remove create-job-default-job-configuration-details from oci data-science job
 datascience_cli.job_group.commands.pop(datascience_cli.create_job_default_job_configuration_details.name)
 
+# Remove create-job-multi-node-job-infrastructure-configuration-details
+datascience_cli.job_group.commands.pop(datascience_cli.create_job_multi_node_job_infrastructure_configuration_details.name)
+
+# Remove create-job-multi-node-job-node-configuration-details
+datascience_cli.job_group.commands.pop(datascience_cli.create_job_multi_node_job_node_configuration_details.name)
+
+# Remove create-job-ocir-container-job-environment-configuration-details
+datascience_cli.job_group.commands.pop(datascience_cli.create_job_ocir_container_job_environment_configuration_details.name)
+
+# Remove create-job-oke-job-infrastructure-configuration-details
+# datascience_cli.job_group.commands.pop(datascience_cli.create_job_oke_job_infrastructure_configuration_details.name)
+
+# Remove update-job-empty-job-infrastructure-configuration-details
+datascience_cli.job_group.commands.pop(datascience_cli.update_job_empty_job_infrastructure_configuration_details.name)
+
+# Remove update-job-multi-node-job-infrastructure-configuration-details
+datascience_cli.job_group.commands.pop(datascience_cli.update_job_multi_node_job_infrastructure_configuration_details.name)
+
+# Remove update-job-oke-job-infrastructure-configuration-details
+# datascience_cli.job_group.commands.pop(datascience_cli.update_job_oke_job_infrastructure_configuration_details.name)
+
+# Remove create-job-empty-job-infrastructure-configuration-details from oci data-science job
+datascience_cli.job_group.commands.pop(datascience_cli.create_job_empty_job_infrastructure_configuration_details.name)
 
 # Remove create-job-run-default-job-configuration-details from oci data-science job-run
 datascience_cli.job_run_group.commands.pop(datascience_cli.create_job_run_default_job_configuration_details.name)
 
-
-# Remove create-job-ocir-container-job-environment-configuration-details from oci data-science job
-datascience_cli.job_group.commands.pop(datascience_cli.create_job_ocir_container_job_environment_configuration_details.name)
-
-
 # Remove create-job-run-ocir-container-job-environment-configuration-details from oci data-science job-run
 datascience_cli.job_run_group.commands.pop(datascience_cli.create_job_run_ocir_container_job_environment_configuration_details.name)
 
+# Remove create-job-run-empty-job-configuration-details
+datascience_cli.job_run_group.commands.pop(datascience_cli.create_job_run_empty_job_configuration_details.name)
+
+# Remove create-job-empty-job-configuration-details from oci data-science job
+datascience_cli.job_group.commands.pop(datascience_cli.create_job_empty_job_configuration_details.name)
+
+# Remove create-job-run-empty-job-infrastructure-configuration-details
+datascience_cli.job_run_group.commands.pop(datascience_cli.create_job_run_empty_job_infrastructure_configuration_details.name)
+
+# Remove create-job-run-managed-egress-standalone-job-infrastructure-configuration-details
+datascience_cli.job_run_group.commands.pop(datascience_cli.create_job_run_managed_egress_standalone_job_infrastructure_configuration_details.name)
+
+# Remove create-job-run-multi-node-job-infrastructure-configuration-details
+datascience_cli.job_run_group.commands.pop(datascience_cli.create_job_run_multi_node_job_infrastructure_configuration_details.name)
+
+# Remove create-job-run-multi-node-job-node-configuration-details
+datascience_cli.job_run_group.commands.pop(datascience_cli.create_job_run_multi_node_job_node_configuration_details.name)
+
+# Remove create-job-run-oke-job-infrastructure-configuration-details
+# datascience_cli.job_run_group.commands.pop(datascience_cli.create_job_run_oke_job_infrastructure_configuration_details.name)
+
+# Remove create-job-run-standalone-job-infrastructure-configuration-details
+datascience_cli.job_run_group.commands.pop(datascience_cli.create_job_run_standalone_job_infrastructure_configuration_details.name)
 
 # oci data-science job get-job-artifact-content -> oci data-science job get-artifact-content
 cli_util.rename_command(datascience_cli, datascience_cli.job_group, datascience_cli.get_job_artifact_content, "get-artifact-content")

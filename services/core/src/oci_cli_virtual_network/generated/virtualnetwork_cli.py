@@ -508,11 +508,11 @@ def peer_region_for_remote_peering_group():
 
 @click.command(cli_util.override('virtual_network.drg_route_distribution_group.command_name', 'drg-route-distribution'), cls=CommandGroupWithAlias, help="""A route distribution establishes how routes get imported into DRG route tables and exported through the DRG attachments.
 
-A route distribution is a list of statements. Each statement consists of a set of matches, all of which must be `True` in order for the statement's action to take place. Each statement determines which routes are propagated.
+A route distribution is a list of statements. Each statement consists of a set of matches, all of which must be `True` for the statement's action to take place. Each statement determines which routes are propagated.
 
 You can assign a route distribution as a route table's import distribution. The statements in an import route distribution specify how how incoming route advertisements through a referenced attachment or all attachments of a certain type are inserted into the route table.
 
-You can assign a route distribution as a DRG attachment's export distribution unless the attachment has the type VCN. Exporting routes through a VCN attachment is unsupported. Export route distribution statements specify how routes in a DRG attachment's assigned table are advertised out through the attachment. When a DRG is created, a route distribution is created with a single ACCEPT statement with match criteria MATCH_ALL. By default, all DRG attachments (except for those of type VCN), are assigned this distribution.
+You can assign a route distribution as a DRG attachment's export distribution unless the attachment has the type `VCN`. Exporting routes through a VCN attachment is unsupported. Export route distribution statements specify how routes in a DRG attachment's assigned table are advertised out through the attachment. When a DRG is created, a route distribution is created with a single ACCEPT statement with match criteria MATCH_ALL. By default, all DRG attachments (except for those of type VCN), are assigned this distribution. You can't create a new export route distribution, one is created for you when the DRG is created.
 
  The two auto-generated DRG route tables (one as the default for VCN attachments, and the other for all other types of attachments) are each assigned an auto generated import route distribution. The default VCN table's import distribution has a single statement with match criteria MATCH_ALL to import routes from each DRG attachment type. The other table's import distribution has a statement to import routes from attachments with the VCN type.
 
@@ -2913,7 +2913,7 @@ def create_drg_attachment_vcn_drg_attachment_network_create_details(ctx, from_js
 
 @drg_route_distribution_group.command(name=cli_util.override('virtual_network.create_drg_route_distribution.command_name', 'create'), help=u"""Creates a new route distribution for the specified DRG. Assign the route distribution as an import distribution to a DRG route table using the `UpdateDrgRouteTable` or `CreateDrgRouteTable` operations. Assign the route distribution as an export distribution to a DRG attachment using the `UpdateDrgAttachment` or `CreateDrgAttachment` operations. \n[Command Reference](createDrgRouteDistribution)""")
 @cli_util.option('--drg-id', required=True, help=u"""The [OCID] of the DRG the DRG route table belongs to.""")
-@cli_util.option('--distribution-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["IMPORT"]), help=u"""Whether this distribution defines how routes get imported into route tables or exported through DRG attachments.""")
+@cli_util.option('--distribution-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["IMPORT"]), help=u"""States that this distribution defines how routes get imported into route tables.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3145,15 +3145,6 @@ For each tunnel, you need the IP address of Oracle's VPN headend and the shared 
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to contain the IPSec connection.""")
 @cli_util.option('--cpe-id', required=True, help=u"""The [OCID] of the [Cpe] object.""")
 @cli_util.option('--drg-id', required=True, help=u"""The [OCID] of the DRG.""")
-@cli_util.option('--static-routes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Static routes to the CPE. A static route's CIDR must not be a multicast address or class E address.
-
-Used for routing a given IPSec tunnel's traffic only if the tunnel is using static routing. If you configure at least one tunnel to use static routing, then you must provide at least one valid static route. If you configure both tunnels to use BGP dynamic routing, you can provide an empty list for the static routes. For more information, see the important note in [IPSecConnection].
-
-The CIDR can be either IPv4 or IPv6. IPv6 addressing is supported for all commercial and government regions. See [IPv6 Addresses].
-
-Example: `10.0.1.0/24`
-
-Example: `2001:db8::/32`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3171,6 +3162,15 @@ Example IP address: `10.0.3.3`
 
 Example hostname: `cpe.example.com`""")
 @cli_util.option('--cpe-local-identifier-type', type=custom_types.CliCaseInsensitiveChoice(["IP_ADDRESS", "HOSTNAME"]), help=u"""The type of identifier for your CPE device. The value you provide here must correspond to the value for `cpeLocalIdentifier`.""")
+@cli_util.option('--static-routes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Static routes to the CPE. A static route's CIDR must not be a multicast address or class E address.
+
+Used for routing a given IPSec tunnel's traffic only if the tunnel is using static routing. If you configure at least one tunnel to use static routing, then you must provide at least one valid static route. If you configure both tunnels to use BGP dynamic routing, you can provide an empty list for the static routes. For more information, see the important note in [IPSecConnection].
+
+The CIDR can be either IPv4 or IPv6. IPv6 addressing is supported for all commercial and government regions. See [IPv6 Addresses].
+
+Example: `10.0.1.0/24`
+
+Example: `2001:db8::/32`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--tunnel-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information for creating the individual tunnels in the IPSec connection. You can provide a maximum of 2 `tunnelConfiguration` objects in the array (one for each of the two tunnels).
 
 This option is a JSON list with items of type CreateIPSecConnectionTunnelDetails.  For documentation on CreateIPSecConnectionTunnelDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/CreateIPSecConnectionTunnelDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3182,7 +3182,7 @@ This option is a JSON list with items of type CreateIPSecConnectionTunnelDetails
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'static-routes': {'module': 'core', 'class': 'list[string]'}, 'tunnel-configuration': {'module': 'core', 'class': 'list[CreateIPSecConnectionTunnelDetails]'}}, output_type={'module': 'core', 'class': 'IPSecConnection'})
 @cli_util.wrap_exceptions
-def create_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cpe_id, drg_id, static_routes, defined_tags, display_name, freeform_tags, cpe_local_identifier, cpe_local_identifier_type, tunnel_configuration):
+def create_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cpe_id, drg_id, defined_tags, display_name, freeform_tags, cpe_local_identifier, cpe_local_identifier_type, static_routes, tunnel_configuration):
 
     kwargs = {}
 
@@ -3190,7 +3190,6 @@ def create_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
     _details['compartmentId'] = compartment_id
     _details['cpeId'] = cpe_id
     _details['drgId'] = drg_id
-    _details['staticRoutes'] = cli_util.parse_json_parameter("static_routes", static_routes)
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -3206,6 +3205,9 @@ def create_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if cpe_local_identifier_type is not None:
         _details['cpeLocalIdentifierType'] = cpe_local_identifier_type
+
+    if static_routes is not None:
+        _details['staticRoutes'] = cli_util.parse_json_parameter("static_routes", static_routes)
 
     if tunnel_configuration is not None:
         _details['tunnelConfiguration'] = cli_util.parse_json_parameter("tunnel_configuration", tunnel_configuration)

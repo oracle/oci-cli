@@ -4754,7 +4754,7 @@ def create_or_update_git_ref_create_or_update_git_tag_details(ctx, from_json, wa
 
 @protected_branch_group.command(name=cli_util.override('devops.create_or_update_protected_branch.command_name', 'create-or-update'), help=u"""Creates a restriction on a branch that prevents certain actions on it. \n[Command Reference](createOrUpdateProtectedBranch)""")
 @cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
-@cli_util.option('--branch-name', required=True, help=u"""Name of a branch to protect.""")
+@cli_util.option('--branch-name', required=True, help=u"""The branchName can either be exact branch name or branch pattern.""")
 @cli_util.option('--protection-levels', type=custom_types.CliCaseInsensitiveChoice(["READ_ONLY", "PULL_REQUEST_MERGE_ONLY"]), help=u"""Level of protection to add on a branch.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -6290,7 +6290,7 @@ def delete_project_repository_settings(ctx, from_json, project_id, if_match):
 
 @protected_branch_group.command(name=cli_util.override('devops.delete_protected_branch.command_name', 'delete'), help=u"""Removes the protection from a branch \n[Command Reference](deleteProtectedBranch)""")
 @cli_util.option('--repository-id', required=True, help=u"""Unique repository identifier.""")
-@cli_util.option('--branch-name', required=True, help=u"""Name of a protected branch.""")
+@cli_util.option('--branch-name', required=True, help=u"""The branchName can either be exact branch name or branch pattern.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -10202,6 +10202,66 @@ def reopen_pull_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.reopen_pull_request_comment.command_name', 'reopen-pull-request-comment'), help=u"""Reopen a PullRequest Comment \n[Command Reference](reopenPullRequestComment)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--comment-id', required=True, help=u"""unique PullRequest Comment identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequestComment'})
+@cli_util.wrap_exceptions
+def reopen_pull_request_comment(ctx, from_json, pull_request_id, comment_id, if_match):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    if isinstance(comment_id, six.string_types) and len(comment_id.strip()) == 0:
+        raise click.UsageError('Parameter --comment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.reopen_pull_request_comment(
+        pull_request_id=pull_request_id,
+        comment_id=comment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pull_request_group.command(name=cli_util.override('devops.resolve_pull_request_comment.command_name', 'resolve-pull-request-comment'), help=u"""Resolve a PullRequest Comment \n[Command Reference](resolvePullRequestComment)""")
+@cli_util.option('--pull-request-id', required=True, help=u"""unique PullRequest identifier""")
+@cli_util.option('--comment-id', required=True, help=u"""unique PullRequest Comment identifier""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'devops', 'class': 'PullRequestComment'})
+@cli_util.wrap_exceptions
+def resolve_pull_request_comment(ctx, from_json, pull_request_id, comment_id, if_match):
+
+    if isinstance(pull_request_id, six.string_types) and len(pull_request_id.strip()) == 0:
+        raise click.UsageError('Parameter --pull-request-id cannot be whitespace or empty string')
+
+    if isinstance(comment_id, six.string_types) and len(comment_id.strip()) == 0:
+        raise click.UsageError('Parameter --comment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.resolve_pull_request_comment(
+        pull_request_id=pull_request_id,
+        comment_id=comment_id,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

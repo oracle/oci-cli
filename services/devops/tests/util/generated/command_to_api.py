@@ -116,6 +116,8 @@ SDK_client_map = {
     "devops.patch_pull_request": "oci.devops.DevopsClient.patch_pull_request",
     "devops.put_repository_ref": "oci.devops.DevopsClient.put_repository_ref",
     "devops.reopen_pull_request": "oci.devops.DevopsClient.reopen_pull_request",
+    "devops.reopen_pull_request_comment": "oci.devops.DevopsClient.reopen_pull_request_comment",
+    "devops.resolve_pull_request_comment": "oci.devops.DevopsClient.resolve_pull_request_comment",
     "devops.review_pull_request": "oci.devops.DevopsClient.review_pull_request",
     "devops.schedule_cascading_project_deletion": "oci.devops.DevopsClient.schedule_cascading_project_deletion",
     "devops.summarize_project_repository_analytics": "oci.devops.DevopsClient.summarize_project_repository_analytics",

@@ -229,6 +229,7 @@ def change_redis_cluster_compartment(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.option('--software-version', required=True, help=u"""The OCI Cache engine version that the cluster is running.""")
 @cli_util.option('--node-memory-in-gbs', required=True, type=click.FLOAT, help=u"""The amount of memory allocated to the cluster's nodes, in gigabytes.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the cluster's subnet.""")
+@cli_util.option('--oci-cache-config-set-id', help=u"""The ID of the corresponding OCI Cache Config Set for the cluster.""")
 @cli_util.option('--cluster-mode', help=u"""Specifies whether the cluster is sharded or non-sharded.""")
 @cli_util.option('--shard-count', type=click.INT, help=u"""The number of shards in sharded cluster. Only applicable when clusterMode is SHARDED.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of Network Security Group (NSG) [OCIDs] associated with this cluster. For more information, see [Using an NSG for Clusters].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -242,7 +243,7 @@ def change_redis_cluster_compartment(ctx, from_json, wait_for_state, max_wait_se
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'redis', 'class': 'list[string]'}, 'freeform-tags': {'module': 'redis', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'redis', 'class': 'RedisCluster'})
 @cli_util.wrap_exceptions
-def create_redis_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, node_count, software_version, node_memory_in_gbs, subnet_id, cluster_mode, shard_count, nsg_ids, freeform_tags, defined_tags):
+def create_redis_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, node_count, software_version, node_memory_in_gbs, subnet_id, oci_cache_config_set_id, cluster_mode, shard_count, nsg_ids, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -254,6 +255,9 @@ def create_redis_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     _details['softwareVersion'] = software_version
     _details['nodeMemoryInGBs'] = node_memory_in_gbs
     _details['subnetId'] = subnet_id
+
+    if oci_cache_config_set_id is not None:
+        _details['ociCacheConfigSetId'] = oci_cache_config_set_id
 
     if cluster_mode is not None:
         _details['clusterMode'] = cluster_mode
@@ -829,6 +833,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 
 @redis_cluster_group.command(name=cli_util.override('redis_cluster.update_redis_cluster.command_name', 'update'), help=u"""Updates the specified OCI Cache cluster. A cluster is a memory-based storage solution. For more information, see [OCI Cache]. \n[Command Reference](updateRedisCluster)""")
 @cli_util.option('--redis-cluster-id', required=True, help=u"""The [OCID] of the cluster.""")
+@cli_util.option('--oci-cache-config-set-id', help=u"""The ID of the corresponding OCI Cache Config Set for the cluster.""")
 @cli_util.option('--shard-count', type=click.INT, help=u"""The number of shards in sharded cluster. Only applicable when clusterMode is SHARDED.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--node-count', type=click.INT, help=u"""The number of nodes per shard in the cluster when clusterMode is SHARDED. This is the total number of nodes when clusterMode is NONSHARDED.""")
@@ -847,7 +852,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'redis', 'class': 'list[string]'}, 'freeform-tags': {'module': 'redis', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'redis', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_redis_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, redis_cluster_id, shard_count, display_name, node_count, node_memory_in_gbs, software_version, nsg_ids, freeform_tags, defined_tags, if_match):
+def update_redis_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, redis_cluster_id, oci_cache_config_set_id, shard_count, display_name, node_count, node_memory_in_gbs, software_version, nsg_ids, freeform_tags, defined_tags, if_match):
 
     if isinstance(redis_cluster_id, six.string_types) and len(redis_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --redis-cluster-id cannot be whitespace or empty string')
@@ -862,6 +867,9 @@ def update_redis_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
+
+    if oci_cache_config_set_id is not None:
+        _details['ociCacheConfigSetId'] = oci_cache_config_set_id
 
     if shard_count is not None:
         _details['shardCount'] = shard_count
