@@ -228,7 +228,13 @@ def chat_on_demand_serving_mode(ctx, from_json, compartment_id, chat_request, se
 @cli_util.option('--chat-request-messages', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The series of messages in a chat request. Includes the previous messages in a conversation. Each message includes a role (`USER` or the `CHATBOT`) and content.
 
 This option is a JSON list with items of type Message.  For documentation on Message please see our API reference: https://docs.cloud.oracle.com/api/#/en/generativeaiinference/20231130/datatypes/Message.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-reasoning-effort', type=custom_types.CliCaseInsensitiveChoice(["MINIMAL", "LOW", "MEDIUM", "HIGH"]), help=u"""Constrains effort on reasoning for reasoning models. Currently supported values are minimal, low, medium, and high. Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.""")
+@cli_util.option('--chat-request-verbosity', type=custom_types.CliCaseInsensitiveChoice(["LOW", "MEDIUM", "HIGH"]), help=u"""Constrains the verbosity of the model's response. Lower values will result in more concise responses, while higher values will result in more verbose responses.""")
+@cli_util.option('--chat-request-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard.
+
+Keys are strings with a maximum length of 64 characters. Values are strings with a maximum length of 512 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--chat-request-is-stream', type=click.BOOL, help=u"""Whether to stream back partial progress. If set to true, as tokens become available, they are sent as data-only server-sent events.""")
+@cli_util.option('--chat-request-stream-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--chat-request-num-generations', type=click.INT, help=u"""The number of of generated texts that will be returned.""")
 @cli_util.option('--chat-request-seed', type=click.INT, help=u"""If specified, the backend will make a best effort to sample tokens deterministically, so that repeated requests with the same seed and parameters yield the same result. However, determinism cannot be fully guaranteed.""")
 @cli_util.option('--chat-request-is-echo', type=click.BOOL, help=u"""Whether to include the user prompt in the response. Applies only to non-stream results.""")
@@ -249,20 +255,24 @@ Similar to frequency penalty, a penalty is applied to previously present tokens,
 @cli_util.option('--chat-request-log-probs', type=click.INT, help=u"""Includes the logarithmic probabilities for the most likely output tokens and the chosen tokens.
 
 For example, if the log probability is 5, the API returns a list of the 5 most likely tokens. The API returns the log probability of the sampled token, so there might be up to logprobs+1 elements in the response.""")
-@cli_util.option('--chat-request-max-tokens', type=click.INT, help=u"""The maximum number of tokens that can be generated per output sequence. The token count of your prompt plus `maxTokens` must not exceed the model's context length. Not setting a value for maxTokens results in the possible use of model's full context length.""")
+@cli_util.option('--chat-request-max-tokens', type=click.INT, help=u"""The maximum number of tokens that can be generated per output sequence. The token count of your prompt plus maxTokens must not exceed the model's context length. For on-demand inferencing, the response length is capped at 4,000 tokens for each run.""")
+@cli_util.option('--chat-request-max-completion-tokens', type=click.INT, help=u"""An upper bound for the number of tokens that can be generated for a completion, including visible output tokens and reasoning tokens.""")
 @cli_util.option('--chat-request-logit-bias', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Modifies the likelihood of specified tokens that appear in the completion.
 
 Example: '{\"6395\": 2, \"8134\": 1, \"21943\": 0.5, \"5923\": -100}'""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-prediction', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-response-format', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--chat-request-tool-choice', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--chat-request-is-parallel-tool-calls', type=click.BOOL, help=u"""Whether to enable parallel function calling during tool use.""")
 @cli_util.option('--chat-request-tools', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of tools the model may call. Use this to provide a list of functions the model may generate JSON inputs for. A max of 128 functions are supported.
 
 This option is a JSON list with items of type ToolDefinition.  For documentation on ToolDefinition please see our API reference: https://docs.cloud.oracle.com/api/#/en/generativeaiinference/20231130/datatypes/ToolDefinition.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-messages': {'module': 'generative_ai_inference', 'class': 'list[Message]'}, 'chat-request-stop': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'chat-request-logit-bias': {'module': 'generative_ai_inference', 'class': 'object'}, 'chat-request-tool-choice': {'module': 'generative_ai_inference', 'class': 'ToolChoice'}, 'chat-request-tools': {'module': 'generative_ai_inference', 'class': 'list[ToolDefinition]'}})
+@json_skeleton_utils.get_cli_json_input_option({'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-messages': {'module': 'generative_ai_inference', 'class': 'list[Message]'}, 'chat-request-metadata': {'module': 'generative_ai_inference', 'class': 'object'}, 'chat-request-stream-options': {'module': 'generative_ai_inference', 'class': 'StreamOptions'}, 'chat-request-stop': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'chat-request-logit-bias': {'module': 'generative_ai_inference', 'class': 'object'}, 'chat-request-prediction': {'module': 'generative_ai_inference', 'class': 'Prediction'}, 'chat-request-response-format': {'module': 'generative_ai_inference', 'class': 'ResponseFormat'}, 'chat-request-tool-choice': {'module': 'generative_ai_inference', 'class': 'ToolChoice'}, 'chat-request-tools': {'module': 'generative_ai_inference', 'class': 'list[ToolDefinition]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-messages': {'module': 'generative_ai_inference', 'class': 'list[Message]'}, 'chat-request-stop': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'chat-request-logit-bias': {'module': 'generative_ai_inference', 'class': 'object'}, 'chat-request-tool-choice': {'module': 'generative_ai_inference', 'class': 'ToolChoice'}, 'chat-request-tools': {'module': 'generative_ai_inference', 'class': 'list[ToolDefinition]'}}, output_type={'module': 'generative_ai_inference', 'class': 'ChatResult'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'serving-mode': {'module': 'generative_ai_inference', 'class': 'ServingMode'}, 'chat-request-messages': {'module': 'generative_ai_inference', 'class': 'list[Message]'}, 'chat-request-metadata': {'module': 'generative_ai_inference', 'class': 'object'}, 'chat-request-stream-options': {'module': 'generative_ai_inference', 'class': 'StreamOptions'}, 'chat-request-stop': {'module': 'generative_ai_inference', 'class': 'list[string]'}, 'chat-request-logit-bias': {'module': 'generative_ai_inference', 'class': 'object'}, 'chat-request-prediction': {'module': 'generative_ai_inference', 'class': 'Prediction'}, 'chat-request-response-format': {'module': 'generative_ai_inference', 'class': 'ResponseFormat'}, 'chat-request-tool-choice': {'module': 'generative_ai_inference', 'class': 'ToolChoice'}, 'chat-request-tools': {'module': 'generative_ai_inference', 'class': 'list[ToolDefinition]'}}, output_type={'module': 'generative_ai_inference', 'class': 'ChatResult'})
 @cli_util.wrap_exceptions
-def chat_generic_chat_request(ctx, from_json, compartment_id, serving_mode, chat_request_messages, chat_request_is_stream, chat_request_num_generations, chat_request_seed, chat_request_is_echo, chat_request_top_k, chat_request_top_p, chat_request_temperature, chat_request_frequency_penalty, chat_request_presence_penalty, chat_request_stop, chat_request_log_probs, chat_request_max_tokens, chat_request_logit_bias, chat_request_tool_choice, chat_request_tools):
+def chat_generic_chat_request(ctx, from_json, compartment_id, serving_mode, chat_request_messages, chat_request_reasoning_effort, chat_request_verbosity, chat_request_metadata, chat_request_is_stream, chat_request_stream_options, chat_request_num_generations, chat_request_seed, chat_request_is_echo, chat_request_top_k, chat_request_top_p, chat_request_temperature, chat_request_frequency_penalty, chat_request_presence_penalty, chat_request_stop, chat_request_log_probs, chat_request_max_tokens, chat_request_max_completion_tokens, chat_request_logit_bias, chat_request_prediction, chat_request_response_format, chat_request_tool_choice, chat_request_is_parallel_tool_calls, chat_request_tools):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -275,8 +285,20 @@ def chat_generic_chat_request(ctx, from_json, compartment_id, serving_mode, chat
     if chat_request_messages is not None:
         _details['chatRequest']['messages'] = cli_util.parse_json_parameter("chat_request_messages", chat_request_messages)
 
+    if chat_request_reasoning_effort is not None:
+        _details['chatRequest']['reasoningEffort'] = chat_request_reasoning_effort
+
+    if chat_request_verbosity is not None:
+        _details['chatRequest']['verbosity'] = chat_request_verbosity
+
+    if chat_request_metadata is not None:
+        _details['chatRequest']['metadata'] = cli_util.parse_json_parameter("chat_request_metadata", chat_request_metadata)
+
     if chat_request_is_stream is not None:
         _details['chatRequest']['isStream'] = chat_request_is_stream
+
+    if chat_request_stream_options is not None:
+        _details['chatRequest']['streamOptions'] = cli_util.parse_json_parameter("chat_request_stream_options", chat_request_stream_options)
 
     if chat_request_num_generations is not None:
         _details['chatRequest']['numGenerations'] = chat_request_num_generations
@@ -311,11 +333,23 @@ def chat_generic_chat_request(ctx, from_json, compartment_id, serving_mode, chat
     if chat_request_max_tokens is not None:
         _details['chatRequest']['maxTokens'] = chat_request_max_tokens
 
+    if chat_request_max_completion_tokens is not None:
+        _details['chatRequest']['maxCompletionTokens'] = chat_request_max_completion_tokens
+
     if chat_request_logit_bias is not None:
         _details['chatRequest']['logitBias'] = cli_util.parse_json_parameter("chat_request_logit_bias", chat_request_logit_bias)
 
+    if chat_request_prediction is not None:
+        _details['chatRequest']['prediction'] = cli_util.parse_json_parameter("chat_request_prediction", chat_request_prediction)
+
+    if chat_request_response_format is not None:
+        _details['chatRequest']['responseFormat'] = cli_util.parse_json_parameter("chat_request_response_format", chat_request_response_format)
+
     if chat_request_tool_choice is not None:
         _details['chatRequest']['toolChoice'] = cli_util.parse_json_parameter("chat_request_tool_choice", chat_request_tool_choice)
+
+    if chat_request_is_parallel_tool_calls is not None:
+        _details['chatRequest']['isParallelToolCalls'] = chat_request_is_parallel_tool_calls
 
     if chat_request_tools is not None:
         _details['chatRequest']['tools'] = cli_util.parse_json_parameter("chat_request_tools", chat_request_tools)
@@ -347,7 +381,7 @@ Example: `[   { \"title\": \"Tall penguins\", \"snippet\": \"Emperor penguins ar
 Example: `You are a travel advisor. Answer with a pirate tone.`""")
 @cli_util.option('--chat-request-is-stream', type=click.BOOL, help=u"""Whether to stream the partial progress of the model's response. When set to true, as tokens become available, they are sent as data-only server-sent events.""")
 @cli_util.option('--chat-request-stream-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--chat-request-max-tokens', type=click.INT, help=u"""The maximum number of output tokens that the model will generate for the response.""")
+@cli_util.option('--chat-request-max-tokens', type=click.INT, help=u"""The maximum number of output tokens that the model will generate for the response. The token count of your prompt plus maxTokens must not exceed the model's context length. For on-demand inferencing, the response length is capped at 4,000 tokens for each run.""")
 @cli_util.option('--chat-request-max-input-tokens', type=click.INT, help=u"""The maximum number of input tokens to send to the model. If not specified, max_input_tokens is the model's context length limit minus a small buffer.""")
 @cli_util.option('--chat-request-temperature', help=u"""A number that sets the randomness of the generated output. A lower temperature means less random generations. Use lower numbers for tasks such as question answering or summarizing. High temperatures can generate hallucinations or factually incorrect information. Start with temperatures lower than 1.0 and increase the temperature for more creative outputs, as you regenerate the prompts to refine the outputs.""")
 @cli_util.option('--chat-request-top-k', type=click.INT, help=u"""A sampling method in which the model chooses the next token randomly from the top k most likely tokens. A higher value for k generates more random output, which makes the output text sound more natural. The default value for k is 0 which disables this method and considers all tokens. To set a number for the likely tokens, choose an integer between 1 and 500.

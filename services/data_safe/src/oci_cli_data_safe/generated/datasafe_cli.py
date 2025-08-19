@@ -13849,6 +13849,11 @@ When you perform the ListFindingAnalytics operation, if the parameter compartmen
 @cli_util.option('--target-ids', multiple=True, help=u"""An optional filter to return only findings that match the specified target ids. Use this parameter to filter by multiple target ids.""")
 @cli_util.option('--category', help=u"""The category of the finding.""")
 @cli_util.option('--contains-severity', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "MEDIUM", "LOW", "EVALUATE", "ADVISORY", "PASS", "DEFERRED"]), multiple=True, help=u"""A filter to return only findings that match the specified risk level(s). Use containsSeverity parameter if need to filter by multiple risk levels.""")
+@cli_util.option('--scim-query', help=u"""The scimQuery query parameter accepts filter expressions that use the syntax described in Section 3.2.2.2 of the System for Cross-Domain Identity Management (SCIM) specification, which is available at [RFC3339]. In SCIM filtering expressions, text, date, and time values must be enclosed in quotation marks, with date and time values using ISO-8601 format. (Numeric and boolean values should not be quoted.)
+
+**Example:** | scimQuery=(severity eq 'high') scimQuery=(category eq \"Users\") and (reference eq 'CIS')
+
+Supported fields: severity reference title category""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({'target-ids': {'module': 'data_safe', 'class': 'list[string]'}})
@@ -13856,7 +13861,7 @@ When you perform the ListFindingAnalytics operation, if the parameter compartmen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-ids': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'FindingAnalyticsCollection'})
 @cli_util.wrap_exceptions
-def list_finding_analytics(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, is_top_finding, group_by, top_finding_status, severity, finding_key, limit, page, target_database_group_id, contains_references, target_ids, category, contains_severity):
+def list_finding_analytics(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, access_level, is_top_finding, group_by, top_finding_status, severity, finding_key, limit, page, target_database_group_id, contains_references, target_ids, category, contains_severity, scim_query):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -13890,6 +13895,8 @@ def list_finding_analytics(ctx, from_json, all_pages, page_size, compartment_id,
         kwargs['category'] = category
     if contains_severity is not None and len(contains_severity) > 0:
         kwargs['contains_severity'] = contains_severity
+    if scim_query is not None:
+        kwargs['scim_query'] = scim_query
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('data_safe', 'data_safe', ctx)
     if all_pages:
@@ -13939,6 +13946,7 @@ def list_finding_analytics(ctx, from_json, all_pages, page_size, compartment_id,
 Supported fields: severity findingKey reference targetId isTopFinding title category remarks details summary isRiskModified""")
 @cli_util.option('--field', type=custom_types.CliCaseInsensitiveChoice(["severity", "findingKey", "reference", "targetId", "isTopFinding", "title", "category", "remarks", "details", "summary", "isRiskModified"]), multiple=True, help=u"""Specifies a subset of fields to be returned in the response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["category", "findingKey", "severity"]), help=u"""The field to sort by. You can specify only one sort order(sortOrder). The default order for category is alphabetical.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
 @cli_util.option('--finding-key', help=u"""Each finding in security assessment has an associated key (think of key as a finding's name). For a given finding, the key will be the same across targets. The user can use these keys to filter the findings.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -13947,7 +13955,7 @@ Supported fields: severity findingKey reference targetId isTopFinding title cate
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-ids': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'list[FindingSummary]'})
 @cli_util.wrap_exceptions
-def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, is_top_finding, severity, contains_severity, category, lifecycle_state, references, contains_references, limit, page, compartment_id_in_subtree, access_level, target_id, target_ids, scim_query, field, sort_by, finding_key):
+def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, is_top_finding, severity, contains_severity, category, lifecycle_state, references, contains_references, limit, page, compartment_id_in_subtree, access_level, target_id, target_ids, scim_query, field, sort_by, sort_order, finding_key):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -13988,6 +13996,8 @@ def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, 
         kwargs['field'] = field
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
     if finding_key is not None:
         kwargs['finding_key'] = finding_key
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])

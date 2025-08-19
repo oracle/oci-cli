@@ -3647,7 +3647,7 @@ def convert_to_regular_pluggable_database_extended(ctx, **kwargs):
     ctx.invoke(database_cli.convert_to_regular_pluggable_database, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.create_pluggable_database, params_to_exclude=['container_database_id', 'pdb_creation_type_details_source_pluggable_database_id', 'should_create_pdb_backup', 'should_pdb_admin_account_be_locked', 'container_database_admin_password', 'pdb_creation_type_details', 'pdb_creation_type_details_is_thin_clone'])
+@cli_util.copy_params_from_generated_command(database_cli.create_pluggable_database, params_to_exclude=['container_database_id', 'pdb_creation_type_details_source_pluggable_database_id', 'should_create_pdb_backup', 'should_pdb_admin_account_be_locked', 'container_database_admin_password', 'pdb_creation_type_details', 'pdb_creation_type_details_is_thin_clone', 'pdb_creation_type_details_source_pluggable_database_snapshot_id'])
 @database_cli.pluggable_database_group.command(name=database_cli.create_pluggable_database_create_pluggable_database_from_local_clone_details.name, help=database_cli.create_pluggable_database_create_pluggable_database_from_local_clone_details.help)
 @cli_util.option('--cdb-id', required=True, help=u"""The [OCID] of the CDB [required]""")
 @cli_util.option('--source-pdb-id', required=True, help=u"""The OCID of the Source Pluggable Database. [required]""")
@@ -3655,6 +3655,7 @@ def convert_to_regular_pluggable_database_extended(ctx, **kwargs):
 @cli_util.option('--lock-pdb-admin-account', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
 @cli_util.option('--cdb-admin-password', help=u"""The DB system administrator password of the Container Database.""")
 @cli_util.option('--is-thin-clone', type=click.BOOL, help=u"""True if Pluggable Database needs to be thin cloned and false if Pluggable Database needs to be thick cloned.""")
+@cli_util.option('--source-pdb-snapshot-id', help=u"""The OCID of the Source Pluggable Database Snapshot id.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
 @cli_util.wrap_exceptions
@@ -3683,6 +3684,10 @@ def create_pluggable_database_create_pluggable_database_from_local_clone_details
     if 'is_thin_clone' in kwargs:
         kwargs['pdb_creation_type_details_is_thin_clone'] = kwargs['is_thin_clone']
         kwargs.pop('is_thin_clone')
+
+    if 'source_pdb_snapshot_id' in kwargs:
+        kwargs['pdb_creation_type_details_source_pluggable_database_snapshot_id'] = kwargs['source_pdb_snapshot_id']
+        kwargs.pop('source_pdb_snapshot_id')
 
     ctx.invoke(database_cli.create_pluggable_database_create_pluggable_database_from_local_clone_details, **kwargs)
 
@@ -3737,7 +3742,7 @@ def create_pluggable_database_create_pluggable_database_from_relocate_details_ex
     ctx.invoke(database_cli.create_pluggable_database_create_pluggable_database_from_relocate_details, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.create_pluggable_database, params_to_exclude=['container_database_id', 'pdb_creation_type_details_source_container_database_admin_password', 'pdb_creation_type_details_source_pluggable_database_id', 'pdb_creation_type_details_dblink_user_password', 'pdb_creation_type_details_dblink_username', 'pdb_creation_type_details_refreshable_clone_details', 'should_create_pdb_backup', 'should_pdb_admin_account_be_locked', 'container_database_admin_password', 'pdb_creation_type_details', 'pdb_creation_type_details_is_thin_clone'])
+@cli_util.copy_params_from_generated_command(database_cli.create_pluggable_database, params_to_exclude=['container_database_id', 'pdb_creation_type_details_source_container_database_admin_password', 'pdb_creation_type_details_source_pluggable_database_id', 'pdb_creation_type_details_dblink_user_password', 'pdb_creation_type_details_dblink_username', 'pdb_creation_type_details_refreshable_clone_details', 'should_create_pdb_backup', 'should_pdb_admin_account_be_locked', 'container_database_admin_password', 'pdb_creation_type_details', 'pdb_creation_type_details_is_thin_clone', 'pdb_creation_type_details_source_pluggable_database_snapshot_id'])
 @database_cli.pluggable_database_group.command(name=database_cli.create_pluggable_database_create_pluggable_database_from_remote_clone_details.name, help=database_cli.create_pluggable_database_create_pluggable_database_from_remote_clone_details.help)
 @cli_util.option('--cdb-id', required=True, help=u"""The [OCID] of the CDB [required]""")
 @cli_util.option('--source-cdb-admin-password', required=True, help=u"""The DB system administrator password of the source Container Database. [required]""")
@@ -3749,6 +3754,7 @@ def create_pluggable_database_create_pluggable_database_from_relocate_details_ex
 @cli_util.option('--lock-pdb-admin-account', type=click.BOOL, help=u"""The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.""")
 @cli_util.option('--cdb-admin-password', help=u"""The DB system administrator password of the Container Database.""")
 @cli_util.option('--is-thin-clone', type=click.BOOL, help=u"""True if Pluggable Database needs to be thin cloned and false if Pluggable Database needs to be thick cloned.""")
+@cli_util.option('--source-pdb-snapshot-id', help=u"""The OCID of the Source Pluggable Database Snapshot id.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
 @cli_util.wrap_exceptions
@@ -3789,6 +3795,10 @@ def create_pluggable_database_create_pluggable_database_from_remote_clone_detail
     if 'is_thin_clone' in kwargs:
         kwargs['pdb_creation_type_details_is_thin_clone'] = kwargs['is_thin_clone']
         kwargs.pop('is_thin_clone')
+
+    if 'source_pdb_snapshot_id' in kwargs:
+        kwargs['pdb_creation_type_details_source_pluggable_database_snapshot_id'] = kwargs['source_pdb_snapshot_id']
+        kwargs.pop('source_pdb_snapshot_id')
 
     pdb_creation_type_details_refreshable_clone_details = {}
     if 'is_refreshable_clone' in kwargs:
@@ -4181,3 +4191,44 @@ cli_util.rename_command(database_cli, database_cli.system_version_minor_version_
 
 # oci db system-version-minor-version-collection -> oci db system-minor-version
 cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.system_version_minor_version_collection_group, "system-minor-version")
+
+# move sanpshot operations to pdb group
+# oci db pluggable-database-snapshot create -> oci db pluggable-database create-snapshot
+# oci db pluggable-database-snapshot delete -> oci db pluggable-database delete-snapshot
+# oci db pluggable-database-snapshot get -> oci db pluggable-database get-snapshot
+# oci db pluggable-database-snapshot list -> oci db pluggable-database list-snapshots
+cli_util.rename_command(database_cli, database_cli.pluggable_database_snapshot_group, database_cli.create_pluggable_database_snapshot, "create-snapshot")
+cli_util.rename_command(database_cli, database_cli.pluggable_database_snapshot_group, database_cli.delete_pluggable_database_snapshot, "delete-snapshot")
+cli_util.rename_command(database_cli, database_cli.pluggable_database_snapshot_group, database_cli.get_pluggable_database_snapshot, "get-snapshot")
+cli_util.rename_command(database_cli, database_cli.pluggable_database_snapshot_group, database_cli.list_pluggable_database_snapshots, "list-snapshots")
+database_cli.pluggable_database_group.add_command(database_cli.create_pluggable_database_snapshot)
+database_cli.pluggable_database_group.add_command(database_cli.delete_pluggable_database_snapshot)
+database_cli.pluggable_database_group.add_command(database_cli.get_pluggable_database_snapshot)
+database_cli.pluggable_database_group.add_command(database_cli.list_pluggable_database_snapshots)
+database_cli.db_root_group.commands.pop(database_cli.pluggable_database_snapshot_group.name)
+
+
+# Renaming the pluggable-database-snapshot-id to pdb-snapshot-id
+@cli_util.copy_params_from_generated_command(database_cli.get_pluggable_database_snapshot, params_to_exclude=['pluggable_database_snapshot_id'])
+@database_cli.pluggable_database_group.command('get-snapshot', help=database_cli.get_pluggable_database_snapshot.help)
+@cli_util.option('--pdb-snapshot-id', required=True, help=u"""The Exadata Pluggable Database Snapshot [OCID].""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'PluggableDatabaseSnapshot'})
+@cli_util.wrap_exceptions
+def get_pluggable_database_snapshot_extended(ctx, **kwargs):
+    kwargs['pluggable_database_snapshot_id'] = kwargs['pdb_snapshot_id']
+    kwargs.pop('pdb_snapshot_id')
+    ctx.invoke(database_cli.get_pluggable_database_snapshot, **kwargs)
+
+
+# Renaming the pluggable-database-snapshot-id to pdb-snapshot-id
+@cli_util.copy_params_from_generated_command(database_cli.delete_pluggable_database_snapshot, params_to_exclude=['pluggable_database_snapshot_id'])
+@database_cli.pluggable_database_group.command('delete-snapshot', help=database_cli.delete_pluggable_database_snapshot.help)
+@cli_util.option('--pdb-snapshot-id', required=True, help=u"""The Exadata Pluggable Database Snapshot [OCID].""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_pluggable_database_snapshot_extended(ctx, **kwargs):
+    kwargs['pluggable_database_snapshot_id'] = kwargs['pdb_snapshot_id']
+    kwargs.pop('pdb_snapshot_id')
+    ctx.invoke(database_cli.delete_pluggable_database_snapshot, **kwargs)

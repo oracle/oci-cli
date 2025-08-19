@@ -291,7 +291,7 @@ def unassign_private_ip(ctx, from_json, vnic_id, ip_address):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
-def assign_ipv6(ctx, from_json, vnic_id, defined_tags, display_name, freeform_tags, ip_address, unassign_if_already_assigned, ipv6_subnet_cidr, route_table_id, lifetime):
+def assign_ipv6(ctx, from_json, vnic_id, defined_tags, display_name, freeform_tags, ip_address, unassign_if_already_assigned, ipv6_subnet_cidr, route_table_id, lifetime, cidr_prefix_length):
     networking_client = cli_util.build_client('core', 'virtual_network', ctx)
 
     # First we get the VNIC because we need to know the subnet OCID for the ListIpv6s call
@@ -355,6 +355,10 @@ def assign_ipv6(ctx, from_json, vnic_id, defined_tags, display_name, freeform_ta
     if not is_ip_reassignment:
         if ip_address is not None:
             assign_ip_request_body['ipAddress'] = ip_address
+        if cidr_prefix_length is not None:
+            assign_ip_request_body['cidrPrefixLength'] = cidr_prefix_length
+        if subnet_id is not None:
+            assign_ip_request_body['subnetId'] = subnet_id
 
         result = networking_client.create_ipv6(assign_ip_request_body)
     else:
