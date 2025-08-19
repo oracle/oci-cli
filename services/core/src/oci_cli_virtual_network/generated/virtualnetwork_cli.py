@@ -3254,6 +3254,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--ip-address', help=u"""An IPv6 address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns an IPv6 address from the subnet. The subnet is the one that contains the VNIC you specify in `vnicId`.
 
 Example: `2001:DB8::`""")
+@cli_util.option('--cidr-prefix-length', type=click.INT, help=u"""Length of cidr range. Optional field to specify flexible cidr.""")
 @cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC to assign the IPv6 to. The IPv6 will be in the VNIC's subnet.""")
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet from which the IPv6 is to be drawn. The IP address, *if supplied*, must be valid for the given subnet, only valid for reserved IPs currently.""")
 @cli_util.option('--lifetime', type=custom_types.CliCaseInsensitiveChoice(["EPHEMERAL", "RESERVED"]), help=u"""Lifetime of the IP address. There are two types of IPs:  - Ephemeral  - Reserved""")
@@ -3267,7 +3268,7 @@ Example: `2001:DB8::`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Ipv6'})
 @cli_util.wrap_exceptions
-def create_ipv6(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, defined_tags, display_name, freeform_tags, ip_address, vnic_id, subnet_id, lifetime, route_table_id, ipv6_subnet_cidr):
+def create_ipv6(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, defined_tags, display_name, freeform_tags, ip_address, cidr_prefix_length, vnic_id, subnet_id, lifetime, route_table_id, ipv6_subnet_cidr):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -3285,6 +3286,9 @@ def create_ipv6(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if ip_address is not None:
         _details['ipAddress'] = ip_address
+
+    if cidr_prefix_length is not None:
+        _details['cidrPrefixLength'] = cidr_prefix_length
 
     if vnic_id is not None:
         _details['vnicId'] = vnic_id

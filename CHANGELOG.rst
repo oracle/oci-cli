@@ -6,6 +6,37 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.64.1 - 2025-08-19
+--------------------
+Added
+~~~~~
+* Support for calling Oracle Cloud Infrastructure services in the eu-budapest-1 region
+
+* Support for new optional parameter cidr-prefix-length for creating IPv6 Flexible CIDR in Virtual Cloud Network Service
+
+  * ``oci network ipv6 create --cidr-prefix-length``
+  * ``oci network vnic assign-ipv6 --cidr-prefix-length``
+
+* Database Service
+
+  * Support for new optional parameter source-pdb-snapshot-id for Pluggable Database resource
+
+    * ``oci db pluggable-database create-local-clone --source-pdb-snapshot-id``
+    * ``oci db pluggable-database create-remote-clone --source-pdb-snapshot-id``
+
+  * Managing Pluggable database snapshot resources
+
+    * ``oci db pluggable-database create-snapshot``
+    * ``oci db pluggable-database delete-snapshot``
+    * ``oci db pluggable-database get-snapshot``
+    * ``oci db pluggable-database list-snapshots``
+
+* Generative AI Interface Service
+
+  * Support for new GenericChatRequest parameters in Generative AI inference service
+
+    * ``oci generative-ai-inference chat-result chat-generic-chat-request``
+
 3.64.0 - 2025-08-12
 --------------------
 Added

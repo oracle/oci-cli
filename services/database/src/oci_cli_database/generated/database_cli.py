@@ -482,6 +482,12 @@ def db_version_group():
     pass
 
 
+@click.command(cli_util.override('db.pluggable_database_snapshot_group.command_name', 'pluggable-database-snapshot'), cls=CommandGroupWithAlias, help="""Details of the Pluggable Database Snapshot.""")
+@cli_util.help_option_group
+def pluggable_database_snapshot_group():
+    pass
+
+
 @click.command(cli_util.override('db.key_store_summary_group.command_name', 'key-store-summary'), cls=CommandGroupWithAlias, help="""Details of the Key Store.""")
 @cli_util.help_option_group
 def key_store_summary_group():
@@ -593,6 +599,7 @@ db_root_group.add_command(cloud_vm_cluster_group)
 db_root_group.add_command(exascale_db_storage_vault_group)
 db_root_group.add_command(autonomous_db_version_group)
 db_root_group.add_command(db_version_group)
+db_root_group.add_command(pluggable_database_snapshot_group)
 db_root_group.add_command(key_store_summary_group)
 db_root_group.add_command(autonomous_db_preview_version_group)
 db_root_group.add_command(vm_cluster_group)
@@ -14096,6 +14103,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--pdb-creation-type-details-dblink-user-password', help=u"""The DB link user password.""")
 @cli_util.option('--pdb-creation-type-details-refreshable-clone-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--pdb-creation-type-details-is-thin-clone', type=click.BOOL, help=u"""True if Pluggable Database needs to be thin cloned and false if Pluggable Database needs to be thick cloned.""")
+@cli_util.option('--pdb-creation-type-details-source-pluggable-database-snapshot-id', help=u"""The OCID of the Source Pluggable Database Snapshot id.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED", "RELOCATING", "RELOCATED", "REFRESHING", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "DISABLED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -14104,7 +14112,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'pdb-creation-type-details-refreshable-clone-details': {'module': 'database', 'class': 'CreatePluggableDatabaseRefreshableCloneDetails'}}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
 @cli_util.wrap_exceptions
-def create_pluggable_database_create_pluggable_database_from_remote_clone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pdb_name, container_database_id, pdb_creation_type_details_source_pluggable_database_id, pdb_creation_type_details_source_container_database_admin_password, pdb_admin_password, tde_wallet_password, should_pdb_admin_account_be_locked, container_database_admin_password, should_create_pdb_backup, freeform_tags, defined_tags, pdb_creation_type_details_dblink_username, pdb_creation_type_details_dblink_user_password, pdb_creation_type_details_refreshable_clone_details, pdb_creation_type_details_is_thin_clone):
+def create_pluggable_database_create_pluggable_database_from_remote_clone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pdb_name, container_database_id, pdb_creation_type_details_source_pluggable_database_id, pdb_creation_type_details_source_container_database_admin_password, pdb_admin_password, tde_wallet_password, should_pdb_admin_account_be_locked, container_database_admin_password, should_create_pdb_backup, freeform_tags, defined_tags, pdb_creation_type_details_dblink_username, pdb_creation_type_details_dblink_user_password, pdb_creation_type_details_refreshable_clone_details, pdb_creation_type_details_is_thin_clone, pdb_creation_type_details_source_pluggable_database_snapshot_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -14148,6 +14156,9 @@ def create_pluggable_database_create_pluggable_database_from_remote_clone_detail
 
     if pdb_creation_type_details_is_thin_clone is not None:
         _details['pdbCreationTypeDetails']['isThinClone'] = pdb_creation_type_details_is_thin_clone
+
+    if pdb_creation_type_details_source_pluggable_database_snapshot_id is not None:
+        _details['pdbCreationTypeDetails']['sourcePluggableDatabaseSnapshotId'] = pdb_creation_type_details_source_pluggable_database_snapshot_id
 
     _details['pdbCreationTypeDetails']['creationType'] = 'REMOTE_CLONE_PDB'
 
@@ -14196,6 +14207,7 @@ def create_pluggable_database_create_pluggable_database_from_remote_clone_detail
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--pdb-creation-type-details-is-thin-clone', type=click.BOOL, help=u"""True if Pluggable Database needs to be thin cloned and false if Pluggable Database needs to be thick cloned.""")
+@cli_util.option('--pdb-creation-type-details-source-pluggable-database-snapshot-id', help=u"""The OCID of the Source Pluggable Database Snapshot id.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING", "FAILED", "RELOCATING", "RELOCATED", "REFRESHING", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "DISABLED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -14204,7 +14216,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'PluggableDatabase'})
 @cli_util.wrap_exceptions
-def create_pluggable_database_create_pluggable_database_from_local_clone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pdb_name, container_database_id, pdb_creation_type_details_source_pluggable_database_id, pdb_admin_password, tde_wallet_password, should_pdb_admin_account_be_locked, container_database_admin_password, should_create_pdb_backup, freeform_tags, defined_tags, pdb_creation_type_details_is_thin_clone):
+def create_pluggable_database_create_pluggable_database_from_local_clone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pdb_name, container_database_id, pdb_creation_type_details_source_pluggable_database_id, pdb_admin_password, tde_wallet_password, should_pdb_admin_account_be_locked, container_database_admin_password, should_create_pdb_backup, freeform_tags, defined_tags, pdb_creation_type_details_is_thin_clone, pdb_creation_type_details_source_pluggable_database_snapshot_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -14239,6 +14251,9 @@ def create_pluggable_database_create_pluggable_database_from_local_clone_details
     if pdb_creation_type_details_is_thin_clone is not None:
         _details['pdbCreationTypeDetails']['isThinClone'] = pdb_creation_type_details_is_thin_clone
 
+    if pdb_creation_type_details_source_pluggable_database_snapshot_id is not None:
+        _details['pdbCreationTypeDetails']['sourcePluggableDatabaseSnapshotId'] = pdb_creation_type_details_source_pluggable_database_snapshot_id
+
     _details['pdbCreationTypeDetails']['creationType'] = 'LOCAL_CLONE_PDB'
 
     client = cli_util.build_client('database', 'database', ctx)
@@ -14258,6 +14273,67 @@ def create_pluggable_database_create_pluggable_database_from_local_clone_details
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_pluggable_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pluggable_database_snapshot_group.command(name=cli_util.override('db.create_pluggable_database_snapshot.command_name', 'create'), help=u"""Creates a Pluggable Database Snapshot \n[Command Reference](createPluggableDatabaseSnapshot)""")
+@cli_util.option('--name', required=True, help=u"""The user-friendly name for the Database Snapshot. The name should be unique.""")
+@cli_util.option('--pluggable-database-id', required=True, help=u"""The [OCID] of the Exadata Pluggable Database.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'PluggableDatabaseSnapshot'})
+@cli_util.wrap_exceptions
+def create_pluggable_database_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, pluggable_database_id, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['pluggableDatabaseId'] = pluggable_database_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_pluggable_database_snapshot(
+        create_pluggable_database_snapshot_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pluggable_database_snapshot') and callable(getattr(client, 'get_pluggable_database_snapshot')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_pluggable_database_snapshot(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -16386,6 +16462,63 @@ def delete_pluggable_database(ctx, from_json, wait_for_state, max_wait_seconds, 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.delete_pluggable_database(
         pluggable_database_id=pluggable_database_id,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pluggable_database_snapshot_group.command(name=cli_util.override('db.delete_pluggable_database_snapshot.command_name', 'delete'), help=u"""Deletes the specified Exadata Pluggable Database Snapshot. \n[Command Reference](deletePluggableDatabaseSnapshot)""")
+@cli_util.option('--pluggable-database-snapshot-id', required=True, help=u"""The Exadata Pluggable Database Snapshot [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_pluggable_database_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_snapshot_id, if_match):
+
+    if isinstance(pluggable_database_snapshot_id, six.string_types) and len(pluggable_database_snapshot_id.strip()) == 0:
+        raise click.UsageError('Parameter --pluggable-database-snapshot-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.delete_pluggable_database_snapshot(
+        pluggable_database_snapshot_id=pluggable_database_snapshot_id,
         **kwargs
     )
     work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
@@ -20538,6 +20671,28 @@ def get_pluggable_database(ctx, from_json, pluggable_database_id):
     client = cli_util.build_client('database', 'database', ctx)
     result = client.get_pluggable_database(
         pluggable_database_id=pluggable_database_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pluggable_database_snapshot_group.command(name=cli_util.override('db.get_pluggable_database_snapshot.command_name', 'get'), help=u"""Gets information about the specified Exadata Pluggable Database Snapshot in the specified compartment. \n[Command Reference](getPluggableDatabaseSnapshot)""")
+@cli_util.option('--pluggable-database-snapshot-id', required=True, help=u"""The Exadata Pluggable Database Snapshot [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'PluggableDatabaseSnapshot'})
+@cli_util.wrap_exceptions
+def get_pluggable_database_snapshot(ctx, from_json, pluggable_database_snapshot_id):
+
+    if isinstance(pluggable_database_snapshot_id, six.string_types) and len(pluggable_database_snapshot_id.strip()) == 0:
+        raise click.UsageError('Parameter --pluggable-database-snapshot-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_pluggable_database_snapshot(
+        pluggable_database_snapshot_id=pluggable_database_snapshot_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -25897,6 +26052,71 @@ def list_pdb_conversion_history_entries(ctx, from_json, all_pages, page_size, da
     else:
         result = client.list_pdb_conversion_history_entries(
             database_id=database_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@pluggable_database_snapshot_group.command(name=cli_util.override('db.list_pluggable_database_snapshots.command_name', 'list'), help=u"""Gets a list of the Exadata Pluggable Database Snapshots in the specified compartment. \n[Command Reference](listPluggableDatabaseSnapshots)""")
+@cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for NAME is ascending. The NAME sort order is case sensitive.""")
+@cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given. The match is not case sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAILED"]), help=u"""A filter to return only Exadata Pluggable Database Snapshots that match the given lifecycle state exactly.""")
+@cli_util.option('--cluster-id', help=u"""A filter to return only Exadata Database Node Snapshots that match the given VM cluster.""")
+@cli_util.option('--pluggable-database-id', help=u"""A filter to return only Exadata Pluggable Database Snapshots that match the given database [OCID].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[PluggableDatabaseSnapshotSummary]'})
+@cli_util.wrap_exceptions
+def list_pluggable_database_snapshots(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, name, sort_order, lifecycle_state, cluster_id, pluggable_database_id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if name is not None:
+        kwargs['name'] = name
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if cluster_id is not None:
+        kwargs['cluster_id'] = cluster_id
+    if pluggable_database_id is not None:
+        kwargs['pluggable_database_id'] = pluggable_database_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_pluggable_database_snapshots,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_pluggable_database_snapshots,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_pluggable_database_snapshots(
             **kwargs
         )
     cli_util.render_response(result, ctx)
