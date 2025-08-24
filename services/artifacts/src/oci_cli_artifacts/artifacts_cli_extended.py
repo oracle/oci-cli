@@ -559,6 +559,7 @@ def list_container_images_extended(ctx, from_json, all_pages, page_size, compart
 @cli_util.option('--image-id', required=True, help=u"""The [OCID] of the container image.""")
 @cli_util.option('--description', help="""The optional text of your choice to describe the image. The description is included as part of the signature, and is shown in the Console. For example, --description "Image for UAT testing" """)
 @cli_util.option('--metadata', help="""The optional information of your choice about the image, in a valid JSON format (alphanumeric characters only, with no whitespace or escape characters). For example, --metadata "{\"buildNumber\":\"123\"}" """)
+@cli_util.option('--base-domain-overwrite', help="Overwrite the base domain for the Cryptographic Endpoint, e.g. to overwrite 'oraclecloud.com' with 'oci.oraclecloud.com'. Usage: --base-domain-overwrite 'oci.oraclecloud.com'")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -567,7 +568,7 @@ def list_container_images_extended(ctx, from_json, all_pages, page_size, compart
 def sign_and_upload_container_image_signature_metadata(ctx, from_json, kms_key_id, kms_key_version_id,
                                                        signing_algorithm,
                                                        compartment_id, image_id,
-                                                       description, metadata):
+                                                       description, metadata, base_domain_overwrite):
     """
     SignAndUploadContainerImageSignatureMetadata calls KMS to sign the message then calls OCIR to upload the returned signature
 
@@ -583,6 +584,7 @@ def sign_and_upload_container_image_signature_metadata(ctx, from_json, kms_key_i
     :param image_id: The OCID of the container image. eg) ocid1.containerimage.oc1..exampleuniqueID. Max length: 255, Min length:1
     :param description: An user inputted message.
     :param metadata:  An user defined information about the container image in JSON format eg) {"buildNumber":"123"}
+    :param base_domain_overwrite: Overwrite the base domain for the Cryptographic Endpoint. e.g. if the base domain is 'oraclecloud.com' instead of 'oci.oraclecloud.com' which happens in me-riyadh-1 and potentially other regions
     restriction:
     - should only contains alphanumeric key strings.
     - should be alphabetically sorted.
@@ -607,7 +609,7 @@ def sign_and_upload_container_image_signature_metadata(ctx, from_json, kms_key_i
     region_name = get_region_from_config(ctx)
 
     # Create KMS client
-    kms_crypto_client = build_vault_crypto_client(ctx, kms_key_id, region_name)
+    kms_crypto_client = build_vault_crypto_client(ctx, kms_key_id, region_name, base_domain_overwrite)
 
     # Get container image metadata
     click.echo("Obtaining container image metadata by the image ID")
@@ -741,13 +743,16 @@ def upload_signature_metadata(ctx, artifacts_client, compartment_id, image_id, k
 
 
 # Build the KmsCryptoClient based on the vault extension OCID in the keyId
-def build_vault_crypto_client(ctx, key_id, region):
+def build_vault_crypto_client(ctx, key_id, region, base_domain_overwrite):
     split_list = re.split("ocid1\\.key\\.([\\w-]+)\\.([\\w-]+)\\.([\\w-]+)\\.([\\w]){60}", key_id)
     if len(split_list) < 4:
         raise click.ClickException("Failed to split key ocid. Please check the kms_key_id is correct.")
     vault_ext = split_list[3]
-    realm = oci.regions.REGION_REALMS.get(region)
-    second_level_domain = oci.regions.REALMS[realm]
+    if base_domain_overwrite is not None:
+        second_level_domain = base_domain_overwrite
+    else:
+        realm = oci.regions.REGION_REALMS.get(region)
+        second_level_domain = oci.regions.REALMS[realm]
     # region example: us-phoenix-1
     crypto_endpoint = "https://" + vault_ext + "-crypto.kms." + region + "." + second_level_domain
     ctx.obj['endpoint'] = crypto_endpoint
@@ -788,10 +793,10 @@ def filter_item_by_trusted_keys(items, trusted_keys):
     return ret
 
 
-def verify_signatures(ctx, container_image_signature_summary, region_name):
+def verify_signatures(ctx, container_image_signature_summary, region_name, base_domain_overwrite):
     verified = None
     for signature_summary in container_image_signature_summary:
-        vault_crypto_client = build_vault_crypto_client(ctx, signature_summary.kms_key_id, region_name)
+        vault_crypto_client = build_vault_crypto_client(ctx, signature_summary.kms_key_id, region_name, base_domain_overwrite)
         algo = signature_summary.signing_algorithm
         signing_algo_list = [
             "SHA_224_RSA_PKCS_PSS", "SHA_256_RSA_PKCS_PSS", "SHA_384_RSA_PKCS_PSS", "SHA_512_RSA_PKCS_PSS"
