@@ -553,3 +553,4 @@ network-firewall, service, create
 email-data-plane, email-raw-submitted-response, submit-raw-email
 api-gateway, certificate, create
 generative-ai-inference, chat-result, chat-generic-chat-request
+db, database, update

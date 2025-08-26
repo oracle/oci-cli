@@ -665,6 +665,8 @@ def launch_db_system_from_database_extended(ctx, **kwargs):
 @cli_util.option('--backup-destination', required=False, type=custom_types.CLI_COMPLEX_TYPE, help="""backup destination list""")
 @cli_util.option('--vault-id', required=False, help="""The OCID of the Oracle Cloud Infrastructure vault.""")
 @cli_util.option('--hsm-password', required=False, help=u"""Provide the HSM password as you would in RDBMS for External HSM.""")
+@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Provide the DATA storage size, in gigabytes, that is applicable for the database.""")
+@cli_util.option('--reco-storage-size-in-gbs', type=click.INT, help=u"""Provide the RECO storage size, in gigabytes, that is applicable for the database.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
@@ -738,6 +740,20 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
 
     if 'kms_key_version_id' in kwargs and kwargs['kms_key_version_id']:
         create_database_details['kmsKeyVersionId'] = kwargs['kms_key_version_id']
+
+    database_storage_size_details = oci.database.models.DatabaseStorageSizeDetails()
+    include_storage_details = False
+
+    if 'data_storage_size_in_gbs' in kwargs and kwargs['data_storage_size_in_gbs']:
+        database_storage_size_details.data_storage_size_in_gbs = kwargs['data_storage_size_in_gbs']
+        include_storage_details = True
+
+    if 'reco_storage_size_in_gbs' in kwargs and kwargs['reco_storage_size_in_gbs']:
+        database_storage_size_details.reco_storage_size_in_gbs = kwargs['reco_storage_size_in_gbs']
+        include_storage_details = True
+
+    if include_storage_details:
+        create_database_details.storage_size_details = database_storage_size_details
 
     _encryption_key_location_details = {}
     if 'hsm_password' in kwargs and kwargs['hsm_password']:
@@ -842,6 +858,8 @@ def create_database(ctx, wait_for_state, max_wait_seconds, wait_interval_seconds
 @cli_util.option('--db-name', required=False, help="""The display name of the database to be created from the backup. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
 @cli_util.option('--db-unique-name', required=False, help="""The database unique name. It must be greater than 3 characters, but at most 30 characters, begin with a letter, and contain only letters, numbers, and underscores. The first eight characters must also be unique within a Database Domain and within a Database System or VM Cluster. In addition, if it is not on a VM Cluster it might either be identical to the database name or prefixed by the datbase name and followed by an underscore.""")
 @cli_util.option('--sid-prefix', required=False, help="""Specifies a prefix for the `Oracle SID` of the database to be created.""")
+@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Provide the DATA storage size, in gigabytes, that is applicable for the database.""")
+@cli_util.option('--reco-storage-size-in-gbs', type=click.INT, help=u"""Provide the RECO storage size, in gigabytes, that is applicable for the database.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
@@ -892,6 +910,20 @@ def create_database_from_backup(ctx, wait_for_state, max_wait_seconds, wait_inte
 
     if 'is_desupported_version' in kwargs and kwargs['is_desupported_version']:
         create_db_home_with_system_details.is_desupported_version = kwargs['is_desupported_version']
+
+    database_storage_size_details = oci.database.models.DatabaseStorageSizeDetails()
+    include_storage_details = False
+
+    if 'data_storage_size_in_gbs' in kwargs and kwargs['data_storage_size_in_gbs']:
+        database_storage_size_details.data_storage_size_in_gbs = kwargs['data_storage_size_in_gbs']
+        include_storage_details = True
+
+    if 'reco_storage_size_in_gbs' in kwargs and kwargs['reco_storage_size_in_gbs']:
+        database_storage_size_details.reco_storage_size_in_gbs = kwargs['reco_storage_size_in_gbs']
+        include_storage_details = True
+
+    if include_storage_details:
+        create_database_details.storage_size_details = database_storage_size_details
 
     create_db_home_with_system_details.database = create_database_details
 
@@ -1479,6 +1511,8 @@ All Oracle Cloud Infrastructue resources, including Data Guard associations, get
 @cli_util.option('--availability-domain', required=True, help="""The name of the Availability Domain that the standby database DB System will be located in.""")
 @cli_util.option('--storage-performance', type=custom_types.CliCaseInsensitiveChoice(["BALANCED", "HIGH_PERFORMANCE"]), help=u"""The block storage volume performance level. Valid values are `BALANCED` and `HIGH_PERFORMANCE`. See [Block Volume Performance] for more information.""")
 @cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of OCPU cores available for AMD-based virtual machine DB systems.""")
+@cli_util.option('--compute-model', type=custom_types.CliCaseInsensitiveChoice(["ECPU", "OCPU"]), help=u"""The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy.""")
+@cli_util.option('--compute-count', type=click.INT, help=u"""The number of compute servers for the DB system.""")
 @cli_util.option('--shape', help=u"""The shape of the DB system to launch to set up the Data Guard association. The shape determines the number of CPU cores and the amount of memory available for the DB system. Only virtual machine shapes are valid shapes. If you do not supply this parameter, the default shape is the shape of the primary DB system. To get a list of all shapes, use the [ListDbSystemShapes] operation.""")
 @cli_util.option('--subnet-id', required=True, help="""The OCID of the subnet the DB System is associated with. **Subnet Restrictions:** - For 1- and 2-node RAC DB Systems, do not use a subnet that overlaps with 192.168.16.16/28
 
@@ -1500,7 +1534,7 @@ These subnets are used by the Oracle Clusterware private interconnect on the dat
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'db-system-freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'db-system-defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'database-freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'database-defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_with_new_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, availability_domain, display_name, hostname, shape, subnet_id, database_software_image_id, is_active_data_guard_enabled, storage_performance, cpu_core_count, node_count, time_zone, fault_domains, private_ip, license_model, db_system_freeform_tags, db_system_defined_tags, database_freeform_tags, database_defined_tags, is_diagnostics_events_enabled, is_health_monitoring_enabled, is_incident_logs_enabled, domain, **kwargs):
+def create_data_guard_association_with_new_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, availability_domain, display_name, hostname, shape, subnet_id, database_software_image_id, is_active_data_guard_enabled, storage_performance, cpu_core_count, compute_model, compute_count, node_count, time_zone, fault_domains, private_ip, license_model, db_system_freeform_tags, db_system_defined_tags, database_freeform_tags, database_defined_tags, is_diagnostics_events_enabled, is_health_monitoring_enabled, is_incident_logs_enabled, domain, **kwargs):
     kwargs = {}
 
     details = {}
@@ -1525,6 +1559,10 @@ def create_data_guard_association_with_new_db_system(ctx, from_json, database_id
         details['isActiveDataGuardEnabled'] = is_active_data_guard_enabled
     if cpu_core_count is not None:
         details['cpuCoreCount'] = cpu_core_count
+    if compute_model is not None:
+        details['computeModel'] = compute_model
+    if compute_count is not None:
+        details['computeCount'] = compute_count
     if storage_performance is not None:
         details['storageVolumePerformanceMode'] = storage_performance
     if node_count is not None:
@@ -4094,6 +4132,9 @@ For more information, see [Redo Transport Services] in the Oracle Data Guard doc
 @cli_util.option('--sid-prefix', help=u"""Specifies a prefix for the `Oracle SID` of the standby database to be created.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].\n\nExample: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--hsm-password', help=u"""Provide the HSM password as you would in RDBMS for External HSM.""")
+@cli_util.option('--data-storage-size-in-gbs', type=click.INT, help=u"""Provide the DATA storage size, in gigabytes, that is applicable for the database.""")
+@cli_util.option('--reco-storage-size-in-gbs', type=click.INT, help=u"""Provide the RECO storage size, in gigabytes, that is applicable for the database.""")
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
@@ -4136,6 +4177,20 @@ def create_standby_database_for_multiple_standby(ctx, wait_for_state, max_wait_s
 
     if 'defined_tags' in kwargs and kwargs['defined_tags']:
         create_standby_details.defined_tags = cli_util.parse_json_parameter('defined_tags', kwargs['defined_tags'])
+
+    database_storage_size_details = oci.database.models.DatabaseStorageSizeDetails()
+    include_storage_details = False
+
+    if 'data_storage_size_in_gbs' in kwargs and kwargs['data_storage_size_in_gbs']:
+        database_storage_size_details.data_storage_size_in_gbs = kwargs['data_storage_size_in_gbs']
+        include_storage_details = True
+
+    if 'reco_storage_size_in_gbs' in kwargs and kwargs['reco_storage_size_in_gbs']:
+        database_storage_size_details.reco_storage_size_in_gbs = kwargs['reco_storage_size_in_gbs']
+        include_storage_details = True
+
+    if include_storage_details:
+        create_standby_details.storage_size_details = database_storage_size_details
 
     _details['database'] = create_standby_details
 
