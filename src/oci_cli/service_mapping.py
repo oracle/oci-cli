@@ -38,11 +38,6 @@ service_mapping = {
         "Announcements Service",
         "Governance & Administration"
     ],
-    "anomaly-detection": [
-        "ai_anomaly_detection",
-        "Anomaly Detection",
-        "Analytics & AI"
-    ],
     "api-gateway": [
         "apigateway",
         "API Gateway",
@@ -288,11 +283,6 @@ service_mapping = {
         "DNS",
         "Networking"
     ],
-    "dts": [
-        "dts",
-        "Data Transfer Service",
-        "Migration"
-    ],
     "em-warehouse": [
         "em_warehouse",
         "EM Warehouse",
@@ -406,6 +396,11 @@ service_mapping = {
     "jms-java-downloads": [
         "jms_java_downloads",
         "Java Management Service Download",
+        "Others"
+    ],
+    "kafka": [
+        "managed_kafka",
+        "Oracle Streaming with Apache Kafka (OSAK)",
         "Others"
     ],
     "kms": [
@@ -598,11 +593,6 @@ service_mapping = {
         "Object Storage Service",
         "Storage"
     ],
-    "os-management": [
-        "os_management",
-        "OS Management",
-        "Compute"
-    ],
     "os-management-hub": [
         "os_management_hub",
         "OS Management Hub",
@@ -697,11 +687,6 @@ service_mapping = {
         "service_manager_proxy",
         "Service Manager Proxy",
         "Others"
-    ],
-    "service-mesh": [
-        "service_mesh",
-        "Service Mesh",
-        "Developer Services"
     ],
     "speech": [
         "ai_speech",

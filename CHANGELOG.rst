@@ -6,6 +6,62 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.65.0 - 2025-08-26
+--------------------
+Fixed
+~~~~~
+* `Github Issue #976 <https://github.com/oracle/oci-cli/issues/976>`_ for Cloud Incident Management Service
+
+Removed
+~~~~~~~
+* [BREAKING] Removed deprecated services: Anomaly Detection, Data Transfer Service, OS Management Service, and Service Mesh.
+
+  * ``oci dts``
+  * ``oci service-mesh``
+  * ``oci anomaly-detection``
+  * ``oci os-management``
+
+Added
+~~~~~
+* Support for Managed Kafka Service
+
+  * ``oci kafka``
+
+* Support for new responses in ComputeGpuMemoryFabric in the Core Service
+ 
+  * ``oci compute compute-gpu-memory-fabric get``
+  * ``oci compute compute-gpu-memory-fabric list``
+
+* Support for new sub-parameters within the complex parameter in Disaster Recovery Service
+
+  * ``oci disaster-recovery dr-protection-group create --members [complex type]``
+  * ``oci disaster-recovery dr-protection-group update --members [complex type]``
+
+* Golden Gate Service
+
+  * Added new parameters for creating/updating deployment: -byol-cpu-core-count-limit --is-byol-cpu-core-count-limit-enabled
+
+    * ``oci goldengate deployment create --byol-cpu-core-count-limit --is-byol-cpu-core-count-limit-enabled``
+    * ``oci goldengate deployment update --byol-cpu-core-count-limit --is-byol-cpu-core-count-limit-enabled``
+
+* Database Service
+  
+  * Support for Oracle 19C Database in the Exadata Database Service on Exascale Infrastructure (ExaDB-XS)
+
+    * ``oci db exadb-vm-cluster create --shape-attribute``
+    * ``oci db database create --data-storage-size-in-gbs, --reco-storage-size-in-gbs``
+    * ``oci db database create-from-backup --data-storage-size-in-gbs, --reco-storage-size-in-gbs``
+    * ``oci db database create-standby-database --data-storage-size-in-gbs, --reco-storage-size-in-gbs``
+    * ``oci db database update --storage-size-details``
+    * ``oci db exascale-db-storage-vault list --attached-shape-attributes, --attached-shape-attributes-not-equal-to, --vm-cluster-count-greater-than-or-equal-to, --vm-cluster-count-less-than-or-equal-to``
+    * ``oci db gi-version list --shape-attribute``
+    * ``oci db system-shape list --shape-attribute``
+    * ``oci db version list --shape-attribute`` 
+
+  * Support for VM.Standard.x86 shape in BaseDB (DBaaS) Service.
+
+    * ``oci db system launch --shape VM.Standard.x86``
+
 3.64.1 - 2025-08-19
 --------------------
 Added
@@ -778,6 +834,10 @@ Security
 ~~~~~~~
 - updated virtualenv dependency to >=20.26.6; python_version > '3.7' , 20.13.0 for <= '3.7' per: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-53899
 - updated PyYAML dependency to 6.0.2 to support py3.13 build
+
+Fixed
+~~~~~
+* `Github Issue #943 <https://github.com/oracle/oci-cli/issues/943>`_ for OCI Database Service
 
 3.57.0 - 2025-05-27
 --------------------

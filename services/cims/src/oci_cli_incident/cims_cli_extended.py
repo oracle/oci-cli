@@ -13,7 +13,7 @@ from services.cims.src.oci_cli_incident.generated.incident_cli import incident_g
 from oci_cli import custom_types
 from oci_cli import json_skeleton_utils
 
-from src.oci_cli import cli_exceptions
+from oci_cli import cli_exceptions
 
 # remove update-incident stand-alone command
 # incident_cli.incident_root_group.commands.pop(incident_cli.update_incident_group.name)
