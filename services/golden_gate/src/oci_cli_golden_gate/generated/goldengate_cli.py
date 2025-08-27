@@ -5437,6 +5437,8 @@ def create_database_registration(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment being referenced.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet of the deployment's private endpoint. The subnet must be a private subnet. For backward compatibility, public subnets are allowed until May 31 2025, after which the private subnet will be enforced.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to a Deployment.""")
+@cli_util.option('--is-byol-cpu-core-count-limit-enabled', type=click.BOOL, help=u"""Flag to allow to configure the 'Bring Your Own License' (BYOL) license type CPU limit. If enabled, the exact number of CPUs must be provided via byolCpuCoreCountLimit.""")
+@cli_util.option('--byol-cpu-core-count-limit', type=click.INT, help=u"""The maximum number of CPUs allowed with a 'Bring Your Own License' (BYOL) license type. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--environment-type', type=custom_types.CliCaseInsensitiveChoice(["PRODUCTION", "DEVELOPMENT_OR_TESTING"]), help=u"""Specifies whether the deployment is used in a production or development/testing environment.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--source-deployment-id', help=u"""The [OCID] of the deployment being referenced.""")
@@ -5474,7 +5476,7 @@ This option is a JSON list with items of type AddResourceLockDetails.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'placements': {'module': 'golden_gate', 'class': 'list[DeploymentPlacementDetails]'}, 'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'golden_gate', 'class': 'list[AddResourceLockDetails]'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'ogg-data': {'module': 'golden_gate', 'class': 'CreateOggDeploymentDetails'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'CreateMaintenanceWindowDetails'}, 'maintenance-configuration': {'module': 'golden_gate', 'class': 'CreateMaintenanceConfigurationDetails'}, 'backup-schedule': {'module': 'golden_gate', 'class': 'CreateBackupScheduleDetails'}}, output_type={'module': 'golden_gate', 'class': 'Deployment'})
 @cli_util.wrap_exceptions
-def create_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, subnet_id, license_model, environment_type, description, source_deployment_id, availability_domain, fault_domain, placements, freeform_tags, defined_tags, locks, deployment_backup_id, load_balancer_subnet_id, fqdn, nsg_ids, is_public, cpu_core_count, is_auto_scaling_enabled, deployment_type, ogg_data, maintenance_window, maintenance_configuration, backup_schedule):
+def create_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, subnet_id, license_model, is_byol_cpu_core_count_limit_enabled, byol_cpu_core_count_limit, environment_type, description, source_deployment_id, availability_domain, fault_domain, placements, freeform_tags, defined_tags, locks, deployment_backup_id, load_balancer_subnet_id, fqdn, nsg_ids, is_public, cpu_core_count, is_auto_scaling_enabled, deployment_type, ogg_data, maintenance_window, maintenance_configuration, backup_schedule):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -5486,6 +5488,12 @@ def create_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if license_model is not None:
         _details['licenseModel'] = license_model
+
+    if is_byol_cpu_core_count_limit_enabled is not None:
+        _details['isByolCpuCoreCountLimitEnabled'] = is_byol_cpu_core_count_limit_enabled
+
+    if byol_cpu_core_count_limit is not None:
+        _details['byolCpuCoreCountLimit'] = byol_cpu_core_count_limit
 
     if environment_type is not None:
         _details['environmentType'] = environment_type
@@ -7438,6 +7446,7 @@ def list_deployment_wallets_operations(ctx, from_json, all_pages, page_size, dep
 @cli_util.option('--assignable-connection-id', help=u"""Return the deployments to which the specified connectionId may be assigned.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED", "NEEDS_ATTENTION", "IN_PROGRESS", "CANCELING", "CANCELED", "SUCCEEDED", "WAITING"]), help=u"""A filter to return only the resources that match the 'lifecycleState' given.""")
 @cli_util.option('--lifecycle-sub-state', type=custom_types.CliCaseInsensitiveChoice(["RECOVERING", "STARTING", "STOPPING", "MOVING", "UPGRADING", "RESTORING", "BACKUP_IN_PROGRESS", "ROLLBACK_IN_PROGRESS"]), help=u"""A filter to return only the resources that match the 'lifecycleSubState' given.""")
+@cli_util.option('--deployment-type', type=custom_types.CliCaseInsensitiveChoice(["OGG", "DATABASE_ORACLE", "BIGDATA", "DATABASE_MICROSOFT_SQLSERVER", "DATABASE_MYSQL", "DATABASE_POSTGRESQL", "DATABASE_DB2ZOS", "DATABASE_DB2I", "GGSA", "DATA_TRANSFORMS"]), help=u"""A filter that returns only the resources matching the specified 'deploymentType'.""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resources that match the entire 'displayName' given.""")
 @cli_util.option('--fqdn', help=u"""A filter to return only the resources that match the 'fqdn' given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -7451,7 +7460,7 @@ def list_deployment_wallets_operations(ctx, from_json, all_pages, page_size, dep
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'golden_gate', 'class': 'DeploymentCollection'})
 @cli_util.wrap_exceptions
-def list_deployments(ctx, from_json, all_pages, page_size, compartment_id, supported_connection_type, assigned_connection_id, assignable_connection_id, lifecycle_state, lifecycle_sub_state, display_name, fqdn, limit, page, sort_order, sort_by):
+def list_deployments(ctx, from_json, all_pages, page_size, compartment_id, supported_connection_type, assigned_connection_id, assignable_connection_id, lifecycle_state, lifecycle_sub_state, deployment_type, display_name, fqdn, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -7467,6 +7476,8 @@ def list_deployments(ctx, from_json, all_pages, page_size, compartment_id, suppo
         kwargs['lifecycle_state'] = lifecycle_state
     if lifecycle_sub_state is not None:
         kwargs['lifecycle_sub_state'] = lifecycle_sub_state
+    if deployment_type is not None:
+        kwargs['deployment_type'] = deployment_type
     if display_name is not None:
         kwargs['display_name'] = display_name
     if fqdn is not None:
@@ -14068,6 +14079,8 @@ def update_database_registration(ctx, from_json, force, wait_for_state, max_wait
 @cli_util.option('--deployment-id', required=True, help=u"""A unique Deployment identifier.""")
 @cli_util.option('--display-name', help=u"""An object's Display Name.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to a Deployment.""")
+@cli_util.option('--is-byol-cpu-core-count-limit-enabled', type=click.BOOL, help=u"""Flag to allow to configure the 'Bring Your Own License' (BYOL) license type CPU limit. If enabled, the exact number of CPUs must be provided via byolCpuCoreCountLimit.""")
+@cli_util.option('--byol-cpu-core-count-limit', type=click.INT, help=u"""The maximum number of CPUs allowed with a 'Bring Your Own License' (BYOL) license type. Any CPU usage above this limit is considered as License Included and billed.""")
 @cli_util.option('--environment-type', type=custom_types.CliCaseInsensitiveChoice(["PRODUCTION", "DEVELOPMENT_OR_TESTING"]), help=u"""Specifies whether the deployment is used in a production or development/testing environment.""")
 @cli_util.option('--description', help=u"""Metadata about this specific object.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only.
@@ -14101,7 +14114,7 @@ This option is a JSON list with items of type DeploymentPlacementDetails.  For d
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'golden_gate', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'golden_gate', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'golden_gate', 'class': 'list[string]'}, 'placements': {'module': 'golden_gate', 'class': 'list[DeploymentPlacementDetails]'}, 'ogg-data': {'module': 'golden_gate', 'class': 'UpdateOggDeploymentDetails'}, 'maintenance-window': {'module': 'golden_gate', 'class': 'UpdateMaintenanceWindowDetails'}, 'maintenance-configuration': {'module': 'golden_gate', 'class': 'UpdateMaintenanceConfigurationDetails'}, 'backup-schedule': {'module': 'golden_gate', 'class': 'UpdateBackupScheduleDetails'}})
 @cli_util.wrap_exceptions
-def update_deployment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, display_name, license_model, environment_type, description, freeform_tags, defined_tags, nsg_ids, subnet_id, load_balancer_subnet_id, is_public, fqdn, cpu_core_count, is_auto_scaling_enabled, placements, ogg_data, maintenance_window, maintenance_configuration, backup_schedule, if_match, is_lock_override):
+def update_deployment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, display_name, license_model, is_byol_cpu_core_count_limit_enabled, byol_cpu_core_count_limit, environment_type, description, freeform_tags, defined_tags, nsg_ids, subnet_id, load_balancer_subnet_id, is_public, fqdn, cpu_core_count, is_auto_scaling_enabled, placements, ogg_data, maintenance_window, maintenance_configuration, backup_schedule, if_match, is_lock_override):
 
     if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
@@ -14124,6 +14137,12 @@ def update_deployment(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 
     if license_model is not None:
         _details['licenseModel'] = license_model
+
+    if is_byol_cpu_core_count_limit_enabled is not None:
+        _details['isByolCpuCoreCountLimitEnabled'] = is_byol_cpu_core_count_limit_enabled
+
+    if byol_cpu_core_count_limit is not None:
+        _details['byolCpuCoreCountLimit'] = byol_cpu_core_count_limit
 
     if environment_type is not None:
         _details['environmentType'] = environment_type
