@@ -6,6 +6,64 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.65.1 - 2025-09-02
+--------------------
+Added
+~~~~~
+* Database Service
+
+  * Support for Autoscale DB Storage Vault in the Exadata Database Service on Exascale Infrastructure
+
+    * ``oci db exascale-db-storage-vault create --is_autoscale_enabled, --autoscale_limit_in_gbs``
+    * ``oci db exascale-db-storage-vault update --is_autoscale_enabled, --autoscale_limit_in_gbs``
+
+  * DG creation with GCP, changing encryption key location to gcp, and two new apis to register/unregister pkcs
+
+    * ``oci db data-guard-association create-data-guard-association-google-cloud-provider-encryption-key-details``
+    * ``oci db database change-encryption-key-location-google-cloud-provider-encryption-key-details``
+    * ``oci db cloud-vm-cluster register-cloud-vm-cluster-pkcs``
+    * ``oci db cloud-vm-cluster unregister-cloud-vm-cluster-pkcs``
+
+* Database Multicloud Service
+
+  * Support for the gcp commands
+
+    * ``oci dbmulticloud oracle-db-gcp-identity-connector``
+    * ``oci dbmulticloud oracle-db-gcp-key``
+    * ``oci dbmulticloud oracle-db-gcp-key-ring``
+
+  * Support for new optional parameters in below commands
+
+    * ``oci dbmulticloud oracle-db-azure-vault refresh --oracle-db-azure-connector-id``
+    * ``oci dbmulticloud multi-cloud-resource-discovery list --resources-filter``
+    * ``oci dbmulticloud multi-cloud-resource-discovery create --resources-filter``
+
+* Cloud Guard Service
+
+  * Support for new parameters for below commands
+
+    * ``oci cloud-guard managed-list update --group``
+    * ``oci cloud-guard managed-list create --group``
+
+  * Support for new sub-parameters within the complex parameter for below commands
+
+    * ``oci cloud-guard detector-recipe create --detector-rules [complex type]``
+    * ``oci cloud-guard detector-recipe update --detector-rules [complex type]``
+    * ``oci cloud-guard detector-recipe-detector-rule create create --detector-rules [complex type]``
+    * ``oci cloud-guard detector-recipe-detector-rule create create --detector-rules [complex type]``
+
+* Support for validating backup for backup in the MySql HeatWave Service
+
+  * ``oci mysql backup validate --backup-id $backup_id --is-prepared-backup-required $prepare_backup``
+
+* Support for new GenericChatRequest parameters in Generative AI inference service
+
+  * ``oci generative-ai-inference chat-result chat-generic-chat-request --chat-request-web-search-options``
+
+* Support for new list-endpoints parameters in the Generative AI Service Management
+
+  * ``oci generative-ai endpoint-collection list-endpoints --generative-ai-private-endpoint-id``
+
 3.65.0 - 2025-08-26
 --------------------
 Fixed
@@ -23,7 +81,7 @@ Removed
 
 Added
 ~~~~~
-* Support for Managed Kafka Service
+* Support for OCI Streaming with Apache Kafka (OCI Managed Kafka) service
 
   * ``oci kafka``
 

@@ -240,7 +240,7 @@ service_mapping = {
     ],
     "dbmulticloud": [
         "dbmulticloud",
-        "Oracle Database MultiCloud Data plane Integration",
+        "Oracle Database MultiCloud Data Plane Integration",
         "Others"
     ],
     "dbtools": [

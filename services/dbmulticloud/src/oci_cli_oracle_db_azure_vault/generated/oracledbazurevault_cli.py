@@ -16,22 +16,41 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.dbmulticloud.src.oci_cli_dbmulticloud.generated import dbmulticloud_service_cli
 
 
-@click.command(cli_util.override('oracle_db_azure_vault.oracle_db_azure_vault_root_group.command_name', 'oracle-db-azure-vault'), cls=CommandGroupWithAlias, help=cli_util.override('oracle_db_azure_vault.oracle_db_azure_vault_root_group.help', """1. Oracle Azure Connector Resource: This is for installing Azure Arc Server in ExaCS VM Cluster.
-  There are two way to install Azure Arc Server (Azure Identity) in ExaCS VMCluster.
-    a. Using Bearer Access Token or
-    b. By providing Authentication token
+@click.command(cli_util.override('oracle_db_azure_vault.oracle_db_azure_vault_root_group.command_name', 'oracle-db-azure-vault'), cls=CommandGroupWithAlias, help=cli_util.override('oracle_db_azure_vault.oracle_db_azure_vault_root_group.help', """<b>Microsoft Azure:</b> <br>
+<b>Oracle Azure Connector Resource:</b>:&nbsp;&nbsp;The Oracle Azure Connector Resource is used to install the Azure Arc Server on an Exadata VM cluster in Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D).
+ The supported method to install the Azure Arc Server (Azure Identity) on the Exadata VM cluster:
+<ul>
+ <li>Using a Bearer Access Token</li>
+</ul>
 
-2. Oracle Azure Blob Container Resource: This is for to capture Azure Container details
-   and same will be used in multiple ExaCS VMCluster to mount the Azure Container.
+<b>Oracle Azure Blob Container Resource:</b>&nbsp;&nbsp;The Oracle Azure Blob Container Resource is used to capture the details of an Azure Blob Container.
+This resource can then be reused across multiple Exadata VM clusters in Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D) to mount the Azure container.
 
-3. Oracle Azure Blob Mount Resource: This is for to mount Azure Container in ExaCS VMCluster
-   using Oracle Azure Connector and Oracle Azure Blob Container Resource."""), short_help=cli_util.override('oracle_db_azure_vault.oracle_db_azure_vault_root_group.short_help', """Oracle Database MultiCloud Data plane Integration"""))
+<b>Oracle Azure Blob Mount Resource:</b>&nbsp;&nbsp;The Oracle Azure Blob Mount Resource is used to mount an Azure Blob Container on an Exadata VM cluster in Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D).
+It relies on both the Oracle Azure Connector and the Oracle Azure Blob Container Resource to perform the mount operation.
+
+<b>Discover Azure Vaults and Keys Resource:</b>&nbsp;&nbsp;The Discover Oracle Azure Vaults and Azure Keys Resource is used to discover Azure Vaults and the associated encryption keys available in your Azure project.
+
+<b>Oracle Azure Vault:</b>&nbsp;&nbsp;The Oracle Azure Vault Resource is used to manage Azure Vaults within Oracle Cloud Infrastructure (OCI) for use with services such as Oracle Exadata Database Service on Dedicated Infrastructure.
+
+<b>Oracle Azure Key:</b>&nbsp;&nbsp;Oracle Azure Key Resource is used to register and manage a Oracle Azure Key Key within Oracle Cloud Infrastructure (OCI) under an associated Azure Vault.
+
+<br>
+
+<b>Google Cloud:</b><br>
+<b>Oracle Google Cloud Connector Resource:</b>&nbsp;&nbsp;The Oracle Google Cloud Connector Resource is used to install the Google Cloud Identity Connector on an Exadata VM cluster in Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D).
+
+<b>Discover Google Key Rings and Keys Resource:</b>&nbsp;&nbsp;The Discover Google Key Rings and Keys Resource is used to discover Google Cloud Key Rings and the associated encryption keys available in your Google Cloud project.
+
+<b>Google Key Rings Resource:</b>&nbsp;&nbsp;The Google Key Rings Resource is used to register and manage Google Cloud Key Rings within Oracle Cloud Infrastructure (OCI) for use with services such as Oracle Exadata Database Service on Dedicated Infrastructure.
+
+<b>Google Key Resource:</b>&nbsp;&nbsp;The Google Key Resource is used to register and manage a Google Cloud Key within Oracle Cloud Infrastructure (OCI) under an associated Google Key Ring."""), short_help=cli_util.override('oracle_db_azure_vault.oracle_db_azure_vault_root_group.short_help', """Oracle Database MultiCloud Data Plane Integration"""))
 @cli_util.help_option_group
 def oracle_db_azure_vault_root_group():
     pass
 
 
-@click.command(cli_util.override('oracle_db_azure_vault.oracle_db_azure_vault_group.command_name', 'oracle-db-azure-vault'), cls=CommandGroupWithAlias, help="""Oracle DB Azure Vault Resource Object.""")
+@click.command(cli_util.override('oracle_db_azure_vault.oracle_db_azure_vault_group.command_name', 'oracle-db-azure-vault'), cls=CommandGroupWithAlias, help="""Oracle DB Azure Vault resource object.""")
 @cli_util.help_option_group
 def oracle_db_azure_vault_group():
     pass
@@ -42,8 +61,8 @@ oracle_db_azure_vault_root_group.add_command(oracle_db_azure_vault_group)
 
 
 @oracle_db_azure_vault_group.command(name=cli_util.override('oracle_db_azure_vault.change_oracle_db_azure_vault_compartment.command_name', 'change-compartment'), help=u"""Moves the DB Azure Vault resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeOracleDbAzureVaultCompartment)""")
-@cli_util.option('--oracle-db-azure-vault-id', required=True, help=u"""The ID of the Oracle DB Azure Vault Resource.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the new compartment to contain the  DB Azure Vault Resource.""")
+@cli_util.option('--oracle-db-azure-vault-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Vault resource.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the new compartment to contain the Oracle DB Azure Vault resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -122,15 +141,15 @@ def change_oracle_db_azure_vault_compartment(ctx, from_json, wait_for_state, max
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_azure_vault_group.command(name=cli_util.override('oracle_db_azure_vault.create_oracle_db_azure_vault.command_name', 'create'), help=u"""Create DB Azure Vaults based on the provided information, this will fetch Keys related to Azure Vaults. \n[Command Reference](createOracleDbAzureVault)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains DB Azure Vault Resource.""")
-@cli_util.option('--oracle-db-connector-id', required=True, help=u"""The [OCID] of the DB Connector Resource.""")
-@cli_util.option('--display-name', required=True, help=u"""Display name of DB Azure Vault.""")
-@cli_util.option('--oracle-db-azure-resource-group', help=u"""Display name of Azure Resource Group.""")
-@cli_util.option('--azure-vault-id', help=u"""Azure Vault Id.""")
-@cli_util.option('--type', help=u"""Vault Resource Type.""")
-@cli_util.option('--location', help=u"""Vault Resource Location.""")
-@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Resource's properties.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@oracle_db_azure_vault_group.command(name=cli_util.override('oracle_db_azure_vault.create_oracle_db_azure_vault.command_name', 'create'), help=u"""Creates DB Azure Vault resource. \n[Command Reference](createOracleDbAzureVault)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains DB Azure Vault resource.""")
+@cli_util.option('--oracle-db-connector-id', required=True, help=u"""The [OCID] of the Oracle DB Connector resource that contains Oracle DB Azure Vault resource.""")
+@cli_util.option('--display-name', required=True, help=u"""Oracle DB Azure Vault resource name.""")
+@cli_util.option('--oracle-db-azure-resource-group', help=u"""Oracle DB Azure resource group name.""")
+@cli_util.option('--azure-vault-id', help=u"""Azure Vault ID.""")
+@cli_util.option('--type', help=u"""Oracle DB Azure Vault resource type.""")
+@cli_util.option('--location', help=u"""Oracle DB Azure Vault resource location.""")
+@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""resource's properties.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -214,8 +233,8 @@ def create_oracle_db_azure_vault(ctx, from_json, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_azure_vault_group.command(name=cli_util.override('oracle_db_azure_vault.delete_oracle_db_azure_vault.command_name', 'delete'), help=u"""Delete  DB Azure Vault details. \n[Command Reference](deleteOracleDbAzureVault)""")
-@cli_util.option('--oracle-db-azure-vault-id', required=True, help=u"""The ID of the Oracle DB Azure Vault Resource.""")
+@oracle_db_azure_vault_group.command(name=cli_util.override('oracle_db_azure_vault.delete_oracle_db_azure_vault.command_name', 'delete'), help=u"""Deletes the DB Azure Vault resource. \n[Command Reference](deleteOracleDbAzureVault)""")
+@cli_util.option('--oracle-db-azure-vault-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Vault resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -270,8 +289,8 @@ def delete_oracle_db_azure_vault(ctx, from_json, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_azure_vault_group.command(name=cli_util.override('oracle_db_azure_vault.get_oracle_db_azure_vault.command_name', 'get'), help=u"""Get Oracle DB Azure Vault Details form a particular Container Resource ID. \n[Command Reference](getOracleDbAzureVault)""")
-@cli_util.option('--oracle-db-azure-vault-id', required=True, help=u"""The ID of the Oracle DB Azure Vault Resource.""")
+@oracle_db_azure_vault_group.command(name=cli_util.override('oracle_db_azure_vault.get_oracle_db_azure_vault.command_name', 'get'), help=u"""Retrieves detailed information about an Oracle Database Azure Vault resource using its unique resource [OCID]. This operation returns metadata and configuration details associated with the specified vault resource. \n[Command Reference](getOracleDbAzureVault)""")
+@cli_util.option('--oracle-db-azure-vault-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Vault resource.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -301,13 +320,13 @@ def get_oracle_db_azure_vault(ctx, from_json, oracle_db_azure_vault_id, limit, p
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_azure_vault_group.command(name=cli_util.override('oracle_db_azure_vault.list_oracle_db_azure_vaults.command_name', 'list'), help=u"""Lists the all DB Azure Vaults based on filters. \n[Command Reference](listOracleDbAzureVaults)""")
+@oracle_db_azure_vault_group.command(name=cli_util.override('oracle_db_azure_vault.list_oracle_db_azure_vaults.command_name', 'list'), help=u"""Lists all DB Azure Vault resources based on the specified filters. \n[Command Reference](listOracleDbAzureVaults)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
-@cli_util.option('--display-name', help=u"""A filter to return Azure Vaults.""")
-@cli_util.option('--oracle-db-azure-vault-id', help=u"""A filter to return Oracle DB Azure Vault Resources.""")
+@cli_util.option('--display-name', help=u"""A filter to return Oracle DB Azure Vault resources that match the specified display name.""")
+@cli_util.option('--oracle-db-azure-vault-id', help=u"""A filter to return Oracle DB Azure Vault resources that match the specified [OCID] of the Oracle DB Azure Vault resource.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
-@cli_util.option('--oracle-db-azure-resource-group', help=u"""A filter to return Azure Vaults.""")
-@cli_util.option('--oracle-db-azure-connector-id', help=u"""A filter to return Oracle DB Azure Blob Mount Resources.""")
+@cli_util.option('--oracle-db-azure-resource-group', help=u"""A filter to return Oracle DB Azure Vault resources that match the specified Oracle DB Azure resource group name.""")
+@cli_util.option('--oracle-db-azure-connector-id', help=u"""A filter to return Oracle DB Azure Azure Identity Connector resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -370,8 +389,9 @@ def list_oracle_db_azure_vaults(ctx, from_json, all_pages, page_size, compartmen
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_azure_vault_group.command(name=cli_util.override('oracle_db_azure_vault.refresh_oracle_db_azure_vault.command_name', 'refresh'), help=u"""Refresh Oracle DB Azure Vault details from backend. \n[Command Reference](refreshOracleDbAzureVault)""")
-@cli_util.option('--oracle-db-azure-vault-id', required=True, help=u"""The ID of the Oracle DB Azure Vault Resource.""")
+@oracle_db_azure_vault_group.command(name=cli_util.override('oracle_db_azure_vault.refresh_oracle_db_azure_vault.command_name', 'refresh'), help=u"""Refreshes the Oracle DB Azure Vault resource. \n[Command Reference](refreshOracleDbAzureVault)""")
+@cli_util.option('--oracle-db-azure-vault-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Vault resource.""")
+@cli_util.option('--oracle-db-azure-connector-id', help=u"""The [OCID] of the Oracle DB Azure Vault resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -381,7 +401,7 @@ def list_oracle_db_azure_vaults(ctx, from_json, all_pages, page_size, compartmen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def refresh_oracle_db_azure_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_azure_vault_id, if_match):
+def refresh_oracle_db_azure_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_azure_vault_id, oracle_db_azure_connector_id, if_match):
 
     if isinstance(oracle_db_azure_vault_id, six.string_types) and len(oracle_db_azure_vault_id.strip()) == 0:
         raise click.UsageError('Parameter --oracle-db-azure-vault-id cannot be whitespace or empty string')
@@ -390,9 +410,16 @@ def refresh_oracle_db_azure_vault(ctx, from_json, wait_for_state, max_wait_secon
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if oracle_db_azure_connector_id is not None:
+        _details['oracleDbAzureConnectorId'] = oracle_db_azure_connector_id
+
     client = cli_util.build_client('dbmulticloud', 'oracle_db_azure_vault', ctx)
     result = client.refresh_oracle_db_azure_vault(
         oracle_db_azure_vault_id=oracle_db_azure_vault_id,
+        refresh_oracle_db_azure_vault_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -425,16 +452,16 @@ def refresh_oracle_db_azure_vault(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_azure_vault_group.command(name=cli_util.override('oracle_db_azure_vault.update_oracle_db_azure_vault.command_name', 'update'), help=u"""Modifies the existing Oracle DB Azure Vault Details for a given ID. \n[Command Reference](updateOracleDbAzureVault)""")
-@cli_util.option('--oracle-db-azure-vault-id', required=True, help=u"""The ID of the Oracle DB Azure Vault Resource.""")
-@cli_util.option('--compartment-id', help=u"""The compartment [OCID] that contains DB Azure Vault Resource.""")
-@cli_util.option('--oracle-db-connector-id', help=u"""The [OCID] of the DB Connector Resource.""")
-@cli_util.option('--display-name', help=u"""Display name of DB Azure Vault.""")
-@cli_util.option('--oracle-db-azure-resource-group', help=u"""Display name of Azure Resource Group.""")
-@cli_util.option('--azure-vault-id', help=u"""Azure Vault Id.""")
-@cli_util.option('--type', help=u"""Vault Resource Type.""")
-@cli_util.option('--location', help=u"""Vault Resource Location.""")
-@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Resource's properties.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@oracle_db_azure_vault_group.command(name=cli_util.override('oracle_db_azure_vault.update_oracle_db_azure_vault.command_name', 'update'), help=u"""Modifies the configuration details of an existing Oracle Database Azure Vault resource identified by its unique [OCID]. This operation updates only the specified fields in the request body. \n[Command Reference](updateOracleDbAzureVault)""")
+@cli_util.option('--oracle-db-azure-vault-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Vault resource.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that contains this Oracle DB Azure Vault resource.""")
+@cli_util.option('--oracle-db-connector-id', help=u"""The [OCID] of the Oracle DB Connector resource that contains Oracle DB Azure Vault resource.""")
+@cli_util.option('--display-name', help=u"""Oracle DB Azure Vault resource name.""")
+@cli_util.option('--oracle-db-azure-resource-group', help=u"""Oracle DB Azure resource group name.""")
+@cli_util.option('--azure-vault-id', help=u"""Azure Vault ID.""")
+@cli_util.option('--type', help=u"""Oracle DB Azure Vault resource type.""")
+@cli_util.option('--location', help=u"""Oracle DB Azure Vault resource location.""")
+@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Oracle DB Azure Vault resource's properties.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

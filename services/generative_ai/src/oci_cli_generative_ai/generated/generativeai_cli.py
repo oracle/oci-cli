@@ -202,7 +202,7 @@ Allowed values are: - HOSTING - FINE_TUNING""")
 @cli_util.option('--unit-count', required=True, type=click.INT, help=u"""The number of dedicated units in this AI cluster.""")
 @cli_util.option('--unit-shape', required=True, help=u"""The shape of dedicated unit in this AI cluster. The underlying hardware configuration is hidden from customers.
 
-Allowed values are: - LARGE_COHERE - LARGE_COHERE_V2 - SMALL_COHERE - SMALL_COHERE_V2 - SMALL_COHERE_4 - EMBED_COHERE - LLAMA2_70 - LARGE_GENERIC - LARGE_COHERE_V2_2 - LARGE_GENERIC_4 - SMALL_GENERIC_V2 - LARGE_GENERIC_2 - LARGE_COHERE_V3 - RERANK_COHERE""")
+Allowed values are: - LARGE_COHERE - LARGE_COHERE_V2 - SMALL_COHERE - SMALL_COHERE_V2 - SMALL_COHERE_4 - EMBED_COHERE - LLAMA2_70 - LARGE_GENERIC - LARGE_COHERE_V2_2 - LARGE_GENERIC_4 - SMALL_GENERIC_V2 - LARGE_GENERIC_2 - LARGE_COHERE_V3 - RERANK_COHERE - SMALL_GENERIC_V1 - MEDIUM_GENERIC_V1 - LARGE_GENERIC_V1""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--description', help=u"""An optional description of the dedicated AI cluster.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -773,6 +773,7 @@ def list_dedicated_ai_clusters(ctx, from_json, all_pages, page_size, compartment
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that their lifecycle state matches the given lifecycle state.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The [OCID] of the endpoint.""")
+@cli_util.option('--generative-ai-private-endpoint-id', help=u"""The [OCID] of the private endpoint.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -784,7 +785,7 @@ def list_dedicated_ai_clusters(ctx, from_json, all_pages, page_size, compartment
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'generative_ai', 'class': 'EndpointCollection'})
 @cli_util.wrap_exceptions
-def list_endpoints(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, id, limit, page, sort_order, sort_by):
+def list_endpoints(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, display_name, id, generative_ai_private_endpoint_id, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -796,6 +797,8 @@ def list_endpoints(ctx, from_json, all_pages, page_size, compartment_id, lifecyc
         kwargs['display_name'] = display_name
     if id is not None:
         kwargs['id'] = id
+    if generative_ai_private_endpoint_id is not None:
+        kwargs['generative_ai_private_endpoint_id'] = generative_ai_private_endpoint_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:

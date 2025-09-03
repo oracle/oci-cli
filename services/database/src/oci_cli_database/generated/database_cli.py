@@ -2428,7 +2428,7 @@ def change_disaster_recovery_configuration(ctx, from_json, wait_for_state, max_w
 
 @database_group.command(name=cli_util.override('db.change_encryption_key_location.command_name', 'change-encryption-key-location'), help=u"""Update the encryption key management location for the database \n[Command Reference](changeEncryptionKeyLocation)""")
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
-@cli_util.option('--provider-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXTERNAL", "AZURE"]), help=u"""Use 'EXTERNAL' for creating a new database or migrating a database key to an External HSM. Use 'AZURE' for creating a new database or migrating a database key to Azure.""")
+@cli_util.option('--provider-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["EXTERNAL", "AZURE", "GCP"]), help=u"""Use 'EXTERNAL' for creating a new database or migrating a database key to an External HSM. Use 'AZURE' for creating a new database or migrating a database key to Azure. Use 'GCP' for creating a new database or migrating a database key to Google Cloud Provider.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2521,6 +2521,77 @@ def change_encryption_key_location_external_hsm_encryption_details(ctx, from_jso
     _details['hsmPassword'] = hsm_password
 
     _details['providerType'] = 'EXTERNAL'
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.change_encryption_key_location(
+        database_id=database_id,
+        encryption_key_location_details=_details,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_group.command(name=cli_util.override('db.change_encryption_key_location_google_cloud_provider_encryption_key_details.command_name', 'change-encryption-key-location-google-cloud-provider-encryption-key-details'), help=u"""Update the encryption key management location for the database \n[Command Reference](changeEncryptionKeyLocation)""")
+@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--google-cloud-provider-encryption-key-id', required=True, help=u"""Provide the key OCID of a registered Google Cloud Provider key.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_encryption_key_location_google_cloud_provider_encryption_key_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, google_cloud_provider_encryption_key_id, if_match):
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['googleCloudProviderEncryptionKeyId'] = google_cloud_provider_encryption_key_id
+
+    _details['providerType'] = 'GCP'
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.change_encryption_key_location(
@@ -11775,6 +11846,106 @@ def create_data_guard_association_external_hsm_encryption_details(ctx, from_json
     cli_util.render_response(result, ctx)
 
 
+@data_guard_association_group.command(name=cli_util.override('db.create_data_guard_association_google_cloud_provider_encryption_key_details.command_name', 'create-data-guard-association-google-cloud-provider-encryption-key-details'), help=u"""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
+
+All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers]. \n[Command Reference](createDataGuardAssociation)""")
+@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--database-admin-password', required=True, help=u"""A strong password for the `SYS`, `SYSTEM`, and `PDB Admin` users to apply during standby creation.
+
+The password must contain no fewer than nine characters and include:
+
+* At least two uppercase characters.
+
+* At least two lowercase characters.
+
+* At least two numeric characters.
+
+* At least two special characters. Valid special characters include \"_\", \"#\", and \"-\" only.
+
+**The password MUST be the same as the primary admin password.**""")
+@cli_util.option('--protection-mode', required=True, type=custom_types.CliCaseInsensitiveChoice(["MAXIMUM_AVAILABILITY", "MAXIMUM_PERFORMANCE", "MAXIMUM_PROTECTION"]), help=u"""The protection mode to set up between the primary and standby databases. For more information, see [Oracle Data Guard Protection Modes] in the Oracle Data Guard documentation.
+
+**IMPORTANT** - The only protection mode currently supported by the Database service is MAXIMUM_PERFORMANCE.""")
+@cli_util.option('--transport-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SYNC", "ASYNC", "FASTSYNC"]), help=u"""The redo transport type to use for this Data Guard association.  Valid values depend on the specified `protectionMode`:
+
+* MAXIMUM_AVAILABILITY - SYNC or FASTSYNC * MAXIMUM_PERFORMANCE - ASYNC * MAXIMUM_PROTECTION - SYNC
+
+For more information, see [Redo Transport Services] in the Oracle Data Guard documentation.
+
+**IMPORTANT** - The only transport type currently supported by the Database service is ASYNC.""")
+@cli_util.option('--source-encryption-key-location-details-google-cloud-provider-encryption-key-id', required=True, help=u"""Provide the key OCID of a registered Google Cloud Provider key.""")
+@cli_util.option('--database-software-image-id', help=u"""The database software image [OCID]""")
+@cli_util.option('--is-active-data-guard-enabled', type=click.BOOL, help=u"""True if active Data Guard is enabled.""")
+@cli_util.option('--peer-db-unique-name', help=u"""Specifies the `DB_UNIQUE_NAME` of the peer database to be created.""")
+@cli_util.option('--peer-sid-prefix', help=u"""Specifies a prefix for the `Oracle SID` of the database to be created.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "UPGRADING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
+@cli_util.wrap_exceptions
+def create_data_guard_association_google_cloud_provider_encryption_key_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, database_admin_password, protection_mode, transport_type, source_encryption_key_location_details_google_cloud_provider_encryption_key_id, database_software_image_id, is_active_data_guard_enabled, peer_db_unique_name, peer_sid_prefix):
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+
+    _details = {}
+    _details['sourceEncryptionKeyLocationDetails'] = {}
+    _details['databaseAdminPassword'] = database_admin_password
+    _details['protectionMode'] = protection_mode
+    _details['transportType'] = transport_type
+    _details['sourceEncryptionKeyLocationDetails']['googleCloudProviderEncryptionKeyId'] = source_encryption_key_location_details_google_cloud_provider_encryption_key_id
+
+    if database_software_image_id is not None:
+        _details['databaseSoftwareImageId'] = database_software_image_id
+
+    if is_active_data_guard_enabled is not None:
+        _details['isActiveDataGuardEnabled'] = is_active_data_guard_enabled
+
+    if peer_db_unique_name is not None:
+        _details['peerDbUniqueName'] = peer_db_unique_name
+
+    if peer_sid_prefix is not None:
+        _details['peerSidPrefix'] = peer_sid_prefix
+
+    _details['sourceEncryptionKeyLocationDetails']['providerType'] = 'GCP'
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_data_guard_association(
+        database_id=database_id,
+        create_data_guard_association_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_data_guard_association') and callable(getattr(client, 'get_data_guard_association')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_data_guard_association(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @data_guard_association_group.command(name=cli_util.override('db.create_data_guard_association_azure_encryption_key_details.command_name', 'create-data-guard-association-azure-encryption-key-details'), help=u"""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers]. \n[Command Reference](createDataGuardAssociation)""")
@@ -11883,6 +12054,7 @@ def create_data_guard_association_azure_encryption_key_details(ctx, from_json, w
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--kms-key-version-id', help=u"""The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous Database Serverless does not use key versions, hence is not applicable for Autonomous Database Serverless instances.""")
+@cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -11891,9 +12063,11 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def create_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, source, db_version, kms_key_id, kms_key_version_id):
+def create_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, source, db_version, kms_key_id, kms_key_version_id, opc_dry_run):
 
     kwargs = {}
+    if opc_dry_run is not None:
+        kwargs['opc_dry_run'] = opc_dry_run
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -11948,6 +12122,7 @@ def create_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--kms-key-version-id', help=u"""The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous Database Serverless does not use key versions, hence is not applicable for Autonomous Database Serverless instances.""")
+@cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -11956,9 +12131,11 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateDatabaseDetails'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def create_database_create_new_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, database, db_version, kms_key_id, kms_key_version_id):
+def create_database_create_new_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, database, db_version, kms_key_id, kms_key_version_id, opc_dry_run):
 
     kwargs = {}
+    if opc_dry_run is not None:
+        kwargs['opc_dry_run'] = opc_dry_run
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -12015,6 +12192,7 @@ def create_database_create_new_database_details(ctx, from_json, wait_for_state, 
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--kms-key-version-id', help=u"""The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous Database Serverless does not use key versions, hence is not applicable for Autonomous Database Serverless instances.""")
+@cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -12023,9 +12201,11 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateStandbyDetails'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def create_database_create_stand_by_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, database, db_version, kms_key_id, kms_key_version_id):
+def create_database_create_stand_by_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, database, db_version, kms_key_id, kms_key_version_id, opc_dry_run):
 
     kwargs = {}
+    if opc_dry_run is not None:
+        kwargs['opc_dry_run'] = opc_dry_run
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -12082,6 +12262,7 @@ def create_database_create_stand_by_database_details(ctx, from_json, wait_for_st
 This cannot be updated in parallel with any of the following: licenseModel, dbEdition, cpuCoreCount, computeCount, computeModel, adminPassword, whitelistedIps, isMTLSConnectionRequired, openMode, permissionLevel, dbWorkload, privateEndpointLabel, nsgIds, isRefreshable, dbName, scheduledOperations, dbToolsDetails, isLocalDataGuardEnabled, or isFreeTier.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.""")
 @cli_util.option('--kms-key-version-id', help=u"""The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous Database Serverless does not use key versions, hence is not applicable for Autonomous Database Serverless instances.""")
+@cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "CONVERTING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -12090,9 +12271,11 @@ This cannot be updated in parallel with any of the following: licenseModel, dbEd
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateDatabaseFromBackupDetails'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def create_database_create_database_from_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, database, db_version, kms_key_id, kms_key_version_id):
+def create_database_create_database_from_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, database, db_version, kms_key_id, kms_key_version_id, opc_dry_run):
 
     kwargs = {}
+    if opc_dry_run is not None:
+        kwargs['opc_dry_run'] = opc_dry_run
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -13048,6 +13231,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--exadata-infrastructure-id', help=u"""The [OCID] of the Exadata infrastructure.""")
 @cli_util.option('--cluster-placement-group-id', help=u"""The [OCID] of the cluster placement group of the Exadata Infrastructure.""")
 @cli_util.option('--subscription-id', help=u"""The [OCID] of the subscription with which resource needs to be associated with.""")
+@cli_util.option('--is-autoscale-enabled', type=click.BOOL, help=u"""Indicates if autoscale feature is enabled for the Database Storage Vault. The default value is `FALSE`.""")
+@cli_util.option('--autoscale-limit-in-gbs', type=click.INT, help=u"""Maximum limit storage size in gigabytes, that is applicable for the Database Storage Vault.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -13056,7 +13241,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'high-capacity-database-storage': {'module': 'database', 'class': 'ExascaleDbStorageInputDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExascaleDbStorageVault'})
 @cli_util.wrap_exceptions
-def create_exascale_db_storage_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, availability_domain, high_capacity_database_storage, description, time_zone, additional_flash_cache_in_percent, freeform_tags, defined_tags, exadata_infrastructure_id, cluster_placement_group_id, subscription_id):
+def create_exascale_db_storage_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, availability_domain, high_capacity_database_storage, description, time_zone, additional_flash_cache_in_percent, freeform_tags, defined_tags, exadata_infrastructure_id, cluster_placement_group_id, subscription_id, is_autoscale_enabled, autoscale_limit_in_gbs):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -13090,6 +13275,12 @@ def create_exascale_db_storage_vault(ctx, from_json, wait_for_state, max_wait_se
 
     if subscription_id is not None:
         _details['subscriptionId'] = subscription_id
+
+    if is_autoscale_enabled is not None:
+        _details['isAutoscaleEnabled'] = is_autoscale_enabled
+
+    if autoscale_limit_in_gbs is not None:
+        _details['autoscaleLimitInGBs'] = autoscale_limit_in_gbs
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_exascale_db_storage_vault(
@@ -27775,7 +27966,7 @@ def register_autonomous_database_data_safe(ctx, from_json, wait_for_state, max_w
 
 @cloud_vm_cluster_group.command(name=cli_util.override('db.register_cloud_vm_cluster_pkcs.command_name', 'register-cloud-vm-cluster-pkcs'), help=u"""Install the PKCS11 driver for given keystore type \n[Command Reference](registerCloudVmClusterPkcs)""")
 @cli_util.option('--cloud-vm-cluster-id', required=True, help=u"""The cloud VM cluster [OCID].""")
-@cli_util.option('--tde-key-store-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["AZURE", "OCI"]), help=u"""TDE keystore type""")
+@cli_util.option('--tde-key-store-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["AZURE", "OCI", "GCP"]), help=u"""TDE keystore type""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -30504,7 +30695,7 @@ def terminate_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 @cloud_vm_cluster_group.command(name=cli_util.override('db.unregister_cloud_vm_cluster_pkcs.command_name', 'unregister-cloud-vm-cluster-pkcs'), help=u"""Uninstall the PKCS11 driver for given keystore type \n[Command Reference](unregisterCloudVmClusterPkcs)""")
 @cli_util.option('--cloud-vm-cluster-id', required=True, help=u"""The cloud VM cluster [OCID].""")
-@cli_util.option('--tde-key-store-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["AZURE", "OCI"]), help=u"""TDE keystore type""")
+@cli_util.option('--tde-key-store-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["AZURE", "OCI", "GCP"]), help=u"""TDE keystore type""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -35244,6 +35435,8 @@ def update_exadb_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seco
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-autoscale-enabled', type=click.BOOL, help=u"""Indicates if autoscale feature is enabled for the Database Storage Vault. The default value is `FALSE`.""")
+@cli_util.option('--autoscale-limit-in-gbs', type=click.INT, help=u"""Maximum limit storage size in gigabytes, that is applicable for the Database Storage Vault.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -35254,7 +35447,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'high-capacity-database-storage': {'module': 'database', 'class': 'ExascaleDbStorageInputDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExascaleDbStorageVault'})
 @cli_util.wrap_exceptions
-def update_exascale_db_storage_vault(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exascale_db_storage_vault_id, display_name, description, high_capacity_database_storage, additional_flash_cache_in_percent, freeform_tags, defined_tags, if_match):
+def update_exascale_db_storage_vault(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exascale_db_storage_vault_id, display_name, description, high_capacity_database_storage, additional_flash_cache_in_percent, freeform_tags, defined_tags, is_autoscale_enabled, autoscale_limit_in_gbs, if_match):
 
     if isinstance(exascale_db_storage_vault_id, six.string_types) and len(exascale_db_storage_vault_id.strip()) == 0:
         raise click.UsageError('Parameter --exascale-db-storage-vault-id cannot be whitespace or empty string')
@@ -35287,6 +35480,12 @@ def update_exascale_db_storage_vault(ctx, from_json, force, wait_for_state, max_
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if is_autoscale_enabled is not None:
+        _details['isAutoscaleEnabled'] = is_autoscale_enabled
+
+    if autoscale_limit_in_gbs is not None:
+        _details['autoscaleLimitInGBs'] = autoscale_limit_in_gbs
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.update_exascale_db_storage_vault(
