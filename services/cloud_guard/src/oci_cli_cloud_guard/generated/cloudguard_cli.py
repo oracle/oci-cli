@@ -1499,7 +1499,7 @@ Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Detector recipe description.
 
 Avoid entering confidential information.""")
-@cli_util.option('--detector', type=custom_types.CliCaseInsensitiveChoice(["IAAS_ACTIVITY_DETECTOR", "IAAS_CONFIGURATION_DETECTOR", "IAAS_THREAT_DETECTOR", "IAAS_LOG_INSIGHT_DETECTOR", "IAAS_INSTANCE_SECURITY_DETECTOR"]), help=u"""Detector for the rule""")
+@cli_util.option('--detector', type=custom_types.CliCaseInsensitiveChoice(["IAAS_ACTIVITY_DETECTOR", "IAAS_CONFIGURATION_DETECTOR", "IAAS_THREAT_DETECTOR", "IAAS_LOG_INSIGHT_DETECTOR", "IAAS_INSTANCE_SECURITY_DETECTOR", "IAAS_CONTAINER_SECURITY_DETECTOR"]), help=u"""Detector for the rule""")
 @cli_util.option('--source-detector-recipe-id', help=u"""The ID of the source detector recipe""")
 @cli_util.option('--detector-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Detector rules to override from source detector recipe
 
@@ -1639,8 +1639,9 @@ Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Managed list description
 
 Avoid entering confidential information.""")
-@cli_util.option('--list-type', type=custom_types.CliCaseInsensitiveChoice(["CIDR_BLOCK", "USERS", "GROUPS", "IPV4ADDRESS", "IPV6ADDRESS", "RESOURCE_OCID", "REGION", "COUNTRY", "STATE", "CITY", "TAGS", "GENERIC", "FUSION_APPS_ROLE", "FUSION_APPS_PERMISSION"]), help=u"""Type of information stored in the list""")
+@cli_util.option('--list-type', type=custom_types.CliCaseInsensitiveChoice(["CIDR_BLOCK", "USERS", "GROUPS", "IPV4ADDRESS", "IPV6ADDRESS", "RESOURCE_OCID", "REGION", "COUNTRY", "STATE", "CITY", "TAGS", "GENERIC", "FUSION_APPS_ROLE", "FUSION_APPS_PERMISSION", "NAMESPACE_SELECTOR", "POD_RESOURCE_SELECTOR"]), help=u"""Type of information stored in the list""")
 @cli_util.option('--list-items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of items in the managed list""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--group', help=u"""Managed list type group""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
 Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1653,7 +1654,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'list-items': {'module': 'cloud_guard', 'class': 'list[string]'}, 'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'ManagedList'})
 @cli_util.wrap_exceptions
-def create_managed_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, source_managed_list_id, description, list_type, list_items, freeform_tags, defined_tags):
+def create_managed_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, source_managed_list_id, description, list_type, list_items, group, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1673,6 +1674,9 @@ def create_managed_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if list_items is not None:
         _details['listItems'] = cli_util.parse_json_parameter("list_items", list_items)
+
+    if group is not None:
+        _details['group'] = group
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -3093,7 +3097,7 @@ def get_adhoc_query_result_content(ctx, from_json, file, adhoc_query_id):
 
 
 @condition_metadata_type_group.command(name=cli_util.override('cloud_guard.get_condition_metadata_type.command_name', 'get'), help=u"""Returns a ConditionMetatDataType resource with its details. \n[Command Reference](getConditionMetadataType)""")
-@cli_util.option('--condition-metadata-type-id', required=True, type=custom_types.CliCaseInsensitiveChoice(["ActivityCondition", "SecurityCondition", "CloudGuardCondition", "InstanceSecurityCondition", "ThreatCondition"]), help=u"""The type of the condition metadata.""")
+@cli_util.option('--condition-metadata-type-id', required=True, type=custom_types.CliCaseInsensitiveChoice(["ActivityCondition", "SecurityCondition", "CloudGuardCondition", "InstanceSecurityCondition", "ThreatCondition", "ContainerCondition"]), help=u"""The type of the condition metadata.""")
 @cli_util.option('--service-type', help=u"""Service type filter for the condition metadata.""")
 @cli_util.option('--resource-type', help=u"""Resource filter for the condition metadata.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4578,7 +4582,7 @@ The parameter `compartmentIdInSubtree` applies when you perform ListManagedLists
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--resource-metadata-only', type=click.BOOL, help=u"""Default is false. When set to true, the list of all Oracle-managed resources metadata supported by Cloud Guard is returned.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
-@cli_util.option('--list-type', type=custom_types.CliCaseInsensitiveChoice(["CIDR_BLOCK", "USERS", "GROUPS", "IPV4ADDRESS", "IPV6ADDRESS", "RESOURCE_OCID", "REGION", "COUNTRY", "STATE", "CITY", "TAGS", "GENERIC", "FUSION_APPS_ROLE", "FUSION_APPS_PERMISSION"]), help=u"""The type of managed list.""")
+@cli_util.option('--list-type', type=custom_types.CliCaseInsensitiveChoice(["CIDR_BLOCK", "USERS", "GROUPS", "IPV4ADDRESS", "IPV6ADDRESS", "RESOURCE_OCID", "REGION", "COUNTRY", "STATE", "CITY", "TAGS", "GENERIC", "FUSION_APPS_ROLE", "FUSION_APPS_PERMISSION", "NAMESPACE_SELECTOR", "POD_RESOURCE_SELECTOR"]), help=u"""The type of managed list.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
@@ -4896,7 +4900,7 @@ The parameter `compartmentIdInSubtree` applies when you perform ListProblems on 
 @cli_util.option('--country', help=u"""Country of the problem.""")
 @cli_util.option('--label', help=u"""User-defined label associated with the problem.""")
 @cli_util.option('--detector-rule-id-list', multiple=True, help=u"""Comma seperated list of detector rule IDs to be passed in to match against Problems.""")
-@cli_util.option('--detector-type', type=custom_types.CliCaseInsensitiveChoice(["IAAS_ACTIVITY_DETECTOR", "IAAS_CONFIGURATION_DETECTOR", "IAAS_THREAT_DETECTOR", "IAAS_LOG_INSIGHT_DETECTOR", "IAAS_INSTANCE_SECURITY_DETECTOR"]), help=u"""The field to list the problems by detector type.""")
+@cli_util.option('--detector-type', type=custom_types.CliCaseInsensitiveChoice(["IAAS_ACTIVITY_DETECTOR", "IAAS_CONFIGURATION_DETECTOR", "IAAS_THREAT_DETECTOR", "IAAS_LOG_INSIGHT_DETECTOR", "IAAS_INSTANCE_SECURITY_DETECTOR", "IAAS_CONTAINER_SECURITY_DETECTOR"]), help=u"""The field to list the problems by detector type.""")
 @cli_util.option('--target-id', help=u"""The ID of the target in which to list resources.""")
 @cli_util.option('--problem-category', type=custom_types.CliCaseInsensitiveChoice(["SECURITY_ZONE"]), help=u"""Setting this to `SECURITY_ZONE` returns only security zone-related violations.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
@@ -5330,7 +5334,7 @@ def list_resource_profiles(ctx, from_json, all_pages, page_size, compartment_id,
 
 @resource_type_summary_group.command(name=cli_util.override('cloud_guard.list_resource_types.command_name', 'list-resource-types'), help=u"""Returns a single ResourceTypeCollection resource, containing a list of resource types, identified by parameters specified. \n[Command Reference](listResourceTypes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
-@cli_util.option('--detector-id', type=custom_types.CliCaseInsensitiveChoice(["IAAS_ACTIVITY_DETECTOR", "IAAS_CONFIGURATION_DETECTOR", "IAAS_THREAT_DETECTOR", "IAAS_LOG_INSIGHT_DETECTOR", "IAAS_INSTANCE_SECURITY_DETECTOR"]), help=u"""Detector type.""")
+@cli_util.option('--detector-id', type=custom_types.CliCaseInsensitiveChoice(["IAAS_ACTIVITY_DETECTOR", "IAAS_CONFIGURATION_DETECTOR", "IAAS_THREAT_DETECTOR", "IAAS_LOG_INSIGHT_DETECTOR", "IAAS_INSTANCE_SECURITY_DETECTOR", "IAAS_CONTAINER_SECURITY_DETECTOR"]), help=u"""Detector type.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The field lifecycle state. Only one state can be provided. Default value for state is active. If no value is specified state is active.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -5469,7 +5473,7 @@ The parameter `compartmentIdInSubtree` applies when you perform ListResources on
 @cli_util.option('--risk-level-greater-than', help=u"""To filter risk level greater than the one mentioned in query param""")
 @cli_util.option('--risk-level-less-than', help=u"""To filter risk level less than the one mentioned in query param""")
 @cli_util.option('--detector-rule-id-list', multiple=True, help=u"""Comma seperated list of detector rule IDs to be passed in to match against Problems.""")
-@cli_util.option('--detector-type', type=custom_types.CliCaseInsensitiveChoice(["IAAS_ACTIVITY_DETECTOR", "IAAS_CONFIGURATION_DETECTOR", "IAAS_THREAT_DETECTOR", "IAAS_LOG_INSIGHT_DETECTOR", "IAAS_INSTANCE_SECURITY_DETECTOR"]), help=u"""The field to list the problems by detector type.""")
+@cli_util.option('--detector-type', type=custom_types.CliCaseInsensitiveChoice(["IAAS_ACTIVITY_DETECTOR", "IAAS_CONFIGURATION_DETECTOR", "IAAS_THREAT_DETECTOR", "IAAS_LOG_INSIGHT_DETECTOR", "IAAS_INSTANCE_SECURITY_DETECTOR", "IAAS_CONTAINER_SECURITY_DETECTOR"]), help=u"""The field to list the problems by detector type.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
@@ -7228,7 +7232,7 @@ def request_summarized_activity_problems(ctx, from_json, compartment_id, compart
 The parameter `accessLevel` specifies whether to return only those compartments for which the requestor has INSPECT permissions on at least one resource directly or indirectly (ACCESSIBLE) (the resource can be in a subcompartment) or to return Not Authorized if Principal doesn't have access to even one of the child compartments. This is valid only when `compartmentIdInSubtree` is set to `true`.
 
 The parameter `compartmentIdInSubtree` applies when you perform summarize API on the `compartmentId` passed and when it is set to true, the entire hierarchy of compartments can be returned. To get a full list of all compartments and subcompartments in the tenancy (root compartment), set the parameter `compartmentIdInSubtree` to true and `accessLevel` to ACCESSIBLE. \n[Command Reference](requestSummarizedProblems)""")
-@cli_util.option('--list-dimensions', required=True, type=custom_types.CliCaseInsensitiveChoice(["RESOURCE_TYPE", "REGION", "COMPARTMENT_ID", "RISK_LEVEL"]), multiple=True, help=u"""The possible attributes based on which the problems can be distinguished.""")
+@cli_util.option('--list-dimensions', required=True, type=custom_types.CliCaseInsensitiveChoice(["RESOURCE_TYPE", "REGION", "COMPARTMENT_ID", "RISK_LEVEL", "DETECTOR_ID", "TARGET_ID"]), multiple=True, help=u"""The possible attributes based on which the problems can be distinguished.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to list resources.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the setting of `accessLevel`.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are `RESTRICTED` and `ACCESSIBLE`. Default is `RESTRICTED`. Setting this to `ACCESSIBLE` returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to `RESTRICTED` permissions are checked and no partial results are displayed.""")
@@ -8578,6 +8582,7 @@ def update_detector_recipe_detector_rule(ctx, from_json, force, wait_for_state, 
 Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Managed list description. Avoid entering confidential information.""")
 @cli_util.option('--list-items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of managed list items""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--group', help=u"""Managed list type group""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`
 
 Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -8592,7 +8597,7 @@ Avoid entering confidential information.""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'list-items': {'module': 'cloud_guard', 'class': 'list[string]'}, 'freeform-tags': {'module': 'cloud_guard', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'cloud_guard', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'cloud_guard', 'class': 'ManagedList'})
 @cli_util.wrap_exceptions
-def update_managed_list(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_list_id, display_name, description, list_items, freeform_tags, defined_tags, if_match):
+def update_managed_list(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_list_id, display_name, description, list_items, group, freeform_tags, defined_tags, if_match):
 
     if isinstance(managed_list_id, six.string_types) and len(managed_list_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-list-id cannot be whitespace or empty string')
@@ -8616,6 +8621,9 @@ def update_managed_list(ctx, from_json, force, wait_for_state, max_wait_seconds,
 
     if list_items is not None:
         _details['listItems'] = cli_util.parse_json_parameter("list_items", list_items)
+
+    if group is not None:
+        _details['group'] = group
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

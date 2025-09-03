@@ -16,22 +16,41 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.dbmulticloud.src.oci_cli_dbmulticloud.generated import dbmulticloud_service_cli
 
 
-@click.command(cli_util.override('oracle_db_azure_connector.oracle_db_azure_connector_root_group.command_name', 'oracle-db-azure-connector'), cls=CommandGroupWithAlias, help=cli_util.override('oracle_db_azure_connector.oracle_db_azure_connector_root_group.help', """1. Oracle Azure Connector Resource: This is for installing Azure Arc Server in ExaCS VM Cluster.
-  There are two way to install Azure Arc Server (Azure Identity) in ExaCS VMCluster.
-    a. Using Bearer Access Token or
-    b. By providing Authentication token
+@click.command(cli_util.override('oracle_db_azure_connector.oracle_db_azure_connector_root_group.command_name', 'oracle-db-azure-connector'), cls=CommandGroupWithAlias, help=cli_util.override('oracle_db_azure_connector.oracle_db_azure_connector_root_group.help', """<b>Microsoft Azure:</b> <br>
+<b>Oracle Azure Connector Resource:</b>:&nbsp;&nbsp;The Oracle Azure Connector Resource is used to install the Azure Arc Server on an Exadata VM cluster in Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D).
+ The supported method to install the Azure Arc Server (Azure Identity) on the Exadata VM cluster:
+<ul>
+ <li>Using a Bearer Access Token</li>
+</ul>
 
-2. Oracle Azure Blob Container Resource: This is for to capture Azure Container details
-   and same will be used in multiple ExaCS VMCluster to mount the Azure Container.
+<b>Oracle Azure Blob Container Resource:</b>&nbsp;&nbsp;The Oracle Azure Blob Container Resource is used to capture the details of an Azure Blob Container.
+This resource can then be reused across multiple Exadata VM clusters in Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D) to mount the Azure container.
 
-3. Oracle Azure Blob Mount Resource: This is for to mount Azure Container in ExaCS VMCluster
-   using Oracle Azure Connector and Oracle Azure Blob Container Resource."""), short_help=cli_util.override('oracle_db_azure_connector.oracle_db_azure_connector_root_group.short_help', """Oracle Database MultiCloud Data plane Integration"""))
+<b>Oracle Azure Blob Mount Resource:</b>&nbsp;&nbsp;The Oracle Azure Blob Mount Resource is used to mount an Azure Blob Container on an Exadata VM cluster in Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D).
+It relies on both the Oracle Azure Connector and the Oracle Azure Blob Container Resource to perform the mount operation.
+
+<b>Discover Azure Vaults and Keys Resource:</b>&nbsp;&nbsp;The Discover Oracle Azure Vaults and Azure Keys Resource is used to discover Azure Vaults and the associated encryption keys available in your Azure project.
+
+<b>Oracle Azure Vault:</b>&nbsp;&nbsp;The Oracle Azure Vault Resource is used to manage Azure Vaults within Oracle Cloud Infrastructure (OCI) for use with services such as Oracle Exadata Database Service on Dedicated Infrastructure.
+
+<b>Oracle Azure Key:</b>&nbsp;&nbsp;Oracle Azure Key Resource is used to register and manage a Oracle Azure Key Key within Oracle Cloud Infrastructure (OCI) under an associated Azure Vault.
+
+<br>
+
+<b>Google Cloud:</b><br>
+<b>Oracle Google Cloud Connector Resource:</b>&nbsp;&nbsp;The Oracle Google Cloud Connector Resource is used to install the Google Cloud Identity Connector on an Exadata VM cluster in Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D).
+
+<b>Discover Google Key Rings and Keys Resource:</b>&nbsp;&nbsp;The Discover Google Key Rings and Keys Resource is used to discover Google Cloud Key Rings and the associated encryption keys available in your Google Cloud project.
+
+<b>Google Key Rings Resource:</b>&nbsp;&nbsp;The Google Key Rings Resource is used to register and manage Google Cloud Key Rings within Oracle Cloud Infrastructure (OCI) for use with services such as Oracle Exadata Database Service on Dedicated Infrastructure.
+
+<b>Google Key Resource:</b>&nbsp;&nbsp;The Google Key Resource is used to register and manage a Google Cloud Key within Oracle Cloud Infrastructure (OCI) under an associated Google Key Ring."""), short_help=cli_util.override('oracle_db_azure_connector.oracle_db_azure_connector_root_group.short_help', """Oracle Database MultiCloud Data Plane Integration"""))
 @cli_util.help_option_group
 def oracle_db_azure_connector_root_group():
     pass
 
 
-@click.command(cli_util.override('oracle_db_azure_connector.oracle_db_azure_connector_group.command_name', 'oracle-db-azure-connector'), cls=CommandGroupWithAlias, help="""Oracle DB Azure Connector Details, this resource is for to create Azure Identity on Database Resource.""")
+@click.command(cli_util.override('oracle_db_azure_connector.oracle_db_azure_connector_group.command_name', 'oracle-db-azure-connector'), cls=CommandGroupWithAlias, help="""Oracle DB Azure Connector resource.""")
 @cli_util.help_option_group
 def oracle_db_azure_connector_group():
     pass
@@ -41,9 +60,9 @@ dbmulticloud_service_cli.dbmulticloud_service_group.add_command(oracle_db_azure_
 oracle_db_azure_connector_root_group.add_command(oracle_db_azure_connector_group)
 
 
-@oracle_db_azure_connector_group.command(name=cli_util.override('oracle_db_azure_connector.change_oracle_db_azure_connector_compartment.command_name', 'change-compartment'), help=u"""Moves the Oracle DB Azure Connector Resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeOracleDbAzureConnectorCompartment)""")
-@cli_util.option('--oracle-db-azure-connector-id', required=True, help=u"""The ID of the Oracle DB Azure Connector Resource.""")
-@cli_util.option('--compartment-id', help=u"""The ID of the new compartment to contain the Oracle DB Azure Connector Resource.""")
+@oracle_db_azure_connector_group.command(name=cli_util.override('oracle_db_azure_connector.change_oracle_db_azure_connector_compartment.command_name', 'change-compartment'), help=u"""Moves the Oracle DB Azure Connector resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeOracleDbAzureConnectorCompartment)""")
+@cli_util.option('--oracle-db-azure-connector-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Connector resource.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the new compartment to contain the Oracle DB Azure Connector resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -122,17 +141,17 @@ def change_oracle_db_azure_connector_compartment(ctx, from_json, wait_for_state,
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_azure_connector_group.command(name=cli_util.override('oracle_db_azure_connector.create_oracle_db_azure_connector.command_name', 'create'), help=u"""Creates Oracle DB Azure Connector Resource and configured Azure Identity in OCI Database Resource. \n[Command Reference](createOracleDbAzureConnector)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment that contains Oracle DB Azure Connector Resource.""")
-@cli_util.option('--display-name', required=True, help=u"""Oracle DB Azure Connector Resource name.""")
-@cli_util.option('--db-cluster-resource-id', required=True, help=u"""The ID of the DB Cluster Resource where this Azure Arc Agent Identity to configure.""")
-@cli_util.option('--azure-identity-mechanism', required=True, help=u"""Azure Identity Mechanism.""")
+@oracle_db_azure_connector_group.command(name=cli_util.override('oracle_db_azure_connector.create_oracle_db_azure_connector.command_name', 'create'), help=u"""Creates Oracle DB Azure Connector resource and configured Azure Identity in Oracle Database resource. \n[Command Reference](createOracleDbAzureConnector)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains Oracle DB Azure Connector resource.""")
+@cli_util.option('--display-name', required=True, help=u"""Oracle DB Azure Connector resource name.""")
+@cli_util.option('--db-cluster-resource-id', required=True, help=u"""The [OCID] of the Oracle DB Cloud VM Cluster resource where this Azure Arc Agent Identity to configure.""")
+@cli_util.option('--azure-identity-mechanism', required=True, help=u"""Azure Identity mechanism.""")
 @cli_util.option('--azure-tenant-id', required=True, help=u"""Azure Tenant ID.""")
 @cli_util.option('--azure-subscription-id', required=True, help=u"""Azure Subscription ID.""")
-@cli_util.option('--azure-resource-group', required=True, help=u"""Azure Resource Group Name.""")
-@cli_util.option('--access-token', help=u"""Azure bearer access token. If bearer access token is provided then Service Principal details are not requires.""")
+@cli_util.option('--azure-resource-group', required=True, help=u"""Azure Resource group name.""")
+@cli_util.option('--access-token', help=u"""Azure bearer access token.""")
 @cli_util.option('--private-endpoint-ip-address', help=u"""Private endpoint IP.""")
-@cli_util.option('--private-endpoint-dns-alias', help=u"""Private endpoint DNS Alias.""")
+@cli_util.option('--private-endpoint-dns-alias', help=u"""Private endpoint's DNS alias.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -211,8 +230,8 @@ def create_oracle_db_azure_connector(ctx, from_json, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_azure_connector_group.command(name=cli_util.override('oracle_db_azure_connector.delete_oracle_db_azure_connector.command_name', 'delete'), help=u"""Delete Oracle DB Azure Connector Resource and delete Azure Arc Identity too from Database Resource. \n[Command Reference](deleteOracleDbAzureConnector)""")
-@cli_util.option('--oracle-db-azure-connector-id', required=True, help=u"""The ID of the Oracle DB Azure Connector Resource.""")
+@oracle_db_azure_connector_group.command(name=cli_util.override('oracle_db_azure_connector.delete_oracle_db_azure_connector.command_name', 'delete'), help=u"""Deletes the Oracle DB Azure Identity Connector resource. \n[Command Reference](deleteOracleDbAzureConnector)""")
+@cli_util.option('--oracle-db-azure-connector-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Connector resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -267,8 +286,8 @@ def delete_oracle_db_azure_connector(ctx, from_json, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_azure_connector_group.command(name=cli_util.override('oracle_db_azure_connector.get_oracle_db_azure_connector.command_name', 'get'), help=u"""Get Oracle DB Azure Connector Resource form a particular Resource ID. \n[Command Reference](getOracleDbAzureConnector)""")
-@cli_util.option('--oracle-db-azure-connector-id', required=True, help=u"""The ID of the Oracle DB Azure Connector Resource.""")
+@oracle_db_azure_connector_group.command(name=cli_util.override('oracle_db_azure_connector.get_oracle_db_azure_connector.command_name', 'get'), help=u"""Retrieves the Oracle DB Azure Identity Connector for a specified resource [OCID]. \n[Command Reference](getOracleDbAzureConnector)""")
+@cli_util.option('--oracle-db-azure-connector-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Connector resource.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -298,12 +317,12 @@ def get_oracle_db_azure_connector(ctx, from_json, oracle_db_azure_connector_id, 
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_azure_connector_group.command(name=cli_util.override('oracle_db_azure_connector.list_oracle_db_azure_connectors.command_name', 'list'), help=u"""Lists the all Oracle DB Azure Connector Resource based on filters. \n[Command Reference](listOracleDbAzureConnectors)""")
+@oracle_db_azure_connector_group.command(name=cli_util.override('oracle_db_azure_connector.list_oracle_db_azure_connectors.command_name', 'list'), help=u"""Lists all Oracle DB Azure Connector resources based on the specified filters. \n[Command Reference](listOracleDbAzureConnectors)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
-@cli_util.option('--display-name', help=u"""A filter to return Oracle DB Azure Connector Resource that match the given display name.""")
-@cli_util.option('--oracle-db-azure-connector-id', help=u"""A filter to return Oracle DB Azure Blob Mount Resources.""")
+@cli_util.option('--display-name', help=u"""A filter to return Oracle DB Azure Connector resources that match the specified display name.""")
+@cli_util.option('--oracle-db-azure-connector-id', help=u"""A filter to return Oracle DB Azure Azure Identity Connector resources.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
-@cli_util.option('--db-cluster-resource-id', help=u"""The [ID] of the Database Resource.""")
+@cli_util.option('--db-cluster-resource-id', help=u"""The [ID] of the Database resource.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -364,8 +383,8 @@ def list_oracle_db_azure_connectors(ctx, from_json, all_pages, page_size, compar
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_azure_connector_group.command(name=cli_util.override('oracle_db_azure_connector.patch_oracle_db_azure_connector.command_name', 'patch'), help=u"""Patch Azure Arc Agent on VM Cluster with new version. \n[Command Reference](patchOracleDbAzureConnector)""")
-@cli_util.option('--oracle-db-azure-connector-id', required=True, help=u"""The ID of the Oracle DB Azure Connector Resource.""")
+@oracle_db_azure_connector_group.command(name=cli_util.override('oracle_db_azure_connector.patch_oracle_db_azure_connector.command_name', 'patch'), help=u"""Patch Azure Arc Agent on Oracle Cloud VM Cluster with new version. \n[Command Reference](patchOracleDbAzureConnector)""")
+@cli_util.option('--oracle-db-azure-connector-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Connector resource.""")
 @cli_util.option('--new-version', help=u"""The new version of Azure Agent to be used for patching.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -445,18 +464,73 @@ def patch_oracle_db_azure_connector(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@oracle_db_azure_connector_group.command(name=cli_util.override('oracle_db_azure_connector.update_oracle_db_azure_connector.command_name', 'update'), help=u"""Modifies the existing Oracle DB Azure Connector Resource for a given ID. \n[Command Reference](updateOracleDbAzureConnector)""")
-@cli_util.option('--oracle-db-azure-connector-id', required=True, help=u"""The ID of the Oracle DB Azure Connector Resource.""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment that contains Oracle DB Azure Connector Resource.""")
-@cli_util.option('--display-name', help=u"""Oracle DB Azure Connector Resource name.""")
-@cli_util.option('--db-cluster-resource-id', help=u"""The ID of the Oracle DB Cluster Resource where this Azure Arc Agent Identity to configure.""")
-@cli_util.option('--azure-identity-mechanism', help=u"""Azure Identity Mechanism.""")
+@oracle_db_azure_connector_group.command(name=cli_util.override('oracle_db_azure_connector.refresh_oracle_db_azure_connector.command_name', 'refresh'), help=u"""Refreshes the Oracle DB Azure Connector resource. \n[Command Reference](refreshOracleDbAzureConnector)""")
+@cli_util.option('--oracle-db-azure-connector-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Connector resource.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def refresh_oracle_db_azure_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oracle_db_azure_connector_id, if_match):
+
+    if isinstance(oracle_db_azure_connector_id, six.string_types) and len(oracle_db_azure_connector_id.strip()) == 0:
+        raise click.UsageError('Parameter --oracle-db-azure-connector-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('dbmulticloud', 'oracle_db_azure_connector', ctx)
+    result = client.refresh_oracle_db_azure_connector(
+        oracle_db_azure_connector_id=oracle_db_azure_connector_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@oracle_db_azure_connector_group.command(name=cli_util.override('oracle_db_azure_connector.update_oracle_db_azure_connector.command_name', 'update'), help=u"""Modifies the existing Oracle DB Azure Connector resource for a given [OCID]. \n[Command Reference](updateOracleDbAzureConnector)""")
+@cli_util.option('--oracle-db-azure-connector-id', required=True, help=u"""The [OCID] of the Oracle DB Azure Connector resource.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that contains Oracle DB Azure Connector resource.""")
+@cli_util.option('--display-name', help=u"""Oracle DB Azure Connector resource name.""")
+@cli_util.option('--db-cluster-resource-id', help=u"""The [OCID] of the Oracle DB Cloud VM Cluster resource where this Azure Arc Agent Identity to configure.""")
+@cli_util.option('--azure-identity-mechanism', help=u"""Azure Identity mechanism.""")
 @cli_util.option('--azure-tenant-id', help=u"""Azure Tenant ID.""")
 @cli_util.option('--azure-subscription-id', help=u"""Azure Subscription ID.""")
-@cli_util.option('--azure-resource-group', help=u"""Azure Resource Group Name.""")
-@cli_util.option('--access-token', help=u"""Azure bearer access token. If bearer access token is provided then Service Principal detail is not required.""")
+@cli_util.option('--azure-resource-group', help=u"""Azure Resource group name.""")
+@cli_util.option('--access-token', help=u"""Azure bearer access token.""")
 @cli_util.option('--private-endpoint-ip-address', help=u"""Private endpoint IP.""")
-@cli_util.option('--private-endpoint-dns-alias', help=u"""Private endpoint DNS Alias.""")
+@cli_util.option('--private-endpoint-dns-alias', help=u"""Private endpoint's DNS alias.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

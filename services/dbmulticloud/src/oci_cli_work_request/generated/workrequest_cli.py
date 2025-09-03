@@ -16,16 +16,35 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.dbmulticloud.src.oci_cli_dbmulticloud.generated import dbmulticloud_service_cli
 
 
-@click.command(cli_util.override('work_request.work_request_root_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help=cli_util.override('work_request.work_request_root_group.help', """1. Oracle Azure Connector Resource: This is for installing Azure Arc Server in ExaCS VM Cluster.
-  There are two way to install Azure Arc Server (Azure Identity) in ExaCS VMCluster.
-    a. Using Bearer Access Token or
-    b. By providing Authentication token
+@click.command(cli_util.override('work_request.work_request_root_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help=cli_util.override('work_request.work_request_root_group.help', """<b>Microsoft Azure:</b> <br>
+<b>Oracle Azure Connector Resource:</b>:&nbsp;&nbsp;The Oracle Azure Connector Resource is used to install the Azure Arc Server on an Exadata VM cluster in Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D).
+ The supported method to install the Azure Arc Server (Azure Identity) on the Exadata VM cluster:
+<ul>
+ <li>Using a Bearer Access Token</li>
+</ul>
 
-2. Oracle Azure Blob Container Resource: This is for to capture Azure Container details
-   and same will be used in multiple ExaCS VMCluster to mount the Azure Container.
+<b>Oracle Azure Blob Container Resource:</b>&nbsp;&nbsp;The Oracle Azure Blob Container Resource is used to capture the details of an Azure Blob Container.
+This resource can then be reused across multiple Exadata VM clusters in Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D) to mount the Azure container.
 
-3. Oracle Azure Blob Mount Resource: This is for to mount Azure Container in ExaCS VMCluster
-   using Oracle Azure Connector and Oracle Azure Blob Container Resource."""), short_help=cli_util.override('work_request.work_request_root_group.short_help', """Oracle Database MultiCloud Data plane Integration"""))
+<b>Oracle Azure Blob Mount Resource:</b>&nbsp;&nbsp;The Oracle Azure Blob Mount Resource is used to mount an Azure Blob Container on an Exadata VM cluster in Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D).
+It relies on both the Oracle Azure Connector and the Oracle Azure Blob Container Resource to perform the mount operation.
+
+<b>Discover Azure Vaults and Keys Resource:</b>&nbsp;&nbsp;The Discover Oracle Azure Vaults and Azure Keys Resource is used to discover Azure Vaults and the associated encryption keys available in your Azure project.
+
+<b>Oracle Azure Vault:</b>&nbsp;&nbsp;The Oracle Azure Vault Resource is used to manage Azure Vaults within Oracle Cloud Infrastructure (OCI) for use with services such as Oracle Exadata Database Service on Dedicated Infrastructure.
+
+<b>Oracle Azure Key:</b>&nbsp;&nbsp;Oracle Azure Key Resource is used to register and manage a Oracle Azure Key Key within Oracle Cloud Infrastructure (OCI) under an associated Azure Vault.
+
+<br>
+
+<b>Google Cloud:</b><br>
+<b>Oracle Google Cloud Connector Resource:</b>&nbsp;&nbsp;The Oracle Google Cloud Connector Resource is used to install the Google Cloud Identity Connector on an Exadata VM cluster in Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D).
+
+<b>Discover Google Key Rings and Keys Resource:</b>&nbsp;&nbsp;The Discover Google Key Rings and Keys Resource is used to discover Google Cloud Key Rings and the associated encryption keys available in your Google Cloud project.
+
+<b>Google Key Rings Resource:</b>&nbsp;&nbsp;The Google Key Rings Resource is used to register and manage Google Cloud Key Rings within Oracle Cloud Infrastructure (OCI) for use with services such as Oracle Exadata Database Service on Dedicated Infrastructure.
+
+<b>Google Key Resource:</b>&nbsp;&nbsp;The Google Key Resource is used to register and manage a Google Cloud Key within Oracle Cloud Infrastructure (OCI) under an associated Google Key Ring."""), short_help=cli_util.override('work_request.work_request_root_group.short_help', """Oracle Database MultiCloud Data Plane Integration"""))
 @cli_util.help_option_group
 def work_request_root_group():
     pass

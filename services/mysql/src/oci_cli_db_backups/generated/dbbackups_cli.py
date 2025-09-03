@@ -409,6 +409,8 @@ def get_backup(ctx, from_json, backup_id, if_none_match):
 @cli_util.option('--db-system-id', help=u"""The DB System [OCID].""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resource matching the given display name exactly.""")
 @cli_util.option('--soft-delete', type=custom_types.CliCaseInsensitiveChoice(["ENABLED", "DISABLED"]), help=u"""Backup Soft Delete""")
+@cli_util.option('--backup-preparation-status', type=custom_types.CliCaseInsensitiveChoice(["PREPARED", "NOT_PREPARED"]), help=u"""Indicates whether the backup has been prepared successfully.""")
+@cli_util.option('--validation-status', type=custom_types.CliCaseInsensitiveChoice(["NOT_VALIDATED", "VALIDATED", "NEEDS_ATTENTION", "FAILED"]), help=u"""Backup validation status""")
 @cli_util.option('--creation-type', type=custom_types.CliCaseInsensitiveChoice(["MANUAL", "AUTOMATIC", "OPERATOR"]), help=u"""Backup creationType""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "timeUpdated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Time fields are default ordered as descending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use (ASC or DESC).""")
@@ -421,7 +423,7 @@ def get_backup(ctx, from_json, backup_id, if_none_match):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'mysql', 'class': 'list[BackupSummary]'})
 @cli_util.wrap_exceptions
-def list_backups(ctx, from_json, all_pages, page_size, compartment_id, backup_id, lifecycle_state, db_system_id, display_name, soft_delete, creation_type, sort_by, sort_order, limit, page):
+def list_backups(ctx, from_json, all_pages, page_size, compartment_id, backup_id, lifecycle_state, db_system_id, display_name, soft_delete, backup_preparation_status, validation_status, creation_type, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -437,6 +439,10 @@ def list_backups(ctx, from_json, all_pages, page_size, compartment_id, backup_id
         kwargs['display_name'] = display_name
     if soft_delete is not None:
         kwargs['soft_delete'] = soft_delete
+    if backup_preparation_status is not None:
+        kwargs['backup_preparation_status'] = backup_preparation_status
+    if validation_status is not None:
+        kwargs['validation_status'] = validation_status
     if creation_type is not None:
         kwargs['creation_type'] = creation_type
     if sort_by is not None:
@@ -555,4 +561,67 @@ def update_backup(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@backup_group.command(name=cli_util.override('db_backups.validate_backup.command_name', 'validate'), help=u"""Request to validate the backup by checking the data consistency. \n[Command Reference](validateBackup)""")
+@cli_util.option('--backup-id', required=True, help=u"""The OCID of the Backup""")
+@cli_util.option('--is-prepared-backup-required', required=True, type=click.BOOL, help=u"""Specifies whether the backup needs to be prepared for fast restore or not. Set to true to prepare the backup, set to false (default) if not required. Note: The prepared backup will replace the original backup and will not generate a new backup copy. The cost associated with the backup may vary, as the prepared backup will consistently be a full backup, it may also change the storage size of the original backup.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'mysql', 'class': 'Backup'})
+@cli_util.wrap_exceptions
+def validate_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_id, is_prepared_backup_required, if_match):
+
+    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+        raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['isPreparedBackupRequired'] = is_prepared_backup_required
+
+    client = cli_util.build_client('mysql', 'db_backups', ctx)
+    result = client.validate_backup(
+        backup_id=backup_id,
+        validate_backup_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        client = cli_util.build_client('mysql', 'work_requests', ctx)
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)

@@ -16,22 +16,41 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.dbmulticloud.src.oci_cli_dbmulticloud.generated import dbmulticloud_service_cli
 
 
-@click.command(cli_util.override('multi_cloud_resource_discovery.multi_cloud_resource_discovery_root_group.command_name', 'multi-cloud-resource-discovery'), cls=CommandGroupWithAlias, help=cli_util.override('multi_cloud_resource_discovery.multi_cloud_resource_discovery_root_group.help', """1. Oracle Azure Connector Resource: This is for installing Azure Arc Server in ExaCS VM Cluster.
-  There are two way to install Azure Arc Server (Azure Identity) in ExaCS VMCluster.
-    a. Using Bearer Access Token or
-    b. By providing Authentication token
+@click.command(cli_util.override('multi_cloud_resource_discovery.multi_cloud_resource_discovery_root_group.command_name', 'multi-cloud-resource-discovery'), cls=CommandGroupWithAlias, help=cli_util.override('multi_cloud_resource_discovery.multi_cloud_resource_discovery_root_group.help', """<b>Microsoft Azure:</b> <br>
+<b>Oracle Azure Connector Resource:</b>:&nbsp;&nbsp;The Oracle Azure Connector Resource is used to install the Azure Arc Server on an Exadata VM cluster in Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D).
+ The supported method to install the Azure Arc Server (Azure Identity) on the Exadata VM cluster:
+<ul>
+ <li>Using a Bearer Access Token</li>
+</ul>
 
-2. Oracle Azure Blob Container Resource: This is for to capture Azure Container details
-   and same will be used in multiple ExaCS VMCluster to mount the Azure Container.
+<b>Oracle Azure Blob Container Resource:</b>&nbsp;&nbsp;The Oracle Azure Blob Container Resource is used to capture the details of an Azure Blob Container.
+This resource can then be reused across multiple Exadata VM clusters in Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D) to mount the Azure container.
 
-3. Oracle Azure Blob Mount Resource: This is for to mount Azure Container in ExaCS VMCluster
-   using Oracle Azure Connector and Oracle Azure Blob Container Resource."""), short_help=cli_util.override('multi_cloud_resource_discovery.multi_cloud_resource_discovery_root_group.short_help', """Oracle Database MultiCloud Data plane Integration"""))
+<b>Oracle Azure Blob Mount Resource:</b>&nbsp;&nbsp;The Oracle Azure Blob Mount Resource is used to mount an Azure Blob Container on an Exadata VM cluster in Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D).
+It relies on both the Oracle Azure Connector and the Oracle Azure Blob Container Resource to perform the mount operation.
+
+<b>Discover Azure Vaults and Keys Resource:</b>&nbsp;&nbsp;The Discover Oracle Azure Vaults and Azure Keys Resource is used to discover Azure Vaults and the associated encryption keys available in your Azure project.
+
+<b>Oracle Azure Vault:</b>&nbsp;&nbsp;The Oracle Azure Vault Resource is used to manage Azure Vaults within Oracle Cloud Infrastructure (OCI) for use with services such as Oracle Exadata Database Service on Dedicated Infrastructure.
+
+<b>Oracle Azure Key:</b>&nbsp;&nbsp;Oracle Azure Key Resource is used to register and manage a Oracle Azure Key Key within Oracle Cloud Infrastructure (OCI) under an associated Azure Vault.
+
+<br>
+
+<b>Google Cloud:</b><br>
+<b>Oracle Google Cloud Connector Resource:</b>&nbsp;&nbsp;The Oracle Google Cloud Connector Resource is used to install the Google Cloud Identity Connector on an Exadata VM cluster in Oracle Exadata Database Service on Dedicated Infrastructure (ExaDB-D).
+
+<b>Discover Google Key Rings and Keys Resource:</b>&nbsp;&nbsp;The Discover Google Key Rings and Keys Resource is used to discover Google Cloud Key Rings and the associated encryption keys available in your Google Cloud project.
+
+<b>Google Key Rings Resource:</b>&nbsp;&nbsp;The Google Key Rings Resource is used to register and manage Google Cloud Key Rings within Oracle Cloud Infrastructure (OCI) for use with services such as Oracle Exadata Database Service on Dedicated Infrastructure.
+
+<b>Google Key Resource:</b>&nbsp;&nbsp;The Google Key Resource is used to register and manage a Google Cloud Key within Oracle Cloud Infrastructure (OCI) under an associated Google Key Ring."""), short_help=cli_util.override('multi_cloud_resource_discovery.multi_cloud_resource_discovery_root_group.short_help', """Oracle Database MultiCloud Data Plane Integration"""))
 @cli_util.help_option_group
 def multi_cloud_resource_discovery_root_group():
     pass
 
 
-@click.command(cli_util.override('multi_cloud_resource_discovery.multi_cloud_resource_discovery_group.command_name', 'multi-cloud-resource-discovery'), cls=CommandGroupWithAlias, help="""Multi Cloud Resource Discovery Object.""")
+@click.command(cli_util.override('multi_cloud_resource_discovery.multi_cloud_resource_discovery_group.command_name', 'multi-cloud-resource-discovery'), cls=CommandGroupWithAlias, help="""Multicloud Resource Discovery resource object""")
 @cli_util.help_option_group
 def multi_cloud_resource_discovery_group():
     pass
@@ -41,9 +60,9 @@ dbmulticloud_service_cli.dbmulticloud_service_group.add_command(multi_cloud_reso
 multi_cloud_resource_discovery_root_group.add_command(multi_cloud_resource_discovery_group)
 
 
-@multi_cloud_resource_discovery_group.command(name=cli_util.override('multi_cloud_resource_discovery.change_multi_cloud_resource_discovery_compartment.command_name', 'change-compartment'), help=u"""Moves the Oracle Azure Vault resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeMultiCloudResourceDiscoveryCompartment)""")
-@cli_util.option('--multi-cloud-resource-discovery-id', required=True, help=u"""The [OCID] of the Multi Cloud Discovery Resource.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the new compartment to contain the Multi Cloud Resource Discovery.""")
+@multi_cloud_resource_discovery_group.command(name=cli_util.override('multi_cloud_resource_discovery.change_multi_cloud_resource_discovery_compartment.command_name', 'change-compartment'), help=u"""Moves the Multicloud Resource Discovery resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeMultiCloudResourceDiscoveryCompartment)""")
+@cli_util.option('--multi-cloud-resource-discovery-id', required=True, help=u"""The [OCID] of the Multicloud Discovery Resource.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the new compartment that contains Multicloud Resource Discovery resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -122,11 +141,12 @@ def change_multi_cloud_resource_discovery_compartment(ctx, from_json, wait_for_s
     cli_util.render_response(result, ctx)
 
 
-@multi_cloud_resource_discovery_group.command(name=cli_util.override('multi_cloud_resource_discovery.create_multi_cloud_resource_discovery.command_name', 'create'), help=u"""Discover Azure Vaults and Keys based on the provided information. \n[Command Reference](createMultiCloudResourceDiscovery)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains Discovered Resource.""")
-@cli_util.option('--display-name', required=True, help=u"""Display name of Discovered Resource.""")
-@cli_util.option('--oracle-db-connector-id', required=True, help=u"""The [OCID] of Oracle DB Connector.""")
+@multi_cloud_resource_discovery_group.command(name=cli_util.override('multi_cloud_resource_discovery.create_multi_cloud_resource_discovery.command_name', 'create'), help=u"""Discovers Multicloud Resource and their associated resources based on the information provided. \n[Command Reference](createMultiCloudResourceDiscovery)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains Multicloud Resource Discovery resource.""")
+@cli_util.option('--display-name', required=True, help=u"""Display name of the Multicloud Resource Discovery resource.""")
+@cli_util.option('--oracle-db-connector-id', required=True, help=u"""The [OCID] of the Oracle DB Connector resource.""")
 @cli_util.option('--resource-type', required=True, help=u"""Resource Type to discover.""")
+@cli_util.option('--resources-filter', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Discover resource using attributes as key-value pair. For GCP supported attributes (keyRing) For Azure supported attributes (keyVault) GCP Example `{\"keyRing\": \"projects/db-mc-dataplane/locations/global/keyRings/dbmci-keyring\"}` or `{\"keyRing\": \"dbmci-keyring\"}` Azure Example `{\"keyVault\": \"/subscriptions/fd42b73d-5f28-4a23-ae7c-ca08c625fe07/resourceGroups/yumfei0808Test/providers/Microsoft.KeyVault/managedHSMs/orp7HSM001\"}` or `{\"keyVault\": \"orp7HSM001\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -137,12 +157,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'resources-filter': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dbmulticloud', 'class': 'MultiCloudResourceDiscovery'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources-filter': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'dbmulticloud', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dbmulticloud', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dbmulticloud', 'class': 'MultiCloudResourceDiscovery'})
 @cli_util.wrap_exceptions
-def create_multi_cloud_resource_discovery(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, oracle_db_connector_id, resource_type, freeform_tags, defined_tags, if_match):
+def create_multi_cloud_resource_discovery(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, oracle_db_connector_id, resource_type, resources_filter, freeform_tags, defined_tags, if_match):
 
     kwargs = {}
     if if_match is not None:
@@ -154,6 +174,9 @@ def create_multi_cloud_resource_discovery(ctx, from_json, wait_for_state, max_wa
     _details['displayName'] = display_name
     _details['oracleDbConnectorId'] = oracle_db_connector_id
     _details['resourceType'] = resource_type
+
+    if resources_filter is not None:
+        _details['resourcesFilter'] = cli_util.parse_json_parameter("resources_filter", resources_filter)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -196,8 +219,8 @@ def create_multi_cloud_resource_discovery(ctx, from_json, wait_for_state, max_wa
     cli_util.render_response(result, ctx)
 
 
-@multi_cloud_resource_discovery_group.command(name=cli_util.override('multi_cloud_resource_discovery.delete_multi_cloud_resource_discovery.command_name', 'delete'), help=u"""Delete Multi Cloud Discovery resource. \n[Command Reference](deleteMultiCloudResourceDiscovery)""")
-@cli_util.option('--multi-cloud-resource-discovery-id', required=True, help=u"""The [OCID] of the Multi Cloud Discovery Resource.""")
+@multi_cloud_resource_discovery_group.command(name=cli_util.override('multi_cloud_resource_discovery.delete_multi_cloud_resource_discovery.command_name', 'delete'), help=u"""Deletes the Multicloud Resource Discovery resource and removes its associated metadata from Oracle Cloud Infrastructure. \n[Command Reference](deleteMultiCloudResourceDiscovery)""")
+@cli_util.option('--multi-cloud-resource-discovery-id', required=True, help=u"""The [OCID] of the Multicloud Discovery Resource.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -252,8 +275,8 @@ def delete_multi_cloud_resource_discovery(ctx, from_json, wait_for_state, max_wa
     cli_util.render_response(result, ctx)
 
 
-@multi_cloud_resource_discovery_group.command(name=cli_util.override('multi_cloud_resource_discovery.get_multi_cloud_resource_discovery.command_name', 'get'), help=u"""Get Multi Cloud Discovered Resource Details form a particular resource ID. \n[Command Reference](getMultiCloudResourceDiscovery)""")
-@cli_util.option('--multi-cloud-resource-discovery-id', required=True, help=u"""The [OCID] of the Multi Cloud Discovery Resource.""")
+@multi_cloud_resource_discovery_group.command(name=cli_util.override('multi_cloud_resource_discovery.get_multi_cloud_resource_discovery.command_name', 'get'), help=u"""Retrieves detailed information about a Multicloud discovered resource by specifying its unique resource [OCID]. \n[Command Reference](getMultiCloudResourceDiscovery)""")
+@cli_util.option('--multi-cloud-resource-discovery-id', required=True, help=u"""The [OCID] of the Multicloud Discovery Resource.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -283,25 +306,26 @@ def get_multi_cloud_resource_discovery(ctx, from_json, multi_cloud_resource_disc
     cli_util.render_response(result, ctx)
 
 
-@multi_cloud_resource_discovery_group.command(name=cli_util.override('multi_cloud_resource_discovery.list_multi_cloud_resource_discoveries.command_name', 'list'), help=u"""Lists the all Multi Cloud Resource Discovery based on filters. \n[Command Reference](listMultiCloudResourceDiscoveries)""")
+@multi_cloud_resource_discovery_group.command(name=cli_util.override('multi_cloud_resource_discovery.list_multi_cloud_resource_discoveries.command_name', 'list'), help=u"""Lists all Multicloud Resource Discovery resources based on the specified filters. \n[Command Reference](listMultiCloudResourceDiscoveries)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [ID] of the compartment.""")
-@cli_util.option('--display-name', help=u"""Display Name of the Multi Cloud Discovery Resource.""")
-@cli_util.option('--multi-cloud-resource-discovery-id', help=u"""The [OCID] of the Multi Cloud Discovery Resource.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "SUCCEEDED", "UPDATING", "CANCELING", "CANCELED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
-@cli_util.option('--oracle-db-azure-connector-id', help=u"""A filter to return Oracle DB Azure Blob Mount Resources.""")
-@cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["VAULTS", "STORAGE"]), help=u"""The type of Multi Cloud Resource.""")
+@cli_util.option('--display-name', help=u"""A filter to return Oracle DB Multicloud Discovery resources that match the specified display name.""")
+@cli_util.option('--multi-cloud-resource-discovery-id', help=u"""The [OCID] of the Multicloud Discovery resource.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "SUCCEEDED", "UPDATING", "CANCELING", "CANCELED", "FAILED", "NEEDS_ATTENTION"]), help=u"""A filter to return only resources that match the specified lifecycle state. The state value is case-insensitive.""")
+@cli_util.option('--oracle-db-azure-connector-id', help=u"""A filter to return Oracle DB Azure Azure Identity Connector resources.""")
+@cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["VAULTS", "STORAGE", "GCP_KEY_RINGS"]), help=u"""The type of Multicloud Resource.""")
+@cli_util.option('--resources-filter', multiple=True, help=u"""Specifies the type(s) of resources to discover in the target cloud provider.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending. If no value is specified, default is timeCreated.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'resources-filter': {'module': 'dbmulticloud', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dbmulticloud', 'class': 'MultiCloudResourceDiscoverySummaryCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources-filter': {'module': 'dbmulticloud', 'class': 'list[string]'}}, output_type={'module': 'dbmulticloud', 'class': 'MultiCloudResourceDiscoverySummaryCollection'})
 @cli_util.wrap_exceptions
-def list_multi_cloud_resource_discoveries(ctx, from_json, all_pages, page_size, compartment_id, display_name, multi_cloud_resource_discovery_id, lifecycle_state, oracle_db_azure_connector_id, resource_type, limit, page, sort_order, sort_by):
+def list_multi_cloud_resource_discoveries(ctx, from_json, all_pages, page_size, compartment_id, display_name, multi_cloud_resource_discovery_id, lifecycle_state, oracle_db_azure_connector_id, resource_type, resources_filter, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -317,6 +341,8 @@ def list_multi_cloud_resource_discoveries(ctx, from_json, all_pages, page_size, 
         kwargs['oracle_db_azure_connector_id'] = oracle_db_azure_connector_id
     if resource_type is not None:
         kwargs['resource_type'] = resource_type
+    if resources_filter is not None and len(resources_filter) > 0:
+        kwargs['resources_filter'] = resources_filter
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -352,11 +378,11 @@ def list_multi_cloud_resource_discoveries(ctx, from_json, all_pages, page_size, 
     cli_util.render_response(result, ctx)
 
 
-@multi_cloud_resource_discovery_group.command(name=cli_util.override('multi_cloud_resource_discovery.update_multi_cloud_resource_discovery.command_name', 'update'), help=u"""Modifies the existing Azure Discovered Resource for a given ID. \n[Command Reference](updateMultiCloudResourceDiscovery)""")
-@cli_util.option('--multi-cloud-resource-discovery-id', required=True, help=u"""The [OCID] of the Multi Cloud Discovery Resource.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that contains Multi Cloud Resource Discovery.""")
-@cli_util.option('--display-name', help=u"""Display name of Oracle Multi Cloud Resource Discovery.""")
-@cli_util.option('--oracle-db-connector-id', help=u"""The [OCID] of the Oracle DB Connector.""")
+@multi_cloud_resource_discovery_group.command(name=cli_util.override('multi_cloud_resource_discovery.update_multi_cloud_resource_discovery.command_name', 'update'), help=u"""Modifies the properties of an Azure discovered resource identified by the specified resource [OCID]. \n[Command Reference](updateMultiCloudResourceDiscovery)""")
+@cli_util.option('--multi-cloud-resource-discovery-id', required=True, help=u"""The [OCID] of the Multicloud Discovery Resource.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment that contains Multicloud Resource Discovery resource.""")
+@cli_util.option('--display-name', help=u"""Display name of the Multicloud Resource Discovery resource.""")
+@cli_util.option('--oracle-db-connector-id', help=u"""The [OCID] of the Oracle DB Connector resource.""")
 @cli_util.option('--resource-type', help=u"""Resource Type to discover.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 

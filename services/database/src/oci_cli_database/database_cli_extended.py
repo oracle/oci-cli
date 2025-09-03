@@ -4208,7 +4208,12 @@ def create_standby_database_for_multiple_standby(ctx, wait_for_state, max_wait_s
     client = cli_util.build_client('database', 'database', ctx)
 
     create_new_database_details = _details
-    result = client.create_database(create_new_database_details)
+
+    opc_dry_run_args = {}
+    if 'opc_dry_run' in kwargs and kwargs['opc_dry_run']:
+        opc_dry_run_args['opc_dry_run'] = kwargs['opc_dry_run']
+
+    result = client.create_database(create_new_database_details, **opc_dry_run_args)
 
     if wait_for_state:
 
@@ -4233,7 +4238,11 @@ def create_standby_database_for_multiple_standby(ctx, wait_for_state, max_wait_s
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
-    cli_util.render_response(result, ctx)
+    if result.data.id is not None:
+        cli_util.render_response(result, ctx)
+    else:
+        result.data = None
+        cli_util.render_response(result, ctx)
 
 
 # Multiple Stabdby : Migrate from Single Standby:  oci db data-guard-association migrate-data-guard-association-to-multi-data-guards -> oci db data-guard-association migrate-to-multiple-standby-model
