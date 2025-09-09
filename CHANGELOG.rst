@@ -6,6 +6,53 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.66.0 - 2025-09-09
+--------------------
+Added
+~~~~~
+
+* Database Service
+
+  * Support for Undelete Autonomous Database on public cloud and cloud at customer
+
+    * ``oci db autonomous-database create-autonomous-database-undelete-autonomous-database-details``
+
+  * Support for setting backup retention policy after termination and lock retention for backup configuration while creating and updating Autonomous Container Database.
+
+    * ``oci db autonomous-container-database create``
+    * ``oci db autonomous-container-database update``
+
+  * Support for Deleting associated Long Term Backups while deleting the Autonomous Database.
+
+    * ``oci db autonomous-database delete --must-delete-associated-long-term-backups [boolean] [optional]``
+
+  * Support for listing Autonomous Database Backups by backup destination id and infrastructure type when applicable.
+
+    * ``oci db autonomous-database-backup list --backup-destination-id  [text] --infrastructure-type [text]``
+
+  * Support for listing Autonomous Database Backups by key store id and infrastructure type as applicable.
+
+    * ``oci db autonomous-database-backup list --key-store-id [text] --infrastructure-type [text]``
+
+* Email Delivery Service
+
+  * Support for Locking API in Email Delivery service
+
+    * ``oci email-control emailDomains update``
+    * ``oci email-control emailIpPools update``
+    * ``oci email-control EmailPrivateEndpoints update``
+    * ``oci email-control emailReturnPaths update``
+    * ``oci email-control emailTrackConfigs update``
+    * ``oci email-control senders update``
+
+Modified
+~~~~~~~~
+* Database Service
+
+  * [BREAKING] Changed enum value from ENTERPRISE_EDITION_EXTREME to ENTERPRISE_EDITION_EXTREME_PERFORMANCE for database-edition parameter
+
+    * ``oci db system list-db-system-storage-performances --database-edition ENTERPRISE_EDITION_EXTREME_PERFORMANCE``
+
 3.65.1 - 2025-09-02
 --------------------
 Added
