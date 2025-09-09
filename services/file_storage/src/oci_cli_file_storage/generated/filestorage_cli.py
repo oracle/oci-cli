@@ -1110,7 +1110,11 @@ Example: `Uocm:PHX-AD-1`""")
 Example: `My mount target`""")
 @cli_util.option('--hostname-label', help=u"""The hostname for the mount target's IP address, used for DNS resolution. The value is the hostname portion of the private IP address's fully qualified domain name (FQDN). For example, `files-1` in the FQDN `files-1.subnet123.vcn1.oraclevcn.com`. Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123].
 
-Note: This attribute value is stored in the [PrivateIp] resource, not in the `mountTarget` resource. To update the `hostnameLabel`, use `GetMountTarget` to obtain the [OCIDs] of the mount target's private IPs (`privateIpIds`). Then, you can use [UpdatePrivateIp] to update the `hostnameLabel` value.
+Note:
+
+If the IP address is IPv4, this attribute value is stored in the [PrivateIp] resource, not in the `mountTarget` resource. To update the `hostnameLabel`, use `GetMountTarget` to obtain the [OCIDs] of the mount target's private IPs (`privateIpIds`). Then, you can use [UpdatePrivateIp] to update the `hostnameLabel` value.
+
+If the IP address is IPv6, it is stored in the [Ipv6]  resource To update the `hostnameLabel`, use `GetMountTarget` to obtain the [OCIDs] of the mount target's IPv6 address (`mountTargetIpv6Ids`). Then, you can use [UpdateIpv6] to update the `hostnameLabel` value.
 
 For more information, see [DNS in Your Virtual Cloud Network].
 

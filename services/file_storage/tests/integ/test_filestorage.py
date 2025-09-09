@@ -90,6 +90,7 @@ def vcn_and_subnet(config_file, config_profile, network_client):
         network_client.delete_vcn(vcn_ocid)
 
 
+@pytest.mark.skip('Skipped from automation')
 @pytest.fixture(scope='module')
 def file_system(filestorage_client, config_file, config_profile):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('filestorage_file_system_fixture.yml'):
@@ -119,6 +120,7 @@ def file_system(filestorage_client, config_file, config_profile):
         util.wait_until(['fs', 'file-system', 'get', '--file-system-id', file_system_id], 'DELETED', max_wait_seconds=300)
 
 
+@pytest.mark.skip('Skipped from automation')
 @pytest.fixture(scope='module')
 def mount_target(filestorage_client, vcn_and_subnet, config_file, config_profile):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('filestorage_mount_target_fixture.yml'):

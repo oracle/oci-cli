@@ -2,6 +2,9 @@
 # Copyright (c) 2016, 2025, Oracle and/or its affiliates. All rights reserved.
 
 SDK_client_map = {
+    "email.add_email_domain_lock": "oci.email.EmailClient.add_email_domain_lock",
+    "email.add_return_path_lock": "oci.email.EmailClient.add_return_path_lock",
+    "email.add_sender_lock": "oci.email.EmailClient.add_sender_lock",
     "email.change_email_domain_compartment": "oci.email.EmailClient.change_email_domain_compartment",
     "email.change_sender_compartment": "oci.email.EmailClient.change_sender_compartment",
     "email.create_dkim": "oci.email.EmailClient.create_dkim",
@@ -29,6 +32,9 @@ SDK_client_map = {
     "email.list_work_request_errors": "oci.email.EmailClient.list_work_request_errors",
     "email.list_work_request_logs": "oci.email.EmailClient.list_work_request_logs",
     "email.list_work_requests": "oci.email.EmailClient.list_work_requests",
+    "email.remove_email_domain_lock": "oci.email.EmailClient.remove_email_domain_lock",
+    "email.remove_return_path_lock": "oci.email.EmailClient.remove_return_path_lock",
+    "email.remove_sender_lock": "oci.email.EmailClient.remove_sender_lock",
     "email.update_dkim": "oci.email.EmailClient.update_dkim",
     "email.update_email_domain": "oci.email.EmailClient.update_email_domain",
     "email.update_email_return_path": "oci.email.EmailClient.update_email_return_path",
