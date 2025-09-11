@@ -4,7 +4,6 @@
 
 from __future__ import print_function
 import click
-import six  # noqa: F401
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401

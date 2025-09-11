@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -57,7 +56,7 @@ discovery_root_group.add_command(discovery_schedule_group)
 @cli_util.wrap_exceptions
 def change_asset_source_compartment(ctx, from_json, asset_source_id, compartment_id, if_match):
 
-    if isinstance(asset_source_id, six.string_types) and len(asset_source_id.strip()) == 0:
+    if isinstance(asset_source_id, str) and len(asset_source_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -88,7 +87,7 @@ def change_asset_source_compartment(ctx, from_json, asset_source_id, compartment
 @cli_util.wrap_exceptions
 def change_discovery_schedule_compartment(ctx, from_json, discovery_schedule_id, compartment_id, if_match):
 
-    if isinstance(discovery_schedule_id, six.string_types) and len(discovery_schedule_id.strip()) == 0:
+    if isinstance(discovery_schedule_id, str) and len(discovery_schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --discovery-schedule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -466,7 +465,7 @@ def create_discovery_schedule(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_asset_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, asset_source_id, if_match):
 
-    if isinstance(asset_source_id, six.string_types) and len(asset_source_id.strip()) == 0:
+    if isinstance(asset_source_id, str) and len(asset_source_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -522,7 +521,7 @@ def delete_asset_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_discovery_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, discovery_schedule_id, if_match):
 
-    if isinstance(discovery_schedule_id, six.string_types) and len(discovery_schedule_id.strip()) == 0:
+    if isinstance(discovery_schedule_id, str) and len(discovery_schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --discovery-schedule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -581,7 +580,7 @@ def delete_discovery_schedule(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def get_asset_source(ctx, from_json, asset_source_id):
 
-    if isinstance(asset_source_id, six.string_types) and len(asset_source_id.strip()) == 0:
+    if isinstance(asset_source_id, str) and len(asset_source_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -603,7 +602,7 @@ def get_asset_source(ctx, from_json, asset_source_id):
 @cli_util.wrap_exceptions
 def get_discovery_schedule(ctx, from_json, discovery_schedule_id):
 
-    if isinstance(discovery_schedule_id, six.string_types) and len(discovery_schedule_id.strip()) == 0:
+    if isinstance(discovery_schedule_id, str) and len(discovery_schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --discovery-schedule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -632,7 +631,7 @@ def list_asset_source_connections(ctx, from_json, all_pages, page_size, asset_so
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(asset_source_id, six.string_types) and len(asset_source_id.strip()) == 0:
+    if isinstance(asset_source_id, str) and len(asset_source_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -861,7 +860,7 @@ def list_supported_cloud_regions(ctx, from_json, all_pages, page_size, asset_sou
 @cli_util.wrap_exceptions
 def refresh_asset_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, asset_source_id):
 
-    if isinstance(asset_source_id, six.string_types) and len(asset_source_id.strip()) == 0:
+    if isinstance(asset_source_id, str) and len(asset_source_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -922,7 +921,7 @@ def refresh_asset_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def update_asset_source(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, asset_source_id, type, display_name, assets_compartment_id, discovery_schedule_id, freeform_tags, defined_tags, system_tags, if_match):
 
-    if isinstance(asset_source_id, six.string_types) and len(asset_source_id.strip()) == 0:
+    if isinstance(asset_source_id, str) and len(asset_source_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-source-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or system_tags:
@@ -1016,7 +1015,7 @@ def update_asset_source(ctx, from_json, force, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def update_asset_source_update_vm_ware_asset_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, asset_source_id, display_name, assets_compartment_id, discovery_schedule_id, freeform_tags, defined_tags, system_tags, vcenter_endpoint, discovery_credentials, replication_credentials, are_historical_metrics_collected, are_realtime_metrics_collected, if_match):
 
-    if isinstance(asset_source_id, six.string_types) and len(asset_source_id.strip()) == 0:
+    if isinstance(asset_source_id, str) and len(asset_source_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-source-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or system_tags or discovery_credentials or replication_credentials:
@@ -1126,7 +1125,7 @@ def update_asset_source_update_vm_ware_asset_source_details(ctx, from_json, forc
 @cli_util.wrap_exceptions
 def update_asset_source_update_aws_asset_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, asset_source_id, display_name, assets_compartment_id, discovery_schedule_id, freeform_tags, defined_tags, system_tags, discovery_credentials, replication_credentials, are_historical_metrics_collected, are_realtime_metrics_collected, is_cost_information_collected, if_match):
 
-    if isinstance(asset_source_id, six.string_types) and len(asset_source_id.strip()) == 0:
+    if isinstance(asset_source_id, str) and len(asset_source_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-source-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or system_tags or discovery_credentials or replication_credentials:
@@ -1229,7 +1228,7 @@ def update_asset_source_update_aws_asset_source_details(ctx, from_json, force, w
 @cli_util.wrap_exceptions
 def update_discovery_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, discovery_schedule_id, display_name, execution_recurrences, freeform_tags, defined_tags, if_match):
 
-    if isinstance(discovery_schedule_id, six.string_types) and len(discovery_schedule_id.strip()) == 0:
+    if isinstance(discovery_schedule_id, str) and len(discovery_schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --discovery-schedule-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

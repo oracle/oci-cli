@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -125,7 +124,7 @@ def create_replica(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_replica(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, replica_id, if_match):
 
-    if isinstance(replica_id, six.string_types) and len(replica_id.strip()) == 0:
+    if isinstance(replica_id, str) and len(replica_id.strip()) == 0:
         raise click.UsageError('Parameter --replica-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -179,7 +178,7 @@ def delete_replica(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def get_replica(ctx, from_json, replica_id, if_none_match):
 
-    if isinstance(replica_id, six.string_types) and len(replica_id.strip()) == 0:
+    if isinstance(replica_id, str) and len(replica_id.strip()) == 0:
         raise click.UsageError('Parameter --replica-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -286,7 +285,7 @@ def list_replicas(ctx, from_json, all_pages, page_size, compartment_id, limit, p
 @cli_util.wrap_exceptions
 def update_replica(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, replica_id, display_name, description, freeform_tags, defined_tags, is_delete_protected, replica_overrides, if_match):
 
-    if isinstance(replica_id, six.string_types) and len(replica_id.strip()) == 0:
+    if isinstance(replica_id, str) and len(replica_id.strip()) == 0:
         raise click.UsageError('Parameter --replica-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or replica_overrides:

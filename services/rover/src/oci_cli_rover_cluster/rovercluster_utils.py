@@ -4,7 +4,6 @@
 import json
 
 import click
-import six
 from oci_cli import cli_util
 from oci_cli.cli_util import formatted_flat_dict
 
@@ -84,7 +83,7 @@ def create_cluster_common(ctx, **kwargs):
 
 
 def show_cluster_common(ctx, **kwargs):
-    if isinstance(kwargs['cluster_id'], six.string_types) and len(kwargs['cluster_id'].strip()) == 0:
+    if isinstance(kwargs['cluster_id'], str) and len(kwargs['cluster_id'].strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
     result = get_rover_cluster_helper(ctx, kwargs['cluster_id'])
@@ -129,7 +128,7 @@ def request_cluster_common(ctx, cluster_type, **kwargs):
 
 
 def delete_cluster_common(ctx, **kwargs):
-    if isinstance(kwargs['cluster_id'], six.string_types) and len(kwargs['cluster_id'].strip()) == 0:
+    if isinstance(kwargs['cluster_id'], str) and len(kwargs['cluster_id'].strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
     kwargs_request = {}
@@ -161,7 +160,7 @@ def set_secrets_cluster_common(ctx, **kwargs):
 
 def change_cluster_compartment_common(ctx, **kwargs):
 
-    if isinstance(kwargs['cluster_id'], six.string_types) and len(kwargs['cluster_id'].strip()) == 0:
+    if isinstance(kwargs['cluster_id'], str) and len(kwargs['cluster_id'].strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
     kwargs.update({'rover_cluster_id': kwargs['cluster_id']})
     kwargs.pop('cluster_id')
@@ -249,10 +248,10 @@ def get_rover_cluster_certificate_common(ctx, **kwargs):
     rover_cluster_id = kwargs['cluster_id']
     output_file_path = kwargs['output_file_path']
 
-    if isinstance(rover_cluster_id, six.string_types) and len(rover_cluster_id.strip()) == 0:
+    if isinstance(rover_cluster_id, str) and len(rover_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
-    if isinstance(output_file_path, six.string_types) and len(output_file_path.strip()) == 0:
+    if isinstance(output_file_path, str) and len(output_file_path.strip()) == 0:
         raise click.UsageError('Parameter --output-file-path cannot be whitespace or empty string')
 
     kwargs = {'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])}

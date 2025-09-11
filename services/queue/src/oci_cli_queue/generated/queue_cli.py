@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -78,10 +77,10 @@ queue_service_cli.queue_service_group.add_command(updated_message_group)
 @cli_util.wrap_exceptions
 def delete_message(ctx, from_json, queue_id, message_receipt):
 
-    if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
+    if isinstance(queue_id, str) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
 
-    if isinstance(message_receipt, six.string_types) and len(message_receipt.strip()) == 0:
+    if isinstance(message_receipt, str) and len(message_receipt.strip()) == 0:
         raise click.UsageError('Parameter --message-receipt cannot be whitespace or empty string')
 
     kwargs = {}
@@ -105,7 +104,7 @@ def delete_message(ctx, from_json, queue_id, message_receipt):
 @cli_util.wrap_exceptions
 def delete_messages(ctx, from_json, queue_id, entries):
 
-    if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
+    if isinstance(queue_id, str) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -140,7 +139,7 @@ If the parameter is set to 0, the request is using the short-polling mode and im
 @cli_util.wrap_exceptions
 def get_messages(ctx, from_json, queue_id, visibility_in_seconds, timeout_in_seconds, limit, channel_filter):
 
-    if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
+    if isinstance(queue_id, str) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -171,7 +170,7 @@ def get_messages(ctx, from_json, queue_id, visibility_in_seconds, timeout_in_sec
 @cli_util.wrap_exceptions
 def get_stats(ctx, from_json, queue_id, channel_id):
 
-    if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
+    if isinstance(queue_id, str) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -203,7 +202,7 @@ def list_channels(ctx, from_json, all_pages, page_size, queue_id, limit, page, c
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
+    if isinstance(queue_id, str) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -250,7 +249,7 @@ def list_channels(ctx, from_json, all_pages, page_size, queue_id, limit, page, c
 @cli_util.wrap_exceptions
 def put_messages(ctx, from_json, queue_id, messages):
 
-    if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
+    if isinstance(queue_id, str) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -279,10 +278,10 @@ def put_messages(ctx, from_json, queue_id, messages):
 @cli_util.wrap_exceptions
 def update_message(ctx, from_json, queue_id, message_receipt, visibility_in_seconds):
 
-    if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
+    if isinstance(queue_id, str) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
 
-    if isinstance(message_receipt, six.string_types) and len(message_receipt.strip()) == 0:
+    if isinstance(message_receipt, str) and len(message_receipt.strip()) == 0:
         raise click.UsageError('Parameter --message-receipt cannot be whitespace or empty string')
 
     kwargs = {}
@@ -311,7 +310,7 @@ def update_message(ctx, from_json, queue_id, message_receipt, visibility_in_seco
 @cli_util.wrap_exceptions
 def update_messages(ctx, from_json, queue_id, entries):
 
-    if isinstance(queue_id, six.string_types) and len(queue_id.strip()) == 0:
+    if isinstance(queue_id, str) and len(queue_id.strip()) == 0:
         raise click.UsageError('Parameter --queue-id cannot be whitespace or empty string')
 
     kwargs = {}

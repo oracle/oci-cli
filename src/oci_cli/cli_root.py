@@ -13,7 +13,6 @@ import configparser     # noqa: E402
 import os.path  # noqa: E402
 import logging  # noqa: E402
 from oci.util import Sentinel   # noqa: E402
-import six  # noqa: E402
 import importlib    # noqa: E402
 import re   # noqa: E402
 from oci_cli.version import __version__    # noqa: E402
@@ -621,7 +620,7 @@ def is_top_level_help(ctx):
         return False
 
     top_level_command_tuples = []
-    for cmd_name, cmd_obj in six.iteritems(ctx.command.commands):
+    for cmd_name, cmd_obj in ctx.command.commands.items():
         if isinstance(cmd_obj, click.Group):
             top_level_command_tuples.append((cmd_name, cmd_obj))
 

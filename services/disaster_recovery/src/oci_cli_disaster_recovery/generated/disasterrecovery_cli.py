@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -100,7 +99,7 @@ Example: `us-ashburn-1`""")
 @cli_util.wrap_exceptions
 def associate_dr_protection_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, role, dr_protection_group_id, peer_id, peer_region, if_match):
 
-    if isinstance(dr_protection_group_id, six.string_types) and len(dr_protection_group_id.strip()) == 0:
+    if isinstance(dr_protection_group_id, str) and len(dr_protection_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-protection-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -169,7 +168,7 @@ Example: `ocid1.drplanexecution.oc1..uniqueID`""")
 @cli_util.wrap_exceptions
 def cancel_dr_plan_execution(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, action_type, dr_plan_execution_id, if_match):
 
-    if isinstance(dr_plan_execution_id, six.string_types) and len(dr_plan_execution_id.strip()) == 0:
+    if isinstance(dr_plan_execution_id, str) and len(dr_plan_execution_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-plan-execution-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -231,7 +230,7 @@ Example: `ocid1.workrequest.oc1..uniqueID`""")
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -264,7 +263,7 @@ Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
 @cli_util.wrap_exceptions
 def change_dr_protection_group_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, dr_protection_group_id, if_match):
 
-    if isinstance(dr_protection_group_id, six.string_types) and len(dr_protection_group_id.strip()) == 0:
+    if isinstance(dr_protection_group_id, str) and len(dr_protection_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-protection-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1395,7 +1394,7 @@ Example: `ocid1.drplan.oc1..uniqueID`""")
 @cli_util.wrap_exceptions
 def delete_dr_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dr_plan_id, if_match):
 
-    if isinstance(dr_plan_id, six.string_types) and len(dr_plan_id.strip()) == 0:
+    if isinstance(dr_plan_id, str) and len(dr_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1461,7 +1460,7 @@ Example: `ocid1.drplanexecution.oc1..uniqueID`""")
 @cli_util.wrap_exceptions
 def delete_dr_plan_execution(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dr_plan_execution_id, if_match):
 
-    if isinstance(dr_plan_execution_id, six.string_types) and len(dr_plan_execution_id.strip()) == 0:
+    if isinstance(dr_plan_execution_id, str) and len(dr_plan_execution_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-plan-execution-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1519,7 +1518,7 @@ Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
 @cli_util.wrap_exceptions
 def delete_dr_protection_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dr_protection_group_id, if_match):
 
-    if isinstance(dr_protection_group_id, six.string_types) and len(dr_protection_group_id.strip()) == 0:
+    if isinstance(dr_protection_group_id, str) and len(dr_protection_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-protection-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1577,7 +1576,7 @@ Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
 @cli_util.wrap_exceptions
 def disassociate_dr_protection_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, dr_protection_group_id, if_match):
 
-    if isinstance(dr_protection_group_id, six.string_types) and len(dr_protection_group_id.strip()) == 0:
+    if isinstance(dr_protection_group_id, str) and len(dr_protection_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-protection-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1639,7 +1638,7 @@ Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
 @cli_util.wrap_exceptions
 def disassociate_dr_protection_group_disassociate_dr_protection_group_default_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dr_protection_group_id, if_match):
 
-    if isinstance(dr_protection_group_id, six.string_types) and len(dr_protection_group_id.strip()) == 0:
+    if isinstance(dr_protection_group_id, str) and len(dr_protection_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-protection-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1722,7 +1721,7 @@ Example: `ocid1.drplan.oc1..uniqueID`""")
 @cli_util.wrap_exceptions
 def get_dr_plan(ctx, from_json, dr_plan_id):
 
-    if isinstance(dr_plan_id, six.string_types) and len(dr_plan_id.strip()) == 0:
+    if isinstance(dr_plan_id, str) and len(dr_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1746,7 +1745,7 @@ Example: `ocid1.drplanexecution.oc1..uniqueID`""")
 @cli_util.wrap_exceptions
 def get_dr_plan_execution(ctx, from_json, dr_plan_execution_id):
 
-    if isinstance(dr_plan_execution_id, six.string_types) and len(dr_plan_execution_id.strip()) == 0:
+    if isinstance(dr_plan_execution_id, str) and len(dr_plan_execution_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-plan-execution-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1770,7 +1769,7 @@ Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
 @cli_util.wrap_exceptions
 def get_dr_protection_group(ctx, from_json, dr_protection_group_id):
 
-    if isinstance(dr_protection_group_id, six.string_types) and len(dr_protection_group_id.strip()) == 0:
+    if isinstance(dr_protection_group_id, str) and len(dr_protection_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-protection-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1794,7 +1793,7 @@ Example: `ocid1.workrequest.oc1..uniqueID`""")
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1828,7 +1827,7 @@ Example: `sgid1.step..uniqueID`""")
 @cli_util.wrap_exceptions
 def ignore_dr_plan_execution(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, group_id, dr_plan_execution_id, step_id, if_match):
 
-    if isinstance(dr_plan_execution_id, six.string_types) and len(dr_plan_execution_id.strip()) == 0:
+    if isinstance(dr_plan_execution_id, str) and len(dr_plan_execution_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-plan-execution-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2227,7 +2226,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2292,7 +2291,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2421,7 +2420,7 @@ Example: `ocid1.drplanexecution.oc1..uniqueID`""")
 @cli_util.wrap_exceptions
 def pause_dr_plan_execution(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, action_type, dr_plan_execution_id, if_match):
 
-    if isinstance(dr_plan_execution_id, six.string_types) and len(dr_plan_execution_id.strip()) == 0:
+    if isinstance(dr_plan_execution_id, str) and len(dr_plan_execution_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-plan-execution-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2486,7 +2485,7 @@ Example: `ocid1.drplan.oc1..uniqueID`""")
 @cli_util.wrap_exceptions
 def refresh_dr_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, dr_plan_id, if_match):
 
-    if isinstance(dr_plan_id, six.string_types) and len(dr_plan_id.strip()) == 0:
+    if isinstance(dr_plan_id, str) and len(dr_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2548,7 +2547,7 @@ Example: `ocid1.drplan.oc1..uniqueID`""")
 @cli_util.wrap_exceptions
 def refresh_dr_plan_refresh_dr_plan_default_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dr_plan_id, if_match):
 
-    if isinstance(dr_plan_id, six.string_types) and len(dr_plan_id.strip()) == 0:
+    if isinstance(dr_plan_id, str) and len(dr_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2612,7 +2611,7 @@ Example: `ocid1.drplanexecution.oc1..uniqueID`""")
 @cli_util.wrap_exceptions
 def resume_dr_plan_execution(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, action_type, dr_plan_execution_id, if_match):
 
-    if isinstance(dr_plan_execution_id, six.string_types) and len(dr_plan_execution_id.strip()) == 0:
+    if isinstance(dr_plan_execution_id, str) and len(dr_plan_execution_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-plan-execution-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2682,7 +2681,7 @@ Example: `sgid1.step..uniqueID`""")
 @cli_util.wrap_exceptions
 def retry_dr_plan_execution(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, group_id, dr_plan_execution_id, step_id, if_match):
 
-    if isinstance(dr_plan_execution_id, six.string_types) and len(dr_plan_execution_id.strip()) == 0:
+    if isinstance(dr_plan_execution_id, str) and len(dr_plan_execution_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-plan-execution-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2862,7 +2861,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_dr_plan(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, dr_plan_id, display_name, plan_groups, freeform_tags, defined_tags, if_match):
 
-    if isinstance(dr_plan_id, six.string_types) and len(dr_plan_id.strip()) == 0:
+    if isinstance(dr_plan_id, str) and len(dr_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-plan-id cannot be whitespace or empty string')
     if not force:
         if plan_groups or freeform_tags or defined_tags:
@@ -2949,7 +2948,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_dr_plan_execution(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, dr_plan_execution_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(dr_plan_execution_id, six.string_types) and len(dr_plan_execution_id.strip()) == 0:
+    if isinstance(dr_plan_execution_id, str) and len(dr_plan_execution_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-plan-execution-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3037,7 +3036,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_dr_protection_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, dr_protection_group_id, display_name, log_location, members, freeform_tags, defined_tags, if_match):
 
-    if isinstance(dr_protection_group_id, six.string_types) and len(dr_protection_group_id.strip()) == 0:
+    if isinstance(dr_protection_group_id, str) and len(dr_protection_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-protection-group-id cannot be whitespace or empty string')
     if not force:
         if log_location or members or freeform_tags or defined_tags:
@@ -3118,7 +3117,7 @@ Example: `ocid1.drprotectiongroup.oc1..uniqueID`""")
 @cli_util.wrap_exceptions
 def update_dr_protection_group_role(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, role, dr_protection_group_id, if_match):
 
-    if isinstance(dr_protection_group_id, six.string_types) and len(dr_protection_group_id.strip()) == 0:
+    if isinstance(dr_protection_group_id, str) and len(dr_protection_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-protection-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3181,7 +3180,7 @@ Example: `ocid1.drplan.oc1..uniqueID`""")
 @cli_util.wrap_exceptions
 def verify_dr_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, type, dr_plan_id, if_match):
 
-    if isinstance(dr_plan_id, six.string_types) and len(dr_plan_id.strip()) == 0:
+    if isinstance(dr_plan_id, str) and len(dr_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3243,7 +3242,7 @@ Example: `ocid1.drplan.oc1..uniqueID`""")
 @cli_util.wrap_exceptions
 def verify_dr_plan_verify_dr_plan_default_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dr_plan_id, if_match):
 
-    if isinstance(dr_plan_id, six.string_types) and len(dr_plan_id.strip()) == 0:
+    if isinstance(dr_plan_id, str) and len(dr_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --dr-plan-id cannot be whitespace or empty string')
 
     kwargs = {}

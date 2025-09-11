@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -57,7 +56,7 @@ def list_rover_cluster_rover_bundle_requests(ctx, from_json, all_pages, page_siz
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(rover_cluster_id, six.string_types) and len(rover_cluster_id.strip()) == 0:
+    if isinstance(rover_cluster_id, str) and len(rover_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -114,7 +113,7 @@ def list_rover_node_rover_bundle_requests(ctx, from_json, all_pages, page_size, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+    if isinstance(rover_node_id, str) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -168,7 +167,7 @@ def list_rover_node_rover_bundle_requests(ctx, from_json, all_pages, page_size, 
 @cli_util.wrap_exceptions
 def request_bundle_rover_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, destination_compartment_id, destination_bucket_name, bundle_version, rover_cluster_id):
 
-    if isinstance(rover_cluster_id, six.string_types) and len(rover_cluster_id.strip()) == 0:
+    if isinstance(rover_cluster_id, str) and len(rover_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -232,7 +231,7 @@ def request_bundle_rover_cluster(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def request_bundle_rover_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, destination_compartment_id, destination_bucket_name, bundle_version, rover_node_id):
 
-    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+    if isinstance(rover_node_id, str) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -291,7 +290,7 @@ def request_bundle_rover_node(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def retrieve_available_bundle_versions_rover_cluster(ctx, from_json, current_rover_bundle_version, rover_cluster_id):
 
-    if isinstance(rover_cluster_id, six.string_types) and len(rover_cluster_id.strip()) == 0:
+    if isinstance(rover_cluster_id, str) and len(rover_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -319,7 +318,7 @@ def retrieve_available_bundle_versions_rover_cluster(ctx, from_json, current_rov
 @cli_util.wrap_exceptions
 def retrieve_available_bundle_versions_rover_node(ctx, from_json, current_rover_bundle_version, rover_node_id):
 
-    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+    if isinstance(rover_node_id, str) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -347,7 +346,7 @@ def retrieve_available_bundle_versions_rover_node(ctx, from_json, current_rover_
 @cli_util.wrap_exceptions
 def retrieve_bundle_status_rover_cluster(ctx, from_json, work_request_id, rover_cluster_id):
 
-    if isinstance(rover_cluster_id, six.string_types) and len(rover_cluster_id.strip()) == 0:
+    if isinstance(rover_cluster_id, str) and len(rover_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -375,7 +374,7 @@ def retrieve_bundle_status_rover_cluster(ctx, from_json, work_request_id, rover_
 @cli_util.wrap_exceptions
 def retrieve_bundle_status_rover_node(ctx, from_json, work_request_id, rover_node_id):
 
-    if isinstance(rover_node_id, six.string_types) and len(rover_node_id.strip()) == 0:
+    if isinstance(rover_node_id, str) and len(rover_node_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-node-id cannot be whitespace or empty string')
 
     kwargs = {}

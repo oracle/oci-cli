@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -136,7 +135,7 @@ email_root_group.add_command(work_request_log_entry_collection_group)
 @cli_util.wrap_exceptions
 def add_email_domain_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, email_domain_id, type, compartment_id, related_resource_id, message, if_match):
 
-    if isinstance(email_domain_id, six.string_types) and len(email_domain_id.strip()) == 0:
+    if isinstance(email_domain_id, str) and len(email_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --email-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -335,7 +334,7 @@ def add_email_outbound_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def add_return_path_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, email_return_path_id, type, compartment_id, related_resource_id, message, if_match):
 
-    if isinstance(email_return_path_id, six.string_types) and len(email_return_path_id.strip()) == 0:
+    if isinstance(email_return_path_id, str) and len(email_return_path_id.strip()) == 0:
         raise click.UsageError('Parameter --email-return-path-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -404,7 +403,7 @@ def add_return_path_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def add_sender_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sender_id, type, compartment_id, related_resource_id, message, if_match):
 
-    if isinstance(sender_id, six.string_types) and len(sender_id.strip()) == 0:
+    if isinstance(sender_id, str) and len(sender_id.strip()) == 0:
         raise click.UsageError('Parameter --sender-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -473,7 +472,7 @@ def add_sender_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def change_email_domain_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, email_domain_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(email_domain_id, six.string_types) and len(email_domain_id.strip()) == 0:
+    if isinstance(email_domain_id, str) and len(email_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --email-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -598,7 +597,7 @@ def change_email_ip_pool_compartment(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def change_sender_compartment(ctx, from_json, sender_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(sender_id, six.string_types) and len(sender_id.strip()) == 0:
+    if isinstance(sender_id, str) and len(sender_id.strip()) == 0:
         raise click.UsageError('Parameter --sender-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1030,7 +1029,7 @@ def create_suppression(ctx, from_json, compartment_id, email_address):
 @cli_util.wrap_exceptions
 def delete_dkim(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dkim_id, if_match):
 
-    if isinstance(dkim_id, six.string_types) and len(dkim_id.strip()) == 0:
+    if isinstance(dkim_id, str) and len(dkim_id.strip()) == 0:
         raise click.UsageError('Parameter --dkim-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1087,7 +1086,7 @@ def delete_dkim(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def delete_email_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, email_domain_id, if_match, is_lock_override):
 
-    if isinstance(email_domain_id, six.string_types) and len(email_domain_id.strip()) == 0:
+    if isinstance(email_domain_id, str) and len(email_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --email-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1205,7 +1204,7 @@ def delete_email_ip_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_email_return_path(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, email_return_path_id, if_match, is_lock_override):
 
-    if isinstance(email_return_path_id, six.string_types) and len(email_return_path_id.strip()) == 0:
+    if isinstance(email_return_path_id, str) and len(email_return_path_id.strip()) == 0:
         raise click.UsageError('Parameter --email-return-path-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1264,7 +1263,7 @@ def delete_email_return_path(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_sender(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sender_id, if_match, is_lock_override):
 
-    if isinstance(sender_id, six.string_types) and len(sender_id.strip()) == 0:
+    if isinstance(sender_id, str) and len(sender_id.strip()) == 0:
         raise click.UsageError('Parameter --sender-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1326,7 +1325,7 @@ def delete_sender(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def delete_suppression(ctx, from_json, suppression_id):
 
-    if isinstance(suppression_id, six.string_types) and len(suppression_id.strip()) == 0:
+    if isinstance(suppression_id, str) and len(suppression_id.strip()) == 0:
         raise click.UsageError('Parameter --suppression-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1348,7 +1347,7 @@ def delete_suppression(ctx, from_json, suppression_id):
 @cli_util.wrap_exceptions
 def get_dkim(ctx, from_json, dkim_id):
 
-    if isinstance(dkim_id, six.string_types) and len(dkim_id.strip()) == 0:
+    if isinstance(dkim_id, str) and len(dkim_id.strip()) == 0:
         raise click.UsageError('Parameter --dkim-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1389,7 +1388,7 @@ def get_email_configuration(ctx, from_json, compartment_id):
 @cli_util.wrap_exceptions
 def get_email_domain(ctx, from_json, email_domain_id):
 
-    if isinstance(email_domain_id, six.string_types) and len(email_domain_id.strip()) == 0:
+    if isinstance(email_domain_id, str) and len(email_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --email-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1433,7 +1432,7 @@ def get_email_ip_pool(ctx, from_json, email_ip_pool_id):
 @cli_util.wrap_exceptions
 def get_email_return_path(ctx, from_json, email_return_path_id):
 
-    if isinstance(email_return_path_id, six.string_types) and len(email_return_path_id.strip()) == 0:
+    if isinstance(email_return_path_id, str) and len(email_return_path_id.strip()) == 0:
         raise click.UsageError('Parameter --email-return-path-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1455,7 +1454,7 @@ def get_email_return_path(ctx, from_json, email_return_path_id):
 @cli_util.wrap_exceptions
 def get_sender(ctx, from_json, sender_id):
 
-    if isinstance(sender_id, six.string_types) and len(sender_id.strip()) == 0:
+    if isinstance(sender_id, str) and len(sender_id.strip()) == 0:
         raise click.UsageError('Parameter --sender-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1477,7 +1476,7 @@ def get_sender(ctx, from_json, sender_id):
 @cli_util.wrap_exceptions
 def get_suppression(ctx, from_json, suppression_id):
 
-    if isinstance(suppression_id, six.string_types) and len(suppression_id.strip()) == 0:
+    if isinstance(suppression_id, str) and len(suppression_id.strip()) == 0:
         raise click.UsageError('Parameter --suppression-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1499,7 +1498,7 @@ def get_suppression(ctx, from_json, suppression_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1994,7 +1993,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2045,7 +2044,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2146,7 +2145,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def remove_email_domain_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, email_domain_id, type, compartment_id, if_match):
 
-    if isinstance(email_domain_id, six.string_types) and len(email_domain_id.strip()) == 0:
+    if isinstance(email_domain_id, str) and len(email_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --email-domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2329,7 +2328,7 @@ def remove_email_outbound_ip(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def remove_return_path_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, email_return_path_id, type, compartment_id, if_match):
 
-    if isinstance(email_return_path_id, six.string_types) and len(email_return_path_id.strip()) == 0:
+    if isinstance(email_return_path_id, str) and len(email_return_path_id.strip()) == 0:
         raise click.UsageError('Parameter --email-return-path-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2390,7 +2389,7 @@ def remove_return_path_lock(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def remove_sender_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sender_id, type, compartment_id, if_match):
 
-    if isinstance(sender_id, six.string_types) and len(sender_id.strip()) == 0:
+    if isinstance(sender_id, str) and len(sender_id.strip()) == 0:
         raise click.UsageError('Parameter --sender-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2457,7 +2456,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_dkim(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, dkim_id, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(dkim_id, six.string_types) and len(dkim_id.strip()) == 0:
+    if isinstance(dkim_id, str) and len(dkim_id.strip()) == 0:
         raise click.UsageError('Parameter --dkim-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2539,7 +2538,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_email_domain(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, email_domain_id, domain_verification_id, description, freeform_tags, defined_tags, if_match, is_lock_override):
 
-    if isinstance(email_domain_id, six.string_types) and len(email_domain_id.strip()) == 0:
+    if isinstance(email_domain_id, str) and len(email_domain_id.strip()) == 0:
         raise click.UsageError('Parameter --email-domain-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2708,7 +2707,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_email_return_path(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, email_return_path_id, description, freeform_tags, defined_tags, if_match, is_lock_override):
 
-    if isinstance(email_return_path_id, six.string_types) and len(email_return_path_id.strip()) == 0:
+    if isinstance(email_return_path_id, str) and len(email_return_path_id.strip()) == 0:
         raise click.UsageError('Parameter --email-return-path-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2791,7 +2790,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_sender(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sender_id, email_ip_pool_id, freeform_tags, defined_tags, if_match, is_lock_override):
 
-    if isinstance(sender_id, six.string_types) and len(sender_id.strip()) == 0:
+    if isinstance(sender_id, str) and len(sender_id.strip()) == 0:
         raise click.UsageError('Parameter --sender-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

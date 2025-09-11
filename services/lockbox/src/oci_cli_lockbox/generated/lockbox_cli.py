@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -114,7 +113,7 @@ oma_root_group.add_command(lockbox_collection_group)
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -140,7 +139,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_approval_template_compartment(ctx, from_json, approval_template_id, compartment_id, if_match):
 
-    if isinstance(approval_template_id, six.string_types) and len(approval_template_id.strip()) == 0:
+    if isinstance(approval_template_id, str) and len(approval_template_id.strip()) == 0:
         raise click.UsageError('Parameter --approval-template-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -171,7 +170,7 @@ def change_approval_template_compartment(ctx, from_json, approval_template_id, c
 @cli_util.wrap_exceptions
 def change_lockbox_compartment(ctx, from_json, lockbox_id, compartment_id, if_match):
 
-    if isinstance(lockbox_id, six.string_types) and len(lockbox_id.strip()) == 0:
+    if isinstance(lockbox_id, str) and len(lockbox_id.strip()) == 0:
         raise click.UsageError('Parameter --lockbox-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -428,7 +427,7 @@ def create_lockbox(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_approval_template(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, approval_template_id, if_match):
 
-    if isinstance(approval_template_id, six.string_types) and len(approval_template_id.strip()) == 0:
+    if isinstance(approval_template_id, str) and len(approval_template_id.strip()) == 0:
         raise click.UsageError('Parameter --approval-template-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -492,7 +491,7 @@ def delete_approval_template(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_lockbox(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, lockbox_id, if_match):
 
-    if isinstance(lockbox_id, six.string_types) and len(lockbox_id.strip()) == 0:
+    if isinstance(lockbox_id, str) and len(lockbox_id.strip()) == 0:
         raise click.UsageError('Parameter --lockbox-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -631,7 +630,7 @@ def export_access_requests(ctx, from_json, file, lockbox_id, time_created_after,
 @cli_util.wrap_exceptions
 def get_access_materials(ctx, from_json, access_request_id):
 
-    if isinstance(access_request_id, six.string_types) and len(access_request_id.strip()) == 0:
+    if isinstance(access_request_id, str) and len(access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -653,7 +652,7 @@ def get_access_materials(ctx, from_json, access_request_id):
 @cli_util.wrap_exceptions
 def get_access_request(ctx, from_json, access_request_id):
 
-    if isinstance(access_request_id, six.string_types) and len(access_request_id.strip()) == 0:
+    if isinstance(access_request_id, str) and len(access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -675,7 +674,7 @@ def get_access_request(ctx, from_json, access_request_id):
 @cli_util.wrap_exceptions
 def get_access_request_internal(ctx, from_json, access_request_id):
 
-    if isinstance(access_request_id, six.string_types) and len(access_request_id.strip()) == 0:
+    if isinstance(access_request_id, str) and len(access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -697,7 +696,7 @@ def get_access_request_internal(ctx, from_json, access_request_id):
 @cli_util.wrap_exceptions
 def get_approval_template(ctx, from_json, approval_template_id):
 
-    if isinstance(approval_template_id, six.string_types) and len(approval_template_id.strip()) == 0:
+    if isinstance(approval_template_id, str) and len(approval_template_id.strip()) == 0:
         raise click.UsageError('Parameter --approval-template-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -719,7 +718,7 @@ def get_approval_template(ctx, from_json, approval_template_id):
 @cli_util.wrap_exceptions
 def get_lockbox(ctx, from_json, lockbox_id):
 
-    if isinstance(lockbox_id, six.string_types) and len(lockbox_id.strip()) == 0:
+    if isinstance(lockbox_id, str) and len(lockbox_id.strip()) == 0:
         raise click.UsageError('Parameter --lockbox-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -741,7 +740,7 @@ def get_lockbox(ctx, from_json, lockbox_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -769,7 +768,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.wrap_exceptions
 def handle_access_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, access_request_id, action, message, if_match):
 
-    if isinstance(access_request_id, six.string_types) and len(access_request_id.strip()) == 0:
+    if isinstance(access_request_id, str) and len(access_request_id.strip()) == 0:
         raise click.UsageError('Parameter --access-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1047,7 +1046,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1104,7 +1103,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1224,7 +1223,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def update_approval_template(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, approval_template_id, approver_levels, display_name, auto_approval_state, freeform_tags, defined_tags, if_match):
 
-    if isinstance(approval_template_id, six.string_types) and len(approval_template_id.strip()) == 0:
+    if isinstance(approval_template_id, str) and len(approval_template_id.strip()) == 0:
         raise click.UsageError('Parameter --approval-template-id cannot be whitespace or empty string')
     if not force:
         if approver_levels or freeform_tags or defined_tags:
@@ -1304,7 +1303,7 @@ def update_approval_template(ctx, from_json, force, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def update_lockbox(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, lockbox_id, display_name, approval_template_id, max_access_duration, freeform_tags, defined_tags, if_match):
 
-    if isinstance(lockbox_id, six.string_types) and len(lockbox_id.strip()) == 0:
+    if isinstance(lockbox_id, str) and len(lockbox_id.strip()) == 0:
         raise click.UsageError('Parameter --lockbox-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

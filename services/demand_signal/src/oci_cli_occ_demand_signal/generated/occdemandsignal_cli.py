@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -51,7 +50,7 @@ demand_signal_root_group.add_command(occ_demand_signal_group)
 @cli_util.wrap_exceptions
 def change_occ_demand_signal_compartment(ctx, from_json, occ_demand_signal_id, compartment_id, if_match):
 
-    if isinstance(occ_demand_signal_id, six.string_types) and len(occ_demand_signal_id.strip()) == 0:
+    if isinstance(occ_demand_signal_id, str) and len(occ_demand_signal_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-demand-signal-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -154,7 +153,7 @@ def create_occ_demand_signal(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_occ_demand_signal(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, occ_demand_signal_id, if_match):
 
-    if isinstance(occ_demand_signal_id, six.string_types) and len(occ_demand_signal_id.strip()) == 0:
+    if isinstance(occ_demand_signal_id, str) and len(occ_demand_signal_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-demand-signal-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -213,7 +212,7 @@ def delete_occ_demand_signal(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def get_occ_demand_signal(ctx, from_json, occ_demand_signal_id):
 
-    if isinstance(occ_demand_signal_id, six.string_types) and len(occ_demand_signal_id.strip()) == 0:
+    if isinstance(occ_demand_signal_id, str) and len(occ_demand_signal_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-demand-signal-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -301,7 +300,7 @@ This option is a JSON list with items of type PatchInstruction.  For documentati
 @cli_util.wrap_exceptions
 def patch_occ_demand_signal(ctx, from_json, occ_demand_signal_id, items, if_match):
 
-    if isinstance(occ_demand_signal_id, six.string_types) and len(occ_demand_signal_id.strip()) == 0:
+    if isinstance(occ_demand_signal_id, str) and len(occ_demand_signal_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-demand-signal-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -345,7 +344,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_occ_demand_signal(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, occ_demand_signal_id, display_name, is_active, freeform_tags, defined_tags, if_match):
 
-    if isinstance(occ_demand_signal_id, six.string_types) and len(occ_demand_signal_id.strip()) == 0:
+    if isinstance(occ_demand_signal_id, str) and len(occ_demand_signal_id.strip()) == 0:
         raise click.UsageError('Parameter --occ-demand-signal-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

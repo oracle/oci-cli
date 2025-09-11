@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -72,7 +71,7 @@ cpg_root_group.add_command(work_request_group)
 @cli_util.wrap_exceptions
 def activate_cluster_placement_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_placement_group_id, if_match):
 
-    if isinstance(cluster_placement_group_id, six.string_types) and len(cluster_placement_group_id.strip()) == 0:
+    if isinstance(cluster_placement_group_id, str) and len(cluster_placement_group_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-placement-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -121,7 +120,7 @@ def activate_cluster_placement_group(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -149,7 +148,7 @@ When provided, If-Match is checked against ETag values of the resource. \n[Comma
 @cli_util.wrap_exceptions
 def change_cluster_placement_group_compartment(ctx, from_json, cluster_placement_group_id, compartment_id, if_match):
 
-    if isinstance(cluster_placement_group_id, six.string_types) and len(cluster_placement_group_id.strip()) == 0:
+    if isinstance(cluster_placement_group_id, str) and len(cluster_placement_group_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-placement-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -262,7 +261,7 @@ def create_cluster_placement_group(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def deactivate_cluster_placement_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_placement_group_id, if_match):
 
-    if isinstance(cluster_placement_group_id, six.string_types) and len(cluster_placement_group_id.strip()) == 0:
+    if isinstance(cluster_placement_group_id, str) and len(cluster_placement_group_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-placement-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -314,7 +313,7 @@ def deactivate_cluster_placement_group(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def delete_cluster_placement_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_placement_group_id, if_match):
 
-    if isinstance(cluster_placement_group_id, six.string_types) and len(cluster_placement_group_id.strip()) == 0:
+    if isinstance(cluster_placement_group_id, str) and len(cluster_placement_group_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-placement-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -365,7 +364,7 @@ def delete_cluster_placement_group(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def get_cluster_placement_group(ctx, from_json, cluster_placement_group_id):
 
-    if isinstance(cluster_placement_group_id, six.string_types) and len(cluster_placement_group_id.strip()) == 0:
+    if isinstance(cluster_placement_group_id, str) and len(cluster_placement_group_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-placement-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -387,7 +386,7 @@ def get_cluster_placement_group(ctx, from_json, cluster_placement_group_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -486,7 +485,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -543,7 +542,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -661,7 +660,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def update_cluster_placement_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_placement_group_id, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(cluster_placement_group_id, six.string_types) and len(cluster_placement_group_id.strip()) == 0:
+    if isinstance(cluster_placement_group_id, str) and len(cluster_placement_group_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-placement-group-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

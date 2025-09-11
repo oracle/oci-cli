@@ -6,7 +6,6 @@ from . import util
 import click
 import json
 import oci_cli
-import six
 import random
 import vcr
 import os
@@ -154,7 +153,7 @@ def process_json_input(input, tmpdir):
     modified_input.pop('all', None)
     for key in modified_input:
         # if input is a Multiple choice option, this will extract a single choice from the choice list.
-        if isinstance(modified_input[key], list) and len(modified_input[key]) == 1 and isinstance(modified_input[key][0], six.string_types):
+        if isinstance(modified_input[key], list) and len(modified_input[key]) == 1 and isinstance(modified_input[key][0], str):
             first_val = str(modified_input[key][0])
             if "|" in first_val:
                 modified_input[key][0] = get_choice_from_choices(first_val)
@@ -182,7 +181,7 @@ def get_choice_from_choices(choices):
 
 def _traverse_oci_cli(command, path, failed_commands, ignored_extended_commands):
     if hasattr(command, "commands"):
-        for name, command in six.iteritems(command.commands):
+        for name, command in command.commands.items():
             _traverse_oci_cli(command, path + [name], failed_commands, ignored_extended_commands)
     else:
         if path not in ignored_commands.IGNORED_COMMANDS and path not in ignored_extended_commands:
@@ -214,7 +213,7 @@ def teardown_module(module):
 
 
 def reset_prompt_in_group(click_group):
-    for cmd_name, cmd in six.iteritems(click_group):
+    for cmd_name, cmd in click_group.items():
         if isinstance(cmd, click.Group):
             reset_prompt_in_group(cmd.commands)
         else:

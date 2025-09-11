@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -44,10 +43,10 @@ plugin_root_group.add_command(plugin_group)
 @cli_util.wrap_exceptions
 def get_instance_agent_plugin(ctx, from_json, instanceagent_id, compartment_id, plugin_name):
 
-    if isinstance(instanceagent_id, six.string_types) and len(instanceagent_id.strip()) == 0:
+    if isinstance(instanceagent_id, str) and len(instanceagent_id.strip()) == 0:
         raise click.UsageError('Parameter --instanceagent-id cannot be whitespace or empty string')
 
-    if isinstance(plugin_name, six.string_types) and len(plugin_name.strip()) == 0:
+    if isinstance(plugin_name, str) and len(plugin_name.strip()) == 0:
         raise click.UsageError('Parameter --plugin-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -85,7 +84,7 @@ def list_instance_agent_plugins(ctx, from_json, all_pages, page_size, compartmen
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(instanceagent_id, six.string_types) and len(instanceagent_id.strip()) == 0:
+    if isinstance(instanceagent_id, str) and len(instanceagent_id.strip()) == 0:
         raise click.UsageError('Parameter --instanceagent-id cannot be whitespace or empty string')
 
     kwargs = {}

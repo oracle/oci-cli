@@ -16,7 +16,6 @@ import json
 import oci
 import os
 from oci._vendor import requests
-import six
 from shutil import copy, make_archive, rmtree
 import sys
 import tempfile
@@ -290,7 +289,7 @@ def export(ctx, output_file, force):
             config[profile] = translate_config_filepaths_to_prefix(profile_to_export)
             config.write(export_config_file)
 
-        for key, value in six.iteritems(profile_to_export):
+        for key, value in profile_to_export.items():
             if key.endswith((CONFIG_KEY_FILE_SUFFIX, TOKEN_FILE_SUFFIX)):
                 copy(os.path.expanduser(value), temp_dir_name)
 
@@ -358,7 +357,7 @@ def import_session(ctx, session_archive, force):
                 os.makedirs(imported_resources_dir)
 
             # copy referenced files from archived config to imported_resources_dir
-            for key, value in six.iteritems(archived_profile):
+            for key, value in archived_profile.items():
                 if key.endswith((CONFIG_KEY_FILE_SUFFIX, TOKEN_FILE_SUFFIX)):
                     # there is no nesting in the archive so the config will always reference the filename directly
                     new_file_location = os.path.join(imported_resources_dir, value)
@@ -385,7 +384,7 @@ def import_session(ctx, session_archive, force):
 
 def translate_config_filepaths_to_prefix(config, prefix=''):
     translated_config = {}
-    for key, value in six.iteritems(config):
+    for key, value in config.items():
         if key.endswith((CONFIG_KEY_FILE_SUFFIX, TOKEN_FILE_SUFFIX)):
             basename = os.path.basename(value)
             translated_config[key] = os.path.join(prefix, basename)

@@ -11,7 +11,6 @@ from oci._vendor.requests import Request
 from oci.auth.signers import InstancePrincipalsDelegationTokenSigner
 import click
 import json
-import six
 import os
 import yaml
 import base64
@@ -36,7 +35,7 @@ containerengine_cli.node_pool_group.commands.pop(containerengine_cli.update_node
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
 def generate_token(ctx, from_json, cluster_id):
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
     client = cli_util.build_client('container_engine', 'container_engine', ctx)
@@ -601,7 +600,7 @@ def update_node_pool(ctx, **kwargs):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
 def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiration, kube_endpoint, overwrite, with_auth_context):
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
     kwargs = {}

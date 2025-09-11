@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -75,7 +74,7 @@ This option is a JSON list with items of type RedeemableUser.  For documentation
 @cli_util.wrap_exceptions
 def create_redeemable_user(ctx, from_json, tenancy_id, subscription_id, items, user_id, if_match):
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -113,7 +112,7 @@ def create_redeemable_user(ctx, from_json, tenancy_id, subscription_id, items, u
 @cli_util.wrap_exceptions
 def delete_redeemable_user(ctx, from_json, email_id, tenancy_id, subscription_id, if_match):
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -151,7 +150,7 @@ def list_products(ctx, from_json, all_pages, page_size, tenancy_id, subscription
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -217,7 +216,7 @@ def list_redeemable_users(ctx, from_json, all_pages, page_size, tenancy_id, subs
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -280,7 +279,7 @@ def list_redemptions(ctx, from_json, all_pages, page_size, tenancy_id, subscript
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -337,7 +336,7 @@ def list_redemptions(ctx, from_json, all_pages, page_size, tenancy_id, subscript
 @cli_util.wrap_exceptions
 def list_rewards(ctx, from_json, all_pages, tenancy_id, subscription_id):
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}

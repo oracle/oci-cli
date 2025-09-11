@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -60,7 +59,7 @@ oci_cache_config_set_root_group.add_command(associated_oci_cache_cluster_summary
 @cli_util.wrap_exceptions
 def change_oci_cache_config_set_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oci_cache_config_set_id, compartment_id, if_match):
 
-    if isinstance(oci_cache_config_set_id, six.string_types) and len(oci_cache_config_set_id.strip()) == 0:
+    if isinstance(oci_cache_config_set_id, str) and len(oci_cache_config_set_id.strip()) == 0:
         raise click.UsageError('Parameter --oci-cache-config-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -192,7 +191,7 @@ def create_oci_cache_config_set(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_oci_cache_config_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oci_cache_config_set_id, if_match):
 
-    if isinstance(oci_cache_config_set_id, six.string_types) and len(oci_cache_config_set_id.strip()) == 0:
+    if isinstance(oci_cache_config_set_id, str) and len(oci_cache_config_set_id.strip()) == 0:
         raise click.UsageError('Parameter --oci-cache-config-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -243,7 +242,7 @@ def delete_oci_cache_config_set(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def get_oci_cache_config_set(ctx, from_json, oci_cache_config_set_id):
 
-    if isinstance(oci_cache_config_set_id, six.string_types) and len(oci_cache_config_set_id.strip()) == 0:
+    if isinstance(oci_cache_config_set_id, str) and len(oci_cache_config_set_id.strip()) == 0:
         raise click.UsageError('Parameter --oci-cache-config-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -274,7 +273,7 @@ def list_associated_oci_cache_clusters(ctx, from_json, all_pages, page_size, oci
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(oci_cache_config_set_id, six.string_types) and len(oci_cache_config_set_id.strip()) == 0:
+    if isinstance(oci_cache_config_set_id, str) and len(oci_cache_config_set_id.strip()) == 0:
         raise click.UsageError('Parameter --oci-cache-config-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -396,7 +395,7 @@ def list_oci_cache_config_sets(ctx, from_json, all_pages, page_size, compartment
 @cli_util.wrap_exceptions
 def update_oci_cache_config_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oci_cache_config_set_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oci_cache_config_set_id, six.string_types) and len(oci_cache_config_set_id.strip()) == 0:
+    if isinstance(oci_cache_config_set_id, str) and len(oci_cache_config_set_id.strip()) == 0:
         raise click.UsageError('Parameter --oci-cache-config-set-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

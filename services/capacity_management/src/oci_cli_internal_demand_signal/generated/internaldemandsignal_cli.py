@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -154,7 +153,7 @@ def create_internal_occm_demand_signal_delivery(ctx, from_json, wait_for_state, 
 @cli_util.wrap_exceptions
 def delete_internal_occm_demand_signal_delivery(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ds_delivery_id, if_match):
 
-    if isinstance(ds_delivery_id, six.string_types) and len(ds_delivery_id.strip()) == 0:
+    if isinstance(ds_delivery_id, str) and len(ds_delivery_id.strip()) == 0:
         raise click.UsageError('Parameter --ds-delivery-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -213,7 +212,7 @@ def delete_internal_occm_demand_signal_delivery(ctx, from_json, wait_for_state, 
 @cli_util.wrap_exceptions
 def get_internal_occm_demand_signal(ctx, from_json, ds_id):
 
-    if isinstance(ds_id, six.string_types) and len(ds_id.strip()) == 0:
+    if isinstance(ds_id, str) and len(ds_id.strip()) == 0:
         raise click.UsageError('Parameter --ds-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -235,7 +234,7 @@ def get_internal_occm_demand_signal(ctx, from_json, ds_id):
 @cli_util.wrap_exceptions
 def get_internal_occm_demand_signal_catalog(ctx, from_json, ds_catalog_id):
 
-    if isinstance(ds_catalog_id, six.string_types) and len(ds_catalog_id.strip()) == 0:
+    if isinstance(ds_catalog_id, str) and len(ds_catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --ds-catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -257,7 +256,7 @@ def get_internal_occm_demand_signal_catalog(ctx, from_json, ds_catalog_id):
 @cli_util.wrap_exceptions
 def get_internal_occm_demand_signal_delivery(ctx, from_json, ds_delivery_id):
 
-    if isinstance(ds_delivery_id, six.string_types) and len(ds_delivery_id.strip()) == 0:
+    if isinstance(ds_delivery_id, str) and len(ds_delivery_id.strip()) == 0:
         raise click.UsageError('Parameter --ds-delivery-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -610,7 +609,7 @@ IN_PROGRESS -> Transitions the demand signal to IN_PROGRESS state. REJECTED -> T
 @cli_util.wrap_exceptions
 def update_internal_occm_demand_signal(ctx, from_json, ds_id, lifecycle_details, if_match):
 
-    if isinstance(ds_id, six.string_types) and len(ds_id.strip()) == 0:
+    if isinstance(ds_id, str) and len(ds_id.strip()) == 0:
         raise click.UsageError('Parameter --ds-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -653,7 +652,7 @@ def update_internal_occm_demand_signal(ctx, from_json, ds_id, lifecycle_details,
 @cli_util.wrap_exceptions
 def update_internal_occm_demand_signal_delivery(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ds_delivery_id, accepted_quantity, lifecycle_details, time_delivered, justification, notes, freeform_tags, defined_tags, if_match):
 
-    if isinstance(ds_delivery_id, six.string_types) and len(ds_delivery_id.strip()) == 0:
+    if isinstance(ds_delivery_id, str) and len(ds_delivery_id.strip()) == 0:
         raise click.UsageError('Parameter --ds-delivery-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

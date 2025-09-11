@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -53,7 +52,7 @@ Canceling a command is a best-effort attempt. If the command has already complet
 @cli_util.wrap_exceptions
 def cancel_instance_agent_command(ctx, from_json, instance_agent_command_id, if_match):
 
-    if isinstance(instance_agent_command_id, six.string_types) and len(instance_agent_command_id.strip()) == 0:
+    if isinstance(instance_agent_command_id, str) and len(instance_agent_command_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-agent-command-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -116,7 +115,7 @@ def create_instance_agent_command(ctx, from_json, compartment_id, execution_time
 @cli_util.wrap_exceptions
 def get_instance_agent_command(ctx, from_json, instance_agent_command_id):
 
-    if isinstance(instance_agent_command_id, six.string_types) and len(instance_agent_command_id.strip()) == 0:
+    if isinstance(instance_agent_command_id, str) and len(instance_agent_command_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-agent-command-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -139,7 +138,7 @@ def get_instance_agent_command(ctx, from_json, instance_agent_command_id):
 @cli_util.wrap_exceptions
 def get_instance_agent_command_execution(ctx, from_json, instance_agent_command_id, instance_id):
 
-    if isinstance(instance_agent_command_id, six.string_types) and len(instance_agent_command_id.strip()) == 0:
+    if isinstance(instance_agent_command_id, str) and len(instance_agent_command_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-agent-command-id cannot be whitespace or empty string')
 
     kwargs = {}

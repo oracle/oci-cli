@@ -7,7 +7,6 @@ from base64 import b64encode
 import click
 import json
 import re
-import six
 import sys
 
 from services.core.src.oci_cli_compute.generated import compute_cli
@@ -415,7 +414,7 @@ If you want to minimize downtime and can delete the SSD, you can set this flag t
 def instance_action_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, action, if_match, delete_local_storage, time_scheduled,
                              allow_dense_reboot_migration):
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
     if delete_local_storage is not None and not action.lower() == 'rebootmigrate':
         raise click.UsageError('Parameter --delete-local-storage is for REBOOTMIGRATE actions only')
@@ -1022,7 +1021,7 @@ def create_instance_console_connection(ctx, from_json, instance_id, ssh_public_k
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstanceConsoleConnection'})
 @cli_util.wrap_exceptions
 def get_plink_connection_string(ctx, from_json, instance_console_connection_id, private_key_file, local_vnc_port, ssh_proxy_port):
-    if isinstance(instance_console_connection_id, six.string_types) and len(instance_console_connection_id.strip()) == 0:
+    if isinstance(instance_console_connection_id, str) and len(instance_console_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-connection-id cannot be whitespace or empty string')
     kwargs = {}
     client = cli_util.build_client('core', 'compute', ctx)
@@ -1075,7 +1074,7 @@ def get_plink_connection_string(ctx, from_json, instance_console_connection_id, 
 @cli_util.wrap_exceptions
 def change_instance_compartment(ctx, instance_id, compartment_id, if_match, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds):
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
 
     kwargs = {}

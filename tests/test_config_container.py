@@ -12,7 +12,6 @@ import json
 import logging
 import oci
 import os
-import six
 import vcr
 
 from vcr.persisters.filesystem import FilesystemPersister
@@ -319,7 +318,7 @@ def vcr_body_matcher(r1, r2, match_request_json_object_values=False):
 # optionally replaces all values with empty strings so that we can compare only keys
 def normalize_json_request_bodies_for_comparison(obj, replace_all_values):
     if isinstance(obj, dict):
-        processed = {k: normalize_json_request_bodies_for_comparison(v, replace_all_values) for k, v in six.iteritems(obj) if k not in KEYS_TO_IGNORE_COMPARING_REQUEST_BODIES}
+        processed = {k: normalize_json_request_bodies_for_comparison(v, replace_all_values) for k, v in obj.items() if k not in KEYS_TO_IGNORE_COMPARING_REQUEST_BODIES}
         return processed
     if isinstance(obj, list):
         return [normalize_json_request_bodies_for_comparison(x, replace_all_values) for x in obj]

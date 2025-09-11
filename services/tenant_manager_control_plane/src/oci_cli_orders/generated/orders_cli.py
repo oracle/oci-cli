@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -45,7 +44,7 @@ orders_root_group.add_command(order_group)
 @cli_util.wrap_exceptions
 def activate_order(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, activation_token):
 
-    if isinstance(activation_token, six.string_types) and len(activation_token.strip()) == 0:
+    if isinstance(activation_token, str) and len(activation_token.strip()) == 0:
         raise click.UsageError('Parameter --activation-token cannot be whitespace or empty string')
 
     kwargs = {}
@@ -99,7 +98,7 @@ def activate_order(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def get_order(ctx, from_json, activation_token):
 
-    if isinstance(activation_token, six.string_types) and len(activation_token.strip()) == 0:
+    if isinstance(activation_token, str) and len(activation_token.strip()) == 0:
         raise click.UsageError('Parameter --activation-token cannot be whitespace or empty string')
 
     kwargs = {}

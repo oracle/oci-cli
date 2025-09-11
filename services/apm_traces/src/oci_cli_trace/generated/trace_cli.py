@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -74,7 +73,7 @@ trace_root_group.add_command(span_group)
 @cli_util.wrap_exceptions
 def get_aggregated_snapshot(ctx, from_json, apm_domain_id, trace_key, service_name, server_name, span_key, span_name):
 
-    if isinstance(trace_key, six.string_types) and len(trace_key.strip()) == 0:
+    if isinstance(trace_key, str) and len(trace_key.strip()) == 0:
         raise click.UsageError('Parameter --trace-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -108,7 +107,7 @@ def get_aggregated_snapshot(ctx, from_json, apm_domain_id, trace_key, service_na
 @cli_util.wrap_exceptions
 def get_log(ctx, from_json, apm_domain_id, log_key, time_log_started_greater_than_or_equal_to, time_log_ended_less_than):
 
-    if isinstance(log_key, six.string_types) and len(log_key.strip()) == 0:
+    if isinstance(log_key, str) and len(log_key.strip()) == 0:
         raise click.UsageError('Parameter --log-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -138,10 +137,10 @@ def get_log(ctx, from_json, apm_domain_id, log_key, time_log_started_greater_tha
 @cli_util.wrap_exceptions
 def get_span(ctx, from_json, apm_domain_id, span_key, trace_key, time_span_started_greater_than_or_equal_to, time_span_started_less_than, span_namespace):
 
-    if isinstance(span_key, six.string_types) and len(span_key.strip()) == 0:
+    if isinstance(span_key, str) and len(span_key.strip()) == 0:
         raise click.UsageError('Parameter --span-key cannot be whitespace or empty string')
 
-    if isinstance(trace_key, six.string_types) and len(trace_key.strip()) == 0:
+    if isinstance(trace_key, str) and len(trace_key.strip()) == 0:
         raise click.UsageError('Parameter --trace-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -175,7 +174,7 @@ def get_span(ctx, from_json, apm_domain_id, span_key, trace_key, time_span_start
 @cli_util.wrap_exceptions
 def get_trace(ctx, from_json, apm_domain_id, trace_key, time_trace_started_greater_than_or_equal_to, time_trace_started_less_than, trace_namespace):
 
-    if isinstance(trace_key, six.string_types) and len(trace_key.strip()) == 0:
+    if isinstance(trace_key, str) and len(trace_key.strip()) == 0:
         raise click.UsageError('Parameter --trace-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -208,7 +207,7 @@ def get_trace(ctx, from_json, apm_domain_id, trace_key, time_trace_started_great
 @cli_util.wrap_exceptions
 def get_trace_snapshot(ctx, from_json, apm_domain_id, trace_key, is_summarized, thread_id, snapshot_time):
 
-    if isinstance(trace_key, six.string_types) and len(trace_key.strip()) == 0:
+    if isinstance(trace_key, str) and len(trace_key.strip()) == 0:
         raise click.UsageError('Parameter --trace-key cannot be whitespace or empty string')
 
     kwargs = {}

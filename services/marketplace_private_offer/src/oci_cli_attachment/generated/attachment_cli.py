@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -54,7 +53,7 @@ attachment_root_group.add_command(attachment_collection_group)
 @cli_util.wrap_exceptions
 def create_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, file_base64_encoded, display_name, type, offer_id):
 
-    if isinstance(offer_id, six.string_types) and len(offer_id.strip()) == 0:
+    if isinstance(offer_id, str) and len(offer_id.strip()) == 0:
         raise click.UsageError('Parameter --offer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -109,10 +108,10 @@ def create_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_attachment(ctx, from_json, offer_id, attachment_id, if_match):
 
-    if isinstance(offer_id, six.string_types) and len(offer_id.strip()) == 0:
+    if isinstance(offer_id, str) and len(offer_id.strip()) == 0:
         raise click.UsageError('Parameter --offer-id cannot be whitespace or empty string')
 
-    if isinstance(attachment_id, six.string_types) and len(attachment_id.strip()) == 0:
+    if isinstance(attachment_id, str) and len(attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -138,10 +137,10 @@ def delete_attachment(ctx, from_json, offer_id, attachment_id, if_match):
 @cli_util.wrap_exceptions
 def get_attachment(ctx, from_json, offer_id, attachment_id):
 
-    if isinstance(offer_id, six.string_types) and len(offer_id.strip()) == 0:
+    if isinstance(offer_id, str) and len(offer_id.strip()) == 0:
         raise click.UsageError('Parameter --offer-id cannot be whitespace or empty string')
 
-    if isinstance(attachment_id, six.string_types) and len(attachment_id.strip()) == 0:
+    if isinstance(attachment_id, str) and len(attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -166,10 +165,10 @@ def get_attachment(ctx, from_json, offer_id, attachment_id):
 @cli_util.wrap_exceptions
 def get_attachment_content(ctx, from_json, file, offer_id, attachment_id):
 
-    if isinstance(offer_id, six.string_types) and len(offer_id.strip()) == 0:
+    if isinstance(offer_id, str) and len(offer_id.strip()) == 0:
         raise click.UsageError('Parameter --offer-id cannot be whitespace or empty string')
 
-    if isinstance(attachment_id, six.string_types) and len(attachment_id.strip()) == 0:
+    if isinstance(attachment_id, str) and len(attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -228,7 +227,7 @@ def list_attachments(ctx, from_json, all_pages, page_size, offer_id, buyer_compa
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(offer_id, six.string_types) and len(offer_id.strip()) == 0:
+    if isinstance(offer_id, str) and len(offer_id.strip()) == 0:
         raise click.UsageError('Parameter --offer-id cannot be whitespace or empty string')
 
     kwargs = {}

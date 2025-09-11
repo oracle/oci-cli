@@ -5,7 +5,6 @@
 import click
 import os
 import os.path
-import six
 import sys
 from services.resource_manager.src.oci_cli_resource_manager.generated import resourcemanager_cli
 from oci_cli import cli_util
@@ -307,7 +306,7 @@ def get_job_logs_extended(ctx, job_id, type, level_greater_than_or_equal_to, sor
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -480,7 +479,7 @@ def update_template_update_template_zip_upload_config_source_details_extended(ct
 @cli_util.wrap_exceptions
 def copy_stack(ctx, from_json, stack_id, destination_region, destination_compartment_id, display_name, description, freeform_tags, defined_tags, variables, access_token):
 
-    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+    if isinstance(stack_id, str) and len(stack_id.strip()) == 0:
         raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
 
     if destination_region is not None and not is_region(destination_region):

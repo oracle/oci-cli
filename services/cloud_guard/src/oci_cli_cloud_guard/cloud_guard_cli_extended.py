@@ -4,7 +4,6 @@
 
 import click
 import sys
-import six
 import oci
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
@@ -306,7 +305,7 @@ def create_data_mask_rule_target_ids_selected_extended(ctx, from_json, wait_for_
 @cli_util.wrap_exceptions
 def update_data_mask_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_mask_rule_id, display_name, compartment_id, iam_group_id, target_selected, data_mask_categories, data_mask_rule_status, freeform_tags, defined_tags, if_match):
 
-    if isinstance(data_mask_rule_id, six.string_types) and len(data_mask_rule_id.strip()) == 0:
+    if isinstance(data_mask_rule_id, str) and len(data_mask_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --data-mask-rule-id cannot be whitespace or empty string')
     if not force:
         if target_selected or data_mask_categories or freeform_tags or defined_tags:
@@ -383,7 +382,7 @@ def update_data_mask_rule(ctx, from_json, force, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def update_data_mask_rule_all_targets_selected_extended(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_mask_rule_id, display_name, compartment_id, iam_group_id, data_mask_categories, data_mask_rule_status, freeform_tags, defined_tags, if_match):
 
-    if isinstance(data_mask_rule_id, six.string_types) and len(data_mask_rule_id.strip()) == 0:
+    if isinstance(data_mask_rule_id, str) and len(data_mask_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --data-mask-rule-id cannot be whitespace or empty string')
     if not force:
         if data_mask_categories or freeform_tags or defined_tags:
@@ -460,7 +459,7 @@ def update_data_mask_rule_all_targets_selected_extended(ctx, from_json, force, w
 @cli_util.wrap_exceptions
 def update_data_mask_rule_target_resource_types_selected_extended(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_mask_rule_id, display_name, compartment_id, iam_group_id, data_mask_categories, data_mask_rule_status, freeform_tags, defined_tags, if_match, target_selected_values):
 
-    if isinstance(data_mask_rule_id, six.string_types) and len(data_mask_rule_id.strip()) == 0:
+    if isinstance(data_mask_rule_id, str) and len(data_mask_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --data-mask-rule-id cannot be whitespace or empty string')
     if not force:
         if data_mask_categories or freeform_tags or defined_tags:
@@ -540,7 +539,7 @@ def update_data_mask_rule_target_resource_types_selected_extended(ctx, from_json
 @cli_util.wrap_exceptions
 def update_data_mask_rule_target_ids_selected_extended(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_mask_rule_id, display_name, compartment_id, iam_group_id, data_mask_categories, data_mask_rule_status, freeform_tags, defined_tags, if_match, target_selected_values):
 
-    if isinstance(data_mask_rule_id, six.string_types) and len(data_mask_rule_id.strip()) == 0:
+    if isinstance(data_mask_rule_id, str) and len(data_mask_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --data-mask-rule-id cannot be whitespace or empty string')
     if not force:
         if data_mask_categories or freeform_tags or defined_tags:

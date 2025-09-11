@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -62,7 +61,7 @@ fleet_apps_management_catalog_root_group.add_command(catalog_item_collection_gro
 @cli_util.wrap_exceptions
 def change_catalog_item_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_item_id, compartment_id, if_match):
 
-    if isinstance(catalog_item_id, six.string_types) and len(catalog_item_id.strip()) == 0:
+    if isinstance(catalog_item_id, str) and len(catalog_item_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-item-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -124,7 +123,7 @@ def change_catalog_item_compartment(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def clone_catalog_item(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_item_id, compartment_id, version_description, if_match):
 
-    if isinstance(catalog_item_id, six.string_types) and len(catalog_item_id.strip()) == 0:
+    if isinstance(catalog_item_id, str) and len(catalog_item_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-item-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -834,7 +833,7 @@ def create_catalog_item_catalog_marketplace_source_config(ctx, from_json, wait_f
 @cli_util.wrap_exceptions
 def delete_catalog_item(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_item_id, if_match):
 
-    if isinstance(catalog_item_id, six.string_types) and len(catalog_item_id.strip()) == 0:
+    if isinstance(catalog_item_id, str) and len(catalog_item_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-item-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -885,7 +884,7 @@ def delete_catalog_item(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def get_catalog_item(ctx, from_json, catalog_item_id):
 
-    if isinstance(catalog_item_id, six.string_types) and len(catalog_item_id.strip()) == 0:
+    if isinstance(catalog_item_id, str) and len(catalog_item_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-item-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1016,7 +1015,7 @@ def list_catalog_items(ctx, from_json, all_pages, page_size, compartment_id, con
 @cli_util.wrap_exceptions
 def update_catalog_item(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_item_id, description, version_description, short_description, display_name, is_item_locked, freeform_tags, defined_tags, if_match):
 
-    if isinstance(catalog_item_id, six.string_types) and len(catalog_item_id.strip()) == 0:
+    if isinstance(catalog_item_id, str) and len(catalog_item_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-item-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

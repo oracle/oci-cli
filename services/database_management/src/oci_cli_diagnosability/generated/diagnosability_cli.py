@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -59,7 +58,7 @@ def list_alert_logs(ctx, from_json, all_pages, page_size, managed_database_id, t
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -137,7 +136,7 @@ def list_attention_logs(ctx, from_json, all_pages, page_size, managed_database_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -209,7 +208,7 @@ def list_attention_logs(ctx, from_json, all_pages, page_size, managed_database_i
 @cli_util.wrap_exceptions
 def summarize_alert_log_counts(ctx, from_json, managed_database_id, time_greater_than_or_equal_to, time_less_than_or_equal_to, level_filter, group_by, type_filter, log_search_text, is_regular_expression, page, limit, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -261,7 +260,7 @@ def summarize_alert_log_counts(ctx, from_json, managed_database_id, time_greater
 @cli_util.wrap_exceptions
 def summarize_attention_log_counts(ctx, from_json, managed_database_id, time_greater_than_or_equal_to, time_less_than_or_equal_to, urgency_filter, group_by, type_filter, log_search_text, is_regular_expression, page, limit, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}

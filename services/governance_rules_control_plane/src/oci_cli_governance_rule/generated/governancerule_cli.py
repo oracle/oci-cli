@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -547,7 +546,7 @@ def create_inclusion_criterion_tenancy_association(ctx, from_json, wait_for_stat
 @cli_util.wrap_exceptions
 def delete_governance_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, governance_rule_id, if_match):
 
-    if isinstance(governance_rule_id, six.string_types) and len(governance_rule_id.strip()) == 0:
+    if isinstance(governance_rule_id, str) and len(governance_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --governance-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -603,7 +602,7 @@ def delete_governance_rule(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_inclusion_criterion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, inclusion_criterion_id, if_match):
 
-    if isinstance(inclusion_criterion_id, six.string_types) and len(inclusion_criterion_id.strip()) == 0:
+    if isinstance(inclusion_criterion_id, str) and len(inclusion_criterion_id.strip()) == 0:
         raise click.UsageError('Parameter --inclusion-criterion-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -654,7 +653,7 @@ def delete_inclusion_criterion(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def get_enforced_governance_rule(ctx, from_json, enforced_governance_rule_id):
 
-    if isinstance(enforced_governance_rule_id, six.string_types) and len(enforced_governance_rule_id.strip()) == 0:
+    if isinstance(enforced_governance_rule_id, str) and len(enforced_governance_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --enforced-governance-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -676,7 +675,7 @@ def get_enforced_governance_rule(ctx, from_json, enforced_governance_rule_id):
 @cli_util.wrap_exceptions
 def get_governance_rule(ctx, from_json, governance_rule_id):
 
-    if isinstance(governance_rule_id, six.string_types) and len(governance_rule_id.strip()) == 0:
+    if isinstance(governance_rule_id, str) and len(governance_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --governance-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -698,7 +697,7 @@ def get_governance_rule(ctx, from_json, governance_rule_id):
 @cli_util.wrap_exceptions
 def get_inclusion_criterion(ctx, from_json, inclusion_criterion_id):
 
-    if isinstance(inclusion_criterion_id, six.string_types) and len(inclusion_criterion_id.strip()) == 0:
+    if isinstance(inclusion_criterion_id, str) and len(inclusion_criterion_id.strip()) == 0:
         raise click.UsageError('Parameter --inclusion-criterion-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -720,7 +719,7 @@ def get_inclusion_criterion(ctx, from_json, inclusion_criterion_id):
 @cli_util.wrap_exceptions
 def get_tenancy_attachment(ctx, from_json, tenancy_attachment_id):
 
-    if isinstance(tenancy_attachment_id, six.string_types) and len(tenancy_attachment_id.strip()) == 0:
+    if isinstance(tenancy_attachment_id, str) and len(tenancy_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --tenancy-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -998,7 +997,7 @@ def list_tenancy_attachments(ctx, from_json, all_pages, page_size, compartment_i
 @cli_util.wrap_exceptions
 def retry_governance_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, governance_rule_id, if_match):
 
-    if isinstance(governance_rule_id, six.string_types) and len(governance_rule_id.strip()) == 0:
+    if isinstance(governance_rule_id, str) and len(governance_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --governance-rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1053,7 +1052,7 @@ def retry_governance_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def retry_tenancy_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tenancy_attachment_id, if_match):
 
-    if isinstance(tenancy_attachment_id, six.string_types) and len(tenancy_attachment_id.strip()) == 0:
+    if isinstance(tenancy_attachment_id, str) and len(tenancy_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --tenancy-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1115,7 +1114,7 @@ def retry_tenancy_attachment(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def update_governance_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, governance_rule_id, display_name, description, template, related_resource_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(governance_rule_id, six.string_types) and len(governance_rule_id.strip()) == 0:
+    if isinstance(governance_rule_id, str) and len(governance_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --governance-rule-id cannot be whitespace or empty string')
     if not force:
         if template or freeform_tags or defined_tags:
@@ -1210,7 +1209,7 @@ This option is a JSON list with items of type TagDefault.  For documentation on 
 @cli_util.wrap_exceptions
 def update_governance_rule_tag_template(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, governance_rule_id, template_name, display_name, description, related_resource_id, freeform_tags, defined_tags, if_match, template_description, template_tags, template_tag_defaults):
 
-    if isinstance(governance_rule_id, six.string_types) and len(governance_rule_id.strip()) == 0:
+    if isinstance(governance_rule_id, str) and len(governance_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --governance-rule-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1310,7 +1309,7 @@ def update_governance_rule_tag_template(ctx, from_json, force, wait_for_state, m
 @cli_util.wrap_exceptions
 def update_governance_rule_quota_template(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, governance_rule_id, template_display_name, template_statements, display_name, description, related_resource_id, freeform_tags, defined_tags, if_match, template_description):
 
-    if isinstance(governance_rule_id, six.string_types) and len(governance_rule_id.strip()) == 0:
+    if isinstance(governance_rule_id, str) and len(governance_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --governance-rule-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1405,7 +1404,7 @@ def update_governance_rule_quota_template(ctx, from_json, force, wait_for_state,
 @cli_util.wrap_exceptions
 def update_governance_rule_allowed_regions_template(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, governance_rule_id, template_display_name, template_regions, display_name, description, related_resource_id, freeform_tags, defined_tags, if_match, template_description):
 
-    if isinstance(governance_rule_id, six.string_types) and len(governance_rule_id.strip()) == 0:
+    if isinstance(governance_rule_id, str) and len(governance_rule_id.strip()) == 0:
         raise click.UsageError('Parameter --governance-rule-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

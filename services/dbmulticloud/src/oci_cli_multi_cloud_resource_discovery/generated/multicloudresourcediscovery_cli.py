@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -89,7 +88,7 @@ Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_type
 @cli_util.wrap_exceptions
 def change_multi_cloud_resource_discovery_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, multi_cloud_resource_discovery_id, compartment_id, freeform_tags, defined_tags, system_tags, if_match):
 
-    if isinstance(multi_cloud_resource_discovery_id, six.string_types) and len(multi_cloud_resource_discovery_id.strip()) == 0:
+    if isinstance(multi_cloud_resource_discovery_id, str) and len(multi_cloud_resource_discovery_id.strip()) == 0:
         raise click.UsageError('Parameter --multi-cloud-resource-discovery-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -239,7 +238,7 @@ def create_multi_cloud_resource_discovery(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def delete_multi_cloud_resource_discovery(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, multi_cloud_resource_discovery_id, if_match):
 
-    if isinstance(multi_cloud_resource_discovery_id, six.string_types) and len(multi_cloud_resource_discovery_id.strip()) == 0:
+    if isinstance(multi_cloud_resource_discovery_id, str) and len(multi_cloud_resource_discovery_id.strip()) == 0:
         raise click.UsageError('Parameter --multi-cloud-resource-discovery-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -293,7 +292,7 @@ def delete_multi_cloud_resource_discovery(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def get_multi_cloud_resource_discovery(ctx, from_json, multi_cloud_resource_discovery_id, limit, page, sort_order):
 
-    if isinstance(multi_cloud_resource_discovery_id, six.string_types) and len(multi_cloud_resource_discovery_id.strip()) == 0:
+    if isinstance(multi_cloud_resource_discovery_id, str) and len(multi_cloud_resource_discovery_id.strip()) == 0:
         raise click.UsageError('Parameter --multi-cloud-resource-discovery-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -408,7 +407,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_multi_cloud_resource_discovery(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, multi_cloud_resource_discovery_id, compartment_id, display_name, oracle_db_connector_id, resource_type, freeform_tags, defined_tags, if_match):
 
-    if isinstance(multi_cloud_resource_discovery_id, six.string_types) and len(multi_cloud_resource_discovery_id.strip()) == 0:
+    if isinstance(multi_cloud_resource_discovery_id, str) and len(multi_cloud_resource_discovery_id.strip()) == 0:
         raise click.UsageError('Parameter --multi-cloud-resource-discovery-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

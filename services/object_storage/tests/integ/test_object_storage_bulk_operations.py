@@ -15,7 +15,6 @@ import sys
 
 import oci
 import pytest
-import six
 from oci.object_storage.models import CreatePreauthenticatedRequestDetails, CreateReplicationPolicyDetails, \
     CreateMultipartUploadDetails
 
@@ -796,7 +795,7 @@ def test_bulk_put_get_delete_with_inclusions(object_storage_client):
         'subfolder': ['blah.pdf', 'hello.txt', 'testfile3.png'],
         'subfolder/subfolder2': ['xyz.jpg', 'blag.txt', 'byz.jpg', 'testfile4.png']
     }
-    for folder, files in six.iteritems(folders_to_files):
+    for folder, files in folders_to_files.items():
         folder_path = os.path.join(inclusion_test_folder, folder)
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
@@ -942,7 +941,7 @@ def test_bulk_put_get_delete_with_exclusions(object_storage_client):
         'subfolder': ['blah.pdf', 'hello.txt', 'testfile3.png'],
         'subfolder/subfolder2': ['xyz.jpg', 'blag.txt', 'byz.jpg', 'testfile4.png']
     }
-    for folder, files in six.iteritems(folders_to_files):
+    for folder, files in folders_to_files.items():
         folder_path = os.path.join(exclusion_test_folder, folder)
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)

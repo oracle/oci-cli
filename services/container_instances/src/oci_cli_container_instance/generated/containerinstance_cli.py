@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -105,7 +104,7 @@ container_instances_root_group.add_command(work_request_log_entry_collection_gro
 @cli_util.wrap_exceptions
 def change_container_instance_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, container_instance_id, compartment_id, if_match):
 
-    if isinstance(container_instance_id, six.string_types) and len(container_instance_id.strip()) == 0:
+    if isinstance(container_instance_id, str) and len(container_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --container-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -271,7 +270,7 @@ def create_container_instance(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_container_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, container_instance_id, if_match):
 
-    if isinstance(container_instance_id, six.string_types) and len(container_instance_id.strip()) == 0:
+    if isinstance(container_instance_id, str) and len(container_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --container-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -322,7 +321,7 @@ def delete_container_instance(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def get_container(ctx, from_json, container_id):
 
-    if isinstance(container_id, six.string_types) and len(container_id.strip()) == 0:
+    if isinstance(container_id, str) and len(container_id.strip()) == 0:
         raise click.UsageError('Parameter --container-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -344,7 +343,7 @@ def get_container(ctx, from_json, container_id):
 @cli_util.wrap_exceptions
 def get_container_instance(ctx, from_json, container_instance_id):
 
-    if isinstance(container_instance_id, six.string_types) and len(container_instance_id.strip()) == 0:
+    if isinstance(container_instance_id, str) and len(container_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --container-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -366,7 +365,7 @@ def get_container_instance(ctx, from_json, container_instance_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -587,7 +586,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -644,7 +643,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -766,7 +765,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def restart_container_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, container_instance_id, if_match):
 
-    if isinstance(container_instance_id, six.string_types) and len(container_instance_id.strip()) == 0:
+    if isinstance(container_instance_id, str) and len(container_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --container-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -819,7 +818,7 @@ def restart_container_instance(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def retrieve_logs(ctx, from_json, file, container_id, is_previous):
 
-    if isinstance(container_id, six.string_types) and len(container_id.strip()) == 0:
+    if isinstance(container_id, str) and len(container_id.strip()) == 0:
         raise click.UsageError('Parameter --container-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -869,7 +868,7 @@ def retrieve_logs(ctx, from_json, file, container_id, is_previous):
 @cli_util.wrap_exceptions
 def start_container_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, container_instance_id, if_match):
 
-    if isinstance(container_instance_id, six.string_types) and len(container_instance_id.strip()) == 0:
+    if isinstance(container_instance_id, str) and len(container_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --container-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -924,7 +923,7 @@ def start_container_instance(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def stop_container_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, container_instance_id, if_match):
 
-    if isinstance(container_instance_id, six.string_types) and len(container_instance_id.strip()) == 0:
+    if isinstance(container_instance_id, str) and len(container_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --container-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -983,7 +982,7 @@ def stop_container_instance(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def update_container(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, container_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(container_id, six.string_types) and len(container_id.strip()) == 0:
+    if isinstance(container_id, str) and len(container_id.strip()) == 0:
         raise click.UsageError('Parameter --container-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1059,7 +1058,7 @@ def update_container(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def update_container_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, container_instance_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(container_instance_id, six.string_types) and len(container_instance_id.strip()) == 0:
+    if isinstance(container_instance_id, str) and len(container_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --container-instance-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

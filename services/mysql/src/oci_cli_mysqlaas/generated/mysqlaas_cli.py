@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -145,7 +144,7 @@ def create_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, configuration_id, if_match):
 
-    if isinstance(configuration_id, six.string_types) and len(configuration_id.strip()) == 0:
+    if isinstance(configuration_id, str) and len(configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -205,7 +204,7 @@ def delete_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def get_configuration(ctx, from_json, configuration_id, if_none_match):
 
-    if isinstance(configuration_id, six.string_types) and len(configuration_id.strip()) == 0:
+    if isinstance(configuration_id, str) and len(configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -362,7 +361,7 @@ def list_versions(ctx, from_json, all_pages, compartment_id):
 @cli_util.wrap_exceptions
 def update_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, configuration_id, description, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(configuration_id, six.string_types) and len(configuration_id.strip()) == 0:
+    if isinstance(configuration_id, str) and len(configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --configuration-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
