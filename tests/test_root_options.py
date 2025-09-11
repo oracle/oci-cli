@@ -5,7 +5,6 @@
 import oci_cli
 import oci
 import os
-import six.moves
 import traceback
 from mock import patch
 from oci_cli.cli_constants import OCI_CONFIG_REQUIRED_VARS as config_required_vars
@@ -228,7 +227,7 @@ def test_operation_retries_if_no_retry_not_supplied(config_file):
 #
 # This teardown explicitly does this so that we don't get debug output in other tests (which can cause failures)
 def teardown_module(module):
-    six.moves.http_client.HTTPConnection.debuglevel = 0
+    http.client.HTTPConnection.debuglevel = 0
 
 
 def invoke_example_operation(runner, root_args, config_file, command_input=None):

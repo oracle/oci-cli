@@ -4,7 +4,6 @@
 
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from services.key_management.src.oci_cli_kms_management.generated import kmsmanagement_cli
 from oci_cli import cli_util
@@ -150,7 +149,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def create_key_version_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, external_key_version_id):
 
-    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+    if isinstance(key_id, str) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -205,10 +204,10 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def schedule_key_version_deletion_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, key_version_id, time_of_deletion, if_match):
 
-    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+    if isinstance(key_id, str) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
-    if isinstance(key_version_id, six.string_types) and len(key_version_id.strip()) == 0:
+    if isinstance(key_version_id, str) and len(key_version_id.strip()) == 0:
         raise click.UsageError('Parameter --key-version-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -265,10 +264,10 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def cancel_key_version_deletion_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, key_version_id, if_match):
 
-    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+    if isinstance(key_id, str) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
-    if isinstance(key_version_id, six.string_types) and len(key_version_id.strip()) == 0:
+    if isinstance(key_version_id, str) and len(key_version_id.strip()) == 0:
         raise click.UsageError('Parameter --key-version-id cannot be whitespace or empty string')
 
     kwargs = {}

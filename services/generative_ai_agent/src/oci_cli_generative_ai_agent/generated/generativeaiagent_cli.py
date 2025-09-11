@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -118,7 +117,7 @@ generative_ai_agent_root_group.add_command(tool_group)
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -147,7 +146,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_agent_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, agent_id, compartment_id, if_match):
 
-    if isinstance(agent_id, six.string_types) and len(agent_id.strip()) == 0:
+    if isinstance(agent_id, str) and len(agent_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -208,7 +207,7 @@ def change_agent_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def change_agent_endpoint_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, agent_endpoint_id, compartment_id, if_match):
 
-    if isinstance(agent_endpoint_id, six.string_types) and len(agent_endpoint_id.strip()) == 0:
+    if isinstance(agent_endpoint_id, str) and len(agent_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -269,7 +268,7 @@ def change_agent_endpoint_compartment(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def change_knowledge_base_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, compartment_id, if_match):
 
-    if isinstance(knowledge_base_id, six.string_types) and len(knowledge_base_id.strip()) == 0:
+    if isinstance(knowledge_base_id, str) and len(knowledge_base_id.strip()) == 0:
         raise click.UsageError('Parameter --knowledge-base-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1624,7 +1623,7 @@ def create_tool_rag_tool_config(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_agent(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, agent_id, if_match):
 
-    if isinstance(agent_id, six.string_types) and len(agent_id.strip()) == 0:
+    if isinstance(agent_id, str) and len(agent_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1680,7 +1679,7 @@ def delete_agent(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def delete_agent_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, agent_endpoint_id, if_match):
 
-    if isinstance(agent_endpoint_id, six.string_types) and len(agent_endpoint_id.strip()) == 0:
+    if isinstance(agent_endpoint_id, str) and len(agent_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1736,7 +1735,7 @@ def delete_agent_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_data_ingestion_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, data_ingestion_job_id, if_match):
 
-    if isinstance(data_ingestion_job_id, six.string_types) and len(data_ingestion_job_id.strip()) == 0:
+    if isinstance(data_ingestion_job_id, str) and len(data_ingestion_job_id.strip()) == 0:
         raise click.UsageError('Parameter --data-ingestion-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1792,7 +1791,7 @@ def delete_data_ingestion_job(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_data_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, data_source_id, if_match):
 
-    if isinstance(data_source_id, six.string_types) and len(data_source_id.strip()) == 0:
+    if isinstance(data_source_id, str) and len(data_source_id.strip()) == 0:
         raise click.UsageError('Parameter --data-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1848,7 +1847,7 @@ def delete_data_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_knowledge_base(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, if_match):
 
-    if isinstance(knowledge_base_id, six.string_types) and len(knowledge_base_id.strip()) == 0:
+    if isinstance(knowledge_base_id, str) and len(knowledge_base_id.strip()) == 0:
         raise click.UsageError('Parameter --knowledge-base-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1904,7 +1903,7 @@ def delete_knowledge_base(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_tool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tool_id, if_match):
 
-    if isinstance(tool_id, six.string_types) and len(tool_id.strip()) == 0:
+    if isinstance(tool_id, str) and len(tool_id.strip()) == 0:
         raise click.UsageError('Parameter --tool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1955,7 +1954,7 @@ def delete_tool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def get_agent(ctx, from_json, agent_id):
 
-    if isinstance(agent_id, six.string_types) and len(agent_id.strip()) == 0:
+    if isinstance(agent_id, str) and len(agent_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1977,7 +1976,7 @@ def get_agent(ctx, from_json, agent_id):
 @cli_util.wrap_exceptions
 def get_agent_endpoint(ctx, from_json, agent_endpoint_id):
 
-    if isinstance(agent_endpoint_id, six.string_types) and len(agent_endpoint_id.strip()) == 0:
+    if isinstance(agent_endpoint_id, str) and len(agent_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1999,7 +1998,7 @@ def get_agent_endpoint(ctx, from_json, agent_endpoint_id):
 @cli_util.wrap_exceptions
 def get_data_ingestion_job(ctx, from_json, data_ingestion_job_id):
 
-    if isinstance(data_ingestion_job_id, six.string_types) and len(data_ingestion_job_id.strip()) == 0:
+    if isinstance(data_ingestion_job_id, str) and len(data_ingestion_job_id.strip()) == 0:
         raise click.UsageError('Parameter --data-ingestion-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2022,7 +2021,7 @@ def get_data_ingestion_job(ctx, from_json, data_ingestion_job_id):
 @cli_util.wrap_exceptions
 def get_data_ingestion_job_log_content(ctx, from_json, file, data_ingestion_job_id):
 
-    if isinstance(data_ingestion_job_id, six.string_types) and len(data_ingestion_job_id.strip()) == 0:
+    if isinstance(data_ingestion_job_id, str) and len(data_ingestion_job_id.strip()) == 0:
         raise click.UsageError('Parameter --data-ingestion-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2066,7 +2065,7 @@ def get_data_ingestion_job_log_content(ctx, from_json, file, data_ingestion_job_
 @cli_util.wrap_exceptions
 def get_data_source(ctx, from_json, data_source_id):
 
-    if isinstance(data_source_id, six.string_types) and len(data_source_id.strip()) == 0:
+    if isinstance(data_source_id, str) and len(data_source_id.strip()) == 0:
         raise click.UsageError('Parameter --data-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2088,7 +2087,7 @@ def get_data_source(ctx, from_json, data_source_id):
 @cli_util.wrap_exceptions
 def get_knowledge_base(ctx, from_json, knowledge_base_id):
 
-    if isinstance(knowledge_base_id, six.string_types) and len(knowledge_base_id.strip()) == 0:
+    if isinstance(knowledge_base_id, str) and len(knowledge_base_id.strip()) == 0:
         raise click.UsageError('Parameter --knowledge-base-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2110,7 +2109,7 @@ def get_knowledge_base(ctx, from_json, knowledge_base_id):
 @cli_util.wrap_exceptions
 def get_tool(ctx, from_json, tool_id):
 
-    if isinstance(tool_id, six.string_types) and len(tool_id.strip()) == 0:
+    if isinstance(tool_id, str) and len(tool_id.strip()) == 0:
         raise click.UsageError('Parameter --tool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2132,7 +2131,7 @@ def get_tool(ctx, from_json, tool_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2529,7 +2528,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2586,7 +2585,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2712,7 +2711,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_agent(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, agent_id, display_name, description, knowledge_base_ids, welcome_message, llm_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(agent_id, six.string_types) and len(agent_id.strip()) == 0:
+    if isinstance(agent_id, str) and len(agent_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-id cannot be whitespace or empty string')
     if not force:
         if knowledge_base_ids or llm_config or freeform_tags or defined_tags:
@@ -2814,7 +2813,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_agent_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, agent_endpoint_id, display_name, description, content_moderation_config, guardrail_config, metadata, human_input_config, output_config, should_enable_trace, should_enable_citation, should_enable_multi_language, session_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(agent_endpoint_id, six.string_types) and len(agent_endpoint_id.strip()) == 0:
+    if isinstance(agent_endpoint_id, str) and len(agent_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-endpoint-id cannot be whitespace or empty string')
     if not force:
         if content_moderation_config or guardrail_config or metadata or human_input_config or output_config or session_config or freeform_tags or defined_tags:
@@ -2927,7 +2926,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_data_source(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_source_id, display_name, description, data_source_config, metadata, freeform_tags, defined_tags, if_match):
 
-    if isinstance(data_source_id, six.string_types) and len(data_source_id.strip()) == 0:
+    if isinstance(data_source_id, str) and len(data_source_id.strip()) == 0:
         raise click.UsageError('Parameter --data-source-id cannot be whitespace or empty string')
     if not force:
         if data_source_config or metadata or freeform_tags or defined_tags:
@@ -3022,7 +3021,7 @@ This option is a JSON list with items of type ObjectStoragePrefix.  For document
 @cli_util.wrap_exceptions
 def update_data_source_oci_object_storage_data_source_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_source_id, display_name, description, metadata, freeform_tags, defined_tags, if_match, data_source_config_should_enable_multi_modality, data_source_config_object_storage_prefixes):
 
-    if isinstance(data_source_id, six.string_types) and len(data_source_id.strip()) == 0:
+    if isinstance(data_source_id, str) and len(data_source_id.strip()) == 0:
         raise click.UsageError('Parameter --data-source-id cannot be whitespace or empty string')
     if not force:
         if metadata or freeform_tags or defined_tags:
@@ -3119,7 +3118,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_knowledge_base(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, display_name, description, index_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(knowledge_base_id, six.string_types) and len(knowledge_base_id.strip()) == 0:
+    if isinstance(knowledge_base_id, str) and len(knowledge_base_id.strip()) == 0:
         raise click.UsageError('Parameter --knowledge-base-id cannot be whitespace or empty string')
     if not force:
         if index_config or freeform_tags or defined_tags:
@@ -3207,7 +3206,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_knowledge_base_default_index_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, display_name, description, freeform_tags, defined_tags, if_match, index_config_should_enable_hybrid_search):
 
-    if isinstance(knowledge_base_id, six.string_types) and len(knowledge_base_id.strip()) == 0:
+    if isinstance(knowledge_base_id, str) and len(knowledge_base_id.strip()) == 0:
         raise click.UsageError('Parameter --knowledge-base-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3299,7 +3298,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_knowledge_base_oci_database_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, index_config_database_connection, index_config_database_functions, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(knowledge_base_id, six.string_types) and len(knowledge_base_id.strip()) == 0:
+    if isinstance(knowledge_base_id, str) and len(knowledge_base_id.strip()) == 0:
         raise click.UsageError('Parameter --knowledge-base-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3391,7 +3390,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_knowledge_base_oci_open_search_index_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, index_config_cluster_id, index_config_secret_detail, index_config_indexes, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(knowledge_base_id, six.string_types) and len(knowledge_base_id.strip()) == 0:
+    if isinstance(knowledge_base_id, str) and len(knowledge_base_id.strip()) == 0:
         raise click.UsageError('Parameter --knowledge-base-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3483,7 +3482,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_tool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tool_id, display_name, description, tool_config, metadata, freeform_tags, defined_tags, if_match):
 
-    if isinstance(tool_id, six.string_types) and len(tool_id.strip()) == 0:
+    if isinstance(tool_id, str) and len(tool_id.strip()) == 0:
         raise click.UsageError('Parameter --tool-id cannot be whitespace or empty string')
     if not force:
         if tool_config or metadata or freeform_tags or defined_tags:
@@ -3583,7 +3582,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_tool_sql_tool_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tool_id, tool_config_dialect, display_name, description, metadata, freeform_tags, defined_tags, if_match, tool_config_icl_examples, tool_config_database_schema, tool_config_should_enable_sql_execution, tool_config_model_size, tool_config_should_enable_self_correction, tool_config_table_and_column_description, tool_config_generation_llm_customization, tool_config_database_connection):
 
-    if isinstance(tool_id, six.string_types) and len(tool_id.strip()) == 0:
+    if isinstance(tool_id, str) and len(tool_id.strip()) == 0:
         raise click.UsageError('Parameter --tool-id cannot be whitespace or empty string')
     if not force:
         if metadata or freeform_tags or defined_tags:
@@ -3700,7 +3699,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_tool_function_calling_tool_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tool_id, tool_config_function, display_name, description, metadata, freeform_tags, defined_tags, if_match):
 
-    if isinstance(tool_id, six.string_types) and len(tool_id.strip()) == 0:
+    if isinstance(tool_id, str) and len(tool_id.strip()) == 0:
         raise click.UsageError('Parameter --tool-id cannot be whitespace or empty string')
     if not force:
         if metadata or freeform_tags or defined_tags:
@@ -3795,7 +3794,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_tool_http_endpoint_tool_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tool_id, tool_config_api_schema, tool_config_subnet_id, tool_config_http_endpoint_auth_config, display_name, description, metadata, freeform_tags, defined_tags, if_match):
 
-    if isinstance(tool_id, six.string_types) and len(tool_id.strip()) == 0:
+    if isinstance(tool_id, str) and len(tool_id.strip()) == 0:
         raise click.UsageError('Parameter --tool-id cannot be whitespace or empty string')
     if not force:
         if metadata or freeform_tags or defined_tags:
@@ -3890,7 +3889,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_tool_agent_tool_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tool_id, tool_config_agent_endpoint_id, display_name, description, metadata, freeform_tags, defined_tags, if_match):
 
-    if isinstance(tool_id, six.string_types) and len(tool_id.strip()) == 0:
+    if isinstance(tool_id, str) and len(tool_id.strip()) == 0:
         raise click.UsageError('Parameter --tool-id cannot be whitespace or empty string')
     if not force:
         if metadata or freeform_tags or defined_tags:
@@ -3984,7 +3983,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_tool_rag_tool_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tool_id, tool_config_knowledge_base_configs, display_name, description, metadata, freeform_tags, defined_tags, if_match, tool_config_generation_llm_customization):
 
-    if isinstance(tool_id, six.string_types) and len(tool_id.strip()) == 0:
+    if isinstance(tool_id, str) and len(tool_id.strip()) == 0:
         raise click.UsageError('Parameter --tool-id cannot be whitespace or empty string')
     if not force:
         if metadata or freeform_tags or defined_tags:

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -447,10 +446,10 @@ db_management_root_group.add_command(preferred_credential_group)
 @cli_util.wrap_exceptions
 def add_data_files(ctx, from_json, managed_database_id, tablespace_name, file_type, credential_details, database_credential, data_files, file_count, file_size, is_reusable, is_auto_extensible, auto_extend_next_size, auto_extend_max_size, is_max_size_unlimited):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+    if isinstance(tablespace_name, str) and len(tablespace_name.strip()) == 0:
         raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -509,7 +508,7 @@ def add_data_files(ctx, from_json, managed_database_id, tablespace_name, file_ty
 @cli_util.wrap_exceptions
 def add_managed_database_to_managed_database_group(ctx, from_json, managed_database_group_id, managed_database_id):
 
-    if isinstance(managed_database_group_id, six.string_types) and len(managed_database_group_id.strip()) == 0:
+    if isinstance(managed_database_group_id, str) and len(managed_database_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -543,7 +542,7 @@ def add_managed_database_to_managed_database_group(ctx, from_json, managed_datab
 @cli_util.wrap_exceptions
 def addm_tasks(ctx, from_json, managed_database_id, time_start, time_end, page, limit, sort_by, sort_order, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -587,7 +586,7 @@ Use `MEMORY` to make the change in memory and affect it immediately. Use `SPFILE
 @cli_util.wrap_exceptions
 def change_database_parameters(ctx, from_json, managed_database_id, scope, parameters, credentials, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -633,7 +632,7 @@ Use `MEMORY` to make the change in memory and affect it immediately. Use `SPFILE
 @cli_util.wrap_exceptions
 def change_database_parameters_database_secret_credential_details(ctx, from_json, managed_database_id, scope, parameters, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -684,7 +683,7 @@ Use `MEMORY` to make the change in memory and affect it immediately. Use `SPFILE
 @cli_util.wrap_exceptions
 def change_database_parameters_database_named_credential_details(ctx, from_json, managed_database_id, scope, parameters, database_credential_named_credential_id, credentials):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -731,7 +730,7 @@ Use `MEMORY` to make the change in memory and affect it immediately. Use `SPFILE
 @cli_util.wrap_exceptions
 def change_database_parameters_database_password_credential_details(ctx, from_json, managed_database_id, scope, parameters, database_credential_password, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -774,7 +773,7 @@ def change_database_parameters_database_password_credential_details(ctx, from_js
 @cli_util.wrap_exceptions
 def change_db_management_private_endpoint_compartment(ctx, from_json, db_management_private_endpoint_id, compartment_id, if_match):
 
-    if isinstance(db_management_private_endpoint_id, six.string_types) and len(db_management_private_endpoint_id.strip()) == 0:
+    if isinstance(db_management_private_endpoint_id, str) and len(db_management_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --db-management-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -810,7 +809,7 @@ def change_db_management_private_endpoint_compartment(ctx, from_json, db_managem
 @cli_util.wrap_exceptions
 def change_external_db_system_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_id, compartment_id, if_match):
 
-    if isinstance(external_db_system_id, six.string_types) and len(external_db_system_id.strip()) == 0:
+    if isinstance(external_db_system_id, str) and len(external_db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -871,7 +870,7 @@ def change_external_db_system_compartment(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def change_external_exadata_infrastructure_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_exadata_infrastructure_id, compartment_id, if_match):
 
-    if isinstance(external_exadata_infrastructure_id, six.string_types) and len(external_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(external_exadata_infrastructure_id, str) and len(external_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --external-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -929,7 +928,7 @@ def change_external_exadata_infrastructure_compartment(ctx, from_json, wait_for_
 @cli_util.wrap_exceptions
 def change_job_compartment(ctx, from_json, job_id, compartment_id, if_match):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -960,7 +959,7 @@ def change_job_compartment(ctx, from_json, job_id, compartment_id, if_match):
 @cli_util.wrap_exceptions
 def change_managed_database_group_compartment(ctx, from_json, managed_database_group_id, compartment_id, if_match):
 
-    if isinstance(managed_database_group_id, six.string_types) and len(managed_database_group_id.strip()) == 0:
+    if isinstance(managed_database_group_id, str) and len(managed_database_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -991,7 +990,7 @@ def change_managed_database_group_compartment(ctx, from_json, managed_database_g
 @cli_util.wrap_exceptions
 def change_named_credential_compartment(ctx, from_json, named_credential_id, compartment_id, if_match):
 
-    if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
+    if isinstance(named_credential_id, str) and len(named_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1025,7 +1024,7 @@ The database purges plans that have not been used for longer than the plan reten
 @cli_util.wrap_exceptions
 def change_plan_retention(ctx, from_json, managed_database_id, retention_weeks, credentials, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1065,7 +1064,7 @@ The database purges plans that have not been used for longer than the plan reten
 @cli_util.wrap_exceptions
 def change_plan_retention_managed_database_password_credential(ctx, from_json, managed_database_id, retention_weeks, credentials_username, credentials_role, credentials_password, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1108,7 +1107,7 @@ The database purges plans that have not been used for longer than the plan reten
 @cli_util.wrap_exceptions
 def change_plan_retention_managed_database_secret_credential(ctx, from_json, managed_database_id, retention_weeks, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1151,7 +1150,7 @@ The database purges plans that have not been used for longer than the plan reten
 @cli_util.wrap_exceptions
 def change_plan_retention_database_secret_credential_details(ctx, from_json, managed_database_id, retention_weeks, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1196,7 +1195,7 @@ The database purges plans that have not been used for longer than the plan reten
 @cli_util.wrap_exceptions
 def change_plan_retention_database_named_credential_details(ctx, from_json, managed_database_id, retention_weeks, database_credential_named_credential_id, credentials):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1237,7 +1236,7 @@ The database purges plans that have not been used for longer than the plan reten
 @cli_util.wrap_exceptions
 def change_plan_retention_database_password_credential_details(ctx, from_json, managed_database_id, retention_weeks, database_credential_password, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1280,7 +1279,7 @@ def change_plan_retention_database_password_credential_details(ctx, from_json, m
 @cli_util.wrap_exceptions
 def change_space_budget(ctx, from_json, managed_database_id, space_budget_percent, credentials, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1318,7 +1317,7 @@ def change_space_budget(ctx, from_json, managed_database_id, space_budget_percen
 @cli_util.wrap_exceptions
 def change_space_budget_managed_database_password_credential(ctx, from_json, managed_database_id, space_budget_percent, credentials_username, credentials_role, credentials_password, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1359,7 +1358,7 @@ def change_space_budget_managed_database_password_credential(ctx, from_json, man
 @cli_util.wrap_exceptions
 def change_space_budget_managed_database_secret_credential(ctx, from_json, managed_database_id, space_budget_percent, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1400,7 +1399,7 @@ def change_space_budget_managed_database_secret_credential(ctx, from_json, manag
 @cli_util.wrap_exceptions
 def change_space_budget_database_secret_credential_details(ctx, from_json, managed_database_id, space_budget_percent, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1443,7 +1442,7 @@ def change_space_budget_database_secret_credential_details(ctx, from_json, manag
 @cli_util.wrap_exceptions
 def change_space_budget_database_named_credential_details(ctx, from_json, managed_database_id, space_budget_percent, database_credential_named_credential_id, credentials):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1482,7 +1481,7 @@ def change_space_budget_database_named_credential_details(ctx, from_json, manage
 @cli_util.wrap_exceptions
 def change_space_budget_database_password_credential_details(ctx, from_json, managed_database_id, space_budget_percent, database_credential_password, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1529,7 +1528,7 @@ def change_space_budget_database_password_credential_details(ctx, from_json, man
 @cli_util.wrap_exceptions
 def change_sql_plan_baselines_attributes(ctx, from_json, managed_database_id, sql_handle, plan_name, is_enabled, is_fixed, is_auto_purged, credentials, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1585,7 +1584,7 @@ def change_sql_plan_baselines_attributes(ctx, from_json, managed_database_id, sq
 @cli_util.wrap_exceptions
 def change_sql_plan_baselines_attributes_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, sql_handle, plan_name, is_enabled, is_fixed, is_auto_purged, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1644,7 +1643,7 @@ def change_sql_plan_baselines_attributes_managed_database_password_credential(ct
 @cli_util.wrap_exceptions
 def change_sql_plan_baselines_attributes_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, sql_handle, plan_name, is_enabled, is_fixed, is_auto_purged, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1703,7 +1702,7 @@ def change_sql_plan_baselines_attributes_managed_database_secret_credential(ctx,
 @cli_util.wrap_exceptions
 def change_sql_plan_baselines_attributes_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, sql_handle, plan_name, is_enabled, is_fixed, is_auto_purged, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1764,7 +1763,7 @@ def change_sql_plan_baselines_attributes_database_secret_credential_details(ctx,
 @cli_util.wrap_exceptions
 def change_sql_plan_baselines_attributes_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, sql_handle, plan_name, is_enabled, is_fixed, is_auto_purged, credentials):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1821,7 +1820,7 @@ def change_sql_plan_baselines_attributes_database_named_credential_details(ctx, 
 @cli_util.wrap_exceptions
 def change_sql_plan_baselines_attributes_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, sql_handle, plan_name, is_enabled, is_fixed, is_auto_purged, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1879,7 +1878,7 @@ def change_sql_plan_baselines_attributes_database_password_credential_details(ct
 @cli_util.wrap_exceptions
 def check_cloud_db_system_connector_connection_status(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_connector_id, if_match):
 
-    if isinstance(cloud_db_system_connector_id, six.string_types) and len(cloud_db_system_connector_id.strip()) == 0:
+    if isinstance(cloud_db_system_connector_id, str) and len(cloud_db_system_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-system-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1930,7 +1929,7 @@ def check_cloud_db_system_connector_connection_status(ctx, from_json, wait_for_s
 @cli_util.wrap_exceptions
 def check_external_db_system_connector_connection_status(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_connector_id, if_match):
 
-    if isinstance(external_db_system_connector_id, six.string_types) and len(external_db_system_connector_id.strip()) == 0:
+    if isinstance(external_db_system_connector_id, str) and len(external_db_system_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1978,7 +1977,7 @@ def check_external_db_system_connector_connection_status(ctx, from_json, wait_fo
 @cli_util.wrap_exceptions
 def check_external_exadata_storage_connector(ctx, from_json, external_exadata_storage_connector_id, if_match):
 
-    if isinstance(external_exadata_storage_connector_id, six.string_types) and len(external_exadata_storage_connector_id.strip()) == 0:
+    if isinstance(external_exadata_storage_connector_id, str) and len(external_exadata_storage_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-exadata-storage-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2006,7 +2005,7 @@ def check_external_exadata_storage_connector(ctx, from_json, external_exadata_st
 @cli_util.wrap_exceptions
 def check_external_my_sql_database_connector_connection_status(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_my_sql_database_connector_id, if_match):
 
-    if isinstance(external_my_sql_database_connector_id, six.string_types) and len(external_my_sql_database_connector_id.strip()) == 0:
+    if isinstance(external_my_sql_database_connector_id, str) and len(external_my_sql_database_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-my-sql-database-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2060,7 +2059,7 @@ def check_external_my_sql_database_connector_connection_status(ctx, from_json, w
 @cli_util.wrap_exceptions
 def configure_automatic_capture_filters(ctx, from_json, managed_database_id, auto_capture_filters, credentials, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2098,7 +2097,7 @@ def configure_automatic_capture_filters(ctx, from_json, managed_database_id, aut
 @cli_util.wrap_exceptions
 def configure_automatic_capture_filters_managed_database_password_credential(ctx, from_json, managed_database_id, auto_capture_filters, credentials_username, credentials_role, credentials_password, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2139,7 +2138,7 @@ def configure_automatic_capture_filters_managed_database_password_credential(ctx
 @cli_util.wrap_exceptions
 def configure_automatic_capture_filters_managed_database_secret_credential(ctx, from_json, managed_database_id, auto_capture_filters, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2180,7 +2179,7 @@ def configure_automatic_capture_filters_managed_database_secret_credential(ctx, 
 @cli_util.wrap_exceptions
 def configure_automatic_capture_filters_database_secret_credential_details(ctx, from_json, managed_database_id, auto_capture_filters, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2223,7 +2222,7 @@ def configure_automatic_capture_filters_database_secret_credential_details(ctx, 
 @cli_util.wrap_exceptions
 def configure_automatic_capture_filters_database_named_credential_details(ctx, from_json, managed_database_id, auto_capture_filters, database_credential_named_credential_id, credentials):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2262,7 +2261,7 @@ def configure_automatic_capture_filters_database_named_credential_details(ctx, f
 @cli_util.wrap_exceptions
 def configure_automatic_capture_filters_database_password_credential_details(ctx, from_json, managed_database_id, auto_capture_filters, database_credential_password, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2305,7 +2304,7 @@ def configure_automatic_capture_filters_database_password_credential_details(ctx
 @cli_util.wrap_exceptions
 def configure_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database_id, task_parameters, credentials, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2343,7 +2342,7 @@ def configure_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database
 @cli_util.wrap_exceptions
 def configure_automatic_spm_evolve_advisor_task_managed_database_password_credential(ctx, from_json, managed_database_id, task_parameters, credentials_username, credentials_role, credentials_password, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2384,7 +2383,7 @@ def configure_automatic_spm_evolve_advisor_task_managed_database_password_creden
 @cli_util.wrap_exceptions
 def configure_automatic_spm_evolve_advisor_task_managed_database_secret_credential(ctx, from_json, managed_database_id, task_parameters, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2425,7 +2424,7 @@ def configure_automatic_spm_evolve_advisor_task_managed_database_secret_credenti
 @cli_util.wrap_exceptions
 def configure_automatic_spm_evolve_advisor_task_database_secret_credential_details(ctx, from_json, managed_database_id, task_parameters, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2468,7 +2467,7 @@ def configure_automatic_spm_evolve_advisor_task_database_secret_credential_detai
 @cli_util.wrap_exceptions
 def configure_automatic_spm_evolve_advisor_task_database_named_credential_details(ctx, from_json, managed_database_id, task_parameters, database_credential_named_credential_id, credentials):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2507,7 +2506,7 @@ def configure_automatic_spm_evolve_advisor_task_database_named_credential_detail
 @cli_util.wrap_exceptions
 def configure_automatic_spm_evolve_advisor_task_database_password_credential_details(ctx, from_json, managed_database_id, task_parameters, database_credential_password, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3920,7 +3919,7 @@ def create_named_credential_basic_named_credential_content(ctx, from_json, wait_
 @cli_util.wrap_exceptions
 def create_tablespace(ctx, from_json, managed_database_id, name, credential_details, database_credential, type, is_bigfile, data_files, file_count, file_size, is_reusable, is_auto_extensible, auto_extend_next_size, auto_extend_max_size, is_max_size_unlimited, block_size_in_kilobytes, is_encrypted, encryption_algorithm, default_compress, status, extent_management, extent_uniform_size, segment_management, is_default):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4015,7 +4014,7 @@ def create_tablespace(ctx, from_json, managed_database_id, name, credential_deta
 @cli_util.wrap_exceptions
 def delete_cloud_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_id, if_match):
 
-    if isinstance(cloud_db_system_id, six.string_types) and len(cloud_db_system_id.strip()) == 0:
+    if isinstance(cloud_db_system_id, str) and len(cloud_db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4071,7 +4070,7 @@ def delete_cloud_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_cloud_db_system_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_connector_id, if_match):
 
-    if isinstance(cloud_db_system_connector_id, six.string_types) and len(cloud_db_system_connector_id.strip()) == 0:
+    if isinstance(cloud_db_system_connector_id, str) and len(cloud_db_system_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-system-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4135,7 +4134,7 @@ def delete_cloud_db_system_connector(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def delete_cloud_db_system_discovery(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_discovery_id, if_match):
 
-    if isinstance(cloud_db_system_discovery_id, six.string_types) and len(cloud_db_system_discovery_id.strip()) == 0:
+    if isinstance(cloud_db_system_discovery_id, str) and len(cloud_db_system_discovery_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-system-discovery-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4199,7 +4198,7 @@ def delete_cloud_db_system_discovery(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def delete_db_management_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_management_private_endpoint_id, if_match):
 
-    if isinstance(db_management_private_endpoint_id, six.string_types) and len(db_management_private_endpoint_id.strip()) == 0:
+    if isinstance(db_management_private_endpoint_id, str) and len(db_management_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --db-management-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4255,7 +4254,7 @@ def delete_db_management_private_endpoint(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def delete_external_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_id, if_match):
 
-    if isinstance(external_db_system_id, six.string_types) and len(external_db_system_id.strip()) == 0:
+    if isinstance(external_db_system_id, str) and len(external_db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4311,7 +4310,7 @@ def delete_external_db_system(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_external_db_system_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_connector_id, if_match):
 
-    if isinstance(external_db_system_connector_id, six.string_types) and len(external_db_system_connector_id.strip()) == 0:
+    if isinstance(external_db_system_connector_id, str) and len(external_db_system_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4375,7 +4374,7 @@ def delete_external_db_system_connector(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def delete_external_db_system_discovery(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_discovery_id, if_match):
 
-    if isinstance(external_db_system_discovery_id, six.string_types) and len(external_db_system_discovery_id.strip()) == 0:
+    if isinstance(external_db_system_discovery_id, str) and len(external_db_system_discovery_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-discovery-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4439,7 +4438,7 @@ def delete_external_db_system_discovery(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def delete_external_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_exadata_infrastructure_id, if_match):
 
-    if isinstance(external_exadata_infrastructure_id, six.string_types) and len(external_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(external_exadata_infrastructure_id, str) and len(external_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --external-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4495,7 +4494,7 @@ def delete_external_exadata_infrastructure(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def delete_external_exadata_storage_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_exadata_storage_connector_id, if_match):
 
-    if isinstance(external_exadata_storage_connector_id, six.string_types) and len(external_exadata_storage_connector_id.strip()) == 0:
+    if isinstance(external_exadata_storage_connector_id, str) and len(external_exadata_storage_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-exadata-storage-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4559,7 +4558,7 @@ def delete_external_exadata_storage_connector(ctx, from_json, wait_for_state, ma
 @cli_util.wrap_exceptions
 def delete_external_my_sql_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_my_sql_database_id, if_match):
 
-    if isinstance(external_my_sql_database_id, six.string_types) and len(external_my_sql_database_id.strip()) == 0:
+    if isinstance(external_my_sql_database_id, str) and len(external_my_sql_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-my-sql-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4615,7 +4614,7 @@ def delete_external_my_sql_database(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def delete_external_my_sql_database_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_my_sql_database_connector_id, if_match):
 
-    if isinstance(external_my_sql_database_connector_id, six.string_types) and len(external_my_sql_database_connector_id.strip()) == 0:
+    if isinstance(external_my_sql_database_connector_id, str) and len(external_my_sql_database_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-my-sql-database-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4671,7 +4670,7 @@ def delete_external_my_sql_database_connector(ctx, from_json, wait_for_state, ma
 @cli_util.wrap_exceptions
 def delete_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, if_match):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4735,7 +4734,7 @@ def delete_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.wrap_exceptions
 def delete_managed_database_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_database_group_id, if_match):
 
-    if isinstance(managed_database_group_id, six.string_types) and len(managed_database_group_id.strip()) == 0:
+    if isinstance(managed_database_group_id, str) and len(managed_database_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4799,7 +4798,7 @@ def delete_managed_database_group(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_named_credential(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, named_credential_id, if_match):
 
-    if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
+    if isinstance(named_credential_id, str) and len(named_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4860,10 +4859,10 @@ def delete_named_credential(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_preferred_credential(ctx, from_json, managed_database_id, credential_name):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(credential_name, six.string_types) and len(credential_name.strip()) == 0:
+    if isinstance(credential_name, str) and len(credential_name.strip()) == 0:
         raise click.UsageError('Parameter --credential-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4888,7 +4887,7 @@ def delete_preferred_credential(ctx, from_json, managed_database_id, credential_
 @cli_util.wrap_exceptions
 def disable_automatic_initial_plan_capture(ctx, from_json, managed_database_id, credentials, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4924,7 +4923,7 @@ def disable_automatic_initial_plan_capture(ctx, from_json, managed_database_id, 
 @cli_util.wrap_exceptions
 def disable_automatic_initial_plan_capture_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4963,7 +4962,7 @@ def disable_automatic_initial_plan_capture_managed_database_password_credential(
 @cli_util.wrap_exceptions
 def disable_automatic_initial_plan_capture_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5002,7 +5001,7 @@ def disable_automatic_initial_plan_capture_managed_database_secret_credential(ct
 @cli_util.wrap_exceptions
 def disable_automatic_initial_plan_capture_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5043,7 +5042,7 @@ def disable_automatic_initial_plan_capture_database_secret_credential_details(ct
 @cli_util.wrap_exceptions
 def disable_automatic_initial_plan_capture_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, credentials):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5080,7 +5079,7 @@ def disable_automatic_initial_plan_capture_database_named_credential_details(ctx
 @cli_util.wrap_exceptions
 def disable_automatic_initial_plan_capture_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5123,7 +5122,7 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.wrap_exceptions
 def disable_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database_id, credentials, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5161,7 +5160,7 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.wrap_exceptions
 def disable_automatic_spm_evolve_advisor_task_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5202,7 +5201,7 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.wrap_exceptions
 def disable_automatic_spm_evolve_advisor_task_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5243,7 +5242,7 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.wrap_exceptions
 def disable_automatic_spm_evolve_advisor_task_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5286,7 +5285,7 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.wrap_exceptions
 def disable_automatic_spm_evolve_advisor_task_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, credentials):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5325,7 +5324,7 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.wrap_exceptions
 def disable_automatic_spm_evolve_advisor_task_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5369,7 +5368,7 @@ def disable_automatic_spm_evolve_advisor_task_database_password_credential_detai
 @cli_util.wrap_exceptions
 def disable_autonomous_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, feature, if_match):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5429,7 +5428,7 @@ def disable_autonomous_database_management_feature(ctx, from_json, wait_for_stat
 @cli_util.wrap_exceptions
 def disable_cloud_db_system_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_id, if_match):
 
-    if isinstance(cloud_db_system_id, six.string_types) and len(cloud_db_system_id.strip()) == 0:
+    if isinstance(cloud_db_system_id, str) and len(cloud_db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5484,7 +5483,7 @@ def disable_cloud_db_system_database_management(ctx, from_json, wait_for_state, 
 @cli_util.wrap_exceptions
 def disable_cloud_db_system_stack_monitoring(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_id, if_match):
 
-    if isinstance(cloud_db_system_id, six.string_types) and len(cloud_db_system_id.strip()) == 0:
+    if isinstance(cloud_db_system_id, str) and len(cloud_db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5541,7 +5540,7 @@ def disable_cloud_db_system_stack_monitoring(ctx, from_json, wait_for_state, max
 @cli_util.wrap_exceptions
 def disable_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, feature, can_disable_all_pdbs, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5606,7 +5605,7 @@ def disable_database_management_feature(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def disable_external_container_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, feature, can_disable_all_pdbs, if_match):
 
-    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+    if isinstance(external_container_database_id, str) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5669,7 +5668,7 @@ def disable_external_container_database_management_feature(ctx, from_json, wait_
 @cli_util.wrap_exceptions
 def disable_external_db_system_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_id, if_match):
 
-    if isinstance(external_db_system_id, six.string_types) and len(external_db_system_id.strip()) == 0:
+    if isinstance(external_db_system_id, str) and len(external_db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5724,7 +5723,7 @@ def disable_external_db_system_database_management(ctx, from_json, wait_for_stat
 @cli_util.wrap_exceptions
 def disable_external_db_system_stack_monitoring(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_id, if_match):
 
-    if isinstance(external_db_system_id, six.string_types) and len(external_db_system_id.strip()) == 0:
+    if isinstance(external_db_system_id, str) and len(external_db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5783,7 +5782,7 @@ Note that Database Management will not be disabled for the DB systems within the
 @cli_util.wrap_exceptions
 def disable_external_exadata_infrastructure_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_exadata_infrastructure_id, if_match):
 
-    if isinstance(external_exadata_infrastructure_id, six.string_types) and len(external_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(external_exadata_infrastructure_id, str) and len(external_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --external-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5838,7 +5837,7 @@ def disable_external_exadata_infrastructure_management(ctx, from_json, wait_for_
 @cli_util.wrap_exceptions
 def disable_external_my_sql_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_my_sql_database_id, if_match):
 
-    if isinstance(external_my_sql_database_id, six.string_types) and len(external_my_sql_database_id.strip()) == 0:
+    if isinstance(external_my_sql_database_id, str) and len(external_my_sql_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-my-sql-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5894,7 +5893,7 @@ def disable_external_my_sql_database_management(ctx, from_json, wait_for_state, 
 @cli_util.wrap_exceptions
 def disable_external_non_container_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_non_container_database_id, feature, if_match):
 
-    if isinstance(external_non_container_database_id, six.string_types) and len(external_non_container_database_id.strip()) == 0:
+    if isinstance(external_non_container_database_id, str) and len(external_non_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-non-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5955,7 +5954,7 @@ def disable_external_non_container_database_management_feature(ctx, from_json, w
 @cli_util.wrap_exceptions
 def disable_external_pluggable_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_pluggable_database_id, feature, if_match):
 
-    if isinstance(external_pluggable_database_id, six.string_types) and len(external_pluggable_database_id.strip()) == 0:
+    if isinstance(external_pluggable_database_id, str) and len(external_pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6015,7 +6014,7 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.wrap_exceptions
 def disable_high_frequency_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database_id, credentials, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6053,7 +6052,7 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.wrap_exceptions
 def disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6094,7 +6093,7 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.wrap_exceptions
 def disable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6135,7 +6134,7 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.wrap_exceptions
 def disable_high_frequency_automatic_spm_evolve_advisor_task_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6178,7 +6177,7 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.wrap_exceptions
 def disable_high_frequency_automatic_spm_evolve_advisor_task_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, credentials):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6217,7 +6216,7 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.wrap_exceptions
 def disable_high_frequency_automatic_spm_evolve_advisor_task_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6261,7 +6260,7 @@ def disable_high_frequency_automatic_spm_evolve_advisor_task_database_password_c
 @cli_util.wrap_exceptions
 def disable_pluggable_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, feature, if_match):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6321,7 +6320,7 @@ When disabled, the optimizer does not use any SQL plan baselines. \n[Command Ref
 @cli_util.wrap_exceptions
 def disable_sql_plan_baselines_usage(ctx, from_json, managed_database_id, credentials, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6359,7 +6358,7 @@ When disabled, the optimizer does not use any SQL plan baselines. \n[Command Ref
 @cli_util.wrap_exceptions
 def disable_sql_plan_baselines_usage_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6400,7 +6399,7 @@ When disabled, the optimizer does not use any SQL plan baselines. \n[Command Ref
 @cli_util.wrap_exceptions
 def disable_sql_plan_baselines_usage_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6441,7 +6440,7 @@ When disabled, the optimizer does not use any SQL plan baselines. \n[Command Ref
 @cli_util.wrap_exceptions
 def disable_sql_plan_baselines_usage_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6484,7 +6483,7 @@ When disabled, the optimizer does not use any SQL plan baselines. \n[Command Ref
 @cli_util.wrap_exceptions
 def disable_sql_plan_baselines_usage_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, credentials):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6523,7 +6522,7 @@ When disabled, the optimizer does not use any SQL plan baselines. \n[Command Ref
 @cli_util.wrap_exceptions
 def disable_sql_plan_baselines_usage_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6608,7 +6607,7 @@ def discover_external_exadata_infrastructure(ctx, from_json, compartment_id, dis
 @cli_util.wrap_exceptions
 def drop_sql_plan_baselines(ctx, from_json, managed_database_id, sql_handle, plan_name, credentials, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6652,7 +6651,7 @@ def drop_sql_plan_baselines(ctx, from_json, managed_database_id, sql_handle, pla
 @cli_util.wrap_exceptions
 def drop_sql_plan_baselines_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, sql_handle, plan_name, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6699,7 +6698,7 @@ def drop_sql_plan_baselines_managed_database_password_credential(ctx, from_json,
 @cli_util.wrap_exceptions
 def drop_sql_plan_baselines_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, sql_handle, plan_name, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6746,7 +6745,7 @@ def drop_sql_plan_baselines_managed_database_secret_credential(ctx, from_json, m
 @cli_util.wrap_exceptions
 def drop_sql_plan_baselines_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, sql_handle, plan_name, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6795,7 +6794,7 @@ def drop_sql_plan_baselines_database_secret_credential_details(ctx, from_json, m
 @cli_util.wrap_exceptions
 def drop_sql_plan_baselines_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, sql_handle, plan_name, credentials):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6840,7 +6839,7 @@ def drop_sql_plan_baselines_database_named_credential_details(ctx, from_json, ma
 @cli_util.wrap_exceptions
 def drop_sql_plan_baselines_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, sql_handle, plan_name, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6891,10 +6890,10 @@ def drop_sql_plan_baselines_database_password_credential_details(ctx, from_json,
 @cli_util.wrap_exceptions
 def drop_tablespace(ctx, from_json, managed_database_id, tablespace_name, credential_details, database_credential, is_including_contents, is_dropping_data_files, is_cascade_constraints):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+    if isinstance(tablespace_name, str) and len(tablespace_name.strip()) == 0:
         raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6944,10 +6943,10 @@ def drop_tablespace(ctx, from_json, managed_database_id, tablespace_name, creden
 @cli_util.wrap_exceptions
 def drop_tablespace_tablespace_admin_password_credential_details(ctx, from_json, managed_database_id, tablespace_name, credential_details_username, credential_details_role, credential_details_password, database_credential, is_including_contents, is_dropping_data_files, is_cascade_constraints):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+    if isinstance(tablespace_name, str) and len(tablespace_name.strip()) == 0:
         raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7000,10 +6999,10 @@ def drop_tablespace_tablespace_admin_password_credential_details(ctx, from_json,
 @cli_util.wrap_exceptions
 def drop_tablespace_tablespace_admin_secret_credential_details(ctx, from_json, managed_database_id, tablespace_name, credential_details_username, credential_details_role, credential_details_password_secret_id, database_credential, is_including_contents, is_dropping_data_files, is_cascade_constraints):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+    if isinstance(tablespace_name, str) and len(tablespace_name.strip()) == 0:
         raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7056,10 +7055,10 @@ def drop_tablespace_tablespace_admin_secret_credential_details(ctx, from_json, m
 @cli_util.wrap_exceptions
 def drop_tablespace_database_secret_credential_details(ctx, from_json, managed_database_id, tablespace_name, database_credential_password_secret_id, credential_details, is_including_contents, is_dropping_data_files, is_cascade_constraints, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+    if isinstance(tablespace_name, str) and len(tablespace_name.strip()) == 0:
         raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7114,10 +7113,10 @@ def drop_tablespace_database_secret_credential_details(ctx, from_json, managed_d
 @cli_util.wrap_exceptions
 def drop_tablespace_database_named_credential_details(ctx, from_json, managed_database_id, tablespace_name, database_credential_named_credential_id, credential_details, is_including_contents, is_dropping_data_files, is_cascade_constraints):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+    if isinstance(tablespace_name, str) and len(tablespace_name.strip()) == 0:
         raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7168,10 +7167,10 @@ def drop_tablespace_database_named_credential_details(ctx, from_json, managed_da
 @cli_util.wrap_exceptions
 def drop_tablespace_database_password_credential_details(ctx, from_json, managed_database_id, tablespace_name, database_credential_password, credential_details, is_including_contents, is_dropping_data_files, is_cascade_constraints, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+    if isinstance(tablespace_name, str) and len(tablespace_name.strip()) == 0:
         raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7224,7 +7223,7 @@ By default, the database creates a SQL plan baseline for every eligible repeatab
 @cli_util.wrap_exceptions
 def enable_automatic_initial_plan_capture(ctx, from_json, managed_database_id, credentials, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7262,7 +7261,7 @@ By default, the database creates a SQL plan baseline for every eligible repeatab
 @cli_util.wrap_exceptions
 def enable_automatic_initial_plan_capture_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7303,7 +7302,7 @@ By default, the database creates a SQL plan baseline for every eligible repeatab
 @cli_util.wrap_exceptions
 def enable_automatic_initial_plan_capture_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7344,7 +7343,7 @@ By default, the database creates a SQL plan baseline for every eligible repeatab
 @cli_util.wrap_exceptions
 def enable_automatic_initial_plan_capture_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7387,7 +7386,7 @@ By default, the database creates a SQL plan baseline for every eligible repeatab
 @cli_util.wrap_exceptions
 def enable_automatic_initial_plan_capture_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, credentials):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7426,7 +7425,7 @@ By default, the database creates a SQL plan baseline for every eligible repeatab
 @cli_util.wrap_exceptions
 def enable_automatic_initial_plan_capture_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7473,7 +7472,7 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.wrap_exceptions
 def enable_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database_id, credentials, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7515,7 +7514,7 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.wrap_exceptions
 def enable_automatic_spm_evolve_advisor_task_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7560,7 +7559,7 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.wrap_exceptions
 def enable_automatic_spm_evolve_advisor_task_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7605,7 +7604,7 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.wrap_exceptions
 def enable_automatic_spm_evolve_advisor_task_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7652,7 +7651,7 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.wrap_exceptions
 def enable_automatic_spm_evolve_advisor_task_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, credentials):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7695,7 +7694,7 @@ One client controls both Automatic SQL Tuning Advisor and Automatic SPM Evolve A
 @cli_util.wrap_exceptions
 def enable_automatic_spm_evolve_advisor_task_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7739,7 +7738,7 @@ def enable_automatic_spm_evolve_advisor_task_database_password_credential_detail
 @cli_util.wrap_exceptions
 def enable_autonomous_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, feature_details, if_match):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7801,7 +7800,7 @@ def enable_autonomous_database_management_feature(ctx, from_json, wait_for_state
 @cli_util.wrap_exceptions
 def enable_autonomous_database_management_feature_autonomous_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, feature_details_database_connection_details, if_match, feature_details_connector_details):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7869,7 +7868,7 @@ def enable_autonomous_database_management_feature_autonomous_database_sql_watch_
 @cli_util.wrap_exceptions
 def enable_autonomous_database_management_feature_autonomous_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, feature_details_database_connection_details, if_match, feature_details_connector_details):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7937,7 +7936,7 @@ def enable_autonomous_database_management_feature_autonomous_database_diagnostic
 @cli_util.wrap_exceptions
 def enable_cloud_db_system_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_id, is_enabled, metadata, if_match):
 
-    if isinstance(cloud_db_system_id, six.string_types) and len(cloud_db_system_id.strip()) == 0:
+    if isinstance(cloud_db_system_id, str) and len(cloud_db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8002,7 +8001,7 @@ def enable_cloud_db_system_database_management(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def enable_cloud_db_system_stack_monitoring(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_id, is_enabled, metadata, if_match):
 
-    if isinstance(cloud_db_system_id, six.string_types) and len(cloud_db_system_id.strip()) == 0:
+    if isinstance(cloud_db_system_id, str) and len(cloud_db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8066,7 +8065,7 @@ def enable_cloud_db_system_stack_monitoring(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def enable_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, feature_details, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8131,7 +8130,7 @@ def enable_database_management_feature(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def enable_database_management_feature_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, feature_details_database_connection_details, feature_details_connector_details, feature_details_management_type, if_match, feature_details_is_auto_enable_pluggable_database, feature_details_can_enable_all_current_pdbs):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8204,7 +8203,7 @@ def enable_database_management_feature_database_diagnostics_and_management_featu
 @cli_util.wrap_exceptions
 def enable_database_management_feature_database_lifecycle_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, feature_details_database_connection_details, feature_details_connector_details, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8272,7 +8271,7 @@ def enable_database_management_feature_database_lifecycle_management_feature_det
 @cli_util.wrap_exceptions
 def enable_database_management_feature_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, feature_details_database_connection_details, feature_details_connector_details, if_match, feature_details_can_enable_all_current_pdbs, feature_details_is_auto_enable_pluggable_database):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8343,7 +8342,7 @@ def enable_database_management_feature_database_sql_watch_feature_details(ctx, f
 @cli_util.wrap_exceptions
 def enable_external_container_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, feature_details, if_match):
 
-    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+    if isinstance(external_container_database_id, str) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8405,7 +8404,7 @@ def enable_external_container_database_management_feature(ctx, from_json, wait_f
 @cli_util.wrap_exceptions
 def enable_external_container_database_management_feature_external_database_lifecycle_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, feature_details_connector_details, feature_details_license_model, if_match):
 
-    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+    if isinstance(external_container_database_id, str) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8470,7 +8469,7 @@ def enable_external_container_database_management_feature_external_database_life
 @cli_util.wrap_exceptions
 def enable_external_container_database_management_feature_external_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, feature_details_connector_details, if_match):
 
-    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+    if isinstance(external_container_database_id, str) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8537,7 +8536,7 @@ def enable_external_container_database_management_feature_external_database_sql_
 @cli_util.wrap_exceptions
 def enable_external_container_database_management_feature_external_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, feature_details_connector_details, feature_details_license_model, if_match, feature_details_can_enable_all_current_pdbs, feature_details_is_auto_enable_pluggable_database):
 
-    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+    if isinstance(external_container_database_id, str) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8608,7 +8607,7 @@ def enable_external_container_database_management_feature_external_database_diag
 @cli_util.wrap_exceptions
 def enable_external_db_system_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_id, license_model, if_match):
 
-    if isinstance(external_db_system_id, six.string_types) and len(external_db_system_id.strip()) == 0:
+    if isinstance(external_db_system_id, str) and len(external_db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8670,7 +8669,7 @@ def enable_external_db_system_database_management(ctx, from_json, wait_for_state
 @cli_util.wrap_exceptions
 def enable_external_db_system_stack_monitoring(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_id, is_enabled, metadata, if_match):
 
-    if isinstance(external_db_system_id, six.string_types) and len(external_db_system_id.strip()) == 0:
+    if isinstance(external_db_system_id, str) and len(external_db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8736,7 +8735,7 @@ def enable_external_db_system_stack_monitoring(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def enable_external_exadata_infrastructure_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_exadata_infrastructure_id, license_model, if_match):
 
-    if isinstance(external_exadata_infrastructure_id, six.string_types) and len(external_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(external_exadata_infrastructure_id, str) and len(external_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --external-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8797,7 +8796,7 @@ def enable_external_exadata_infrastructure_management(ctx, from_json, wait_for_s
 @cli_util.wrap_exceptions
 def enable_external_my_sql_database_management(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_my_sql_database_id, connector_id, if_match):
 
-    if isinstance(external_my_sql_database_id, six.string_types) and len(external_my_sql_database_id.strip()) == 0:
+    if isinstance(external_my_sql_database_id, str) and len(external_my_sql_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-my-sql-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8858,7 +8857,7 @@ def enable_external_my_sql_database_management(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def enable_external_non_container_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_non_container_database_id, feature_details, if_match):
 
-    if isinstance(external_non_container_database_id, six.string_types) and len(external_non_container_database_id.strip()) == 0:
+    if isinstance(external_non_container_database_id, str) and len(external_non_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-non-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8920,7 +8919,7 @@ def enable_external_non_container_database_management_feature(ctx, from_json, wa
 @cli_util.wrap_exceptions
 def enable_external_non_container_database_management_feature_external_database_lifecycle_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_non_container_database_id, feature_details_connector_details, feature_details_license_model, if_match):
 
-    if isinstance(external_non_container_database_id, six.string_types) and len(external_non_container_database_id.strip()) == 0:
+    if isinstance(external_non_container_database_id, str) and len(external_non_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-non-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8985,7 +8984,7 @@ def enable_external_non_container_database_management_feature_external_database_
 @cli_util.wrap_exceptions
 def enable_external_non_container_database_management_feature_external_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_non_container_database_id, feature_details_connector_details, if_match):
 
-    if isinstance(external_non_container_database_id, six.string_types) and len(external_non_container_database_id.strip()) == 0:
+    if isinstance(external_non_container_database_id, str) and len(external_non_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-non-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9052,7 +9051,7 @@ def enable_external_non_container_database_management_feature_external_database_
 @cli_util.wrap_exceptions
 def enable_external_non_container_database_management_feature_external_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_non_container_database_id, feature_details_connector_details, feature_details_license_model, if_match, feature_details_can_enable_all_current_pdbs, feature_details_is_auto_enable_pluggable_database):
 
-    if isinstance(external_non_container_database_id, six.string_types) and len(external_non_container_database_id.strip()) == 0:
+    if isinstance(external_non_container_database_id, str) and len(external_non_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-non-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9123,7 +9122,7 @@ def enable_external_non_container_database_management_feature_external_database_
 @cli_util.wrap_exceptions
 def enable_external_pluggable_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_pluggable_database_id, feature_details, if_match):
 
-    if isinstance(external_pluggable_database_id, six.string_types) and len(external_pluggable_database_id.strip()) == 0:
+    if isinstance(external_pluggable_database_id, str) and len(external_pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9184,7 +9183,7 @@ def enable_external_pluggable_database_management_feature(ctx, from_json, wait_f
 @cli_util.wrap_exceptions
 def enable_external_pluggable_database_management_feature_external_pluggable_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_pluggable_database_id, feature_details_connector_details, if_match):
 
-    if isinstance(external_pluggable_database_id, six.string_types) and len(external_pluggable_database_id.strip()) == 0:
+    if isinstance(external_pluggable_database_id, str) and len(external_pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9248,7 +9247,7 @@ def enable_external_pluggable_database_management_feature_external_pluggable_dat
 @cli_util.wrap_exceptions
 def enable_external_pluggable_database_management_feature_external_pluggable_database_lifecycle_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_pluggable_database_id, feature_details_connector_details, if_match):
 
-    if isinstance(external_pluggable_database_id, six.string_types) and len(external_pluggable_database_id.strip()) == 0:
+    if isinstance(external_pluggable_database_id, str) and len(external_pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9312,7 +9311,7 @@ def enable_external_pluggable_database_management_feature_external_pluggable_dat
 @cli_util.wrap_exceptions
 def enable_external_pluggable_database_management_feature_external_pluggable_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_pluggable_database_id, feature_details_connector_details, if_match):
 
-    if isinstance(external_pluggable_database_id, six.string_types) and len(external_pluggable_database_id.strip()) == 0:
+    if isinstance(external_pluggable_database_id, str) and len(external_pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9377,7 +9376,7 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.wrap_exceptions
 def enable_high_frequency_automatic_spm_evolve_advisor_task(ctx, from_json, managed_database_id, credentials, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9417,7 +9416,7 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.wrap_exceptions
 def enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9460,7 +9459,7 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.wrap_exceptions
 def enable_high_frequency_automatic_spm_evolve_advisor_task_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9503,7 +9502,7 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.wrap_exceptions
 def enable_high_frequency_automatic_spm_evolve_advisor_task_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9548,7 +9547,7 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.wrap_exceptions
 def enable_high_frequency_automatic_spm_evolve_advisor_task_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, credentials):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9589,7 +9588,7 @@ It is available only on Oracle Exadata Database Machine, Oracle Database Exadata
 @cli_util.wrap_exceptions
 def enable_high_frequency_automatic_spm_evolve_advisor_task_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9633,7 +9632,7 @@ def enable_high_frequency_automatic_spm_evolve_advisor_task_database_password_cr
 @cli_util.wrap_exceptions
 def enable_pluggable_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, feature_details, if_match):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9698,7 +9697,7 @@ def enable_pluggable_database_management_feature(ctx, from_json, wait_for_state,
 @cli_util.wrap_exceptions
 def enable_pluggable_database_management_feature_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, feature_details_database_connection_details, feature_details_connector_details, feature_details_management_type, if_match, feature_details_is_auto_enable_pluggable_database, feature_details_can_enable_all_current_pdbs):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9771,7 +9770,7 @@ def enable_pluggable_database_management_feature_database_diagnostics_and_manage
 @cli_util.wrap_exceptions
 def enable_pluggable_database_management_feature_database_lifecycle_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, feature_details_database_connection_details, feature_details_connector_details, if_match):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9839,7 +9838,7 @@ def enable_pluggable_database_management_feature_database_lifecycle_management_f
 @cli_util.wrap_exceptions
 def enable_pluggable_database_management_feature_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, feature_details_database_connection_details, feature_details_connector_details, if_match, feature_details_can_enable_all_current_pdbs, feature_details_is_auto_enable_pluggable_database):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9909,7 +9908,7 @@ When enabled, the optimizer uses SQL plan baselines to select plans to avoid pot
 @cli_util.wrap_exceptions
 def enable_sql_plan_baselines_usage(ctx, from_json, managed_database_id, credentials, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9947,7 +9946,7 @@ When enabled, the optimizer uses SQL plan baselines to select plans to avoid pot
 @cli_util.wrap_exceptions
 def enable_sql_plan_baselines_usage_managed_database_password_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9988,7 +9987,7 @@ When enabled, the optimizer uses SQL plan baselines to select plans to avoid pot
 @cli_util.wrap_exceptions
 def enable_sql_plan_baselines_usage_managed_database_secret_credential(ctx, from_json, managed_database_id, credentials_username, credentials_role, credentials_password_secret_id, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10029,7 +10028,7 @@ When enabled, the optimizer uses SQL plan baselines to select plans to avoid pot
 @cli_util.wrap_exceptions
 def enable_sql_plan_baselines_usage_database_secret_credential_details(ctx, from_json, managed_database_id, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10072,7 +10071,7 @@ When enabled, the optimizer uses SQL plan baselines to select plans to avoid pot
 @cli_util.wrap_exceptions
 def enable_sql_plan_baselines_usage_database_named_credential_details(ctx, from_json, managed_database_id, database_credential_named_credential_id, credentials):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10111,7 +10110,7 @@ When enabled, the optimizer uses SQL plan baselines to select plans to avoid pot
 @cli_util.wrap_exceptions
 def enable_sql_plan_baselines_usage_database_password_credential_details(ctx, from_json, managed_database_id, database_credential_password, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10151,7 +10150,7 @@ def enable_sql_plan_baselines_usage_database_password_credential_details(ctx, fr
 @cli_util.wrap_exceptions
 def generate_awr_snapshot(ctx, from_json, managed_database_id, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10185,10 +10184,10 @@ def generate_awr_snapshot(ctx, from_json, managed_database_id, opc_named_credent
 @cli_util.wrap_exceptions
 def get_awr_db_report(ctx, from_json, managed_database_id, awr_db_id, inst_nums, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, report_type, container_id, report_format, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(awr_db_id, six.string_types) and len(awr_db_id.strip()) == 0:
+    if isinstance(awr_db_id, str) and len(awr_db_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-db-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10239,10 +10238,10 @@ def get_awr_db_report(ctx, from_json, managed_database_id, awr_db_id, inst_nums,
 @cli_util.wrap_exceptions
 def get_awr_db_sql_report(ctx, from_json, managed_database_id, awr_db_id, sql_id, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, report_format, container_id, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(awr_db_id, six.string_types) and len(awr_db_id.strip()) == 0:
+    if isinstance(awr_db_id, str) and len(awr_db_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-db-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10282,7 +10281,7 @@ def get_awr_db_sql_report(ctx, from_json, managed_database_id, awr_db_id, sql_id
 @cli_util.wrap_exceptions
 def get_cloud_asm(ctx, from_json, cloud_asm_id):
 
-    if isinstance(cloud_asm_id, six.string_types) and len(cloud_asm_id.strip()) == 0:
+    if isinstance(cloud_asm_id, str) and len(cloud_asm_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-asm-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10305,7 +10304,7 @@ def get_cloud_asm(ctx, from_json, cloud_asm_id):
 @cli_util.wrap_exceptions
 def get_cloud_asm_configuration(ctx, from_json, cloud_asm_id, opc_named_credential_id):
 
-    if isinstance(cloud_asm_id, six.string_types) and len(cloud_asm_id.strip()) == 0:
+    if isinstance(cloud_asm_id, str) and len(cloud_asm_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-asm-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10329,7 +10328,7 @@ def get_cloud_asm_configuration(ctx, from_json, cloud_asm_id, opc_named_credenti
 @cli_util.wrap_exceptions
 def get_cloud_asm_instance(ctx, from_json, cloud_asm_instance_id):
 
-    if isinstance(cloud_asm_instance_id, six.string_types) and len(cloud_asm_instance_id.strip()) == 0:
+    if isinstance(cloud_asm_instance_id, str) and len(cloud_asm_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-asm-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10351,7 +10350,7 @@ def get_cloud_asm_instance(ctx, from_json, cloud_asm_instance_id):
 @cli_util.wrap_exceptions
 def get_cloud_cluster(ctx, from_json, cloud_cluster_id):
 
-    if isinstance(cloud_cluster_id, six.string_types) and len(cloud_cluster_id.strip()) == 0:
+    if isinstance(cloud_cluster_id, str) and len(cloud_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10373,7 +10372,7 @@ def get_cloud_cluster(ctx, from_json, cloud_cluster_id):
 @cli_util.wrap_exceptions
 def get_cloud_cluster_instance(ctx, from_json, cloud_cluster_instance_id):
 
-    if isinstance(cloud_cluster_instance_id, six.string_types) and len(cloud_cluster_instance_id.strip()) == 0:
+    if isinstance(cloud_cluster_instance_id, str) and len(cloud_cluster_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-cluster-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10395,7 +10394,7 @@ def get_cloud_cluster_instance(ctx, from_json, cloud_cluster_instance_id):
 @cli_util.wrap_exceptions
 def get_cloud_db_home(ctx, from_json, cloud_db_home_id):
 
-    if isinstance(cloud_db_home_id, six.string_types) and len(cloud_db_home_id.strip()) == 0:
+    if isinstance(cloud_db_home_id, str) and len(cloud_db_home_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-home-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10417,7 +10416,7 @@ def get_cloud_db_home(ctx, from_json, cloud_db_home_id):
 @cli_util.wrap_exceptions
 def get_cloud_db_node(ctx, from_json, cloud_db_node_id):
 
-    if isinstance(cloud_db_node_id, six.string_types) and len(cloud_db_node_id.strip()) == 0:
+    if isinstance(cloud_db_node_id, str) and len(cloud_db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10439,7 +10438,7 @@ def get_cloud_db_node(ctx, from_json, cloud_db_node_id):
 @cli_util.wrap_exceptions
 def get_cloud_db_system(ctx, from_json, cloud_db_system_id):
 
-    if isinstance(cloud_db_system_id, six.string_types) and len(cloud_db_system_id.strip()) == 0:
+    if isinstance(cloud_db_system_id, str) and len(cloud_db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10461,7 +10460,7 @@ def get_cloud_db_system(ctx, from_json, cloud_db_system_id):
 @cli_util.wrap_exceptions
 def get_cloud_db_system_connector(ctx, from_json, cloud_db_system_connector_id):
 
-    if isinstance(cloud_db_system_connector_id, six.string_types) and len(cloud_db_system_connector_id.strip()) == 0:
+    if isinstance(cloud_db_system_connector_id, str) and len(cloud_db_system_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-system-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10483,7 +10482,7 @@ def get_cloud_db_system_connector(ctx, from_json, cloud_db_system_connector_id):
 @cli_util.wrap_exceptions
 def get_cloud_db_system_discovery(ctx, from_json, cloud_db_system_discovery_id):
 
-    if isinstance(cloud_db_system_discovery_id, six.string_types) and len(cloud_db_system_discovery_id.strip()) == 0:
+    if isinstance(cloud_db_system_discovery_id, str) and len(cloud_db_system_discovery_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-system-discovery-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10505,7 +10504,7 @@ def get_cloud_db_system_discovery(ctx, from_json, cloud_db_system_discovery_id):
 @cli_util.wrap_exceptions
 def get_cloud_listener(ctx, from_json, cloud_listener_id):
 
-    if isinstance(cloud_listener_id, six.string_types) and len(cloud_listener_id.strip()) == 0:
+    if isinstance(cloud_listener_id, str) and len(cloud_listener_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-listener-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10529,7 +10528,7 @@ def get_cloud_listener(ctx, from_json, cloud_listener_id):
 @cli_util.wrap_exceptions
 def get_cluster_cache_metric(ctx, from_json, managed_database_id, start_time, end_time):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10779,7 +10778,7 @@ def get_database_fleet_health_metrics(ctx, from_json, compare_baseline_time, com
 @cli_util.wrap_exceptions
 def get_database_ha_backup_details(ctx, from_json, managed_database_id, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10830,7 +10829,7 @@ def get_database_home_metrics(ctx, from_json, managed_database_id, start_time, e
 @cli_util.wrap_exceptions
 def get_dataguard_performance_metrics(ctx, from_json, managed_database_id, start_time, end_time, peer_database_compartment_id, filter_by_metric_names):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10858,7 +10857,7 @@ def get_dataguard_performance_metrics(ctx, from_json, managed_database_id, start
 @cli_util.wrap_exceptions
 def get_db_management_private_endpoint(ctx, from_json, db_management_private_endpoint_id):
 
-    if isinstance(db_management_private_endpoint_id, six.string_types) and len(db_management_private_endpoint_id.strip()) == 0:
+    if isinstance(db_management_private_endpoint_id, str) and len(db_management_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --db-management-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10880,7 +10879,7 @@ def get_db_management_private_endpoint(ctx, from_json, db_management_private_end
 @cli_util.wrap_exceptions
 def get_external_asm(ctx, from_json, external_asm_id):
 
-    if isinstance(external_asm_id, six.string_types) and len(external_asm_id.strip()) == 0:
+    if isinstance(external_asm_id, str) and len(external_asm_id.strip()) == 0:
         raise click.UsageError('Parameter --external-asm-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10903,7 +10902,7 @@ def get_external_asm(ctx, from_json, external_asm_id):
 @cli_util.wrap_exceptions
 def get_external_asm_configuration(ctx, from_json, external_asm_id, opc_named_credential_id):
 
-    if isinstance(external_asm_id, six.string_types) and len(external_asm_id.strip()) == 0:
+    if isinstance(external_asm_id, str) and len(external_asm_id.strip()) == 0:
         raise click.UsageError('Parameter --external-asm-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10927,7 +10926,7 @@ def get_external_asm_configuration(ctx, from_json, external_asm_id, opc_named_cr
 @cli_util.wrap_exceptions
 def get_external_asm_instance(ctx, from_json, external_asm_instance_id):
 
-    if isinstance(external_asm_instance_id, six.string_types) and len(external_asm_instance_id.strip()) == 0:
+    if isinstance(external_asm_instance_id, str) and len(external_asm_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --external-asm-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10949,7 +10948,7 @@ def get_external_asm_instance(ctx, from_json, external_asm_instance_id):
 @cli_util.wrap_exceptions
 def get_external_cluster(ctx, from_json, external_cluster_id):
 
-    if isinstance(external_cluster_id, six.string_types) and len(external_cluster_id.strip()) == 0:
+    if isinstance(external_cluster_id, str) and len(external_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --external-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10971,7 +10970,7 @@ def get_external_cluster(ctx, from_json, external_cluster_id):
 @cli_util.wrap_exceptions
 def get_external_cluster_instance(ctx, from_json, external_cluster_instance_id):
 
-    if isinstance(external_cluster_instance_id, six.string_types) and len(external_cluster_instance_id.strip()) == 0:
+    if isinstance(external_cluster_instance_id, str) and len(external_cluster_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --external-cluster-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10993,7 +10992,7 @@ def get_external_cluster_instance(ctx, from_json, external_cluster_instance_id):
 @cli_util.wrap_exceptions
 def get_external_db_home(ctx, from_json, external_db_home_id):
 
-    if isinstance(external_db_home_id, six.string_types) and len(external_db_home_id.strip()) == 0:
+    if isinstance(external_db_home_id, str) and len(external_db_home_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-home-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11015,7 +11014,7 @@ def get_external_db_home(ctx, from_json, external_db_home_id):
 @cli_util.wrap_exceptions
 def get_external_db_node(ctx, from_json, external_db_node_id):
 
-    if isinstance(external_db_node_id, six.string_types) and len(external_db_node_id.strip()) == 0:
+    if isinstance(external_db_node_id, str) and len(external_db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11037,7 +11036,7 @@ def get_external_db_node(ctx, from_json, external_db_node_id):
 @cli_util.wrap_exceptions
 def get_external_db_system(ctx, from_json, external_db_system_id):
 
-    if isinstance(external_db_system_id, six.string_types) and len(external_db_system_id.strip()) == 0:
+    if isinstance(external_db_system_id, str) and len(external_db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11059,7 +11058,7 @@ def get_external_db_system(ctx, from_json, external_db_system_id):
 @cli_util.wrap_exceptions
 def get_external_db_system_connector(ctx, from_json, external_db_system_connector_id):
 
-    if isinstance(external_db_system_connector_id, six.string_types) and len(external_db_system_connector_id.strip()) == 0:
+    if isinstance(external_db_system_connector_id, str) and len(external_db_system_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11081,7 +11080,7 @@ def get_external_db_system_connector(ctx, from_json, external_db_system_connecto
 @cli_util.wrap_exceptions
 def get_external_db_system_discovery(ctx, from_json, external_db_system_discovery_id):
 
-    if isinstance(external_db_system_discovery_id, six.string_types) and len(external_db_system_discovery_id.strip()) == 0:
+    if isinstance(external_db_system_discovery_id, str) and len(external_db_system_discovery_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-discovery-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11103,7 +11102,7 @@ def get_external_db_system_discovery(ctx, from_json, external_db_system_discover
 @cli_util.wrap_exceptions
 def get_external_exadata_infrastructure(ctx, from_json, external_exadata_infrastructure_id):
 
-    if isinstance(external_exadata_infrastructure_id, six.string_types) and len(external_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(external_exadata_infrastructure_id, str) and len(external_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --external-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11125,7 +11124,7 @@ def get_external_exadata_infrastructure(ctx, from_json, external_exadata_infrast
 @cli_util.wrap_exceptions
 def get_external_exadata_storage_connector(ctx, from_json, external_exadata_storage_connector_id):
 
-    if isinstance(external_exadata_storage_connector_id, six.string_types) and len(external_exadata_storage_connector_id.strip()) == 0:
+    if isinstance(external_exadata_storage_connector_id, str) and len(external_exadata_storage_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-exadata-storage-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11147,7 +11146,7 @@ def get_external_exadata_storage_connector(ctx, from_json, external_exadata_stor
 @cli_util.wrap_exceptions
 def get_external_exadata_storage_grid(ctx, from_json, external_exadata_storage_grid_id):
 
-    if isinstance(external_exadata_storage_grid_id, six.string_types) and len(external_exadata_storage_grid_id.strip()) == 0:
+    if isinstance(external_exadata_storage_grid_id, str) and len(external_exadata_storage_grid_id.strip()) == 0:
         raise click.UsageError('Parameter --external-exadata-storage-grid-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11169,7 +11168,7 @@ def get_external_exadata_storage_grid(ctx, from_json, external_exadata_storage_g
 @cli_util.wrap_exceptions
 def get_external_exadata_storage_server(ctx, from_json, external_exadata_storage_server_id):
 
-    if isinstance(external_exadata_storage_server_id, six.string_types) and len(external_exadata_storage_server_id.strip()) == 0:
+    if isinstance(external_exadata_storage_server_id, str) and len(external_exadata_storage_server_id.strip()) == 0:
         raise click.UsageError('Parameter --external-exadata-storage-server-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11191,7 +11190,7 @@ def get_external_exadata_storage_server(ctx, from_json, external_exadata_storage
 @cli_util.wrap_exceptions
 def get_external_listener(ctx, from_json, external_listener_id):
 
-    if isinstance(external_listener_id, six.string_types) and len(external_listener_id.strip()) == 0:
+    if isinstance(external_listener_id, str) and len(external_listener_id.strip()) == 0:
         raise click.UsageError('Parameter --external-listener-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11213,7 +11212,7 @@ def get_external_listener(ctx, from_json, external_listener_id):
 @cli_util.wrap_exceptions
 def get_external_my_sql_database(ctx, from_json, external_my_sql_database_id):
 
-    if isinstance(external_my_sql_database_id, six.string_types) and len(external_my_sql_database_id.strip()) == 0:
+    if isinstance(external_my_sql_database_id, str) and len(external_my_sql_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-my-sql-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11235,7 +11234,7 @@ def get_external_my_sql_database(ctx, from_json, external_my_sql_database_id):
 @cli_util.wrap_exceptions
 def get_external_my_sql_database_connector(ctx, from_json, external_my_sql_database_connector_id):
 
-    if isinstance(external_my_sql_database_connector_id, six.string_types) and len(external_my_sql_database_connector_id.strip()) == 0:
+    if isinstance(external_my_sql_database_connector_id, str) and len(external_my_sql_database_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-my-sql-database-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11257,7 +11256,7 @@ def get_external_my_sql_database_connector(ctx, from_json, external_my_sql_datab
 @cli_util.wrap_exceptions
 def get_iorm_plan(ctx, from_json, external_exadata_storage_server_id):
 
-    if isinstance(external_exadata_storage_server_id, six.string_types) and len(external_exadata_storage_server_id.strip()) == 0:
+    if isinstance(external_exadata_storage_server_id, str) and len(external_exadata_storage_server_id.strip()) == 0:
         raise click.UsageError('Parameter --external-exadata-storage-server-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11279,7 +11278,7 @@ def get_iorm_plan(ctx, from_json, external_exadata_storage_server_id):
 @cli_util.wrap_exceptions
 def get_job(ctx, from_json, job_id):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11301,7 +11300,7 @@ def get_job(ctx, from_json, job_id):
 @cli_util.wrap_exceptions
 def get_job_execution(ctx, from_json, job_execution_id):
 
-    if isinstance(job_execution_id, six.string_types) and len(job_execution_id.strip()) == 0:
+    if isinstance(job_execution_id, str) and len(job_execution_id.strip()) == 0:
         raise click.UsageError('Parameter --job-execution-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11323,7 +11322,7 @@ def get_job_execution(ctx, from_json, job_execution_id):
 @cli_util.wrap_exceptions
 def get_job_run(ctx, from_json, job_run_id):
 
-    if isinstance(job_run_id, six.string_types) and len(job_run_id.strip()) == 0:
+    if isinstance(job_run_id, str) and len(job_run_id.strip()) == 0:
         raise click.UsageError('Parameter --job-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11345,7 +11344,7 @@ def get_job_run(ctx, from_json, job_run_id):
 @cli_util.wrap_exceptions
 def get_managed_database(ctx, from_json, managed_database_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11367,7 +11366,7 @@ def get_managed_database(ctx, from_json, managed_database_id):
 @cli_util.wrap_exceptions
 def get_managed_database_group(ctx, from_json, managed_database_group_id):
 
-    if isinstance(managed_database_group_id, six.string_types) and len(managed_database_group_id.strip()) == 0:
+    if isinstance(managed_database_group_id, str) and len(managed_database_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11389,7 +11388,7 @@ def get_managed_database_group(ctx, from_json, managed_database_group_id):
 @cli_util.wrap_exceptions
 def get_named_credential(ctx, from_json, named_credential_id):
 
-    if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
+    if isinstance(named_credential_id, str) and len(named_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11411,7 +11410,7 @@ def get_named_credential(ctx, from_json, named_credential_id):
 @cli_util.wrap_exceptions
 def get_open_alert_history(ctx, from_json, external_exadata_storage_server_id):
 
-    if isinstance(external_exadata_storage_server_id, six.string_types) and len(external_exadata_storage_server_id.strip()) == 0:
+    if isinstance(external_exadata_storage_server_id, str) and len(external_exadata_storage_server_id.strip()) == 0:
         raise click.UsageError('Parameter --external-exadata-storage-server-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11436,10 +11435,10 @@ def get_open_alert_history(ctx, from_json, external_exadata_storage_server_id):
 @cli_util.wrap_exceptions
 def get_optimizer_statistics_advisor_execution(ctx, from_json, managed_database_id, execution_name, task_name, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(execution_name, six.string_types) and len(execution_name.strip()) == 0:
+    if isinstance(execution_name, str) and len(execution_name.strip()) == 0:
         raise click.UsageError('Parameter --execution-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11468,10 +11467,10 @@ def get_optimizer_statistics_advisor_execution(ctx, from_json, managed_database_
 @cli_util.wrap_exceptions
 def get_optimizer_statistics_advisor_execution_script(ctx, from_json, managed_database_id, execution_name, task_name, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(execution_name, six.string_types) and len(execution_name.strip()) == 0:
+    if isinstance(execution_name, str) and len(execution_name.strip()) == 0:
         raise click.UsageError('Parameter --execution-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11499,10 +11498,10 @@ def get_optimizer_statistics_advisor_execution_script(ctx, from_json, managed_da
 @cli_util.wrap_exceptions
 def get_optimizer_statistics_collection_operation(ctx, from_json, managed_database_id, optimizer_statistics_collection_operation_id, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(optimizer_statistics_collection_operation_id, six.string_types) and len(optimizer_statistics_collection_operation_id.strip()) == 0:
+    if isinstance(optimizer_statistics_collection_operation_id, str) and len(optimizer_statistics_collection_operation_id.strip()) == 0:
         raise click.UsageError('Parameter --optimizer-statistics-collection-operation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11532,7 +11531,7 @@ def get_optimizer_statistics_collection_operation(ctx, from_json, managed_databa
 @cli_util.wrap_exceptions
 def get_pdb_metrics(ctx, from_json, managed_database_id, start_time, end_time, compartment_id, compare_type, filter_by_metric_names):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11567,7 +11566,7 @@ def get_pdb_metrics(ctx, from_json, managed_database_id, start_time, end_time, c
 @cli_util.wrap_exceptions
 def get_peer_database_metrics(ctx, from_json, managed_database_id, start_time, end_time, peer_database_compartment_id, compare_type, filter_by_metric_names):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11598,10 +11597,10 @@ def get_peer_database_metrics(ctx, from_json, managed_database_id, start_time, e
 @cli_util.wrap_exceptions
 def get_preferred_credential(ctx, from_json, managed_database_id, credential_name):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(credential_name, six.string_types) and len(credential_name.strip()) == 0:
+    if isinstance(credential_name, str) and len(credential_name.strip()) == 0:
         raise click.UsageError('Parameter --credential-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11626,10 +11625,10 @@ def get_preferred_credential(ctx, from_json, managed_database_id, credential_nam
 @cli_util.wrap_exceptions
 def get_sql_plan_baseline(ctx, from_json, managed_database_id, plan_name, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(plan_name, six.string_types) and len(plan_name.strip()) == 0:
+    if isinstance(plan_name, str) and len(plan_name.strip()) == 0:
         raise click.UsageError('Parameter --plan-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11655,7 +11654,7 @@ def get_sql_plan_baseline(ctx, from_json, managed_database_id, plan_name, opc_na
 @cli_util.wrap_exceptions
 def get_sql_plan_baseline_configuration(ctx, from_json, managed_database_id, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11681,10 +11680,10 @@ def get_sql_plan_baseline_configuration(ctx, from_json, managed_database_id, opc
 @cli_util.wrap_exceptions
 def get_tablespace(ctx, from_json, managed_database_id, tablespace_name, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+    if isinstance(tablespace_name, str) and len(tablespace_name.strip()) == 0:
         raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11709,7 +11708,7 @@ def get_tablespace(ctx, from_json, managed_database_id, tablespace_name, opc_nam
 @cli_util.wrap_exceptions
 def get_top_sql_cpu_activity(ctx, from_json, external_exadata_storage_server_id):
 
-    if isinstance(external_exadata_storage_server_id, six.string_types) and len(external_exadata_storage_server_id.strip()) == 0:
+    if isinstance(external_exadata_storage_server_id, str) and len(external_exadata_storage_server_id.strip()) == 0:
         raise click.UsageError('Parameter --external-exadata-storage-server-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11733,10 +11732,10 @@ def get_top_sql_cpu_activity(ctx, from_json, external_exadata_storage_server_id)
 @cli_util.wrap_exceptions
 def get_user(ctx, from_json, managed_database_id, user_name, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(user_name, six.string_types) and len(user_name.strip()) == 0:
+    if isinstance(user_name, str) and len(user_name.strip()) == 0:
         raise click.UsageError('Parameter --user-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11761,7 +11760,7 @@ def get_user(ctx, from_json, managed_database_id, user_name, opc_named_credentia
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11786,10 +11785,10 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.wrap_exceptions
 def implement_optimizer_statistics_advisor_recommendations(ctx, from_json, managed_database_id, execution_name, task_name, job_details):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(execution_name, six.string_types) and len(execution_name.strip()) == 0:
+    if isinstance(execution_name, str) and len(execution_name.strip()) == 0:
         raise click.UsageError('Parameter --execution-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11828,7 +11827,7 @@ def list_asm_properties(ctx, from_json, all_pages, page_size, managed_database_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11888,7 +11887,7 @@ def list_associated_databases(ctx, from_json, all_pages, page_size, db_managemen
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(db_management_private_endpoint_id, six.string_types) and len(db_management_private_endpoint_id.strip()) == 0:
+    if isinstance(db_management_private_endpoint_id, str) and len(db_management_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --db-management-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11956,10 +11955,10 @@ def list_awr_db_snapshots(ctx, from_json, all_pages, page_size, managed_database
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(awr_db_id, six.string_types) and len(awr_db_id.strip()) == 0:
+    if isinstance(awr_db_id, str) and len(awr_db_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-db-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12037,7 +12036,7 @@ def list_awr_dbs(ctx, from_json, all_pages, page_size, managed_database_id, name
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12103,7 +12102,7 @@ def list_cloud_asm_disk_groups(ctx, from_json, all_pages, page_size, cloud_asm_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(cloud_asm_id, six.string_types) and len(cloud_asm_id.strip()) == 0:
+    if isinstance(cloud_asm_id, str) and len(cloud_asm_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-asm-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12222,7 +12221,7 @@ def list_cloud_asm_users(ctx, from_json, all_pages, page_size, cloud_asm_id, pag
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(cloud_asm_id, six.string_types) and len(cloud_asm_id.strip()) == 0:
+    if isinstance(cloud_asm_id, str) and len(cloud_asm_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-asm-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12820,7 +12819,7 @@ def list_cloud_listener_services(ctx, from_json, all_pages, page_size, cloud_lis
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(cloud_listener_id, six.string_types) and len(cloud_listener_id.strip()) == 0:
+    if isinstance(cloud_listener_id, str) and len(cloud_listener_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-listener-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12944,10 +12943,10 @@ def list_consumer_group_privileges(ctx, from_json, all_pages, page_size, managed
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(user_name, six.string_types) and len(user_name.strip()) == 0:
+    if isinstance(user_name, str) and len(user_name.strip()) == 0:
         raise click.UsageError('Parameter --user-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13013,7 +13012,7 @@ def list_cursor_cache_statements(ctx, from_json, all_pages, page_size, managed_d
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13077,10 +13076,10 @@ def list_data_access_containers(ctx, from_json, all_pages, page_size, managed_da
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(user_name, six.string_types) and len(user_name.strip()) == 0:
+    if isinstance(user_name, str) and len(user_name.strip()) == 0:
         raise click.UsageError('Parameter --user-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13142,7 +13141,7 @@ def list_data_access_containers(ctx, from_json, all_pages, page_size, managed_da
 @cli_util.wrap_exceptions
 def list_database_parameters(ctx, from_json, all_pages, managed_database_id, source, name, is_allowed_values_included, sort_by, sort_order, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13255,7 +13254,7 @@ def list_external_asm_disk_groups(ctx, from_json, all_pages, page_size, external
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(external_asm_id, six.string_types) and len(external_asm_id.strip()) == 0:
+    if isinstance(external_asm_id, str) and len(external_asm_id.strip()) == 0:
         raise click.UsageError('Parameter --external-asm-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13374,7 +13373,7 @@ def list_external_asm_users(ctx, from_json, all_pages, page_size, external_asm_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(external_asm_id, six.string_types) and len(external_asm_id.strip()) == 0:
+    if isinstance(external_asm_id, str) and len(external_asm_id.strip()) == 0:
         raise click.UsageError('Parameter --external-asm-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14144,7 +14143,7 @@ def list_external_listener_services(ctx, from_json, all_pages, page_size, extern
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(external_listener_id, six.string_types) and len(external_listener_id.strip()) == 0:
+    if isinstance(external_listener_id, str) and len(external_listener_id.strip()) == 0:
         raise click.UsageError('Parameter --external-listener-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14799,10 +14798,10 @@ def list_object_privileges(ctx, from_json, all_pages, page_size, managed_databas
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(user_name, six.string_types) and len(user_name.strip()) == 0:
+    if isinstance(user_name, str) and len(user_name.strip()) == 0:
         raise click.UsageError('Parameter --user-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14861,7 +14860,7 @@ def list_object_privileges(ctx, from_json, all_pages, page_size, managed_databas
 @cli_util.wrap_exceptions
 def list_optimizer_statistics_advisor_executions(ctx, from_json, all_pages, managed_database_id, start_time_greater_than_or_equal_to, end_time_less_than_or_equal_to, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14901,7 +14900,7 @@ def list_optimizer_statistics_collection_aggregations(ctx, from_json, all_pages,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14970,7 +14969,7 @@ def list_optimizer_statistics_collection_operations(ctx, from_json, all_pages, p
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15029,7 +15028,7 @@ def list_optimizer_statistics_collection_operations(ctx, from_json, all_pages, p
 @cli_util.wrap_exceptions
 def list_preferred_credentials(ctx, from_json, all_pages, managed_database_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15063,10 +15062,10 @@ def list_proxied_for_users(ctx, from_json, all_pages, page_size, managed_databas
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(user_name, six.string_types) and len(user_name.strip()) == 0:
+    if isinstance(user_name, str) and len(user_name.strip()) == 0:
         raise click.UsageError('Parameter --user-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15133,10 +15132,10 @@ def list_proxy_users(ctx, from_json, all_pages, page_size, managed_database_id, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(user_name, six.string_types) and len(user_name.strip()) == 0:
+    if isinstance(user_name, str) and len(user_name.strip()) == 0:
         raise click.UsageError('Parameter --user-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15203,10 +15202,10 @@ def list_roles(ctx, from_json, all_pages, page_size, managed_database_id, user_n
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(user_name, six.string_types) and len(user_name.strip()) == 0:
+    if isinstance(user_name, str) and len(user_name.strip()) == 0:
         raise click.UsageError('Parameter --user-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15272,7 +15271,7 @@ def list_sql_plan_baseline_jobs(ctx, from_json, all_pages, page_size, managed_da
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15347,7 +15346,7 @@ def list_sql_plan_baselines(ctx, from_json, all_pages, page_size, managed_databa
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15435,10 +15434,10 @@ def list_system_privileges(ctx, from_json, all_pages, page_size, managed_databas
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(user_name, six.string_types) and len(user_name.strip()) == 0:
+    if isinstance(user_name, str) and len(user_name.strip()) == 0:
         raise click.UsageError('Parameter --user-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15495,7 +15494,7 @@ def list_system_privileges(ctx, from_json, all_pages, page_size, managed_databas
 @cli_util.wrap_exceptions
 def list_table_statistics(ctx, from_json, all_pages, managed_database_id, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15530,7 +15529,7 @@ def list_tablespaces(ctx, from_json, all_pages, page_size, managed_database_id, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15593,7 +15592,7 @@ def list_users(ctx, from_json, all_pages, page_size, managed_database_id, name, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15654,7 +15653,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15711,7 +15710,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15831,7 +15830,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 @cli_util.wrap_exceptions
 def load_sql_plan_baselines_from_awr(ctx, from_json, managed_database_id, job_name, begin_snapshot, end_snapshot, job_description, sql_text_filter, is_fixed, is_enabled, credentials, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15889,7 +15888,7 @@ def load_sql_plan_baselines_from_awr(ctx, from_json, managed_database_id, job_na
 @cli_util.wrap_exceptions
 def load_sql_plan_baselines_from_awr_managed_database_password_credential(ctx, from_json, managed_database_id, job_name, begin_snapshot, end_snapshot, credentials_username, credentials_role, credentials_password, job_description, sql_text_filter, is_fixed, is_enabled, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -15950,7 +15949,7 @@ def load_sql_plan_baselines_from_awr_managed_database_password_credential(ctx, f
 @cli_util.wrap_exceptions
 def load_sql_plan_baselines_from_awr_managed_database_secret_credential(ctx, from_json, managed_database_id, job_name, begin_snapshot, end_snapshot, credentials_username, credentials_role, credentials_password_secret_id, job_description, sql_text_filter, is_fixed, is_enabled, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16011,7 +16010,7 @@ def load_sql_plan_baselines_from_awr_managed_database_secret_credential(ctx, fro
 @cli_util.wrap_exceptions
 def load_sql_plan_baselines_from_awr_database_secret_credential_details(ctx, from_json, managed_database_id, job_name, begin_snapshot, end_snapshot, database_credential_password_secret_id, job_description, sql_text_filter, is_fixed, is_enabled, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16074,7 +16073,7 @@ def load_sql_plan_baselines_from_awr_database_secret_credential_details(ctx, fro
 @cli_util.wrap_exceptions
 def load_sql_plan_baselines_from_awr_database_named_credential_details(ctx, from_json, managed_database_id, job_name, begin_snapshot, end_snapshot, database_credential_named_credential_id, job_description, sql_text_filter, is_fixed, is_enabled, credentials):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16133,7 +16132,7 @@ def load_sql_plan_baselines_from_awr_database_named_credential_details(ctx, from
 @cli_util.wrap_exceptions
 def load_sql_plan_baselines_from_awr_database_password_credential_details(ctx, from_json, managed_database_id, job_name, begin_snapshot, end_snapshot, database_credential_password, job_description, sql_text_filter, is_fixed, is_enabled, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16201,7 +16200,7 @@ def load_sql_plan_baselines_from_awr_database_password_credential_details(ctx, f
 @cli_util.wrap_exceptions
 def load_sql_plan_baselines_from_cursor_cache(ctx, from_json, managed_database_id, job_name, job_description, sql_id, plan_hash, sql_text, sql_handle, filter_name, filter_value, is_fixed, is_enabled, credentials, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16277,7 +16276,7 @@ def load_sql_plan_baselines_from_cursor_cache(ctx, from_json, managed_database_i
 @cli_util.wrap_exceptions
 def load_sql_plan_baselines_from_cursor_cache_managed_database_password_credential(ctx, from_json, managed_database_id, job_name, credentials_username, credentials_role, credentials_password, job_description, sql_id, plan_hash, sql_text, sql_handle, filter_name, filter_value, is_fixed, is_enabled, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16356,7 +16355,7 @@ def load_sql_plan_baselines_from_cursor_cache_managed_database_password_credenti
 @cli_util.wrap_exceptions
 def load_sql_plan_baselines_from_cursor_cache_managed_database_secret_credential(ctx, from_json, managed_database_id, job_name, credentials_username, credentials_role, credentials_password_secret_id, job_description, sql_id, plan_hash, sql_text, sql_handle, filter_name, filter_value, is_fixed, is_enabled, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16435,7 +16434,7 @@ def load_sql_plan_baselines_from_cursor_cache_managed_database_secret_credential
 @cli_util.wrap_exceptions
 def load_sql_plan_baselines_from_cursor_cache_database_secret_credential_details(ctx, from_json, managed_database_id, job_name, database_credential_password_secret_id, job_description, sql_id, plan_hash, sql_text, sql_handle, filter_name, filter_value, is_fixed, is_enabled, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16516,7 +16515,7 @@ def load_sql_plan_baselines_from_cursor_cache_database_secret_credential_details
 @cli_util.wrap_exceptions
 def load_sql_plan_baselines_from_cursor_cache_database_named_credential_details(ctx, from_json, managed_database_id, job_name, database_credential_named_credential_id, job_description, sql_id, plan_hash, sql_text, sql_handle, filter_name, filter_value, is_fixed, is_enabled, credentials):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16593,7 +16592,7 @@ def load_sql_plan_baselines_from_cursor_cache_database_named_credential_details(
 @cli_util.wrap_exceptions
 def load_sql_plan_baselines_from_cursor_cache_database_password_credential_details(ctx, from_json, managed_database_id, job_name, database_credential_password, job_description, sql_id, plan_hash, sql_text, sql_handle, filter_name, filter_value, is_fixed, is_enabled, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16665,7 +16664,7 @@ def load_sql_plan_baselines_from_cursor_cache_database_password_credential_detai
 @cli_util.wrap_exceptions
 def modify_autonomous_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, feature_details, if_match):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16727,7 +16726,7 @@ def modify_autonomous_database_management_feature(ctx, from_json, wait_for_state
 @cli_util.wrap_exceptions
 def modify_autonomous_database_management_feature_autonomous_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, feature_details_database_connection_details, if_match, feature_details_connector_details):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16795,7 +16794,7 @@ def modify_autonomous_database_management_feature_autonomous_database_sql_watch_
 @cli_util.wrap_exceptions
 def modify_autonomous_database_management_feature_autonomous_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_database_id, feature_details_database_connection_details, if_match, feature_details_connector_details):
 
-    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+    if isinstance(autonomous_database_id, str) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16862,7 +16861,7 @@ def modify_autonomous_database_management_feature_autonomous_database_diagnostic
 @cli_util.wrap_exceptions
 def modify_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, feature_details, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16927,7 +16926,7 @@ def modify_database_management_feature(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def modify_database_management_feature_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, feature_details_database_connection_details, feature_details_connector_details, feature_details_management_type, if_match, feature_details_is_auto_enable_pluggable_database, feature_details_can_enable_all_current_pdbs):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17000,7 +16999,7 @@ def modify_database_management_feature_database_diagnostics_and_management_featu
 @cli_util.wrap_exceptions
 def modify_database_management_feature_database_lifecycle_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, feature_details_database_connection_details, feature_details_connector_details, if_match):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17068,7 +17067,7 @@ def modify_database_management_feature_database_lifecycle_management_feature_det
 @cli_util.wrap_exceptions
 def modify_database_management_feature_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, feature_details_database_connection_details, feature_details_connector_details, if_match, feature_details_can_enable_all_current_pdbs, feature_details_is_auto_enable_pluggable_database):
 
-    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+    if isinstance(database_id, str) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17139,7 +17138,7 @@ def modify_database_management_feature_database_sql_watch_feature_details(ctx, f
 @cli_util.wrap_exceptions
 def modify_external_container_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, feature_details, if_match):
 
-    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+    if isinstance(external_container_database_id, str) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17201,7 +17200,7 @@ def modify_external_container_database_management_feature(ctx, from_json, wait_f
 @cli_util.wrap_exceptions
 def modify_external_container_database_management_feature_external_database_lifecycle_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, feature_details_connector_details, feature_details_license_model, if_match):
 
-    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+    if isinstance(external_container_database_id, str) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17266,7 +17265,7 @@ def modify_external_container_database_management_feature_external_database_life
 @cli_util.wrap_exceptions
 def modify_external_container_database_management_feature_external_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, feature_details_connector_details, if_match):
 
-    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+    if isinstance(external_container_database_id, str) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17333,7 +17332,7 @@ def modify_external_container_database_management_feature_external_database_sql_
 @cli_util.wrap_exceptions
 def modify_external_container_database_management_feature_external_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_container_database_id, feature_details_connector_details, feature_details_license_model, if_match, feature_details_can_enable_all_current_pdbs, feature_details_is_auto_enable_pluggable_database):
 
-    if isinstance(external_container_database_id, six.string_types) and len(external_container_database_id.strip()) == 0:
+    if isinstance(external_container_database_id, str) and len(external_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17404,7 +17403,7 @@ def modify_external_container_database_management_feature_external_database_diag
 @cli_util.wrap_exceptions
 def modify_pluggable_database_management_feature(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, feature_details, if_match):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17469,7 +17468,7 @@ def modify_pluggable_database_management_feature(ctx, from_json, wait_for_state,
 @cli_util.wrap_exceptions
 def modify_pluggable_database_management_feature_database_diagnostics_and_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, feature_details_database_connection_details, feature_details_connector_details, feature_details_management_type, if_match, feature_details_is_auto_enable_pluggable_database, feature_details_can_enable_all_current_pdbs):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17542,7 +17541,7 @@ def modify_pluggable_database_management_feature_database_diagnostics_and_manage
 @cli_util.wrap_exceptions
 def modify_pluggable_database_management_feature_database_lifecycle_management_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, feature_details_database_connection_details, feature_details_connector_details, if_match):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17610,7 +17609,7 @@ def modify_pluggable_database_management_feature_database_lifecycle_management_f
 @cli_util.wrap_exceptions
 def modify_pluggable_database_management_feature_database_sql_watch_feature_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pluggable_database_id, feature_details_database_connection_details, feature_details_connector_details, if_match, feature_details_can_enable_all_current_pdbs, feature_details_is_auto_enable_pluggable_database):
 
-    if isinstance(pluggable_database_id, six.string_types) and len(pluggable_database_id.strip()) == 0:
+    if isinstance(pluggable_database_id, str) and len(pluggable_database_id.strip()) == 0:
         raise click.UsageError('Parameter --pluggable-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17680,7 +17679,7 @@ This option is a JSON list with items of type PatchInstruction.  For documentati
 @cli_util.wrap_exceptions
 def patch_cloud_db_system_discovery(ctx, from_json, cloud_db_system_discovery_id, items, if_match):
 
-    if isinstance(cloud_db_system_discovery_id, six.string_types) and len(cloud_db_system_discovery_id.strip()) == 0:
+    if isinstance(cloud_db_system_discovery_id, str) and len(cloud_db_system_discovery_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-system-discovery-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17715,7 +17714,7 @@ This option is a JSON list with items of type PatchInstruction.  For documentati
 @cli_util.wrap_exceptions
 def patch_external_db_system_discovery(ctx, from_json, external_db_system_discovery_id, items, if_match):
 
-    if isinstance(external_db_system_discovery_id, six.string_types) and len(external_db_system_discovery_id.strip()) == 0:
+    if isinstance(external_db_system_discovery_id, str) and len(external_db_system_discovery_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-discovery-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17751,10 +17750,10 @@ def patch_external_db_system_discovery(ctx, from_json, external_db_system_discov
 @cli_util.wrap_exceptions
 def remove_data_file(ctx, from_json, managed_database_id, tablespace_name, file_type, data_file, credential_details, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+    if isinstance(tablespace_name, str) and len(tablespace_name.strip()) == 0:
         raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17796,10 +17795,10 @@ def remove_data_file(ctx, from_json, managed_database_id, tablespace_name, file_
 @cli_util.wrap_exceptions
 def remove_data_file_tablespace_admin_password_credential_details(ctx, from_json, managed_database_id, tablespace_name, file_type, data_file, credential_details_username, credential_details_role, credential_details_password, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+    if isinstance(tablespace_name, str) and len(tablespace_name.strip()) == 0:
         raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17844,10 +17843,10 @@ def remove_data_file_tablespace_admin_password_credential_details(ctx, from_json
 @cli_util.wrap_exceptions
 def remove_data_file_tablespace_admin_secret_credential_details(ctx, from_json, managed_database_id, tablespace_name, file_type, data_file, credential_details_username, credential_details_role, credential_details_password_secret_id, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+    if isinstance(tablespace_name, str) and len(tablespace_name.strip()) == 0:
         raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17892,10 +17891,10 @@ def remove_data_file_tablespace_admin_secret_credential_details(ctx, from_json, 
 @cli_util.wrap_exceptions
 def remove_data_file_database_secret_credential_details(ctx, from_json, managed_database_id, tablespace_name, file_type, data_file, database_credential_password_secret_id, credential_details, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+    if isinstance(tablespace_name, str) and len(tablespace_name.strip()) == 0:
         raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17942,10 +17941,10 @@ def remove_data_file_database_secret_credential_details(ctx, from_json, managed_
 @cli_util.wrap_exceptions
 def remove_data_file_database_named_credential_details(ctx, from_json, managed_database_id, tablespace_name, file_type, data_file, database_credential_named_credential_id, credential_details):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+    if isinstance(tablespace_name, str) and len(tablespace_name.strip()) == 0:
         raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17988,10 +17987,10 @@ def remove_data_file_database_named_credential_details(ctx, from_json, managed_d
 @cli_util.wrap_exceptions
 def remove_data_file_database_password_credential_details(ctx, from_json, managed_database_id, tablespace_name, file_type, data_file, database_credential_password, credential_details, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+    if isinstance(tablespace_name, str) and len(tablespace_name.strip()) == 0:
         raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18034,7 +18033,7 @@ def remove_data_file_database_password_credential_details(ctx, from_json, manage
 @cli_util.wrap_exceptions
 def remove_managed_database_from_managed_database_group(ctx, from_json, managed_database_group_id, managed_database_id):
 
-    if isinstance(managed_database_group_id, six.string_types) and len(managed_database_group_id.strip()) == 0:
+    if isinstance(managed_database_group_id, str) and len(managed_database_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18067,7 +18066,7 @@ Use `MEMORY` to make the change in memory and ensure that it takes effect immedi
 @cli_util.wrap_exceptions
 def reset_database_parameters(ctx, from_json, managed_database_id, scope, parameters, credentials, database_credential):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18109,7 +18108,7 @@ Use `MEMORY` to make the change in memory and ensure that it takes effect immedi
 @cli_util.wrap_exceptions
 def reset_database_parameters_database_secret_credential_details(ctx, from_json, managed_database_id, scope, parameters, database_credential_password_secret_id, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18156,7 +18155,7 @@ Use `MEMORY` to make the change in memory and ensure that it takes effect immedi
 @cli_util.wrap_exceptions
 def reset_database_parameters_database_named_credential_details(ctx, from_json, managed_database_id, scope, parameters, database_credential_named_credential_id, credentials):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18199,7 +18198,7 @@ Use `MEMORY` to make the change in memory and ensure that it takes effect immedi
 @cli_util.wrap_exceptions
 def reset_database_parameters_database_password_credential_details(ctx, from_json, managed_database_id, scope, parameters, database_credential_password, credentials, database_credential_username, database_credential_role):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18250,10 +18249,10 @@ def reset_database_parameters_database_password_credential_details(ctx, from_jso
 @cli_util.wrap_exceptions
 def resize_data_file(ctx, from_json, managed_database_id, tablespace_name, file_type, data_file, credential_details, database_credential, file_size, is_auto_extensible, auto_extend_next_size, auto_extend_max_size, is_max_size_unlimited):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+    if isinstance(tablespace_name, str) and len(tablespace_name.strip()) == 0:
         raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18306,7 +18305,7 @@ def resize_data_file(ctx, from_json, managed_database_id, tablespace_name, file_
 @cli_util.wrap_exceptions
 def run_historic_addm(ctx, from_json, managed_database_id, start_snapshot_id, end_snapshot_id, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18349,10 +18348,10 @@ def run_historic_addm(ctx, from_json, managed_database_id, start_snapshot_id, en
 @cli_util.wrap_exceptions
 def summarize_awr_db_cpu_usages(ctx, from_json, managed_database_id, awr_db_id, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, session_type, container_id, page, limit, sort_by, sort_order, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(awr_db_id, six.string_types) and len(awr_db_id.strip()) == 0:
+    if isinstance(awr_db_id, str) and len(awr_db_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-db-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18412,10 +18411,10 @@ def summarize_awr_db_cpu_usages(ctx, from_json, managed_database_id, awr_db_id, 
 @cli_util.wrap_exceptions
 def summarize_awr_db_metrics(ctx, from_json, managed_database_id, awr_db_id, name, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, container_id, page, limit, sort_by, sort_order, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(awr_db_id, six.string_types) and len(awr_db_id.strip()) == 0:
+    if isinstance(awr_db_id, str) and len(awr_db_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-db-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18474,10 +18473,10 @@ def summarize_awr_db_metrics(ctx, from_json, managed_database_id, awr_db_id, nam
 @cli_util.wrap_exceptions
 def summarize_awr_db_parameter_changes(ctx, from_json, managed_database_id, awr_db_id, name, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, container_id, page, limit, sort_by, sort_order, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(awr_db_id, six.string_types) and len(awr_db_id.strip()) == 0:
+    if isinstance(awr_db_id, str) and len(awr_db_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-db-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18544,10 +18543,10 @@ Note that this API does not return information on the number of times each datab
 @cli_util.wrap_exceptions
 def summarize_awr_db_parameters(ctx, from_json, managed_database_id, awr_db_id, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, container_id, name, name_contains, value_changed, value_default, value_modified, page, limit, sort_by, sort_order, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(awr_db_id, six.string_types) and len(awr_db_id.strip()) == 0:
+    if isinstance(awr_db_id, str) and len(awr_db_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-db-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18610,7 +18609,7 @@ def summarize_awr_db_parameters(ctx, from_json, managed_database_id, awr_db_id, 
 @cli_util.wrap_exceptions
 def summarize_awr_db_snapshot_ranges(ctx, from_json, managed_database_id, name, time_greater_than_or_equal_to, time_less_than_or_equal_to, page, limit, sort_by, sort_order, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18661,10 +18660,10 @@ def summarize_awr_db_snapshot_ranges(ctx, from_json, managed_database_id, name, 
 @cli_util.wrap_exceptions
 def summarize_awr_db_sysstats(ctx, from_json, managed_database_id, awr_db_id, name, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, container_id, page, limit, sort_by, sort_order, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(awr_db_id, six.string_types) and len(awr_db_id.strip()) == 0:
+    if isinstance(awr_db_id, str) and len(awr_db_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-db-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18722,10 +18721,10 @@ def summarize_awr_db_sysstats(ctx, from_json, managed_database_id, awr_db_id, na
 @cli_util.wrap_exceptions
 def summarize_awr_db_top_wait_events(ctx, from_json, managed_database_id, awr_db_id, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, session_type, container_id, top_n, sort_by, sort_order, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(awr_db_id, six.string_types) and len(awr_db_id.strip()) == 0:
+    if isinstance(awr_db_id, str) and len(awr_db_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-db-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18786,10 +18785,10 @@ def summarize_awr_db_top_wait_events(ctx, from_json, managed_database_id, awr_db
 @cli_util.wrap_exceptions
 def summarize_awr_db_wait_event_buckets(ctx, from_json, managed_database_id, awr_db_id, name, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, num_bucket, min_value, max_value, container_id, page, limit, sort_by, sort_order, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(awr_db_id, six.string_types) and len(awr_db_id.strip()) == 0:
+    if isinstance(awr_db_id, str) and len(awr_db_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-db-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18855,10 +18854,10 @@ def summarize_awr_db_wait_event_buckets(ctx, from_json, managed_database_id, awr
 @cli_util.wrap_exceptions
 def summarize_awr_db_wait_events(ctx, from_json, managed_database_id, awr_db_id, inst_num, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, name, session_type, container_id, page, limit, sort_by, sort_order, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(awr_db_id, six.string_types) and len(awr_db_id.strip()) == 0:
+    if isinstance(awr_db_id, str) and len(awr_db_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-db-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18912,7 +18911,7 @@ def summarize_awr_db_wait_events(ctx, from_json, managed_database_id, awr_db_id,
 @cli_util.wrap_exceptions
 def summarize_cloud_asm_metrics(ctx, from_json, cloud_asm_id, start_time, end_time, page, limit, filter_by_metric_names):
 
-    if isinstance(cloud_asm_id, six.string_types) and len(cloud_asm_id.strip()) == 0:
+    if isinstance(cloud_asm_id, str) and len(cloud_asm_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-asm-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18947,7 +18946,7 @@ def summarize_cloud_asm_metrics(ctx, from_json, cloud_asm_id, start_time, end_ti
 @cli_util.wrap_exceptions
 def summarize_cloud_cluster_metrics(ctx, from_json, cloud_cluster_id, start_time, end_time, page, limit, filter_by_metric_names):
 
-    if isinstance(cloud_cluster_id, six.string_types) and len(cloud_cluster_id.strip()) == 0:
+    if isinstance(cloud_cluster_id, str) and len(cloud_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18982,7 +18981,7 @@ def summarize_cloud_cluster_metrics(ctx, from_json, cloud_cluster_id, start_time
 @cli_util.wrap_exceptions
 def summarize_cloud_db_node_metrics(ctx, from_json, cloud_db_node_id, start_time, end_time, page, limit, filter_by_metric_names):
 
-    if isinstance(cloud_db_node_id, six.string_types) and len(cloud_db_node_id.strip()) == 0:
+    if isinstance(cloud_db_node_id, str) and len(cloud_db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19017,7 +19016,7 @@ def summarize_cloud_db_node_metrics(ctx, from_json, cloud_db_node_id, start_time
 @cli_util.wrap_exceptions
 def summarize_cloud_db_system_availability_metrics(ctx, from_json, cloud_db_system_id, start_time, end_time, page, limit, filter_by_component_types):
 
-    if isinstance(cloud_db_system_id, six.string_types) and len(cloud_db_system_id.strip()) == 0:
+    if isinstance(cloud_db_system_id, str) and len(cloud_db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19052,7 +19051,7 @@ def summarize_cloud_db_system_availability_metrics(ctx, from_json, cloud_db_syst
 @cli_util.wrap_exceptions
 def summarize_cloud_listener_metrics(ctx, from_json, cloud_listener_id, start_time, end_time, page, limit, filter_by_metric_names):
 
-    if isinstance(cloud_listener_id, six.string_types) and len(cloud_listener_id.strip()) == 0:
+    if isinstance(cloud_listener_id, str) and len(cloud_listener_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-listener-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19087,7 +19086,7 @@ def summarize_cloud_listener_metrics(ctx, from_json, cloud_listener_id, start_ti
 @cli_util.wrap_exceptions
 def summarize_external_asm_metrics(ctx, from_json, external_asm_id, start_time, end_time, page, limit, filter_by_metric_names):
 
-    if isinstance(external_asm_id, six.string_types) and len(external_asm_id.strip()) == 0:
+    if isinstance(external_asm_id, str) and len(external_asm_id.strip()) == 0:
         raise click.UsageError('Parameter --external-asm-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19122,7 +19121,7 @@ def summarize_external_asm_metrics(ctx, from_json, external_asm_id, start_time, 
 @cli_util.wrap_exceptions
 def summarize_external_cluster_metrics(ctx, from_json, external_cluster_id, start_time, end_time, page, limit, filter_by_metric_names):
 
-    if isinstance(external_cluster_id, six.string_types) and len(external_cluster_id.strip()) == 0:
+    if isinstance(external_cluster_id, str) and len(external_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --external-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19157,7 +19156,7 @@ def summarize_external_cluster_metrics(ctx, from_json, external_cluster_id, star
 @cli_util.wrap_exceptions
 def summarize_external_db_node_metrics(ctx, from_json, external_db_node_id, start_time, end_time, page, limit, filter_by_metric_names):
 
-    if isinstance(external_db_node_id, six.string_types) and len(external_db_node_id.strip()) == 0:
+    if isinstance(external_db_node_id, str) and len(external_db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19192,7 +19191,7 @@ def summarize_external_db_node_metrics(ctx, from_json, external_db_node_id, star
 @cli_util.wrap_exceptions
 def summarize_external_db_system_availability_metrics(ctx, from_json, external_db_system_id, start_time, end_time, page, limit, filter_by_component_types):
 
-    if isinstance(external_db_system_id, six.string_types) and len(external_db_system_id.strip()) == 0:
+    if isinstance(external_db_system_id, str) and len(external_db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19227,7 +19226,7 @@ def summarize_external_db_system_availability_metrics(ctx, from_json, external_d
 @cli_util.wrap_exceptions
 def summarize_external_listener_metrics(ctx, from_json, external_listener_id, start_time, end_time, page, limit, filter_by_metric_names):
 
-    if isinstance(external_listener_id, six.string_types) and len(external_listener_id.strip()) == 0:
+    if isinstance(external_listener_id, str) and len(external_listener_id.strip()) == 0:
         raise click.UsageError('Parameter --external-listener-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19302,7 +19301,7 @@ def summarize_job_executions_statuses(ctx, from_json, compartment_id, start_time
 @cli_util.wrap_exceptions
 def summarize_managed_database_availability_metrics(ctx, from_json, managed_database_id, start_time, end_time, page, limit):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19332,7 +19331,7 @@ def summarize_managed_database_availability_metrics(ctx, from_json, managed_data
 @cli_util.wrap_exceptions
 def summarize_sql_plan_baselines(ctx, from_json, managed_database_id, page, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19360,7 +19359,7 @@ def summarize_sql_plan_baselines(ctx, from_json, managed_database_id, page, opc_
 @cli_util.wrap_exceptions
 def summarize_sql_plan_baselines_by_last_execution(ctx, from_json, managed_database_id, page, opc_named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19387,7 +19386,7 @@ def summarize_sql_plan_baselines_by_last_execution(ctx, from_json, managed_datab
 @cli_util.wrap_exceptions
 def test_named_credential(ctx, from_json, named_credential_id, managed_database_id):
 
-    if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
+    if isinstance(named_credential_id, str) and len(named_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19418,10 +19417,10 @@ def test_named_credential(ctx, from_json, named_credential_id, managed_database_
 @cli_util.wrap_exceptions
 def test_preferred_credential(ctx, from_json, managed_database_id, credential_name, type):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(credential_name, six.string_types) and len(credential_name.strip()) == 0:
+    if isinstance(credential_name, str) and len(credential_name.strip()) == 0:
         raise click.UsageError('Parameter --credential-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19451,10 +19450,10 @@ def test_preferred_credential(ctx, from_json, managed_database_id, credential_na
 @cli_util.wrap_exceptions
 def test_preferred_credential_test_named_preferred_credential_details(ctx, from_json, managed_database_id, credential_name, named_credential_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(credential_name, six.string_types) and len(credential_name.strip()) == 0:
+    if isinstance(credential_name, str) and len(credential_name.strip()) == 0:
         raise click.UsageError('Parameter --credential-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19490,10 +19489,10 @@ def test_preferred_credential_test_named_preferred_credential_details(ctx, from_
 @cli_util.wrap_exceptions
 def test_preferred_credential_test_basic_preferred_credential_details(ctx, from_json, managed_database_id, credential_name, user_name, role, password_secret_id):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(credential_name, six.string_types) and len(credential_name.strip()) == 0:
+    if isinstance(credential_name, str) and len(credential_name.strip()) == 0:
         raise click.UsageError('Parameter --credential-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -19539,7 +19538,7 @@ def test_preferred_credential_test_basic_preferred_credential_details(ctx, from_
 @cli_util.wrap_exceptions
 def update_cloud_asm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_asm_id, cloud_connector_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(cloud_asm_id, six.string_types) and len(cloud_asm_id.strip()) == 0:
+    if isinstance(cloud_asm_id, str) and len(cloud_asm_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-asm-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -19614,7 +19613,7 @@ def update_cloud_asm(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def update_cloud_asm_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_asm_instance_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(cloud_asm_instance_id, six.string_types) and len(cloud_asm_instance_id.strip()) == 0:
+    if isinstance(cloud_asm_instance_id, str) and len(cloud_asm_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-asm-instance-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -19683,7 +19682,7 @@ def update_cloud_asm_instance(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def update_cloud_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_cluster_id, cloud_connector_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(cloud_cluster_id, six.string_types) and len(cloud_cluster_id.strip()) == 0:
+    if isinstance(cloud_cluster_id, str) and len(cloud_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-cluster-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -19759,7 +19758,7 @@ def update_cloud_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def update_cloud_cluster_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_cluster_instance_id, cloud_connector_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(cloud_cluster_instance_id, six.string_types) and len(cloud_cluster_instance_id.strip()) == 0:
+    if isinstance(cloud_cluster_instance_id, str) and len(cloud_cluster_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-cluster-instance-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -19834,7 +19833,7 @@ def update_cloud_cluster_instance(ctx, from_json, force, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def update_cloud_db_home(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_home_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(cloud_db_home_id, six.string_types) and len(cloud_db_home_id.strip()) == 0:
+    if isinstance(cloud_db_home_id, str) and len(cloud_db_home_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-home-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -19903,7 +19902,7 @@ def update_cloud_db_home(ctx, from_json, force, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def update_cloud_db_node(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_node_id, cloud_connector_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(cloud_db_node_id, six.string_types) and len(cloud_db_node_id.strip()) == 0:
+    if isinstance(cloud_db_node_id, str) and len(cloud_db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-node-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -19979,7 +19978,7 @@ def update_cloud_db_node(ctx, from_json, force, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def update_cloud_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(cloud_db_system_id, six.string_types) and len(cloud_db_system_id.strip()) == 0:
+    if isinstance(cloud_db_system_id, str) and len(cloud_db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-system-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -20048,7 +20047,7 @@ def update_cloud_db_system(ctx, from_json, force, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def update_cloud_db_system_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_connector_id, connector_type, if_match):
 
-    if isinstance(cloud_db_system_connector_id, six.string_types) and len(cloud_db_system_connector_id.strip()) == 0:
+    if isinstance(cloud_db_system_connector_id, str) and len(cloud_db_system_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-system-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20112,7 +20111,7 @@ def update_cloud_db_system_connector(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def update_cloud_db_system_connector_update_cloud_db_system_macs_connector_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_connector_id, connection_info, freeform_tags, defined_tags, if_match):
 
-    if isinstance(cloud_db_system_connector_id, six.string_types) and len(cloud_db_system_connector_id.strip()) == 0:
+    if isinstance(cloud_db_system_connector_id, str) and len(cloud_db_system_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-system-connector-id cannot be whitespace or empty string')
     if not force:
         if connection_info or freeform_tags or defined_tags:
@@ -20190,7 +20189,7 @@ def update_cloud_db_system_connector_update_cloud_db_system_macs_connector_detai
 @cli_util.wrap_exceptions
 def update_cloud_db_system_discovery(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_db_system_discovery_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(cloud_db_system_discovery_id, six.string_types) and len(cloud_db_system_discovery_id.strip()) == 0:
+    if isinstance(cloud_db_system_discovery_id, str) and len(cloud_db_system_discovery_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-db-system-discovery-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -20262,7 +20261,7 @@ def update_cloud_db_system_discovery(ctx, from_json, force, wait_for_state, max_
 @cli_util.wrap_exceptions
 def update_cloud_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_listener_id, cloud_connector_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(cloud_listener_id, six.string_types) and len(cloud_listener_id.strip()) == 0:
+    if isinstance(cloud_listener_id, str) and len(cloud_listener_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-listener-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -20340,7 +20339,7 @@ def update_cloud_listener(ctx, from_json, force, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def update_db_management_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_management_private_endpoint_id, name, description, nsg_ids, freeform_tags, defined_tags, if_match):
 
-    if isinstance(db_management_private_endpoint_id, six.string_types) and len(db_management_private_endpoint_id.strip()) == 0:
+    if isinstance(db_management_private_endpoint_id, str) and len(db_management_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --db-management-private-endpoint-id cannot be whitespace or empty string')
     if not force:
         if nsg_ids or freeform_tags or defined_tags:
@@ -20418,7 +20417,7 @@ def update_db_management_private_endpoint(ctx, from_json, force, wait_for_state,
 @cli_util.wrap_exceptions
 def update_external_asm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_asm_id, external_connector_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(external_asm_id, six.string_types) and len(external_asm_id.strip()) == 0:
+    if isinstance(external_asm_id, str) and len(external_asm_id.strip()) == 0:
         raise click.UsageError('Parameter --external-asm-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -20493,7 +20492,7 @@ def update_external_asm(ctx, from_json, force, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def update_external_asm_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_asm_instance_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(external_asm_instance_id, six.string_types) and len(external_asm_instance_id.strip()) == 0:
+    if isinstance(external_asm_instance_id, str) and len(external_asm_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --external-asm-instance-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -20562,7 +20561,7 @@ def update_external_asm_instance(ctx, from_json, force, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def update_external_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_cluster_id, external_connector_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(external_cluster_id, six.string_types) and len(external_cluster_id.strip()) == 0:
+    if isinstance(external_cluster_id, str) and len(external_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --external-cluster-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -20638,7 +20637,7 @@ def update_external_cluster(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def update_external_cluster_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_cluster_instance_id, external_connector_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(external_cluster_instance_id, six.string_types) and len(external_cluster_instance_id.strip()) == 0:
+    if isinstance(external_cluster_instance_id, str) and len(external_cluster_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --external-cluster-instance-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -20713,7 +20712,7 @@ def update_external_cluster_instance(ctx, from_json, force, wait_for_state, max_
 @cli_util.wrap_exceptions
 def update_external_db_home(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_home_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(external_db_home_id, six.string_types) and len(external_db_home_id.strip()) == 0:
+    if isinstance(external_db_home_id, str) and len(external_db_home_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-home-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -20782,7 +20781,7 @@ def update_external_db_home(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def update_external_db_node(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_node_id, external_connector_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(external_db_node_id, six.string_types) and len(external_db_node_id.strip()) == 0:
+    if isinstance(external_db_node_id, str) and len(external_db_node_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-node-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -20858,7 +20857,7 @@ def update_external_db_node(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def update_external_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(external_db_system_id, six.string_types) and len(external_db_system_id.strip()) == 0:
+    if isinstance(external_db_system_id, str) and len(external_db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -20927,7 +20926,7 @@ def update_external_db_system(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def update_external_db_system_connector(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_connector_id, connector_type, if_match):
 
-    if isinstance(external_db_system_connector_id, six.string_types) and len(external_db_system_connector_id.strip()) == 0:
+    if isinstance(external_db_system_connector_id, str) and len(external_db_system_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-connector-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -20991,7 +20990,7 @@ def update_external_db_system_connector(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def update_external_db_system_connector_update_external_db_system_macs_connector_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_connector_id, connection_info, freeform_tags, defined_tags, if_match):
 
-    if isinstance(external_db_system_connector_id, six.string_types) and len(external_db_system_connector_id.strip()) == 0:
+    if isinstance(external_db_system_connector_id, str) and len(external_db_system_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-connector-id cannot be whitespace or empty string')
     if not force:
         if connection_info or freeform_tags or defined_tags:
@@ -21069,7 +21068,7 @@ def update_external_db_system_connector_update_external_db_system_macs_connector
 @cli_util.wrap_exceptions
 def update_external_db_system_discovery(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_db_system_discovery_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(external_db_system_discovery_id, six.string_types) and len(external_db_system_discovery_id.strip()) == 0:
+    if isinstance(external_db_system_discovery_id, str) and len(external_db_system_discovery_id.strip()) == 0:
         raise click.UsageError('Parameter --external-db-system-discovery-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -21146,7 +21145,7 @@ def update_external_db_system_discovery(ctx, from_json, force, wait_for_state, m
 @cli_util.wrap_exceptions
 def update_external_exadata_infrastructure(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_exadata_infrastructure_id, compartment_id, discovery_key, license_model, display_name, db_system_ids, storage_server_names, freeform_tags, defined_tags, if_match):
 
-    if isinstance(external_exadata_infrastructure_id, six.string_types) and len(external_exadata_infrastructure_id.strip()) == 0:
+    if isinstance(external_exadata_infrastructure_id, str) and len(external_exadata_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --external-exadata-infrastructure-id cannot be whitespace or empty string')
     if not force:
         if db_system_ids or storage_server_names or freeform_tags or defined_tags:
@@ -21233,7 +21232,7 @@ def update_external_exadata_infrastructure(ctx, from_json, force, wait_for_state
 @cli_util.wrap_exceptions
 def update_external_exadata_storage_connector(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_exadata_storage_connector_id, connector_name, connection_uri, credential_info, freeform_tags, defined_tags, if_match):
 
-    if isinstance(external_exadata_storage_connector_id, six.string_types) and len(external_exadata_storage_connector_id.strip()) == 0:
+    if isinstance(external_exadata_storage_connector_id, str) and len(external_exadata_storage_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-exadata-storage-connector-id cannot be whitespace or empty string')
     if not force:
         if credential_info or freeform_tags or defined_tags:
@@ -21310,7 +21309,7 @@ def update_external_exadata_storage_connector(ctx, from_json, force, wait_for_st
 @cli_util.wrap_exceptions
 def update_external_exadata_storage_grid(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_exadata_storage_grid_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(external_exadata_storage_grid_id, six.string_types) and len(external_exadata_storage_grid_id.strip()) == 0:
+    if isinstance(external_exadata_storage_grid_id, str) and len(external_exadata_storage_grid_id.strip()) == 0:
         raise click.UsageError('Parameter --external-exadata-storage-grid-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -21378,7 +21377,7 @@ def update_external_exadata_storage_grid(ctx, from_json, force, wait_for_state, 
 @cli_util.wrap_exceptions
 def update_external_exadata_storage_server(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_exadata_storage_server_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(external_exadata_storage_server_id, six.string_types) and len(external_exadata_storage_server_id.strip()) == 0:
+    if isinstance(external_exadata_storage_server_id, str) and len(external_exadata_storage_server_id.strip()) == 0:
         raise click.UsageError('Parameter --external-exadata-storage-server-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -21447,7 +21446,7 @@ def update_external_exadata_storage_server(ctx, from_json, force, wait_for_state
 @cli_util.wrap_exceptions
 def update_external_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_listener_id, external_connector_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(external_listener_id, six.string_types) and len(external_listener_id.strip()) == 0:
+    if isinstance(external_listener_id, str) and len(external_listener_id.strip()) == 0:
         raise click.UsageError('Parameter --external-listener-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -21517,7 +21516,7 @@ def update_external_listener(ctx, from_json, force, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def update_external_mysql_database(ctx, from_json, external_my_sql_database_id, db_name, if_match):
 
-    if isinstance(external_my_sql_database_id, six.string_types) and len(external_my_sql_database_id.strip()) == 0:
+    if isinstance(external_my_sql_database_id, str) and len(external_my_sql_database_id.strip()) == 0:
         raise click.UsageError('Parameter --external-my-sql-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -21553,7 +21552,7 @@ def update_external_mysql_database(ctx, from_json, external_my_sql_database_id, 
 @cli_util.wrap_exceptions
 def update_external_mysql_database_connector(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, external_my_sql_database_connector_id, connector_details, compartment_id, if_match):
 
-    if isinstance(external_my_sql_database_connector_id, six.string_types) and len(external_my_sql_database_connector_id.strip()) == 0:
+    if isinstance(external_my_sql_database_connector_id, str) and len(external_my_sql_database_connector_id.strip()) == 0:
         raise click.UsageError('Parameter --external-my-sql-database-connector-id cannot be whitespace or empty string')
     if not force:
         if connector_details:
@@ -21626,7 +21625,7 @@ def update_external_mysql_database_connector(ctx, from_json, force, wait_for_sta
 @cli_util.wrap_exceptions
 def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, description, job_type, timeout, result_location, schedule_details, if_match):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
     if not force:
         if result_location or schedule_details:
@@ -21716,7 +21715,7 @@ def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def update_job_update_sql_job_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, description, timeout, result_location, schedule_details, sql_text, in_binds, out_binds, sql_type, user_name, password, secret_id, named_credential_id, role, freeform_tags, defined_tags, if_match):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
     if not force:
         if result_location or schedule_details or in_binds or out_binds or freeform_tags or defined_tags:
@@ -21828,7 +21827,7 @@ def update_job_update_sql_job_details(ctx, from_json, force, wait_for_state, max
 @cli_util.wrap_exceptions
 def update_job_object_storage_job_execution_result_location(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, description, timeout, schedule_details, if_match, result_location_namespace_name, result_location_bucket_name):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
     if not force:
         if schedule_details:
@@ -21905,7 +21904,7 @@ def update_job_object_storage_job_execution_result_location(ctx, from_json, forc
 @cli_util.wrap_exceptions
 def update_managed_database(ctx, from_json, force, managed_database_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -21951,7 +21950,7 @@ def update_managed_database(ctx, from_json, force, managed_database_id, freeform
 @cli_util.wrap_exceptions
 def update_managed_database_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_database_group_id, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(managed_database_group_id, six.string_types) and len(managed_database_group_id.strip()) == 0:
+    if isinstance(managed_database_group_id, str) and len(managed_database_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-group-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -22026,7 +22025,7 @@ def update_managed_database_group(ctx, from_json, force, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def update_named_credential(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, named_credential_id, description, scope, content, associated_resource, freeform_tags, defined_tags, if_match):
 
-    if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
+    if isinstance(named_credential_id, str) and len(named_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
     if not force:
         if content or freeform_tags or defined_tags:
@@ -22113,7 +22112,7 @@ def update_named_credential(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def update_named_credential_basic_named_credential_content(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, named_credential_id, content_user_name, content_role, content_password_secret_id, content_password_secret_access_mode, description, scope, associated_resource, freeform_tags, defined_tags, if_match):
 
-    if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
+    if isinstance(named_credential_id, str) and len(named_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -22193,10 +22192,10 @@ def update_named_credential_basic_named_credential_content(ctx, from_json, force
 @cli_util.wrap_exceptions
 def update_preferred_credential(ctx, from_json, managed_database_id, credential_name, type, if_match):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(credential_name, six.string_types) and len(credential_name.strip()) == 0:
+    if isinstance(credential_name, str) and len(credential_name.strip()) == 0:
         raise click.UsageError('Parameter --credential-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22229,10 +22228,10 @@ def update_preferred_credential(ctx, from_json, managed_database_id, credential_
 @cli_util.wrap_exceptions
 def update_preferred_credential_update_named_preferred_credential_details(ctx, from_json, managed_database_id, credential_name, named_credential_id, if_match):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(credential_name, six.string_types) and len(credential_name.strip()) == 0:
+    if isinstance(credential_name, str) and len(credential_name.strip()) == 0:
         raise click.UsageError('Parameter --credential-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22271,10 +22270,10 @@ def update_preferred_credential_update_named_preferred_credential_details(ctx, f
 @cli_util.wrap_exceptions
 def update_preferred_credential_update_basic_preferred_credential_details(ctx, from_json, managed_database_id, credential_name, user_name, role, password_secret_id, if_match):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(credential_name, six.string_types) and len(credential_name.strip()) == 0:
+    if isinstance(credential_name, str) and len(credential_name.strip()) == 0:
         raise click.UsageError('Parameter --credential-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -22327,10 +22326,10 @@ def update_preferred_credential_update_basic_preferred_credential_details(ctx, f
 @cli_util.wrap_exceptions
 def update_tablespace(ctx, from_json, force, managed_database_id, tablespace_name, credential_details, database_credential, name, type, file_size, status, is_auto_extensible, auto_extend_next_size, auto_extend_max_size, is_max_size_unlimited, is_default):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(tablespace_name, six.string_types) and len(tablespace_name.strip()) == 0:
+    if isinstance(tablespace_name, str) and len(tablespace_name.strip()) == 0:
         raise click.UsageError('Parameter --tablespace-name cannot be whitespace or empty string')
     if not force:
         if credential_details or database_credential or file_size or auto_extend_next_size or auto_extend_max_size:

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -93,7 +92,7 @@ adm_root_group.add_command(vulnerability_audit_group)
 @cli_util.wrap_exceptions
 def activate_remediation_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, if_match):
 
-    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+    if isinstance(remediation_recipe_id, str) and len(remediation_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -148,7 +147,7 @@ def activate_remediation_recipe(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def cancel_remediation_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_run_id, if_match):
 
-    if isinstance(remediation_run_id, six.string_types) and len(remediation_run_id.strip()) == 0:
+    if isinstance(remediation_run_id, str) and len(remediation_run_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -197,7 +196,7 @@ def cancel_remediation_run(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -226,7 +225,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_knowledge_base_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, compartment_id, if_match):
 
-    if isinstance(knowledge_base_id, six.string_types) and len(knowledge_base_id.strip()) == 0:
+    if isinstance(knowledge_base_id, str) and len(knowledge_base_id.strip()) == 0:
         raise click.UsageError('Parameter --knowledge-base-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -287,7 +286,7 @@ def change_knowledge_base_compartment(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def change_remediation_recipe_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, compartment_id, if_match):
 
-    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+    if isinstance(remediation_recipe_id, str) and len(remediation_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -345,7 +344,7 @@ def change_remediation_recipe_compartment(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def change_remediation_run_compartment(ctx, from_json, remediation_run_id, compartment_id, if_match):
 
-    if isinstance(remediation_run_id, six.string_types) and len(remediation_run_id.strip()) == 0:
+    if isinstance(remediation_run_id, str) and len(remediation_run_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -376,7 +375,7 @@ def change_remediation_run_compartment(ctx, from_json, remediation_run_id, compa
 @cli_util.wrap_exceptions
 def change_vulnerability_audit_compartment(ctx, from_json, vulnerability_audit_id, compartment_id, if_match):
 
-    if isinstance(vulnerability_audit_id, six.string_types) and len(vulnerability_audit_id.strip()) == 0:
+    if isinstance(vulnerability_audit_id, str) and len(vulnerability_audit_id.strip()) == 0:
         raise click.UsageError('Parameter --vulnerability-audit-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1686,7 +1685,7 @@ def create_vulnerability_audit_external_resource_vulnerability_audit_source(ctx,
 @cli_util.wrap_exceptions
 def deactivate_remediation_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, if_match):
 
-    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+    if isinstance(remediation_recipe_id, str) and len(remediation_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1742,7 +1741,7 @@ def deactivate_remediation_recipe(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_knowledge_base(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, if_match):
 
-    if isinstance(knowledge_base_id, six.string_types) and len(knowledge_base_id.strip()) == 0:
+    if isinstance(knowledge_base_id, str) and len(knowledge_base_id.strip()) == 0:
         raise click.UsageError('Parameter --knowledge-base-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1798,7 +1797,7 @@ def delete_knowledge_base(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_remediation_recipe(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, if_match):
 
-    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+    if isinstance(remediation_recipe_id, str) and len(remediation_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1854,7 +1853,7 @@ def delete_remediation_recipe(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_remediation_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_run_id, if_match):
 
-    if isinstance(remediation_run_id, six.string_types) and len(remediation_run_id.strip()) == 0:
+    if isinstance(remediation_run_id, str) and len(remediation_run_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1918,7 +1917,7 @@ def delete_remediation_run(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_vulnerability_audit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vulnerability_audit_id, if_match):
 
-    if isinstance(vulnerability_audit_id, six.string_types) and len(vulnerability_audit_id.strip()) == 0:
+    if isinstance(vulnerability_audit_id, str) and len(vulnerability_audit_id.strip()) == 0:
         raise click.UsageError('Parameter --vulnerability-audit-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1977,7 +1976,7 @@ def delete_vulnerability_audit(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def get_knowledge_base(ctx, from_json, knowledge_base_id):
 
-    if isinstance(knowledge_base_id, six.string_types) and len(knowledge_base_id.strip()) == 0:
+    if isinstance(knowledge_base_id, str) and len(knowledge_base_id.strip()) == 0:
         raise click.UsageError('Parameter --knowledge-base-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1999,7 +1998,7 @@ def get_knowledge_base(ctx, from_json, knowledge_base_id):
 @cli_util.wrap_exceptions
 def get_remediation_recipe(ctx, from_json, remediation_recipe_id):
 
-    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+    if isinstance(remediation_recipe_id, str) and len(remediation_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2021,7 +2020,7 @@ def get_remediation_recipe(ctx, from_json, remediation_recipe_id):
 @cli_util.wrap_exceptions
 def get_remediation_run(ctx, from_json, remediation_run_id):
 
-    if isinstance(remediation_run_id, six.string_types) and len(remediation_run_id.strip()) == 0:
+    if isinstance(remediation_run_id, str) and len(remediation_run_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2044,10 +2043,10 @@ def get_remediation_run(ctx, from_json, remediation_run_id):
 @cli_util.wrap_exceptions
 def get_stage(ctx, from_json, remediation_run_id, stage_type):
 
-    if isinstance(remediation_run_id, six.string_types) and len(remediation_run_id.strip()) == 0:
+    if isinstance(remediation_run_id, str) and len(remediation_run_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-run-id cannot be whitespace or empty string')
 
-    if isinstance(stage_type, six.string_types) and len(stage_type.strip()) == 0:
+    if isinstance(stage_type, str) and len(stage_type.strip()) == 0:
         raise click.UsageError('Parameter --stage-type cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2070,7 +2069,7 @@ def get_stage(ctx, from_json, remediation_run_id, stage_type):
 @cli_util.wrap_exceptions
 def get_vulnerability_audit(ctx, from_json, vulnerability_audit_id):
 
-    if isinstance(vulnerability_audit_id, six.string_types) and len(vulnerability_audit_id.strip()) == 0:
+    if isinstance(vulnerability_audit_id, str) and len(vulnerability_audit_id.strip()) == 0:
         raise click.UsageError('Parameter --vulnerability-audit-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2092,7 +2091,7 @@ def get_vulnerability_audit(ctx, from_json, vulnerability_audit_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2125,7 +2124,7 @@ def list_application_dependency_recommendations(ctx, from_json, all_pages, page_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(remediation_run_id, six.string_types) and len(remediation_run_id.strip()) == 0:
+    if isinstance(remediation_run_id, str) and len(remediation_run_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2194,7 +2193,7 @@ def list_application_dependency_vulnerabilities(ctx, from_json, all_pages, page_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(vulnerability_audit_id, six.string_types) and len(vulnerability_audit_id.strip()) == 0:
+    if isinstance(vulnerability_audit_id, str) and len(vulnerability_audit_id.strip()) == 0:
         raise click.UsageError('Parameter --vulnerability-audit-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2458,7 +2457,7 @@ def list_stages(ctx, from_json, all_pages, page_size, remediation_run_id, type, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(remediation_run_id, six.string_types) and len(remediation_run_id.strip()) == 0:
+    if isinstance(remediation_run_id, str) and len(remediation_run_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2596,7 +2595,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2653,7 +2652,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2771,7 +2770,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def update_knowledge_base(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, knowledge_base_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(knowledge_base_id, six.string_types) and len(knowledge_base_id.strip()) == 0:
+    if isinstance(knowledge_base_id, str) and len(knowledge_base_id.strip()) == 0:
         raise click.UsageError('Parameter --knowledge-base-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -2853,7 +2852,7 @@ def update_knowledge_base(ctx, from_json, force, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def update_remediation_recipe(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, display_name, scm_configuration, verify_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, freeform_tags, defined_tags, if_match):
 
-    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+    if isinstance(remediation_recipe_id, str) and len(remediation_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
     if not force:
         if scm_configuration or verify_configuration or detect_configuration or network_configuration or freeform_tags or defined_tags:
@@ -2956,7 +2955,7 @@ def update_remediation_recipe(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def update_remediation_recipe_oci_code_repository_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, scm_configuration_branch, scm_configuration_is_automerge_enabled, scm_configuration_oci_code_repository_id, display_name, verify_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, freeform_tags, defined_tags, if_match, scm_configuration_build_file_location):
 
-    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+    if isinstance(remediation_recipe_id, str) and len(remediation_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
     if not force:
         if verify_configuration or detect_configuration or network_configuration or freeform_tags or defined_tags:
@@ -3068,7 +3067,7 @@ def update_remediation_recipe_oci_code_repository_configuration(ctx, from_json, 
 @cli_util.wrap_exceptions
 def update_remediation_recipe_external_scm_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, scm_configuration_branch, scm_configuration_is_automerge_enabled, scm_configuration_external_scm_type, scm_configuration_repository_url, scm_configuration_pat_secret_id, display_name, verify_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, freeform_tags, defined_tags, if_match, scm_configuration_build_file_location, scm_configuration_username):
 
-    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+    if isinstance(remediation_recipe_id, str) and len(remediation_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
     if not force:
         if verify_configuration or detect_configuration or network_configuration or freeform_tags or defined_tags:
@@ -3183,7 +3182,7 @@ def update_remediation_recipe_external_scm_configuration(ctx, from_json, force, 
 @cli_util.wrap_exceptions
 def update_remediation_recipe_jenkins_pipeline_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, verify_configuration_username, verify_configuration_pat_secret_id, verify_configuration_jenkins_url, verify_configuration_job_name, display_name, scm_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, freeform_tags, defined_tags, if_match, verify_configuration_additional_parameters):
 
-    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+    if isinstance(remediation_recipe_id, str) and len(remediation_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
     if not force:
         if scm_configuration or detect_configuration or network_configuration or freeform_tags or defined_tags:
@@ -3289,7 +3288,7 @@ def update_remediation_recipe_jenkins_pipeline_configuration(ctx, from_json, for
 @cli_util.wrap_exceptions
 def update_remediation_recipe_none_verify_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, display_name, scm_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, freeform_tags, defined_tags, if_match):
 
-    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+    if isinstance(remediation_recipe_id, str) and len(remediation_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
     if not force:
         if scm_configuration or detect_configuration or network_configuration or freeform_tags or defined_tags:
@@ -3390,7 +3389,7 @@ def update_remediation_recipe_none_verify_configuration(ctx, from_json, force, w
 @cli_util.wrap_exceptions
 def update_remediation_recipe_oci_dev_ops_build_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, verify_configuration_pipeline_id, display_name, scm_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, freeform_tags, defined_tags, if_match, verify_configuration_additional_parameters):
 
-    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+    if isinstance(remediation_recipe_id, str) and len(remediation_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
     if not force:
         if scm_configuration or detect_configuration or network_configuration or freeform_tags or defined_tags:
@@ -3498,7 +3497,7 @@ def update_remediation_recipe_oci_dev_ops_build_configuration(ctx, from_json, fo
 @cli_util.wrap_exceptions
 def update_remediation_recipe_git_hub_actions_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, verify_configuration_repository_url, verify_configuration_pat_secret_id, verify_configuration_username, verify_configuration_workflow_name, display_name, scm_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, freeform_tags, defined_tags, if_match, verify_configuration_additional_parameters):
 
-    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+    if isinstance(remediation_recipe_id, str) and len(remediation_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
     if not force:
         if scm_configuration or detect_configuration or network_configuration or freeform_tags or defined_tags:
@@ -3609,7 +3608,7 @@ def update_remediation_recipe_git_hub_actions_configuration(ctx, from_json, forc
 @cli_util.wrap_exceptions
 def update_remediation_recipe_git_lab_pipeline_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_recipe_id, verify_configuration_repository_url, verify_configuration_username, verify_configuration_pat_secret_id, verify_configuration_trigger_secret_id, display_name, scm_configuration, detect_configuration, network_configuration, knowledge_base_id, is_run_triggered_on_kb_change, freeform_tags, defined_tags, if_match, verify_configuration_additional_parameters):
 
-    if isinstance(remediation_recipe_id, six.string_types) and len(remediation_recipe_id.strip()) == 0:
+    if isinstance(remediation_recipe_id, str) and len(remediation_recipe_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-recipe-id cannot be whitespace or empty string')
     if not force:
         if scm_configuration or detect_configuration or network_configuration or freeform_tags or defined_tags:
@@ -3710,7 +3709,7 @@ def update_remediation_recipe_git_lab_pipeline_configuration(ctx, from_json, for
 @cli_util.wrap_exceptions
 def update_remediation_run(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remediation_run_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(remediation_run_id, six.string_types) and len(remediation_run_id.strip()) == 0:
+    if isinstance(remediation_run_id, str) and len(remediation_run_id.strip()) == 0:
         raise click.UsageError('Parameter --remediation-run-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3782,7 +3781,7 @@ def update_remediation_run(ctx, from_json, force, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def update_vulnerability_audit(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vulnerability_audit_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(vulnerability_audit_id, six.string_types) and len(vulnerability_audit_id.strip()) == 0:
+    if isinstance(vulnerability_audit_id, str) and len(vulnerability_audit_id.strip()) == 0:
         raise click.UsageError('Parameter --vulnerability-audit-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

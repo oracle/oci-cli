@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -145,7 +144,7 @@ fleet_apps_management_service_cli.fleet_apps_management_service_group.add_comman
 @cli_util.wrap_exceptions
 def change_fleet_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, compartment_id, if_match):
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -234,7 +233,7 @@ def check_resource_tagging(ctx, from_json, compartment_id, resource_ids, fleet_d
 @cli_util.wrap_exceptions
 def confirm_targets(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, targets, fleet_id):
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1102,7 +1101,7 @@ Example: `My new resource`""")
 @cli_util.wrap_exceptions
 def create_fleet_credential(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, entity_specifics, user, password, fleet_id):
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1164,7 +1163,7 @@ def create_fleet_credential(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def create_fleet_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, value, property_id, fleet_id):
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1223,7 +1222,7 @@ def create_fleet_property(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def create_fleet_resource(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, resource_id, tenancy_id, compartment_id, fleet_id, resource_region, resource_type):
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1290,7 +1289,7 @@ def create_fleet_resource(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_fleet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, if_match):
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1347,10 +1346,10 @@ def delete_fleet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def delete_fleet_credential(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_credential_id, fleet_id, if_match):
 
-    if isinstance(fleet_credential_id, six.string_types) and len(fleet_credential_id.strip()) == 0:
+    if isinstance(fleet_credential_id, str) and len(fleet_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-credential-id cannot be whitespace or empty string')
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1405,10 +1404,10 @@ def delete_fleet_credential(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_fleet_property(ctx, from_json, fleet_property_id, fleet_id, if_match):
 
-    if isinstance(fleet_property_id, six.string_types) and len(fleet_property_id.strip()) == 0:
+    if isinstance(fleet_property_id, str) and len(fleet_property_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-property-id cannot be whitespace or empty string')
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1439,10 +1438,10 @@ def delete_fleet_property(ctx, from_json, fleet_property_id, fleet_id, if_match)
 @cli_util.wrap_exceptions
 def delete_fleet_resource(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_resource_id, fleet_id, if_match):
 
-    if isinstance(fleet_resource_id, six.string_types) and len(fleet_resource_id.strip()) == 0:
+    if isinstance(fleet_resource_id, str) and len(fleet_resource_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-resource-id cannot be whitespace or empty string')
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1498,7 +1497,7 @@ def delete_fleet_resource(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def generate_compliance_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, are_details_required):
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1555,10 +1554,10 @@ def generate_compliance_report(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def get_compliance_report(ctx, from_json, fleet_id, compliance_report_id):
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
-    if isinstance(compliance_report_id, six.string_types) and len(compliance_report_id.strip()) == 0:
+    if isinstance(compliance_report_id, str) and len(compliance_report_id.strip()) == 0:
         raise click.UsageError('Parameter --compliance-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1581,7 +1580,7 @@ def get_compliance_report(ctx, from_json, fleet_id, compliance_report_id):
 @cli_util.wrap_exceptions
 def get_fleet(ctx, from_json, fleet_id):
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1604,10 +1603,10 @@ def get_fleet(ctx, from_json, fleet_id):
 @cli_util.wrap_exceptions
 def get_fleet_credential(ctx, from_json, fleet_credential_id, fleet_id):
 
-    if isinstance(fleet_credential_id, six.string_types) and len(fleet_credential_id.strip()) == 0:
+    if isinstance(fleet_credential_id, str) and len(fleet_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-credential-id cannot be whitespace or empty string')
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1631,10 +1630,10 @@ def get_fleet_credential(ctx, from_json, fleet_credential_id, fleet_id):
 @cli_util.wrap_exceptions
 def get_fleet_property(ctx, from_json, fleet_property_id, fleet_id):
 
-    if isinstance(fleet_property_id, six.string_types) and len(fleet_property_id.strip()) == 0:
+    if isinstance(fleet_property_id, str) and len(fleet_property_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-property-id cannot be whitespace or empty string')
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1658,10 +1657,10 @@ def get_fleet_property(ctx, from_json, fleet_property_id, fleet_id):
 @cli_util.wrap_exceptions
 def get_fleet_resource(ctx, from_json, fleet_resource_id, fleet_id):
 
-    if isinstance(fleet_resource_id, six.string_types) and len(fleet_resource_id.strip()) == 0:
+    if isinstance(fleet_resource_id, str) and len(fleet_resource_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-resource-id cannot be whitespace or empty string')
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1759,7 +1758,7 @@ def list_fleet_credentials(ctx, from_json, all_pages, page_size, fleet_id, lifec
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1832,7 +1831,7 @@ def list_fleet_products(ctx, from_json, all_pages, page_size, fleet_id, compartm
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1900,7 +1899,7 @@ def list_fleet_properties(ctx, from_json, all_pages, page_size, fleet_id, lifecy
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1967,7 +1966,7 @@ def list_fleet_resources(ctx, from_json, all_pages, page_size, fleet_id, lifecyc
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2036,7 +2035,7 @@ def list_fleet_targets(ctx, from_json, all_pages, page_size, fleet_id, display_n
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2255,7 +2254,7 @@ def list_targets(ctx, from_json, all_pages, page_size, fleet_id, display_name, l
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2310,7 +2309,7 @@ def list_targets(ctx, from_json, all_pages, page_size, fleet_id, display_name, l
 @cli_util.wrap_exceptions
 def request_resource_validation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, is_applicable_to_all_resources, resource_ids):
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2374,7 +2373,7 @@ def request_resource_validation(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def request_target_discovery(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, is_applicable_to_all_resources, resource_ids):
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2450,7 +2449,7 @@ This option is a JSON list with items of type NotificationPreference.  For docum
 @cli_util.wrap_exceptions
 def update_fleet(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, display_name, description, notification_preferences, is_target_auto_confirm, resource_selection, products, freeform_tags, defined_tags, if_match):
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
     if not force:
         if notification_preferences or resource_selection or products or freeform_tags or defined_tags:
@@ -2546,7 +2545,7 @@ This option is a JSON list with items of type NotificationPreference.  For docum
 @cli_util.wrap_exceptions
 def update_fleet_dynamic_resource_selection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, resource_selection_rule_selection_criteria, display_name, description, notification_preferences, is_target_auto_confirm, products, freeform_tags, defined_tags, if_match):
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
     if not force:
         if notification_preferences or products or freeform_tags or defined_tags:
@@ -2642,7 +2641,7 @@ This option is a JSON list with items of type NotificationPreference.  For docum
 @cli_util.wrap_exceptions
 def update_fleet_manual_resource_selection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, display_name, description, notification_preferences, is_target_auto_confirm, products, freeform_tags, defined_tags, if_match):
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
     if not force:
         if notification_preferences or products or freeform_tags or defined_tags:
@@ -2733,10 +2732,10 @@ Example: `My new resource`""")
 @cli_util.wrap_exceptions
 def update_fleet_credential(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_credential_id, fleet_id, display_name, entity_specifics, user, password, if_match):
 
-    if isinstance(fleet_credential_id, six.string_types) and len(fleet_credential_id.strip()) == 0:
+    if isinstance(fleet_credential_id, str) and len(fleet_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-credential-id cannot be whitespace or empty string')
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
     if not force:
         if entity_specifics or user or password:
@@ -2814,10 +2813,10 @@ def update_fleet_credential(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def update_fleet_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_property_id, fleet_id, value, if_match):
 
-    if isinstance(fleet_property_id, six.string_types) and len(fleet_property_id.strip()) == 0:
+    if isinstance(fleet_property_id, str) and len(fleet_property_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-property-id cannot be whitespace or empty string')
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2879,10 +2878,10 @@ def update_fleet_property(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def update_fleet_resource(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_resource_id, fleet_id, tenancy_id, compartment_id, if_match):
 
-    if isinstance(fleet_resource_id, six.string_types) and len(fleet_resource_id.strip()) == 0:
+    if isinstance(fleet_resource_id, str) and len(fleet_resource_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-resource-id cannot be whitespace or empty string')
 
-    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+    if isinstance(fleet_id, str) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
 
     kwargs = {}

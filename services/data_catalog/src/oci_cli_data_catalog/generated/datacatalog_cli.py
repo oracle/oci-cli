@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -350,7 +349,7 @@ data_catalog_root_group.add_command(job_execution_collection_group)
 @cli_util.wrap_exceptions
 def add_catalog_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -419,7 +418,7 @@ def add_catalog_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def add_catalog_private_endpoint_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_private_endpoint_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(catalog_private_endpoint_id, six.string_types) and len(catalog_private_endpoint_id.strip()) == 0:
+    if isinstance(catalog_private_endpoint_id, str) and len(catalog_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -486,10 +485,10 @@ def add_catalog_private_endpoint_lock(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def add_data_selector_patterns(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, items, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -550,7 +549,7 @@ def add_data_selector_patterns(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def add_metastore_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, metastore_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(metastore_id, six.string_types) and len(metastore_id.strip()) == 0:
+    if isinstance(metastore_id, str) and len(metastore_id.strip()) == 0:
         raise click.UsageError('Parameter --metastore-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -618,10 +617,10 @@ def add_metastore_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def associate_custom_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, type_key, custom_property_ids, is_event_enabled, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(type_key, six.string_types) and len(type_key.strip()) == 0:
+    if isinstance(type_key, str) and len(type_key.strip()) == 0:
         raise click.UsageError('Parameter --type-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -685,10 +684,10 @@ This option is a JSON list with items of type DataAssetExportScope.  For documen
 @cli_util.wrap_exceptions
 def asynchronous_export_data_asset(ctx, from_json, catalog_id, data_asset_key, export_type, export_scope, object_storage_target):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -724,10 +723,10 @@ def asynchronous_export_data_asset(ctx, from_json, catalog_id, data_asset_key, e
 @cli_util.wrap_exceptions
 def asynchronous_export_glossary(ctx, from_json, catalog_id, glossary_key, object_storage_target):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(glossary_key, six.string_types) and len(glossary_key.strip()) == 0:
+    if isinstance(glossary_key, str) and len(glossary_key.strip()) == 0:
         raise click.UsageError('Parameter --glossary-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -763,7 +762,7 @@ def asynchronous_export_glossary(ctx, from_json, catalog_id, glossary_key, objec
 @cli_util.wrap_exceptions
 def attach_catalog_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_private_endpoint_id, catalog_id, if_match, is_lock_override):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -827,7 +826,7 @@ def attach_catalog_private_endpoint(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def change_catalog_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, catalog_id, if_match, is_lock_override):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -891,7 +890,7 @@ def change_catalog_compartment(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def change_catalog_private_endpoint_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, catalog_private_endpoint_id, if_match, is_lock_override):
 
-    if isinstance(catalog_private_endpoint_id, six.string_types) and len(catalog_private_endpoint_id.strip()) == 0:
+    if isinstance(catalog_private_endpoint_id, str) and len(catalog_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -955,7 +954,7 @@ def change_catalog_private_endpoint_compartment(ctx, from_json, wait_for_state, 
 @cli_util.wrap_exceptions
 def change_metastore_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, metastore_id, if_match, is_lock_override):
 
-    if isinstance(metastore_id, six.string_types) and len(metastore_id.strip()) == 0:
+    if isinstance(metastore_id, str) and len(metastore_id.strip()) == 0:
         raise click.UsageError('Parameter --metastore-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1038,13 +1037,13 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @cli_util.wrap_exceptions
 def create_attribute(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, display_name, external_data_type, time_external, business_name, description, is_incremental_data, is_nullable, length, position, precision, scale, min_collection_count, max_collection_count, external_datatype_entity_key, external_parent_attribute_key, custom_property_members, type_key, properties):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+    if isinstance(entity_key, str) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1151,16 +1150,16 @@ def create_attribute(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def create_attribute_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, attribute_key, name, term_key):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+    if isinstance(entity_key, str) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
 
-    if isinstance(attribute_key, six.string_types) and len(attribute_key.strip()) == 0:
+    if isinstance(attribute_key, str) and len(attribute_key.strip()) == 0:
         raise click.UsageError('Parameter --attribute-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1365,10 +1364,10 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @cli_util.wrap_exceptions
 def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, type_key, properties, description, custom_property_members, enc_properties, is_default):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1450,10 +1449,10 @@ def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def create_custom_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, namespace_id, display_name, description, data_type, is_sortable, is_filterable, is_multi_valued, is_hidden, is_editable, is_shown_in_list, is_hidden_in_search, is_event_enabled, allowed_values, properties):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(namespace_id, six.string_types) and len(namespace_id.strip()) == 0:
+    if isinstance(namespace_id, str) and len(namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1550,7 +1549,7 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @cli_util.wrap_exceptions
 def create_data_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, display_name, type_key, description, custom_property_members, properties):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1616,10 +1615,10 @@ def create_data_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def create_data_asset_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, name, term_key):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1695,10 +1694,10 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @cli_util.wrap_exceptions
 def create_entity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, time_external, business_name, type_key, description, is_logical, is_partition, folder_key, pattern_key, realized_expression, harvest_status, last_job_key, custom_property_members, properties):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1793,13 +1792,13 @@ def create_entity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def create_entity_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, name, term_key):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+    if isinstance(entity_key, str) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1872,10 +1871,10 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @cli_util.wrap_exceptions
 def create_folder(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, time_external, business_name, description, custom_property_members, properties, parent_folder_key, last_job_key, harvest_status, type_key):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1958,13 +1957,13 @@ def create_folder(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def create_folder_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, folder_key, name, term_key):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(folder_key, six.string_types) and len(folder_key.strip()) == 0:
+    if isinstance(folder_key, str) and len(folder_key.strip()) == 0:
         raise click.UsageError('Parameter --folder-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2031,7 +2030,7 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @cli_util.wrap_exceptions
 def create_glossary(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, display_name, description, workflow_status, owner, custom_property_members):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2103,7 +2102,7 @@ def create_glossary(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, display_name, job_definition_key, description, schedule_cron_expression, time_schedule_begin, time_schedule_end, connection_key):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2182,7 +2181,7 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.wrap_exceptions
 def create_job_definition(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, display_name, job_type, description, is_incremental, data_asset_key, glossary_key, connection_key, is_sample_data_extracted, sample_data_size_in_mbs, properties):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2275,10 +2274,10 @@ def create_job_definition(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def create_job_execution(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, job_key, sub_type, job_type, parent_key, time_started, time_ended, lifecycle_state, error_code, error_message, schedule_instance_key, process_key, external_url, event_key, data_entity_key, properties):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(job_key, six.string_types) and len(job_key.strip()) == 0:
+    if isinstance(job_key, str) and len(job_key.strip()) == 0:
         raise click.UsageError('Parameter --job-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2445,7 +2444,7 @@ def create_metastore(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def create_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, display_name, description, is_service_defined):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2512,7 +2511,7 @@ def create_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def create_pattern(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, display_name, description, expression, file_path_prefix, check_file_path_list, is_enable_check_failure_limit, check_failure_limit, properties):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2596,10 +2595,10 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @cli_util.wrap_exceptions
 def create_term(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, glossary_key, display_name, description, is_allowed_to_have_child_terms, parent_term_key, owner, workflow_status, custom_property_members):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(glossary_key, six.string_types) and len(glossary_key.strip()) == 0:
+    if isinstance(glossary_key, str) and len(glossary_key.strip()) == 0:
         raise click.UsageError('Parameter --glossary-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2676,13 +2675,13 @@ def create_term(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def create_term_relationship(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, glossary_key, term_key, display_name, related_term_key, description):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(glossary_key, six.string_types) and len(glossary_key.strip()) == 0:
+    if isinstance(glossary_key, str) and len(glossary_key.strip()) == 0:
         raise click.UsageError('Parameter --glossary-key cannot be whitespace or empty string')
 
-    if isinstance(term_key, six.string_types) and len(term_key.strip()) == 0:
+    if isinstance(term_key, str) and len(term_key.strip()) == 0:
         raise click.UsageError('Parameter --term-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2743,16 +2742,16 @@ def create_term_relationship(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_attribute(ctx, from_json, catalog_id, data_asset_key, entity_key, attribute_key, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+    if isinstance(entity_key, str) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
 
-    if isinstance(attribute_key, six.string_types) and len(attribute_key.strip()) == 0:
+    if isinstance(attribute_key, str) and len(attribute_key.strip()) == 0:
         raise click.UsageError('Parameter --attribute-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2785,19 +2784,19 @@ def delete_attribute(ctx, from_json, catalog_id, data_asset_key, entity_key, att
 @cli_util.wrap_exceptions
 def delete_attribute_tag(ctx, from_json, catalog_id, data_asset_key, entity_key, attribute_key, tag_key, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+    if isinstance(entity_key, str) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
 
-    if isinstance(attribute_key, six.string_types) and len(attribute_key.strip()) == 0:
+    if isinstance(attribute_key, str) and len(attribute_key.strip()) == 0:
         raise click.UsageError('Parameter --attribute-key cannot be whitespace or empty string')
 
-    if isinstance(tag_key, six.string_types) and len(tag_key.strip()) == 0:
+    if isinstance(tag_key, str) and len(tag_key.strip()) == 0:
         raise click.UsageError('Parameter --tag-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2831,7 +2830,7 @@ def delete_attribute_tag(ctx, from_json, catalog_id, data_asset_key, entity_key,
 @cli_util.wrap_exceptions
 def delete_catalog(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, if_match, is_lock_override):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2890,7 +2889,7 @@ def delete_catalog(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_catalog_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_private_endpoint_id, if_match, is_lock_override):
 
-    if isinstance(catalog_private_endpoint_id, six.string_types) and len(catalog_private_endpoint_id.strip()) == 0:
+    if isinstance(catalog_private_endpoint_id, str) and len(catalog_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2947,13 +2946,13 @@ def delete_catalog_private_endpoint(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def delete_connection(ctx, from_json, catalog_id, data_asset_key, connection_key, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2983,13 +2982,13 @@ def delete_connection(ctx, from_json, catalog_id, data_asset_key, connection_key
 @cli_util.wrap_exceptions
 def delete_custom_property(ctx, from_json, catalog_id, namespace_id, custom_property_key, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(namespace_id, six.string_types) and len(namespace_id.strip()) == 0:
+    if isinstance(namespace_id, str) and len(namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --namespace-id cannot be whitespace or empty string')
 
-    if isinstance(custom_property_key, six.string_types) and len(custom_property_key.strip()) == 0:
+    if isinstance(custom_property_key, str) and len(custom_property_key.strip()) == 0:
         raise click.UsageError('Parameter --custom-property-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3018,10 +3017,10 @@ def delete_custom_property(ctx, from_json, catalog_id, namespace_id, custom_prop
 @cli_util.wrap_exceptions
 def delete_data_asset(ctx, from_json, catalog_id, data_asset_key, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3050,13 +3049,13 @@ def delete_data_asset(ctx, from_json, catalog_id, data_asset_key, if_match):
 @cli_util.wrap_exceptions
 def delete_data_asset_tag(ctx, from_json, catalog_id, data_asset_key, tag_key, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(tag_key, six.string_types) and len(tag_key.strip()) == 0:
+    if isinstance(tag_key, str) and len(tag_key.strip()) == 0:
         raise click.UsageError('Parameter --tag-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3086,13 +3085,13 @@ def delete_data_asset_tag(ctx, from_json, catalog_id, data_asset_key, tag_key, i
 @cli_util.wrap_exceptions
 def delete_entity(ctx, from_json, catalog_id, data_asset_key, entity_key, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+    if isinstance(entity_key, str) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3123,16 +3122,16 @@ def delete_entity(ctx, from_json, catalog_id, data_asset_key, entity_key, if_mat
 @cli_util.wrap_exceptions
 def delete_entity_tag(ctx, from_json, catalog_id, data_asset_key, entity_key, tag_key, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+    if isinstance(entity_key, str) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
 
-    if isinstance(tag_key, six.string_types) and len(tag_key.strip()) == 0:
+    if isinstance(tag_key, str) and len(tag_key.strip()) == 0:
         raise click.UsageError('Parameter --tag-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3163,13 +3162,13 @@ def delete_entity_tag(ctx, from_json, catalog_id, data_asset_key, entity_key, ta
 @cli_util.wrap_exceptions
 def delete_folder(ctx, from_json, catalog_id, data_asset_key, folder_key, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(folder_key, six.string_types) and len(folder_key.strip()) == 0:
+    if isinstance(folder_key, str) and len(folder_key.strip()) == 0:
         raise click.UsageError('Parameter --folder-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3200,16 +3199,16 @@ def delete_folder(ctx, from_json, catalog_id, data_asset_key, folder_key, if_mat
 @cli_util.wrap_exceptions
 def delete_folder_tag(ctx, from_json, catalog_id, data_asset_key, folder_key, tag_key, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(folder_key, six.string_types) and len(folder_key.strip()) == 0:
+    if isinstance(folder_key, str) and len(folder_key.strip()) == 0:
         raise click.UsageError('Parameter --folder-key cannot be whitespace or empty string')
 
-    if isinstance(tag_key, six.string_types) and len(tag_key.strip()) == 0:
+    if isinstance(tag_key, str) and len(tag_key.strip()) == 0:
         raise click.UsageError('Parameter --tag-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3239,10 +3238,10 @@ def delete_folder_tag(ctx, from_json, catalog_id, data_asset_key, folder_key, ta
 @cli_util.wrap_exceptions
 def delete_glossary(ctx, from_json, catalog_id, glossary_key, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(glossary_key, six.string_types) and len(glossary_key.strip()) == 0:
+    if isinstance(glossary_key, str) and len(glossary_key.strip()) == 0:
         raise click.UsageError('Parameter --glossary-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3270,10 +3269,10 @@ def delete_glossary(ctx, from_json, catalog_id, glossary_key, if_match):
 @cli_util.wrap_exceptions
 def delete_job(ctx, from_json, catalog_id, job_key, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(job_key, six.string_types) and len(job_key.strip()) == 0:
+    if isinstance(job_key, str) and len(job_key.strip()) == 0:
         raise click.UsageError('Parameter --job-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3301,10 +3300,10 @@ def delete_job(ctx, from_json, catalog_id, job_key, if_match):
 @cli_util.wrap_exceptions
 def delete_job_definition(ctx, from_json, catalog_id, job_definition_key, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(job_definition_key, six.string_types) and len(job_definition_key.strip()) == 0:
+    if isinstance(job_definition_key, str) and len(job_definition_key.strip()) == 0:
         raise click.UsageError('Parameter --job-definition-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3335,7 +3334,7 @@ def delete_job_definition(ctx, from_json, catalog_id, job_definition_key, if_mat
 @cli_util.wrap_exceptions
 def delete_metastore(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, metastore_id, if_match, is_lock_override):
 
-    if isinstance(metastore_id, six.string_types) and len(metastore_id.strip()) == 0:
+    if isinstance(metastore_id, str) and len(metastore_id.strip()) == 0:
         raise click.UsageError('Parameter --metastore-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3391,10 +3390,10 @@ def delete_metastore(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def delete_namespace(ctx, from_json, catalog_id, namespace_id, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(namespace_id, six.string_types) and len(namespace_id.strip()) == 0:
+    if isinstance(namespace_id, str) and len(namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3422,10 +3421,10 @@ def delete_namespace(ctx, from_json, catalog_id, namespace_id, if_match):
 @cli_util.wrap_exceptions
 def delete_pattern(ctx, from_json, catalog_id, pattern_key, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(pattern_key, six.string_types) and len(pattern_key.strip()) == 0:
+    if isinstance(pattern_key, str) and len(pattern_key.strip()) == 0:
         raise click.UsageError('Parameter --pattern-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3454,13 +3453,13 @@ def delete_pattern(ctx, from_json, catalog_id, pattern_key, if_match):
 @cli_util.wrap_exceptions
 def delete_term(ctx, from_json, catalog_id, glossary_key, term_key, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(glossary_key, six.string_types) and len(glossary_key.strip()) == 0:
+    if isinstance(glossary_key, str) and len(glossary_key.strip()) == 0:
         raise click.UsageError('Parameter --glossary-key cannot be whitespace or empty string')
 
-    if isinstance(term_key, six.string_types) and len(term_key.strip()) == 0:
+    if isinstance(term_key, str) and len(term_key.strip()) == 0:
         raise click.UsageError('Parameter --term-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3491,16 +3490,16 @@ def delete_term(ctx, from_json, catalog_id, glossary_key, term_key, if_match):
 @cli_util.wrap_exceptions
 def delete_term_relationship(ctx, from_json, catalog_id, glossary_key, term_key, term_relationship_key, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(glossary_key, six.string_types) and len(glossary_key.strip()) == 0:
+    if isinstance(glossary_key, str) and len(glossary_key.strip()) == 0:
         raise click.UsageError('Parameter --glossary-key cannot be whitespace or empty string')
 
-    if isinstance(term_key, six.string_types) and len(term_key.strip()) == 0:
+    if isinstance(term_key, str) and len(term_key.strip()) == 0:
         raise click.UsageError('Parameter --term-key cannot be whitespace or empty string')
 
-    if isinstance(term_relationship_key, six.string_types) and len(term_relationship_key.strip()) == 0:
+    if isinstance(term_relationship_key, str) and len(term_relationship_key.strip()) == 0:
         raise click.UsageError('Parameter --term-relationship-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3533,7 +3532,7 @@ def delete_term_relationship(ctx, from_json, catalog_id, glossary_key, term_key,
 @cli_util.wrap_exceptions
 def detach_catalog_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_private_endpoint_id, catalog_id, if_match, is_lock_override):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3598,10 +3597,10 @@ def detach_catalog_private_endpoint(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def disassociate_custom_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, type_key, custom_property_ids, is_event_enabled, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(type_key, six.string_types) and len(type_key.strip()) == 0:
+    if isinstance(type_key, str) and len(type_key.strip()) == 0:
         raise click.UsageError('Parameter --type-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3660,10 +3659,10 @@ def disassociate_custom_property(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def expand_tree_for_glossary(ctx, from_json, catalog_id, glossary_key):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(glossary_key, six.string_types) and len(glossary_key.strip()) == 0:
+    if isinstance(glossary_key, str) and len(glossary_key.strip()) == 0:
         raise click.UsageError('Parameter --glossary-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3688,10 +3687,10 @@ def expand_tree_for_glossary(ctx, from_json, catalog_id, glossary_key):
 @cli_util.wrap_exceptions
 def export_glossary(ctx, from_json, catalog_id, glossary_key, is_relationship_exported):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(glossary_key, six.string_types) and len(glossary_key.strip()) == 0:
+    if isinstance(glossary_key, str) and len(glossary_key.strip()) == 0:
         raise click.UsageError('Parameter --glossary-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3725,13 +3724,13 @@ def export_glossary(ctx, from_json, catalog_id, glossary_key, is_relationship_ex
 @cli_util.wrap_exceptions
 def fetch_entity_lineage(ctx, from_json, catalog_id, data_asset_key, entity_key, level, direction, is_intra_lineage, intra_lineage_object_key, limit, page, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+    if isinstance(entity_key, str) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3782,16 +3781,16 @@ def fetch_entity_lineage(ctx, from_json, catalog_id, data_asset_key, entity_key,
 @cli_util.wrap_exceptions
 def get_attribute(ctx, from_json, catalog_id, data_asset_key, entity_key, attribute_key, is_include_object_relationships, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+    if isinstance(entity_key, str) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
 
-    if isinstance(attribute_key, six.string_types) and len(attribute_key.strip()) == 0:
+    if isinstance(attribute_key, str) and len(attribute_key.strip()) == 0:
         raise click.UsageError('Parameter --attribute-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3825,19 +3824,19 @@ def get_attribute(ctx, from_json, catalog_id, data_asset_key, entity_key, attrib
 @cli_util.wrap_exceptions
 def get_attribute_tag(ctx, from_json, catalog_id, data_asset_key, entity_key, attribute_key, tag_key, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+    if isinstance(entity_key, str) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
 
-    if isinstance(attribute_key, six.string_types) and len(attribute_key.strip()) == 0:
+    if isinstance(attribute_key, str) and len(attribute_key.strip()) == 0:
         raise click.UsageError('Parameter --attribute-key cannot be whitespace or empty string')
 
-    if isinstance(tag_key, six.string_types) and len(tag_key.strip()) == 0:
+    if isinstance(tag_key, str) and len(tag_key.strip()) == 0:
         raise click.UsageError('Parameter --tag-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3865,7 +3864,7 @@ def get_attribute_tag(ctx, from_json, catalog_id, data_asset_key, entity_key, at
 @cli_util.wrap_exceptions
 def get_catalog(ctx, from_json, catalog_id):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3887,7 +3886,7 @@ def get_catalog(ctx, from_json, catalog_id):
 @cli_util.wrap_exceptions
 def get_catalog_private_endpoint(ctx, from_json, catalog_private_endpoint_id):
 
-    if isinstance(catalog_private_endpoint_id, six.string_types) and len(catalog_private_endpoint_id.strip()) == 0:
+    if isinstance(catalog_private_endpoint_id, str) and len(catalog_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3912,13 +3911,13 @@ def get_catalog_private_endpoint(ctx, from_json, catalog_private_endpoint_id):
 @cli_util.wrap_exceptions
 def get_connection(ctx, from_json, catalog_id, data_asset_key, connection_key, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3947,13 +3946,13 @@ def get_connection(ctx, from_json, catalog_id, data_asset_key, connection_key, f
 @cli_util.wrap_exceptions
 def get_custom_property(ctx, from_json, catalog_id, namespace_id, custom_property_key, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(namespace_id, six.string_types) and len(namespace_id.strip()) == 0:
+    if isinstance(namespace_id, str) and len(namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --namespace-id cannot be whitespace or empty string')
 
-    if isinstance(custom_property_key, six.string_types) and len(custom_property_key.strip()) == 0:
+    if isinstance(custom_property_key, str) and len(custom_property_key.strip()) == 0:
         raise click.UsageError('Parameter --custom-property-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3981,10 +3980,10 @@ def get_custom_property(ctx, from_json, catalog_id, namespace_id, custom_propert
 @cli_util.wrap_exceptions
 def get_data_asset(ctx, from_json, catalog_id, data_asset_key, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4012,13 +4011,13 @@ def get_data_asset(ctx, from_json, catalog_id, data_asset_key, fields):
 @cli_util.wrap_exceptions
 def get_data_asset_tag(ctx, from_json, catalog_id, data_asset_key, tag_key, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(tag_key, six.string_types) and len(tag_key.strip()) == 0:
+    if isinstance(tag_key, str) and len(tag_key.strip()) == 0:
         raise click.UsageError('Parameter --tag-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4048,13 +4047,13 @@ def get_data_asset_tag(ctx, from_json, catalog_id, data_asset_key, tag_key, fiel
 @cli_util.wrap_exceptions
 def get_entity(ctx, from_json, catalog_id, data_asset_key, entity_key, is_include_object_relationships, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+    if isinstance(entity_key, str) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4086,16 +4085,16 @@ def get_entity(ctx, from_json, catalog_id, data_asset_key, entity_key, is_includ
 @cli_util.wrap_exceptions
 def get_entity_tag(ctx, from_json, catalog_id, data_asset_key, entity_key, tag_key, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+    if isinstance(entity_key, str) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
 
-    if isinstance(tag_key, six.string_types) and len(tag_key.strip()) == 0:
+    if isinstance(tag_key, str) and len(tag_key.strip()) == 0:
         raise click.UsageError('Parameter --tag-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4126,13 +4125,13 @@ def get_entity_tag(ctx, from_json, catalog_id, data_asset_key, entity_key, tag_k
 @cli_util.wrap_exceptions
 def get_folder(ctx, from_json, catalog_id, data_asset_key, folder_key, is_include_object_relationships, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(folder_key, six.string_types) and len(folder_key.strip()) == 0:
+    if isinstance(folder_key, str) and len(folder_key.strip()) == 0:
         raise click.UsageError('Parameter --folder-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4164,16 +4163,16 @@ def get_folder(ctx, from_json, catalog_id, data_asset_key, folder_key, is_includ
 @cli_util.wrap_exceptions
 def get_folder_tag(ctx, from_json, catalog_id, data_asset_key, folder_key, tag_key, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(folder_key, six.string_types) and len(folder_key.strip()) == 0:
+    if isinstance(folder_key, str) and len(folder_key.strip()) == 0:
         raise click.UsageError('Parameter --folder-key cannot be whitespace or empty string')
 
-    if isinstance(tag_key, six.string_types) and len(tag_key.strip()) == 0:
+    if isinstance(tag_key, str) and len(tag_key.strip()) == 0:
         raise click.UsageError('Parameter --tag-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4202,10 +4201,10 @@ def get_folder_tag(ctx, from_json, catalog_id, data_asset_key, folder_key, tag_k
 @cli_util.wrap_exceptions
 def get_glossary(ctx, from_json, catalog_id, glossary_key, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(glossary_key, six.string_types) and len(glossary_key.strip()) == 0:
+    if isinstance(glossary_key, str) and len(glossary_key.strip()) == 0:
         raise click.UsageError('Parameter --glossary-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4232,10 +4231,10 @@ def get_glossary(ctx, from_json, catalog_id, glossary_key, fields):
 @cli_util.wrap_exceptions
 def get_job(ctx, from_json, catalog_id, job_key, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(job_key, six.string_types) and len(job_key.strip()) == 0:
+    if isinstance(job_key, str) and len(job_key.strip()) == 0:
         raise click.UsageError('Parameter --job-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4262,10 +4261,10 @@ def get_job(ctx, from_json, catalog_id, job_key, fields):
 @cli_util.wrap_exceptions
 def get_job_definition(ctx, from_json, catalog_id, job_definition_key, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(job_definition_key, six.string_types) and len(job_definition_key.strip()) == 0:
+    if isinstance(job_definition_key, str) and len(job_definition_key.strip()) == 0:
         raise click.UsageError('Parameter --job-definition-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4293,13 +4292,13 @@ def get_job_definition(ctx, from_json, catalog_id, job_definition_key, fields):
 @cli_util.wrap_exceptions
 def get_job_execution(ctx, from_json, catalog_id, job_key, job_execution_key, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(job_key, six.string_types) and len(job_key.strip()) == 0:
+    if isinstance(job_key, str) and len(job_key.strip()) == 0:
         raise click.UsageError('Parameter --job-key cannot be whitespace or empty string')
 
-    if isinstance(job_execution_key, six.string_types) and len(job_execution_key.strip()) == 0:
+    if isinstance(job_execution_key, str) and len(job_execution_key.strip()) == 0:
         raise click.UsageError('Parameter --job-execution-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4329,16 +4328,16 @@ def get_job_execution(ctx, from_json, catalog_id, job_key, job_execution_key, fi
 @cli_util.wrap_exceptions
 def get_job_log(ctx, from_json, catalog_id, job_key, job_execution_key, job_log_key, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(job_key, six.string_types) and len(job_key.strip()) == 0:
+    if isinstance(job_key, str) and len(job_key.strip()) == 0:
         raise click.UsageError('Parameter --job-key cannot be whitespace or empty string')
 
-    if isinstance(job_execution_key, six.string_types) and len(job_execution_key.strip()) == 0:
+    if isinstance(job_execution_key, str) and len(job_execution_key.strip()) == 0:
         raise click.UsageError('Parameter --job-execution-key cannot be whitespace or empty string')
 
-    if isinstance(job_log_key, six.string_types) and len(job_log_key.strip()) == 0:
+    if isinstance(job_log_key, str) and len(job_log_key.strip()) == 0:
         raise click.UsageError('Parameter --job-log-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4369,16 +4368,16 @@ def get_job_log(ctx, from_json, catalog_id, job_key, job_execution_key, job_log_
 @cli_util.wrap_exceptions
 def get_job_metrics(ctx, from_json, catalog_id, job_key, job_execution_key, job_metrics_key, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(job_key, six.string_types) and len(job_key.strip()) == 0:
+    if isinstance(job_key, str) and len(job_key.strip()) == 0:
         raise click.UsageError('Parameter --job-key cannot be whitespace or empty string')
 
-    if isinstance(job_execution_key, six.string_types) and len(job_execution_key.strip()) == 0:
+    if isinstance(job_execution_key, str) and len(job_execution_key.strip()) == 0:
         raise click.UsageError('Parameter --job-execution-key cannot be whitespace or empty string')
 
-    if isinstance(job_metrics_key, six.string_types) and len(job_metrics_key.strip()) == 0:
+    if isinstance(job_metrics_key, str) and len(job_metrics_key.strip()) == 0:
         raise click.UsageError('Parameter --job-metrics-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4405,7 +4404,7 @@ def get_job_metrics(ctx, from_json, catalog_id, job_key, job_execution_key, job_
 @cli_util.wrap_exceptions
 def get_metastore(ctx, from_json, metastore_id):
 
-    if isinstance(metastore_id, six.string_types) and len(metastore_id.strip()) == 0:
+    if isinstance(metastore_id, str) and len(metastore_id.strip()) == 0:
         raise click.UsageError('Parameter --metastore-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4429,10 +4428,10 @@ def get_metastore(ctx, from_json, metastore_id):
 @cli_util.wrap_exceptions
 def get_namespace(ctx, from_json, catalog_id, namespace_id, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(namespace_id, six.string_types) and len(namespace_id.strip()) == 0:
+    if isinstance(namespace_id, str) and len(namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4459,10 +4458,10 @@ def get_namespace(ctx, from_json, catalog_id, namespace_id, fields):
 @cli_util.wrap_exceptions
 def get_pattern(ctx, from_json, catalog_id, pattern_key, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(pattern_key, six.string_types) and len(pattern_key.strip()) == 0:
+    if isinstance(pattern_key, str) and len(pattern_key.strip()) == 0:
         raise click.UsageError('Parameter --pattern-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4490,13 +4489,13 @@ def get_pattern(ctx, from_json, catalog_id, pattern_key, fields):
 @cli_util.wrap_exceptions
 def get_term(ctx, from_json, catalog_id, glossary_key, term_key, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(glossary_key, six.string_types) and len(glossary_key.strip()) == 0:
+    if isinstance(glossary_key, str) and len(glossary_key.strip()) == 0:
         raise click.UsageError('Parameter --glossary-key cannot be whitespace or empty string')
 
-    if isinstance(term_key, six.string_types) and len(term_key.strip()) == 0:
+    if isinstance(term_key, str) and len(term_key.strip()) == 0:
         raise click.UsageError('Parameter --term-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4526,16 +4525,16 @@ def get_term(ctx, from_json, catalog_id, glossary_key, term_key, fields):
 @cli_util.wrap_exceptions
 def get_term_relationship(ctx, from_json, catalog_id, glossary_key, term_key, term_relationship_key, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(glossary_key, six.string_types) and len(glossary_key.strip()) == 0:
+    if isinstance(glossary_key, str) and len(glossary_key.strip()) == 0:
         raise click.UsageError('Parameter --glossary-key cannot be whitespace or empty string')
 
-    if isinstance(term_key, six.string_types) and len(term_key.strip()) == 0:
+    if isinstance(term_key, str) and len(term_key.strip()) == 0:
         raise click.UsageError('Parameter --term-key cannot be whitespace or empty string')
 
-    if isinstance(term_relationship_key, six.string_types) and len(term_relationship_key.strip()) == 0:
+    if isinstance(term_relationship_key, str) and len(term_relationship_key.strip()) == 0:
         raise click.UsageError('Parameter --term-relationship-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4564,10 +4563,10 @@ def get_term_relationship(ctx, from_json, catalog_id, glossary_key, term_key, te
 @cli_util.wrap_exceptions
 def get_type(ctx, from_json, catalog_id, type_key, fields):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(type_key, six.string_types) and len(type_key.strip()) == 0:
+    if isinstance(type_key, str) and len(type_key.strip()) == 0:
         raise click.UsageError('Parameter --type-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4592,7 +4591,7 @@ def get_type(ctx, from_json, catalog_id, type_key, fields):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4618,10 +4617,10 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.wrap_exceptions
 def import_connection(ctx, from_json, catalog_id, data_asset_key, connection_payload, connection_detail, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4658,10 +4657,10 @@ def import_connection(ctx, from_json, catalog_id, data_asset_key, connection_pay
 @cli_util.wrap_exceptions
 def import_data_asset(ctx, from_json, catalog_id, data_asset_key, import_file_contents, import_type, is_missing_value_ignored):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4695,10 +4694,10 @@ def import_data_asset(ctx, from_json, catalog_id, data_asset_key, import_file_co
 @cli_util.wrap_exceptions
 def import_glossary(ctx, from_json, catalog_id, glossary_key, glossary_file_contents, is_relationship_imported):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(glossary_key, six.string_types) and len(glossary_key.strip()) == 0:
+    if isinstance(glossary_key, str) and len(glossary_key.strip()) == 0:
         raise click.UsageError('Parameter --glossary-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4732,10 +4731,10 @@ def import_glossary(ctx, from_json, catalog_id, glossary_key, glossary_file_cont
 @cli_util.wrap_exceptions
 def import_lineage(ctx, from_json, catalog_id, data_asset_key, lineage_payload):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4777,13 +4776,13 @@ def list_aggregated_physical_entities(ctx, from_json, all_pages, page_size, cata
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+    if isinstance(entity_key, str) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4862,16 +4861,16 @@ def list_attribute_tags(ctx, from_json, all_pages, page_size, catalog_id, data_a
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+    if isinstance(entity_key, str) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
 
-    if isinstance(attribute_key, six.string_types) and len(attribute_key.strip()) == 0:
+    if isinstance(attribute_key, str) and len(attribute_key.strip()) == 0:
         raise click.UsageError('Parameter --attribute-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4972,13 +4971,13 @@ def list_attributes(ctx, from_json, all_pages, page_size, catalog_id, data_asset
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+    if isinstance(entity_key, str) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5211,10 +5210,10 @@ def list_connections(ctx, from_json, all_pages, page_size, catalog_id, data_asse
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5307,10 +5306,10 @@ def list_custom_properties(ctx, from_json, all_pages, page_size, catalog_id, nam
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(namespace_id, six.string_types) and len(namespace_id.strip()) == 0:
+    if isinstance(namespace_id, str) and len(namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5398,10 +5397,10 @@ def list_data_asset_tags(ctx, from_json, all_pages, page_size, catalog_id, data_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5485,7 +5484,7 @@ def list_data_assets(ctx, from_json, all_pages, page_size, catalog_id, display_n
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5565,10 +5564,10 @@ def list_derived_logical_entities(ctx, from_json, all_pages, page_size, catalog_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(pattern_key, six.string_types) and len(pattern_key.strip()) == 0:
+    if isinstance(pattern_key, str) and len(pattern_key.strip()) == 0:
         raise click.UsageError('Parameter --pattern-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5655,10 +5654,10 @@ def list_entities(ctx, from_json, all_pages, page_size, catalog_id, data_asset_k
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5771,13 +5770,13 @@ def list_entity_tags(ctx, from_json, all_pages, page_size, catalog_id, data_asse
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+    if isinstance(entity_key, str) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5863,13 +5862,13 @@ def list_folder_tags(ctx, from_json, all_pages, page_size, catalog_id, data_asse
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(folder_key, six.string_types) and len(folder_key.strip()) == 0:
+    if isinstance(folder_key, str) and len(folder_key.strip()) == 0:
         raise click.UsageError('Parameter --folder-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5963,10 +5962,10 @@ def list_folders(ctx, from_json, all_pages, page_size, catalog_id, data_asset_ke
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6066,7 +6065,7 @@ def list_glossaries(ctx, from_json, all_pages, page_size, catalog_id, display_na
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6154,7 +6153,7 @@ def list_job_definitions(ctx, from_json, all_pages, page_size, catalog_id, displ
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6259,10 +6258,10 @@ def list_job_executions(ctx, from_json, all_pages, page_size, catalog_id, job_ke
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(job_key, six.string_types) and len(job_key.strip()) == 0:
+    if isinstance(job_key, str) and len(job_key.strip()) == 0:
         raise click.UsageError('Parameter --job-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6365,13 +6364,13 @@ def list_job_logs(ctx, from_json, all_pages, page_size, catalog_id, job_key, job
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(job_key, six.string_types) and len(job_key.strip()) == 0:
+    if isinstance(job_key, str) and len(job_key.strip()) == 0:
         raise click.UsageError('Parameter --job-key cannot be whitespace or empty string')
 
-    if isinstance(job_execution_key, six.string_types) and len(job_execution_key.strip()) == 0:
+    if isinstance(job_execution_key, str) and len(job_execution_key.strip()) == 0:
         raise click.UsageError('Parameter --job-execution-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6463,13 +6462,13 @@ def list_job_metrics(ctx, from_json, all_pages, page_size, catalog_id, job_key, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(job_key, six.string_types) and len(job_key.strip()) == 0:
+    if isinstance(job_key, str) and len(job_key.strip()) == 0:
         raise click.UsageError('Parameter --job-key cannot be whitespace or empty string')
 
-    if isinstance(job_execution_key, six.string_types) and len(job_execution_key.strip()) == 0:
+    if isinstance(job_execution_key, str) and len(job_execution_key.strip()) == 0:
         raise click.UsageError('Parameter --job-execution-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6577,7 +6576,7 @@ def list_jobs(ctx, from_json, all_pages, page_size, catalog_id, display_name, di
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6740,7 +6739,7 @@ def list_namespaces(ctx, from_json, all_pages, page_size, catalog_id, display_na
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6821,7 +6820,7 @@ def list_patterns(ctx, from_json, all_pages, page_size, catalog_id, display_name
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6907,13 +6906,13 @@ def list_rules(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+    if isinstance(entity_key, str) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7002,7 +7001,7 @@ def list_tags(ctx, from_json, all_pages, page_size, catalog_id, display_name, di
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7073,13 +7072,13 @@ def list_term_relationships(ctx, from_json, all_pages, page_size, catalog_id, gl
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(glossary_key, six.string_types) and len(glossary_key.strip()) == 0:
+    if isinstance(glossary_key, str) and len(glossary_key.strip()) == 0:
         raise click.UsageError('Parameter --glossary-key cannot be whitespace or empty string')
 
-    if isinstance(term_key, six.string_types) and len(term_key.strip()) == 0:
+    if isinstance(term_key, str) and len(term_key.strip()) == 0:
         raise click.UsageError('Parameter --term-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7159,10 +7158,10 @@ def list_terms(ctx, from_json, all_pages, page_size, catalog_id, glossary_key, d
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(glossary_key, six.string_types) and len(glossary_key.strip()) == 0:
+    if isinstance(glossary_key, str) and len(glossary_key.strip()) == 0:
         raise click.UsageError('Parameter --glossary-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7246,7 +7245,7 @@ def list_types(ctx, from_json, all_pages, page_size, catalog_id, name, lifecycle
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7319,7 +7318,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7376,7 +7375,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7476,7 +7475,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
 @cli_util.wrap_exceptions
 def object_stats(ctx, from_json, catalog_id, sort_by, sort_order, limit, page):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7512,10 +7511,10 @@ def object_stats(ctx, from_json, catalog_id, sort_by, sort_order, limit, page):
 @cli_util.wrap_exceptions
 def parse_connection(ctx, from_json, catalog_id, data_asset_key, connection_detail, connection_payload, wallet_secret_id, wallet_secret_name, connection_key):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7560,7 +7559,7 @@ def parse_connection(ctx, from_json, catalog_id, data_asset_key, connection_deta
 @cli_util.wrap_exceptions
 def process_recommendation(ctx, from_json, catalog_id, recommendation_key, recommendation_status, properties, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7597,7 +7596,7 @@ def process_recommendation(ctx, from_json, catalog_id, recommendation_key, recom
 @cli_util.wrap_exceptions
 def recommendations(ctx, from_json, catalog_id, recommendation_type, source_object_key, source_object_type, recommendation_status):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7632,7 +7631,7 @@ def recommendations(ctx, from_json, catalog_id, recommendation_type, source_obje
 @cli_util.wrap_exceptions
 def remove_catalog_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7701,7 +7700,7 @@ def remove_catalog_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def remove_catalog_private_endpoint_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_private_endpoint_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(catalog_private_endpoint_id, six.string_types) and len(catalog_private_endpoint_id.strip()) == 0:
+    if isinstance(catalog_private_endpoint_id, str) and len(catalog_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7768,10 +7767,10 @@ def remove_catalog_private_endpoint_lock(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def remove_data_selector_patterns(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, items, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7832,7 +7831,7 @@ def remove_data_selector_patterns(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def remove_metastore_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, metastore_id, type, related_resource_id, message, time_created, if_match):
 
-    if isinstance(metastore_id, six.string_types) and len(metastore_id.strip()) == 0:
+    if isinstance(metastore_id, str) and len(metastore_id.strip()) == 0:
         raise click.UsageError('Parameter --metastore-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7908,7 +7907,7 @@ This option is a JSON list with items of type FacetedSearchSortRequest.  For doc
 @cli_util.wrap_exceptions
 def search_criteria(ctx, from_json, catalog_id, query_parameterconflict, faceted_query, dimensions, sort, filters, display_name, name, lifecycle_state, timeout, sort_by, sort_order, limit, page):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7968,7 +7967,7 @@ def search_criteria(ctx, from_json, catalog_id, query_parameterconflict, faceted
 @cli_util.wrap_exceptions
 def suggest_matches(ctx, from_json, catalog_id, input_text, timeout, limit):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8001,10 +8000,10 @@ This option is a JSON list with items of type DataAssetExportScope.  For documen
 @cli_util.wrap_exceptions
 def synchronous_export_data_asset(ctx, from_json, file, catalog_id, data_asset_key, export_type, export_scope):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8059,13 +8058,13 @@ def synchronous_export_data_asset(ctx, from_json, file, catalog_id, data_asset_k
 @cli_util.wrap_exceptions
 def test_connection(ctx, from_json, catalog_id, data_asset_key, connection_key):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8116,16 +8115,16 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @cli_util.wrap_exceptions
 def update_attribute(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, attribute_key, display_name, business_name, description, external_data_type, is_incremental_data, is_nullable, length, position, precision, scale, time_external, min_collection_count, max_collection_count, external_datatype_entity_key, external_parent_attribute_key, custom_property_members, properties, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+    if isinstance(entity_key, str) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
 
-    if isinstance(attribute_key, six.string_types) and len(attribute_key.strip()) == 0:
+    if isinstance(attribute_key, str) and len(attribute_key.strip()) == 0:
         raise click.UsageError('Parameter --attribute-key cannot be whitespace or empty string')
     if not force:
         if custom_property_members or properties:
@@ -8243,7 +8242,7 @@ def update_attribute(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def update_catalog(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, display_name, freeform_tags, defined_tags, if_match, is_lock_override):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -8319,7 +8318,7 @@ def update_catalog(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def update_catalog_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_private_endpoint_id, dns_zones, freeform_tags, defined_tags, display_name, if_match, is_lock_override):
 
-    if isinstance(catalog_private_endpoint_id, six.string_types) and len(catalog_private_endpoint_id.strip()) == 0:
+    if isinstance(catalog_private_endpoint_id, str) and len(catalog_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-private-endpoint-id cannot be whitespace or empty string')
     if not force:
         if dns_zones or freeform_tags or defined_tags:
@@ -8407,13 +8406,13 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @cli_util.wrap_exceptions
 def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, connection_key, description, display_name, custom_property_members, properties, enc_properties, is_default, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
         if custom_property_members or properties or enc_properties:
@@ -8507,13 +8506,13 @@ def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def update_custom_property(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, namespace_id, custom_property_key, display_name, description, is_sortable, is_filterable, is_multi_valued, is_hidden, is_editable, is_shown_in_list, is_hidden_in_search, is_event_enabled, allowed_values, properties, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(namespace_id, six.string_types) and len(namespace_id.strip()) == 0:
+    if isinstance(namespace_id, str) and len(namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --namespace-id cannot be whitespace or empty string')
 
-    if isinstance(custom_property_key, six.string_types) and len(custom_property_key.strip()) == 0:
+    if isinstance(custom_property_key, str) and len(custom_property_key.strip()) == 0:
         raise click.UsageError('Parameter --custom-property-key cannot be whitespace or empty string')
     if not force:
         if allowed_values or properties:
@@ -8618,10 +8617,10 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @cli_util.wrap_exceptions
 def update_data_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, description, custom_property_members, properties, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
     if not force:
         if custom_property_members or properties:
@@ -8711,13 +8710,13 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @cli_util.wrap_exceptions
 def update_entity(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, display_name, business_name, description, time_external, is_logical, is_partition, folder_key, pattern_key, realized_expression, harvest_status, last_job_key, custom_property_members, properties, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+    if isinstance(entity_key, str) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
     if not force:
         if custom_property_members or properties:
@@ -8831,13 +8830,13 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @cli_util.wrap_exceptions
 def update_folder(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, folder_key, display_name, business_name, description, parent_folder_key, custom_property_members, properties, time_external, harvest_status, last_job_key, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(folder_key, six.string_types) and len(folder_key.strip()) == 0:
+    if isinstance(folder_key, str) and len(folder_key.strip()) == 0:
         raise click.UsageError('Parameter --folder-key cannot be whitespace or empty string')
     if not force:
         if custom_property_members or properties:
@@ -8934,10 +8933,10 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @cli_util.wrap_exceptions
 def update_glossary(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, glossary_key, display_name, description, owner, workflow_status, custom_property_members, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(glossary_key, six.string_types) and len(glossary_key.strip()) == 0:
+    if isinstance(glossary_key, str) and len(glossary_key.strip()) == 0:
         raise click.UsageError('Parameter --glossary-key cannot be whitespace or empty string')
     if not force:
         if custom_property_members:
@@ -9019,10 +9018,10 @@ def update_glossary(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def update_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, job_key, display_name, description, schedule_cron_expression, time_schedule_begin, time_schedule_end, connection_key, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(job_key, six.string_types) and len(job_key.strip()) == 0:
+    if isinstance(job_key, str) and len(job_key.strip()) == 0:
         raise click.UsageError('Parameter --job-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9107,10 +9106,10 @@ def update_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.wrap_exceptions
 def update_job_definition(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, job_definition_key, display_name, is_incremental, data_asset_key, glossary_key, description, connection_key, is_sample_data_extracted, sample_data_size_in_mbs, properties, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(job_definition_key, six.string_types) and len(job_definition_key.strip()) == 0:
+    if isinstance(job_definition_key, str) and len(job_definition_key.strip()) == 0:
         raise click.UsageError('Parameter --job-definition-key cannot be whitespace or empty string')
     if not force:
         if properties:
@@ -9202,7 +9201,7 @@ def update_job_definition(ctx, from_json, force, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def update_metastore(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, metastore_id, display_name, freeform_tags, defined_tags, if_match, is_lock_override):
 
-    if isinstance(metastore_id, six.string_types) and len(metastore_id.strip()) == 0:
+    if isinstance(metastore_id, str) and len(metastore_id.strip()) == 0:
         raise click.UsageError('Parameter --metastore-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -9276,10 +9275,10 @@ def update_metastore(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def update_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, namespace_id, display_name, description, is_service_defined, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(namespace_id, six.string_types) and len(namespace_id.strip()) == 0:
+    if isinstance(namespace_id, str) and len(namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9354,10 +9353,10 @@ def update_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def update_pattern(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, pattern_key, display_name, description, expression, file_path_prefix, check_file_path_list, is_enable_check_failure_limit, check_failure_limit, properties, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(pattern_key, six.string_types) and len(pattern_key.strip()) == 0:
+    if isinstance(pattern_key, str) and len(pattern_key.strip()) == 0:
         raise click.UsageError('Parameter --pattern-key cannot be whitespace or empty string')
     if not force:
         if check_file_path_list or properties:
@@ -9452,13 +9451,13 @@ This option is a JSON list with items of type CustomPropertySetUsage.  For docum
 @cli_util.wrap_exceptions
 def update_term(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, glossary_key, term_key, display_name, description, parent_term_key, owner, workflow_status, custom_property_members, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(glossary_key, six.string_types) and len(glossary_key.strip()) == 0:
+    if isinstance(glossary_key, str) and len(glossary_key.strip()) == 0:
         raise click.UsageError('Parameter --glossary-key cannot be whitespace or empty string')
 
-    if isinstance(term_key, six.string_types) and len(term_key.strip()) == 0:
+    if isinstance(term_key, str) and len(term_key.strip()) == 0:
         raise click.UsageError('Parameter --term-key cannot be whitespace or empty string')
     if not force:
         if custom_property_members:
@@ -9542,16 +9541,16 @@ def update_term(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def update_term_relationship(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, glossary_key, term_key, term_relationship_key, display_name, description, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(glossary_key, six.string_types) and len(glossary_key.strip()) == 0:
+    if isinstance(glossary_key, str) and len(glossary_key.strip()) == 0:
         raise click.UsageError('Parameter --glossary-key cannot be whitespace or empty string')
 
-    if isinstance(term_key, six.string_types) and len(term_key.strip()) == 0:
+    if isinstance(term_key, str) and len(term_key.strip()) == 0:
         raise click.UsageError('Parameter --term-key cannot be whitespace or empty string')
 
-    if isinstance(term_relationship_key, six.string_types) and len(term_relationship_key.strip()) == 0:
+    if isinstance(term_relationship_key, str) and len(term_relationship_key.strip()) == 0:
         raise click.UsageError('Parameter --term-relationship-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9619,13 +9618,13 @@ def update_term_relationship(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def upload_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, connection_key, credential_payload, connection_detail, if_match):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
-    if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
+    if isinstance(connection_key, str) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9686,7 +9685,7 @@ def upload_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def users(ctx, from_json, catalog_id, sort_by, sort_order, limit, page):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9719,10 +9718,10 @@ def users(ctx, from_json, catalog_id, sort_by, sort_order, limit, page):
 @cli_util.wrap_exceptions
 def validate_connection(ctx, from_json, catalog_id, data_asset_key, connection_detail, connection_payload):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+    if isinstance(data_asset_key, str) and len(data_asset_key.strip()) == 0:
         raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9764,10 +9763,10 @@ If provided with the request, this overrides the value which already exists as p
 @cli_util.wrap_exceptions
 def validate_pattern(ctx, from_json, catalog_id, pattern_key, expression, file_path_prefix, check_file_path_list, check_failure_limit):
 
-    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+    if isinstance(catalog_id, str) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(pattern_key, six.string_types) and len(pattern_key.strip()) == 0:
+    if isinstance(pattern_key, str) and len(pattern_key.strip()) == 0:
         raise click.UsageError('Parameter --pattern-key cannot be whitespace or empty string')
 
     kwargs = {}

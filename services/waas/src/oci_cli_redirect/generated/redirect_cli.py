@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -45,7 +44,7 @@ redirect_root_group.add_command(http_redirect_group)
 @cli_util.wrap_exceptions
 def change_http_redirect_compartment(ctx, from_json, http_redirect_id, compartment_id, if_match):
 
-    if isinstance(http_redirect_id, six.string_types) and len(http_redirect_id.strip()) == 0:
+    if isinstance(http_redirect_id, str) and len(http_redirect_id.strip()) == 0:
         raise click.UsageError('Parameter --http-redirect-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -156,7 +155,7 @@ def create_http_redirect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_http_redirect(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, http_redirect_id, if_match):
 
-    if isinstance(http_redirect_id, six.string_types) and len(http_redirect_id.strip()) == 0:
+    if isinstance(http_redirect_id, str) and len(http_redirect_id.strip()) == 0:
         raise click.UsageError('Parameter --http-redirect-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -207,7 +206,7 @@ def delete_http_redirect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def get_http_redirect(ctx, from_json, http_redirect_id):
 
-    if isinstance(http_redirect_id, six.string_types) and len(http_redirect_id.strip()) == 0:
+    if isinstance(http_redirect_id, str) and len(http_redirect_id.strip()) == 0:
         raise click.UsageError('Parameter --http-redirect-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -312,7 +311,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_http_redirect(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, http_redirect_id, display_name, target, response_code, freeform_tags, defined_tags, if_match):
 
-    if isinstance(http_redirect_id, six.string_types) and len(http_redirect_id.strip()) == 0:
+    if isinstance(http_redirect_id, str) and len(http_redirect_id.strip()) == 0:
         raise click.UsageError('Parameter --http-redirect-id cannot be whitespace or empty string')
     if not force:
         if target or freeform_tags or defined_tags:

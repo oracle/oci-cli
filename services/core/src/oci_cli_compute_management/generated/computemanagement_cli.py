@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -98,7 +97,7 @@ compute_management_root_group.add_command(instance_pool_instance_group)
 @cli_util.wrap_exceptions
 def attach_instance_pool_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, instance_id):
 
-    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+    if isinstance(instance_pool_id, str) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -155,7 +154,7 @@ def attach_instance_pool_instance(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def attach_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, load_balancer_id, backend_set_name, port, vnic_selection, if_match):
 
-    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+    if isinstance(instance_pool_id, str) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -213,7 +212,7 @@ When you move a cluster network to a different compartment, associated resources
 @cli_util.wrap_exceptions
 def change_cluster_network_compartment(ctx, from_json, cluster_network_id, compartment_id, if_match):
 
-    if isinstance(cluster_network_id, six.string_types) and len(cluster_network_id.strip()) == 0:
+    if isinstance(cluster_network_id, str) and len(cluster_network_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-network-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -248,7 +247,7 @@ When you move an instance configuration to a different compartment, associated r
 @cli_util.wrap_exceptions
 def change_instance_configuration_compartment(ctx, from_json, instance_configuration_id, compartment_id, if_match):
 
-    if isinstance(instance_configuration_id, six.string_types) and len(instance_configuration_id.strip()) == 0:
+    if isinstance(instance_configuration_id, str) and len(instance_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -281,7 +280,7 @@ When you move an instance pool to a different compartment, associated resources 
 @cli_util.wrap_exceptions
 def change_instance_pool_compartment(ctx, from_json, instance_pool_id, compartment_id, if_match):
 
-    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+    if isinstance(instance_pool_id, str) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -616,7 +615,7 @@ def create_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_instance_configuration(ctx, from_json, instance_configuration_id, if_match):
 
-    if isinstance(instance_configuration_id, six.string_types) and len(instance_configuration_id.strip()) == 0:
+    if isinstance(instance_configuration_id, str) and len(instance_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -645,7 +644,7 @@ def delete_instance_configuration(ctx, from_json, instance_configuration_id, if_
 @cli_util.wrap_exceptions
 def detach_instance_pool_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, instance_id, is_decrement_size, is_auto_terminate):
 
-    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+    if isinstance(instance_pool_id, str) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -718,7 +717,7 @@ def detach_instance_pool_instance(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def detach_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, load_balancer_id, backend_set_name, if_match):
 
-    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+    if isinstance(instance_pool_id, str) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -770,7 +769,7 @@ def detach_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def get_cluster_network(ctx, from_json, cluster_network_id):
 
-    if isinstance(cluster_network_id, six.string_types) and len(cluster_network_id.strip()) == 0:
+    if isinstance(cluster_network_id, str) and len(cluster_network_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-network-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -791,7 +790,7 @@ def get_cluster_network(ctx, from_json, cluster_network_id):
 @cli_util.wrap_exceptions
 def get_instance_configuration(ctx, from_json, instance_configuration_id):
 
-    if isinstance(instance_configuration_id, six.string_types) and len(instance_configuration_id.strip()) == 0:
+    if isinstance(instance_configuration_id, str) and len(instance_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -812,7 +811,7 @@ def get_instance_configuration(ctx, from_json, instance_configuration_id):
 @cli_util.wrap_exceptions
 def get_instance_pool(ctx, from_json, instance_pool_id):
 
-    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+    if isinstance(instance_pool_id, str) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -834,10 +833,10 @@ def get_instance_pool(ctx, from_json, instance_pool_id):
 @cli_util.wrap_exceptions
 def get_instance_pool_instance(ctx, from_json, instance_pool_id, instance_id):
 
-    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+    if isinstance(instance_pool_id, str) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -860,10 +859,10 @@ def get_instance_pool_instance(ctx, from_json, instance_pool_id, instance_id):
 @cli_util.wrap_exceptions
 def get_instance_pool_load_balancer_attachment(ctx, from_json, instance_pool_id, instance_pool_load_balancer_attachment_id):
 
-    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+    if isinstance(instance_pool_id, str) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
 
-    if isinstance(instance_pool_load_balancer_attachment_id, six.string_types) and len(instance_pool_load_balancer_attachment_id.strip()) == 0:
+    if isinstance(instance_pool_load_balancer_attachment_id, str) and len(instance_pool_load_balancer_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-load-balancer-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -890,7 +889,7 @@ To determine whether capacity is available for a specific shape before you creat
 @cli_util.wrap_exceptions
 def launch_instance_configuration(ctx, from_json, instance_configuration_id, instance_type):
 
-    if isinstance(instance_configuration_id, six.string_types) and len(instance_configuration_id.strip()) == 0:
+    if isinstance(instance_configuration_id, str) and len(instance_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -923,7 +922,7 @@ This option is a JSON list with items of type ComputeInstanceDetails.  For docum
 @cli_util.wrap_exceptions
 def launch_instance_configuration_compute_instance_options(ctx, from_json, instance_configuration_id, options):
 
-    if isinstance(instance_configuration_id, six.string_types) and len(instance_configuration_id.strip()) == 0:
+    if isinstance(instance_configuration_id, str) and len(instance_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -964,7 +963,7 @@ This option is a JSON list with items of type InstanceConfigurationAttachVnicDet
 @cli_util.wrap_exceptions
 def launch_instance_configuration_compute_instance_details(ctx, from_json, instance_configuration_id, block_volumes, launch_details, secondary_vnics):
 
-    if isinstance(instance_configuration_id, six.string_types) and len(instance_configuration_id.strip()) == 0:
+    if isinstance(instance_configuration_id, str) and len(instance_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1015,7 +1014,7 @@ def list_cluster_network_instances(ctx, from_json, all_pages, page_size, compart
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(cluster_network_id, six.string_types) and len(cluster_network_id.strip()) == 0:
+    if isinstance(cluster_network_id, str) and len(cluster_network_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-network-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1202,7 +1201,7 @@ def list_instance_pool_instances(ctx, from_json, all_pages, page_size, compartme
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+    if isinstance(instance_pool_id, str) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1321,7 +1320,7 @@ def list_instance_pools(ctx, from_json, all_pages, page_size, compartment_id, di
 @cli_util.wrap_exceptions
 def reset_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, if_match):
 
-    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+    if isinstance(instance_pool_id, str) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1373,7 +1372,7 @@ Softreset gracefully reboots the instances by sending a shutdown command to the 
 @cli_util.wrap_exceptions
 def softreset_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, if_match):
 
-    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+    if isinstance(instance_pool_id, str) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1425,7 +1424,7 @@ Softstop gracefully reboots the instances by sending a shutdown command to the o
 @cli_util.wrap_exceptions
 def softstop_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, if_match):
 
-    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+    if isinstance(instance_pool_id, str) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1475,7 +1474,7 @@ def softstop_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def start_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, if_match):
 
-    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+    if isinstance(instance_pool_id, str) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1525,7 +1524,7 @@ def start_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def stop_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, if_match):
 
-    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+    if isinstance(instance_pool_id, str) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1578,7 +1577,7 @@ When you delete a cluster network, all of its resources are permanently deleted,
 @cli_util.wrap_exceptions
 def terminate_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_network_id, if_match):
 
-    if isinstance(cluster_network_id, six.string_types) and len(cluster_network_id.strip()) == 0:
+    if isinstance(cluster_network_id, str) and len(cluster_network_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-network-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1638,7 +1637,7 @@ If an autoscaling configuration applies to the instance pool, the autoscaling co
 @cli_util.wrap_exceptions
 def terminate_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, if_match):
 
-    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+    if isinstance(instance_pool_id, str) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1711,7 +1710,7 @@ This option is a JSON list with items of type UpdateClusterNetworkInstancePoolDe
 @cli_util.wrap_exceptions
 def update_cluster_network(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_network_id, defined_tags, display_name, freeform_tags, instance_pools, if_match):
 
-    if isinstance(cluster_network_id, six.string_types) and len(cluster_network_id.strip()) == 0:
+    if isinstance(cluster_network_id, str) and len(cluster_network_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-network-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or instance_pools:
@@ -1786,7 +1785,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_instance_configuration(ctx, from_json, force, instance_configuration_id, defined_tags, display_name, freeform_tags, if_match):
 
-    if isinstance(instance_configuration_id, six.string_types) and len(instance_configuration_id.strip()) == 0:
+    if isinstance(instance_configuration_id, str) and len(instance_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-configuration-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -1851,7 +1850,7 @@ To determine whether capacity is available for a specific shape before you resiz
 @cli_util.wrap_exceptions
 def update_instance_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, defined_tags, display_name, freeform_tags, instance_configuration_id, placement_configurations, size, instance_display_name_formatter, instance_hostname_formatter, if_match):
 
-    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+    if isinstance(instance_pool_id, str) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or placement_configurations:

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -404,7 +403,7 @@ def analyze_image_inline_image_details(ctx, from_json, features, image_data, com
 @cli_util.wrap_exceptions
 def cancel_document_job(ctx, from_json, document_job_id, if_match):
 
-    if isinstance(document_job_id, six.string_types) and len(document_job_id.strip()) == 0:
+    if isinstance(document_job_id, str) and len(document_job_id.strip()) == 0:
         raise click.UsageError('Parameter --document-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -429,7 +428,7 @@ def cancel_document_job(ctx, from_json, document_job_id, if_match):
 @cli_util.wrap_exceptions
 def cancel_image_job(ctx, from_json, image_job_id, if_match):
 
-    if isinstance(image_job_id, six.string_types) and len(image_job_id.strip()) == 0:
+    if isinstance(image_job_id, str) and len(image_job_id.strip()) == 0:
         raise click.UsageError('Parameter --image-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -454,7 +453,7 @@ def cancel_image_job(ctx, from_json, image_job_id, if_match):
 @cli_util.wrap_exceptions
 def cancel_video_job(ctx, from_json, video_job_id, if_match):
 
-    if isinstance(video_job_id, six.string_types) and len(video_job_id.strip()) == 0:
+    if isinstance(video_job_id, str) and len(video_job_id.strip()) == 0:
         raise click.UsageError('Parameter --video-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -480,7 +479,7 @@ def cancel_video_job(ctx, from_json, video_job_id, if_match):
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -506,7 +505,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -537,7 +536,7 @@ def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match)
 @cli_util.wrap_exceptions
 def change_project_compartment(ctx, from_json, project_id, compartment_id, if_match):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -571,7 +570,7 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
 @cli_util.wrap_exceptions
 def change_stream_group_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_group_id, compartment_id, if_match):
 
-    if isinstance(stream_group_id, six.string_types) and len(stream_group_id.strip()) == 0:
+    if isinstance(stream_group_id, str) and len(stream_group_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -632,7 +631,7 @@ def change_stream_group_compartment(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def change_stream_job_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_job_id, compartment_id, if_match):
 
-    if isinstance(stream_job_id, six.string_types) and len(stream_job_id.strip()) == 0:
+    if isinstance(stream_job_id, str) and len(stream_job_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -693,7 +692,7 @@ def change_stream_job_compartment(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def change_stream_source_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_source_id, compartment_id, if_match):
 
-    if isinstance(stream_source_id, six.string_types) and len(stream_source_id.strip()) == 0:
+    if isinstance(stream_source_id, str) and len(stream_source_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -751,7 +750,7 @@ def change_stream_source_compartment(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def change_vision_private_endpoint_compartment(ctx, from_json, vision_private_endpoint_id, compartment_id, if_match):
 
-    if isinstance(vision_private_endpoint_id, six.string_types) and len(vision_private_endpoint_id.strip()) == 0:
+    if isinstance(vision_private_endpoint_id, str) and len(vision_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --vision-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1814,7 +1813,7 @@ def create_vision_private_endpoint(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1870,7 +1869,7 @@ def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, if_match):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1926,7 +1925,7 @@ def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_stream_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_group_id, if_match):
 
-    if isinstance(stream_group_id, six.string_types) and len(stream_group_id.strip()) == 0:
+    if isinstance(stream_group_id, str) and len(stream_group_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1982,7 +1981,7 @@ def delete_stream_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_stream_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_job_id, if_match):
 
-    if isinstance(stream_job_id, six.string_types) and len(stream_job_id.strip()) == 0:
+    if isinstance(stream_job_id, str) and len(stream_job_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2038,7 +2037,7 @@ def delete_stream_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_stream_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_source_id, if_match):
 
-    if isinstance(stream_source_id, six.string_types) and len(stream_source_id.strip()) == 0:
+    if isinstance(stream_source_id, str) and len(stream_source_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2094,7 +2093,7 @@ def delete_stream_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_vision_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vision_private_endpoint_id, if_match):
 
-    if isinstance(vision_private_endpoint_id, six.string_types) and len(vision_private_endpoint_id.strip()) == 0:
+    if isinstance(vision_private_endpoint_id, str) and len(vision_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --vision-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2145,7 +2144,7 @@ def delete_vision_private_endpoint(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def get_document_job(ctx, from_json, document_job_id):
 
-    if isinstance(document_job_id, six.string_types) and len(document_job_id.strip()) == 0:
+    if isinstance(document_job_id, str) and len(document_job_id.strip()) == 0:
         raise click.UsageError('Parameter --document-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2167,7 +2166,7 @@ def get_document_job(ctx, from_json, document_job_id):
 @cli_util.wrap_exceptions
 def get_image_job(ctx, from_json, image_job_id):
 
-    if isinstance(image_job_id, six.string_types) and len(image_job_id.strip()) == 0:
+    if isinstance(image_job_id, str) and len(image_job_id.strip()) == 0:
         raise click.UsageError('Parameter --image-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2189,7 +2188,7 @@ def get_image_job(ctx, from_json, image_job_id):
 @cli_util.wrap_exceptions
 def get_model(ctx, from_json, model_id):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2211,7 +2210,7 @@ def get_model(ctx, from_json, model_id):
 @cli_util.wrap_exceptions
 def get_project(ctx, from_json, project_id):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2233,7 +2232,7 @@ def get_project(ctx, from_json, project_id):
 @cli_util.wrap_exceptions
 def get_stream_group(ctx, from_json, stream_group_id):
 
-    if isinstance(stream_group_id, six.string_types) and len(stream_group_id.strip()) == 0:
+    if isinstance(stream_group_id, str) and len(stream_group_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2255,7 +2254,7 @@ def get_stream_group(ctx, from_json, stream_group_id):
 @cli_util.wrap_exceptions
 def get_stream_job(ctx, from_json, stream_job_id):
 
-    if isinstance(stream_job_id, six.string_types) and len(stream_job_id.strip()) == 0:
+    if isinstance(stream_job_id, str) and len(stream_job_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2277,7 +2276,7 @@ def get_stream_job(ctx, from_json, stream_job_id):
 @cli_util.wrap_exceptions
 def get_stream_source(ctx, from_json, stream_source_id):
 
-    if isinstance(stream_source_id, six.string_types) and len(stream_source_id.strip()) == 0:
+    if isinstance(stream_source_id, str) and len(stream_source_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2299,7 +2298,7 @@ def get_stream_source(ctx, from_json, stream_source_id):
 @cli_util.wrap_exceptions
 def get_video_job(ctx, from_json, video_job_id):
 
-    if isinstance(video_job_id, six.string_types) and len(video_job_id.strip()) == 0:
+    if isinstance(video_job_id, str) and len(video_job_id.strip()) == 0:
         raise click.UsageError('Parameter --video-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2321,7 +2320,7 @@ def get_video_job(ctx, from_json, video_job_id):
 @cli_util.wrap_exceptions
 def get_vision_private_endpoint(ctx, from_json, vision_private_endpoint_id):
 
-    if isinstance(vision_private_endpoint_id, six.string_types) and len(vision_private_endpoint_id.strip()) == 0:
+    if isinstance(vision_private_endpoint_id, str) and len(vision_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --vision-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2343,7 +2342,7 @@ def get_vision_private_endpoint(ctx, from_json, vision_private_endpoint_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2746,7 +2745,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2803,7 +2802,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2917,7 +2916,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def start_stream_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_job_id, if_match):
 
-    if isinstance(stream_job_id, six.string_types) and len(stream_job_id.strip()) == 0:
+    if isinstance(stream_job_id, str) and len(stream_job_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2972,7 +2971,7 @@ def start_stream_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def stop_stream_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_job_id, if_match):
 
-    if isinstance(stream_job_id, six.string_types) and len(stream_job_id.strip()) == 0:
+    if isinstance(stream_job_id, str) and len(stream_job_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3032,7 +3031,7 @@ def stop_stream_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3112,7 +3111,7 @@ def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def update_project(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3196,7 +3195,7 @@ This option is a JSON list with items of type StreamGroupOverlap.  For documenta
 @cli_util.wrap_exceptions
 def update_stream_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_group_id, display_name, is_enabled, stream_source_ids, stream_overlaps, freeform_tags, defined_tags, if_match):
 
-    if isinstance(stream_group_id, six.string_types) and len(stream_group_id.strip()) == 0:
+    if isinstance(stream_group_id, str) and len(stream_group_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-group-id cannot be whitespace or empty string')
     if not force:
         if stream_source_ids or stream_overlaps or freeform_tags or defined_tags:
@@ -3286,7 +3285,7 @@ This option is a JSON list with items of type VideoStreamFeature.  For documenta
 @cli_util.wrap_exceptions
 def update_stream_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_job_id, stream_source_id, features, stream_output_location, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(stream_job_id, six.string_types) and len(stream_job_id.strip()) == 0:
+    if isinstance(stream_job_id, str) and len(stream_job_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-job-id cannot be whitespace or empty string')
     if not force:
         if features or stream_output_location or freeform_tags or defined_tags:
@@ -3378,7 +3377,7 @@ This option is a JSON list with items of type VideoStreamFeature.  For documenta
 @cli_util.wrap_exceptions
 def update_stream_job_object_storage_output_location(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_job_id, stream_output_location_namespace_name, stream_output_location_bucket_name, stream_output_location_prefix, stream_source_id, features, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(stream_job_id, six.string_types) and len(stream_job_id.strip()) == 0:
+    if isinstance(stream_job_id, str) and len(stream_job_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-job-id cannot be whitespace or empty string')
     if not force:
         if features or freeform_tags or defined_tags:
@@ -3467,7 +3466,7 @@ def update_stream_job_object_storage_output_location(ctx, from_json, force, wait
 @cli_util.wrap_exceptions
 def update_stream_source(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_source_id, stream_source_details, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(stream_source_id, six.string_types) and len(stream_source_id.strip()) == 0:
+    if isinstance(stream_source_id, str) and len(stream_source_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-source-id cannot be whitespace or empty string')
     if not force:
         if stream_source_details or freeform_tags or defined_tags:
@@ -3549,7 +3548,7 @@ def update_stream_source(ctx, from_json, force, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def update_stream_source_rtsp_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_source_id, stream_source_details_stream_network_access_details, stream_source_details_camera_url, display_name, freeform_tags, defined_tags, if_match, stream_source_details_secret_id):
 
-    if isinstance(stream_source_id, six.string_types) and len(stream_source_id.strip()) == 0:
+    if isinstance(stream_source_id, str) and len(stream_source_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-source-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3634,7 +3633,7 @@ def update_stream_source_rtsp_source_details(ctx, from_json, force, wait_for_sta
 @cli_util.wrap_exceptions
 def update_vision_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vision_private_endpoint_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(vision_private_endpoint_id, six.string_types) and len(vision_private_endpoint_id.strip()) == 0:
+    if isinstance(vision_private_endpoint_id, str) and len(vision_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --vision-private-endpoint-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

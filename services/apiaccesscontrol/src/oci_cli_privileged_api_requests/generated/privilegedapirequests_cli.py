@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -61,7 +60,7 @@ privileged_api_requests_root_group.add_command(privileged_api_request_group)
 @cli_util.wrap_exceptions
 def approve_privileged_api_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, privileged_api_request_id, approver_comment, time_of_user_creation, if_match):
 
-    if isinstance(privileged_api_request_id, six.string_types) and len(privileged_api_request_id.strip()) == 0:
+    if isinstance(privileged_api_request_id, str) and len(privileged_api_request_id.strip()) == 0:
         raise click.UsageError('Parameter --privileged-api-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -127,7 +126,7 @@ def approve_privileged_api_request(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def close_privileged_api_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, privileged_api_request_id, description, if_match):
 
-    if isinstance(privileged_api_request_id, six.string_types) and len(privileged_api_request_id.strip()) == 0:
+    if isinstance(privileged_api_request_id, str) and len(privileged_api_request_id.strip()) == 0:
         raise click.UsageError('Parameter --privileged-api-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -286,7 +285,7 @@ def create_privileged_api_request(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def get_privileged_api_request(ctx, from_json, privileged_api_request_id):
 
-    if isinstance(privileged_api_request_id, six.string_types) and len(privileged_api_request_id.strip()) == 0:
+    if isinstance(privileged_api_request_id, str) and len(privileged_api_request_id.strip()) == 0:
         raise click.UsageError('Parameter --privileged-api-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -384,7 +383,7 @@ def list_privileged_api_requests(ctx, from_json, all_pages, page_size, compartme
 @cli_util.wrap_exceptions
 def reject_privileged_api_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, privileged_api_request_id, approver_comment, if_match):
 
-    if isinstance(privileged_api_request_id, six.string_types) and len(privileged_api_request_id.strip()) == 0:
+    if isinstance(privileged_api_request_id, str) and len(privileged_api_request_id.strip()) == 0:
         raise click.UsageError('Parameter --privileged-api-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -447,7 +446,7 @@ def reject_privileged_api_request(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def revoke_privileged_api_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, privileged_api_request_id, approver_comment, if_match):
 
-    if isinstance(privileged_api_request_id, six.string_types) and len(privileged_api_request_id.strip()) == 0:
+    if isinstance(privileged_api_request_id, str) and len(privileged_api_request_id.strip()) == 0:
         raise click.UsageError('Parameter --privileged-api-request-id cannot be whitespace or empty string')
 
     kwargs = {}

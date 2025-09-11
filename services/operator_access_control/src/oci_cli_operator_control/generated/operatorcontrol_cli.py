@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -46,7 +45,7 @@ operator_control_root_group.add_command(operator_control_group)
 @cli_util.wrap_exceptions
 def change_operator_control_compartment(ctx, from_json, operator_control_id, compartment_id, if_match):
 
-    if isinstance(operator_control_id, six.string_types) and len(operator_control_id.strip()) == 0:
+    if isinstance(operator_control_id, str) and len(operator_control_id.strip()) == 0:
         raise click.UsageError('Parameter --operator-control-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -172,7 +171,7 @@ def create_operator_control(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_operator_control(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operator_control_id, description, if_match):
 
-    if isinstance(operator_control_id, six.string_types) and len(operator_control_id.strip()) == 0:
+    if isinstance(operator_control_id, str) and len(operator_control_id.strip()) == 0:
         raise click.UsageError('Parameter --operator-control-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -233,7 +232,7 @@ def delete_operator_control(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def get_operator_control(ctx, from_json, operator_control_id):
 
-    if isinstance(operator_control_id, six.string_types) and len(operator_control_id.strip()) == 0:
+    if isinstance(operator_control_id, str) and len(operator_control_id.strip()) == 0:
         raise click.UsageError('Parameter --operator-control-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -334,7 +333,7 @@ def list_operator_controls(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.wrap_exceptions
 def update_operator_control(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, operator_control_id, operator_control_name, approver_groups_list, is_fully_pre_approved, description, approvers_list, pre_approved_op_action_list, email_id_list, number_of_approvers, system_message, freeform_tags, defined_tags, if_match):
 
-    if isinstance(operator_control_id, six.string_types) and len(operator_control_id.strip()) == 0:
+    if isinstance(operator_control_id, str) and len(operator_control_id.strip()) == 0:
         raise click.UsageError('Parameter --operator-control-id cannot be whitespace or empty string')
     if not force:
         if approvers_list or approver_groups_list or pre_approved_op_action_list or email_id_list or freeform_tags or defined_tags:

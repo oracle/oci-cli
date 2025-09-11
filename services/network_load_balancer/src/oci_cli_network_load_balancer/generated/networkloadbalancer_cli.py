@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -169,7 +168,7 @@ nlb_root_group.add_command(network_load_balancer_health_group)
 @cli_util.wrap_exceptions
 def change_network_load_balancer_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, compartment_id, if_match):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -250,10 +249,10 @@ Example: `false`""")
 @cli_util.wrap_exceptions
 def create_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, port, backend_set_name, name, ip_address, target_id, weight, is_drain, is_backup, is_offline, if_match):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -353,7 +352,7 @@ This option is a JSON list with items of type BackendDetails.  For documentation
 @cli_util.wrap_exceptions
 def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, name, policy, health_checker, is_preserve_source, is_fail_open, is_instant_failover_enabled, is_instant_failover_tcp_reset_enabled, are_operationally_active_backends_preferred, ip_version, backends, if_match):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -453,7 +452,7 @@ Example: `TCP`""")
 @cli_util.wrap_exceptions
 def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, name, default_backend_set_name, port, protocol, ip_version, is_ppv2_enabled, tcp_idle_timeout, udp_idle_timeout, l3_ip_idle_timeout, if_match):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -677,13 +676,13 @@ Example: `10.0.0.3:8080` or `ocid1.privateip..oc1.<var>&lt;unique_ID&gt;</var>:8
 @cli_util.wrap_exceptions
 def delete_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, backend_set_name, backend_name, if_match):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
-    if isinstance(backend_name, six.string_types) and len(backend_name.strip()) == 0:
+    if isinstance(backend_name, str) and len(backend_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -746,10 +745,10 @@ Example: `example_backend_set`""")
 @cli_util.wrap_exceptions
 def delete_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, backend_set_name, if_match):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -809,10 +808,10 @@ Example: `example_listener`""")
 @cli_util.wrap_exceptions
 def delete_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, listener_name, if_match):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(listener_name, six.string_types) and len(listener_name.strip()) == 0:
+    if isinstance(listener_name, str) and len(listener_name.strip()) == 0:
         raise click.UsageError('Parameter --listener-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -869,7 +868,7 @@ def delete_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def delete_network_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, if_match):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -929,13 +928,13 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def get_backend(ctx, from_json, network_load_balancer_id, backend_set_name, backend_name, if_none_match):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
-    if isinstance(backend_name, six.string_types) and len(backend_name.strip()) == 0:
+    if isinstance(backend_name, str) and len(backend_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -967,13 +966,13 @@ Example: `10.0.0.3:8080` or `ocid1.privateip..oc1.<var>&lt;unique_ID&gt;</var>:8
 @cli_util.wrap_exceptions
 def get_backend_health(ctx, from_json, network_load_balancer_id, backend_set_name, backend_name):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
-    if isinstance(backend_name, six.string_types) and len(backend_name.strip()) == 0:
+    if isinstance(backend_name, str) and len(backend_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1003,13 +1002,13 @@ Example: `10.0.0.3:8080` or `ocid1.privateip..oc1.<var>&lt;unique_ID&gt;</var>:8
 @cli_util.wrap_exceptions
 def get_backend_operational_status(ctx, from_json, network_load_balancer_id, backend_set_name, backend_name):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
-    if isinstance(backend_name, six.string_types) and len(backend_name.strip()) == 0:
+    if isinstance(backend_name, str) and len(backend_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1039,10 +1038,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def get_backend_set(ctx, from_json, network_load_balancer_id, backend_set_name, if_none_match):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1070,10 +1069,10 @@ Example: `example_backend_set`""")
 @cli_util.wrap_exceptions
 def get_backend_set_health(ctx, from_json, network_load_balancer_id, backend_set_name):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1102,10 +1101,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def get_health_checker(ctx, from_json, network_load_balancer_id, backend_set_name, if_none_match):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1136,10 +1135,10 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def get_listener(ctx, from_json, network_load_balancer_id, listener_name, if_none_match):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(listener_name, six.string_types) and len(listener_name.strip()) == 0:
+    if isinstance(listener_name, str) and len(listener_name.strip()) == 0:
         raise click.UsageError('Parameter --listener-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1167,7 +1166,7 @@ Example: `example-etag`""")
 @cli_util.wrap_exceptions
 def get_network_load_balancer(ctx, from_json, network_load_balancer_id, if_none_match):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1191,7 +1190,7 @@ def get_network_load_balancer(ctx, from_json, network_load_balancer_id, if_none_
 @cli_util.wrap_exceptions
 def get_network_load_balancer_health(ctx, from_json, network_load_balancer_id):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1213,7 +1212,7 @@ def get_network_load_balancer_health(ctx, from_json, network_load_balancer_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1247,7 +1246,7 @@ def list_backend_sets(ctx, from_json, all_pages, page_size, network_load_balance
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1312,10 +1311,10 @@ def list_backends(ctx, from_json, all_pages, page_size, network_load_balancer_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1380,7 +1379,7 @@ def list_listeners(ctx, from_json, all_pages, page_size, network_load_balancer_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1652,7 +1651,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1707,7 +1706,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1824,13 +1823,13 @@ Example: `false`""")
 @cli_util.wrap_exceptions
 def update_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, backend_set_name, backend_name, weight, is_backup, is_drain, is_offline, if_match):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
 
-    if isinstance(backend_name, six.string_types) and len(backend_name.strip()) == 0:
+    if isinstance(backend_name, str) and len(backend_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1920,10 +1919,10 @@ This option is a JSON list with items of type BackendDetails.  For documentation
 @cli_util.wrap_exceptions
 def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, backend_set_name, policy, is_preserve_source, is_fail_open, is_instant_failover_enabled, is_instant_failover_tcp_reset_enabled, are_operationally_active_backends_preferred, ip_version, backends, health_checker, if_match):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
     if not force:
         if backends or health_checker:
@@ -2045,10 +2044,10 @@ Example: `200`""")
 @cli_util.wrap_exceptions
 def update_health_checker(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, backend_set_name, protocol, port, retries, timeout_in_millis, interval_in_millis, url_path, response_body_regex, return_code, request_data, response_data, dns, if_match):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
+    if isinstance(backend_set_name, str) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
     if not force:
         if dns:
@@ -2162,10 +2161,10 @@ Example: `TCP`""")
 @cli_util.wrap_exceptions
 def update_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, listener_name, default_backend_set_name, port, protocol, ip_version, is_ppv2_enabled, tcp_idle_timeout, udp_idle_timeout, l3_ip_idle_timeout, if_match):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
 
-    if isinstance(listener_name, six.string_types) and len(listener_name.strip()) == 0:
+    if isinstance(listener_name, str) and len(listener_name.strip()) == 0:
         raise click.UsageError('Parameter --listener-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2267,7 +2266,7 @@ Example: `{\"oracle-zpr\": {\"td\": {\"value\": \"42\", \"mode\": \"audit\"}}}`"
 @cli_util.wrap_exceptions
 def update_network_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, display_name, is_preserve_source_destination, is_symmetric_hash_enabled, nlb_ip_version, subnet_ipv6_cidr, assigned_ipv6, freeform_tags, defined_tags, security_attributes, if_match):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or security_attributes:
@@ -2367,7 +2366,7 @@ The benefits of associating the network load balancer with network security grou
 @cli_util.wrap_exceptions
 def update_network_security_groups(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_load_balancer_id, network_security_group_ids, if_match):
 
-    if isinstance(network_load_balancer_id, six.string_types) and len(network_load_balancer_id.strip()) == 0:
+    if isinstance(network_load_balancer_id, str) and len(network_load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --network-load-balancer-id cannot be whitespace or empty string')
     if not force:
         if network_security_group_ids:

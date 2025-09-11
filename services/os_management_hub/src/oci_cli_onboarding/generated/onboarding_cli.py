@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -51,7 +50,7 @@ onboarding_root_group.add_command(profile_group)
 @cli_util.wrap_exceptions
 def attach_lifecycle_stage_to_profile(ctx, from_json, profile_id, lifecycle_stage_id, if_match):
 
-    if isinstance(profile_id, six.string_types) and len(profile_id.strip()) == 0:
+    if isinstance(profile_id, str) and len(profile_id.strip()) == 0:
         raise click.UsageError('Parameter --profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -82,7 +81,7 @@ def attach_lifecycle_stage_to_profile(ctx, from_json, profile_id, lifecycle_stag
 @cli_util.wrap_exceptions
 def attach_managed_instance_group_to_profile(ctx, from_json, profile_id, managed_instance_group_id, if_match):
 
-    if isinstance(profile_id, six.string_types) and len(profile_id.strip()) == 0:
+    if isinstance(profile_id, str) and len(profile_id.strip()) == 0:
         raise click.UsageError('Parameter --profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -113,7 +112,7 @@ def attach_managed_instance_group_to_profile(ctx, from_json, profile_id, managed
 @cli_util.wrap_exceptions
 def attach_management_station_to_profile(ctx, from_json, profile_id, management_station_id, if_match):
 
-    if isinstance(profile_id, six.string_types) and len(profile_id.strip()) == 0:
+    if isinstance(profile_id, str) and len(profile_id.strip()) == 0:
         raise click.UsageError('Parameter --profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -144,7 +143,7 @@ def attach_management_station_to_profile(ctx, from_json, profile_id, management_
 @cli_util.wrap_exceptions
 def attach_software_sources_to_profile(ctx, from_json, profile_id, software_sources, if_match):
 
-    if isinstance(profile_id, six.string_types) and len(profile_id.strip()) == 0:
+    if isinstance(profile_id, str) and len(profile_id.strip()) == 0:
         raise click.UsageError('Parameter --profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -175,7 +174,7 @@ def attach_software_sources_to_profile(ctx, from_json, profile_id, software_sour
 @cli_util.wrap_exceptions
 def change_profile_compartment(ctx, from_json, profile_id, compartment_id, if_match):
 
-    if isinstance(profile_id, six.string_types) and len(profile_id.strip()) == 0:
+    if isinstance(profile_id, str) and len(profile_id.strip()) == 0:
         raise click.UsageError('Parameter --profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -705,7 +704,7 @@ def create_profile_create_lifecycle_profile_details(ctx, from_json, wait_for_sta
 @cli_util.wrap_exceptions
 def delete_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, profile_id, if_match):
 
-    if isinstance(profile_id, six.string_types) and len(profile_id.strip()) == 0:
+    if isinstance(profile_id, str) and len(profile_id.strip()) == 0:
         raise click.UsageError('Parameter --profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -766,7 +765,7 @@ def delete_profile(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def detach_software_sources_from_profile(ctx, from_json, profile_id, software_sources, if_match):
 
-    if isinstance(profile_id, six.string_types) and len(profile_id.strip()) == 0:
+    if isinstance(profile_id, str) and len(profile_id.strip()) == 0:
         raise click.UsageError('Parameter --profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -795,7 +794,7 @@ def detach_software_sources_from_profile(ctx, from_json, profile_id, software_so
 @cli_util.wrap_exceptions
 def get_profile(ctx, from_json, profile_id):
 
-    if isinstance(profile_id, six.string_types) and len(profile_id.strip()) == 0:
+    if isinstance(profile_id, str) and len(profile_id.strip()) == 0:
         raise click.UsageError('Parameter --profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -818,10 +817,10 @@ def get_profile(ctx, from_json, profile_id):
 @cli_util.wrap_exceptions
 def get_profile_version(ctx, from_json, profile_id, profile_version):
 
-    if isinstance(profile_id, six.string_types) and len(profile_id.strip()) == 0:
+    if isinstance(profile_id, str) and len(profile_id.strip()) == 0:
         raise click.UsageError('Parameter --profile-id cannot be whitespace or empty string')
 
-    if isinstance(profile_version, six.string_types) and len(profile_version.strip()) == 0:
+    if isinstance(profile_version, str) and len(profile_version.strip()) == 0:
         raise click.UsageError('Parameter --profile-version cannot be whitespace or empty string')
 
     kwargs = {}
@@ -860,7 +859,7 @@ def list_profile_available_software_sources(ctx, from_json, all_pages, page_size
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(profile_id, six.string_types) and len(profile_id.strip()) == 0:
+    if isinstance(profile_id, str) and len(profile_id.strip()) == 0:
         raise click.UsageError('Parameter --profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1023,7 +1022,7 @@ def list_profiles(ctx, from_json, all_pages, page_size, compartment_id, display_
 @cli_util.wrap_exceptions
 def update_profile(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, profile_id, display_name, description, is_default_profile, freeform_tags, defined_tags, if_match):
 
-    if isinstance(profile_id, six.string_types) and len(profile_id.strip()) == 0:
+    if isinstance(profile_id, str) and len(profile_id.strip()) == 0:
         raise click.UsageError('Parameter --profile-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

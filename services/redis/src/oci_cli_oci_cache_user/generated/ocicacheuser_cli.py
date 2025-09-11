@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -67,7 +66,7 @@ oci_cache_user_root_group.add_command(oci_cache_user_group)
 @cli_util.wrap_exceptions
 def change_oci_cache_user_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oci_cache_user_id, compartment_id, if_match):
 
-    if isinstance(oci_cache_user_id, six.string_types) and len(oci_cache_user_id.strip()) == 0:
+    if isinstance(oci_cache_user_id, str) and len(oci_cache_user_id.strip()) == 0:
         raise click.UsageError('Parameter --oci-cache-user-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -351,7 +350,7 @@ def create_oci_cache_user_password_authentication_mode(ctx, from_json, wait_for_
 @cli_util.wrap_exceptions
 def delete_oci_cache_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oci_cache_user_id, if_match):
 
-    if isinstance(oci_cache_user_id, six.string_types) and len(oci_cache_user_id.strip()) == 0:
+    if isinstance(oci_cache_user_id, str) and len(oci_cache_user_id.strip()) == 0:
         raise click.UsageError('Parameter --oci-cache-user-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -402,7 +401,7 @@ def delete_oci_cache_user(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def get_oci_cache_user(ctx, from_json, oci_cache_user_id):
 
-    if isinstance(oci_cache_user_id, six.string_types) and len(oci_cache_user_id.strip()) == 0:
+    if isinstance(oci_cache_user_id, str) and len(oci_cache_user_id.strip()) == 0:
         raise click.UsageError('Parameter --oci-cache-user-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -435,7 +434,7 @@ def list_attached_redis_clusters(ctx, from_json, all_pages, page_size, oci_cache
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(oci_cache_user_id, six.string_types) and len(oci_cache_user_id.strip()) == 0:
+    if isinstance(oci_cache_user_id, str) and len(oci_cache_user_id.strip()) == 0:
         raise click.UsageError('Parameter --oci-cache-user-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -557,7 +556,7 @@ def list_oci_cache_users(ctx, from_json, all_pages, page_size, compartment_id, n
 @cli_util.wrap_exceptions
 def update_oci_cache_user(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oci_cache_user_id, description, authentication_mode, acl_string, status, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oci_cache_user_id, six.string_types) and len(oci_cache_user_id.strip()) == 0:
+    if isinstance(oci_cache_user_id, str) and len(oci_cache_user_id.strip()) == 0:
         raise click.UsageError('Parameter --oci-cache-user-id cannot be whitespace or empty string')
     if not force:
         if authentication_mode or freeform_tags or defined_tags:
@@ -644,7 +643,7 @@ def update_oci_cache_user(ctx, from_json, force, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def update_oci_cache_user_iam_authentication_mode(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oci_cache_user_id, description, acl_string, status, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oci_cache_user_id, six.string_types) and len(oci_cache_user_id.strip()) == 0:
+    if isinstance(oci_cache_user_id, str) and len(oci_cache_user_id.strip()) == 0:
         raise click.UsageError('Parameter --oci-cache-user-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -732,7 +731,7 @@ def update_oci_cache_user_iam_authentication_mode(ctx, from_json, force, wait_fo
 @cli_util.wrap_exceptions
 def update_oci_cache_user_password_authentication_mode(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, oci_cache_user_id, authentication_mode_hashed_passwords, description, acl_string, status, freeform_tags, defined_tags, if_match):
 
-    if isinstance(oci_cache_user_id, six.string_types) and len(oci_cache_user_id.strip()) == 0:
+    if isinstance(oci_cache_user_id, str) and len(oci_cache_user_id.strip()) == 0:
         raise click.UsageError('Parameter --oci-cache-user-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

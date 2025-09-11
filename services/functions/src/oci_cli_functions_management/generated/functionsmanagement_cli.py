@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -71,7 +70,7 @@ functions_management_root_group.add_command(pbf_listing_version_group)
 @cli_util.wrap_exceptions
 def change_application_compartment(ctx, from_json, application_id, compartment_id, if_match):
 
-    if isinstance(application_id, six.string_types) and len(application_id.strip()) == 0:
+    if isinstance(application_id, str) and len(application_id.strip()) == 0:
         raise click.UsageError('Parameter --application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -589,7 +588,7 @@ def create_function_constant_provisioned_concurrency_config(ctx, from_json, wait
 @cli_util.wrap_exceptions
 def delete_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, if_match):
 
-    if isinstance(application_id, six.string_types) and len(application_id.strip()) == 0:
+    if isinstance(application_id, str) and len(application_id.strip()) == 0:
         raise click.UsageError('Parameter --application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -653,7 +652,7 @@ def delete_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_function(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, function_id, if_match):
 
-    if isinstance(function_id, six.string_types) and len(function_id.strip()) == 0:
+    if isinstance(function_id, str) and len(function_id.strip()) == 0:
         raise click.UsageError('Parameter --function-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -712,7 +711,7 @@ def delete_function(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def get_application(ctx, from_json, application_id):
 
-    if isinstance(application_id, six.string_types) and len(application_id.strip()) == 0:
+    if isinstance(application_id, str) and len(application_id.strip()) == 0:
         raise click.UsageError('Parameter --application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -734,7 +733,7 @@ def get_application(ctx, from_json, application_id):
 @cli_util.wrap_exceptions
 def get_function(ctx, from_json, function_id):
 
-    if isinstance(function_id, six.string_types) and len(function_id.strip()) == 0:
+    if isinstance(function_id, str) and len(function_id.strip()) == 0:
         raise click.UsageError('Parameter --function-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -756,7 +755,7 @@ def get_function(ctx, from_json, function_id):
 @cli_util.wrap_exceptions
 def get_pbf_listing(ctx, from_json, pbf_listing_id):
 
-    if isinstance(pbf_listing_id, six.string_types) and len(pbf_listing_id.strip()) == 0:
+    if isinstance(pbf_listing_id, str) and len(pbf_listing_id.strip()) == 0:
         raise click.UsageError('Parameter --pbf-listing-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -778,7 +777,7 @@ def get_pbf_listing(ctx, from_json, pbf_listing_id):
 @cli_util.wrap_exceptions
 def get_pbf_listing_version(ctx, from_json, pbf_listing_version_id):
 
-    if isinstance(pbf_listing_version_id, six.string_types) and len(pbf_listing_version_id.strip()) == 0:
+    if isinstance(pbf_listing_version_id, str) and len(pbf_listing_version_id.strip()) == 0:
         raise click.UsageError('Parameter --pbf-listing-version-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1162,7 +1161,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, config, network_security_group_ids, syslog_url, trace_config, freeform_tags, defined_tags, image_policy_config, if_match):
 
-    if isinstance(application_id, six.string_types) and len(application_id.strip()) == 0:
+    if isinstance(application_id, str) and len(application_id.strip()) == 0:
         raise click.UsageError('Parameter --application-id cannot be whitespace or empty string')
     if not force:
         if config or network_security_group_ids or trace_config or freeform_tags or defined_tags or image_policy_config:
@@ -1258,7 +1257,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_function(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, function_id, image, image_digest, memory_in_mbs, config, timeout_in_seconds, provisioned_concurrency_config, trace_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(function_id, six.string_types) and len(function_id.strip()) == 0:
+    if isinstance(function_id, str) and len(function_id.strip()) == 0:
         raise click.UsageError('Parameter --function-id cannot be whitespace or empty string')
     if not force:
         if config or provisioned_concurrency_config or trace_config or freeform_tags or defined_tags:
@@ -1359,7 +1358,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_function_none_provisioned_concurrency_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, function_id, image, image_digest, memory_in_mbs, config, timeout_in_seconds, trace_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(function_id, six.string_types) and len(function_id.strip()) == 0:
+    if isinstance(function_id, str) and len(function_id.strip()) == 0:
         raise click.UsageError('Parameter --function-id cannot be whitespace or empty string')
     if not force:
         if config or trace_config or freeform_tags or defined_tags:
@@ -1461,7 +1460,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_function_constant_provisioned_concurrency_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, function_id, provisioned_concurrency_config_count, image, image_digest, memory_in_mbs, config, timeout_in_seconds, trace_config, freeform_tags, defined_tags, if_match):
 
-    if isinstance(function_id, six.string_types) and len(function_id.strip()) == 0:
+    if isinstance(function_id, str) and len(function_id.strip()) == 0:
         raise click.UsageError('Parameter --function-id cannot be whitespace or empty string')
     if not force:
         if config or trace_config or freeform_tags or defined_tags:

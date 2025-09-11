@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -149,7 +148,7 @@ To delete a security attribute namespace, you must first retire it. Use [UpdateS
 @cli_util.wrap_exceptions
 def cascading_delete_security_attribute_namespace(ctx, from_json, security_attribute_namespace_id, if_match):
 
-    if isinstance(security_attribute_namespace_id, six.string_types) and len(security_attribute_namespace_id.strip()) == 0:
+    if isinstance(security_attribute_namespace_id, str) and len(security_attribute_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --security-attribute-namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -179,7 +178,7 @@ Moving a security attribute namespace moves all the security attributes containe
 @cli_util.wrap_exceptions
 def change_security_attribute_namespace_compartment(ctx, from_json, security_attribute_namespace_id, compartment_id, if_match):
 
-    if isinstance(security_attribute_namespace_id, six.string_types) and len(security_attribute_namespace_id.strip()) == 0:
+    if isinstance(security_attribute_namespace_id, str) and len(security_attribute_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --security-attribute-namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -222,7 +221,7 @@ The security attribute must have a value type, which is specified with a validat
 @cli_util.wrap_exceptions
 def create_security_attribute(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_attribute_namespace_id, name, description, validator):
 
-    if isinstance(security_attribute_namespace_id, six.string_types) and len(security_attribute_namespace_id.strip()) == 0:
+    if isinstance(security_attribute_namespace_id, str) and len(security_attribute_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --security-attribute-namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -290,7 +289,7 @@ The security attribute must have a value type, which is specified with a validat
 @cli_util.wrap_exceptions
 def create_security_attribute_enum_security_attribute_validator(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_attribute_namespace_id, name, description, validator_values):
 
-    if isinstance(security_attribute_namespace_id, six.string_types) and len(security_attribute_namespace_id.strip()) == 0:
+    if isinstance(security_attribute_namespace_id, str) and len(security_attribute_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --security-attribute-namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -360,7 +359,7 @@ The security attribute must have a value type, which is specified with a validat
 @cli_util.wrap_exceptions
 def create_security_attribute_default_security_attribute_validator(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_attribute_namespace_id, name, description):
 
-    if isinstance(security_attribute_namespace_id, six.string_types) and len(security_attribute_namespace_id.strip()) == 0:
+    if isinstance(security_attribute_namespace_id, str) and len(security_attribute_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --security-attribute-namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -496,10 +495,10 @@ To delete a security attribute, you must first retire it. Use [UpdateSecurityAtt
 @cli_util.wrap_exceptions
 def delete_security_attribute(ctx, from_json, security_attribute_namespace_id, security_attribute_name, if_match):
 
-    if isinstance(security_attribute_namespace_id, six.string_types) and len(security_attribute_namespace_id.strip()) == 0:
+    if isinstance(security_attribute_namespace_id, str) and len(security_attribute_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --security-attribute-namespace-id cannot be whitespace or empty string')
 
-    if isinstance(security_attribute_name, six.string_types) and len(security_attribute_name.strip()) == 0:
+    if isinstance(security_attribute_name, str) and len(security_attribute_name.strip()) == 0:
         raise click.UsageError('Parameter --security-attribute-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -529,7 +528,7 @@ def delete_security_attribute(ctx, from_json, security_attribute_namespace_id, s
 @cli_util.wrap_exceptions
 def delete_security_attribute_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_attribute_namespace_id, if_match):
 
-    if isinstance(security_attribute_namespace_id, six.string_types) and len(security_attribute_namespace_id.strip()) == 0:
+    if isinstance(security_attribute_namespace_id, str) and len(security_attribute_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --security-attribute-namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -589,10 +588,10 @@ def delete_security_attribute_namespace(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def get_security_attribute(ctx, from_json, security_attribute_namespace_id, security_attribute_name):
 
-    if isinstance(security_attribute_namespace_id, six.string_types) and len(security_attribute_namespace_id.strip()) == 0:
+    if isinstance(security_attribute_namespace_id, str) and len(security_attribute_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --security-attribute-namespace-id cannot be whitespace or empty string')
 
-    if isinstance(security_attribute_name, six.string_types) and len(security_attribute_name.strip()) == 0:
+    if isinstance(security_attribute_name, str) and len(security_attribute_name.strip()) == 0:
         raise click.UsageError('Parameter --security-attribute-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -615,7 +614,7 @@ def get_security_attribute(ctx, from_json, security_attribute_namespace_id, secu
 @cli_util.wrap_exceptions
 def get_security_attribute_namespace(ctx, from_json, security_attribute_namespace_id):
 
-    if isinstance(security_attribute_namespace_id, six.string_types) and len(security_attribute_namespace_id.strip()) == 0:
+    if isinstance(security_attribute_namespace_id, str) and len(security_attribute_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --security-attribute-namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -637,7 +636,7 @@ def get_security_attribute_namespace(ctx, from_json, security_attribute_namespac
 @cli_util.wrap_exceptions
 def get_security_attribute_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -730,7 +729,7 @@ def list_security_attribute_work_request_errors(ctx, from_json, all_pages, page_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -781,7 +780,7 @@ def list_security_attribute_work_request_logs(ctx, from_json, all_pages, page_si
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -883,7 +882,7 @@ def list_security_attributes(ctx, from_json, all_pages, page_size, security_attr
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(security_attribute_namespace_id, six.string_types) and len(security_attribute_namespace_id.strip()) == 0:
+    if isinstance(security_attribute_namespace_id, str) and len(security_attribute_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --security-attribute-namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -938,10 +937,10 @@ def list_security_attributes(ctx, from_json, all_pages, page_size, security_attr
 @cli_util.wrap_exceptions
 def update_security_attribute(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, security_attribute_namespace_id, security_attribute_name, description, is_retired, validator, if_match):
 
-    if isinstance(security_attribute_namespace_id, six.string_types) and len(security_attribute_namespace_id.strip()) == 0:
+    if isinstance(security_attribute_namespace_id, str) and len(security_attribute_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --security-attribute-namespace-id cannot be whitespace or empty string')
 
-    if isinstance(security_attribute_name, six.string_types) and len(security_attribute_name.strip()) == 0:
+    if isinstance(security_attribute_name, str) and len(security_attribute_name.strip()) == 0:
         raise click.UsageError('Parameter --security-attribute-name cannot be whitespace or empty string')
     if not force:
         if validator:
@@ -1014,10 +1013,10 @@ def update_security_attribute(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def update_security_attribute_enum_security_attribute_validator(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_attribute_namespace_id, security_attribute_name, description, is_retired, if_match, validator_values):
 
-    if isinstance(security_attribute_namespace_id, six.string_types) and len(security_attribute_namespace_id.strip()) == 0:
+    if isinstance(security_attribute_namespace_id, str) and len(security_attribute_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --security-attribute-namespace-id cannot be whitespace or empty string')
 
-    if isinstance(security_attribute_name, six.string_types) and len(security_attribute_name.strip()) == 0:
+    if isinstance(security_attribute_name, str) and len(security_attribute_name.strip()) == 0:
         raise click.UsageError('Parameter --security-attribute-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1088,10 +1087,10 @@ def update_security_attribute_enum_security_attribute_validator(ctx, from_json, 
 @cli_util.wrap_exceptions
 def update_security_attribute_default_security_attribute_validator(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, security_attribute_namespace_id, security_attribute_name, description, is_retired, if_match):
 
-    if isinstance(security_attribute_namespace_id, six.string_types) and len(security_attribute_namespace_id.strip()) == 0:
+    if isinstance(security_attribute_namespace_id, str) and len(security_attribute_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --security-attribute-namespace-id cannot be whitespace or empty string')
 
-    if isinstance(security_attribute_name, six.string_types) and len(security_attribute_name.strip()) == 0:
+    if isinstance(security_attribute_name, str) and len(security_attribute_name.strip()) == 0:
         raise click.UsageError('Parameter --security-attribute-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1169,7 +1168,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_security_attribute_namespace(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, security_attribute_namespace_id, description, is_retired, freeform_tags, defined_tags, if_match):
 
-    if isinstance(security_attribute_namespace_id, six.string_types) and len(security_attribute_namespace_id.strip()) == 0:
+    if isinstance(security_attribute_namespace_id, str) and len(security_attribute_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --security-attribute-namespace-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

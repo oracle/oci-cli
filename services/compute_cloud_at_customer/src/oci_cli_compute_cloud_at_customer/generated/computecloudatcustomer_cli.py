@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -64,7 +63,7 @@ ccc_root_group.add_command(ccc_infrastructure_collection_group)
 @cli_util.wrap_exceptions
 def change_ccc_infrastructure_compartment(ctx, from_json, ccc_infrastructure_id, compartment_id, if_match):
 
-    if isinstance(ccc_infrastructure_id, six.string_types) and len(ccc_infrastructure_id.strip()) == 0:
+    if isinstance(ccc_infrastructure_id, str) and len(ccc_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --ccc-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -95,7 +94,7 @@ def change_ccc_infrastructure_compartment(ctx, from_json, ccc_infrastructure_id,
 @cli_util.wrap_exceptions
 def change_ccc_upgrade_schedule_compartment(ctx, from_json, ccc_upgrade_schedule_id, compartment_id, if_match):
 
-    if isinstance(ccc_upgrade_schedule_id, six.string_types) and len(ccc_upgrade_schedule_id.strip()) == 0:
+    if isinstance(ccc_upgrade_schedule_id, str) and len(ccc_upgrade_schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --ccc-upgrade-schedule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -271,7 +270,7 @@ def create_ccc_upgrade_schedule(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_ccc_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ccc_infrastructure_id, if_match):
 
-    if isinstance(ccc_infrastructure_id, six.string_types) and len(ccc_infrastructure_id.strip()) == 0:
+    if isinstance(ccc_infrastructure_id, str) and len(ccc_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --ccc-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -335,7 +334,7 @@ def delete_ccc_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_ccc_upgrade_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ccc_upgrade_schedule_id, if_match):
 
-    if isinstance(ccc_upgrade_schedule_id, six.string_types) and len(ccc_upgrade_schedule_id.strip()) == 0:
+    if isinstance(ccc_upgrade_schedule_id, str) and len(ccc_upgrade_schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --ccc-upgrade-schedule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -394,7 +393,7 @@ def delete_ccc_upgrade_schedule(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def get_ccc_infrastructure(ctx, from_json, ccc_infrastructure_id):
 
-    if isinstance(ccc_infrastructure_id, six.string_types) and len(ccc_infrastructure_id.strip()) == 0:
+    if isinstance(ccc_infrastructure_id, str) and len(ccc_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --ccc-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -416,7 +415,7 @@ def get_ccc_infrastructure(ctx, from_json, ccc_infrastructure_id):
 @cli_util.wrap_exceptions
 def get_ccc_upgrade_schedule(ctx, from_json, ccc_upgrade_schedule_id):
 
-    if isinstance(ccc_upgrade_schedule_id, six.string_types) and len(ccc_upgrade_schedule_id.strip()) == 0:
+    if isinstance(ccc_upgrade_schedule_id, str) and len(ccc_upgrade_schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --ccc-upgrade-schedule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -593,7 +592,7 @@ def list_ccc_upgrade_schedules(ctx, from_json, all_pages, page_size, ccc_upgrade
 @cli_util.wrap_exceptions
 def update_ccc_infrastructure(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ccc_infrastructure_id, display_name, description, subnet_id, connection_state, connection_details, ccc_upgrade_schedule_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(ccc_infrastructure_id, six.string_types) and len(ccc_infrastructure_id.strip()) == 0:
+    if isinstance(ccc_infrastructure_id, str) and len(ccc_infrastructure_id.strip()) == 0:
         raise click.UsageError('Parameter --ccc-infrastructure-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -684,7 +683,7 @@ This option is a JSON list with items of type UpdateCccScheduleEvent.  For docum
 @cli_util.wrap_exceptions
 def update_ccc_upgrade_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ccc_upgrade_schedule_id, display_name, description, events, freeform_tags, defined_tags, if_match):
 
-    if isinstance(ccc_upgrade_schedule_id, six.string_types) and len(ccc_upgrade_schedule_id.strip()) == 0:
+    if isinstance(ccc_upgrade_schedule_id, str) and len(ccc_upgrade_schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --ccc-upgrade-schedule-id cannot be whitespace or empty string')
     if not force:
         if events or freeform_tags or defined_tags:

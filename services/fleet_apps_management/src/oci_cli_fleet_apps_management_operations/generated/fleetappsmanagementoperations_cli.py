@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -172,7 +171,7 @@ fleet_apps_management_operations_root_group.add_command(step_collection_group)
 @cli_util.wrap_exceptions
 def change_patch_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, patch_id, compartment_id, if_match):
 
-    if isinstance(patch_id, six.string_types) and len(patch_id.strip()) == 0:
+    if isinstance(patch_id, str) and len(patch_id.strip()) == 0:
         raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -733,7 +732,7 @@ def create_scheduler_definition_maintenance_window_schedule(ctx, from_json, wait
 @cli_util.wrap_exceptions
 def delete_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, patch_id, if_match):
 
-    if isinstance(patch_id, six.string_types) and len(patch_id.strip()) == 0:
+    if isinstance(patch_id, str) and len(patch_id.strip()) == 0:
         raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -789,7 +788,7 @@ def delete_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def delete_scheduler_definition(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduler_definition_id, if_match):
 
-    if isinstance(scheduler_definition_id, six.string_types) and len(scheduler_definition_id.strip()) == 0:
+    if isinstance(scheduler_definition_id, str) and len(scheduler_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduler-definition-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -853,7 +852,7 @@ def delete_scheduler_definition(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_scheduler_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduler_job_id, if_match):
 
-    if isinstance(scheduler_job_id, six.string_types) and len(scheduler_job_id.strip()) == 0:
+    if isinstance(scheduler_job_id, str) and len(scheduler_job_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduler-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -984,16 +983,16 @@ def export_compliance_report(ctx, from_json, file, compartment_id, entity_id, re
 @cli_util.wrap_exceptions
 def get_execution(ctx, from_json, scheduler_job_id, job_activity_id, resource_id, execution_id):
 
-    if isinstance(scheduler_job_id, six.string_types) and len(scheduler_job_id.strip()) == 0:
+    if isinstance(scheduler_job_id, str) and len(scheduler_job_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduler-job-id cannot be whitespace or empty string')
 
-    if isinstance(job_activity_id, six.string_types) and len(job_activity_id.strip()) == 0:
+    if isinstance(job_activity_id, str) and len(job_activity_id.strip()) == 0:
         raise click.UsageError('Parameter --job-activity-id cannot be whitespace or empty string')
 
-    if isinstance(resource_id, six.string_types) and len(resource_id.strip()) == 0:
+    if isinstance(resource_id, str) and len(resource_id.strip()) == 0:
         raise click.UsageError('Parameter --resource-id cannot be whitespace or empty string')
 
-    if isinstance(execution_id, six.string_types) and len(execution_id.strip()) == 0:
+    if isinstance(execution_id, str) and len(execution_id.strip()) == 0:
         raise click.UsageError('Parameter --execution-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1019,10 +1018,10 @@ def get_execution(ctx, from_json, scheduler_job_id, job_activity_id, resource_id
 @cli_util.wrap_exceptions
 def get_job_activity(ctx, from_json, scheduler_job_id, job_activity_id):
 
-    if isinstance(scheduler_job_id, six.string_types) and len(scheduler_job_id.strip()) == 0:
+    if isinstance(scheduler_job_id, str) and len(scheduler_job_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduler-job-id cannot be whitespace or empty string')
 
-    if isinstance(job_activity_id, six.string_types) and len(job_activity_id.strip()) == 0:
+    if isinstance(job_activity_id, str) and len(job_activity_id.strip()) == 0:
         raise click.UsageError('Parameter --job-activity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1045,7 +1044,7 @@ def get_job_activity(ctx, from_json, scheduler_job_id, job_activity_id):
 @cli_util.wrap_exceptions
 def get_patch(ctx, from_json, patch_id):
 
-    if isinstance(patch_id, six.string_types) and len(patch_id.strip()) == 0:
+    if isinstance(patch_id, str) and len(patch_id.strip()) == 0:
         raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1067,7 +1066,7 @@ def get_patch(ctx, from_json, patch_id):
 @cli_util.wrap_exceptions
 def get_scheduler_definition(ctx, from_json, scheduler_definition_id):
 
-    if isinstance(scheduler_definition_id, six.string_types) and len(scheduler_definition_id.strip()) == 0:
+    if isinstance(scheduler_definition_id, str) and len(scheduler_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduler-definition-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1089,7 +1088,7 @@ def get_scheduler_definition(ctx, from_json, scheduler_definition_id):
 @cli_util.wrap_exceptions
 def get_scheduler_job(ctx, from_json, scheduler_job_id):
 
-    if isinstance(scheduler_job_id, six.string_types) and len(scheduler_job_id.strip()) == 0:
+    if isinstance(scheduler_job_id, str) and len(scheduler_job_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduler-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1201,13 +1200,13 @@ def list_executions(ctx, from_json, all_pages, page_size, scheduler_job_id, job_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(scheduler_job_id, six.string_types) and len(scheduler_job_id.strip()) == 0:
+    if isinstance(scheduler_job_id, str) and len(scheduler_job_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduler-job-id cannot be whitespace or empty string')
 
-    if isinstance(job_activity_id, six.string_types) and len(job_activity_id.strip()) == 0:
+    if isinstance(job_activity_id, str) and len(job_activity_id.strip()) == 0:
         raise click.UsageError('Parameter --job-activity-id cannot be whitespace or empty string')
 
-    if isinstance(resource_id, six.string_types) and len(resource_id.strip()) == 0:
+    if isinstance(resource_id, str) and len(resource_id.strip()) == 0:
         raise click.UsageError('Parameter --resource-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1429,10 +1428,10 @@ def list_resources(ctx, from_json, all_pages, page_size, scheduler_job_id, job_a
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(scheduler_job_id, six.string_types) and len(scheduler_job_id.strip()) == 0:
+    if isinstance(scheduler_job_id, str) and len(scheduler_job_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduler-job-id cannot be whitespace or empty string')
 
-    if isinstance(job_activity_id, six.string_types) and len(job_activity_id.strip()) == 0:
+    if isinstance(job_activity_id, str) and len(job_activity_id.strip()) == 0:
         raise click.UsageError('Parameter --job-activity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1501,7 +1500,7 @@ def list_scheduled_fleets(ctx, from_json, all_pages, page_size, scheduler_defini
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(scheduler_definition_id, six.string_types) and len(scheduler_definition_id.strip()) == 0:
+    if isinstance(scheduler_definition_id, str) and len(scheduler_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduler-definition-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1811,10 +1810,10 @@ def list_steps(ctx, from_json, all_pages, page_size, scheduler_job_id, job_activ
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(scheduler_job_id, six.string_types) and len(scheduler_job_id.strip()) == 0:
+    if isinstance(scheduler_job_id, str) and len(scheduler_job_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduler-job-id cannot be whitespace or empty string')
 
-    if isinstance(job_activity_id, six.string_types) and len(job_activity_id.strip()) == 0:
+    if isinstance(job_activity_id, str) and len(job_activity_id.strip()) == 0:
         raise click.UsageError('Parameter --job-activity-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1878,7 +1877,7 @@ def list_steps(ctx, from_json, all_pages, page_size, scheduler_job_id, job_activ
 @cli_util.wrap_exceptions
 def manage_job_execution(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, action_details, scheduler_job_id, if_match):
 
-    if isinstance(scheduler_job_id, six.string_types) and len(scheduler_job_id.strip()) == 0:
+    if isinstance(scheduler_job_id, str) and len(scheduler_job_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduler-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1943,7 +1942,7 @@ def manage_job_execution(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def manage_job_execution_step_based_user_action_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduler_job_id, action_details_action, action_details_action_group_id, action_details_resource_id, action_details_step_name, if_match, action_details_target_id):
 
-    if isinstance(scheduler_job_id, six.string_types) and len(scheduler_job_id.strip()) == 0:
+    if isinstance(scheduler_job_id, str) and len(scheduler_job_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduler-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2014,7 +2013,7 @@ def manage_job_execution_step_based_user_action_details(ctx, from_json, wait_for
 @cli_util.wrap_exceptions
 def manage_job_execution_action_group_based_user_action_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduler_job_id, action_details_action, action_details_action_group_id, if_match):
 
-    if isinstance(scheduler_job_id, six.string_types) and len(scheduler_job_id.strip()) == 0:
+    if isinstance(scheduler_job_id, str) and len(scheduler_job_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduler-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2186,7 +2185,7 @@ This option is a JSON list with items of type DependentPatchDetails.  For docume
 @cli_util.wrap_exceptions
 def update_patch(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, patch_id, description, patch_type, severity, time_released, artifact_details, product, dependent_patches, freeform_tags, defined_tags, if_match):
 
-    if isinstance(patch_id, six.string_types) and len(patch_id.strip()) == 0:
+    if isinstance(patch_id, str) and len(patch_id.strip()) == 0:
         raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
     if not force:
         if patch_type or artifact_details or product or dependent_patches or freeform_tags or defined_tags:
@@ -2288,7 +2287,7 @@ This option is a JSON list with items of type DependentPatchDetails.  For docume
 @cli_util.wrap_exceptions
 def update_patch_platform_specific_artifact_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, patch_id, artifact_details_artifacts, description, patch_type, severity, time_released, product, dependent_patches, freeform_tags, defined_tags, if_match):
 
-    if isinstance(patch_id, six.string_types) and len(patch_id.strip()) == 0:
+    if isinstance(patch_id, str) and len(patch_id.strip()) == 0:
         raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
     if not force:
         if patch_type or product or dependent_patches or freeform_tags or defined_tags:
@@ -2391,7 +2390,7 @@ This option is a JSON list with items of type DependentPatchDetails.  For docume
 @cli_util.wrap_exceptions
 def update_patch_generic_artifact_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, patch_id, artifact_details_artifact, description, patch_type, severity, time_released, product, dependent_patches, freeform_tags, defined_tags, if_match):
 
-    if isinstance(patch_id, six.string_types) and len(patch_id.strip()) == 0:
+    if isinstance(patch_id, str) and len(patch_id.strip()) == 0:
         raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
     if not force:
         if patch_type or product or dependent_patches or freeform_tags or defined_tags:
@@ -2496,7 +2495,7 @@ This option is a JSON list with items of type OperationRunbook.  For documentati
 @cli_util.wrap_exceptions
 def update_scheduler_definition(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduler_definition_id, display_name, description, schedule, action_groups, run_books, freeform_tags, defined_tags, if_match):
 
-    if isinstance(scheduler_definition_id, six.string_types) and len(scheduler_definition_id.strip()) == 0:
+    if isinstance(scheduler_definition_id, str) and len(scheduler_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduler-definition-id cannot be whitespace or empty string')
     if not force:
         if schedule or action_groups or run_books or freeform_tags or defined_tags:
@@ -2596,7 +2595,7 @@ This option is a JSON list with items of type OperationRunbook.  For documentati
 @cli_util.wrap_exceptions
 def update_scheduler_definition_custom_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduler_definition_id, schedule_execution_startdate, schedule_duration, display_name, description, action_groups, run_books, freeform_tags, defined_tags, if_match, schedule_recurrences):
 
-    if isinstance(scheduler_definition_id, six.string_types) and len(scheduler_definition_id.strip()) == 0:
+    if isinstance(scheduler_definition_id, str) and len(scheduler_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduler-definition-id cannot be whitespace or empty string')
     if not force:
         if action_groups or run_books or freeform_tags or defined_tags:
@@ -2700,7 +2699,7 @@ This option is a JSON list with items of type OperationRunbook.  For documentati
 @cli_util.wrap_exceptions
 def update_scheduler_definition_maintenance_window_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduler_definition_id, schedule_execution_startdate, schedule_maintenance_window_id, display_name, description, action_groups, run_books, freeform_tags, defined_tags, if_match):
 
-    if isinstance(scheduler_definition_id, six.string_types) and len(scheduler_definition_id.strip()) == 0:
+    if isinstance(scheduler_definition_id, str) and len(scheduler_definition_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduler-definition-id cannot be whitespace or empty string')
     if not force:
         if action_groups or run_books or freeform_tags or defined_tags:
@@ -2790,7 +2789,7 @@ def update_scheduler_definition_maintenance_window_schedule(ctx, from_json, forc
 @cli_util.wrap_exceptions
 def update_scheduler_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduler_job_id, time_scheduled, freeform_tags, defined_tags, if_match):
 
-    if isinstance(scheduler_job_id, six.string_types) and len(scheduler_job_id.strip()) == 0:
+    if isinstance(scheduler_job_id, str) and len(scheduler_job_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduler-job-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

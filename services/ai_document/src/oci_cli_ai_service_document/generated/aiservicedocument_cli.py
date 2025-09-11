@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -97,7 +96,7 @@ ai_document_root_group.add_command(processor_job_group)
 @cli_util.wrap_exceptions
 def add_model_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, type, related_resource_id, message, if_match, is_lock_override):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -165,7 +164,7 @@ def add_model_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def add_project_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, type, related_resource_id, message, if_match, is_lock_override):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -388,7 +387,7 @@ def analyze_document_inline_document_details(ctx, from_json, features, document_
 @cli_util.wrap_exceptions
 def cancel_processor_job(ctx, from_json, processor_job_id, if_match):
 
-    if isinstance(processor_job_id, six.string_types) and len(processor_job_id.strip()) == 0:
+    if isinstance(processor_job_id, str) and len(processor_job_id.strip()) == 0:
         raise click.UsageError('Parameter --processor-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -414,7 +413,7 @@ def cancel_processor_job(ctx, from_json, processor_job_id, if_match):
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -441,7 +440,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -475,7 +474,7 @@ def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match,
 @cli_util.wrap_exceptions
 def change_project_compartment(ctx, from_json, project_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1027,7 +1026,7 @@ def create_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, if_match, is_lock_override):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1086,7 +1085,7 @@ def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, if_match, is_lock_override):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1139,7 +1138,7 @@ def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def get_model(ctx, from_json, model_id):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1163,7 +1162,7 @@ def get_model(ctx, from_json, model_id):
 @cli_util.wrap_exceptions
 def get_model_type(ctx, from_json, model_type, compartment_id, model_sub_type):
 
-    if isinstance(model_type, six.string_types) and len(model_type.strip()) == 0:
+    if isinstance(model_type, str) and len(model_type.strip()) == 0:
         raise click.UsageError('Parameter --model-type cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1189,7 +1188,7 @@ def get_model_type(ctx, from_json, model_type, compartment_id, model_sub_type):
 @cli_util.wrap_exceptions
 def get_processor_job(ctx, from_json, processor_job_id):
 
-    if isinstance(processor_job_id, six.string_types) and len(processor_job_id.strip()) == 0:
+    if isinstance(processor_job_id, str) and len(processor_job_id.strip()) == 0:
         raise click.UsageError('Parameter --processor-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1211,7 +1210,7 @@ def get_processor_job(ctx, from_json, processor_job_id):
 @cli_util.wrap_exceptions
 def get_project(ctx, from_json, project_id):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1233,7 +1232,7 @@ def get_project(ctx, from_json, project_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1391,7 +1390,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1448,7 +1447,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1565,7 +1564,7 @@ This option is a JSON list with items of type PatchModelOperation.  For document
 @cli_util.wrap_exceptions
 def patch_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, operations, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1629,7 +1628,7 @@ def patch_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def remove_model_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, type, if_match, is_lock_override):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1689,7 +1688,7 @@ def remove_model_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def remove_project_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, type, if_match, is_lock_override):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1754,7 +1753,7 @@ def remove_project_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, display_name, description, inference_units, freeform_tags, defined_tags, if_match, is_lock_override):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1840,7 +1839,7 @@ def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def update_project(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, display_name, description, freeform_tags, defined_tags, if_match, is_lock_override):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

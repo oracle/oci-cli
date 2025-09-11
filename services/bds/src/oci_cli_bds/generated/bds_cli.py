@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -131,10 +130,10 @@ bds_root_group.add_command(node_backup_configuration_group)
 @cli_util.wrap_exceptions
 def activate_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, metastore_config_id, cluster_admin_password, bds_api_key_passphrase, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(metastore_config_id, six.string_types) and len(metastore_config_id.strip()) == 0:
+    if isinstance(metastore_config_id, str) and len(metastore_config_id.strip()) == 0:
         raise click.UsageError('Parameter --metastore-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -201,10 +200,10 @@ def activate_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def activate_iam_user_sync_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, is_posix_attributes_addition_required, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(identity_configuration_id, six.string_types) and len(identity_configuration_id.strip()) == 0:
+    if isinstance(identity_configuration_id, str) and len(identity_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -272,10 +271,10 @@ def activate_iam_user_sync_configuration(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def activate_upst_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, vault_id, master_encryption_key_id, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(identity_configuration_id, six.string_types) and len(identity_configuration_id.strip()) == 0:
+    if isinstance(identity_configuration_id, str) and len(identity_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -344,7 +343,7 @@ def activate_upst_configuration(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def add_auto_scaling_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_type, is_enabled, cluster_admin_password, display_name, policy, policy_details, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -422,7 +421,7 @@ def add_auto_scaling_configuration(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def add_auto_scaling_configuration_add_metric_based_horizontal_scaling_policy_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_type, is_enabled, cluster_admin_password, display_name, policy, if_match, policy_details_scale_out_config, policy_details_scale_in_config):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -508,7 +507,7 @@ This option is a JSON list with items of type VerticalScalingScheduleDetails.  F
 @cli_util.wrap_exceptions
 def add_auto_scaling_configuration_add_schedule_based_vertical_scaling_policy_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_type, is_enabled, cluster_admin_password, display_name, policy, if_match, policy_details_timezone, policy_details_schedule_details):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -594,7 +593,7 @@ This option is a JSON list with items of type HorizontalScalingScheduleDetails. 
 @cli_util.wrap_exceptions
 def add_auto_scaling_configuration_add_schedule_based_horizontal_scaling_policy_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_type, is_enabled, cluster_admin_password, display_name, policy, if_match, policy_details_timezone, policy_details_schedule_details):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -678,7 +677,7 @@ def add_auto_scaling_configuration_add_schedule_based_horizontal_scaling_policy_
 @cli_util.wrap_exceptions
 def add_auto_scaling_configuration_add_metric_based_vertical_scaling_policy_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_type, is_enabled, cluster_admin_password, display_name, policy, if_match, policy_details_scale_up_config, policy_details_scale_down_config):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -758,7 +757,7 @@ def add_auto_scaling_configuration_add_metric_based_vertical_scaling_policy_deta
 @cli_util.wrap_exceptions
 def add_block_storage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, block_volume_size_in_gbs, node_type, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -824,7 +823,7 @@ def add_block_storage(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def add_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, shape, cluster_admin_password, shape_config, block_volume_size_in_gbs, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -896,7 +895,7 @@ def add_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def add_kafka(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, shape, number_of_kafka_nodes, cluster_admin_password, shape_config, block_volume_size_in_gbs, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -969,7 +968,7 @@ def add_kafka(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_se
 @cli_util.wrap_exceptions
 def add_master_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, number_of_master_nodes, shape, block_volume_size_in_gbs, shape_config, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1044,7 +1043,7 @@ def add_master_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def add_utility_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, number_of_utility_nodes, shape, block_volume_size_in_gbs, shape_config, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1120,7 +1119,7 @@ def add_utility_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def add_worker_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, number_of_worker_nodes, node_type, shape, block_volume_size_in_gbs, shape_config, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1193,7 +1192,7 @@ def add_worker_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def backup_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, level_type_details, backup_type, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1258,7 +1257,7 @@ def backup_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def backup_node_node_type_level_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, level_type_details_node_type, backup_type, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1326,7 +1325,7 @@ def backup_node_node_type_level_details(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def backup_node_node_level_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, level_type_details_node_host_name, backup_type, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1390,7 +1389,7 @@ def backup_node_node_level_details(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def certificate_service_info(ctx, from_json, bds_instance_id, services, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1424,7 +1423,7 @@ def certificate_service_info(ctx, from_json, bds_instance_id, services, if_match
 @cli_util.wrap_exceptions
 def change_bds_instance_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, compartment_id, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1486,7 +1485,7 @@ def change_bds_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def change_shape(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, nodes, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1551,7 +1550,7 @@ def change_shape(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def create_bds_api_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, user_id, passphrase, key_alias, default_region, domain_ocid):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1745,7 +1744,7 @@ def create_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def create_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, metastore_id, bds_api_key_id, bds_api_key_passphrase, cluster_admin_password, display_name):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1814,7 +1813,7 @@ def create_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def create_identity_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, display_name, identity_domain_id, confidential_application_id, upst_configuration_details, iam_user_sync_configuration_details):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1886,7 +1885,7 @@ def create_identity_configuration(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def create_node_backup_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, level_type_details, schedule, display_name, timezone, number_of_backups_to_retain, backup_type):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1962,7 +1961,7 @@ def create_node_backup_configuration(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def create_node_backup_configuration_node_type_level_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, schedule, level_type_details_node_type, display_name, timezone, number_of_backups_to_retain, backup_type):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2041,7 +2040,7 @@ def create_node_backup_configuration_node_type_level_details(ctx, from_json, wai
 @cli_util.wrap_exceptions
 def create_node_backup_configuration_node_level_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, schedule, level_type_details_node_host_name, display_name, timezone, number_of_backups_to_retain, backup_type):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2119,7 +2118,7 @@ def create_node_backup_configuration_node_level_details(ctx, from_json, wait_for
 @cli_util.wrap_exceptions
 def create_node_replace_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, level_type_details, cluster_admin_password, metric_type, duration_in_minutes, display_name):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2187,7 +2186,7 @@ def create_node_replace_configuration(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def create_node_replace_configuration_node_type_level_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, metric_type, duration_in_minutes, level_type_details_node_type, display_name):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2258,7 +2257,7 @@ def create_node_replace_configuration_node_type_level_details(ctx, from_json, wa
 @cli_util.wrap_exceptions
 def create_node_replace_configuration_node_level_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, metric_type, duration_in_minutes, level_type_details_node_host_name, display_name):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2327,7 +2326,7 @@ def create_node_replace_configuration_node_level_details(ctx, from_json, wait_fo
 @cli_util.wrap_exceptions
 def create_resource_principal_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, display_name, cluster_admin_password, session_token_life_span_duration_in_hours):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2391,10 +2390,10 @@ def create_resource_principal_configuration(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def deactivate_iam_user_sync_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(identity_configuration_id, six.string_types) and len(identity_configuration_id.strip()) == 0:
+    if isinstance(identity_configuration_id, str) and len(identity_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2457,10 +2456,10 @@ def deactivate_iam_user_sync_configuration(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def deactivate_upst_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(identity_configuration_id, six.string_types) and len(identity_configuration_id.strip()) == 0:
+    if isinstance(identity_configuration_id, str) and len(identity_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2523,10 +2522,10 @@ def deactivate_upst_configuration(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_bds_api_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, api_key_id, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(api_key_id, six.string_types) and len(api_key_id.strip()) == 0:
+    if isinstance(api_key_id, str) and len(api_key_id.strip()) == 0:
         raise click.UsageError('Parameter --api-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2583,7 +2582,7 @@ def delete_bds_api_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2640,10 +2639,10 @@ def delete_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, metastore_config_id, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(metastore_config_id, six.string_types) and len(metastore_config_id.strip()) == 0:
+    if isinstance(metastore_config_id, str) and len(metastore_config_id.strip()) == 0:
         raise click.UsageError('Parameter --metastore-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2701,10 +2700,10 @@ def delete_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def delete_identity_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(identity_configuration_id, six.string_types) and len(identity_configuration_id.strip()) == 0:
+    if isinstance(identity_configuration_id, str) and len(identity_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2762,10 +2761,10 @@ def delete_identity_configuration(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_node_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_backup_id, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(node_backup_id, six.string_types) and len(node_backup_id.strip()) == 0:
+    if isinstance(node_backup_id, str) and len(node_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --node-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2823,10 +2822,10 @@ def delete_node_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_node_backup_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_backup_configuration_id, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(node_backup_configuration_id, six.string_types) and len(node_backup_configuration_id.strip()) == 0:
+    if isinstance(node_backup_configuration_id, str) and len(node_backup_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --node-backup-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2884,7 +2883,7 @@ def delete_node_backup_configuration(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def disable_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, services, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2952,7 +2951,7 @@ This option is a JSON list with items of type HostCertDetails.  For documentatio
 @cli_util.wrap_exceptions
 def enable_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, services, root_certificate, host_cert_details, server_key_password, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3024,7 +3023,7 @@ def enable_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def execute_bootstrap_script(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, bootstrap_script_url, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3089,10 +3088,10 @@ def execute_bootstrap_script(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def force_refresh_resource_principal(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, resource_principal_configuration_id, cluster_admin_password, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(resource_principal_configuration_id, six.string_types) and len(resource_principal_configuration_id.strip()) == 0:
+    if isinstance(resource_principal_configuration_id, str) and len(resource_principal_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --resource-principal-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3150,10 +3149,10 @@ def force_refresh_resource_principal(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def get_auto_scaling_configuration(ctx, from_json, bds_instance_id, auto_scaling_configuration_id):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3177,10 +3176,10 @@ def get_auto_scaling_configuration(ctx, from_json, bds_instance_id, auto_scaling
 @cli_util.wrap_exceptions
 def get_bds_api_key(ctx, from_json, bds_instance_id, api_key_id):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(api_key_id, six.string_types) and len(api_key_id.strip()) == 0:
+    if isinstance(api_key_id, str) and len(api_key_id.strip()) == 0:
         raise click.UsageError('Parameter --api-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3203,7 +3202,7 @@ def get_bds_api_key(ctx, from_json, bds_instance_id, api_key_id):
 @cli_util.wrap_exceptions
 def get_bds_instance(ctx, from_json, bds_instance_id):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3226,10 +3225,10 @@ def get_bds_instance(ctx, from_json, bds_instance_id):
 @cli_util.wrap_exceptions
 def get_bds_metastore_configuration(ctx, from_json, bds_instance_id, metastore_config_id):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(metastore_config_id, six.string_types) and len(metastore_config_id.strip()) == 0:
+    if isinstance(metastore_config_id, str) and len(metastore_config_id.strip()) == 0:
         raise click.UsageError('Parameter --metastore-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3257,10 +3256,10 @@ def get_bds_metastore_configuration(ctx, from_json, bds_instance_id, metastore_c
 @cli_util.wrap_exceptions
 def get_identity_configuration(ctx, from_json, bds_instance_id, identity_configuration_id, page, limit, sort_by, sort_order):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(identity_configuration_id, six.string_types) and len(identity_configuration_id.strip()) == 0:
+    if isinstance(identity_configuration_id, str) and len(identity_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3292,10 +3291,10 @@ def get_identity_configuration(ctx, from_json, bds_instance_id, identity_configu
 @cli_util.wrap_exceptions
 def get_node_backup(ctx, from_json, bds_instance_id, node_backup_id):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(node_backup_id, six.string_types) and len(node_backup_id.strip()) == 0:
+    if isinstance(node_backup_id, str) and len(node_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --node-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3319,10 +3318,10 @@ def get_node_backup(ctx, from_json, bds_instance_id, node_backup_id):
 @cli_util.wrap_exceptions
 def get_node_backup_configuration(ctx, from_json, bds_instance_id, node_backup_configuration_id):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(node_backup_configuration_id, six.string_types) and len(node_backup_configuration_id.strip()) == 0:
+    if isinstance(node_backup_configuration_id, str) and len(node_backup_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --node-backup-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3346,10 +3345,10 @@ def get_node_backup_configuration(ctx, from_json, bds_instance_id, node_backup_c
 @cli_util.wrap_exceptions
 def get_node_replace_configuration(ctx, from_json, bds_instance_id, node_replace_configuration_id):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(node_replace_configuration_id, six.string_types) and len(node_replace_configuration_id.strip()) == 0:
+    if isinstance(node_replace_configuration_id, str) and len(node_replace_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --node-replace-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3374,7 +3373,7 @@ def get_node_replace_configuration(ctx, from_json, bds_instance_id, node_replace
 @cli_util.wrap_exceptions
 def get_os_patch_details(ctx, from_json, bds_instance_id, os_patch_version, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3400,10 +3399,10 @@ def get_os_patch_details(ctx, from_json, bds_instance_id, os_patch_version, if_m
 @cli_util.wrap_exceptions
 def get_resource_principal_configuration(ctx, from_json, bds_instance_id, resource_principal_configuration_id):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(resource_principal_configuration_id, six.string_types) and len(resource_principal_configuration_id.strip()) == 0:
+    if isinstance(resource_principal_configuration_id, str) and len(resource_principal_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --resource-principal-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3428,10 +3427,10 @@ def get_resource_principal_configuration(ctx, from_json, bds_instance_id, resour
 @cli_util.wrap_exceptions
 def get_software_update(ctx, from_json, bds_instance_id, software_update_key, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(software_update_key, six.string_types) and len(software_update_key.strip()) == 0:
+    if isinstance(software_update_key, str) and len(software_update_key.strip()) == 0:
         raise click.UsageError('Parameter --software-update-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3456,7 +3455,7 @@ def get_software_update(ctx, from_json, bds_instance_id, software_update_key, if
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3486,7 +3485,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.wrap_exceptions
 def install_os_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, cluster_admin_password, patching_configs, is_dry_run, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3559,7 +3558,7 @@ def install_os_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def install_os_patch_batching_based_patching_configs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, cluster_admin_password, patching_configs_batch_size, patching_configs_wait_time_between_batch_in_seconds, patching_configs_tolerance_threshold_per_batch, is_dry_run, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3632,7 +3631,7 @@ def install_os_patch_batching_based_patching_configs(ctx, from_json, wait_for_st
 @cli_util.wrap_exceptions
 def install_os_patch_downtime_based_patching_configs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, cluster_admin_password, is_dry_run, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3704,7 +3703,7 @@ def install_os_patch_downtime_based_patching_configs(ctx, from_json, wait_for_st
 @cli_util.wrap_exceptions
 def install_os_patch_domain_based_patching_configs(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, os_patch_version, cluster_admin_password, patching_configs_wait_time_between_domain_in_seconds, patching_configs_tolerance_threshold_per_domain, is_dry_run, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3776,7 +3775,7 @@ def install_os_patch_domain_based_patching_configs(ctx, from_json, wait_for_stat
 @cli_util.wrap_exceptions
 def install_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, version_parameterconflict, cluster_admin_password, patching_config, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3842,7 +3841,7 @@ def install_patch(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def install_patch_downtime_based_odh_patching_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, version_parameterconflict, cluster_admin_password, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3910,7 +3909,7 @@ def install_patch_downtime_based_odh_patching_config(ctx, from_json, wait_for_st
 @cli_util.wrap_exceptions
 def install_patch_domain_based_odh_patching_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, version_parameterconflict, cluster_admin_password, patching_config_wait_time_between_domain_in_seconds, if_match, patching_config_tolerance_threshold_per_domain):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3983,7 +3982,7 @@ def install_patch_domain_based_odh_patching_config(ctx, from_json, wait_for_stat
 @cli_util.wrap_exceptions
 def install_patch_batching_based_odh_patching_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, version_parameterconflict, cluster_admin_password, patching_config_batch_size, patching_config_wait_time_between_batch_in_seconds, if_match, patching_config_tolerance_threshold_per_batch):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4053,7 +4052,7 @@ def install_patch_batching_based_odh_patching_config(ctx, from_json, wait_for_st
 @cli_util.wrap_exceptions
 def install_software_updates(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, software_update_keys, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4121,7 +4120,7 @@ def list_auto_scaling_configurations(ctx, from_json, all_pages, page_size, compa
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4188,7 +4187,7 @@ def list_bds_api_keys(ctx, from_json, all_pages, page_size, bds_instance_id, lif
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4366,7 +4365,7 @@ def list_bds_metastore_configurations(ctx, from_json, all_pages, page_size, bds_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4436,7 +4435,7 @@ def list_identity_configurations(ctx, from_json, all_pages, page_size, bds_insta
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4502,7 +4501,7 @@ def list_node_backup_configurations(ctx, from_json, all_pages, page_size, bds_in
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4566,7 +4565,7 @@ def list_node_backups(ctx, from_json, all_pages, page_size, bds_instance_id, pag
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4631,7 +4630,7 @@ def list_node_replace_configurations(ctx, from_json, all_pages, page_size, bds_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4693,7 +4692,7 @@ def list_os_patches(ctx, from_json, all_pages, page_size, bds_instance_id, page,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4755,7 +4754,7 @@ def list_patch_histories(ctx, from_json, all_pages, page_size, bds_instance_id, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4816,7 +4815,7 @@ def list_patches(ctx, from_json, all_pages, page_size, bds_instance_id, page, li
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4871,7 +4870,7 @@ def list_resource_principal_configurations(ctx, from_json, all_pages, page_size,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4933,7 +4932,7 @@ def list_software_updates(ctx, from_json, all_pages, page_size, bds_instance_id,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4992,7 +4991,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5049,7 +5048,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5160,10 +5159,10 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 @cli_util.wrap_exceptions
 def refresh_confidential_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(identity_configuration_id, six.string_types) and len(identity_configuration_id.strip()) == 0:
+    if isinstance(identity_configuration_id, str) and len(identity_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5226,10 +5225,10 @@ def refresh_confidential_application(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def refresh_upst_token_exchange_keytab(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(identity_configuration_id, six.string_types) and len(identity_configuration_id.strip()) == 0:
+    if isinstance(identity_configuration_id, str) and len(identity_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5292,10 +5291,10 @@ def refresh_upst_token_exchange_keytab(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def remove_auto_scaling_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, cluster_admin_password, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5357,7 +5356,7 @@ def remove_auto_scaling_configuration(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def remove_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5418,7 +5417,7 @@ def remove_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def remove_kafka(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5481,7 +5480,7 @@ def remove_kafka(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def remove_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, node_id, is_force_remove_enabled, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5547,10 +5546,10 @@ def remove_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def remove_node_replace_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_replace_configuration_id, cluster_admin_password, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(node_replace_configuration_id, six.string_types) and len(node_replace_configuration_id.strip()) == 0:
+    if isinstance(node_replace_configuration_id, str) and len(node_replace_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --node-replace-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5613,10 +5612,10 @@ def remove_node_replace_configuration(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def remove_resource_principal_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, resource_principal_configuration_id, cluster_admin_password, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(resource_principal_configuration_id, six.string_types) and len(resource_principal_configuration_id.strip()) == 0:
+    if isinstance(resource_principal_configuration_id, str) and len(resource_principal_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --resource-principal-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5686,7 +5685,7 @@ This option is a JSON list with items of type HostCertDetails.  For documentatio
 @cli_util.wrap_exceptions
 def renew_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, services, root_certificate, host_cert_details, server_key_password, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5762,7 +5761,7 @@ def renew_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def replace_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_host_name, node_backup_id, cluster_admin_password, shape, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5828,7 +5827,7 @@ def replace_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def restart_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_id, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5890,7 +5889,7 @@ def restart_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def start_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, start_cluster_shape_configs, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5955,7 +5954,7 @@ def start_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def stop_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, cluster_admin_password, is_force_stop_jobs, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6020,10 +6019,10 @@ def stop_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def test_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, metastore_config_id, cluster_admin_password, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(metastore_config_id, six.string_types) and len(metastore_config_id.strip()) == 0:
+    if isinstance(metastore_config_id, str) and len(metastore_config_id.strip()) == 0:
         raise click.UsageError('Parameter --metastore-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6087,10 +6086,10 @@ def test_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def test_bds_object_storage_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, api_key_id, object_storage_uri, passphrase, object_storage_region):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(api_key_id, six.string_types) and len(api_key_id.strip()) == 0:
+    if isinstance(api_key_id, str) and len(api_key_id.strip()) == 0:
         raise click.UsageError('Parameter --api-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6160,10 +6159,10 @@ def test_bds_object_storage_connection(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def update_auto_scaling_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, display_name, is_enabled, cluster_admin_password, policy, policy_details, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
     if not force:
         if policy or policy_details:
@@ -6252,10 +6251,10 @@ This option is a JSON list with items of type HorizontalScalingScheduleDetails. 
 @cli_util.wrap_exceptions
 def update_auto_scaling_configuration_update_schedule_based_horizontal_scaling_policy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, display_name, is_enabled, cluster_admin_password, policy, if_match, policy_details_timezone, policy_details_schedule_details):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
     if not force:
         if policy:
@@ -6348,10 +6347,10 @@ def update_auto_scaling_configuration_update_schedule_based_horizontal_scaling_p
 @cli_util.wrap_exceptions
 def update_auto_scaling_configuration_update_metric_based_vertical_scaling_policy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, display_name, is_enabled, cluster_admin_password, policy, if_match, policy_details_scale_up_config, policy_details_scale_down_config):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
     if not force:
         if policy:
@@ -6444,10 +6443,10 @@ def update_auto_scaling_configuration_update_metric_based_vertical_scaling_polic
 @cli_util.wrap_exceptions
 def update_auto_scaling_configuration_update_metric_based_horizontal_scaling_policy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, display_name, is_enabled, cluster_admin_password, policy, if_match, policy_details_scale_out_config, policy_details_scale_in_config):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
     if not force:
         if policy:
@@ -6542,10 +6541,10 @@ This option is a JSON list with items of type VerticalScalingScheduleDetails.  F
 @cli_util.wrap_exceptions
 def update_auto_scaling_configuration_update_schedule_based_vertical_scaling_policy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, auto_scaling_configuration_id, display_name, is_enabled, cluster_admin_password, policy, if_match, policy_details_timezone, policy_details_schedule_details):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
     if not force:
         if policy:
@@ -6637,7 +6636,7 @@ def update_auto_scaling_configuration_update_schedule_based_vertical_scaling_pol
 @cli_util.wrap_exceptions
 def update_bds_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, display_name, bootstrap_script_url, freeform_tags, defined_tags, kms_key_id, network_config, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or network_config:
@@ -6723,10 +6722,10 @@ def update_bds_instance(ctx, from_json, force, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def update_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, metastore_config_id, display_name, bds_api_key_id, bds_api_key_passphrase, cluster_admin_password, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(metastore_config_id, six.string_types) and len(metastore_config_id.strip()) == 0:
+    if isinstance(metastore_config_id, str) and len(metastore_config_id.strip()) == 0:
         raise click.UsageError('Parameter --metastore-config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6803,10 +6802,10 @@ def update_bds_metastore_configuration(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def update_identity_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, identity_configuration_id, cluster_admin_password, upst_configuration_details, iam_user_sync_configuration_details, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(identity_configuration_id, six.string_types) and len(identity_configuration_id.strip()) == 0:
+    if isinstance(identity_configuration_id, str) and len(identity_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-configuration-id cannot be whitespace or empty string')
     if not force:
         if upst_configuration_details or iam_user_sync_configuration_details:
@@ -6885,10 +6884,10 @@ def update_identity_configuration(ctx, from_json, force, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def update_node_backup_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_backup_configuration_id, level_type_details, display_name, timezone, schedule, number_of_backups_to_retain, backup_type, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(node_backup_configuration_id, six.string_types) and len(node_backup_configuration_id.strip()) == 0:
+    if isinstance(node_backup_configuration_id, str) and len(node_backup_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --node-backup-configuration-id cannot be whitespace or empty string')
     if not force:
         if level_type_details:
@@ -6977,10 +6976,10 @@ def update_node_backup_configuration(ctx, from_json, force, wait_for_state, max_
 @cli_util.wrap_exceptions
 def update_node_backup_configuration_node_type_level_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_backup_configuration_id, level_type_details_node_type, display_name, timezone, schedule, number_of_backups_to_retain, backup_type, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(node_backup_configuration_id, six.string_types) and len(node_backup_configuration_id.strip()) == 0:
+    if isinstance(node_backup_configuration_id, str) and len(node_backup_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --node-backup-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7066,10 +7065,10 @@ def update_node_backup_configuration_node_type_level_details(ctx, from_json, wai
 @cli_util.wrap_exceptions
 def update_node_backup_configuration_node_level_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_backup_configuration_id, level_type_details_node_host_name, display_name, timezone, schedule, number_of_backups_to_retain, backup_type, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(node_backup_configuration_id, six.string_types) and len(node_backup_configuration_id.strip()) == 0:
+    if isinstance(node_backup_configuration_id, str) and len(node_backup_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --node-backup-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7154,10 +7153,10 @@ def update_node_backup_configuration_node_level_details(ctx, from_json, wait_for
 @cli_util.wrap_exceptions
 def update_node_replace_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_replace_configuration_id, level_type_details, display_name, metric_type, duration_in_minutes, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(node_replace_configuration_id, six.string_types) and len(node_replace_configuration_id.strip()) == 0:
+    if isinstance(node_replace_configuration_id, str) and len(node_replace_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --node-replace-configuration-id cannot be whitespace or empty string')
     if not force:
         if level_type_details:
@@ -7238,10 +7237,10 @@ def update_node_replace_configuration(ctx, from_json, force, wait_for_state, max
 @cli_util.wrap_exceptions
 def update_node_replace_configuration_node_type_level_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_replace_configuration_id, level_type_details_node_type, display_name, metric_type, duration_in_minutes, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(node_replace_configuration_id, six.string_types) and len(node_replace_configuration_id.strip()) == 0:
+    if isinstance(node_replace_configuration_id, str) and len(node_replace_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --node-replace-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7319,10 +7318,10 @@ def update_node_replace_configuration_node_type_level_details(ctx, from_json, wa
 @cli_util.wrap_exceptions
 def update_node_replace_configuration_node_level_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, node_replace_configuration_id, level_type_details_node_host_name, display_name, metric_type, duration_in_minutes, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(node_replace_configuration_id, six.string_types) and len(node_replace_configuration_id.strip()) == 0:
+    if isinstance(node_replace_configuration_id, str) and len(node_replace_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --node-replace-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7398,10 +7397,10 @@ def update_node_replace_configuration_node_level_details(ctx, from_json, wait_fo
 @cli_util.wrap_exceptions
 def update_resource_principal_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, bds_instance_id, resource_principal_configuration_id, display_name, session_token_life_span_duration_in_hours, if_match):
 
-    if isinstance(bds_instance_id, six.string_types) and len(bds_instance_id.strip()) == 0:
+    if isinstance(bds_instance_id, str) and len(bds_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --bds-instance-id cannot be whitespace or empty string')
 
-    if isinstance(resource_principal_configuration_id, six.string_types) and len(resource_principal_configuration_id.strip()) == 0:
+    if isinstance(resource_principal_configuration_id, str) and len(resource_principal_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --resource-principal-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}

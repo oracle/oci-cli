@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -66,7 +65,7 @@ When you move an autoscaling configuration to a different compartment, associate
 @cli_util.wrap_exceptions
 def change_auto_scaling_configuration_compartment(ctx, from_json, auto_scaling_configuration_id, compartment_id, if_match):
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -214,7 +213,7 @@ An autoscaling configuration can either have multiple schedule-based autoscaling
 @cli_util.wrap_exceptions
 def create_auto_scaling_policy(ctx, from_json, auto_scaling_configuration_id, policy_type, capacity, display_name, is_enabled):
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -261,7 +260,7 @@ An autoscaling configuration can either have multiple schedule-based autoscaling
 @cli_util.wrap_exceptions
 def create_auto_scaling_policy_create_scheduled_policy_details(ctx, from_json, auto_scaling_configuration_id, execution_schedule, capacity, display_name, is_enabled, resource_action):
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -312,7 +311,7 @@ An autoscaling configuration can either have multiple schedule-based autoscaling
 @cli_util.wrap_exceptions
 def create_auto_scaling_policy_create_threshold_policy_details(ctx, from_json, auto_scaling_configuration_id, rules, capacity, display_name, is_enabled):
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -352,7 +351,7 @@ def create_auto_scaling_policy_create_threshold_policy_details(ctx, from_json, a
 @cli_util.wrap_exceptions
 def delete_auto_scaling_configuration(ctx, from_json, auto_scaling_configuration_id, if_match):
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -379,10 +378,10 @@ def delete_auto_scaling_configuration(ctx, from_json, auto_scaling_configuration
 @cli_util.wrap_exceptions
 def delete_auto_scaling_policy(ctx, from_json, auto_scaling_configuration_id, auto_scaling_policy_id, if_match):
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
 
-    if isinstance(auto_scaling_policy_id, six.string_types) and len(auto_scaling_policy_id.strip()) == 0:
+    if isinstance(auto_scaling_policy_id, str) and len(auto_scaling_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -407,7 +406,7 @@ def delete_auto_scaling_policy(ctx, from_json, auto_scaling_configuration_id, au
 @cli_util.wrap_exceptions
 def get_auto_scaling_configuration(ctx, from_json, auto_scaling_configuration_id):
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -430,10 +429,10 @@ def get_auto_scaling_configuration(ctx, from_json, auto_scaling_configuration_id
 @cli_util.wrap_exceptions
 def get_auto_scaling_policy(ctx, from_json, auto_scaling_configuration_id, auto_scaling_policy_id):
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
 
-    if isinstance(auto_scaling_policy_id, six.string_types) and len(auto_scaling_policy_id.strip()) == 0:
+    if isinstance(auto_scaling_policy_id, str) and len(auto_scaling_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -527,7 +526,7 @@ def list_auto_scaling_policies(ctx, from_json, all_pages, page_size, auto_scalin
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -588,7 +587,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_auto_scaling_configuration(ctx, from_json, force, auto_scaling_configuration_id, defined_tags, display_name, freeform_tags, is_enabled, cool_down_in_seconds, if_match):
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -642,10 +641,10 @@ def update_auto_scaling_configuration(ctx, from_json, force, auto_scaling_config
 @cli_util.wrap_exceptions
 def update_auto_scaling_policy(ctx, from_json, force, auto_scaling_configuration_id, auto_scaling_policy_id, policy_type, display_name, capacity, is_enabled, if_match):
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
 
-    if isinstance(auto_scaling_policy_id, six.string_types) and len(auto_scaling_policy_id.strip()) == 0:
+    if isinstance(auto_scaling_policy_id, str) and len(auto_scaling_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-policy-id cannot be whitespace or empty string')
     if not force:
         if capacity:
@@ -697,10 +696,10 @@ This option is a JSON list with items of type UpdateConditionDetails.  For docum
 @cli_util.wrap_exceptions
 def update_auto_scaling_policy_update_threshold_policy_details(ctx, from_json, force, auto_scaling_configuration_id, auto_scaling_policy_id, display_name, capacity, is_enabled, rules, if_match):
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
 
-    if isinstance(auto_scaling_policy_id, six.string_types) and len(auto_scaling_policy_id.strip()) == 0:
+    if isinstance(auto_scaling_policy_id, str) and len(auto_scaling_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-policy-id cannot be whitespace or empty string')
     if not force:
         if capacity or rules:
@@ -755,10 +754,10 @@ def update_auto_scaling_policy_update_threshold_policy_details(ctx, from_json, f
 @cli_util.wrap_exceptions
 def update_auto_scaling_policy_update_scheduled_policy_details(ctx, from_json, force, auto_scaling_configuration_id, auto_scaling_policy_id, display_name, capacity, is_enabled, execution_schedule, resource_action, if_match):
 
-    if isinstance(auto_scaling_configuration_id, six.string_types) and len(auto_scaling_configuration_id.strip()) == 0:
+    if isinstance(auto_scaling_configuration_id, str) and len(auto_scaling_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-configuration-id cannot be whitespace or empty string')
 
-    if isinstance(auto_scaling_policy_id, six.string_types) and len(auto_scaling_policy_id.strip()) == 0:
+    if isinstance(auto_scaling_policy_id, str) and len(auto_scaling_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --auto-scaling-policy-id cannot be whitespace or empty string')
     if not force:
         if capacity or execution_schedule or resource_action:

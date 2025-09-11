@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -47,7 +46,7 @@ subscription_service_root_group.add_command(subscription_group)
 @cli_util.wrap_exceptions
 def authorize_subscription_payment(ctx, from_json, osp_home_region, subscription_id, compartment_id, subscription, language_code, email, if_match):
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -82,7 +81,7 @@ def authorize_subscription_payment(ctx, from_json, osp_home_region, subscription
 @cli_util.wrap_exceptions
 def get_subscription(ctx, from_json, subscription_id, osp_home_region, compartment_id):
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -170,7 +169,7 @@ def list_subscriptions(ctx, from_json, all_pages, page_size, osp_home_region, co
 @cli_util.wrap_exceptions
 def pay_subscription(ctx, from_json, osp_home_region, subscription_id, compartment_id, subscription, language_code, email, if_match):
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -209,7 +208,7 @@ def pay_subscription(ctx, from_json, osp_home_region, subscription_id, compartme
 @cli_util.wrap_exceptions
 def update_subscription(ctx, from_json, force, subscription_id, osp_home_region, compartment_id, subscription, email, if_match):
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
     if not force:
         if subscription:

@@ -4,7 +4,6 @@
 
 import click  # noqa: F401
 import json  # noqa: F401
-import six
 from services.database_management.src.oci_cli_db_management.generated import dbmanagement_cli
 from services.database_management.src.oci_cli_database_management.generated import database_management_service_cli
 from oci_cli import cli_util  # noqa: F401
@@ -54,10 +53,10 @@ dbmanagement_cli.managed_database_group.commands.pop(dbmanagement_cli.get_awr_db
 @cli_util.wrap_exceptions
 def get_awr_db_report(ctx, from_json, managed_database_id, awr_db_id, inst_nums, begin_sn_id_greater_than_or_equal_to, end_sn_id_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, report_type, container_id, report_format):
 
-    if isinstance(managed_database_id, six.string_types) and len(managed_database_id.strip()) == 0:
+    if isinstance(managed_database_id, str) and len(managed_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-database-id cannot be whitespace or empty string')
 
-    if isinstance(awr_db_id, six.string_types) and len(awr_db_id.strip()) == 0:
+    if isinstance(awr_db_id, str) and len(awr_db_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-db-id cannot be whitespace or empty string')
 
     kwargs = {}

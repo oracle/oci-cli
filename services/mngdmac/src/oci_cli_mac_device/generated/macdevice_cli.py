@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -49,10 +48,10 @@ mac_device_root_group.add_command(mac_device_collection_group)
 @cli_util.wrap_exceptions
 def get_mac_device(ctx, from_json, mac_device_id, mac_order_id):
 
-    if isinstance(mac_device_id, six.string_types) and len(mac_device_id.strip()) == 0:
+    if isinstance(mac_device_id, str) and len(mac_device_id.strip()) == 0:
         raise click.UsageError('Parameter --mac-device-id cannot be whitespace or empty string')
 
-    if isinstance(mac_order_id, six.string_types) and len(mac_order_id.strip()) == 0:
+    if isinstance(mac_order_id, str) and len(mac_order_id.strip()) == 0:
         raise click.UsageError('Parameter --mac-order-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -88,7 +87,7 @@ def list_mac_devices(ctx, from_json, all_pages, page_size, mac_order_id, compart
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(mac_order_id, six.string_types) and len(mac_order_id.strip()) == 0:
+    if isinstance(mac_order_id, str) and len(mac_order_id.strip()) == 0:
         raise click.UsageError('Parameter --mac-order-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -149,10 +148,10 @@ def list_mac_devices(ctx, from_json, all_pages, page_size, mac_order_id, compart
 @cli_util.wrap_exceptions
 def terminate_mac_device(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, mac_device_id, mac_order_id, if_match):
 
-    if isinstance(mac_device_id, six.string_types) and len(mac_device_id.strip()) == 0:
+    if isinstance(mac_device_id, str) and len(mac_device_id.strip()) == 0:
         raise click.UsageError('Parameter --mac-device-id cannot be whitespace or empty string')
 
-    if isinstance(mac_order_id, six.string_types) and len(mac_order_id.strip()) == 0:
+    if isinstance(mac_order_id, str) and len(mac_order_id.strip()) == 0:
         raise click.UsageError('Parameter --mac-order-id cannot be whitespace or empty string')
 
     kwargs = {}

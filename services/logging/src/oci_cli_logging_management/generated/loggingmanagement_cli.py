@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -97,7 +96,7 @@ logging_root_group.add_command(log_saved_search_group)
 @cli_util.wrap_exceptions
 def change_log_group_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, log_group_id, compartment_id, if_match):
 
-    if isinstance(log_group_id, six.string_types) and len(log_group_id.strip()) == 0:
+    if isinstance(log_group_id, str) and len(log_group_id.strip()) == 0:
         raise click.UsageError('Parameter --log-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -161,10 +160,10 @@ def change_log_group_compartment(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def change_log_log_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, log_group_id, log_id, target_log_group_id, if_match):
 
-    if isinstance(log_group_id, six.string_types) and len(log_group_id.strip()) == 0:
+    if isinstance(log_group_id, str) and len(log_group_id.strip()) == 0:
         raise click.UsageError('Parameter --log-group-id cannot be whitespace or empty string')
 
-    if isinstance(log_id, six.string_types) and len(log_id.strip()) == 0:
+    if isinstance(log_id, str) and len(log_id.strip()) == 0:
         raise click.UsageError('Parameter --log-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -225,7 +224,7 @@ def change_log_log_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def change_log_saved_search_compartment(ctx, from_json, log_saved_search_id, compartment_id, if_match):
 
-    if isinstance(log_saved_search_id, six.string_types) and len(log_saved_search_id.strip()) == 0:
+    if isinstance(log_saved_search_id, str) and len(log_saved_search_id.strip()) == 0:
         raise click.UsageError('Parameter --log-saved-search-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -259,7 +258,7 @@ def change_log_saved_search_compartment(ctx, from_json, log_saved_search_id, com
 @cli_util.wrap_exceptions
 def change_unified_agent_configuration_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, unified_agent_configuration_id, compartment_id, if_match):
 
-    if isinstance(unified_agent_configuration_id, six.string_types) and len(unified_agent_configuration_id.strip()) == 0:
+    if isinstance(unified_agent_configuration_id, str) and len(unified_agent_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --unified-agent-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -329,7 +328,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def create_log(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, log_group_id, display_name, log_type, is_enabled, defined_tags, freeform_tags, configuration, retention_duration):
 
-    if isinstance(log_group_id, six.string_types) and len(log_group_id.strip()) == 0:
+    if isinstance(log_group_id, str) and len(log_group_id.strip()) == 0:
         raise click.UsageError('Parameter --log-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -780,10 +779,10 @@ def create_unified_agent_configuration_unified_agent_monitoring_configuration_de
 @cli_util.wrap_exceptions
 def delete_log(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, log_group_id, log_id, if_match):
 
-    if isinstance(log_group_id, six.string_types) and len(log_group_id.strip()) == 0:
+    if isinstance(log_group_id, str) and len(log_group_id.strip()) == 0:
         raise click.UsageError('Parameter --log-group-id cannot be whitespace or empty string')
 
-    if isinstance(log_id, six.string_types) and len(log_id.strip()) == 0:
+    if isinstance(log_id, str) and len(log_id.strip()) == 0:
         raise click.UsageError('Parameter --log-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -840,7 +839,7 @@ def delete_log(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.wrap_exceptions
 def delete_log_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, log_group_id, if_match):
 
-    if isinstance(log_group_id, six.string_types) and len(log_group_id.strip()) == 0:
+    if isinstance(log_group_id, str) and len(log_group_id.strip()) == 0:
         raise click.UsageError('Parameter --log-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -896,7 +895,7 @@ def delete_log_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def delete_log_saved_search(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, log_saved_search_id, if_match):
 
-    if isinstance(log_saved_search_id, six.string_types) and len(log_saved_search_id.strip()) == 0:
+    if isinstance(log_saved_search_id, str) and len(log_saved_search_id.strip()) == 0:
         raise click.UsageError('Parameter --log-saved-search-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -960,7 +959,7 @@ def delete_log_saved_search(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_unified_agent_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, unified_agent_configuration_id, if_match):
 
-    if isinstance(unified_agent_configuration_id, six.string_types) and len(unified_agent_configuration_id.strip()) == 0:
+    if isinstance(unified_agent_configuration_id, str) and len(unified_agent_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --unified-agent-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1016,7 +1015,7 @@ def delete_unified_agent_configuration(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def delete_work_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1068,10 +1067,10 @@ def delete_work_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def get_log(ctx, from_json, log_group_id, log_id):
 
-    if isinstance(log_group_id, six.string_types) and len(log_group_id.strip()) == 0:
+    if isinstance(log_group_id, str) and len(log_group_id.strip()) == 0:
         raise click.UsageError('Parameter --log-group-id cannot be whitespace or empty string')
 
-    if isinstance(log_id, six.string_types) and len(log_id.strip()) == 0:
+    if isinstance(log_id, str) and len(log_id.strip()) == 0:
         raise click.UsageError('Parameter --log-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1094,7 +1093,7 @@ def get_log(ctx, from_json, log_group_id, log_id):
 @cli_util.wrap_exceptions
 def get_log_group(ctx, from_json, log_group_id):
 
-    if isinstance(log_group_id, six.string_types) and len(log_group_id.strip()) == 0:
+    if isinstance(log_group_id, str) and len(log_group_id.strip()) == 0:
         raise click.UsageError('Parameter --log-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1116,7 +1115,7 @@ def get_log_group(ctx, from_json, log_group_id):
 @cli_util.wrap_exceptions
 def get_log_saved_search(ctx, from_json, log_saved_search_id):
 
-    if isinstance(log_saved_search_id, six.string_types) and len(log_saved_search_id.strip()) == 0:
+    if isinstance(log_saved_search_id, str) and len(log_saved_search_id.strip()) == 0:
         raise click.UsageError('Parameter --log-saved-search-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1138,7 +1137,7 @@ def get_log_saved_search(ctx, from_json, log_saved_search_id):
 @cli_util.wrap_exceptions
 def get_unified_agent_configuration(ctx, from_json, unified_agent_configuration_id):
 
-    if isinstance(unified_agent_configuration_id, six.string_types) and len(unified_agent_configuration_id.strip()) == 0:
+    if isinstance(unified_agent_configuration_id, str) and len(unified_agent_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --unified-agent-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1160,7 +1159,7 @@ def get_unified_agent_configuration(ctx, from_json, unified_agent_configuration_
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1316,7 +1315,7 @@ def list_logs(ctx, from_json, all_pages, page_size, log_group_id, log_type, sour
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(log_group_id, six.string_types) and len(log_group_id.strip()) == 0:
+    if isinstance(log_group_id, str) and len(log_group_id.strip()) == 0:
         raise click.UsageError('Parameter --log-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1468,7 +1467,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1519,7 +1518,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1637,10 +1636,10 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_log(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, log_group_id, log_id, display_name, is_enabled, defined_tags, freeform_tags, retention_duration, configuration, if_match):
 
-    if isinstance(log_group_id, six.string_types) and len(log_group_id.strip()) == 0:
+    if isinstance(log_group_id, str) and len(log_group_id.strip()) == 0:
         raise click.UsageError('Parameter --log-group-id cannot be whitespace or empty string')
 
-    if isinstance(log_id, six.string_types) and len(log_id.strip()) == 0:
+    if isinstance(log_id, str) and len(log_id.strip()) == 0:
         raise click.UsageError('Parameter --log-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or configuration:
@@ -1729,7 +1728,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_log_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, log_group_id, display_name, description, defined_tags, freeform_tags, if_match):
 
-    if isinstance(log_group_id, six.string_types) and len(log_group_id.strip()) == 0:
+    if isinstance(log_group_id, str) and len(log_group_id.strip()) == 0:
         raise click.UsageError('Parameter --log-group-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -1812,7 +1811,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_log_saved_search(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, log_saved_search_id, name, description, query_parameterconflict, defined_tags, freeform_tags, if_match):
 
-    if isinstance(log_saved_search_id, six.string_types) and len(log_saved_search_id.strip()) == 0:
+    if isinstance(log_saved_search_id, str) and len(log_saved_search_id.strip()) == 0:
         raise click.UsageError('Parameter --log-saved-search-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -1896,7 +1895,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_unified_agent_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, unified_agent_configuration_id, display_name, is_enabled, service_configuration, defined_tags, freeform_tags, description, group_association, if_match):
 
-    if isinstance(unified_agent_configuration_id, six.string_types) and len(unified_agent_configuration_id.strip()) == 0:
+    if isinstance(unified_agent_configuration_id, str) and len(unified_agent_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --unified-agent-configuration-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or service_configuration or group_association:
@@ -1988,7 +1987,7 @@ This option is a JSON list with items of type UnifiedAgentLoggingFilter.  For do
 @cli_util.wrap_exceptions
 def update_unified_agent_configuration_unified_agent_logging_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, unified_agent_configuration_id, display_name, is_enabled, service_configuration_sources, service_configuration_destination, defined_tags, freeform_tags, description, group_association, if_match, service_configuration_filter):
 
-    if isinstance(unified_agent_configuration_id, six.string_types) and len(unified_agent_configuration_id.strip()) == 0:
+    if isinstance(unified_agent_configuration_id, str) and len(unified_agent_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --unified-agent-configuration-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or group_association:
@@ -2083,7 +2082,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_unified_agent_configuration_unified_agent_monitoring_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, unified_agent_configuration_id, display_name, is_enabled, service_configuration_application_configurations, defined_tags, freeform_tags, description, group_association, if_match):
 
-    if isinstance(unified_agent_configuration_id, six.string_types) and len(unified_agent_configuration_id.strip()) == 0:
+    if isinstance(unified_agent_configuration_id, str) and len(unified_agent_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --unified-agent-configuration-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or group_association:

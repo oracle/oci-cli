@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -159,7 +158,7 @@ def create_opensearch_cluster_pipeline(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def delete_opensearch_cluster_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_pipeline_id, if_match):
 
-    if isinstance(opensearch_cluster_pipeline_id, six.string_types) and len(opensearch_cluster_pipeline_id.strip()) == 0:
+    if isinstance(opensearch_cluster_pipeline_id, str) and len(opensearch_cluster_pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --opensearch-cluster-pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -210,7 +209,7 @@ def delete_opensearch_cluster_pipeline(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def get_opensearch_cluster_pipeline(ctx, from_json, opensearch_cluster_pipeline_id):
 
-    if isinstance(opensearch_cluster_pipeline_id, six.string_types) and len(opensearch_cluster_pipeline_id.strip()) == 0:
+    if isinstance(opensearch_cluster_pipeline_id, str) and len(opensearch_cluster_pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --opensearch-cluster-pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -321,7 +320,7 @@ This option is a JSON list with items of type OpensearchPipelineReverseConnectio
 @cli_util.wrap_exceptions
 def update_opensearch_cluster_pipeline(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_pipeline_id, display_name, ocpu_count, memory_gb, node_count, node_shape, pipeline_configuration_body, data_prepper_configuration_body, vcn_id, subnet_id, vcn_compartment_id, subnet_compartment_id, nsg_id, reverse_connection_endpoints, freeform_tags, defined_tags, if_match, opc_dry_run):
 
-    if isinstance(opensearch_cluster_pipeline_id, six.string_types) and len(opensearch_cluster_pipeline_id.strip()) == 0:
+    if isinstance(opensearch_cluster_pipeline_id, str) and len(opensearch_cluster_pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --opensearch-cluster-pipeline-id cannot be whitespace or empty string')
     if not force:
         if reverse_connection_endpoints or freeform_tags or defined_tags:
