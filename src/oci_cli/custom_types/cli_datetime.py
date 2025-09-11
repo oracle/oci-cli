@@ -5,7 +5,6 @@
 import arrow
 import click
 import re
-import six
 
 
 class CliDatetime(click.ParamType):
@@ -305,7 +304,7 @@ Timezone with microseconds
         if value is None:
             return None
 
-        if not isinstance(value, six.string_types):
+        if not isinstance(value, str):
             raise click.BadParameter('Value {} is not a valid datetime. {}'.format(value, self.VALID_DATETIME_EXCEPTION_MESSAGE))
 
         if value.isdigit():

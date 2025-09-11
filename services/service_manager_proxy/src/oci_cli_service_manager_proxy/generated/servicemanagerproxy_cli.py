@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -46,7 +45,7 @@ service_manager_proxy_root_group.add_command(service_environment_group)
 @cli_util.wrap_exceptions
 def get_service_environment(ctx, from_json, service_environment_id, compartment_id):
 
-    if isinstance(service_environment_id, six.string_types) and len(service_environment_id.strip()) == 0:
+    if isinstance(service_environment_id, str) and len(service_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --service-environment-id cannot be whitespace or empty string')
 
     kwargs = {}

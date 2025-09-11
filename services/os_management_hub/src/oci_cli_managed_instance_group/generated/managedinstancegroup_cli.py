@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -48,7 +47,7 @@ managed_instance_group_root_group.add_command(managed_instance_group_group)
 @cli_util.wrap_exceptions
 def attach_managed_instances_to_managed_instance_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_group_id, managed_instances, work_request_details, if_match):
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -113,7 +112,7 @@ def attach_managed_instances_to_managed_instance_group(ctx, from_json, wait_for_
 @cli_util.wrap_exceptions
 def attach_software_sources_to_managed_instance_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_group_id, software_sources, work_request_details, if_match):
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -174,7 +173,7 @@ def attach_software_sources_to_managed_instance_group(ctx, from_json, wait_for_s
 @cli_util.wrap_exceptions
 def change_managed_instance_group_compartment(ctx, from_json, managed_instance_group_id, compartment_id, if_match):
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -297,7 +296,7 @@ def create_managed_instance_group(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_managed_instance_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_group_id, if_match):
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -358,7 +357,7 @@ def delete_managed_instance_group(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def detach_managed_instances_from_managed_instance_group(ctx, from_json, managed_instance_group_id, managed_instances, if_match):
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -390,7 +389,7 @@ def detach_managed_instances_from_managed_instance_group(ctx, from_json, managed
 @cli_util.wrap_exceptions
 def detach_software_sources_from_managed_instance_group(ctx, from_json, managed_instance_group_id, software_sources, work_request_details, if_match):
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -430,7 +429,7 @@ def detach_software_sources_from_managed_instance_group(ctx, from_json, managed_
 @cli_util.wrap_exceptions
 def disable_module_stream_on_managed_instance_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_group_id, module_name, stream_name, software_source_id, work_request_details, if_match):
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -503,7 +502,7 @@ def disable_module_stream_on_managed_instance_group(ctx, from_json, wait_for_sta
 @cli_util.wrap_exceptions
 def enable_module_stream_on_managed_instance_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_group_id, module_name, stream_name, software_source_id, work_request_details, if_match):
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -568,7 +567,7 @@ def enable_module_stream_on_managed_instance_group(ctx, from_json, wait_for_stat
 @cli_util.wrap_exceptions
 def get_managed_instance_group(ctx, from_json, managed_instance_group_id):
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -599,7 +598,7 @@ def get_managed_instance_group(ctx, from_json, managed_instance_group_id):
 @cli_util.wrap_exceptions
 def install_module_stream_profile_on_managed_instance_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_group_id, module_name, stream_name, profile_name, software_source_id, work_request_details, if_match):
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -674,7 +673,7 @@ def install_module_stream_profile_on_managed_instance_group(ctx, from_json, wait
 @cli_util.wrap_exceptions
 def install_packages_on_managed_instance_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_group_id, package_names, work_request_details, is_latest, if_match):
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -742,7 +741,7 @@ def install_packages_on_managed_instance_group(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def install_windows_updates_on_managed_instance_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_group_id, windows_update_types, work_request_details, if_match):
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -817,7 +816,7 @@ def list_managed_instance_group_available_modules(ctx, from_json, all_pages, pag
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -888,7 +887,7 @@ def list_managed_instance_group_available_packages(ctx, from_json, all_pages, pa
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -960,7 +959,7 @@ def list_managed_instance_group_available_software_sources(ctx, from_json, all_p
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1036,7 +1035,7 @@ def list_managed_instance_group_installed_packages(ctx, from_json, all_pages, pa
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1120,7 +1119,7 @@ def list_managed_instance_group_modules(ctx, from_json, all_pages, page_size, wa
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1308,7 +1307,7 @@ This option is a JSON list with items of type ModuleStreamProfileDetails.  For d
 @cli_util.wrap_exceptions
 def manage_module_streams_on_managed_instance_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_group_id, is_dry_run, enable, disable, install, remove, work_request_details, if_match):
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1387,7 +1386,7 @@ def manage_module_streams_on_managed_instance_group(ctx, from_json, wait_for_sta
 @cli_util.wrap_exceptions
 def reboot_managed_instance_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_group_id, reboot_timeout_in_mins, work_request_details, if_match):
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1457,7 +1456,7 @@ def reboot_managed_instance_group(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def remove_module_stream_profile_from_managed_instance_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_group_id, module_name, stream_name, profile_name, software_source_id, work_request_details, if_match):
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1531,7 +1530,7 @@ def remove_module_stream_profile_from_managed_instance_group(ctx, from_json, wai
 @cli_util.wrap_exceptions
 def remove_packages_from_managed_instance_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_group_id, package_names, work_request_details, if_match):
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1598,7 +1597,7 @@ def remove_packages_from_managed_instance_group(ctx, from_json, wait_for_state, 
 @cli_util.wrap_exceptions
 def switch_module_stream_on_managed_instance_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_group_id, module_name, stream_name, software_source_id, work_request_details, if_match):
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1667,7 +1666,7 @@ def switch_module_stream_on_managed_instance_group(ctx, from_json, wait_for_stat
 @cli_util.wrap_exceptions
 def update_all_packages_on_managed_instance_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_group_id, update_types, work_request_details, if_match):
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1739,7 +1738,7 @@ def update_all_packages_on_managed_instance_group(ctx, from_json, wait_for_state
 @cli_util.wrap_exceptions
 def update_managed_instance_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_group_id, display_name, description, notification_topic_id, autonomous_settings, freeform_tags, defined_tags, if_match):
 
-    if isinstance(managed_instance_group_id, six.string_types) and len(managed_instance_group_id.strip()) == 0:
+    if isinstance(managed_instance_group_id, str) and len(managed_instance_group_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-group-id cannot be whitespace or empty string')
     if not force:
         if autonomous_settings or freeform_tags or defined_tags:

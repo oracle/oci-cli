@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -49,7 +48,7 @@ subscribers_root_group.add_command(subscriber_group)
 @cli_util.wrap_exceptions
 def add_subscriber_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subscriber_id, type, message, if_match):
 
-    if isinstance(subscriber_id, six.string_types) and len(subscriber_id.strip()) == 0:
+    if isinstance(subscriber_id, str) and len(subscriber_id.strip()) == 0:
         raise click.UsageError('Parameter --subscriber-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -110,7 +109,7 @@ def add_subscriber_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def change_subscriber_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subscriber_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(subscriber_id, six.string_types) and len(subscriber_id.strip()) == 0:
+    if isinstance(subscriber_id, str) and len(subscriber_id.strip()) == 0:
         raise click.UsageError('Parameter --subscriber-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -259,7 +258,7 @@ def create_subscriber(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_subscriber(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subscriber_id, if_match, is_lock_override):
 
-    if isinstance(subscriber_id, six.string_types) and len(subscriber_id.strip()) == 0:
+    if isinstance(subscriber_id, str) and len(subscriber_id.strip()) == 0:
         raise click.UsageError('Parameter --subscriber-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -314,7 +313,7 @@ def delete_subscriber(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def get_subscriber(ctx, from_json, subscriber_id):
 
-    if isinstance(subscriber_id, six.string_types) and len(subscriber_id.strip()) == 0:
+    if isinstance(subscriber_id, str) and len(subscriber_id.strip()) == 0:
         raise click.UsageError('Parameter --subscriber-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -403,7 +402,7 @@ def list_subscribers(ctx, from_json, all_pages, page_size, compartment_id, displ
 @cli_util.wrap_exceptions
 def remove_subscriber_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subscriber_id, type, if_match):
 
-    if isinstance(subscriber_id, six.string_types) and len(subscriber_id.strip()) == 0:
+    if isinstance(subscriber_id, str) and len(subscriber_id.strip()) == 0:
         raise click.UsageError('Parameter --subscriber-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -474,7 +473,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_subscriber(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, subscriber_id, display_name, clients, usage_plans, freeform_tags, defined_tags, if_match, is_lock_override):
 
-    if isinstance(subscriber_id, six.string_types) and len(subscriber_id.strip()) == 0:
+    if isinstance(subscriber_id, str) and len(subscriber_id.strip()) == 0:
         raise click.UsageError('Parameter --subscriber-id cannot be whitespace or empty string')
     if not force:
         if clients or usage_plans or freeform_tags or defined_tags:

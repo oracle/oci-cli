@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -48,7 +47,7 @@ api_metadata_root_group.add_command(api_metadata_group)
 @cli_util.wrap_exceptions
 def get_api_metadata(ctx, from_json, api_metadata_id):
 
-    if isinstance(api_metadata_id, six.string_types) and len(api_metadata_id.strip()) == 0:
+    if isinstance(api_metadata_id, str) and len(api_metadata_id.strip()) == 0:
         raise click.UsageError('Parameter --api-metadata-id cannot be whitespace or empty string')
 
     kwargs = {}

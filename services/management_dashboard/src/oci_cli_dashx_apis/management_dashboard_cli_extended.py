@@ -4,7 +4,6 @@
 
 from __future__ import print_function
 import click
-import six
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from services.management_dashboard.src.oci_cli_dashx_apis.generated import dashxapis_cli
@@ -40,7 +39,7 @@ cli_util.rename_command(dashxapis_cli, dashxapis_cli.management_dashboard_group,
 @cli_util.wrap_exceptions
 def export_dashboard(ctx, from_json, export_dashboard_id):
 
-    if isinstance(export_dashboard_id, six.string_types) and len(export_dashboard_id.strip()) == 0:
+    if isinstance(export_dashboard_id, str) and len(export_dashboard_id.strip()) == 0:
         raise click.UsageError('Parameter --export-dashboard-id cannot be whitespace or empty string')
 
     kwargs = {}

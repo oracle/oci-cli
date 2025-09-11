@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -92,7 +91,7 @@ service_catalog_root_group.add_command(application_summary_group)
 @cli_util.wrap_exceptions
 def bulk_replace_service_catalog_associations(ctx, from_json, force, service_catalog_id, items, if_match):
 
-    if isinstance(service_catalog_id, six.string_types) and len(service_catalog_id.strip()) == 0:
+    if isinstance(service_catalog_id, str) and len(service_catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --service-catalog-id cannot be whitespace or empty string')
     if not force:
         if items:
@@ -130,7 +129,7 @@ def bulk_replace_service_catalog_associations(ctx, from_json, force, service_cat
 @cli_util.wrap_exceptions
 def change_private_application_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, private_application_id, compartment_id, if_match):
 
-    if isinstance(private_application_id, six.string_types) and len(private_application_id.strip()) == 0:
+    if isinstance(private_application_id, str) and len(private_application_id.strip()) == 0:
         raise click.UsageError('Parameter --private-application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -190,7 +189,7 @@ def change_private_application_compartment(ctx, from_json, wait_for_state, max_w
 @cli_util.wrap_exceptions
 def change_service_catalog_compartment(ctx, from_json, service_catalog_id, compartment_id, if_match):
 
-    if isinstance(service_catalog_id, six.string_types) and len(service_catalog_id.strip()) == 0:
+    if isinstance(service_catalog_id, str) and len(service_catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --service-catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -471,7 +470,7 @@ def create_service_catalog_association(ctx, from_json, service_catalog_id, entit
 @cli_util.wrap_exceptions
 def delete_private_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, private_application_id, if_match):
 
-    if isinstance(private_application_id, six.string_types) and len(private_application_id.strip()) == 0:
+    if isinstance(private_application_id, str) and len(private_application_id.strip()) == 0:
         raise click.UsageError('Parameter --private-application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -527,7 +526,7 @@ def delete_private_application(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def delete_service_catalog(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, service_catalog_id, if_match):
 
-    if isinstance(service_catalog_id, six.string_types) and len(service_catalog_id.strip()) == 0:
+    if isinstance(service_catalog_id, str) and len(service_catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --service-catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -588,7 +587,7 @@ def delete_service_catalog(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_service_catalog_association(ctx, from_json, service_catalog_association_id, if_match):
 
-    if isinstance(service_catalog_association_id, six.string_types) and len(service_catalog_association_id.strip()) == 0:
+    if isinstance(service_catalog_association_id, str) and len(service_catalog_association_id.strip()) == 0:
         raise click.UsageError('Parameter --service-catalog-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -612,7 +611,7 @@ def delete_service_catalog_association(ctx, from_json, service_catalog_associati
 @cli_util.wrap_exceptions
 def get_private_application(ctx, from_json, private_application_id):
 
-    if isinstance(private_application_id, six.string_types) and len(private_application_id.strip()) == 0:
+    if isinstance(private_application_id, str) and len(private_application_id.strip()) == 0:
         raise click.UsageError('Parameter --private-application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -635,7 +634,7 @@ def get_private_application(ctx, from_json, private_application_id):
 @cli_util.wrap_exceptions
 def get_private_application_action_download_logo(ctx, from_json, file, private_application_id):
 
-    if isinstance(private_application_id, six.string_types) and len(private_application_id.strip()) == 0:
+    if isinstance(private_application_id, str) and len(private_application_id.strip()) == 0:
         raise click.UsageError('Parameter --private-application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -679,7 +678,7 @@ def get_private_application_action_download_logo(ctx, from_json, file, private_a
 @cli_util.wrap_exceptions
 def get_private_application_package(ctx, from_json, private_application_package_id):
 
-    if isinstance(private_application_package_id, six.string_types) and len(private_application_package_id.strip()) == 0:
+    if isinstance(private_application_package_id, str) and len(private_application_package_id.strip()) == 0:
         raise click.UsageError('Parameter --private-application-package-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -702,7 +701,7 @@ def get_private_application_package(ctx, from_json, private_application_package_
 @cli_util.wrap_exceptions
 def get_private_application_package_action_download_config(ctx, from_json, file, private_application_package_id):
 
-    if isinstance(private_application_package_id, six.string_types) and len(private_application_package_id.strip()) == 0:
+    if isinstance(private_application_package_id, str) and len(private_application_package_id.strip()) == 0:
         raise click.UsageError('Parameter --private-application-package-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -746,7 +745,7 @@ def get_private_application_package_action_download_config(ctx, from_json, file,
 @cli_util.wrap_exceptions
 def get_service_catalog(ctx, from_json, service_catalog_id):
 
-    if isinstance(service_catalog_id, six.string_types) and len(service_catalog_id.strip()) == 0:
+    if isinstance(service_catalog_id, str) and len(service_catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --service-catalog-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -768,7 +767,7 @@ def get_service_catalog(ctx, from_json, service_catalog_id):
 @cli_util.wrap_exceptions
 def get_service_catalog_association(ctx, from_json, service_catalog_association_id):
 
-    if isinstance(service_catalog_association_id, six.string_types) and len(service_catalog_association_id.strip()) == 0:
+    if isinstance(service_catalog_association_id, str) and len(service_catalog_association_id.strip()) == 0:
         raise click.UsageError('Parameter --service-catalog-association-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -790,7 +789,7 @@ def get_service_catalog_association(ctx, from_json, service_catalog_association_
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1140,7 +1139,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1197,7 +1196,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1318,7 +1317,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def update_private_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, private_application_id, display_name, short_description, long_description, logo_file_base64_encoded, defined_tags, freeform_tags, if_match):
 
-    if isinstance(private_application_id, six.string_types) and len(private_application_id.strip()) == 0:
+    if isinstance(private_application_id, str) and len(private_application_id.strip()) == 0:
         raise click.UsageError('Parameter --private-application-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -1403,7 +1402,7 @@ def update_private_application(ctx, from_json, force, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def update_service_catalog(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_catalog_id, display_name, defined_tags, freeform_tags, if_match):
 
-    if isinstance(service_catalog_id, six.string_types) and len(service_catalog_id.strip()) == 0:
+    if isinstance(service_catalog_id, str) and len(service_catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --service-catalog-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:

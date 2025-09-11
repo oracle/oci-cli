@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -357,7 +356,7 @@ compute_root_group.add_command(console_history_group)
 @cli_util.wrap_exceptions
 def accept_shielded_integrity_policy(ctx, from_json, instance_id, if_match):
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -385,10 +384,10 @@ def accept_shielded_integrity_policy(ctx, from_json, instance_id, if_match):
 @cli_util.wrap_exceptions
 def add_image_shape_compatibility_entry(ctx, from_json, force, image_id, shape_name, memory_constraints, ocpu_constraints):
 
-    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+    if isinstance(image_id, str) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
 
-    if isinstance(shape_name, six.string_types) and len(shape_name.strip()) == 0:
+    if isinstance(shape_name, str) and len(shape_name.strip()) == 0:
         raise click.UsageError('Parameter --shape-name cannot be whitespace or empty string')
     if not force:
         if memory_constraints or ocpu_constraints:
@@ -487,7 +486,7 @@ def attach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def attach_compute_host_group_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_host_id, compute_host_group_id, if_match):
 
-    if isinstance(compute_host_id, six.string_types) and len(compute_host_id.strip()) == 0:
+    if isinstance(compute_host_id, str) and len(compute_host_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-host-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1026,7 +1025,7 @@ def capture_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def change_compute_capacity_reservation_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, capacity_reservation_id, compartment_id, if_match):
 
-    if isinstance(capacity_reservation_id, six.string_types) and len(capacity_reservation_id.strip()) == 0:
+    if isinstance(capacity_reservation_id, str) and len(capacity_reservation_id.strip()) == 0:
         raise click.UsageError('Parameter --capacity-reservation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1095,7 +1094,7 @@ def change_compute_capacity_reservation_compartment(ctx, from_json, wait_for_sta
 @cli_util.wrap_exceptions
 def change_compute_capacity_topology_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_capacity_topology_id, compartment_id, if_match):
 
-    if isinstance(compute_capacity_topology_id, six.string_types) and len(compute_capacity_topology_id.strip()) == 0:
+    if isinstance(compute_capacity_topology_id, str) and len(compute_capacity_topology_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-capacity-topology-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1163,7 +1162,7 @@ For information about moving resources between compartments, see [Moving Resourc
 @cli_util.wrap_exceptions
 def change_compute_cluster_compartment(ctx, from_json, compute_cluster_id, compartment_id, if_match):
 
-    if isinstance(compute_cluster_id, six.string_types) and len(compute_cluster_id.strip()) == 0:
+    if isinstance(compute_cluster_id, str) and len(compute_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1194,7 +1193,7 @@ def change_compute_cluster_compartment(ctx, from_json, compute_cluster_id, compa
 @cli_util.wrap_exceptions
 def change_compute_gpu_memory_cluster_compartment(ctx, from_json, compute_gpu_memory_cluster_id, compartment_id, if_match):
 
-    if isinstance(compute_gpu_memory_cluster_id, six.string_types) and len(compute_gpu_memory_cluster_id.strip()) == 0:
+    if isinstance(compute_gpu_memory_cluster_id, str) and len(compute_gpu_memory_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-gpu-memory-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1225,7 +1224,7 @@ def change_compute_gpu_memory_cluster_compartment(ctx, from_json, compute_gpu_me
 @cli_util.wrap_exceptions
 def change_compute_gpu_memory_fabric_compartment(ctx, from_json, compute_gpu_memory_fabric_id, compartment_id, if_match):
 
-    if isinstance(compute_gpu_memory_fabric_id, six.string_types) and len(compute_gpu_memory_fabric_id.strip()) == 0:
+    if isinstance(compute_gpu_memory_fabric_id, str) and len(compute_gpu_memory_fabric_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-gpu-memory-fabric-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1259,7 +1258,7 @@ def change_compute_gpu_memory_fabric_compartment(ctx, from_json, compute_gpu_mem
 @cli_util.wrap_exceptions
 def change_compute_host_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_host_id, compartment_id, if_match):
 
-    if isinstance(compute_host_id, six.string_types) and len(compute_host_id.strip()) == 0:
+    if isinstance(compute_host_id, str) and len(compute_host_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-host-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1328,7 +1327,7 @@ def change_compute_host_compartment(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def change_compute_host_group_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_host_group_id, compartment_id, if_match):
 
-    if isinstance(compute_host_group_id, six.string_types) and len(compute_host_group_id.strip()) == 0:
+    if isinstance(compute_host_group_id, str) and len(compute_host_group_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-host-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1394,7 +1393,7 @@ def change_compute_host_group_compartment(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def change_compute_image_capability_schema_compartment(ctx, from_json, compute_image_capability_schema_id, compartment_id, if_match):
 
-    if isinstance(compute_image_capability_schema_id, six.string_types) and len(compute_image_capability_schema_id.strip()) == 0:
+    if isinstance(compute_image_capability_schema_id, str) and len(compute_image_capability_schema_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-image-capability-schema-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1428,7 +1427,7 @@ def change_compute_image_capability_schema_compartment(ctx, from_json, compute_i
 @cli_util.wrap_exceptions
 def change_dedicated_vm_host_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dedicated_vm_host_id, compartment_id, if_match):
 
-    if isinstance(dedicated_vm_host_id, six.string_types) and len(dedicated_vm_host_id.strip()) == 0:
+    if isinstance(dedicated_vm_host_id, str) and len(dedicated_vm_host_id.strip()) == 0:
         raise click.UsageError('Parameter --dedicated-vm-host-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1494,7 +1493,7 @@ def change_dedicated_vm_host_compartment(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def change_image_compartment(ctx, from_json, image_id, compartment_id, if_match):
 
-    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+    if isinstance(image_id, str) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1530,7 +1529,7 @@ When you move an instance to a different compartment, associated resources such 
 @cli_util.wrap_exceptions
 def change_instance_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, compartment_id, if_match):
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2819,7 +2818,7 @@ def delete_app_catalog_subscription(ctx, from_json, listing_id, compartment_id, 
 @cli_util.wrap_exceptions
 def delete_compute_capacity_reservation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, capacity_reservation_id, if_match):
 
-    if isinstance(capacity_reservation_id, six.string_types) and len(capacity_reservation_id.strip()) == 0:
+    if isinstance(capacity_reservation_id, str) and len(capacity_reservation_id.strip()) == 0:
         raise click.UsageError('Parameter --capacity-reservation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2876,7 +2875,7 @@ def delete_compute_capacity_reservation(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def delete_compute_capacity_topology(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_capacity_topology_id, if_match):
 
-    if isinstance(compute_capacity_topology_id, six.string_types) and len(compute_capacity_topology_id.strip()) == 0:
+    if isinstance(compute_capacity_topology_id, str) and len(compute_capacity_topology_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-capacity-topology-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2935,7 +2934,7 @@ Before you delete a compute cluster, first delete all instances in the cluster b
 @cli_util.wrap_exceptions
 def delete_compute_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_cluster_id, if_match):
 
-    if isinstance(compute_cluster_id, six.string_types) and len(compute_cluster_id.strip()) == 0:
+    if isinstance(compute_cluster_id, str) and len(compute_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2999,7 +2998,7 @@ def delete_compute_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_compute_gpu_memory_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_gpu_memory_cluster_id, if_match):
 
-    if isinstance(compute_gpu_memory_cluster_id, six.string_types) and len(compute_gpu_memory_cluster_id.strip()) == 0:
+    if isinstance(compute_gpu_memory_cluster_id, str) and len(compute_gpu_memory_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-gpu-memory-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3056,7 +3055,7 @@ def delete_compute_gpu_memory_cluster(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def delete_compute_host_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_host_group_id, if_match):
 
-    if isinstance(compute_host_group_id, six.string_types) and len(compute_host_group_id.strip()) == 0:
+    if isinstance(compute_host_group_id, str) and len(compute_host_group_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-host-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3117,7 +3116,7 @@ def delete_compute_host_group(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_compute_image_capability_schema(ctx, from_json, compute_image_capability_schema_id, if_match):
 
-    if isinstance(compute_image_capability_schema_id, six.string_types) and len(compute_image_capability_schema_id.strip()) == 0:
+    if isinstance(compute_image_capability_schema_id, str) and len(compute_image_capability_schema_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-image-capability-schema-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3145,7 +3144,7 @@ def delete_compute_image_capability_schema(ctx, from_json, compute_image_capabil
 @cli_util.wrap_exceptions
 def delete_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_console_history_id, if_match):
 
-    if isinstance(instance_console_history_id, six.string_types) and len(instance_console_history_id.strip()) == 0:
+    if isinstance(instance_console_history_id, str) and len(instance_console_history_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-history-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3209,7 +3208,7 @@ If any VM instances are assigned to the dedicated virtual machine host, the dele
 @cli_util.wrap_exceptions
 def delete_dedicated_vm_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dedicated_vm_host_id):
 
-    if isinstance(dedicated_vm_host_id, six.string_types) and len(dedicated_vm_host_id.strip()) == 0:
+    if isinstance(dedicated_vm_host_id, str) and len(dedicated_vm_host_id.strip()) == 0:
         raise click.UsageError('Parameter --dedicated-vm-host-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3264,7 +3263,7 @@ def delete_dedicated_vm_host(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, image_id, if_match):
 
-    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+    if isinstance(image_id, str) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3327,7 +3326,7 @@ def delete_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def delete_instance_console_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_console_connection_id, if_match):
 
-    if isinstance(instance_console_connection_id, six.string_types) and len(instance_console_connection_id.strip()) == 0:
+    if isinstance(instance_console_connection_id, str) and len(instance_console_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3392,7 +3391,7 @@ This is an asynchronous operation. The attachment's `lifecycleState` will change
 @cli_util.wrap_exceptions
 def detach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_attachment_id, if_match):
 
-    if isinstance(boot_volume_attachment_id, six.string_types) and len(boot_volume_attachment_id.strip()) == 0:
+    if isinstance(boot_volume_attachment_id, str) and len(boot_volume_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3455,7 +3454,7 @@ def detach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def detach_compute_host_group_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_host_id, compute_host_group_id, if_match):
 
-    if isinstance(compute_host_id, six.string_types) and len(compute_host_id.strip()) == 0:
+    if isinstance(compute_host_id, str) and len(compute_host_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-host-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3526,7 +3525,7 @@ def detach_compute_host_group_host(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def detach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vnic_attachment_id, if_match):
 
-    if isinstance(vnic_attachment_id, six.string_types) and len(vnic_attachment_id.strip()) == 0:
+    if isinstance(vnic_attachment_id, str) and len(vnic_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --vnic-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3591,7 +3590,7 @@ This is an asynchronous operation. The attachment's `lifecycleState` will change
 @cli_util.wrap_exceptions
 def detach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_attachment_id, if_match):
 
-    if isinstance(volume_attachment_id, six.string_types) and len(volume_attachment_id.strip()) == 0:
+    if isinstance(volume_attachment_id, str) and len(volume_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3665,7 +3664,7 @@ The following image formats are available:
 @cli_util.wrap_exceptions
 def export_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, image_id, destination_type, export_format, if_match):
 
-    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+    if isinstance(image_id, str) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3735,7 +3734,7 @@ The following image formats are available:
 @cli_util.wrap_exceptions
 def export_image_export_image_via_object_storage_uri_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, image_id, destination_uri, export_format, if_match):
 
-    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+    if isinstance(image_id, str) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3809,7 +3808,7 @@ The following image formats are available:
 @cli_util.wrap_exceptions
 def export_image_export_image_via_object_storage_tuple_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, image_id, bucket_name, namespace_name, object_name, export_format, if_match):
 
-    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+    if isinstance(image_id, str) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3867,7 +3866,7 @@ def export_image_export_image_via_object_storage_tuple_details(ctx, from_json, w
 @cli_util.wrap_exceptions
 def get_app_catalog_listing(ctx, from_json, listing_id):
 
-    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+    if isinstance(listing_id, str) and len(listing_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3889,10 +3888,10 @@ def get_app_catalog_listing(ctx, from_json, listing_id):
 @cli_util.wrap_exceptions
 def get_app_catalog_listing_agreements(ctx, from_json, listing_id, resource_version):
 
-    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+    if isinstance(listing_id, str) and len(listing_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
 
-    if isinstance(resource_version, six.string_types) and len(resource_version.strip()) == 0:
+    if isinstance(resource_version, str) and len(resource_version.strip()) == 0:
         raise click.UsageError('Parameter --resource-version cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3915,10 +3914,10 @@ def get_app_catalog_listing_agreements(ctx, from_json, listing_id, resource_vers
 @cli_util.wrap_exceptions
 def get_app_catalog_listing_resource_version(ctx, from_json, listing_id, resource_version):
 
-    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+    if isinstance(listing_id, str) and len(listing_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
 
-    if isinstance(resource_version, six.string_types) and len(resource_version.strip()) == 0:
+    if isinstance(resource_version, str) and len(resource_version.strip()) == 0:
         raise click.UsageError('Parameter --resource-version cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3940,7 +3939,7 @@ def get_app_catalog_listing_resource_version(ctx, from_json, listing_id, resourc
 @cli_util.wrap_exceptions
 def get_boot_volume_attachment(ctx, from_json, boot_volume_attachment_id):
 
-    if isinstance(boot_volume_attachment_id, six.string_types) and len(boot_volume_attachment_id.strip()) == 0:
+    if isinstance(boot_volume_attachment_id, str) and len(boot_volume_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3961,7 +3960,7 @@ def get_boot_volume_attachment(ctx, from_json, boot_volume_attachment_id):
 @cli_util.wrap_exceptions
 def get_compute_capacity_reservation(ctx, from_json, capacity_reservation_id):
 
-    if isinstance(capacity_reservation_id, six.string_types) and len(capacity_reservation_id.strip()) == 0:
+    if isinstance(capacity_reservation_id, str) and len(capacity_reservation_id.strip()) == 0:
         raise click.UsageError('Parameter --capacity-reservation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3983,7 +3982,7 @@ def get_compute_capacity_reservation(ctx, from_json, capacity_reservation_id):
 @cli_util.wrap_exceptions
 def get_compute_capacity_topology(ctx, from_json, compute_capacity_topology_id):
 
-    if isinstance(compute_capacity_topology_id, six.string_types) and len(compute_capacity_topology_id.strip()) == 0:
+    if isinstance(compute_capacity_topology_id, str) and len(compute_capacity_topology_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-capacity-topology-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4005,7 +4004,7 @@ def get_compute_capacity_topology(ctx, from_json, compute_capacity_topology_id):
 @cli_util.wrap_exceptions
 def get_compute_cluster(ctx, from_json, compute_cluster_id):
 
-    if isinstance(compute_cluster_id, six.string_types) and len(compute_cluster_id.strip()) == 0:
+    if isinstance(compute_cluster_id, str) and len(compute_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4027,7 +4026,7 @@ def get_compute_cluster(ctx, from_json, compute_cluster_id):
 @cli_util.wrap_exceptions
 def get_compute_global_image_capability_schema(ctx, from_json, compute_global_image_capability_schema_id):
 
-    if isinstance(compute_global_image_capability_schema_id, six.string_types) and len(compute_global_image_capability_schema_id.strip()) == 0:
+    if isinstance(compute_global_image_capability_schema_id, str) and len(compute_global_image_capability_schema_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-global-image-capability-schema-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4049,10 +4048,10 @@ def get_compute_global_image_capability_schema(ctx, from_json, compute_global_im
 @cli_util.wrap_exceptions
 def get_compute_global_image_capability_schema_version(ctx, from_json, compute_global_image_capability_schema_id, compute_global_image_capability_schema_version_name):
 
-    if isinstance(compute_global_image_capability_schema_id, six.string_types) and len(compute_global_image_capability_schema_id.strip()) == 0:
+    if isinstance(compute_global_image_capability_schema_id, str) and len(compute_global_image_capability_schema_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-global-image-capability-schema-id cannot be whitespace or empty string')
 
-    if isinstance(compute_global_image_capability_schema_version_name, six.string_types) and len(compute_global_image_capability_schema_version_name.strip()) == 0:
+    if isinstance(compute_global_image_capability_schema_version_name, str) and len(compute_global_image_capability_schema_version_name.strip()) == 0:
         raise click.UsageError('Parameter --compute-global-image-capability-schema-version-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4074,7 +4073,7 @@ def get_compute_global_image_capability_schema_version(ctx, from_json, compute_g
 @cli_util.wrap_exceptions
 def get_compute_gpu_memory_cluster(ctx, from_json, compute_gpu_memory_cluster_id):
 
-    if isinstance(compute_gpu_memory_cluster_id, six.string_types) and len(compute_gpu_memory_cluster_id.strip()) == 0:
+    if isinstance(compute_gpu_memory_cluster_id, str) and len(compute_gpu_memory_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-gpu-memory-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4096,7 +4095,7 @@ def get_compute_gpu_memory_cluster(ctx, from_json, compute_gpu_memory_cluster_id
 @cli_util.wrap_exceptions
 def get_compute_gpu_memory_fabric(ctx, from_json, compute_gpu_memory_fabric_id):
 
-    if isinstance(compute_gpu_memory_fabric_id, six.string_types) and len(compute_gpu_memory_fabric_id.strip()) == 0:
+    if isinstance(compute_gpu_memory_fabric_id, str) and len(compute_gpu_memory_fabric_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-gpu-memory-fabric-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4118,7 +4117,7 @@ def get_compute_gpu_memory_fabric(ctx, from_json, compute_gpu_memory_fabric_id):
 @cli_util.wrap_exceptions
 def get_compute_host(ctx, from_json, compute_host_id):
 
-    if isinstance(compute_host_id, six.string_types) and len(compute_host_id.strip()) == 0:
+    if isinstance(compute_host_id, str) and len(compute_host_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-host-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4140,7 +4139,7 @@ def get_compute_host(ctx, from_json, compute_host_id):
 @cli_util.wrap_exceptions
 def get_compute_host_group(ctx, from_json, compute_host_group_id):
 
-    if isinstance(compute_host_group_id, six.string_types) and len(compute_host_group_id.strip()) == 0:
+    if isinstance(compute_host_group_id, str) and len(compute_host_group_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-host-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4163,7 +4162,7 @@ def get_compute_host_group(ctx, from_json, compute_host_group_id):
 @cli_util.wrap_exceptions
 def get_compute_image_capability_schema(ctx, from_json, compute_image_capability_schema_id, is_merge_enabled):
 
-    if isinstance(compute_image_capability_schema_id, six.string_types) and len(compute_image_capability_schema_id.strip()) == 0:
+    if isinstance(compute_image_capability_schema_id, str) and len(compute_image_capability_schema_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-image-capability-schema-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4186,7 +4185,7 @@ def get_compute_image_capability_schema(ctx, from_json, compute_image_capability
 @cli_util.wrap_exceptions
 def get_console_history(ctx, from_json, instance_console_history_id):
 
-    if isinstance(instance_console_history_id, six.string_types) and len(instance_console_history_id.strip()) == 0:
+    if isinstance(instance_console_history_id, str) and len(instance_console_history_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-history-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4210,7 +4209,7 @@ def get_console_history(ctx, from_json, instance_console_history_id):
 @cli_util.wrap_exceptions
 def get_console_history_content(ctx, from_json, file, instance_console_history_id, offset, length):
 
-    if isinstance(instance_console_history_id, six.string_types) and len(instance_console_history_id.strip()) == 0:
+    if isinstance(instance_console_history_id, str) and len(instance_console_history_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-history-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4235,7 +4234,7 @@ def get_console_history_content(ctx, from_json, file, instance_console_history_i
 @cli_util.wrap_exceptions
 def get_dedicated_vm_host(ctx, from_json, dedicated_vm_host_id):
 
-    if isinstance(dedicated_vm_host_id, six.string_types) and len(dedicated_vm_host_id.strip()) == 0:
+    if isinstance(dedicated_vm_host_id, str) and len(dedicated_vm_host_id.strip()) == 0:
         raise click.UsageError('Parameter --dedicated-vm-host-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4257,7 +4256,7 @@ def get_dedicated_vm_host(ctx, from_json, dedicated_vm_host_id):
 @cli_util.wrap_exceptions
 def get_image(ctx, from_json, image_id):
 
-    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+    if isinstance(image_id, str) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4279,10 +4278,10 @@ def get_image(ctx, from_json, image_id):
 @cli_util.wrap_exceptions
 def get_image_shape_compatibility_entry(ctx, from_json, image_id, shape_name):
 
-    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+    if isinstance(image_id, str) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
 
-    if isinstance(shape_name, six.string_types) and len(shape_name.strip()) == 0:
+    if isinstance(shape_name, str) and len(shape_name.strip()) == 0:
         raise click.UsageError('Parameter --shape-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4307,7 +4306,7 @@ def get_image_shape_compatibility_entry(ctx, from_json, image_id, shape_name):
 @cli_util.wrap_exceptions
 def get_instance(ctx, from_json, instance_id):
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4328,7 +4327,7 @@ def get_instance(ctx, from_json, instance_id):
 @cli_util.wrap_exceptions
 def get_instance_console_connection(ctx, from_json, instance_console_connection_id):
 
-    if isinstance(instance_console_connection_id, six.string_types) and len(instance_console_connection_id.strip()) == 0:
+    if isinstance(instance_console_connection_id, str) and len(instance_console_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4349,7 +4348,7 @@ def get_instance_console_connection(ctx, from_json, instance_console_connection_
 @cli_util.wrap_exceptions
 def get_instance_maintenance_event(ctx, from_json, instance_maintenance_event_id):
 
-    if isinstance(instance_maintenance_event_id, six.string_types) and len(instance_maintenance_event_id.strip()) == 0:
+    if isinstance(instance_maintenance_event_id, str) and len(instance_maintenance_event_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-maintenance-event-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4371,7 +4370,7 @@ def get_instance_maintenance_event(ctx, from_json, instance_maintenance_event_id
 @cli_util.wrap_exceptions
 def get_instance_maintenance_reboot(ctx, from_json, instance_id):
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4393,7 +4392,7 @@ def get_instance_maintenance_reboot(ctx, from_json, instance_id):
 @cli_util.wrap_exceptions
 def get_measured_boot_report(ctx, from_json, instance_id):
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4415,7 +4414,7 @@ def get_measured_boot_report(ctx, from_json, instance_id):
 @cli_util.wrap_exceptions
 def get_vnic_attachment(ctx, from_json, vnic_attachment_id):
 
-    if isinstance(vnic_attachment_id, six.string_types) and len(vnic_attachment_id.strip()) == 0:
+    if isinstance(vnic_attachment_id, str) and len(vnic_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --vnic-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4436,7 +4435,7 @@ def get_vnic_attachment(ctx, from_json, vnic_attachment_id):
 @cli_util.wrap_exceptions
 def get_volume_attachment(ctx, from_json, volume_attachment_id):
 
-    if isinstance(volume_attachment_id, six.string_types) and len(volume_attachment_id.strip()) == 0:
+    if isinstance(volume_attachment_id, str) and len(volume_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4457,7 +4456,7 @@ def get_volume_attachment(ctx, from_json, volume_attachment_id):
 @cli_util.wrap_exceptions
 def get_windows_instance_initial_credentials(ctx, from_json, instance_id):
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4504,7 +4503,7 @@ def get_windows_instance_initial_credentials(ctx, from_json, instance_id):
 @cli_util.wrap_exceptions
 def instance_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, action, action_type, if_match):
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4588,7 +4587,7 @@ If you want to minimize downtime and can delete the SSD, you can set this flag t
 @cli_util.wrap_exceptions
 def instance_action_reset_action_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, action, if_match, allow_dense_reboot_migration):
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4673,7 +4672,7 @@ If not present, the reboot migration will be triggered immediately.""" + custom_
 @cli_util.wrap_exceptions
 def instance_action_reboot_migrate_action_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, action, if_match, delete_local_storage, time_scheduled):
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4764,7 +4763,7 @@ If you want to minimize downtime and can delete the SSD, you can set this flag t
 @cli_util.wrap_exceptions
 def instance_action_soft_reset_action_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, action, if_match, allow_dense_reboot_migration):
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8701,7 +8700,7 @@ def list_app_catalog_listing_resource_versions(ctx, from_json, all_pages, page_s
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+    if isinstance(listing_id, str) and len(listing_id.strip()) == 0:
         raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9011,7 +9010,7 @@ def list_compute_capacity_reservation_instances(ctx, from_json, all_pages, page_
     if sort_by and not availability_domain and not all_pages:
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
 
-    if isinstance(capacity_reservation_id, six.string_types) and len(capacity_reservation_id.strip()) == 0:
+    if isinstance(capacity_reservation_id, str) and len(capacity_reservation_id.strip()) == 0:
         raise click.UsageError('Parameter --capacity-reservation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9226,7 +9225,7 @@ def list_compute_capacity_topology_compute_bare_metal_hosts(ctx, from_json, all_
     if sort_by and not availability_domain and not all_pages:
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
 
-    if isinstance(compute_capacity_topology_id, six.string_types) and len(compute_capacity_topology_id.strip()) == 0:
+    if isinstance(compute_capacity_topology_id, str) and len(compute_capacity_topology_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-capacity-topology-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9303,7 +9302,7 @@ def list_compute_capacity_topology_compute_hpc_islands(ctx, from_json, all_pages
     if sort_by and not availability_domain and not all_pages:
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
 
-    if isinstance(compute_capacity_topology_id, six.string_types) and len(compute_capacity_topology_id.strip()) == 0:
+    if isinstance(compute_capacity_topology_id, str) and len(compute_capacity_topology_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-capacity-topology-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9375,7 +9374,7 @@ def list_compute_capacity_topology_compute_network_blocks(ctx, from_json, all_pa
     if sort_by and not availability_domain and not all_pages:
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
 
-    if isinstance(compute_capacity_topology_id, six.string_types) and len(compute_capacity_topology_id.strip()) == 0:
+    if isinstance(compute_capacity_topology_id, str) and len(compute_capacity_topology_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-capacity-topology-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9511,7 +9510,7 @@ def list_compute_global_image_capability_schema_versions(ctx, from_json, all_pag
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(compute_global_image_capability_schema_id, six.string_types) and len(compute_global_image_capability_schema_id.strip()) == 0:
+    if isinstance(compute_global_image_capability_schema_id, str) and len(compute_global_image_capability_schema_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-global-image-capability-schema-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9632,7 +9631,7 @@ def list_compute_gpu_memory_cluster_instances(ctx, from_json, all_pages, page_si
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(compute_gpu_memory_cluster_id, six.string_types) and len(compute_gpu_memory_cluster_id.strip()) == 0:
+    if isinstance(compute_gpu_memory_cluster_id, str) and len(compute_gpu_memory_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-gpu-memory-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10176,7 +10175,7 @@ def list_dedicated_vm_host_instances(ctx, from_json, all_pages, page_size, compa
     if sort_by and not availability_domain and not all_pages:
         raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
 
-    if isinstance(dedicated_vm_host_id, six.string_types) and len(dedicated_vm_host_id.strip()) == 0:
+    if isinstance(dedicated_vm_host_id, str) and len(dedicated_vm_host_id.strip()) == 0:
         raise click.UsageError('Parameter --dedicated-vm-host-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10378,7 +10377,7 @@ def list_image_shape_compatibility_entries(ctx, from_json, all_pages, page_size,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+    if isinstance(image_id, str) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10571,7 +10570,7 @@ def list_instance_devices(ctx, from_json, all_pages, page_size, instance_id, is_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10958,10 +10957,10 @@ def list_volume_attachments(ctx, from_json, all_pages, page_size, compartment_id
 @cli_util.wrap_exceptions
 def remove_image_shape_compatibility_entry(ctx, from_json, image_id, shape_name):
 
-    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+    if isinstance(image_id, str) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
 
-    if isinstance(shape_name, six.string_types) and len(shape_name.strip()) == 0:
+    if isinstance(shape_name, str) and len(shape_name.strip()) == 0:
         raise click.UsageError('Parameter --shape-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10997,7 +10996,7 @@ This is an asynchronous operation. The instance's `lifecycleState` changes to TE
 @cli_util.wrap_exceptions
 def terminate_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, if_match, preserve_boot_volume, preserve_data_volumes_created_at_launch, recycle_level):
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11079,7 +11078,7 @@ This option is a JSON list with items of type InstanceReservationConfigDetails. 
 @cli_util.wrap_exceptions
 def update_compute_capacity_reservation(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, capacity_reservation_id, defined_tags, display_name, freeform_tags, is_default_reservation, instance_reservation_configs, if_match):
 
-    if isinstance(capacity_reservation_id, six.string_types) and len(capacity_reservation_id.strip()) == 0:
+    if isinstance(capacity_reservation_id, str) and len(capacity_reservation_id.strip()) == 0:
         raise click.UsageError('Parameter --capacity-reservation-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags or instance_reservation_configs:
@@ -11174,7 +11173,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_compute_capacity_topology(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_capacity_topology_id, capacity_source, defined_tags, display_name, freeform_tags, if_match):
 
-    if isinstance(compute_capacity_topology_id, six.string_types) and len(compute_capacity_topology_id.strip()) == 0:
+    if isinstance(compute_capacity_topology_id, str) and len(compute_capacity_topology_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-capacity-topology-id cannot be whitespace or empty string')
     if not force:
         if capacity_source or defined_tags or freeform_tags:
@@ -11265,7 +11264,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_compute_capacity_topology_update_dedicated_capacity_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_capacity_topology_id, defined_tags, display_name, freeform_tags, if_match):
 
-    if isinstance(compute_capacity_topology_id, six.string_types) and len(compute_capacity_topology_id.strip()) == 0:
+    if isinstance(compute_capacity_topology_id, str) and len(compute_capacity_topology_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-capacity-topology-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -11360,7 +11359,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_compute_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_cluster_id, display_name, defined_tags, freeform_tags, if_match):
 
-    if isinstance(compute_cluster_id, six.string_types) and len(compute_cluster_id.strip()) == 0:
+    if isinstance(compute_cluster_id, str) and len(compute_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-cluster-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -11438,7 +11437,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_compute_gpu_memory_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_gpu_memory_cluster_id, instance_configuration_id, size, defined_tags, freeform_tags, display_name, if_match):
 
-    if isinstance(compute_gpu_memory_cluster_id, six.string_types) and len(compute_gpu_memory_cluster_id.strip()) == 0:
+    if isinstance(compute_gpu_memory_cluster_id, str) and len(compute_gpu_memory_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-gpu-memory-cluster-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -11520,7 +11519,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_compute_gpu_memory_fabric(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_gpu_memory_fabric_id, defined_tags, freeform_tags, display_name, if_match):
 
-    if isinstance(compute_gpu_memory_fabric_id, six.string_types) and len(compute_gpu_memory_fabric_id.strip()) == 0:
+    if isinstance(compute_gpu_memory_fabric_id, str) and len(compute_gpu_memory_fabric_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-gpu-memory-fabric-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -11596,7 +11595,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_compute_host(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_host_id, defined_tags, display_name, freeform_tags, if_match):
 
-    if isinstance(compute_host_id, six.string_types) and len(compute_host_id.strip()) == 0:
+    if isinstance(compute_host_id, str) and len(compute_host_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-host-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -11688,7 +11687,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_compute_host_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_host_group_id, display_name, configurations, is_targeted_placement_required, defined_tags, freeform_tags, if_match):
 
-    if isinstance(compute_host_group_id, six.string_types) and len(compute_host_group_id.strip()) == 0:
+    if isinstance(compute_host_group_id, str) and len(compute_host_group_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-host-group-id cannot be whitespace or empty string')
     if not force:
         if configurations or defined_tags or freeform_tags:
@@ -11770,7 +11769,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_compute_image_capability_schema(ctx, from_json, force, compute_image_capability_schema_id, display_name, freeform_tags, schema_data, defined_tags, if_match):
 
-    if isinstance(compute_image_capability_schema_id, six.string_types) and len(compute_image_capability_schema_id.strip()) == 0:
+    if isinstance(compute_image_capability_schema_id, str) and len(compute_image_capability_schema_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-image-capability-schema-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or schema_data or defined_tags:
@@ -11825,7 +11824,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_console_history(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_console_history_id, defined_tags, display_name, freeform_tags, if_match):
 
-    if isinstance(instance_console_history_id, six.string_types) and len(instance_console_history_id.strip()) == 0:
+    if isinstance(instance_console_history_id, str) and len(instance_console_history_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-history-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -11900,7 +11899,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_dedicated_vm_host(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, dedicated_vm_host_id, defined_tags, display_name, freeform_tags, if_match):
 
-    if isinstance(dedicated_vm_host_id, six.string_types) and len(dedicated_vm_host_id.strip()) == 0:
+    if isinstance(dedicated_vm_host_id, str) and len(dedicated_vm_host_id.strip()) == 0:
         raise click.UsageError('Parameter --dedicated-vm-host-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -11982,7 +11981,7 @@ Example: `7.4`""")
 @cli_util.wrap_exceptions
 def update_image(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, image_id, defined_tags, display_name, freeform_tags, operating_system, operating_system_version, if_match):
 
-    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+    if isinstance(image_id, str) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -12122,7 +12121,7 @@ This option is a JSON list with items of type UpdateInstanceLicensingConfig.  Fo
 @cli_util.wrap_exceptions
 def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, capacity_reservation_id, defined_tags, security_attributes, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, source_details, update_operation_constraint, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, dedicated_vm_host_id, platform_config, licensing_configs, if_match):
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or security_attributes or freeform_tags or agent_config or metadata or extended_metadata or shape_config or source_details or instance_options or launch_options or availability_config or platform_config or licensing_configs:
@@ -12308,7 +12307,7 @@ This option is a JSON list with items of type UpdateInstanceLicensingConfig.  Fo
 @cli_util.wrap_exceptions
 def update_instance_update_instance_source_via_boot_volume_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, source_details_boot_volume_id, capacity_reservation_id, defined_tags, security_attributes, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, update_operation_constraint, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, dedicated_vm_host_id, platform_config, licensing_configs, if_match, source_details_is_preserve_boot_volume_enabled):
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or security_attributes or freeform_tags or agent_config or metadata or extended_metadata or shape_config or instance_options or launch_options or availability_config or platform_config or licensing_configs:
@@ -12500,7 +12499,7 @@ This option is a JSON list with items of type UpdateInstanceLicensingConfig.  Fo
 @cli_util.wrap_exceptions
 def update_instance_update_instance_source_via_image_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, source_details_image_id, capacity_reservation_id, defined_tags, security_attributes, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, update_operation_constraint, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, dedicated_vm_host_id, platform_config, licensing_configs, if_match, source_details_is_preserve_boot_volume_enabled, source_details_boot_volume_size_in_gbs, source_details_kms_key_id):
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or security_attributes or freeform_tags or agent_config or metadata or extended_metadata or shape_config or instance_options or launch_options or availability_config or platform_config or licensing_configs:
@@ -12697,7 +12696,7 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @cli_util.wrap_exceptions
 def update_instance_amd_vm_update_instance_platform_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, capacity_reservation_id, defined_tags, security_attributes, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, source_details, update_operation_constraint, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, dedicated_vm_host_id, licensing_configs, if_match, platform_config_is_symmetric_multi_threading_enabled):
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or security_attributes or freeform_tags or agent_config or metadata or extended_metadata or shape_config or source_details or instance_options or launch_options or availability_config or licensing_configs:
@@ -12887,7 +12886,7 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @cli_util.wrap_exceptions
 def update_instance_intel_vm_update_instance_platform_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, capacity_reservation_id, defined_tags, security_attributes, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, source_details, update_operation_constraint, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, dedicated_vm_host_id, licensing_configs, if_match, platform_config_is_symmetric_multi_threading_enabled):
 
-    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+    if isinstance(instance_id, str) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or security_attributes or freeform_tags or agent_config or metadata or extended_metadata or shape_config or source_details or instance_options or launch_options or availability_config or licensing_configs:
@@ -13015,7 +13014,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_instance_console_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_console_connection_id, defined_tags, freeform_tags, if_match):
 
-    if isinstance(instance_console_connection_id, six.string_types) and len(instance_console_connection_id.strip()) == 0:
+    if isinstance(instance_console_connection_id, str) and len(instance_console_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-connection-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -13097,7 +13096,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.wrap_exceptions
 def update_instance_maintenance_event(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_maintenance_event_id, time_window_start, alternative_resolution_action, can_delete_local_storage, display_name, defined_tags, freeform_tags, if_match):
 
-    if isinstance(instance_maintenance_event_id, six.string_types) and len(instance_maintenance_event_id.strip()) == 0:
+    if isinstance(instance_maintenance_event_id, str) and len(instance_maintenance_event_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-maintenance-event-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -13187,7 +13186,7 @@ def update_instance_maintenance_event(ctx, from_json, force, wait_for_state, max
 @cli_util.wrap_exceptions
 def update_volume_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_attachment_id, iscsi_login_state, if_match):
 
-    if isinstance(volume_attachment_id, six.string_types) and len(volume_attachment_id.strip()) == 0:
+    if isinstance(volume_attachment_id, str) and len(volume_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}

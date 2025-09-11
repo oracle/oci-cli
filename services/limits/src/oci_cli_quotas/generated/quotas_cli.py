@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -48,7 +47,7 @@ quotas_root_group.add_command(quota_group)
 @cli_util.wrap_exceptions
 def add_quota_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, quota_id, type, related_resource_id, message, if_match):
 
-    if isinstance(quota_id, six.string_types) and len(quota_id.strip()) == 0:
+    if isinstance(quota_id, str) and len(quota_id.strip()) == 0:
         raise click.UsageError('Parameter --quota-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -181,7 +180,7 @@ def create_quota(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def delete_quota(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, quota_id, if_match, is_lock_override):
 
-    if isinstance(quota_id, six.string_types) and len(quota_id.strip()) == 0:
+    if isinstance(quota_id, str) and len(quota_id.strip()) == 0:
         raise click.UsageError('Parameter --quota-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -242,7 +241,7 @@ def delete_quota(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def get_quota(ctx, from_json, quota_id):
 
-    if isinstance(quota_id, six.string_types) and len(quota_id.strip()) == 0:
+    if isinstance(quota_id, str) and len(quota_id.strip()) == 0:
         raise click.UsageError('Parameter --quota-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -329,7 +328,7 @@ def list_quotas(ctx, from_json, all_pages, page_size, compartment_id, page, limi
 @cli_util.wrap_exceptions
 def remove_quota_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, quota_id, type, if_match):
 
-    if isinstance(quota_id, six.string_types) and len(quota_id.strip()) == 0:
+    if isinstance(quota_id, str) and len(quota_id.strip()) == 0:
         raise click.UsageError('Parameter --quota-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -391,7 +390,7 @@ def remove_quota_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def update_quota(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, quota_id, description, statements, freeform_tags, defined_tags, if_match, is_lock_override):
 
-    if isinstance(quota_id, six.string_types) and len(quota_id.strip()) == 0:
+    if isinstance(quota_id, str) and len(quota_id.strip()) == 0:
         raise click.UsageError('Parameter --quota-id cannot be whitespace or empty string')
     if not force:
         if statements or freeform_tags or defined_tags:

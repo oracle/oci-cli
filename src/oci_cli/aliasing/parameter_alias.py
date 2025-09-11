@@ -4,7 +4,6 @@
 
 from copy import deepcopy
 import click
-import six
 
 ALIASES = {}
 
@@ -19,7 +18,7 @@ def get_aliases_for_long_parameter(long_param_name):
 def shim_in_aliases(command_group):
     remove_redundant_aliases()
     collision_errors = set()
-    for cmd_name, cmd_obj in six.iteritems(command_group.commands):
+    for cmd_name, cmd_obj in command_group.commands.items():
         if isinstance(cmd_obj, click.Group):
             collision_errors.update(shim_in_aliases(cmd_obj))
         elif isinstance(cmd_obj, click.Command):
@@ -50,7 +49,7 @@ def add_alias_to_command_params(params):
 
 
 def does_option_name_already_exist(original_opts, param_name, aliases):
-    for param, opts in six.iteritems(original_opts):
+    for param, opts in original_opts.items():
         if param == param_name:
             continue
 

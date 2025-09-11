@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -219,7 +218,7 @@ data_science_root_group.add_command(data_science_private_endpoint_group)
 @cli_util.wrap_exceptions
 def activate_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -270,7 +269,7 @@ def activate_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def activate_model_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_deployment_id, if_match):
 
-    if isinstance(model_deployment_id, six.string_types) and len(model_deployment_id.strip()) == 0:
+    if isinstance(model_deployment_id, str) and len(model_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --model-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -325,7 +324,7 @@ def activate_model_deployment(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def activate_model_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_group_id, if_match):
 
-    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+    if isinstance(model_group_id, str) and len(model_group_id.strip()) == 0:
         raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -376,7 +375,7 @@ def activate_model_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def activate_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, notebook_session_id, if_match):
 
-    if isinstance(notebook_session_id, six.string_types) and len(notebook_session_id.strip()) == 0:
+    if isinstance(notebook_session_id, str) and len(notebook_session_id.strip()) == 0:
         raise click.UsageError('Parameter --notebook-session-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -431,7 +430,7 @@ def activate_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def activate_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, if_match):
 
-    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+    if isinstance(schedule_id, str) and len(schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -483,7 +482,7 @@ def activate_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def cancel_job_run(ctx, from_json, job_run_id, if_match):
 
-    if isinstance(job_run_id, six.string_types) and len(job_run_id.strip()) == 0:
+    if isinstance(job_run_id, str) and len(job_run_id.strip()) == 0:
         raise click.UsageError('Parameter --job-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -509,7 +508,7 @@ def cancel_job_run(ctx, from_json, job_run_id, if_match):
 @cli_util.wrap_exceptions
 def cancel_pipeline_run(ctx, from_json, pipeline_run_id, if_match, terminate_gracefully):
 
-    if isinstance(pipeline_run_id, six.string_types) and len(pipeline_run_id.strip()) == 0:
+    if isinstance(pipeline_run_id, str) and len(pipeline_run_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -537,7 +536,7 @@ def cancel_pipeline_run(ctx, from_json, pipeline_run_id, if_match, terminate_gra
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -566,7 +565,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_data_science_private_endpoint_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, data_science_private_endpoint_id, compartment_id, if_match):
 
-    if isinstance(data_science_private_endpoint_id, six.string_types) and len(data_science_private_endpoint_id.strip()) == 0:
+    if isinstance(data_science_private_endpoint_id, str) and len(data_science_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --data-science-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -624,7 +623,7 @@ def change_data_science_private_endpoint_compartment(ctx, from_json, wait_for_st
 @cli_util.wrap_exceptions
 def change_job_compartment(ctx, from_json, job_id, compartment_id, if_match):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -655,7 +654,7 @@ def change_job_compartment(ctx, from_json, job_id, compartment_id, if_match):
 @cli_util.wrap_exceptions
 def change_job_run_compartment(ctx, from_json, job_run_id, compartment_id, if_match):
 
-    if isinstance(job_run_id, six.string_types) and len(job_run_id.strip()) == 0:
+    if isinstance(job_run_id, str) and len(job_run_id.strip()) == 0:
         raise click.UsageError('Parameter --job-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -686,7 +685,7 @@ def change_job_run_compartment(ctx, from_json, job_run_id, compartment_id, if_ma
 @cli_util.wrap_exceptions
 def change_ml_application_compartment(ctx, from_json, ml_application_id, compartment_id, if_match):
 
-    if isinstance(ml_application_id, six.string_types) and len(ml_application_id.strip()) == 0:
+    if isinstance(ml_application_id, str) and len(ml_application_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -720,7 +719,7 @@ def change_ml_application_compartment(ctx, from_json, ml_application_id, compart
 @cli_util.wrap_exceptions
 def change_ml_application_implementation_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ml_application_implementation_id, compartment_id, if_match):
 
-    if isinstance(ml_application_implementation_id, six.string_types) and len(ml_application_implementation_id.strip()) == 0:
+    if isinstance(ml_application_implementation_id, str) and len(ml_application_implementation_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-implementation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -781,7 +780,7 @@ def change_ml_application_implementation_compartment(ctx, from_json, wait_for_st
 @cli_util.wrap_exceptions
 def change_ml_application_instance_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ml_application_instance_id, compartment_id, if_match):
 
-    if isinstance(ml_application_instance_id, six.string_types) and len(ml_application_instance_id.strip()) == 0:
+    if isinstance(ml_application_instance_id, str) and len(ml_application_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -842,7 +841,7 @@ def change_ml_application_instance_compartment(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def change_ml_application_instance_view_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ml_application_instance_view_id, compartment_id, if_match):
 
-    if isinstance(ml_application_instance_view_id, six.string_types) and len(ml_application_instance_view_id.strip()) == 0:
+    if isinstance(ml_application_instance_view_id, str) and len(ml_application_instance_view_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-instance-view-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -900,7 +899,7 @@ def change_ml_application_instance_view_compartment(ctx, from_json, wait_for_sta
 @cli_util.wrap_exceptions
 def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -931,7 +930,7 @@ def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match)
 @cli_util.wrap_exceptions
 def change_model_deployment_compartment(ctx, from_json, model_deployment_id, compartment_id, if_match):
 
-    if isinstance(model_deployment_id, six.string_types) and len(model_deployment_id.strip()) == 0:
+    if isinstance(model_deployment_id, str) and len(model_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --model-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -962,7 +961,7 @@ def change_model_deployment_compartment(ctx, from_json, model_deployment_id, com
 @cli_util.wrap_exceptions
 def change_model_group_compartment(ctx, from_json, model_group_id, compartment_id, if_match):
 
-    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+    if isinstance(model_group_id, str) and len(model_group_id.strip()) == 0:
         raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -993,7 +992,7 @@ def change_model_group_compartment(ctx, from_json, model_group_id, compartment_i
 @cli_util.wrap_exceptions
 def change_model_group_version_history_compartment(ctx, from_json, model_group_version_history_id, compartment_id, if_match):
 
-    if isinstance(model_group_version_history_id, six.string_types) and len(model_group_version_history_id.strip()) == 0:
+    if isinstance(model_group_version_history_id, str) and len(model_group_version_history_id.strip()) == 0:
         raise click.UsageError('Parameter --model-group-version-history-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1027,7 +1026,7 @@ def change_model_group_version_history_compartment(ctx, from_json, model_group_v
 @cli_util.wrap_exceptions
 def change_model_version_set_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_version_set_id, compartment_id, if_match):
 
-    if isinstance(model_version_set_id, six.string_types) and len(model_version_set_id.strip()) == 0:
+    if isinstance(model_version_set_id, str) and len(model_version_set_id.strip()) == 0:
         raise click.UsageError('Parameter --model-version-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1085,7 +1084,7 @@ def change_model_version_set_compartment(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def change_notebook_session_compartment(ctx, from_json, notebook_session_id, compartment_id, if_match):
 
-    if isinstance(notebook_session_id, six.string_types) and len(notebook_session_id.strip()) == 0:
+    if isinstance(notebook_session_id, str) and len(notebook_session_id.strip()) == 0:
         raise click.UsageError('Parameter --notebook-session-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1116,7 +1115,7 @@ def change_notebook_session_compartment(ctx, from_json, notebook_session_id, com
 @cli_util.wrap_exceptions
 def change_pipeline_compartment(ctx, from_json, pipeline_id, compartment_id, if_match):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1147,7 +1146,7 @@ def change_pipeline_compartment(ctx, from_json, pipeline_id, compartment_id, if_
 @cli_util.wrap_exceptions
 def change_pipeline_run_compartment(ctx, from_json, pipeline_run_id, compartment_id, if_match):
 
-    if isinstance(pipeline_run_id, six.string_types) and len(pipeline_run_id.strip()) == 0:
+    if isinstance(pipeline_run_id, str) and len(pipeline_run_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1178,7 +1177,7 @@ def change_pipeline_run_compartment(ctx, from_json, pipeline_run_id, compartment
 @cli_util.wrap_exceptions
 def change_project_compartment(ctx, from_json, project_id, compartment_id, if_match):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1212,7 +1211,7 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
 @cli_util.wrap_exceptions
 def change_schedule_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, compartment_id, if_match):
 
-    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+    if isinstance(schedule_id, str) and len(schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2259,7 +2258,7 @@ def create_job_multi_node_job_node_configuration_details(ctx, from_json, wait_fo
 @cli_util.wrap_exceptions
 def create_job_artifact(ctx, from_json, job_id, job_artifact, content_length, content_disposition):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3734,7 +3733,7 @@ def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def create_model_artifact(ctx, from_json, model_id, model_artifact, content_length, content_disposition, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3772,10 +3771,10 @@ def create_model_artifact(ctx, from_json, model_id, model_artifact, content_leng
 @cli_util.wrap_exceptions
 def create_model_custom_metadatum_artifact(ctx, from_json, model_id, metadatum_key_name, model_custom_metadatum_artifact, content_length, content_disposition, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
-    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+    if isinstance(metadatum_key_name, str) and len(metadatum_key_name.strip()) == 0:
         raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3814,10 +3813,10 @@ def create_model_custom_metadatum_artifact(ctx, from_json, model_id, metadatum_k
 @cli_util.wrap_exceptions
 def create_model_defined_metadatum_artifact(ctx, from_json, model_id, metadatum_key_name, model_defined_metadatum_artifact, content_length, content_disposition, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
-    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+    if isinstance(metadatum_key_name, str) and len(metadatum_key_name.strip()) == 0:
         raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4312,7 +4311,7 @@ def create_model_group_create_model_group_details(ctx, from_json, wait_for_state
 @cli_util.wrap_exceptions
 def create_model_group_artifact(ctx, from_json, model_group_id, model_group_artifact, content_length, content_disposition, if_match):
 
-    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+    if isinstance(model_group_id, str) and len(model_group_id.strip()) == 0:
         raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4422,7 +4421,7 @@ def create_model_group_version_history(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def create_model_provenance(ctx, from_json, model_id, repository_url, git_branch, git_commit, script_dir, training_script, training_id):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5492,10 +5491,10 @@ def create_schedule_schedule_http_action(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def create_step_artifact(ctx, from_json, pipeline_id, step_name, step_artifact, content_length, content_disposition):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
-    if isinstance(step_name, six.string_types) and len(step_name.strip()) == 0:
+    if isinstance(step_name, str) and len(step_name.strip()) == 0:
         raise click.UsageError('Parameter --step-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5531,7 +5530,7 @@ def create_step_artifact(ctx, from_json, pipeline_id, step_name, step_artifact, 
 @cli_util.wrap_exceptions
 def deactivate_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5582,7 +5581,7 @@ def deactivate_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def deactivate_model_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_deployment_id, if_match):
 
-    if isinstance(model_deployment_id, six.string_types) and len(model_deployment_id.strip()) == 0:
+    if isinstance(model_deployment_id, str) and len(model_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --model-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5637,7 +5636,7 @@ def deactivate_model_deployment(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def deactivate_model_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_group_id, if_match):
 
-    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+    if isinstance(model_group_id, str) and len(model_group_id.strip()) == 0:
         raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5688,7 +5687,7 @@ def deactivate_model_group(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def deactivate_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, notebook_session_id, if_match):
 
-    if isinstance(notebook_session_id, six.string_types) and len(notebook_session_id.strip()) == 0:
+    if isinstance(notebook_session_id, str) and len(notebook_session_id.strip()) == 0:
         raise click.UsageError('Parameter --notebook-session-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5743,7 +5742,7 @@ def deactivate_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def deactivate_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, if_match):
 
-    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+    if isinstance(schedule_id, str) and len(schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5799,7 +5798,7 @@ def deactivate_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_data_science_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, data_science_private_endpoint_id, if_match):
 
-    if isinstance(data_science_private_endpoint_id, six.string_types) and len(data_science_private_endpoint_id.strip()) == 0:
+    if isinstance(data_science_private_endpoint_id, str) and len(data_science_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --data-science-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5856,7 +5855,7 @@ def delete_data_science_private_endpoint(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def delete_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, if_match, delete_related_job_runs):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5914,7 +5913,7 @@ def delete_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.wrap_exceptions
 def delete_job_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, job_run_id, if_match):
 
-    if isinstance(job_run_id, six.string_types) and len(job_run_id.strip()) == 0:
+    if isinstance(job_run_id, str) and len(job_run_id.strip()) == 0:
         raise click.UsageError('Parameter --job-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5978,7 +5977,7 @@ def delete_job_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_ml_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ml_application_id, if_match):
 
-    if isinstance(ml_application_id, six.string_types) and len(ml_application_id.strip()) == 0:
+    if isinstance(ml_application_id, str) and len(ml_application_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6042,7 +6041,7 @@ def delete_ml_application(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_ml_application_implementation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ml_application_implementation_id, if_match):
 
-    if isinstance(ml_application_implementation_id, six.string_types) and len(ml_application_implementation_id.strip()) == 0:
+    if isinstance(ml_application_implementation_id, str) and len(ml_application_implementation_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-implementation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6098,7 +6097,7 @@ def delete_ml_application_implementation(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def delete_ml_application_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ml_application_instance_id, if_match):
 
-    if isinstance(ml_application_instance_id, six.string_types) and len(ml_application_instance_id.strip()) == 0:
+    if isinstance(ml_application_instance_id, str) and len(ml_application_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6154,7 +6153,7 @@ def delete_ml_application_instance(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6216,10 +6215,10 @@ def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def delete_model_custom_metadatum_artifact(ctx, from_json, model_id, metadatum_key_name, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
-    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+    if isinstance(metadatum_key_name, str) and len(metadatum_key_name.strip()) == 0:
         raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6247,10 +6246,10 @@ def delete_model_custom_metadatum_artifact(ctx, from_json, model_id, metadatum_k
 @cli_util.wrap_exceptions
 def delete_model_defined_metadatum_artifact(ctx, from_json, model_id, metadatum_key_name, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
-    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+    if isinstance(metadatum_key_name, str) and len(metadatum_key_name.strip()) == 0:
         raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6280,7 +6279,7 @@ def delete_model_defined_metadatum_artifact(ctx, from_json, model_id, metadatum_
 @cli_util.wrap_exceptions
 def delete_model_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_deployment_id, if_match):
 
-    if isinstance(model_deployment_id, six.string_types) and len(model_deployment_id.strip()) == 0:
+    if isinstance(model_deployment_id, str) and len(model_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --model-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6336,7 +6335,7 @@ def delete_model_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_model_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_group_id, if_match):
 
-    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+    if isinstance(model_group_id, str) and len(model_group_id.strip()) == 0:
         raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6392,7 +6391,7 @@ def delete_model_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_model_group_version_history(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_group_version_history_id, if_match):
 
-    if isinstance(model_group_version_history_id, six.string_types) and len(model_group_version_history_id.strip()) == 0:
+    if isinstance(model_group_version_history_id, str) and len(model_group_version_history_id.strip()) == 0:
         raise click.UsageError('Parameter --model-group-version-history-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6449,7 +6448,7 @@ def delete_model_group_version_history(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def delete_model_version_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_version_set_id, is_delete_related_models, if_match):
 
-    if isinstance(model_version_set_id, six.string_types) and len(model_version_set_id.strip()) == 0:
+    if isinstance(model_version_set_id, str) and len(model_version_set_id.strip()) == 0:
         raise click.UsageError('Parameter --model-version-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6507,7 +6506,7 @@ def delete_model_version_set(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, notebook_session_id, if_match):
 
-    if isinstance(notebook_session_id, six.string_types) and len(notebook_session_id.strip()) == 0:
+    if isinstance(notebook_session_id, str) and len(notebook_session_id.strip()) == 0:
         raise click.UsageError('Parameter --notebook-session-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6565,7 +6564,7 @@ def delete_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, delete_related_pipeline_runs, delete_related_job_runs, if_match):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6626,7 +6625,7 @@ def delete_pipeline(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def delete_pipeline_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_run_id, delete_related_job_runs, if_match):
 
-    if isinstance(pipeline_run_id, six.string_types) and len(pipeline_run_id.strip()) == 0:
+    if isinstance(pipeline_run_id, str) and len(pipeline_run_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6692,7 +6691,7 @@ def delete_pipeline_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, if_match):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6748,7 +6747,7 @@ def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, if_match):
 
-    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+    if isinstance(schedule_id, str) and len(schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6804,7 +6803,7 @@ def delete_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def disable_ml_application_instance_view_trigger(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_name, ml_application_instance_view_id, if_match):
 
-    if isinstance(ml_application_instance_view_id, six.string_types) and len(ml_application_instance_view_id.strip()) == 0:
+    if isinstance(ml_application_instance_view_id, str) and len(ml_application_instance_view_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-instance-view-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6861,7 +6860,7 @@ def disable_ml_application_instance_view_trigger(ctx, from_json, wait_for_state,
 @cli_util.wrap_exceptions
 def enable_ml_application_instance_view_trigger(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_name, ml_application_instance_view_id, if_match):
 
-    if isinstance(ml_application_instance_view_id, six.string_types) and len(ml_application_instance_view_id.strip()) == 0:
+    if isinstance(ml_application_instance_view_id, str) and len(ml_application_instance_view_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-instance-view-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6918,7 +6917,7 @@ def enable_ml_application_instance_view_trigger(ctx, from_json, wait_for_state, 
 @cli_util.wrap_exceptions
 def export_model_artifact(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, artifact_export_details, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6982,7 +6981,7 @@ def export_model_artifact(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def export_model_artifact_artifact_export_details_object_storage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, if_match, artifact_export_details_namespace, artifact_export_details_source_bucket, artifact_export_details_source_object_name, artifact_export_details_source_region):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7052,7 +7051,7 @@ def export_model_artifact_artifact_export_details_object_storage(ctx, from_json,
 @cli_util.wrap_exceptions
 def get_data_science_private_endpoint(ctx, from_json, data_science_private_endpoint_id):
 
-    if isinstance(data_science_private_endpoint_id, six.string_types) and len(data_science_private_endpoint_id.strip()) == 0:
+    if isinstance(data_science_private_endpoint_id, str) and len(data_science_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --data-science-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7074,7 +7073,7 @@ def get_data_science_private_endpoint(ctx, from_json, data_science_private_endpo
 @cli_util.wrap_exceptions
 def get_job(ctx, from_json, job_id):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7098,7 +7097,7 @@ def get_job(ctx, from_json, job_id):
 @cli_util.wrap_exceptions
 def get_job_artifact_content(ctx, from_json, file, job_id, range):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7144,7 +7143,7 @@ def get_job_artifact_content(ctx, from_json, file, job_id, range):
 @cli_util.wrap_exceptions
 def get_job_run(ctx, from_json, job_run_id):
 
-    if isinstance(job_run_id, six.string_types) and len(job_run_id.strip()) == 0:
+    if isinstance(job_run_id, str) and len(job_run_id.strip()) == 0:
         raise click.UsageError('Parameter --job-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7166,7 +7165,7 @@ def get_job_run(ctx, from_json, job_run_id):
 @cli_util.wrap_exceptions
 def get_ml_application(ctx, from_json, ml_application_id):
 
-    if isinstance(ml_application_id, six.string_types) and len(ml_application_id.strip()) == 0:
+    if isinstance(ml_application_id, str) and len(ml_application_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7189,7 +7188,7 @@ def get_ml_application(ctx, from_json, ml_application_id):
 @cli_util.wrap_exceptions
 def get_ml_application_historical_package_content(ctx, from_json, file, ml_application_implementation_version_id):
 
-    if isinstance(ml_application_implementation_version_id, six.string_types) and len(ml_application_implementation_version_id.strip()) == 0:
+    if isinstance(ml_application_implementation_version_id, str) and len(ml_application_implementation_version_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-implementation-version-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7233,7 +7232,7 @@ def get_ml_application_historical_package_content(ctx, from_json, file, ml_appli
 @cli_util.wrap_exceptions
 def get_ml_application_implementation(ctx, from_json, ml_application_implementation_id):
 
-    if isinstance(ml_application_implementation_id, six.string_types) and len(ml_application_implementation_id.strip()) == 0:
+    if isinstance(ml_application_implementation_id, str) and len(ml_application_implementation_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-implementation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7255,7 +7254,7 @@ def get_ml_application_implementation(ctx, from_json, ml_application_implementat
 @cli_util.wrap_exceptions
 def get_ml_application_implementation_version(ctx, from_json, ml_application_implementation_version_id):
 
-    if isinstance(ml_application_implementation_version_id, six.string_types) and len(ml_application_implementation_version_id.strip()) == 0:
+    if isinstance(ml_application_implementation_version_id, str) and len(ml_application_implementation_version_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-implementation-version-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7277,7 +7276,7 @@ def get_ml_application_implementation_version(ctx, from_json, ml_application_imp
 @cli_util.wrap_exceptions
 def get_ml_application_instance(ctx, from_json, ml_application_instance_id):
 
-    if isinstance(ml_application_instance_id, six.string_types) and len(ml_application_instance_id.strip()) == 0:
+    if isinstance(ml_application_instance_id, str) and len(ml_application_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7299,7 +7298,7 @@ def get_ml_application_instance(ctx, from_json, ml_application_instance_id):
 @cli_util.wrap_exceptions
 def get_ml_application_instance_view(ctx, from_json, ml_application_instance_view_id):
 
-    if isinstance(ml_application_instance_view_id, six.string_types) and len(ml_application_instance_view_id.strip()) == 0:
+    if isinstance(ml_application_instance_view_id, str) and len(ml_application_instance_view_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-instance-view-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7322,7 +7321,7 @@ def get_ml_application_instance_view(ctx, from_json, ml_application_instance_vie
 @cli_util.wrap_exceptions
 def get_ml_application_package_content(ctx, from_json, file, ml_application_implementation_id):
 
-    if isinstance(ml_application_implementation_id, six.string_types) and len(ml_application_implementation_id.strip()) == 0:
+    if isinstance(ml_application_implementation_id, str) and len(ml_application_implementation_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-implementation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7366,7 +7365,7 @@ def get_ml_application_package_content(ctx, from_json, file, ml_application_impl
 @cli_util.wrap_exceptions
 def get_model(ctx, from_json, model_id):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7390,7 +7389,7 @@ def get_model(ctx, from_json, model_id):
 @cli_util.wrap_exceptions
 def get_model_artifact_content(ctx, from_json, file, model_id, range):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7439,10 +7438,10 @@ def get_model_artifact_content(ctx, from_json, file, model_id, range):
 @cli_util.wrap_exceptions
 def get_model_custom_metadatum_artifact_content(ctx, from_json, file, model_id, metadatum_key_name, range):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
-    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+    if isinstance(metadatum_key_name, str) and len(metadatum_key_name.strip()) == 0:
         raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7492,10 +7491,10 @@ def get_model_custom_metadatum_artifact_content(ctx, from_json, file, model_id, 
 @cli_util.wrap_exceptions
 def get_model_defined_metadatum_artifact_content(ctx, from_json, file, model_id, metadatum_key_name, range):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
-    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+    if isinstance(metadatum_key_name, str) and len(metadatum_key_name.strip()) == 0:
         raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7542,7 +7541,7 @@ def get_model_defined_metadatum_artifact_content(ctx, from_json, file, model_id,
 @cli_util.wrap_exceptions
 def get_model_deployment(ctx, from_json, model_deployment_id):
 
-    if isinstance(model_deployment_id, six.string_types) and len(model_deployment_id.strip()) == 0:
+    if isinstance(model_deployment_id, str) and len(model_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --model-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7564,7 +7563,7 @@ def get_model_deployment(ctx, from_json, model_deployment_id):
 @cli_util.wrap_exceptions
 def get_model_group(ctx, from_json, model_group_id):
 
-    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+    if isinstance(model_group_id, str) and len(model_group_id.strip()) == 0:
         raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7588,7 +7587,7 @@ def get_model_group(ctx, from_json, model_group_id):
 @cli_util.wrap_exceptions
 def get_model_group_artifact_content(ctx, from_json, file, model_group_id, range):
 
-    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+    if isinstance(model_group_id, str) and len(model_group_id.strip()) == 0:
         raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7634,7 +7633,7 @@ def get_model_group_artifact_content(ctx, from_json, file, model_group_id, range
 @cli_util.wrap_exceptions
 def get_model_group_version_history(ctx, from_json, model_group_version_history_id):
 
-    if isinstance(model_group_version_history_id, six.string_types) and len(model_group_version_history_id.strip()) == 0:
+    if isinstance(model_group_version_history_id, str) and len(model_group_version_history_id.strip()) == 0:
         raise click.UsageError('Parameter --model-group-version-history-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7656,7 +7655,7 @@ def get_model_group_version_history(ctx, from_json, model_group_version_history_
 @cli_util.wrap_exceptions
 def get_model_provenance(ctx, from_json, model_id):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7678,7 +7677,7 @@ def get_model_provenance(ctx, from_json, model_id):
 @cli_util.wrap_exceptions
 def get_model_version_set(ctx, from_json, model_version_set_id):
 
-    if isinstance(model_version_set_id, six.string_types) and len(model_version_set_id.strip()) == 0:
+    if isinstance(model_version_set_id, str) and len(model_version_set_id.strip()) == 0:
         raise click.UsageError('Parameter --model-version-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7700,7 +7699,7 @@ def get_model_version_set(ctx, from_json, model_version_set_id):
 @cli_util.wrap_exceptions
 def get_notebook_session(ctx, from_json, notebook_session_id):
 
-    if isinstance(notebook_session_id, six.string_types) and len(notebook_session_id.strip()) == 0:
+    if isinstance(notebook_session_id, str) and len(notebook_session_id.strip()) == 0:
         raise click.UsageError('Parameter --notebook-session-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7722,7 +7721,7 @@ def get_notebook_session(ctx, from_json, notebook_session_id):
 @cli_util.wrap_exceptions
 def get_pipeline(ctx, from_json, pipeline_id):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7744,7 +7743,7 @@ def get_pipeline(ctx, from_json, pipeline_id):
 @cli_util.wrap_exceptions
 def get_pipeline_run(ctx, from_json, pipeline_run_id):
 
-    if isinstance(pipeline_run_id, six.string_types) and len(pipeline_run_id.strip()) == 0:
+    if isinstance(pipeline_run_id, str) and len(pipeline_run_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7766,7 +7765,7 @@ def get_pipeline_run(ctx, from_json, pipeline_run_id):
 @cli_util.wrap_exceptions
 def get_project(ctx, from_json, project_id):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7788,7 +7787,7 @@ def get_project(ctx, from_json, project_id):
 @cli_util.wrap_exceptions
 def get_schedule(ctx, from_json, schedule_id):
 
-    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+    if isinstance(schedule_id, str) and len(schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7813,10 +7812,10 @@ def get_schedule(ctx, from_json, schedule_id):
 @cli_util.wrap_exceptions
 def get_step_artifact_content(ctx, from_json, file, pipeline_id, step_name, range):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
-    if isinstance(step_name, six.string_types) and len(step_name.strip()) == 0:
+    if isinstance(step_name, str) and len(step_name.strip()) == 0:
         raise click.UsageError('Parameter --step-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7863,7 +7862,7 @@ def get_step_artifact_content(ctx, from_json, file, pipeline_id, step_name, rang
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7885,7 +7884,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.wrap_exceptions
 def head_job_artifact(ctx, from_json, job_id):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7907,7 +7906,7 @@ def head_job_artifact(ctx, from_json, job_id):
 @cli_util.wrap_exceptions
 def head_model_artifact(ctx, from_json, model_id):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7930,10 +7929,10 @@ def head_model_artifact(ctx, from_json, model_id):
 @cli_util.wrap_exceptions
 def head_model_custom_metadatum_artifact(ctx, from_json, model_id, metadatum_key_name):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
-    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+    if isinstance(metadatum_key_name, str) and len(metadatum_key_name.strip()) == 0:
         raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7957,10 +7956,10 @@ def head_model_custom_metadatum_artifact(ctx, from_json, model_id, metadatum_key
 @cli_util.wrap_exceptions
 def head_model_defined_metadatum_artifact(ctx, from_json, model_id, metadatum_key_name):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
-    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+    if isinstance(metadatum_key_name, str) and len(metadatum_key_name.strip()) == 0:
         raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7983,7 +7982,7 @@ def head_model_defined_metadatum_artifact(ctx, from_json, model_id, metadatum_ke
 @cli_util.wrap_exceptions
 def head_model_group_artifact(ctx, from_json, model_group_id):
 
-    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+    if isinstance(model_group_id, str) and len(model_group_id.strip()) == 0:
         raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8006,10 +8005,10 @@ def head_model_group_artifact(ctx, from_json, model_group_id):
 @cli_util.wrap_exceptions
 def head_step_artifact(ctx, from_json, pipeline_id, step_name):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
 
-    if isinstance(step_name, six.string_types) and len(step_name.strip()) == 0:
+    if isinstance(step_name, str) and len(step_name.strip()) == 0:
         raise click.UsageError('Parameter --step-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8037,7 +8036,7 @@ def head_step_artifact(ctx, from_json, pipeline_id, step_name):
 @cli_util.wrap_exceptions
 def import_model_artifact(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, artifact_import_details, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8101,7 +8100,7 @@ def import_model_artifact(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def import_model_artifact_artifact_import_details_object_storage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, if_match, artifact_import_details_namespace, artifact_import_details_destination_bucket, artifact_import_details_destination_object_name, artifact_import_details_destination_region):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8919,7 +8918,7 @@ def list_model_deployment_model_states(ctx, from_json, all_pages, page_size, mod
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(model_deployment_id, six.string_types) and len(model_deployment_id.strip()) == 0:
+    if isinstance(model_deployment_id, str) and len(model_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --model-deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9121,7 +9120,7 @@ def list_model_group_models(ctx, from_json, all_pages, page_size, model_group_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+    if isinstance(model_group_id, str) and len(model_group_id.strip()) == 0:
         raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9909,7 +9908,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9964,7 +9963,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10082,7 +10081,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, id,
 @cli_util.wrap_exceptions
 def put_ml_application_package(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ml_application_implementation_id, put_ml_application_package, content_length, content_disposition, opc_ml_app_package_args):
 
-    if isinstance(ml_application_implementation_id, six.string_types) and len(ml_application_implementation_id.strip()) == 0:
+    if isinstance(ml_application_implementation_id, str) and len(ml_application_implementation_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-implementation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10146,7 +10145,7 @@ def put_ml_application_package(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def recover_ml_application_instance_view(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ml_application_instance_view_id, if_match):
 
-    if isinstance(ml_application_instance_view_id, six.string_types) and len(ml_application_instance_view_id.strip()) == 0:
+    if isinstance(ml_application_instance_view_id, str) and len(ml_application_instance_view_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-instance-view-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10202,7 +10201,7 @@ def recover_ml_application_instance_view(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def register_model_artifact_reference(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_artifact_references, model_id, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10263,7 +10262,7 @@ def register_model_artifact_reference(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def restore_archived_model_artifact(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, restore_model_for_hours_specified, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10320,7 +10319,7 @@ def restore_archived_model_artifact(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def trigger_ml_application_instance_flow(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_name, ml_application_instance_id):
 
-    if isinstance(ml_application_instance_id, six.string_types) and len(ml_application_instance_id.strip()) == 0:
+    if isinstance(ml_application_instance_id, str) and len(ml_application_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10381,7 +10380,7 @@ This option is a JSON list with items of type TriggerParameter.  For documentati
 @cli_util.wrap_exceptions
 def trigger_ml_application_instance_view_flow(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, trigger_name, ml_application_instance_view_id, parameters):
 
-    if isinstance(ml_application_instance_view_id, six.string_types) and len(ml_application_instance_view_id.strip()) == 0:
+    if isinstance(ml_application_instance_view_id, str) and len(ml_application_instance_view_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-instance-view-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10448,7 +10447,7 @@ def trigger_ml_application_instance_view_flow(ctx, from_json, wait_for_state, ma
 @cli_util.wrap_exceptions
 def update_data_science_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, data_science_private_endpoint_id, freeform_tags, defined_tags, description, display_name, nsg_ids, if_match):
 
-    if isinstance(data_science_private_endpoint_id, six.string_types) and len(data_science_private_endpoint_id.strip()) == 0:
+    if isinstance(data_science_private_endpoint_id, str) and len(data_science_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --data-science-private-endpoint-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids:
@@ -10535,7 +10534,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @cli_util.wrap_exceptions
 def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, display_name, description, job_infrastructure_configuration_details, job_storage_mount_configuration_details_list, freeform_tags, defined_tags, if_match):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
     if not force:
         if job_infrastructure_configuration_details or job_storage_mount_configuration_details_list or freeform_tags or defined_tags:
@@ -10623,7 +10622,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @cli_util.wrap_exceptions
 def update_job_multi_node_job_infrastructure_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, job_infrastructure_configuration_details_shape_name, job_infrastructure_configuration_details_block_storage_size_in_gbs, display_name, description, job_storage_mount_configuration_details_list, freeform_tags, defined_tags, if_match, job_infrastructure_configuration_details_job_shape_config_details):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
     if not force:
         if job_storage_mount_configuration_details_list or freeform_tags or defined_tags:
@@ -10713,7 +10712,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @cli_util.wrap_exceptions
 def update_job_empty_job_infrastructure_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, display_name, description, job_storage_mount_configuration_details_list, freeform_tags, defined_tags, if_match):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
     if not force:
         if job_storage_mount_configuration_details_list or freeform_tags or defined_tags:
@@ -10801,7 +10800,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @cli_util.wrap_exceptions
 def update_job_managed_egress_standalone_job_infrastructure_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, job_infrastructure_configuration_details_shape_name, job_infrastructure_configuration_details_block_storage_size_in_gbs, display_name, description, job_storage_mount_configuration_details_list, freeform_tags, defined_tags, if_match, job_infrastructure_configuration_details_job_shape_config_details):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
     if not force:
         if job_storage_mount_configuration_details_list or freeform_tags or defined_tags:
@@ -10895,7 +10894,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @cli_util.wrap_exceptions
 def update_job_standalone_job_infrastructure_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_id, job_infrastructure_configuration_details_shape_name, job_infrastructure_configuration_details_subnet_id, job_infrastructure_configuration_details_block_storage_size_in_gbs, display_name, description, job_storage_mount_configuration_details_list, freeform_tags, defined_tags, if_match, job_infrastructure_configuration_details_job_shape_config_details):
 
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+    if isinstance(job_id, str) and len(job_id.strip()) == 0:
         raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
     if not force:
         if job_storage_mount_configuration_details_list or freeform_tags or defined_tags:
@@ -10982,7 +10981,7 @@ def update_job_standalone_job_infrastructure_configuration_details(ctx, from_jso
 @cli_util.wrap_exceptions
 def update_job_run(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, job_run_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(job_run_id, six.string_types) and len(job_run_id.strip()) == 0:
+    if isinstance(job_run_id, str) and len(job_run_id.strip()) == 0:
         raise click.UsageError('Parameter --job-run-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -11054,7 +11053,7 @@ def update_job_run(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def update_ml_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ml_application_id, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(ml_application_id, six.string_types) and len(ml_application_id.strip()) == 0:
+    if isinstance(ml_application_id, str) and len(ml_application_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -11127,7 +11126,7 @@ def update_ml_application(ctx, from_json, force, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def update_ml_application_implementation(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ml_application_implementation_id, allowed_migration_destinations, logging, freeform_tags, defined_tags, if_match):
 
-    if isinstance(ml_application_implementation_id, six.string_types) and len(ml_application_implementation_id.strip()) == 0:
+    if isinstance(ml_application_implementation_id, str) and len(ml_application_implementation_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-implementation-id cannot be whitespace or empty string')
     if not force:
         if allowed_migration_destinations or logging or freeform_tags or defined_tags:
@@ -11205,7 +11204,7 @@ def update_ml_application_implementation(ctx, from_json, force, wait_for_state, 
 @cli_util.wrap_exceptions
 def update_ml_application_implementation_version(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ml_application_implementation_version_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(ml_application_implementation_version_id, six.string_types) and len(ml_application_implementation_version_id.strip()) == 0:
+    if isinstance(ml_application_implementation_version_id, str) and len(ml_application_implementation_version_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-implementation-version-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -11278,7 +11277,7 @@ This option is a JSON list with items of type ConfigurationProperty.  For docume
 @cli_util.wrap_exceptions
 def update_ml_application_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ml_application_instance_id, configuration, ml_application_implementation_id, is_enabled, freeform_tags, defined_tags, if_match):
 
-    if isinstance(ml_application_instance_id, six.string_types) and len(ml_application_instance_id.strip()) == 0:
+    if isinstance(ml_application_instance_id, str) and len(ml_application_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-instance-id cannot be whitespace or empty string')
     if not force:
         if configuration or freeform_tags or defined_tags:
@@ -11359,7 +11358,7 @@ def update_ml_application_instance(ctx, from_json, force, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def update_ml_application_instance_view(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ml_application_instance_view_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(ml_application_instance_view_id, six.string_types) and len(ml_application_instance_view_id.strip()) == 0:
+    if isinstance(ml_application_instance_view_id, str) and len(ml_application_instance_view_id.strip()) == 0:
         raise click.UsageError('Parameter --ml-application-instance-view-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -11439,7 +11438,7 @@ This option is a JSON list with items of type Metadata.  For documentation on Me
 @cli_util.wrap_exceptions
 def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_id, display_name, description, freeform_tags, defined_tags, custom_metadata_list, defined_metadata_list, model_version_set_id, version_label, retention_setting, backup_setting, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or custom_metadata_list or defined_metadata_list or retention_setting or backup_setting:
@@ -11529,10 +11528,10 @@ def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def update_model_custom_metadatum_artifact(ctx, from_json, model_id, metadatum_key_name, model_custom_metadatum_artifact, content_length, content_disposition, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
-    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+    if isinstance(metadatum_key_name, str) and len(metadatum_key_name.strip()) == 0:
         raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11571,10 +11570,10 @@ def update_model_custom_metadatum_artifact(ctx, from_json, model_id, metadatum_k
 @cli_util.wrap_exceptions
 def update_model_defined_metadatum_artifact(ctx, from_json, model_id, metadatum_key_name, model_defined_metadatum_artifact, content_length, content_disposition, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
-    if isinstance(metadatum_key_name, six.string_types) and len(metadatum_key_name.strip()) == 0:
+    if isinstance(metadatum_key_name, str) and len(metadatum_key_name.strip()) == 0:
         raise click.UsageError('Parameter --metadatum-key-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11619,7 +11618,7 @@ def update_model_defined_metadatum_artifact(ctx, from_json, model_id, metadatum_
 @cli_util.wrap_exceptions
 def update_model_deployment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_deployment_id, display_name, description, model_deployment_configuration_details, category_log_details, freeform_tags, defined_tags, if_match):
 
-    if isinstance(model_deployment_id, six.string_types) and len(model_deployment_id.strip()) == 0:
+    if isinstance(model_deployment_id, str) and len(model_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --model-deployment-id cannot be whitespace or empty string')
     if not force:
         if model_deployment_configuration_details or category_log_details or freeform_tags or defined_tags:
@@ -11710,7 +11709,7 @@ def update_model_deployment(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def update_model_deployment_update_model_group_deployment_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_deployment_id, display_name, description, category_log_details, freeform_tags, defined_tags, if_match, model_deployment_configuration_details_update_type, model_deployment_configuration_details_model_group_configuration_details, model_deployment_configuration_details_infrastructure_configuration_details, model_deployment_configuration_details_environment_configuration_details):
 
-    if isinstance(model_deployment_id, six.string_types) and len(model_deployment_id.strip()) == 0:
+    if isinstance(model_deployment_id, str) and len(model_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --model-deployment-id cannot be whitespace or empty string')
     if not force:
         if category_log_details or freeform_tags or defined_tags:
@@ -11811,7 +11810,7 @@ def update_model_deployment_update_model_group_deployment_configuration_details(
 @cli_util.wrap_exceptions
 def update_model_deployment_update_single_model_deployment_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_deployment_id, display_name, description, category_log_details, freeform_tags, defined_tags, if_match, model_deployment_configuration_details_model_configuration_details, model_deployment_configuration_details_environment_configuration_details):
 
-    if isinstance(model_deployment_id, six.string_types) and len(model_deployment_id.strip()) == 0:
+    if isinstance(model_deployment_id, str) and len(model_deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --model-deployment-id cannot be whitespace or empty string')
     if not force:
         if category_log_details or freeform_tags or defined_tags:
@@ -11905,7 +11904,7 @@ def update_model_deployment_update_single_model_deployment_configuration_details
 @cli_util.wrap_exceptions
 def update_model_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_group_id, display_name, description, version_label, model_group_version_history_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(model_group_id, six.string_types) and len(model_group_id.strip()) == 0:
+    if isinstance(model_group_id, str) and len(model_group_id.strip()) == 0:
         raise click.UsageError('Parameter --model-group-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -11988,7 +11987,7 @@ def update_model_group(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def update_model_group_version_history(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_group_version_history_id, display_name, description, latest_model_group_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(model_group_version_history_id, six.string_types) and len(model_group_version_history_id.strip()) == 0:
+    if isinstance(model_group_version_history_id, str) and len(model_group_version_history_id.strip()) == 0:
         raise click.UsageError('Parameter --model-group-version-history-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -12065,7 +12064,7 @@ def update_model_group_version_history(ctx, from_json, force, wait_for_state, ma
 @cli_util.wrap_exceptions
 def update_model_provenance(ctx, from_json, model_id, repository_url, git_branch, git_commit, script_dir, training_script, training_id, if_match):
 
-    if isinstance(model_id, six.string_types) and len(model_id.strip()) == 0:
+    if isinstance(model_id, str) and len(model_id.strip()) == 0:
         raise click.UsageError('Parameter --model-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12119,7 +12118,7 @@ def update_model_provenance(ctx, from_json, model_id, repository_url, git_branch
 @cli_util.wrap_exceptions
 def update_model_version_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, model_version_set_id, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(model_version_set_id, six.string_types) and len(model_version_set_id.strip()) == 0:
+    if isinstance(model_version_set_id, str) and len(model_version_set_id.strip()) == 0:
         raise click.UsageError('Parameter --model-version-set-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -12196,7 +12195,7 @@ This option is a JSON list with items of type StorageMountConfigurationDetails. 
 @cli_util.wrap_exceptions
 def update_notebook_session(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, notebook_session_id, display_name, notebook_session_configuration_details, freeform_tags, defined_tags, notebook_session_runtime_config_details, notebook_session_storage_mount_configuration_details_list, if_match):
 
-    if isinstance(notebook_session_id, six.string_types) and len(notebook_session_id.strip()) == 0:
+    if isinstance(notebook_session_id, str) and len(notebook_session_id.strip()) == 0:
         raise click.UsageError('Parameter --notebook-session-id cannot be whitespace or empty string')
     if not force:
         if notebook_session_configuration_details or freeform_tags or defined_tags or notebook_session_runtime_config_details or notebook_session_storage_mount_configuration_details_list:
@@ -12287,7 +12286,7 @@ This option is a JSON list with items of type PipelineStepUpdateDetails.  For do
 @cli_util.wrap_exceptions
 def update_pipeline(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, display_name, description, configuration_details, infrastructure_configuration_details, log_configuration_details, storage_mount_configuration_details_list, step_details, freeform_tags, defined_tags, if_match):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
     if not force:
         if configuration_details or infrastructure_configuration_details or log_configuration_details or storage_mount_configuration_details_list or step_details or freeform_tags or defined_tags:
@@ -12389,7 +12388,7 @@ This option is a JSON list with items of type PipelineStepUpdateDetails.  For do
 @cli_util.wrap_exceptions
 def update_pipeline_pipeline_default_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_id, display_name, description, infrastructure_configuration_details, log_configuration_details, storage_mount_configuration_details_list, step_details, freeform_tags, defined_tags, if_match, configuration_details_maximum_runtime_in_minutes, configuration_details_environment_variables, configuration_details_command_line_arguments):
 
-    if isinstance(pipeline_id, six.string_types) and len(pipeline_id.strip()) == 0:
+    if isinstance(pipeline_id, str) and len(pipeline_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-id cannot be whitespace or empty string')
     if not force:
         if infrastructure_configuration_details or log_configuration_details or storage_mount_configuration_details_list or step_details or freeform_tags or defined_tags:
@@ -12488,7 +12487,7 @@ def update_pipeline_pipeline_default_configuration_details(ctx, from_json, force
 @cli_util.wrap_exceptions
 def update_pipeline_run(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, pipeline_run_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(pipeline_run_id, six.string_types) and len(pipeline_run_id.strip()) == 0:
+    if isinstance(pipeline_run_id, str) and len(pipeline_run_id.strip()) == 0:
         raise click.UsageError('Parameter --pipeline-run-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -12561,7 +12560,7 @@ def update_pipeline_run(ctx, from_json, force, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def update_project(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, project_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(project_id, six.string_types) and len(project_id.strip()) == 0:
+    if isinstance(project_id, str) and len(project_id.strip()) == 0:
         raise click.UsageError('Parameter --project-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -12640,7 +12639,7 @@ def update_project(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def update_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, display_name, description, trigger, action, log_details, freeform_tags, defined_tags, if_match):
 
-    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+    if isinstance(schedule_id, str) and len(schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
     if not force:
         if trigger or action or log_details or freeform_tags or defined_tags:
@@ -12734,7 +12733,7 @@ def update_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def update_schedule_schedule_i_cal_trigger(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, trigger_recurrence, display_name, description, action, log_details, freeform_tags, defined_tags, if_match, trigger_time_start, trigger_time_end):
 
-    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+    if isinstance(schedule_id, str) and len(schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
     if not force:
         if action or log_details or freeform_tags or defined_tags:
@@ -12837,7 +12836,7 @@ def update_schedule_schedule_i_cal_trigger(ctx, from_json, force, wait_for_state
 @cli_util.wrap_exceptions
 def update_schedule_schedule_interval_trigger(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, trigger_frequency, trigger_interval, display_name, description, action, log_details, freeform_tags, defined_tags, if_match, trigger_time_start, trigger_time_end, trigger_is_random_start_time):
 
-    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+    if isinstance(schedule_id, str) and len(schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
     if not force:
         if action or log_details or freeform_tags or defined_tags:
@@ -12942,7 +12941,7 @@ def update_schedule_schedule_interval_trigger(ctx, from_json, force, wait_for_st
 @cli_util.wrap_exceptions
 def update_schedule_schedule_cron_trigger(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, trigger_cron_expression, display_name, description, action, log_details, freeform_tags, defined_tags, if_match, trigger_time_start, trigger_time_end):
 
-    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+    if isinstance(schedule_id, str) and len(schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
     if not force:
         if action or log_details or freeform_tags or defined_tags:
@@ -13041,7 +13040,7 @@ def update_schedule_schedule_cron_trigger(ctx, from_json, force, wait_for_state,
 @cli_util.wrap_exceptions
 def update_schedule_schedule_http_action(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, action_action_details, display_name, description, trigger, log_details, freeform_tags, defined_tags, if_match):
 
-    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+    if isinstance(schedule_id, str) and len(schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
     if not force:
         if trigger or log_details or freeform_tags or defined_tags:

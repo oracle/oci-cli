@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -72,7 +71,7 @@ lfs_root_group.add_command(work_request_group)
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -101,7 +100,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_lustre_file_system_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, lustre_file_system_id, compartment_id, if_match):
 
-    if isinstance(lustre_file_system_id, six.string_types) and len(lustre_file_system_id.strip()) == 0:
+    if isinstance(lustre_file_system_id, str) and len(lustre_file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --lustre-file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -263,7 +262,7 @@ def create_lustre_file_system(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_lustre_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, lustre_file_system_id, if_match):
 
-    if isinstance(lustre_file_system_id, six.string_types) and len(lustre_file_system_id.strip()) == 0:
+    if isinstance(lustre_file_system_id, str) and len(lustre_file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --lustre-file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -314,7 +313,7 @@ def delete_lustre_file_system(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def get_lustre_file_system(ctx, from_json, lustre_file_system_id):
 
-    if isinstance(lustre_file_system_id, six.string_types) and len(lustre_file_system_id.strip()) == 0:
+    if isinstance(lustre_file_system_id, str) and len(lustre_file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --lustre-file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -336,7 +335,7 @@ def get_lustre_file_system(ctx, from_json, lustre_file_system_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -436,7 +435,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -493,7 +492,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -622,7 +621,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_lustre_file_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, lustre_file_system_id, display_name, file_system_description, freeform_tags, defined_tags, nsg_ids, kms_key_id, capacity_in_gbs, root_squash_configuration, if_match):
 
-    if isinstance(lustre_file_system_id, six.string_types) and len(lustre_file_system_id.strip()) == 0:
+    if isinstance(lustre_file_system_id, str) and len(lustre_file_system_id.strip()) == 0:
         raise click.UsageError('Parameter --lustre-file-system-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or nsg_ids or root_squash_configuration:

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -44,7 +43,7 @@ Example: `ocid1.genericartifact.oc1..exampleuniqueID`""")
 @cli_util.wrap_exceptions
 def get_generic_artifact_content(ctx, from_json, file, artifact_id):
 
-    if isinstance(artifact_id, six.string_types) and len(artifact_id.strip()) == 0:
+    if isinstance(artifact_id, str) and len(artifact_id.strip()) == 0:
         raise click.UsageError('Parameter --artifact-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -97,13 +96,13 @@ Example: `1.1.2` or `1.2-beta-2`""")
 @cli_util.wrap_exceptions
 def get_generic_artifact_content_by_path(ctx, from_json, file, repository_id, artifact_path, version_parameterconflict):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
-    if isinstance(artifact_path, six.string_types) and len(artifact_path.strip()) == 0:
+    if isinstance(artifact_path, str) and len(artifact_path.strip()) == 0:
         raise click.UsageError('Parameter --artifact-path cannot be whitespace or empty string')
 
-    if isinstance(version_parameterconflict, six.string_types) and len(version_parameterconflict.strip()) == 0:
+    if isinstance(version_parameterconflict, str) and len(version_parameterconflict.strip()) == 0:
         raise click.UsageError('Parameter --version-parameterconflict cannot be whitespace or empty string')
 
     kwargs = {}
@@ -159,13 +158,13 @@ Example: `1.1.2` or `1.2-beta-2`""")
 @cli_util.wrap_exceptions
 def put_generic_artifact_content_by_path(ctx, from_json, repository_id, artifact_path, version_parameterconflict, generic_artifact_content_body, if_match):
 
-    if isinstance(repository_id, six.string_types) and len(repository_id.strip()) == 0:
+    if isinstance(repository_id, str) and len(repository_id.strip()) == 0:
         raise click.UsageError('Parameter --repository-id cannot be whitespace or empty string')
 
-    if isinstance(artifact_path, six.string_types) and len(artifact_path.strip()) == 0:
+    if isinstance(artifact_path, str) and len(artifact_path.strip()) == 0:
         raise click.UsageError('Parameter --artifact-path cannot be whitespace or empty string')
 
-    if isinstance(version_parameterconflict, six.string_types) and len(version_parameterconflict.strip()) == 0:
+    if isinstance(version_parameterconflict, str) and len(version_parameterconflict.strip()) == 0:
         raise click.UsageError('Parameter --version-parameterconflict cannot be whitespace or empty string')
 
     kwargs = {}

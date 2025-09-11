@@ -8,7 +8,6 @@ from .generated import waas_service_cli
 from oci_cli import cli_util
 from oci_cli import custom_types  # noqa: F401
 import sys  # noqa: F401
-import six  # noqa: F401
 import oci  # noqa: F401
 from oci_cli import json_skeleton_utils
 from oci_cli.aliasing import CommandGroupWithAlias
@@ -88,7 +87,7 @@ Enabled TLS protocols must go in a row. For example if `TLS_v1_1` and `TLS_V1_3`
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'load-balancing-method': {'module': 'waas', 'class': 'LoadBalancingMethod'}, 'websocket-path-prefixes': {'module': 'waas', 'class': 'list[string]'}, 'health-checks': {'module': 'waas', 'class': 'HealthCheck'}})
 @cli_util.wrap_exceptions
 def update_policy_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, certificate_id, is_https_enabled, is_https_forced, tls_protocols, is_origin_compression_enabled, is_behind_cdn, client_address_header, is_cache_control_respected, is_response_buffering_enabled, cipher_group, load_balancing_method, websocket_path_prefixes, is_sni_enabled, health_checks, if_match):
-    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+    if isinstance(waas_policy_id, str) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
     if not force:
         if tls_protocols or load_balancing_method or websocket_path_prefixes or health_checks:

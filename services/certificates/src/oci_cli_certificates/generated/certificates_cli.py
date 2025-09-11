@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -68,7 +67,7 @@ certificates_root_group.add_command(certificate_bundle_group)
 @cli_util.wrap_exceptions
 def get_ca_bundle(ctx, from_json, ca_bundle_id):
 
-    if isinstance(ca_bundle_id, six.string_types) and len(ca_bundle_id.strip()) == 0:
+    if isinstance(ca_bundle_id, str) and len(ca_bundle_id.strip()) == 0:
         raise click.UsageError('Parameter --ca-bundle-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -93,7 +92,7 @@ def get_ca_bundle(ctx, from_json, ca_bundle_id):
 @cli_util.wrap_exceptions
 def get_certificate_authority_bundle(ctx, from_json, certificate_authority_id, version_number, certificate_authority_version_name, stage):
 
-    if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
+    if isinstance(certificate_authority_id, str) and len(certificate_authority_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -127,7 +126,7 @@ By default, the private key is not included in the query result, and a Certifica
 @cli_util.wrap_exceptions
 def get_certificate_bundle(ctx, from_json, certificate_id, version_number, certificate_version_name, stage, certificate_bundle_type):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -160,7 +159,7 @@ def get_certificate_bundle(ctx, from_json, certificate_id, version_number, certi
 @cli_util.wrap_exceptions
 def list_certificate_authority_bundle_versions(ctx, from_json, all_pages, certificate_authority_id, sort_by, sort_order):
 
-    if isinstance(certificate_authority_id, six.string_types) and len(certificate_authority_id.strip()) == 0:
+    if isinstance(certificate_authority_id, str) and len(certificate_authority_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-authority-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -189,7 +188,7 @@ def list_certificate_authority_bundle_versions(ctx, from_json, all_pages, certif
 @cli_util.wrap_exceptions
 def list_certificate_bundle_versions(ctx, from_json, all_pages, certificate_id, sort_by, sort_order):
 
-    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+    if isinstance(certificate_id, str) and len(certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
     kwargs = {}

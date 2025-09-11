@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -47,7 +46,7 @@ db_backups_root_group.add_command(backup_group)
 @cli_util.wrap_exceptions
 def cancel_backup_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_id, if_match):
 
-    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+    if isinstance(backup_id, str) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -105,7 +104,7 @@ def cancel_backup_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def change_backup_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_id, compartment_id, if_match):
 
-    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+    if isinstance(backup_id, str) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -333,7 +332,7 @@ def create_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def delete_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_id, if_match):
 
-    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+    if isinstance(backup_id, str) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -387,7 +386,7 @@ def delete_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def get_backup(ctx, from_json, backup_id, if_none_match):
 
-    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+    if isinstance(backup_id, str) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -500,7 +499,7 @@ def list_backups(ctx, from_json, all_pages, page_size, compartment_id, backup_id
 @cli_util.wrap_exceptions
 def update_backup(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_id, display_name, description, soft_delete, retention_in_days, freeform_tags, defined_tags, if_match):
 
-    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+    if isinstance(backup_id, str) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -578,7 +577,7 @@ def update_backup(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def validate_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_id, is_prepared_backup_required, if_match):
 
-    if isinstance(backup_id, six.string_types) and len(backup_id.strip()) == 0:
+    if isinstance(backup_id, str) and len(backup_id.strip()) == 0:
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
 
     kwargs = {}

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -52,7 +51,7 @@ kms_hsm_cluster_root_group.add_command(hsm_partition_group)
 @cli_util.wrap_exceptions
 def cancel_hsm_cluster_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, hsm_cluster_id, if_match):
 
-    if isinstance(hsm_cluster_id, six.string_types) and len(hsm_cluster_id.strip()) == 0:
+    if isinstance(hsm_cluster_id, str) and len(hsm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --hsm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -101,7 +100,7 @@ def cancel_hsm_cluster_deletion(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def change_hsm_cluster_compartment(ctx, from_json, hsm_cluster_id, compartment_id, if_match):
 
-    if isinstance(hsm_cluster_id, six.string_types) and len(hsm_cluster_id.strip()) == 0:
+    if isinstance(hsm_cluster_id, str) and len(hsm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --hsm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -190,7 +189,7 @@ def create_hsm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def download_certificate_signing_request(ctx, from_json, hsm_cluster_id, if_match):
 
-    if isinstance(hsm_cluster_id, six.string_types) and len(hsm_cluster_id.strip()) == 0:
+    if isinstance(hsm_cluster_id, str) and len(hsm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --hsm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -216,7 +215,7 @@ As a provisioning operation, this call is subject to a Key Management limit that
 @cli_util.wrap_exceptions
 def get_hsm_cluster(ctx, from_json, hsm_cluster_id):
 
-    if isinstance(hsm_cluster_id, six.string_types) and len(hsm_cluster_id.strip()) == 0:
+    if isinstance(hsm_cluster_id, str) and len(hsm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --hsm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -239,10 +238,10 @@ def get_hsm_cluster(ctx, from_json, hsm_cluster_id):
 @cli_util.wrap_exceptions
 def get_hsm_partition(ctx, from_json, hsm_cluster_id, hsm_partition_id):
 
-    if isinstance(hsm_cluster_id, six.string_types) and len(hsm_cluster_id.strip()) == 0:
+    if isinstance(hsm_cluster_id, str) and len(hsm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --hsm-cluster-id cannot be whitespace or empty string')
 
-    if isinstance(hsm_partition_id, six.string_types) and len(hsm_partition_id.strip()) == 0:
+    if isinstance(hsm_partition_id, str) and len(hsm_partition_id.strip()) == 0:
         raise click.UsageError('Parameter --hsm-partition-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -265,7 +264,7 @@ def get_hsm_partition(ctx, from_json, hsm_cluster_id, hsm_partition_id):
 @cli_util.wrap_exceptions
 def get_pre_co_user_credentials(ctx, from_json, hsm_cluster_id):
 
-    if isinstance(hsm_cluster_id, six.string_types) and len(hsm_cluster_id.strip()) == 0:
+    if isinstance(hsm_cluster_id, str) and len(hsm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --hsm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -353,7 +352,7 @@ def list_hsm_partitions(ctx, from_json, all_pages, page_size, hsm_cluster_id, li
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(hsm_cluster_id, six.string_types) and len(hsm_cluster_id.strip()) == 0:
+    if isinstance(hsm_cluster_id, str) and len(hsm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --hsm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -408,7 +407,7 @@ def list_hsm_partitions(ctx, from_json, all_pages, page_size, hsm_cluster_id, li
 @cli_util.wrap_exceptions
 def schedule_hsm_cluster_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, hsm_cluster_id, time_of_deletion, if_match):
 
-    if isinstance(hsm_cluster_id, six.string_types) and len(hsm_cluster_id.strip()) == 0:
+    if isinstance(hsm_cluster_id, str) and len(hsm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --hsm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -472,7 +471,7 @@ As a provisioning operation, this call is subject to a Key Management limit that
 @cli_util.wrap_exceptions
 def update_hsm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, hsm_cluster_id, defined_tags, display_name, freeform_tags, if_match):
 
-    if isinstance(hsm_cluster_id, six.string_types) and len(hsm_cluster_id.strip()) == 0:
+    if isinstance(hsm_cluster_id, str) and len(hsm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --hsm-cluster-id cannot be whitespace or empty string')
     if not force:
         if defined_tags or freeform_tags:
@@ -539,7 +538,7 @@ def update_hsm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def upload_partition_certificates(ctx, from_json, hsm_cluster_id, partition_certificate, partition_owner_certificate, if_match):
 
-    if isinstance(hsm_cluster_id, six.string_types) and len(hsm_cluster_id.strip()) == 0:
+    if isinstance(hsm_cluster_id, str) and len(hsm_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --hsm-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}

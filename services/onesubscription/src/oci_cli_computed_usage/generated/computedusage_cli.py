@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -50,7 +49,7 @@ computed_usage_root_group.add_command(computed_usage_group)
 @cli_util.wrap_exceptions
 def get_computed_usage(ctx, from_json, computed_usage_id, compartment_id, fields):
 
-    if isinstance(computed_usage_id, six.string_types) and len(computed_usage_id.strip()) == 0:
+    if isinstance(computed_usage_id, str) and len(computed_usage_id.strip()) == 0:
         raise click.UsageError('Parameter --computed-usage-id cannot be whitespace or empty string')
 
     kwargs = {}

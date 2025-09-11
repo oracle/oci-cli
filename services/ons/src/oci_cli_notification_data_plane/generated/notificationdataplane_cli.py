@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -53,7 +52,7 @@ Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Comma
 @cli_util.wrap_exceptions
 def change_subscription_compartment(ctx, from_json, subscription_id, compartment_id, if_match):
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -168,7 +167,7 @@ Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Comma
 @cli_util.wrap_exceptions
 def delete_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subscription_id, if_match):
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -235,7 +234,7 @@ For information about subscription protocols, see [To create a subscription]."""
 @cli_util.wrap_exceptions
 def get_confirm_subscription(ctx, from_json, id, token, protocol):
 
-    if isinstance(id, six.string_types) and len(id.strip()) == 0:
+    if isinstance(id, str) and len(id.strip()) == 0:
         raise click.UsageError('Parameter --id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -261,7 +260,7 @@ Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Comma
 @cli_util.wrap_exceptions
 def get_subscription(ctx, from_json, subscription_id):
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -291,7 +290,7 @@ For information about subscription protocols, see [To create a subscription]."""
 @cli_util.wrap_exceptions
 def get_unsubscription(ctx, from_json, id, token, protocol):
 
-    if isinstance(id, six.string_types) and len(id.strip()) == 0:
+    if isinstance(id, str) and len(id.strip()) == 0:
         raise click.UsageError('Parameter --id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -385,7 +384,7 @@ Type of message body in the request. For `messageType` of JSON, a default key-va
 @cli_util.wrap_exceptions
 def publish_message(ctx, from_json, topic_id, body, title, message_type):
 
-    if isinstance(topic_id, six.string_types) and len(topic_id.strip()) == 0:
+    if isinstance(topic_id, str) and len(topic_id.strip()) == 0:
         raise click.UsageError('Parameter --topic-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -419,7 +418,7 @@ Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Comma
 @cli_util.wrap_exceptions
 def resend_subscription_confirmation(ctx, from_json, id):
 
-    if isinstance(id, six.string_types) and len(id.strip()) == 0:
+    if isinstance(id, str) and len(id.strip()) == 0:
         raise click.UsageError('Parameter --id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -452,7 +451,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_subscription(ctx, from_json, force, subscription_id, delivery_policy, freeform_tags, defined_tags, if_match):
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
     if not force:
         if delivery_policy or freeform_tags or defined_tags:

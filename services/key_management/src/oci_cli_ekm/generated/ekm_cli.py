@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -115,7 +114,7 @@ def create_ekms_private_endpoint(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def delete_ekms_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ekms_private_endpoint_id, if_match):
 
-    if isinstance(ekms_private_endpoint_id, six.string_types) and len(ekms_private_endpoint_id.strip()) == 0:
+    if isinstance(ekms_private_endpoint_id, str) and len(ekms_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --ekms-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -174,7 +173,7 @@ def delete_ekms_private_endpoint(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def get_ekms_private_endpoint(ctx, from_json, ekms_private_endpoint_id):
 
-    if isinstance(ekms_private_endpoint_id, six.string_types) and len(ekms_private_endpoint_id.strip()) == 0:
+    if isinstance(ekms_private_endpoint_id, str) and len(ekms_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --ekms-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -258,7 +257,7 @@ def list_ekms_private_endpoints(ctx, from_json, all_pages, page_size, compartmen
 @cli_util.wrap_exceptions
 def update_ekms_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ekms_private_endpoint_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(ekms_private_endpoint_id, six.string_types) and len(ekms_private_endpoint_id.strip()) == 0:
+    if isinstance(ekms_private_endpoint_id, str) and len(ekms_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --ekms-private-endpoint-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

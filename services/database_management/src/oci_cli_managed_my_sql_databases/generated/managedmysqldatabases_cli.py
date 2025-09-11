@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -70,7 +69,7 @@ managed_my_sql_databases_root_group.add_command(managed_my_sql_database_collecti
 @cli_util.wrap_exceptions
 def change_mysql_database_management_type(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_my_sql_database_id, management_type, operation, if_match):
 
-    if isinstance(managed_my_sql_database_id, six.string_types) and len(managed_my_sql_database_id.strip()) == 0:
+    if isinstance(managed_my_sql_database_id, str) and len(managed_my_sql_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-my-sql-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -129,7 +128,7 @@ def change_mysql_database_management_type(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def get_binary_log_information(ctx, from_json, managed_my_sql_database_id):
 
-    if isinstance(managed_my_sql_database_id, six.string_types) and len(managed_my_sql_database_id.strip()) == 0:
+    if isinstance(managed_my_sql_database_id, str) and len(managed_my_sql_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-my-sql-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -151,7 +150,7 @@ def get_binary_log_information(ctx, from_json, managed_my_sql_database_id):
 @cli_util.wrap_exceptions
 def get_general_replication_information(ctx, from_json, managed_my_sql_database_id):
 
-    if isinstance(managed_my_sql_database_id, six.string_types) and len(managed_my_sql_database_id.strip()) == 0:
+    if isinstance(managed_my_sql_database_id, str) and len(managed_my_sql_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-my-sql-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -208,7 +207,7 @@ def get_heat_wave_fleet_metric(ctx, from_json, compartment_id, start_time, end_t
 @cli_util.wrap_exceptions
 def get_managed_my_sql_database(ctx, from_json, managed_my_sql_database_id):
 
-    if isinstance(managed_my_sql_database_id, six.string_types) and len(managed_my_sql_database_id.strip()) == 0:
+    if isinstance(managed_my_sql_database_id, str) and len(managed_my_sql_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-my-sql-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -275,7 +274,7 @@ def get_my_sql_fleet_metric(ctx, from_json, compartment_id, start_time, end_time
 @cli_util.wrap_exceptions
 def get_my_sql_query_details(ctx, from_json, managed_my_sql_database_id, digest):
 
-    if isinstance(managed_my_sql_database_id, six.string_types) and len(managed_my_sql_database_id.strip()) == 0:
+    if isinstance(managed_my_sql_database_id, str) and len(managed_my_sql_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-my-sql-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -307,7 +306,7 @@ def list_high_availability_members(ctx, from_json, all_pages, page_size, managed
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_my_sql_database_id, six.string_types) and len(managed_my_sql_database_id.strip()) == 0:
+    if isinstance(managed_my_sql_database_id, str) and len(managed_my_sql_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-my-sql-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -364,7 +363,7 @@ def list_inbound_replications(ctx, from_json, all_pages, page_size, managed_my_s
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_my_sql_database_id, six.string_types) and len(managed_my_sql_database_id.strip()) == 0:
+    if isinstance(managed_my_sql_database_id, str) and len(managed_my_sql_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-my-sql-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -421,7 +420,7 @@ def list_managed_my_sql_database_configuration_data(ctx, from_json, all_pages, p
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_my_sql_database_id, six.string_types) and len(managed_my_sql_database_id.strip()) == 0:
+    if isinstance(managed_my_sql_database_id, str) and len(managed_my_sql_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-my-sql-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -481,7 +480,7 @@ def list_managed_my_sql_database_sql_data(ctx, from_json, all_pages, page_size, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_my_sql_database_id, six.string_types) and len(managed_my_sql_database_id.strip()) == 0:
+    if isinstance(managed_my_sql_database_id, str) and len(managed_my_sql_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-my-sql-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -604,7 +603,7 @@ def list_my_sql_digest_errors(ctx, from_json, all_pages, page_size, managed_my_s
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_my_sql_database_id, six.string_types) and len(managed_my_sql_database_id.strip()) == 0:
+    if isinstance(managed_my_sql_database_id, str) and len(managed_my_sql_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-my-sql-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -664,7 +663,7 @@ def list_outbound_replications(ctx, from_json, all_pages, page_size, managed_my_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(managed_my_sql_database_id, six.string_types) and len(managed_my_sql_database_id.strip()) == 0:
+    if isinstance(managed_my_sql_database_id, str) and len(managed_my_sql_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-my-sql-database-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -716,7 +715,7 @@ def list_outbound_replications(ctx, from_json, all_pages, page_size, managed_my_
 @cli_util.wrap_exceptions
 def summarize_managed_my_sql_database_availability_metrics(ctx, from_json, managed_my_sql_database_id, start_time, end_time, page, limit):
 
-    if isinstance(managed_my_sql_database_id, six.string_types) and len(managed_my_sql_database_id.strip()) == 0:
+    if isinstance(managed_my_sql_database_id, str) and len(managed_my_sql_database_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-my-sql-database-id cannot be whitespace or empty string')
 
     kwargs = {}

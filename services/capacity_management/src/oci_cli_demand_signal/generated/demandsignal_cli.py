@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -240,7 +239,7 @@ def create_occm_demand_signal_item(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def delete_occm_demand_signal(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ds_id, if_match):
 
-    if isinstance(ds_id, six.string_types) and len(ds_id.strip()) == 0:
+    if isinstance(ds_id, str) and len(ds_id.strip()) == 0:
         raise click.UsageError('Parameter --ds-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -304,7 +303,7 @@ def delete_occm_demand_signal(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_occm_demand_signal_item(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ds_item_id, if_match):
 
-    if isinstance(ds_item_id, six.string_types) and len(ds_item_id.strip()) == 0:
+    if isinstance(ds_item_id, str) and len(ds_item_id.strip()) == 0:
         raise click.UsageError('Parameter --ds-item-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -363,7 +362,7 @@ def delete_occm_demand_signal_item(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def get_occm_demand_signal(ctx, from_json, ds_id):
 
-    if isinstance(ds_id, six.string_types) and len(ds_id.strip()) == 0:
+    if isinstance(ds_id, str) and len(ds_id.strip()) == 0:
         raise click.UsageError('Parameter --ds-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -385,7 +384,7 @@ def get_occm_demand_signal(ctx, from_json, ds_id):
 @cli_util.wrap_exceptions
 def get_occm_demand_signal_item(ctx, from_json, ds_item_id):
 
-    if isinstance(ds_item_id, six.string_types) and len(ds_item_id.strip()) == 0:
+    if isinstance(ds_item_id, str) and len(ds_item_id.strip()) == 0:
         raise click.UsageError('Parameter --ds-item-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -663,7 +662,7 @@ def list_occm_demand_signals(ctx, from_json, all_pages, page_size, compartment_i
 @cli_util.wrap_exceptions
 def update_occm_demand_signal(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ds_id, display_name, freeform_tags, defined_tags, description, lifecycle_details, if_match):
 
-    if isinstance(ds_id, six.string_types) and len(ds_id.strip()) == 0:
+    if isinstance(ds_id, str) and len(ds_id.strip()) == 0:
         raise click.UsageError('Parameter --ds-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -749,7 +748,7 @@ NOTE: The previous value gets overwritten with the new one for this once updated
 @cli_util.wrap_exceptions
 def update_occm_demand_signal_item(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ds_item_id, region_parameterconflict, ad, target_compartment_id, demand_quantity, time_needed_before, resource_properties, notes, freeform_tags, defined_tags, if_match):
 
-    if isinstance(ds_item_id, six.string_types) and len(ds_item_id.strip()) == 0:
+    if isinstance(ds_item_id, str) and len(ds_item_id.strip()) == 0:
         raise click.UsageError('Parameter --ds-item-id cannot be whitespace or empty string')
     if not force:
         if resource_properties or freeform_tags or defined_tags:

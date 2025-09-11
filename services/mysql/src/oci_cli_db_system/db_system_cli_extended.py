@@ -10,7 +10,6 @@ from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types
 import click
-import six
 import oci.waiter
 import sys
 import json
@@ -63,7 +62,7 @@ def list_db_systems_extended(ctx, **kwargs):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
 def start_db_system_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, if_match, **kwargs):
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -115,7 +114,7 @@ def start_db_system_extended(ctx, from_json, wait_for_state, max_wait_seconds, w
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
 def stop_db_system_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, shutdown_type, if_match, **kwargs):
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}

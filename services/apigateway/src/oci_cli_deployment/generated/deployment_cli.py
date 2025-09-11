@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -56,7 +55,7 @@ deployment_root_group.add_command(deployment_group)
 @cli_util.wrap_exceptions
 def add_deployment_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, type, message, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -117,7 +116,7 @@ def add_deployment_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def change_deployment_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -268,7 +267,7 @@ def create_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, if_match, is_lock_override):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -323,7 +322,7 @@ def delete_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def get_deployment(ctx, from_json, deployment_id):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -417,7 +416,7 @@ def list_deployments(ctx, from_json, all_pages, page_size, compartment_id, gatew
 @cli_util.wrap_exceptions
 def remove_deployment_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, type, if_match):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -485,7 +484,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_deployment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, deployment_id, display_name, specification, freeform_tags, defined_tags, if_match, is_lock_override):
 
-    if isinstance(deployment_id, six.string_types) and len(deployment_id.strip()) == 0:
+    if isinstance(deployment_id, str) and len(deployment_id.strip()) == 0:
         raise click.UsageError('Parameter --deployment-id cannot be whitespace or empty string')
     if not force:
         if specification or freeform_tags or defined_tags:

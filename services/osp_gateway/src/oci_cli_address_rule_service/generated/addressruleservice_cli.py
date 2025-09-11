@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -43,7 +42,7 @@ address_rule_service_root_group.add_command(address_rule_group)
 @cli_util.wrap_exceptions
 def get_address_rule(ctx, from_json, osp_home_region, compartment_id, country_code):
 
-    if isinstance(country_code, six.string_types) and len(country_code.strip()) == 0:
+    if isinstance(country_code, str) and len(country_code.strip()) == 0:
         raise click.UsageError('Parameter --country-code cannot be whitespace or empty string')
 
     kwargs = {}
