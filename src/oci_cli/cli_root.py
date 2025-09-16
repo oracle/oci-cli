@@ -427,13 +427,13 @@ For more information, see the Using Queries section at {cli_constants.INPUT_OUTP
 @click.option('--auth-purpose', help='The The auth purpose which can be used in conjunction with --auth.')
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, help=GENERATE_FULL_COMMAND_JSON_HELP)
 @click.option('--generate-param-json-input', is_eager=True, help=GENERATE_PARAM_JSON_HELP)
-@click.option('--no-retry', is_flag=True, help='Disable retry logic for calls to services.')
-@click.option('--max-retries', type=click.INT, help='Maximum number of retry calls to be made to the service. For most commands, 5 attempts will be made. For operations with binary bodies, retries are disabled')
 @click.option('--proxy', help="""If the environment the CLI runs in requires use of a proxy server for HTTP requests, the details of the proxy server to use. Examples:
 
 http://proxy.example.org:3128/ (uses proxy.example.org on port 3128)
 \b
 http://user:pass@proxy.example.org:3128/ (if your proxy requires a username and password to authenticate)""")
+@click.option('--no-retry', is_flag=True, help='Disable retry logic for calls to services.')
+@click.option('--max-retries', type=click.INT, help='Maximum number of retry calls to be made to the service. For most commands, 7 attempts will be made. For operations with binary bodies, retries are disabled')
 @click.option('-d', '--debug', is_flag=True, help='Show additional debug information.')
 @click.option('-i', '--cli-auto-prompt', is_flag=True, help=f'''Use the interactive features for autocompletion and quick view of command reference.
 

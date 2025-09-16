@@ -21,6 +21,7 @@ SDK_client_map = {
     "db.change_backup_destination_compartment": "oci.database.DatabaseClient.change_backup_destination_compartment",
     "db.change_cloud_autonomous_vm_cluster_compartment": "oci.database.DatabaseClient.change_cloud_autonomous_vm_cluster_compartment",
     "db.change_cloud_autonomous_vm_cluster_subscription": "oci.database.DatabaseClient.change_cloud_autonomous_vm_cluster_subscription",
+    "db.change_cloud_db_system_subscription": "oci.database.DatabaseClient.change_cloud_db_system_subscription",
     "db.change_cloud_exadata_infrastructure_compartment": "oci.database.DatabaseClient.change_cloud_exadata_infrastructure_compartment",
     "db.change_cloud_exadata_infrastructure_subscription": "oci.database.DatabaseClient.change_cloud_exadata_infrastructure_subscription",
     "db.change_cloud_vm_cluster_compartment": "oci.database.DatabaseClient.change_cloud_vm_cluster_compartment",
