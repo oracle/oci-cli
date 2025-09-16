@@ -6,6 +6,45 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.66.1 - 2025-09-16
+--------------------
+Added
+~~~~~
+
+* Database Service
+
+  * Support for creating refreshable metadata clones for an Autonomous Database Serverless
+
+    * ``oci db autonomous-database create-refreshable-clone --clone-type``
+
+  * Support for new parameter in the Database Management service
+
+    * ``oci db system change-cloud-db-system-subscription --db-system-id``
+
+  * Support for the Oracle BaseDB service for Multicloud Database Service
+
+    * ``oci db system launch --db-system-id --cluster-placement-group-id --opc-dry-run --subscription-id``
+    * ``oci db system launch-from-backup --cluster-placement-group-id --opc-dry-run --subscription-id``
+    * ``oci db system launch-from-database --cluster-placement-group-id --opc-dry-run --subscription-id``
+    * ``oci db system launch-from-db-system --cluster-placement-group-id --opc-dry-run --subscription-id``
+    * ``oci db system update --opc-dry-run``
+
+* AI Data Platform Service
+
+  * Support for AI Data Platform Service
+
+    * ``oci ai-data-platform ai-data-platform change-compartment``
+    * ``oci ai-data-platform ai-data-platform create``
+    * ``oci ai-data-platform ai-data-platform delete``
+    * ``oci ai-data-platform ai-data-platform get``
+    * ``oci ai-data-platform ai-data-platform update``
+    * ``oci ai-data-platform ai-data-platform-collection list-ai-data-platforms``
+    * ``oci ai-data-platform work-request cancel``
+    * ``oci ai-data-platform work-request get``
+    * ``oci ai-data-platform work-request list``
+    * ``oci ai-data-platform work-request-error list``
+    * ``oci ai-data-platform work-request-log-entry list-work-request-logs``
+
 3.66.0 - 2025-09-09
 --------------------
 Added

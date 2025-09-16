@@ -18,6 +18,11 @@ service_mapping = {
         "Language",
         "Analytics & AI"
     ],
+    "ai-data-platform": [
+        "ai_data_platform",
+        "AiDataPlatform Control Plane",
+        "Others"
+    ],
     "ai-document": [
         "ai_document",
         "Document Understanding",

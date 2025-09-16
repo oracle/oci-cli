@@ -1112,11 +1112,7 @@ Example: `My mount target`""")
 
 Note:
 
-If the IP address is IPv4, this attribute value is stored in the [PrivateIp] resource, not in the `mountTarget` resource. To update the `hostnameLabel`, use `GetMountTarget` to obtain the [OCIDs] of the mount target's private IPs (`privateIpIds`). Then, you can use [UpdatePrivateIp] to update the `hostnameLabel` value.
-
-If the IP address is IPv6, it is stored in the [Ipv6]  resource To update the `hostnameLabel`, use `GetMountTarget` to obtain the [OCIDs] of the mount target's IPv6 address (`mountTargetIpv6Ids`). Then, you can use [UpdateIpv6] to update the `hostnameLabel` value.
-
-For more information, see [DNS in Your Virtual Cloud Network].
+This attribute value is stored in the [PrivateIp] resource, not in the `mountTarget` resource. To update the `hostnameLabel`, use `GetMountTarget` to obtain the [OCIDs] of the mount target's private IPs (`privateIpIds`). Then, you can use [UpdatePrivateIp] to update the `hostnameLabel` value. For more information, see [DNS in Your Virtual Cloud Network].
 
 Example: `files-1`""")
 @cli_util.option('--ip-address', help=u"""A private IP address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet.
