@@ -58,6 +58,12 @@ def application_installation_usage_summary_group():
     pass
 
 
+@click.command(cli_util.override('jms.uncorrelated_package_usage_summary_group.command_name', 'uncorrelated-package-usage-summary'), cls=CommandGroupWithAlias, help="""Summary of an uncorrelated package.""")
+@cli_util.help_option_group
+def uncorrelated_package_usage_summary_group():
+    pass
+
+
 @click.command(cli_util.override('jms.work_item_summary_group.command_name', 'work-item-summary'), cls=CommandGroupWithAlias, help="""Work item to complete a work request.""")
 @cli_util.help_option_group
 def work_item_summary_group():
@@ -88,6 +94,12 @@ def jre_usage_group():
     pass
 
 
+@click.command(cli_util.override('jms.library_managed_instance_usage_summary_group.command_name', 'library-managed-instance-usage-summary'), cls=CommandGroupWithAlias, help="""Summary of a managed instance where a given library was detected statically and/or dynamically. Contains the count of applications where the library was detected.""")
+@cli_util.help_option_group
+def library_managed_instance_usage_summary_group():
+    pass
+
+
 @click.command(cli_util.override('jms.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An asynchronous work request. See [Work Requests].""")
 @cli_util.help_option_group
 def work_request_group():
@@ -97,6 +109,12 @@ def work_request_group():
 @click.command(cli_util.override('jms.java_server_instance_usage_group.command_name', 'java-server-instance-usage'), cls=CommandGroupWithAlias, help="""Java Server instance usage during a specified time period.""")
 @cli_util.help_option_group
 def java_server_instance_usage_group():
+    pass
+
+
+@click.command(cli_util.override('jms.uncorrelated_package_application_usage_summary_group.command_name', 'uncorrelated-package-application-usage-summary'), cls=CommandGroupWithAlias, help="""Summary of an application where a given libary was detected. Contains the count of managed instances where the package was detected with this application.""")
+@cli_util.help_option_group
+def uncorrelated_package_application_usage_summary_group():
     pass
 
 
@@ -142,9 +160,21 @@ def performance_tuning_analysis_result_group():
     pass
 
 
+@click.command(cli_util.override('jms.uncorrelated_package_managed_instance_usage_summary_group.command_name', 'uncorrelated-package-managed-instance-usage-summary'), cls=CommandGroupWithAlias, help="""Summary of a managed instance where a given uncorrelated package was detected. Contains the count of application where the package was detected with this application.""")
+@cli_util.help_option_group
+def uncorrelated_package_managed_instance_usage_summary_group():
+    pass
+
+
 @click.command(cli_util.override('jms.fleet_advanced_feature_configuration_group.command_name', 'fleet-advanced-feature-configuration'), cls=CommandGroupWithAlias, help="""Metadata for the advanced features in the Fleet.""")
 @cli_util.help_option_group
 def fleet_advanced_feature_configuration_group():
+    pass
+
+
+@click.command(cli_util.override('jms.library_application_usage_summary_group.command_name', 'library-application-usage-summary'), cls=CommandGroupWithAlias, help="""Summary of an application where a given library was detected statically and/or dynamically. Contains the count of managed instances where the library was detected with this application.""")
+@cli_util.help_option_group
+def library_application_usage_summary_group():
     pass
 
 
@@ -190,6 +220,12 @@ def drs_file_collection_group():
     pass
 
 
+@click.command(cli_util.override('jms.container_summary_group.command_name', 'container-summary'), cls=CommandGroupWithAlias, help="""Information about a container in the cluster.""")
+@cli_util.help_option_group
+def container_summary_group():
+    pass
+
+
 @click.command(cli_util.override('jms.fleet_diagnosis_summary_group.command_name', 'fleet-diagnosis-summary'), cls=CommandGroupWithAlias, help="""Diagnosis of a resource needed by the fleet.""")
 @cli_util.help_option_group
 def fleet_diagnosis_summary_group():
@@ -205,6 +241,12 @@ def library_usage_group():
 @click.command(cli_util.override('jms.fleet_agent_configuration_group.command_name', 'fleet-agent-configuration'), cls=CommandGroupWithAlias, help="""Management Agent Configuration for a Fleet. Includes JRE scanning frequency and a list of include/exclude file system paths.""")
 @cli_util.help_option_group
 def fleet_agent_configuration_group():
+    pass
+
+
+@click.command(cli_util.override('jms.library_inventory_group.command_name', 'library-inventory'), cls=CommandGroupWithAlias, help="""Inventory of libraries in a fleet during a specified time period.""")
+@cli_util.help_option_group
+def library_inventory_group():
     pass
 
 
@@ -238,19 +280,28 @@ def fleet_error_summary_group():
     pass
 
 
+@click.command(cli_util.override('jms.task_schedule_group.command_name', 'task-schedule'), cls=CommandGroupWithAlias, help="""The properties of a task schedule.""")
+@cli_util.help_option_group
+def task_schedule_group():
+    pass
+
+
 jms_root_group.add_command(fleet_group)
 jms_root_group.add_command(installation_site_summary_group)
 jms_root_group.add_command(export_status_group)
 jms_root_group.add_command(java_migration_analysis_result_group)
 jms_root_group.add_command(fleet_error_aggregation_group)
 jms_root_group.add_command(application_installation_usage_summary_group)
+jms_root_group.add_command(uncorrelated_package_usage_summary_group)
 jms_root_group.add_command(work_item_summary_group)
 jms_root_group.add_command(installation_usage_group)
 jms_root_group.add_command(java_family_group)
 jms_root_group.add_command(plugin_error_summary_group)
 jms_root_group.add_command(jre_usage_group)
+jms_root_group.add_command(library_managed_instance_usage_summary_group)
 jms_root_group.add_command(work_request_group)
 jms_root_group.add_command(java_server_instance_usage_group)
+jms_root_group.add_command(uncorrelated_package_application_usage_summary_group)
 jms_root_group.add_command(deployed_application_installation_usage_summary_group)
 jms_root_group.add_command(work_request_error_group)
 jms_root_group.add_command(plugin_error_aggregation_group)
@@ -258,7 +309,9 @@ jms_root_group.add_command(deployed_application_usage_group)
 jms_root_group.add_command(managed_instance_usage_group)
 jms_root_group.add_command(blocklist_group)
 jms_root_group.add_command(performance_tuning_analysis_result_group)
+jms_root_group.add_command(uncorrelated_package_managed_instance_usage_summary_group)
 jms_root_group.add_command(fleet_advanced_feature_configuration_group)
+jms_root_group.add_command(library_application_usage_summary_group)
 jms_root_group.add_command(java_release_group)
 jms_root_group.add_command(announcement_collection_group)
 jms_root_group.add_command(jms_plugin_group)
@@ -266,14 +319,17 @@ jms_root_group.add_command(work_request_log_entry_group)
 jms_root_group.add_command(java_server_usage_group)
 jms_root_group.add_command(agent_installer_summary_group)
 jms_root_group.add_command(drs_file_collection_group)
+jms_root_group.add_command(container_summary_group)
 jms_root_group.add_command(fleet_diagnosis_summary_group)
 jms_root_group.add_command(library_usage_group)
 jms_root_group.add_command(fleet_agent_configuration_group)
+jms_root_group.add_command(library_inventory_group)
 jms_root_group.add_command(application_usage_group)
 jms_root_group.add_command(drs_file_group)
 jms_root_group.add_command(crypto_analysis_result_group)
 jms_root_group.add_command(export_setting_group)
 jms_root_group.add_command(fleet_error_summary_group)
+jms_root_group.add_command(task_schedule_group)
 
 
 @installation_site_summary_group.command(name=cli_util.override('jms.add_fleet_installation_sites.command_name', 'add'), help=u"""Add Java installation sites in a Fleet. \n[Command Reference](addFleetInstallationSites)""")
@@ -433,7 +489,7 @@ def change_fleet_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
 @blocklist_group.command(name=cli_util.override('jms.create_blocklist.command_name', 'create'), help=u"""Add a new record to the fleet blocklist. \n[Command Reference](createBlocklist)""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @cli_util.option('--target', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--operation', required=True, type=custom_types.CliCaseInsensitiveChoice(["CREATE_FLEET", "DELETE_FLEET", "MOVE_FLEET", "UPDATE_FLEET", "UPDATE_FLEET_AGENT_CONFIGURATION", "DELETE_JAVA_INSTALLATION", "CREATE_JAVA_INSTALLATION", "COLLECT_JFR", "REQUEST_CRYPTO_EVENT_ANALYSIS", "REQUEST_PERFORMANCE_TUNING_ANALYSIS", "REQUEST_JAVA_MIGRATION_ANALYSIS", "DELETE_JMS_REPORT", "SCAN_JAVA_SERVER_USAGE", "SCAN_LIBRARY_USAGE", "EXPORT_DATA_CSV", "CREATE_DRS_FILE", "UPDATE_DRS_FILE", "DELETE_DRS_FILE", "ENABLE_DRS", "DISABLE_DRS"]), help=u"""The operation type""")
+@cli_util.option('--operation', required=True, type=custom_types.CliCaseInsensitiveChoice(["CREATE_FLEET", "DELETE_FLEET", "MOVE_FLEET", "UPDATE_FLEET", "UPDATE_FLEET_AGENT_CONFIGURATION", "DELETE_JAVA_INSTALLATION", "CREATE_JAVA_INSTALLATION", "COLLECT_JFR", "REQUEST_CRYPTO_EVENT_ANALYSIS", "REQUEST_PERFORMANCE_TUNING_ANALYSIS", "REQUEST_JAVA_MIGRATION_ANALYSIS", "DELETE_JMS_REPORT", "SCAN_JAVA_SERVER_USAGE", "SCAN_LIBRARY_USAGE", "SCAN_LIBRARY_DYNAMIC_USAGE", "EXPORT_DATA_CSV", "CREATE_DRS_FILE", "UPDATE_DRS_FILE", "DELETE_DRS_FILE", "ENABLE_DRS", "DISABLE_DRS"]), help=u"""The operation type""")
 @cli_util.option('--reason', help=u"""The reason why the operation is blocklisted""")
 @json_skeleton_utils.get_cli_json_input_option({'target': {'module': 'jms', 'class': 'BlocklistTarget'}})
 @cli_util.help_option
@@ -609,8 +665,9 @@ def create_fleet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 
 @jms_plugin_group.command(name=cli_util.override('jms.create_jms_plugin.command_name', 'create'), help=u"""Registers an agent's JmsPlugin, optionally attaching to an existing fleet of the tenancy. JmsPlugins registered fleet-less are created with lifecycle state INACTIVE. For the operation to be authorized, the agent must exist, and the authorized user requires JMS_PLUGIN_CREATE permission for the agent's compartment. \n[Command Reference](createJmsPlugin)""")
-@cli_util.option('--agent-id', required=True, help=u"""The [OCID] of the Management Agent (OMA) or the Oracle Cloud Agent (OCA) instance where the JMS plugin is deployed.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OMA/OCA agent's compartment [OCID].""")
+@cli_util.option('--agent-id', required=True, help=u"""The [OCID] of the Management Agent (OMA), the Oracle Cloud Agent (OCA), or the Oracle Container Management Agent (OCMA) instance where the JMS plugin is deployed.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OMA/OCA/OCMA agent's compartment [OCID].""")
+@cli_util.option('--agent-type', type=custom_types.CliCaseInsensitiveChoice(["OMA", "OCA", "OCMA"]), help=u"""The agent type.""")
 @cli_util.option('--fleet-id', help=u"""The [OCID] of the fleet.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`. (See [Understanding Free-form Tags]).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`. (See [Managing Tags and Tag Namespaces].)""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -622,7 +679,7 @@ def create_fleet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'jms', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'jms', 'class': 'dict(str, string)'}}, output_type={'module': 'jms', 'class': 'JmsPlugin'})
 @cli_util.wrap_exceptions
-def create_jms_plugin(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, agent_id, compartment_id, fleet_id, defined_tags, freeform_tags):
+def create_jms_plugin(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, agent_id, compartment_id, agent_type, fleet_id, defined_tags, freeform_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -630,6 +687,9 @@ def create_jms_plugin(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     _details = {}
     _details['agentId'] = agent_id
     _details['compartmentId'] = compartment_id
+
+    if agent_type is not None:
+        _details['agentType'] = agent_type
 
     if fleet_id is not None:
         _details['fleetId'] = fleet_id
@@ -657,6 +717,581 @@ def create_jms_plugin(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_jms_plugin(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.create_task_schedule.command_name', 'create'), help=u"""Create a task schedule using the information provided. \n[Command Reference](createTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details': {'module': 'jms', 'class': 'TaskDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details': {'module': 'jms', 'class': 'TaskDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def create_task_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_details):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+    _details['taskDetails'] = cli_util.parse_json_parameter("task_details", task_details)
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.create_task_schedule(
+        create_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.create_task_schedule_deployed_application_migration_task_details.command_name', 'create-task-schedule-deployed-application-migration-task-details'), help=u"""Create a task schedule using the information provided. \n[Command Reference](createTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-details-deployed-application-migration-task-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details-deployed-application-migration-task-request': {'module': 'jms', 'class': 'RequestDeployedApplicationMigrationAnalysesDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details-deployed-application-migration-task-request': {'module': 'jms', 'class': 'RequestDeployedApplicationMigrationAnalysesDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def create_task_schedule_deployed_application_migration_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_details_deployed_application_migration_task_request):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+
+    if task_details_deployed_application_migration_task_request is not None:
+        _details['taskDetails']['deployedApplicationMigrationTaskRequest'] = cli_util.parse_json_parameter("task_details_deployed_application_migration_task_request", task_details_deployed_application_migration_task_request)
+
+    _details['taskDetails']['taskType'] = 'DEPLOYED_APPLICATION_MIGRATION'
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.create_task_schedule(
+        create_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.create_task_schedule_remove_installation_site_task_details.command_name', 'create-task-schedule-remove-installation-site-task-details'), help=u"""Create a task schedule using the information provided. \n[Command Reference](createTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-details-remove-installation-site-task-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details-remove-installation-site-task-request': {'module': 'jms', 'class': 'RemoveFleetInstallationSitesDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details-remove-installation-site-task-request': {'module': 'jms', 'class': 'RemoveFleetInstallationSitesDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def create_task_schedule_remove_installation_site_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_details_remove_installation_site_task_request):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+
+    if task_details_remove_installation_site_task_request is not None:
+        _details['taskDetails']['removeInstallationSiteTaskRequest'] = cli_util.parse_json_parameter("task_details_remove_installation_site_task_request", task_details_remove_installation_site_task_request)
+
+    _details['taskDetails']['taskType'] = 'REMOVE_INSTALLATION_SITE'
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.create_task_schedule(
+        create_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.create_task_schedule_crypto_task_details.command_name', 'create-task-schedule-crypto-task-details'), help=u"""Create a task schedule using the information provided. \n[Command Reference](createTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-details-crypto-task-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details-crypto-task-request': {'module': 'jms', 'class': 'RequestCryptoAnalysesDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details-crypto-task-request': {'module': 'jms', 'class': 'RequestCryptoAnalysesDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def create_task_schedule_crypto_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_details_crypto_task_request):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+
+    if task_details_crypto_task_request is not None:
+        _details['taskDetails']['cryptoTaskRequest'] = cli_util.parse_json_parameter("task_details_crypto_task_request", task_details_crypto_task_request)
+
+    _details['taskDetails']['taskType'] = 'CRYPTO'
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.create_task_schedule(
+        create_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.create_task_schedule_java_migration_task_details.command_name', 'create-task-schedule-java-migration-task-details'), help=u"""Create a task schedule using the information provided. \n[Command Reference](createTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-details-java-migration-task-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details-java-migration-task-request': {'module': 'jms', 'class': 'RequestJavaMigrationAnalysesDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details-java-migration-task-request': {'module': 'jms', 'class': 'RequestJavaMigrationAnalysesDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def create_task_schedule_java_migration_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_details_java_migration_task_request):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+
+    if task_details_java_migration_task_request is not None:
+        _details['taskDetails']['javaMigrationTaskRequest'] = cli_util.parse_json_parameter("task_details_java_migration_task_request", task_details_java_migration_task_request)
+
+    _details['taskDetails']['taskType'] = 'JAVA_MIGRATION'
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.create_task_schedule(
+        create_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.create_task_schedule_scan_library_task_details.command_name', 'create-task-schedule-scan-library-task-details'), help=u"""Create a task schedule using the information provided. \n[Command Reference](createTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-details-scan-library-task-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details-scan-library-task-request': {'module': 'jms', 'class': 'ScanLibraryUsageDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details-scan-library-task-request': {'module': 'jms', 'class': 'ScanLibraryUsageDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def create_task_schedule_scan_library_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_details_scan_library_task_request):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+
+    if task_details_scan_library_task_request is not None:
+        _details['taskDetails']['scanLibraryTaskRequest'] = cli_util.parse_json_parameter("task_details_scan_library_task_request", task_details_scan_library_task_request)
+
+    _details['taskDetails']['taskType'] = 'SCAN_LIBRARY'
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.create_task_schedule(
+        create_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.create_task_schedule_performance_tuning_task_details.command_name', 'create-task-schedule-performance-tuning-task-details'), help=u"""Create a task schedule using the information provided. \n[Command Reference](createTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-details-performance-tuning-task-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details-performance-tuning-task-request': {'module': 'jms', 'class': 'RequestPerformanceTuningAnalysesDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details-performance-tuning-task-request': {'module': 'jms', 'class': 'RequestPerformanceTuningAnalysesDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def create_task_schedule_performance_tuning_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_details_performance_tuning_task_request):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+
+    if task_details_performance_tuning_task_request is not None:
+        _details['taskDetails']['performanceTuningTaskRequest'] = cli_util.parse_json_parameter("task_details_performance_tuning_task_request", task_details_performance_tuning_task_request)
+
+    _details['taskDetails']['taskType'] = 'PERFORMANCE_TUNING'
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.create_task_schedule(
+        create_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.create_task_schedule_scan_java_server_task_details.command_name', 'create-task-schedule-scan-java-server-task-details'), help=u"""Create a task schedule using the information provided. \n[Command Reference](createTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-details-scan-java-server-task-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details-scan-java-server-task-request': {'module': 'jms', 'class': 'ScanJavaServerUsageDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details-scan-java-server-task-request': {'module': 'jms', 'class': 'ScanJavaServerUsageDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def create_task_schedule_scan_java_server_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_details_scan_java_server_task_request):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+
+    if task_details_scan_java_server_task_request is not None:
+        _details['taskDetails']['scanJavaServerTaskRequest'] = cli_util.parse_json_parameter("task_details_scan_java_server_task_request", task_details_scan_java_server_task_request)
+
+    _details['taskDetails']['taskType'] = 'SCAN_JAVA_SERVER'
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.create_task_schedule(
+        create_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.create_task_schedule_jfr_task_details.command_name', 'create-task-schedule-jfr-task-details'), help=u"""Create a task schedule using the information provided. \n[Command Reference](createTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-details-jfr-task-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details-jfr-task-request': {'module': 'jms', 'class': 'RequestJfrRecordingsDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details-jfr-task-request': {'module': 'jms', 'class': 'RequestJfrRecordingsDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def create_task_schedule_jfr_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_details_jfr_task_request):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+
+    if task_details_jfr_task_request is not None:
+        _details['taskDetails']['jfrTaskRequest'] = cli_util.parse_json_parameter("task_details_jfr_task_request", task_details_jfr_task_request)
+
+    _details['taskDetails']['taskType'] = 'JFR'
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.create_task_schedule(
+        create_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.create_task_schedule_add_installation_site_task_details.command_name', 'create-task-schedule-add-installation-site-task-details'), help=u"""Create a task schedule using the information provided. \n[Command Reference](createTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-details-add-installation-site-task-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details-add-installation-site-task-request': {'module': 'jms', 'class': 'AddFleetInstallationSitesDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details-add-installation-site-task-request': {'module': 'jms', 'class': 'AddFleetInstallationSitesDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def create_task_schedule_add_installation_site_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_details_add_installation_site_task_request):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+
+    if task_details_add_installation_site_task_request is not None:
+        _details['taskDetails']['addInstallationSiteTaskRequest'] = cli_util.parse_json_parameter("task_details_add_installation_site_task_request", task_details_add_installation_site_task_request)
+
+    _details['taskDetails']['taskType'] = 'ADD_INSTALLATION_SITE'
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.create_task_schedule(
+        create_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -1066,6 +1701,73 @@ def delete_performance_tuning_analysis_result(ctx, from_json, wait_for_state, ma
     cli_util.render_response(result, ctx)
 
 
+@task_schedule_group.command(name=cli_util.override('jms.delete_task_schedule.command_name', 'delete'), help=u"""Deletes the task schedule record specified by an identifier. \n[Command Reference](deleteTaskSchedule)""")
+@cli_util.option('--task-schedule-id', required=True, help=u"""The [OCID] to identify this task schedule.""")
+@cli_util.option('--fleet-id', help=u"""The ID of the Fleet.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_task_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, task_schedule_id, fleet_id, if_match):
+
+    if isinstance(task_schedule_id, six.string_types) and len(task_schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --task-schedule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if fleet_id is not None:
+        kwargs['fleet_id'] = fleet_id
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.delete_task_schedule(
+        task_schedule_id=task_schedule_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_task_schedule(task_schedule_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @fleet_group.command(name=cli_util.override('jms.disable_drs.command_name', 'disable-drs'), help=u"""Request to disable the DRS in the selected target in the Fleet. \n[Command Reference](disableDrs)""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @cli_util.option('--manage-drs-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1251,12 +1953,13 @@ def generate_agent_deploy_script(ctx, from_json, file, fleet_id, install_key_id,
 @cli_util.option('--install-key-id', required=True, help=u"""The [OCID] of the management agent install key for which to generate the configuration file.""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the fleet for which to generate the configuration file.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--agent-type', type=custom_types.CliCaseInsensitiveChoice(["OMA", "OCA", "OCMA"]), help=u"""The JMS plugin type.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def generate_agent_installer_configuration(ctx, from_json, file, install_key_id, fleet_id):
+def generate_agent_installer_configuration(ctx, from_json, file, install_key_id, fleet_id, agent_type):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1264,6 +1967,9 @@ def generate_agent_installer_configuration(ctx, from_json, file, install_key_id,
     _details = {}
     _details['installKeyId'] = install_key_id
     _details['fleetId'] = fleet_id
+
+    if agent_type is not None:
+        _details['agentType'] = agent_type
 
     client = cli_util.build_client('jms', 'java_management_service', ctx)
     result = client.generate_agent_installer_configuration(
@@ -1644,6 +2350,31 @@ def get_performance_tuning_analysis_result(ctx, from_json, fleet_id, performance
     cli_util.render_response(result, ctx)
 
 
+@task_schedule_group.command(name=cli_util.override('jms.get_task_schedule.command_name', 'get'), help=u"""Returns a task schedule. \n[Command Reference](getTaskSchedule)""")
+@cli_util.option('--task-schedule-id', required=True, help=u"""The [OCID] to identify this task schedule.""")
+@cli_util.option('--fleet-id', help=u"""The ID of the Fleet.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def get_task_schedule(ctx, from_json, task_schedule_id, fleet_id):
+
+    if isinstance(task_schedule_id, six.string_types) and len(task_schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --task-schedule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if fleet_id is not None:
+        kwargs['fleet_id'] = fleet_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.get_task_schedule(
+        task_schedule_id=task_schedule_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @work_request_group.command(name=cli_util.override('jms.get_work_request.command_name', 'get'), help=u"""Retrieve the details of a work request with the specified ID. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the asynchronous work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1789,7 +2520,7 @@ def list_announcements(ctx, from_json, all_pages, page_size, summary_contains, t
 
 @blocklist_group.command(name=cli_util.override('jms.list_blocklists.command_name', 'list'), help=u"""Returns a list of blocklist entities contained by a fleet. \n[Command Reference](listBlocklists)""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
-@cli_util.option('--operation', type=custom_types.CliCaseInsensitiveChoice(["CREATE_FLEET", "DELETE_FLEET", "MOVE_FLEET", "UPDATE_FLEET", "UPDATE_FLEET_AGENT_CONFIGURATION", "DELETE_JAVA_INSTALLATION", "CREATE_JAVA_INSTALLATION", "COLLECT_JFR", "REQUEST_CRYPTO_EVENT_ANALYSIS", "REQUEST_PERFORMANCE_TUNING_ANALYSIS", "REQUEST_JAVA_MIGRATION_ANALYSIS", "DELETE_JMS_REPORT", "SCAN_JAVA_SERVER_USAGE", "SCAN_LIBRARY_USAGE", "EXPORT_DATA_CSV", "CREATE_DRS_FILE", "UPDATE_DRS_FILE", "DELETE_DRS_FILE", "ENABLE_DRS", "DISABLE_DRS"]), help=u"""The operation type.""")
+@cli_util.option('--operation', type=custom_types.CliCaseInsensitiveChoice(["CREATE_FLEET", "DELETE_FLEET", "MOVE_FLEET", "UPDATE_FLEET", "UPDATE_FLEET_AGENT_CONFIGURATION", "DELETE_JAVA_INSTALLATION", "CREATE_JAVA_INSTALLATION", "COLLECT_JFR", "REQUEST_CRYPTO_EVENT_ANALYSIS", "REQUEST_PERFORMANCE_TUNING_ANALYSIS", "REQUEST_JAVA_MIGRATION_ANALYSIS", "DELETE_JMS_REPORT", "SCAN_JAVA_SERVER_USAGE", "SCAN_LIBRARY_USAGE", "SCAN_LIBRARY_DYNAMIC_USAGE", "EXPORT_DATA_CSV", "CREATE_DRS_FILE", "UPDATE_DRS_FILE", "DELETE_DRS_FILE", "ENABLE_DRS", "DISABLE_DRS"]), help=u"""The operation type.""")
 @cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the related managed instance.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
@@ -1844,6 +2575,84 @@ def list_blocklists(ctx, from_json, all_pages, page_size, fleet_id, operation, m
         )
     else:
         result = client.list_blocklists(
+            fleet_id=fleet_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@container_summary_group.command(name=cli_util.override('jms.list_containers.command_name', 'list-containers'), help=u"""List containers in a fleet filtered by query parameters. \n[Command Reference](listContainers)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the managed instance.""")
+@cli_util.option('--display-name', help=u"""The display name.""")
+@cli_util.option('--application-name', help=u"""The name of the application.""")
+@cli_util.option('--jre-version', help=u"""The version of the related Java Runtime.""")
+@cli_util.option('--jre-security-status', type=custom_types.CliCaseInsensitiveChoice(["EARLY_ACCESS", "UNKNOWN", "UP_TO_DATE", "UPDATE_REQUIRED", "UPGRADE_REQUIRED"]), help=u"""The security status of the Java Runtime.""")
+@cli_util.option('--time-started-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""If specified, only containers with a start time later than or equal to this parameter will be included in the response (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-started-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""If specified, only containers with a start time earlier than or equal to this parameter will be included in the response (formatted according to RFC3339).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "namespace", "podName", "applicationName", "jreVersion", "jreSecurityStatus", "timeStarted"]), help=u"""The field to sort the containers. Only one sort order can be provided. Default order for _displayName_, _namespace_, _podName_, _applicationName_, or _jreVersion_ is **ascending**. Default order for _timeStarted_ is **descending**. If no value is specified _timeStarted_ is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'ContainerCollection'})
+@cli_util.wrap_exceptions
+def list_containers(ctx, from_json, all_pages, page_size, fleet_id, managed_instance_id, display_name, application_name, jre_version, jre_security_status, time_started_greater_than_or_equal_to, time_started_less_than_or_equal_to, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+        raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if managed_instance_id is not None:
+        kwargs['managed_instance_id'] = managed_instance_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if application_name is not None:
+        kwargs['application_name'] = application_name
+    if jre_version is not None:
+        kwargs['jre_version'] = jre_version
+    if jre_security_status is not None:
+        kwargs['jre_security_status'] = jre_security_status
+    if time_started_greater_than_or_equal_to is not None:
+        kwargs['time_started_greater_than_or_equal_to'] = time_started_greater_than_or_equal_to
+    if time_started_less_than_or_equal_to is not None:
+        kwargs['time_started_less_than_or_equal_to'] = time_started_less_than_or_equal_to
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_containers,
+            fleet_id=fleet_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_containers,
+            limit,
+            page_size,
+            fleet_id=fleet_id,
+            **kwargs
+        )
+    else:
+        result = client.list_containers(
             fleet_id=fleet_id,
             **kwargs
         )
@@ -2469,10 +3278,10 @@ def list_java_releases(ctx, from_json, all_pages, page_size, release_version, fa
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Flag to determine whether the info should be gathered only in the compartment or in the compartment and its subcompartments.""")
 @cli_util.option('--id', help=u"""The [OCID] of the JmsPlugin.""")
 @cli_util.option('--fleet-id', help=u"""The ID of the Fleet.""")
-@cli_util.option('--agent-id', help=u"""The ManagementAgent (OMA) or Instance (OCA) [OCID] that identifies the Agent.""")
+@cli_util.option('--agent-id', help=u"""The ManagementAgent (OMA), Oracle Cloud Agent (OCA), or the Oracle Container Management Agent (OCMA) [OCID] that identifies the Agent.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "NEEDS_ATTENTION", "DELETED"]), help=u"""Filter JmsPlugin with its lifecycle state.""")
 @cli_util.option('--availability-status', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "SILENT", "NOT_AVAILABLE"]), help=u"""Filter JmsPlugin with its availability status.""")
-@cli_util.option('--agent-type', type=custom_types.CliCaseInsensitiveChoice(["OMA", "OCA"]), help=u"""Filter JmsPlugin with agent type.""")
+@cli_util.option('--agent-type', type=custom_types.CliCaseInsensitiveChoice(["OMA", "OCA", "OCMA"]), help=u"""Filter JmsPlugin with agent type.""")
 @cli_util.option('--time-registered-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""If present, only plugins with a registration time before this parameter are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-last-seen-less-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""If present, only plugins with a last seen time before this parameter are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -2610,6 +3419,170 @@ def list_jre_usage(ctx, from_json, all_pages, page_size, compartment_id, host_id
         )
     else:
         result = client.list_jre_usage(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@library_application_usage_summary_group.command(name=cli_util.override('jms.list_library_application_usage.command_name', 'list-library-application-usage'), help=u"""List applications where a library has been detected filtered by query parameters. \n[Command Reference](listLibraryApplicationUsage)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--library-key', required=True, help=u"""The unique identifier of a Java library.""")
+@cli_util.option('--application-id', help=u"""The Fleet-unique identifier of the application.""")
+@cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the managed instance.""")
+@cli_util.option('--application-name', help=u"""The name of the application.""")
+@cli_util.option('--application-name-contains', help=u"""Filter the list with application name contains the given value.""")
+@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["applicationName", "managedInstanceCount", "lastDetectedDynamically", "firstSeenInClasspath", "lastSeenInClasspath"]), help=u"""The field to sort library application usage summaries.  Only one sort order may be provided. If no value is specified _lastSeenInClasspath_ is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'LibraryApplicationUsageCollection'})
+@cli_util.wrap_exceptions
+def list_library_application_usage(ctx, from_json, all_pages, page_size, fleet_id, library_key, application_id, managed_instance_id, application_name, application_name_contains, time_start, time_end, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+        raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
+
+    if isinstance(library_key, six.string_types) and len(library_key.strip()) == 0:
+        raise click.UsageError('Parameter --library-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if application_id is not None:
+        kwargs['application_id'] = application_id
+    if managed_instance_id is not None:
+        kwargs['managed_instance_id'] = managed_instance_id
+    if application_name is not None:
+        kwargs['application_name'] = application_name
+    if application_name_contains is not None:
+        kwargs['application_name_contains'] = application_name_contains
+    if time_start is not None:
+        kwargs['time_start'] = time_start
+    if time_end is not None:
+        kwargs['time_end'] = time_end
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_library_application_usage,
+            fleet_id=fleet_id,
+            library_key=library_key,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_library_application_usage,
+            limit,
+            page_size,
+            fleet_id=fleet_id,
+            library_key=library_key,
+            **kwargs
+        )
+    else:
+        result = client.list_library_application_usage(
+            fleet_id=fleet_id,
+            library_key=library_key,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@library_managed_instance_usage_summary_group.command(name=cli_util.override('jms.list_library_managed_instance_usage.command_name', 'list-library-managed-instance-usage'), help=u"""List managed instances where a library has been detected, filtered by query parameters. \n[Command Reference](listLibraryManagedInstanceUsage)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--library-key', required=True, help=u"""The unique identifier of a Java library.""")
+@cli_util.option('--application-id', help=u"""The Fleet-unique identifier of the application.""")
+@cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the managed instance.""")
+@cli_util.option('--host-name', help=u"""The host [OCID] of the managed instance.""")
+@cli_util.option('--hostname-contains', help=u"""Filter the list with hostname contains the given value.""")
+@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["hostname", "applicationCount", "lastDetectedDynamically", "firstSeenInClasspath", "lastSeenInClasspath"]), help=u"""The field to sort library application usage summaries.  Only one sort order may be provided. If no value is specified _lastSeenInClasspath_ is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'LibraryManagedInstanceUsageCollection'})
+@cli_util.wrap_exceptions
+def list_library_managed_instance_usage(ctx, from_json, all_pages, page_size, fleet_id, library_key, application_id, managed_instance_id, host_name, hostname_contains, time_start, time_end, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+        raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
+
+    if isinstance(library_key, six.string_types) and len(library_key.strip()) == 0:
+        raise click.UsageError('Parameter --library-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if application_id is not None:
+        kwargs['application_id'] = application_id
+    if managed_instance_id is not None:
+        kwargs['managed_instance_id'] = managed_instance_id
+    if host_name is not None:
+        kwargs['host_name'] = host_name
+    if hostname_contains is not None:
+        kwargs['hostname_contains'] = hostname_contains
+    if time_start is not None:
+        kwargs['time_start'] = time_start
+    if time_end is not None:
+        kwargs['time_end'] = time_end
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_library_managed_instance_usage,
+            fleet_id=fleet_id,
+            library_key=library_key,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_library_managed_instance_usage,
+            limit,
+            page_size,
+            fleet_id=fleet_id,
+            library_key=library_key,
+            **kwargs
+        )
+    else:
+        result = client.list_library_managed_instance_usage(
+            fleet_id=fleet_id,
+            library_key=library_key,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -2756,6 +3729,295 @@ def list_plugin_errors(ctx, from_json, all_pages, page_size, compartment_id, com
         )
     else:
         result = client.list_plugin_errors(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.list_task_schedules.command_name', 'list'), help=u"""Returns a list of task schedules. \n[Command Reference](listTaskSchedules)""")
+@cli_util.option('--fleet-id', help=u"""The ID of the Fleet.""")
+@cli_util.option('--id', help=u"""The [OCID] to identify this task schedule.""")
+@cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the related managed instance.""")
+@cli_util.option('--name', help=u"""The task name.""")
+@cli_util.option('--task-schedule-name-contains', help=u"""Filter the list with task schedule name contains the given value.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "lifecycleState", "timeCreated", "timeNextRun", "timeLastRun"]), help=u"""The field used to sort task schedule records. Only one sort order may be provided. Default order for _timeCreated_ is **ascending**. If no value is specified, _timeCreated_ is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'TaskScheduleCollection'})
+@cli_util.wrap_exceptions
+def list_task_schedules(ctx, from_json, all_pages, page_size, fleet_id, id, managed_instance_id, name, task_schedule_name_contains, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if fleet_id is not None:
+        kwargs['fleet_id'] = fleet_id
+    if id is not None:
+        kwargs['id'] = id
+    if managed_instance_id is not None:
+        kwargs['managed_instance_id'] = managed_instance_id
+    if name is not None:
+        kwargs['name'] = name
+    if task_schedule_name_contains is not None:
+        kwargs['task_schedule_name_contains'] = task_schedule_name_contains
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_task_schedules,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_task_schedules,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_task_schedules(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@uncorrelated_package_application_usage_summary_group.command(name=cli_util.override('jms.list_uncorrelated_package_application_usage.command_name', 'list-uncorrelated-package-application-usage'), help=u"""List applications where an uncorrelated package has been detected, filtered by query parameters. \n[Command Reference](listUncorrelatedPackageApplicationUsage)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--package-name', required=True, help=u"""The unique identifier of a Java package.""")
+@cli_util.option('--application-id', help=u"""The Fleet-unique identifier of the application.""")
+@cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the managed instance.""")
+@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["applicationName", "managedInstanceCount", "lastDetectedDynamically"]), help=u"""The field to sort detection events.  Only one sort order may be provided. If no value is specified _dynamicallyLastDetected_ is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'UncorrelatedPackageApplicationUsageCollection'})
+@cli_util.wrap_exceptions
+def list_uncorrelated_package_application_usage(ctx, from_json, all_pages, page_size, fleet_id, package_name, application_id, managed_instance_id, time_start, time_end, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+        raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
+
+    if isinstance(package_name, six.string_types) and len(package_name.strip()) == 0:
+        raise click.UsageError('Parameter --package-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if application_id is not None:
+        kwargs['application_id'] = application_id
+    if managed_instance_id is not None:
+        kwargs['managed_instance_id'] = managed_instance_id
+    if time_start is not None:
+        kwargs['time_start'] = time_start
+    if time_end is not None:
+        kwargs['time_end'] = time_end
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_uncorrelated_package_application_usage,
+            fleet_id=fleet_id,
+            package_name=package_name,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_uncorrelated_package_application_usage,
+            limit,
+            page_size,
+            fleet_id=fleet_id,
+            package_name=package_name,
+            **kwargs
+        )
+    else:
+        result = client.list_uncorrelated_package_application_usage(
+            fleet_id=fleet_id,
+            package_name=package_name,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@uncorrelated_package_managed_instance_usage_summary_group.command(name=cli_util.override('jms.list_uncorrelated_package_managed_instance_usage.command_name', 'list-uncorrelated-package-managed-instance-usage'), help=u"""List managed instances where an uncorrelated package has been detected, filtered by query parameters. \n[Command Reference](listUncorrelatedPackageManagedInstanceUsage)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--package-name', required=True, help=u"""The unique identifier of a Java package.""")
+@cli_util.option('--application-id', help=u"""The Fleet-unique identifier of the application.""")
+@cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the managed instance.""")
+@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["hostname", "applicationCount", "lastDetectedDynamically"]), help=u"""The field to sort detection events.  Only one sort order may be provided. If no value is specified _dynamicallyLastDetected_ is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'UncorrelatedPackageManagedInstanceUsageCollection'})
+@cli_util.wrap_exceptions
+def list_uncorrelated_package_managed_instance_usage(ctx, from_json, all_pages, page_size, fleet_id, package_name, application_id, managed_instance_id, time_start, time_end, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+        raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
+
+    if isinstance(package_name, six.string_types) and len(package_name.strip()) == 0:
+        raise click.UsageError('Parameter --package-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if application_id is not None:
+        kwargs['application_id'] = application_id
+    if managed_instance_id is not None:
+        kwargs['managed_instance_id'] = managed_instance_id
+    if time_start is not None:
+        kwargs['time_start'] = time_start
+    if time_end is not None:
+        kwargs['time_end'] = time_end
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_uncorrelated_package_managed_instance_usage,
+            fleet_id=fleet_id,
+            package_name=package_name,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_uncorrelated_package_managed_instance_usage,
+            limit,
+            page_size,
+            fleet_id=fleet_id,
+            package_name=package_name,
+            **kwargs
+        )
+    else:
+        result = client.list_uncorrelated_package_managed_instance_usage(
+            fleet_id=fleet_id,
+            package_name=package_name,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@uncorrelated_package_usage_summary_group.command(name=cli_util.override('jms.list_uncorrelated_package_usage.command_name', 'list-uncorrelated-package-usage'), help=u"""List uncorrelated package summaries in a fleet, filtered by query parameters. Uncorrelated packages are Java packages which can't be accurately correlated to a library during a library scan. \n[Command Reference](listUncorrelatedPackageUsage)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--package-name', help=u"""The unique identifier of a Java package.""")
+@cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the managed instance.""")
+@cli_util.option('--application-id', help=u"""The Fleet-unique identifier of the application.""")
+@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["packageName", "managedInstanceCount", "applicationCount", "lastDetectedDynamically"]), help=u"""The field to sort Java packages.  Only one sort order may be provided. If no value is specified _timeLastSeen_ is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'UncorrelatedPackageUsageCollection'})
+@cli_util.wrap_exceptions
+def list_uncorrelated_package_usage(ctx, from_json, all_pages, page_size, fleet_id, package_name, managed_instance_id, application_id, time_start, time_end, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+        raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if package_name is not None:
+        kwargs['package_name'] = package_name
+    if managed_instance_id is not None:
+        kwargs['managed_instance_id'] = managed_instance_id
+    if application_id is not None:
+        kwargs['application_id'] = application_id
+    if time_start is not None:
+        kwargs['time_start'] = time_start
+    if time_end is not None:
+        kwargs['time_end'] = time_end
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_uncorrelated_package_usage,
+            fleet_id=fleet_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_uncorrelated_package_usage,
+            limit,
+            page_size,
+            fleet_id=fleet_id,
+            **kwargs
+        )
+    else:
+        result = client.list_uncorrelated_package_usage(
+            fleet_id=fleet_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -2921,7 +4183,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the managed instance.""")
-@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["CREATE_FLEET", "DELETE_FLEET", "MOVE_FLEET", "UPDATE_FLEET", "UPDATE_FLEET_AGENT_CONFIGURATION", "DELETE_JAVA_INSTALLATION", "CREATE_JAVA_INSTALLATION", "COLLECT_JFR", "REQUEST_CRYPTO_EVENT_ANALYSIS", "REQUEST_PERFORMANCE_TUNING_ANALYSIS", "REQUEST_JAVA_MIGRATION_ANALYSIS", "DELETE_JMS_REPORT", "SCAN_JAVA_SERVER_USAGE", "SCAN_LIBRARY_USAGE", "EXPORT_DATA_CSV", "CREATE_DRS_FILE", "UPDATE_DRS_FILE", "DELETE_DRS_FILE", "ENABLE_DRS", "DISABLE_DRS"]), help=u"""The operation type of the work request.""")
+@cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["CREATE_FLEET", "DELETE_FLEET", "MOVE_FLEET", "UPDATE_FLEET", "UPDATE_FLEET_AGENT_CONFIGURATION", "DELETE_JAVA_INSTALLATION", "CREATE_JAVA_INSTALLATION", "COLLECT_JFR", "REQUEST_CRYPTO_EVENT_ANALYSIS", "REQUEST_PERFORMANCE_TUNING_ANALYSIS", "REQUEST_JAVA_MIGRATION_ANALYSIS", "DELETE_JMS_REPORT", "SCAN_JAVA_SERVER_USAGE", "SCAN_LIBRARY_USAGE", "SCAN_LIBRARY_DYNAMIC_USAGE", "EXPORT_DATA_CSV", "CREATE_DRS_FILE", "UPDATE_DRS_FILE", "DELETE_DRS_FILE", "ENABLE_DRS", "DISABLE_DRS"]), help=u"""The operation type of the work request.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELED", "CANCELING", "FAILED", "IN_PROGRESS", "SUCCEEDED"]), multiple=True, help=u"""The status of the work request.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -3441,6 +4703,8 @@ def scan_java_server_usage(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @library_usage_group.command(name=cli_util.override('jms.scan_library_usage.command_name', 'scan'), help=u"""Scan library usage in a fleet. \n[Command Reference](scanLibraryUsage)""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @cli_util.option('--managed-instance-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of [OCIDs] of managed instances to scan.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-dynamic-scan', type=click.BOOL, help=u"""Indicates whether the scan is dynamic or static.""")
+@cli_util.option('--dynamic-scan-duration-in-minutes', type=click.INT, help=u"""The duration of the dynamic scan in minutes.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "CANCELED", "CANCELING", "FAILED", "IN_PROGRESS", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3450,7 +4714,7 @@ def scan_java_server_usage(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'managed-instance-ids': {'module': 'jms', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def scan_library_usage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, managed_instance_ids, if_match):
+def scan_library_usage(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, managed_instance_ids, is_dynamic_scan, dynamic_scan_duration_in_minutes, if_match):
 
     if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
@@ -3464,6 +4728,12 @@ def scan_library_usage(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if managed_instance_ids is not None:
         _details['managedInstanceIds'] = cli_util.parse_json_parameter("managed_instance_ids", managed_instance_ids)
+
+    if is_dynamic_scan is not None:
+        _details['isDynamicScan'] = is_dynamic_scan
+
+    if dynamic_scan_duration_in_minutes is not None:
+        _details['dynamicScanDurationInMinutes'] = dynamic_scan_duration_in_minutes
 
     client = cli_util.build_client('jms', 'java_management_service', ctx)
     result = client.scan_library_usage(
@@ -3827,7 +5097,7 @@ def summarize_fleet_errors(ctx, from_json, compartment_id, compartment_id_in_sub
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["jreDistribution", "jreVendor", "jreVersion", "path", "timeFirstSeen", "timeLastSeen", "approximateApplicationCount", "approximateManagedInstanceCount", "osName"]), help=u"""The field to sort installation views. Only one sort order may be provided. Default order for _timeFirstSeen_, _timeLastSeen_, and _jreVersion_, _approximateApplicationCount_ and _approximateManagedInstanceCount_  is **descending**. Default order for _jreDistribution_ and _jreVendor_ is **ascending**. If no value is specified _timeLastSeen_ is default.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["jreDistribution", "jreVendor", "jreVersion", "path", "timeFirstSeen", "timeLastSeen", "approximateApplicationCount", "approximateManagedInstanceCount", "osName", "securityStatus"]), help=u"""The field to sort installation views. Only one sort order may be provided. Default order for _timeFirstSeen_, _timeLastSeen_, and _jreVersion_, _approximateApplicationCount_ and _approximateManagedInstanceCount_  is **descending**. Default order for _jreDistribution_ and _jreVendor_ is **ascending**. If no value is specified _timeLastSeen_ is default.""")
 @cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "MACOS", "UNKNOWN"]), multiple=True, help=u"""The operating system type.""")
 @cli_util.option('--path-contains', help=u"""Filter the list with path contains the given value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4060,6 +5330,40 @@ def summarize_jre_usage(ctx, from_json, fleet_id, jre_id, jre_vendor, jre_distri
     cli_util.render_response(result, ctx)
 
 
+@library_inventory_group.command(name=cli_util.override('jms.summarize_library_inventory.command_name', 'summarize'), help=u"""Retrieve the inventory of libraries in the specified fleet: Statically detected library count, Dynamically detected library count, Uncorrelated package count, High, Medium and Low severity library count. \n[Command Reference](summarizeLibraryInventory)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the managed instance.""")
+@cli_util.option('--application-id', help=u"""The Fleet-unique identifier of the application.""")
+@cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'LibraryInventory'})
+@cli_util.wrap_exceptions
+def summarize_library_inventory(ctx, from_json, fleet_id, managed_instance_id, application_id, time_start, time_end):
+
+    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+        raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if managed_instance_id is not None:
+        kwargs['managed_instance_id'] = managed_instance_id
+    if application_id is not None:
+        kwargs['application_id'] = application_id
+    if time_start is not None:
+        kwargs['time_start'] = time_start
+    if time_end is not None:
+        kwargs['time_end'] = time_end
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.summarize_library_inventory(
+        fleet_id=fleet_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @library_usage_group.command(name=cli_util.override('jms.summarize_library_usage.command_name', 'summarize'), help=u"""List libraries in a fleet filtered by query parameters. \n[Command Reference](summarizeLibraryUsage)""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @cli_util.option('--server-instance-key', help=u"""The Java Server instance key.""")
@@ -4068,14 +5372,14 @@ def summarize_jre_usage(ctx, from_json, fleet_id, jre_id, jre_vendor, jre_distri
 @cli_util.option('--library-key', help=u"""The library key.""")
 @cli_util.option('--library-name-contains', help=u"""Filter the list with library name contains the given value.""")
 @cli_util.option('--library-name', help=u"""The library name.""")
-@cli_util.option('--cvss-score-greater-than', type=click.INT, help=u"""Total Common Vulnerability Scoring System (CVSS) Score reported by the analysis.""")
-@cli_util.option('--cvss-score-less-than', type=click.INT, help=u"""Total Common Vulnerability Scoring System (CVSS) Score reported by the analysis.""")
+@cli_util.option('--cvss-score-greater-than', type=click.FLOAT, help=u"""Total Common Vulnerability Scoring System (CVSS) Score reported by the analysis.""")
+@cli_util.option('--cvss-score-less-than', type=click.FLOAT, help=u"""Total Common Vulnerability Scoring System (CVSS) Score reported by the analysis.""")
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help=u"""The end of the time period during which resources are searched (formatted according to [RFC3339]).""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either 'asc' or 'desc'.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["applicationCount", "javaServerInstanceCount", "cvssScore", "deployedApplicationCount", "libraryName", "libraryVersion", "managedInstanceCount", "timeFirstSeen", "timeLastSeen"]), help=u"""The field to sort libraries.  Only one sort order may be provided. If no value is specified _timeLastSeen_ is default.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["applicationCount", "javaServerInstanceCount", "cvssScore", "deployedApplicationCount", "libraryName", "libraryVersion", "managedInstanceCount", "timeFirstSeen", "timeLastSeen", "highestVulnerabilityScore", "confidenceLevel"]), help=u"""The field to sort libraries.  Only one sort order may be provided. If no value is specified _timeLastSeen_ is default.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -4127,7 +5431,7 @@ def summarize_library_usage(ctx, from_json, fleet_id, server_instance_key, manag
 @managed_instance_usage_group.command(name=cli_util.override('jms.summarize_managed_instance_usage.command_name', 'summarize'), help=u"""List managed instance usage in a Fleet filtered by query parameters. \n[Command Reference](summarizeManagedInstanceUsage)""")
 @cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
 @cli_util.option('--managed-instance-id', help=u"""The Fleet-unique identifier of the managed instance.""")
-@cli_util.option('--managed-instance-type', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_MANAGEMENT_AGENT", "ORACLE_CLOUD_AGENT"]), help=u"""The type of the managed instance.""")
+@cli_util.option('--managed-instance-type', type=custom_types.CliCaseInsensitiveChoice(["ORACLE_MANAGEMENT_AGENT", "ORACLE_CLOUD_AGENT", "ORACLE_CONTAINER_MANAGEMENT_AGENT"]), help=u"""The type of the managed instance.""")
 @cli_util.option('--jre-vendor', help=u"""The vendor of the related Java Runtime.""")
 @cli_util.option('--jre-distribution', help=u"""The distribution of the related Java Runtime.""")
 @cli_util.option('--jre-version', help=u"""The version of the related Java Runtime.""")
@@ -4335,16 +5639,22 @@ def update_drs_file(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--target-bucket-namespace', help=u"""The namespace of the bucket where data will be exported.""")
 @cli_util.option('--target-bucket-region', help=u"""The id of the region of the target bucket.""")
 @cli_util.option('--export-frequency', type=custom_types.CliCaseInsensitiveChoice(["DAILY", "WEEKLY", "MONTHLY"]), help=u"""Schedule at which data will be exported.""")
+@cli_util.option('--export-data-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'export-data-filters': {'module': 'jms', 'class': 'ExportDataFilters'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'jms', 'class': 'ExportSetting'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'export-data-filters': {'module': 'jms', 'class': 'ExportDataFilters'}}, output_type={'module': 'jms', 'class': 'ExportSetting'})
 @cli_util.wrap_exceptions
-def update_export_setting(ctx, from_json, fleet_id, is_enabled, export_duration, export_resources, is_cross_region_acknowledged, target_bucket_name, target_bucket_namespace, target_bucket_region, export_frequency, if_match):
+def update_export_setting(ctx, from_json, force, fleet_id, is_enabled, export_duration, export_resources, is_cross_region_acknowledged, target_bucket_name, target_bucket_namespace, target_bucket_region, export_frequency, export_data_filters, if_match):
 
     if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
+    if not force:
+        if export_data_filters:
+            if not click.confirm("WARNING: Updates to export-data-filters will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -4374,6 +5684,9 @@ def update_export_setting(ctx, from_json, fleet_id, is_enabled, export_duration,
 
     if export_frequency is not None:
         _details['exportFrequency'] = export_frequency
+
+    if export_data_filters is not None:
+        _details['exportDataFilters'] = cli_util.parse_json_parameter("export_data_filters", export_data_filters)
 
     client = cli_util.build_client('jms', 'java_management_service', ctx)
     result = client.update_export_setting(
@@ -4550,6 +5863,8 @@ def update_fleet_advanced_feature_configuration(ctx, from_json, force, fleet_id,
 @cli_util.option('--agent-polling-interval-in-minutes', type=click.INT, help=u"""Agent polling interval in minutes""")
 @cli_util.option('--is-collecting-managed-instance-metrics-enabled', type=click.BOOL, help=u"""Collect JMS agent metrics on all managed instances in the fleet.""")
 @cli_util.option('--is-collecting-usernames-enabled', type=click.BOOL, help=u"""Collect username for application invocations for all managed instances in the fleet.""")
+@cli_util.option('--is-capturing-ip-address-and-fqdn-enabled', type=click.BOOL, help=u"""Collect network addresses of managed instances in the fleet.""")
+@cli_util.option('--is-libraries-scan-enabled', type=click.BOOL, help=u"""Enable libraries scan on all managed instances in the fleet.""")
 @cli_util.option('--linux-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--windows-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--mac-os-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4563,7 +5878,7 @@ def update_fleet_advanced_feature_configuration(ctx, from_json, force, fleet_id,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'linux-configuration': {'module': 'jms', 'class': 'FleetAgentOsConfiguration'}, 'windows-configuration': {'module': 'jms', 'class': 'FleetAgentOsConfiguration'}, 'mac-os-configuration': {'module': 'jms', 'class': 'FleetAgentOsConfiguration'}})
 @cli_util.wrap_exceptions
-def update_fleet_agent_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, jre_scan_frequency_in_minutes, java_usage_tracker_processing_frequency_in_minutes, work_request_validity_period_in_days, agent_polling_interval_in_minutes, is_collecting_managed_instance_metrics_enabled, is_collecting_usernames_enabled, linux_configuration, windows_configuration, mac_os_configuration, if_match):
+def update_fleet_agent_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, jre_scan_frequency_in_minutes, java_usage_tracker_processing_frequency_in_minutes, work_request_validity_period_in_days, agent_polling_interval_in_minutes, is_collecting_managed_instance_metrics_enabled, is_collecting_usernames_enabled, is_capturing_ip_address_and_fqdn_enabled, is_libraries_scan_enabled, linux_configuration, windows_configuration, mac_os_configuration, if_match):
 
     if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
@@ -4596,6 +5911,12 @@ def update_fleet_agent_configuration(ctx, from_json, force, wait_for_state, max_
 
     if is_collecting_usernames_enabled is not None:
         _details['isCollectingUsernamesEnabled'] = is_collecting_usernames_enabled
+
+    if is_capturing_ip_address_and_fqdn_enabled is not None:
+        _details['isCapturingIpAddressAndFqdnEnabled'] = is_capturing_ip_address_and_fqdn_enabled
+
+    if is_libraries_scan_enabled is not None:
+        _details['isLibrariesScanEnabled'] = is_libraries_scan_enabled
 
     if linux_configuration is not None:
         _details['linuxConfiguration'] = cli_util.parse_json_parameter("linux_configuration", linux_configuration)
@@ -4700,6 +6021,666 @@ def update_jms_plugin(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_jms_plugin(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.update_task_schedule.command_name', 'update'), help=u"""Update the task schedule for the given task type. \n[Command Reference](updateTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--task-schedule-id', required=True, help=u"""The [OCID] to identify this task schedule.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details': {'module': 'jms', 'class': 'TaskDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details': {'module': 'jms', 'class': 'TaskDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def update_task_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_details, task_schedule_id, if_match):
+
+    if isinstance(task_schedule_id, six.string_types) and len(task_schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --task-schedule-id cannot be whitespace or empty string')
+    if not force:
+        if task_details:
+            if not click.confirm("WARNING: Updates to task-details will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+    _details['taskDetails'] = cli_util.parse_json_parameter("task_details", task_details)
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.update_task_schedule(
+        task_schedule_id=task_schedule_id,
+        update_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.update_task_schedule_deployed_application_migration_task_details.command_name', 'update-task-schedule-deployed-application-migration-task-details'), help=u"""Update the task schedule for the given task type. \n[Command Reference](updateTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-schedule-id', required=True, help=u"""The [OCID] to identify this task schedule.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")
+@cli_util.option('--task-details-deployed-application-migration-task-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details-deployed-application-migration-task-request': {'module': 'jms', 'class': 'RequestDeployedApplicationMigrationAnalysesDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details-deployed-application-migration-task-request': {'module': 'jms', 'class': 'RequestDeployedApplicationMigrationAnalysesDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def update_task_schedule_deployed_application_migration_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_schedule_id, if_match, task_details_deployed_application_migration_task_request):
+
+    if isinstance(task_schedule_id, six.string_types) and len(task_schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --task-schedule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+
+    if task_details_deployed_application_migration_task_request is not None:
+        _details['taskDetails']['deployedApplicationMigrationTaskRequest'] = cli_util.parse_json_parameter("task_details_deployed_application_migration_task_request", task_details_deployed_application_migration_task_request)
+
+    _details['taskDetails']['taskType'] = 'DEPLOYED_APPLICATION_MIGRATION'
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.update_task_schedule(
+        task_schedule_id=task_schedule_id,
+        update_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.update_task_schedule_remove_installation_site_task_details.command_name', 'update-task-schedule-remove-installation-site-task-details'), help=u"""Update the task schedule for the given task type. \n[Command Reference](updateTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-schedule-id', required=True, help=u"""The [OCID] to identify this task schedule.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")
+@cli_util.option('--task-details-remove-installation-site-task-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details-remove-installation-site-task-request': {'module': 'jms', 'class': 'RemoveFleetInstallationSitesDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details-remove-installation-site-task-request': {'module': 'jms', 'class': 'RemoveFleetInstallationSitesDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def update_task_schedule_remove_installation_site_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_schedule_id, if_match, task_details_remove_installation_site_task_request):
+
+    if isinstance(task_schedule_id, six.string_types) and len(task_schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --task-schedule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+
+    if task_details_remove_installation_site_task_request is not None:
+        _details['taskDetails']['removeInstallationSiteTaskRequest'] = cli_util.parse_json_parameter("task_details_remove_installation_site_task_request", task_details_remove_installation_site_task_request)
+
+    _details['taskDetails']['taskType'] = 'REMOVE_INSTALLATION_SITE'
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.update_task_schedule(
+        task_schedule_id=task_schedule_id,
+        update_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.update_task_schedule_crypto_task_details.command_name', 'update-task-schedule-crypto-task-details'), help=u"""Update the task schedule for the given task type. \n[Command Reference](updateTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-schedule-id', required=True, help=u"""The [OCID] to identify this task schedule.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")
+@cli_util.option('--task-details-crypto-task-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details-crypto-task-request': {'module': 'jms', 'class': 'RequestCryptoAnalysesDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details-crypto-task-request': {'module': 'jms', 'class': 'RequestCryptoAnalysesDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def update_task_schedule_crypto_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_schedule_id, if_match, task_details_crypto_task_request):
+
+    if isinstance(task_schedule_id, six.string_types) and len(task_schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --task-schedule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+
+    if task_details_crypto_task_request is not None:
+        _details['taskDetails']['cryptoTaskRequest'] = cli_util.parse_json_parameter("task_details_crypto_task_request", task_details_crypto_task_request)
+
+    _details['taskDetails']['taskType'] = 'CRYPTO'
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.update_task_schedule(
+        task_schedule_id=task_schedule_id,
+        update_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.update_task_schedule_java_migration_task_details.command_name', 'update-task-schedule-java-migration-task-details'), help=u"""Update the task schedule for the given task type. \n[Command Reference](updateTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-schedule-id', required=True, help=u"""The [OCID] to identify this task schedule.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")
+@cli_util.option('--task-details-java-migration-task-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details-java-migration-task-request': {'module': 'jms', 'class': 'RequestJavaMigrationAnalysesDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details-java-migration-task-request': {'module': 'jms', 'class': 'RequestJavaMigrationAnalysesDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def update_task_schedule_java_migration_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_schedule_id, if_match, task_details_java_migration_task_request):
+
+    if isinstance(task_schedule_id, six.string_types) and len(task_schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --task-schedule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+
+    if task_details_java_migration_task_request is not None:
+        _details['taskDetails']['javaMigrationTaskRequest'] = cli_util.parse_json_parameter("task_details_java_migration_task_request", task_details_java_migration_task_request)
+
+    _details['taskDetails']['taskType'] = 'JAVA_MIGRATION'
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.update_task_schedule(
+        task_schedule_id=task_schedule_id,
+        update_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.update_task_schedule_scan_library_task_details.command_name', 'update-task-schedule-scan-library-task-details'), help=u"""Update the task schedule for the given task type. \n[Command Reference](updateTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-schedule-id', required=True, help=u"""The [OCID] to identify this task schedule.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")
+@cli_util.option('--task-details-scan-library-task-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details-scan-library-task-request': {'module': 'jms', 'class': 'ScanLibraryUsageDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details-scan-library-task-request': {'module': 'jms', 'class': 'ScanLibraryUsageDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def update_task_schedule_scan_library_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_schedule_id, if_match, task_details_scan_library_task_request):
+
+    if isinstance(task_schedule_id, six.string_types) and len(task_schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --task-schedule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+
+    if task_details_scan_library_task_request is not None:
+        _details['taskDetails']['scanLibraryTaskRequest'] = cli_util.parse_json_parameter("task_details_scan_library_task_request", task_details_scan_library_task_request)
+
+    _details['taskDetails']['taskType'] = 'SCAN_LIBRARY'
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.update_task_schedule(
+        task_schedule_id=task_schedule_id,
+        update_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.update_task_schedule_performance_tuning_task_details.command_name', 'update-task-schedule-performance-tuning-task-details'), help=u"""Update the task schedule for the given task type. \n[Command Reference](updateTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-schedule-id', required=True, help=u"""The [OCID] to identify this task schedule.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")
+@cli_util.option('--task-details-performance-tuning-task-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details-performance-tuning-task-request': {'module': 'jms', 'class': 'RequestPerformanceTuningAnalysesDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details-performance-tuning-task-request': {'module': 'jms', 'class': 'RequestPerformanceTuningAnalysesDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def update_task_schedule_performance_tuning_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_schedule_id, if_match, task_details_performance_tuning_task_request):
+
+    if isinstance(task_schedule_id, six.string_types) and len(task_schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --task-schedule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+
+    if task_details_performance_tuning_task_request is not None:
+        _details['taskDetails']['performanceTuningTaskRequest'] = cli_util.parse_json_parameter("task_details_performance_tuning_task_request", task_details_performance_tuning_task_request)
+
+    _details['taskDetails']['taskType'] = 'PERFORMANCE_TUNING'
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.update_task_schedule(
+        task_schedule_id=task_schedule_id,
+        update_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.update_task_schedule_scan_java_server_task_details.command_name', 'update-task-schedule-scan-java-server-task-details'), help=u"""Update the task schedule for the given task type. \n[Command Reference](updateTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-schedule-id', required=True, help=u"""The [OCID] to identify this task schedule.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")
+@cli_util.option('--task-details-scan-java-server-task-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details-scan-java-server-task-request': {'module': 'jms', 'class': 'ScanJavaServerUsageDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details-scan-java-server-task-request': {'module': 'jms', 'class': 'ScanJavaServerUsageDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def update_task_schedule_scan_java_server_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_schedule_id, if_match, task_details_scan_java_server_task_request):
+
+    if isinstance(task_schedule_id, six.string_types) and len(task_schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --task-schedule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+
+    if task_details_scan_java_server_task_request is not None:
+        _details['taskDetails']['scanJavaServerTaskRequest'] = cli_util.parse_json_parameter("task_details_scan_java_server_task_request", task_details_scan_java_server_task_request)
+
+    _details['taskDetails']['taskType'] = 'SCAN_JAVA_SERVER'
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.update_task_schedule(
+        task_schedule_id=task_schedule_id,
+        update_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.update_task_schedule_jfr_task_details.command_name', 'update-task-schedule-jfr-task-details'), help=u"""Update the task schedule for the given task type. \n[Command Reference](updateTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-schedule-id', required=True, help=u"""The [OCID] to identify this task schedule.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")
+@cli_util.option('--task-details-jfr-task-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details-jfr-task-request': {'module': 'jms', 'class': 'RequestJfrRecordingsDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details-jfr-task-request': {'module': 'jms', 'class': 'RequestJfrRecordingsDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def update_task_schedule_jfr_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_schedule_id, if_match, task_details_jfr_task_request):
+
+    if isinstance(task_schedule_id, six.string_types) and len(task_schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --task-schedule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+
+    if task_details_jfr_task_request is not None:
+        _details['taskDetails']['jfrTaskRequest'] = cli_util.parse_json_parameter("task_details_jfr_task_request", task_details_jfr_task_request)
+
+    _details['taskDetails']['taskType'] = 'JFR'
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.update_task_schedule(
+        task_schedule_id=task_schedule_id,
+        update_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@task_schedule_group.command(name=cli_util.override('jms.update_task_schedule_add_installation_site_task_details.command_name', 'update-task-schedule-add-installation-site-task-details'), help=u"""Update the task schedule for the given task type. \n[Command Reference](updateTaskSchedule)""")
+@cli_util.option('--fleet-id', required=True, help=u"""The [OCID] of the Fleet.""")
+@cli_util.option('--execution-recurrences', required=True, help=u"""Recurrence specification for the task schedule execution (formatted according to [RFC-5545]). To run daily for 10 occurrences starts on September 2, 2024 09:00 EDT, it should be 'DTSTART;TZID=America/New_York:20240902T090000 RRULE:FREQ=DAILY;COUNT=10'. To run every 3 hours from 9:00 AM to 5:00 PM on August 5, 2024 EDT, it should be 'DTSTART;TZID=America/New_York:20240805T090000 RRULE:FREQ=HOURLY;INTERVAL=3;UNTIL=20240805T170000Z'.""")
+@cli_util.option('--task-schedule-id', required=True, help=u"""The [OCID] to identify this task schedule.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the ETag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the ETag you provide matches the resource's current ETag value.""")
+@cli_util.option('--task-details-add-installation-site-task-request', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'task-details-add-installation-site-task-request': {'module': 'jms', 'class': 'AddFleetInstallationSitesDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'task-details-add-installation-site-task-request': {'module': 'jms', 'class': 'AddFleetInstallationSitesDetails'}}, output_type={'module': 'jms', 'class': 'TaskSchedule'})
+@cli_util.wrap_exceptions
+def update_task_schedule_add_installation_site_task_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, execution_recurrences, task_schedule_id, if_match, task_details_add_installation_site_task_request):
+
+    if isinstance(task_schedule_id, six.string_types) and len(task_schedule_id.strip()) == 0:
+        raise click.UsageError('Parameter --task-schedule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['taskDetails'] = {}
+    _details['fleetId'] = fleet_id
+    _details['executionRecurrences'] = execution_recurrences
+
+    if task_details_add_installation_site_task_request is not None:
+        _details['taskDetails']['addInstallationSiteTaskRequest'] = cli_util.parse_json_parameter("task_details_add_installation_site_task_request", task_details_add_installation_site_task_request)
+
+    _details['taskDetails']['taskType'] = 'ADD_INSTALLATION_SITE'
+
+    client = cli_util.build_client('jms', 'java_management_service', ctx)
+    result = client.update_task_schedule(
+        task_schedule_id=task_schedule_id,
+        update_task_schedule_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_task_schedule') and callable(getattr(client, 'get_task_schedule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_task_schedule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

@@ -52,6 +52,12 @@ def listing_package_summary_group():
     pass
 
 
+@click.command(cli_util.override('marketplace.marketplace_metadata_public_key_summary_group.command_name', 'marketplace-metadata-public-key-summary'), cls=CommandGroupWithAlias, help="""Model that contains signed marketplace instance metadata and associated signature in JWT form""")
+@cli_util.help_option_group
+def marketplace_metadata_public_key_summary_group():
+    pass
+
+
 @click.command(cli_util.override('marketplace.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""A description of workrequest""")
 @cli_util.help_option_group
 def work_request_group():
@@ -61,6 +67,12 @@ def work_request_group():
 @click.command(cli_util.override('marketplace.tax_summary_group.command_name', 'tax-summary'), cls=CommandGroupWithAlias, help="""Tax implication that current tenant may be eligible while using specific listing""")
 @cli_util.help_option_group
 def tax_summary_group():
+    pass
+
+
+@click.command(cli_util.override('marketplace.create_marketplace_external_attested_metadata_details_group.command_name', 'create-marketplace-external-attested-metadata-details'), cls=CommandGroupWithAlias, help="""Payload that customer will use to generate JWT for launched instance associated with Marketplace listing""")
+@cli_util.help_option_group
+def create_marketplace_external_attested_metadata_details_group():
     pass
 
 
@@ -118,8 +130,10 @@ marketplace_root_group.add_command(publication_package_group)
 marketplace_root_group.add_command(agreement_group)
 marketplace_root_group.add_command(category_summary_group)
 marketplace_root_group.add_command(listing_package_summary_group)
+marketplace_root_group.add_command(marketplace_metadata_public_key_summary_group)
 marketplace_root_group.add_command(work_request_group)
 marketplace_root_group.add_command(tax_summary_group)
+marketplace_root_group.add_command(create_marketplace_external_attested_metadata_details_group)
 marketplace_root_group.add_command(report_collection_group)
 marketplace_root_group.add_command(listing_summary_group)
 marketplace_root_group.add_command(listing_package_group)
@@ -135,8 +149,10 @@ marketplace_service_cli.marketplace_service_group.add_command(publication_packag
 marketplace_service_cli.marketplace_service_group.add_command(agreement_group)
 marketplace_service_cli.marketplace_service_group.add_command(category_summary_group)
 marketplace_service_cli.marketplace_service_group.add_command(listing_package_summary_group)
+marketplace_service_cli.marketplace_service_group.add_command(marketplace_metadata_public_key_summary_group)
 marketplace_service_cli.marketplace_service_group.add_command(work_request_group)
 marketplace_service_cli.marketplace_service_group.add_command(tax_summary_group)
+marketplace_service_cli.marketplace_service_group.add_command(create_marketplace_external_attested_metadata_details_group)
 marketplace_service_cli.marketplace_service_group.add_command(report_collection_group)
 marketplace_service_cli.marketplace_service_group.add_command(listing_summary_group)
 marketplace_service_cli.marketplace_service_group.add_command(listing_package_group)
@@ -218,6 +234,31 @@ def create_accepted_agreement(ctx, from_json, compartment_id, listing_id, packag
     client = cli_util.build_client('marketplace', 'marketplace', ctx)
     result = client.create_accepted_agreement(
         create_accepted_agreement_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@create_marketplace_external_attested_metadata_details_group.command(name=cli_util.override('marketplace.create_marketplace_external_attested_metadata.command_name', 'create-marketplace-external-attested-metadata'), help=u"""Generates attested marketplace metadata \n[Command Reference](createMarketplaceExternalAttestedMetadata)""")
+@cli_util.option('--instance-id', required=True, help=u"""unique id that identifies the associated instance""")
+@cli_util.option('--compartment-id', required=True, help=u"""compartment that associated instance is in""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'marketplace', 'class': 'MarketplaceExternalAttestedMetadata'})
+@cli_util.wrap_exceptions
+def create_marketplace_external_attested_metadata(ctx, from_json, instance_id, compartment_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['instanceId'] = instance_id
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('marketplace', 'marketplace', ctx)
+    result = client.create_marketplace_external_attested_metadata(
+        create_marketplace_external_attested_metadata_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -991,6 +1032,59 @@ def list_listings(ctx, from_json, all_pages, page_size, name, listing_id, image_
         )
     else:
         result = client.list_listings(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@marketplace_metadata_public_key_summary_group.command(name=cli_util.override('marketplace.list_marketplace_metadata_public_keys.command_name', 'list-marketplace-metadata-public-keys'), help=u"""Get public certificates used in JWT signing, in JSON Web Key Sets format \n[Command Reference](listMarketplaceMetadataPublicKeys)""")
+@cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either `ASC` or `DESC`.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["keyId"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for keyId is descending.""")
+@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'marketplace', 'class': 'list[MarketplaceMetadataPublicKeySummary]'})
+@cli_util.wrap_exceptions
+def list_marketplace_metadata_public_keys(ctx, from_json, all_pages, page_size, limit, page, sort_order, sort_by, compartment_id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('marketplace', 'marketplace', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_marketplace_metadata_public_keys,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_marketplace_metadata_public_keys,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_marketplace_metadata_public_keys(
             **kwargs
         )
     cli_util.render_response(result, ctx)

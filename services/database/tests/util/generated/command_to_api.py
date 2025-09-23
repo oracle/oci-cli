@@ -48,6 +48,7 @@ SDK_client_map = {
     "db.check_external_database_connector_connection_status": "oci.database.DatabaseClient.check_external_database_connector_connection_status",
     "db.complete_external_backup_job": "oci.database.DatabaseClient.complete_external_backup_job",
     "db.configure_autonomous_database_vault_key": "oci.database.DatabaseClient.configure_autonomous_database_vault_key",
+    "db.configure_exascale_cloud_exadata_infrastructure": "oci.database.DatabaseClient.configure_exascale_cloud_exadata_infrastructure",
     "db.configure_exascale_exadata_infrastructure": "oci.database.DatabaseClient.configure_exascale_exadata_infrastructure",
     "db.configure_saas_admin_user": "oci.database.DatabaseClient.configure_saas_admin_user",
     "db.confirm_key_store_details_are_correct": "oci.database.DatabaseClient.confirm_key_store_details_are_correct",

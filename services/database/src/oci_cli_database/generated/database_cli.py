@@ -3960,6 +3960,63 @@ def configure_autonomous_database_vault_key(ctx, from_json, wait_for_state, max_
     cli_util.render_response(result, ctx)
 
 
+@cloud_exadata_infrastructure_group.command(name=cli_util.override('db.configure_exascale_cloud_exadata_infrastructure.command_name', 'configure-exascale'), help=u"""Configures Exascale on Cloud exadata infrastructure resource. Applies to Exadata Cloud Service instances only. \n[Command Reference](configureExascaleCloudExadataInfrastructure)""")
+@cli_util.option('--cloud-exadata-infrastructure-id', required=True, help=u"""The cloud Exadata infrastructure [OCID].""")
+@cli_util.option('--total-storage-in-gbs', required=True, type=click.INT, help=u"""Storage size needed for Exascale in GBs.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'CloudExadataInfrastructure'})
+@cli_util.wrap_exceptions
+def configure_exascale_cloud_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cloud_exadata_infrastructure_id, total_storage_in_gbs, if_match):
+
+    if isinstance(cloud_exadata_infrastructure_id, six.string_types) and len(cloud_exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --cloud-exadata-infrastructure-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['totalStorageInGBs'] = total_storage_in_gbs
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.configure_exascale_cloud_exadata_infrastructure(
+        cloud_exadata_infrastructure_id=cloud_exadata_infrastructure_id,
+        configure_exascale_cloud_exadata_infrastructure_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_cloud_exadata_infrastructure') and callable(getattr(client, 'get_cloud_exadata_infrastructure')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_cloud_exadata_infrastructure(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @exadata_infrastructure_group.command(name=cli_util.override('db.configure_exascale_exadata_infrastructure.command_name', 'configure-exascale'), help=u"""Configures Exascale on Exadata infrastructure resource. Applies to Exadata Cloud@Customer instances only. \n[Command Reference](configureExascaleExadataInfrastructure)""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @cli_util.option('--total-storage-in-gbs', required=True, type=click.INT, help=u"""Storage size needed for Exascale in GBs.""")
@@ -11029,6 +11086,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 This option is a JSON list with items of type FileSystemConfigurationDetail.  For documentation on FileSystemConfigurationDetail please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/FileSystemConfigurationDetail.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cloud-automation-update-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--exascale-db-storage-vault-id', help=u"""The [OCID] of the Exadata Database Storage Vault.""")
 @cli_util.option('--vm-cluster-type', type=custom_types.CliCaseInsensitiveChoice(["REGULAR", "DEVELOPER"]), help=u"""The vmcluster type for the VM cluster/Cloud VM cluster.""")
 @cli_util.option('--opc-dry-run', type=click.BOOL, help=u"""Indicates that the request is a dry run, if set to \"true\". A dry run request does not actually creating or updating a resource and is used only to perform validation on the submitted data.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -11039,7 +11097,7 @@ This option is a JSON list with items of type FileSystemConfigurationDetail.  Fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-servers': {'module': 'database', 'class': 'list[string]'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'data-collection-options': {'module': 'database', 'class': 'DataCollectionOptions'}, 'file-system-configuration-details': {'module': 'database', 'class': 'list[FileSystemConfigurationDetail]'}, 'cloud-automation-update-details': {'module': 'database', 'class': 'CloudAutomationUpdateDetails'}}, output_type={'module': 'database', 'class': 'CloudVmCluster'})
 @cli_util.wrap_exceptions
-def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, backup_subnet_id, cpu_core_count, display_name, cloud_exadata_infrastructure_id, hostname, ssh_public_keys, gi_version, subscription_id, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, db_servers, cluster_name, data_storage_percentage, domain, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, scan_listener_port_tcp, scan_listener_port_tcp_ssl, private_zone_id, nsg_ids, backup_network_nsg_ids, freeform_tags, defined_tags, security_attributes, data_collection_options, system_version, file_system_configuration_details, cloud_automation_update_details, vm_cluster_type, opc_dry_run):
+def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, subnet_id, backup_subnet_id, cpu_core_count, display_name, cloud_exadata_infrastructure_id, hostname, ssh_public_keys, gi_version, subscription_id, ocpu_count, memory_size_in_gbs, db_node_storage_size_in_gbs, data_storage_size_in_tbs, db_servers, cluster_name, data_storage_percentage, domain, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, scan_listener_port_tcp, scan_listener_port_tcp_ssl, private_zone_id, nsg_ids, backup_network_nsg_ids, freeform_tags, defined_tags, security_attributes, data_collection_options, system_version, file_system_configuration_details, cloud_automation_update_details, exascale_db_storage_vault_id, vm_cluster_type, opc_dry_run):
 
     kwargs = {}
     if opc_dry_run is not None:
@@ -11131,6 +11189,9 @@ def create_cloud_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     if cloud_automation_update_details is not None:
         _details['cloudAutomationUpdateDetails'] = cli_util.parse_json_parameter("cloud_automation_update_details", cloud_automation_update_details)
+
+    if exascale_db_storage_vault_id is not None:
+        _details['exascaleDbStorageVaultId'] = exascale_db_storage_vault_id
 
     if vm_cluster_type is not None:
         _details['vmClusterType'] = vm_cluster_type
