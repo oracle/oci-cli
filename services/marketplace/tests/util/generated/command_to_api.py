@@ -4,6 +4,7 @@
 SDK_client_map = {
     "marketplace.change_publication_compartment": "oci.marketplace.MarketplaceClient.change_publication_compartment",
     "marketplace.create_accepted_agreement": "oci.marketplace.MarketplaceClient.create_accepted_agreement",
+    "marketplace.create_marketplace_external_attested_metadata": "oci.marketplace.MarketplaceClient.create_marketplace_external_attested_metadata",
     "marketplace.create_publication": "oci.marketplace.MarketplaceClient.create_publication",
     "marketplace.delete_accepted_agreement": "oci.marketplace.MarketplaceClient.delete_accepted_agreement",
     "marketplace.delete_publication": "oci.marketplace.MarketplaceClient.delete_publication",
@@ -19,6 +20,7 @@ SDK_client_map = {
     "marketplace.list_agreements": "oci.marketplace.MarketplaceClient.list_agreements",
     "marketplace.list_categories": "oci.marketplace.MarketplaceClient.list_categories",
     "marketplace.list_listings": "oci.marketplace.MarketplaceClient.list_listings",
+    "marketplace.list_marketplace_metadata_public_keys": "oci.marketplace.MarketplaceClient.list_marketplace_metadata_public_keys",
     "marketplace.list_packages": "oci.marketplace.MarketplaceClient.list_packages",
     "marketplace.list_publication_packages": "oci.marketplace.MarketplaceClient.list_publication_packages",
     "marketplace.list_publications": "oci.marketplace.MarketplaceClient.list_publications",

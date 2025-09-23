@@ -400,7 +400,12 @@ service_mapping = {
     ],
     "jms-java-downloads": [
         "jms_java_downloads",
-        "Java Management Service Download",
+        "Java Management Service Java Download",
+        "Others"
+    ],
+    "jms-utils": [
+        "jms_utils",
+        "Java Management Service Utilities",
         "Others"
     ],
     "kafka": [
@@ -646,6 +651,11 @@ service_mapping = {
     "redis": [
         "redis",
         "OCI Cache",
+        "Others"
+    ],
+    "resource-analytics": [
+        "resource_analytics",
+        "Resource Analytics",
         "Others"
     ],
     "resource-manager": [

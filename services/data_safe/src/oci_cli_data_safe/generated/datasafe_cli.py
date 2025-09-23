@@ -10678,7 +10678,7 @@ def get_compatible_formats_for_sensitive_types(ctx, from_json, compartment_id, c
 
 
 @data_safe_configuration_group.command(name=cli_util.override('data_safe.get_data_safe_configuration.command_name', 'get'), help=u"""Gets the details of the Data Safe configuration. \n[Command Reference](getDataSafeConfiguration)""")
-@cli_util.option('--compartment-id', help=u"""A filter to return only resources that match the specified compartment OCID.""")
+@cli_util.option('--compartment-id', help=u"""A filter to return the Data Safe configuration for the specified tenancy OCID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -13690,7 +13690,8 @@ def list_discovery_analytics(ctx, from_json, all_pages, page_size, compartment_i
 @cli_util.option('--object-name', multiple=True, help=u"""A filter to return only items related to a specific object name.""")
 @cli_util.option('--column-name', multiple=True, help=u"""A filter to return only a specific column based on column name.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["discoveryType", "timeFinished", "schemaName", "objectName", "columnName", "plannedAction"]), help=u"""The field to sort by. You can specify only one sorting parameter (sortOrder). The default order for timeFinished is descending. The default order for discoveryType, schemaName, objectName, columnName and plannedAction is ascending.""")
+@cli_util.option('--confidence-level', type=custom_types.CliCaseInsensitiveChoice(["NONE", "HIGH", "MEDIUM", "LOW"]), multiple=True, help=u"""A filter to return the discovery job results with the specified confidence level. Confidence level of discovery job result associated with a seeded sensitive type can either be HIGH or LOW. While the confidence level of discovery job result associated with a user defined sensitive will be NONE.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["discoveryType", "timeFinished", "schemaName", "objectName", "columnName", "plannedAction", "confidenceLevel"]), help=u"""The field to sort by. You can specify only one sorting parameter (sortOrder). The default order for timeFinished is descending. The default order for discoveryType, schemaName, objectName, columnName and plannedAction is ascending.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -13700,7 +13701,7 @@ def list_discovery_analytics(ctx, from_json, all_pages, page_size, compartment_i
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schema-name': {'module': 'data_safe', 'class': 'list[string]'}, 'object-name': {'module': 'data_safe', 'class': 'list[string]'}, 'column-name': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'DiscoveryJobResultCollection'})
 @cli_util.wrap_exceptions
-def list_discovery_job_results(ctx, from_json, all_pages, page_size, discovery_job_id, discovery_type, planned_action, is_result_applied, schema_name, object_name, column_name, sort_order, sort_by, limit, page):
+def list_discovery_job_results(ctx, from_json, all_pages, page_size, discovery_job_id, discovery_type, planned_action, is_result_applied, schema_name, object_name, column_name, sort_order, confidence_level, sort_by, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -13723,6 +13724,8 @@ def list_discovery_job_results(ctx, from_json, all_pages, page_size, discovery_j
         kwargs['column_name'] = column_name
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if confidence_level is not None and len(confidence_level) > 0:
+        kwargs['confidence_level'] = confidence_level
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     if limit is not None:
@@ -13935,6 +13938,7 @@ def list_finding_analytics(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.option('--contains-references', type=custom_types.CliCaseInsensitiveChoice(["STIG", "CIS", "GDPR"]), multiple=True, help=u"""An optional filter to return only findings that match the specified references. Use containsReferences param if need to filter by multiple references.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
+@cli_util.option('--compartment-id', help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
 @cli_util.option('--access-level', type=custom_types.CliCaseInsensitiveChoice(["RESTRICTED", "ACCESSIBLE"]), help=u"""Valid values are RESTRICTED and ACCESSIBLE. Default is RESTRICTED. Setting this to ACCESSIBLE returns only those compartments for which the user has INSPECT permissions directly or indirectly (permissions can be on a resource in a subcompartment). When set to RESTRICTED permissions are checked and no partial results are displayed.""")
 @cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
@@ -13955,7 +13959,7 @@ Supported fields: severity findingKey reference targetId isTopFinding title cate
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'target-ids': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'list[FindingSummary]'})
 @cli_util.wrap_exceptions
-def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, is_top_finding, severity, contains_severity, category, lifecycle_state, references, contains_references, limit, page, compartment_id_in_subtree, access_level, target_id, target_ids, scim_query, field, sort_by, sort_order, finding_key):
+def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, is_top_finding, severity, contains_severity, category, lifecycle_state, references, contains_references, limit, page, compartment_id, compartment_id_in_subtree, access_level, target_id, target_ids, scim_query, field, sort_by, sort_order, finding_key):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -13982,6 +13986,8 @@ def list_findings(ctx, from_json, all_pages, page_size, security_assessment_id, 
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
     if compartment_id_in_subtree is not None:
         kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
     if access_level is not None:
@@ -14588,7 +14594,7 @@ def list_masking_columns(ctx, from_json, all_pages, page_size, masking_policy_id
 
 @masking_error_summary_group.command(name=cli_util.override('data_safe.list_masking_errors.command_name', 'list-masking-errors'), help=u"""Gets a list of masking errors in a masking run based on the specified query parameters. \n[Command Reference](listMaskingErrors)""")
 @cli_util.option('--masking-report-id', required=True, help=u"""The OCID of the masking report.""")
-@cli_util.option('--step-name', type=custom_types.CliCaseInsensitiveChoice(["EXECUTE_MASKING", "PRE_MASKING", "POST_MASKING"]), help=u"""A filter to return only masking errors that match the specified step name.""")
+@cli_util.option('--step-name', type=custom_types.CliCaseInsensitiveChoice(["VALIDATE", "GENERATE_SCRIPT", "EXECUTE_MASKING", "PRE_MASKING", "POST_MASKING"]), help=u"""A filter to return only masking errors that match the specified step name.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["stepName", "timeCreated"]), help=u"""The field to sort by. The default order will be ascending.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -15007,6 +15013,7 @@ def list_masking_policy_referential_relations(ctx, from_json, all_pages, page_si
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--masking-policy-id', help=u"""A filter to return only the resources that match the specified masking policy OCID.""")
 @cli_util.option('--target-id', help=u"""A filter to return only items related to a specific target OCID.""")
+@cli_util.option('--target-database-group-id', help=u"""A filter to return the target database group that matches the specified OCID.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeMaskingFinished"]), help=u"""The field to sort by. You can specify only one sorting parameter (sortOrder). The default order for timeMaskingFinished is descending.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned. Depends on the 'accessLevel' setting.""")
@@ -15018,7 +15025,7 @@ def list_masking_policy_referential_relations(ctx, from_json, all_pages, page_si
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_safe', 'class': 'MaskingReportCollection'})
 @cli_util.wrap_exceptions
-def list_masking_reports(ctx, from_json, all_pages, page_size, compartment_id, limit, page, masking_policy_id, target_id, sort_order, sort_by, compartment_id_in_subtree, access_level):
+def list_masking_reports(ctx, from_json, all_pages, page_size, compartment_id, limit, page, masking_policy_id, target_id, target_database_group_id, sort_order, sort_by, compartment_id_in_subtree, access_level):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -15032,6 +15039,8 @@ def list_masking_reports(ctx, from_json, all_pages, page_size, compartment_id, l
         kwargs['masking_policy_id'] = masking_policy_id
     if target_id is not None:
         kwargs['target_id'] = target_id
+    if target_database_group_id is not None:
+        kwargs['target_database_group_id'] = target_database_group_id
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
@@ -16711,6 +16720,8 @@ def list_sensitive_column_analytics(ctx, from_json, all_pages, page_size, compar
 @cli_util.option('--time-updated-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Search for resources that were updated after a specific date. Specifying this parameter corresponding `timeUpdatedGreaterThanOrEqualTo` parameter will retrieve all resources updated after the specified created date, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by RFC 3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-updated-less-than', type=custom_types.CLI_DATETIME, help=u"""Search for resources that were updated before a specific date. Specifying this parameter corresponding `timeUpdatedLessThan` parameter will retrieve all resources updated before the specified created date, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by RFC 3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--sensitive-column-lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "FAILED"]), help=u"""Filters the sensitive column resources with the given lifecycle state values.""")
+@cli_util.option('--column-data-count-filter', type=custom_types.CliCaseInsensitiveChoice(["SHOW_ALL_COLUMNS", "SHOW_COLUMNS_WITH_DATA", "SHOW_COLUMNS_WITHOUT_DATA"]), help=u"""Filters the sensitive columns with respect to the estimated row count.""")
+@cli_util.option('--confidence-level', type=custom_types.CliCaseInsensitiveChoice(["NONE", "HIGH", "MEDIUM", "LOW"]), multiple=True, help=u"""A filter to return the sensitive columns with the specified confidence level. Confidence level of sensitive column associated with a seeded sensitive type can either be HIGH or LOW. While the confidence level of sensitive column associated with a user defined sensitive will be NONE. For sensitive columns added manually the confidence level will also be NONE.""")
 @cli_util.option('--schema-name', multiple=True, help=u"""A filter to return only items related to specific schema name.""")
 @cli_util.option('--object-name', multiple=True, help=u"""A filter to return only items related to a specific object name.""")
 @cli_util.option('--column-name', multiple=True, help=u"""A filter to return only a specific column based on column name.""")
@@ -16724,7 +16735,7 @@ def list_sensitive_column_analytics(ctx, from_json, all_pages, page_size, compar
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The page token representing the page at which to start retrieving results. It is usually retrieved from a previous \"List\" call. For details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (ASC) or descending (DESC).""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "schemaName", "objectName", "columnName", "dataType"]), help=u"""The field to sort by. You can specify only one sorting parameter (sortOrder). The default order for timeCreated is descending. The default order for schemaName, objectName, and columnName is ascending.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "schemaName", "objectName", "columnName", "dataType", "confidenceLevel"]), help=u"""The field to sort by. You can specify only one sorting parameter (sortOrder). The default order for timeCreated is descending. The default order for schemaName, objectName, and columnName is ascending.""")
 @cli_util.option('--is-case-in-sensitive', type=click.BOOL, help=u"""A boolean flag indicating whether the search should be case-insensitive. The search is case-sensitive by default. Set this parameter to true to do case-insensitive search.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -16733,7 +16744,7 @@ def list_sensitive_column_analytics(ctx, from_json, all_pages, page_size, compar
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schema-name': {'module': 'data_safe', 'class': 'list[string]'}, 'object-name': {'module': 'data_safe', 'class': 'list[string]'}, 'column-name': {'module': 'data_safe', 'class': 'list[string]'}, 'data-type': {'module': 'data_safe', 'class': 'list[string]'}, 'sensitive-type-id': {'module': 'data_safe', 'class': 'list[string]'}, 'parent-column-key': {'module': 'data_safe', 'class': 'list[string]'}}, output_type={'module': 'data_safe', 'class': 'SensitiveColumnCollection'})
 @cli_util.wrap_exceptions
-def list_sensitive_columns(ctx, from_json, all_pages, page_size, sensitive_data_model_id, time_created_greater_than_or_equal_to, time_created_less_than, time_updated_greater_than_or_equal_to, time_updated_less_than, sensitive_column_lifecycle_state, schema_name, object_name, column_name, object_type, data_type, status, sensitive_type_id, parent_column_key, relation_type, column_group, limit, page, sort_order, sort_by, is_case_in_sensitive):
+def list_sensitive_columns(ctx, from_json, all_pages, page_size, sensitive_data_model_id, time_created_greater_than_or_equal_to, time_created_less_than, time_updated_greater_than_or_equal_to, time_updated_less_than, sensitive_column_lifecycle_state, column_data_count_filter, confidence_level, schema_name, object_name, column_name, object_type, data_type, status, sensitive_type_id, parent_column_key, relation_type, column_group, limit, page, sort_order, sort_by, is_case_in_sensitive):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -16752,6 +16763,10 @@ def list_sensitive_columns(ctx, from_json, all_pages, page_size, sensitive_data_
         kwargs['time_updated_less_than'] = time_updated_less_than
     if sensitive_column_lifecycle_state is not None:
         kwargs['sensitive_column_lifecycle_state'] = sensitive_column_lifecycle_state
+    if column_data_count_filter is not None:
+        kwargs['column_data_count_filter'] = column_data_count_filter
+    if confidence_level is not None and len(confidence_level) > 0:
+        kwargs['confidence_level'] = confidence_level
     if schema_name is not None and len(schema_name) > 0:
         kwargs['schema_name'] = schema_name
     if object_name is not None and len(object_name) > 0:
@@ -19298,6 +19313,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, ope
 @cli_util.option('--tablespace', help=u"""The tablespace that should be used to create the mapping tables, DMASK objects, and other temporary tables for data masking. If no tablespace is provided, the DEFAULT tablespace is used.""")
 @cli_util.option('--is-ignore-errors-enabled', type=click.BOOL, help=u"""Indicates if the masking process should continue on hitting an error. It provides fault tolerance support and is enabled by default. In fault-tolerant mode, the masking process saves the failed step and continues. You can then submit another masking request (with isRerun attribute set to true) to execute only the failed steps.""")
 @cli_util.option('--seed', help=u"""The seed value to be used in case of Deterministic Encryption and Deterministic Substitution masking formats.""")
+@cli_util.option('--user-defined-function-seed', help=u"""The seed value to be used in case of User Defined Function masking format. This is an optional parameter and needs to be passed only if any User Defined Function uses seed.""")
 @cli_util.option('--is-move-interim-tables-enabled', type=click.BOOL, help=u"""Indicates if the interim DMASK tables should be moved to the user-specified tablespace. As interim tables can be large in size, set it to false if moving them causes performance overhead during masking.""")
 @cli_util.option('--is-execute-saved-script-enabled', type=click.BOOL, help=u"""Indicates if data masking should be performed using a saved masking script. Setting this attribute to true skips masking script generation and executes the masking script stored in the Data Safe repository. It helps save time if there are no changes in the database tables and their dependencies.""")
 @cli_util.option('--is-drop-temp-tables-enabled', type=click.BOOL, help=u"""Indicates if the temporary tables created during a masking operation should be dropped after masking. Set this attribute to false to preserve the temporary tables. Masking creates temporary tables that map the original sensitive data values to mask values. These temporary tables are dropped after masking if this attribute is set as true. But, in some cases, you may want to preserve this information to track how masking changed your data. Note that doing so compromises security. These tables must be dropped before the database is available for unprivileged users. If it's not provided, the value of the isDropTempTablesEnabled attribute in the MaskingPolicy resource is used.""")
@@ -19313,7 +19329,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, ope
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def mask_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, target_id, is_decrypt, is_rerun, re_run_from_step, tablespace, is_ignore_errors_enabled, seed, is_move_interim_tables_enabled, is_execute_saved_script_enabled, is_drop_temp_tables_enabled, is_redo_logging_enabled, is_refresh_stats_enabled, parallel_degree, recompile):
+def mask_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, masking_policy_id, target_id, is_decrypt, is_rerun, re_run_from_step, tablespace, is_ignore_errors_enabled, seed, user_defined_function_seed, is_move_interim_tables_enabled, is_execute_saved_script_enabled, is_drop_temp_tables_enabled, is_redo_logging_enabled, is_refresh_stats_enabled, parallel_degree, recompile):
 
     if isinstance(masking_policy_id, six.string_types) and len(masking_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --masking-policy-id cannot be whitespace or empty string')
@@ -19343,6 +19359,9 @@ def mask_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_se
 
     if seed is not None:
         _details['seed'] = seed
+
+    if user_defined_function_seed is not None:
+        _details['userDefinedFunctionSeed'] = user_defined_function_seed
 
     if is_move_interim_tables_enabled is not None:
         _details['isMoveInterimTablesEnabled'] = is_move_interim_tables_enabled

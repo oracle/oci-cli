@@ -16,7 +16,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('jms_java_downloads.jms_java_downloads_root_group.command_name', 'jms-java-downloads'), cls=CommandGroupWithAlias, help=cli_util.override('jms_java_downloads.jms_java_downloads_root_group.help', """The APIs for the <a href="https://docs.oracle.com/en-us/iaas/jms/doc/java-download.html">Java Download</a> feature of Java Management Service."""), short_help=cli_util.override('jms_java_downloads.jms_java_downloads_root_group.short_help', """Java Management Service Download API"""))
+@cli.command(cli_util.override('jms_java_downloads.jms_java_downloads_root_group.command_name', 'jms-java-downloads'), cls=CommandGroupWithAlias, help=cli_util.override('jms_java_downloads.jms_java_downloads_root_group.help', """The APIs for the [Java Download] feature of Java Management Service."""), short_help=cli_util.override('jms_java_downloads.jms_java_downloads_root_group.short_help', """Java Management Service Java Download API"""))
 @cli_util.help_option_group
 def jms_java_downloads_root_group():
     pass
@@ -276,7 +276,7 @@ def create_java_download_token(ctx, from_json, wait_for_state, max_wait_seconds,
 
 @java_license_acceptance_record_group.command(name=cli_util.override('jms_java_downloads.create_java_license_acceptance_record.command_name', 'create'), help=u"""Creates a Java license acceptance record for the specified license type in a tenancy. \n[Command Reference](createJavaLicenseAcceptanceRecord)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The tenancy [OCID] of the user accepting the license.""")
-@cli_util.option('--license-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["OTN", "NFTC", "RESTRICTED"]), help=u"""License type for the Java version.""")
+@cli_util.option('--license-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["OTN", "NFTC", "BCL", "RESTRICTED"]), help=u"""License type for the Java version.""")
 @cli_util.option('--license-acceptance-status', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "REVOKED"]), help=u"""Status of license acceptance.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`. (See [Managing Tags and Tag Namespaces].)""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`. (See [Understanding Free-form Tags]).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -630,7 +630,7 @@ def get_java_download_token(ctx, from_json, java_download_token_id):
 
 
 @java_license_group.command(name=cli_util.override('jms_java_downloads.get_java_license.command_name', 'get'), help=u"""Return details of the specified Java license type. \n[Command Reference](getJavaLicense)""")
-@cli_util.option('--license-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["OTN", "NFTC", "RESTRICTED"]), help=u"""Unique Java license type.""")
+@cli_util.option('--license-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["OTN", "NFTC", "BCL", "RESTRICTED"]), help=u"""Unique Java license type.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -909,7 +909,7 @@ def list_java_download_tokens(ctx, from_json, all_pages, page_size, compartment_
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the tenancy.""")
 @cli_util.option('--search-by-user', help=u"""A filter to return only resources that match the user principal detail. The search string can be any of the property values from the [Principal] object. This object is used as a response datatype for the `createdBy` and `lastUpdatedBy` fields in applicable resource.""")
 @cli_util.option('--id', help=u"""Unique Java license acceptance record identifier.""")
-@cli_util.option('--license-type', type=custom_types.CliCaseInsensitiveChoice(["OTN", "NFTC", "RESTRICTED"]), help=u"""Unique Java license type.""")
+@cli_util.option('--license-type', type=custom_types.CliCaseInsensitiveChoice(["OTN", "NFTC", "BCL", "RESTRICTED"]), help=u"""Unique Java license type.""")
 @cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "REVOKED"]), help=u"""The status of license acceptance.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
@@ -972,7 +972,7 @@ def list_java_license_acceptance_records(ctx, from_json, all_pages, page_size, c
 
 
 @java_license_group.command(name=cli_util.override('jms_java_downloads.list_java_licenses.command_name', 'list'), help=u"""Return a list with details of all Java licenses. \n[Command Reference](listJavaLicenses)""")
-@cli_util.option('--license-type', type=custom_types.CliCaseInsensitiveChoice(["OTN", "NFTC", "RESTRICTED"]), help=u"""Unique Java license type.""")
+@cli_util.option('--license-type', type=custom_types.CliCaseInsensitiveChoice(["OTN", "NFTC", "BCL", "RESTRICTED"]), help=u"""Unique Java license type.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the display name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. The token is usually retrieved from a previous list call.""")
