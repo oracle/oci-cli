@@ -6,6 +6,89 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.67.0 - 2025-09-30
+--------------------
+Added
+~~~~~
+
+* Database Service
+
+    * Support update autonomous database kms key for gcp resource
+
+      * ``oci db autonomous-database create-autonomous-database-gcp-key-details``
+      * ``oci db autonomous-database update-autonomous-database-gcp-key-details``
+
+* Oracle Cloud Vmware Solution
+
+    * Support for datastore management for standard shapes in Oracle Cloud VMware Provisioning service
+
+      * ``oci ocvs datastore``
+      * ``oci ocvs datastore-cluster``
+
+* Generative AI Service
+
+    * Support Video/Audio input for Gemini models
+
+      * ``oci generative-ai-inference chat-result chat``
+
+    * Support for private endpoint in generative ai service
+
+      * ``oci generative-ai endpoint create``
+      * ``oci generative-ai endpoint update``
+      * ``oci generative-ai generative-ai-private-endpoint change-compartment``
+
+* Fleet Software Update Service
+
+    * Support for applying Exadata VM OS updates or Exadata stack updates (combined VM OS and Oracle Grid Infrastructure updates) to collections of ExaDB-D or ExaDB-C@C VM Clusters in the Exadata Fleet Update service
+
+      * ``oci fleet-software-update fsu-discovery create-exadb-stack``
+      * ``oci fleet-software-update fsu-discovery create-guest-os``
+      * ``oci fleet-software-update fsu-collection create-exadb-stack``
+      * ``oci fleet-software-update fsu-collection create-guest-os``
+
+* FusionApp Service
+
+    * Support for public api exposing option to enbale IPv6 in fusion_apps service
+
+      * ``oci fusion-apps fusion-environment create --ipv6-dual-stack-enabled``
+      * ``oci fusion-apps fusion-environment update --ipv6-dual-stack-enabled``
+
+* Functions Service
+
+    * Support for new optional parameters when creating or updating functions
+
+      * ``oci fn function create|update --detached-mode-timeout-in-seconds``
+      * ``oci fn function create|update --success-destination``
+      * ``oci fn function create|update --failure-destination``
+
+* Compute Service
+
+    * New request and response field is-ai-enterprise-enabled added for Instance launch and update operations.
+
+      * ``oci compute instance update``
+
+* Core Service
+
+    * Add is-ai-enterprise-enabled field for instance launch via instance-pool or instance-configuration
+
+      * ``oci compute instance launch``
+
+* Functions Service
+
+    * Support for new optional parameters when creating or updating functions
+
+      * ``oci fn function create|update --detached-mode-timeout-in-seconds``
+      * ``oci fn function create|update --success-destination``
+      * ``oci fn function create|update --failure-destination``
+
+Modified
+~~~~~~~~
+* Oracle Cloud Vmware Solution Service
+
+  * [BREAKING] Command modified for work-request-error
+
+    * ``oci ocvs work-request-error list``
+    
 3.66.2 - 2025-09-23
 --------------------
 Added

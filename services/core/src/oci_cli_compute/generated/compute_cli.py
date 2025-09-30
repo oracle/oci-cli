@@ -2129,12 +2129,15 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'schema-data': {'module': 'core', 'class': 'dict(str, ImageCapabilitySchemaDescriptor)'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'schema-data': {'module': 'core', 'class': 'dict(str, ImageCapabilitySchemaDescriptor)'}}, output_type={'module': 'core', 'class': 'ComputeImageCapabilitySchema'})
 @cli_util.wrap_exceptions
-def create_compute_image_capability_schema(ctx, from_json, compartment_id, compute_global_image_capability_schema_version_name, image_id, schema_data, freeform_tags, display_name, defined_tags):
+def create_compute_image_capability_schema(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, compute_global_image_capability_schema_version_name, image_id, schema_data, freeform_tags, display_name, defined_tags):
 
     kwargs = {}
 
@@ -2158,6 +2161,29 @@ def create_compute_image_capability_schema(ctx, from_json, compartment_id, compu
         create_compute_image_capability_schema_details=_details,
         **kwargs
     )
+    if wait_for_state:
+
+        if hasattr(client, 'get_compute_image_capability_schema') and callable(getattr(client, 'get_compute_image_capability_schema')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_compute_image_capability_schema(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -3110,12 +3136,15 @@ def delete_compute_host_group(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--compute-image-capability-schema-id', required=True, help=u"""The id of the compute image capability schema or the image ocid""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_compute_image_capability_schema(ctx, from_json, compute_image_capability_schema_id, if_match):
+def delete_compute_image_capability_schema(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_image_capability_schema_id, if_match):
 
     if isinstance(compute_image_capability_schema_id, six.string_types) and len(compute_image_capability_schema_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-image-capability-schema-id cannot be whitespace or empty string')
@@ -3128,6 +3157,41 @@ def delete_compute_image_capability_schema(ctx, from_json, compute_image_capabil
         compute_image_capability_schema_id=compute_image_capability_schema_id,
         **kwargs
     )
+    if wait_for_state:
+
+        if hasattr(client, 'get_compute_image_capability_schema') and callable(getattr(client, 'get_compute_image_capability_schema')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_compute_image_capability_schema(compute_image_capability_schema_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -4920,6 +4984,7 @@ This option is a JSON list with items of type LaunchAttachVolumeDetails.  For do
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--platform-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
 @cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
@@ -4932,7 +4997,7 @@ This option is a JSON list with items of type LaunchInstanceLicensingConfig.  Fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, placement_constraint_details, instance_configuration_id, licensing_configs):
+def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, placement_constraint_details, is_ai_enterprise_enabled, instance_configuration_id, licensing_configs):
 
     kwargs = {}
 
@@ -5023,6 +5088,9 @@ def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if placement_constraint_details is not None:
         _details['placementConstraintDetails'] = cli_util.parse_json_parameter("placement_constraint_details", placement_constraint_details)
+
+    if is_ai_enterprise_enabled is not None:
+        _details['isAIEnterpriseEnabled'] = is_ai_enterprise_enabled
 
     if instance_configuration_id is not None:
         _details['instanceConfigurationId'] = instance_configuration_id
@@ -5169,6 +5237,7 @@ This option is a JSON list with items of type LaunchAttachVolumeDetails.  For do
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--platform-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
 @cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
@@ -5195,7 +5264,7 @@ For volumes with the auto-tuned performance feature enabled, this is set to the 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}, 'source-details-instance-source-image-filter-details': {'module': 'core', 'class': 'InstanceSourceImageFilterDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, placement_constraint_details, instance_configuration_id, licensing_configs, source_details_boot_volume_size_in_gbs, source_details_image_id, source_details_boot_volume_vpus_per_gb, source_details_instance_source_image_filter_details):
+def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, placement_constraint_details, is_ai_enterprise_enabled, instance_configuration_id, licensing_configs, source_details_boot_volume_size_in_gbs, source_details_image_id, source_details_boot_volume_vpus_per_gb, source_details_instance_source_image_filter_details):
 
     kwargs = {}
 
@@ -5284,6 +5353,9 @@ def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_s
 
     if placement_constraint_details is not None:
         _details['placementConstraintDetails'] = cli_util.parse_json_parameter("placement_constraint_details", placement_constraint_details)
+
+    if is_ai_enterprise_enabled is not None:
+        _details['isAIEnterpriseEnabled'] = is_ai_enterprise_enabled
 
     if instance_configuration_id is not None:
         _details['instanceConfigurationId'] = instance_configuration_id
@@ -5445,6 +5517,7 @@ This option is a JSON list with items of type LaunchAttachVolumeDetails.  For do
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--platform-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
 @cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
@@ -5457,7 +5530,7 @@ This option is a JSON list with items of type LaunchInstanceLicensingConfig.  Fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_boot_volume_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, placement_constraint_details, instance_configuration_id, licensing_configs):
+def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_boot_volume_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, placement_constraint_details, is_ai_enterprise_enabled, instance_configuration_id, licensing_configs):
 
     kwargs = {}
 
@@ -5547,6 +5620,9 @@ def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait
 
     if placement_constraint_details is not None:
         _details['placementConstraintDetails'] = cli_util.parse_json_parameter("placement_constraint_details", placement_constraint_details)
+
+    if is_ai_enterprise_enabled is not None:
+        _details['isAIEnterpriseEnabled'] = is_ai_enterprise_enabled
 
     if instance_configuration_id is not None:
         _details['instanceConfigurationId'] = instance_configuration_id
@@ -5695,6 +5771,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
 @cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
@@ -5703,7 +5780,7 @@ This option is a JSON list with items of type LaunchInstanceLicensingConfig.  Fo
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
 @cli_util.option('--platform-config-is-memory-encryption-enabled', type=click.BOOL, help=u"""Whether the instance is a confidential instance. If this value is `true`, the instance is a confidential instance. The default value is `false`.""")
-@cli_util.option('--platform-config-numa-nodes-per-socket', type=custom_types.CliCaseInsensitiveChoice(["NPS0", "NPS1", "NPS2", "NPS4"]), help=u"""The number of NUMA nodes per socket (NPS).""")
+@cli_util.option('--platform-config-numa-nodes-per-socket', type=custom_types.CliCaseInsensitiveChoice(["NPS0", "NPS1", "NPS2", "NPS4", "NPS6"]), help=u"""The number of NUMA nodes per socket (NPS).""")
 @cli_util.option('--platform-config-is-symmetric-multi-threading-enabled', type=click.BOOL, help=u"""Whether symmetric multithreading is enabled on the instance. Symmetric multithreading is also called simultaneous multithreading (SMT) or Intel Hyper-Threading.
 
 Intel and AMD processors have two hardware execution threads per core (OCPU). SMT permits multiple independent threads of execution, to better use the resources and increase the efficiency of the CPU. When multithreading is disabled, only one thread is permitted to run on each core, which can provide higher or more predictable performance for some workloads.""")
@@ -5719,7 +5796,7 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_config_map):
+def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, is_ai_enterprise_enabled, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -5808,6 +5885,9 @@ def launch_instance_amd_rome_bm_gpu_launch_instance_platform_config(ctx, from_js
 
     if placement_constraint_details is not None:
         _details['placementConstraintDetails'] = cli_util.parse_json_parameter("placement_constraint_details", placement_constraint_details)
+
+    if is_ai_enterprise_enabled is not None:
+        _details['isAIEnterpriseEnabled'] = is_ai_enterprise_enabled
 
     if instance_configuration_id is not None:
         _details['instanceConfigurationId'] = instance_configuration_id
@@ -5986,6 +6066,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
 @cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
@@ -5994,7 +6075,7 @@ This option is a JSON list with items of type LaunchInstanceLicensingConfig.  Fo
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
 @cli_util.option('--platform-config-is-memory-encryption-enabled', type=click.BOOL, help=u"""Whether the instance is a confidential instance. If this value is `true`, the instance is a confidential instance. The default value is `false`.""")
-@cli_util.option('--platform-config-numa-nodes-per-socket', type=custom_types.CliCaseInsensitiveChoice(["NPS0", "NPS1", "NPS2", "NPS4"]), help=u"""The number of NUMA nodes per socket (NPS).""")
+@cli_util.option('--platform-config-numa-nodes-per-socket', type=custom_types.CliCaseInsensitiveChoice(["NPS0", "NPS1", "NPS2", "NPS4", "NPS6"]), help=u"""The number of NUMA nodes per socket (NPS).""")
 @cli_util.option('--platform-config-is-symmetric-multi-threading-enabled', type=click.BOOL, help=u"""Whether symmetric multithreading is enabled on the instance. Symmetric multithreading is also called simultaneous multithreading (SMT) or Intel Hyper-Threading.
 
 Intel and AMD processors have two hardware execution threads per core (OCPU). SMT permits multiple independent threads of execution, to better use the resources and increase the efficiency of the CPU. When multithreading is disabled, only one thread is permitted to run on each core, which can provide higher or more predictable performance for some workloads.""")
@@ -6013,7 +6094,7 @@ If the applications that you run on the instance use a core-based licensing mode
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
+def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, is_ai_enterprise_enabled, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -6102,6 +6183,9 @@ def launch_instance_amd_rome_bm_launch_instance_platform_config(ctx, from_json, 
 
     if placement_constraint_details is not None:
         _details['placementConstraintDetails'] = cli_util.parse_json_parameter("placement_constraint_details", placement_constraint_details)
+
+    if is_ai_enterprise_enabled is not None:
+        _details['isAIEnterpriseEnabled'] = is_ai_enterprise_enabled
 
     if instance_configuration_id is not None:
         _details['instanceConfigurationId'] = instance_configuration_id
@@ -6283,6 +6367,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
 @cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
@@ -6308,7 +6393,7 @@ If the applications that you run on the instance use a core-based licensing mode
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
+def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, is_ai_enterprise_enabled, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -6397,6 +6482,9 @@ def launch_instance_intel_icelake_bm_launch_instance_platform_config(ctx, from_j
 
     if placement_constraint_details is not None:
         _details['placementConstraintDetails'] = cli_util.parse_json_parameter("placement_constraint_details", placement_constraint_details)
+
+    if is_ai_enterprise_enabled is not None:
+        _details['isAIEnterpriseEnabled'] = is_ai_enterprise_enabled
 
     if instance_configuration_id is not None:
         _details['instanceConfigurationId'] = instance_configuration_id
@@ -6572,6 +6660,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
 @cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
@@ -6591,7 +6680,7 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_is_symmetric_multi_threading_enabled):
+def launch_instance_amd_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, is_ai_enterprise_enabled, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_is_symmetric_multi_threading_enabled):
 
     kwargs = {}
 
@@ -6680,6 +6769,9 @@ def launch_instance_amd_vm_launch_instance_platform_config(ctx, from_json, wait_
 
     if placement_constraint_details is not None:
         _details['placementConstraintDetails'] = cli_util.parse_json_parameter("placement_constraint_details", placement_constraint_details)
+
+    if is_ai_enterprise_enabled is not None:
+        _details['isAIEnterpriseEnabled'] = is_ai_enterprise_enabled
 
     if instance_configuration_id is not None:
         _details['instanceConfigurationId'] = instance_configuration_id
@@ -6843,6 +6935,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
 @cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
@@ -6862,7 +6955,7 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_intel_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_is_symmetric_multi_threading_enabled):
+def launch_instance_intel_vm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, is_ai_enterprise_enabled, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_is_symmetric_multi_threading_enabled):
 
     kwargs = {}
 
@@ -6951,6 +7044,9 @@ def launch_instance_intel_vm_launch_instance_platform_config(ctx, from_json, wai
 
     if placement_constraint_details is not None:
         _details['placementConstraintDetails'] = cli_util.parse_json_parameter("placement_constraint_details", placement_constraint_details)
+
+    if is_ai_enterprise_enabled is not None:
+        _details['isAIEnterpriseEnabled'] = is_ai_enterprise_enabled
 
     if instance_configuration_id is not None:
         _details['instanceConfigurationId'] = instance_configuration_id
@@ -7114,6 +7210,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
 @cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
@@ -7139,7 +7236,7 @@ If the applications that you run on the instance use a core-based licensing mode
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
+def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, is_ai_enterprise_enabled, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -7228,6 +7325,9 @@ def launch_instance_intel_skylake_bm_launch_instance_platform_config(ctx, from_j
 
     if placement_constraint_details is not None:
         _details['placementConstraintDetails'] = cli_util.parse_json_parameter("placement_constraint_details", placement_constraint_details)
+
+    if is_ai_enterprise_enabled is not None:
+        _details['isAIEnterpriseEnabled'] = is_ai_enterprise_enabled
 
     if instance_configuration_id is not None:
         _details['instanceConfigurationId'] = instance_configuration_id
@@ -7403,6 +7503,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
 @cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
@@ -7411,7 +7512,7 @@ This option is a JSON list with items of type LaunchInstanceLicensingConfig.  Fo
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
 @cli_util.option('--platform-config-is-memory-encryption-enabled', type=click.BOOL, help=u"""Whether the instance is a confidential instance. If this value is `true`, the instance is a confidential instance. The default value is `false`.""")
-@cli_util.option('--platform-config-numa-nodes-per-socket', type=custom_types.CliCaseInsensitiveChoice(["NPS0", "NPS1", "NPS2", "NPS4"]), help=u"""The number of NUMA nodes per socket (NPS).""")
+@cli_util.option('--platform-config-numa-nodes-per-socket', type=custom_types.CliCaseInsensitiveChoice(["NPS0", "NPS1", "NPS2", "NPS4", "NPS6"]), help=u"""The number of NUMA nodes per socket (NPS).""")
 @cli_util.option('--platform-config-is-symmetric-multi-threading-enabled', type=click.BOOL, help=u"""Whether symmetric multithreading is enabled on the instance. Symmetric multithreading is also called simultaneous multithreading (SMT) or Intel Hyper-Threading.
 
 Intel and AMD processors have two hardware execution threads per core (OCPU). SMT permits multiple independent threads of execution, to better use the resources and increase the efficiency of the CPU. When multithreading is disabled, only one thread is permitted to run on each core, which can provide higher or more predictable performance for some workloads.""")
@@ -7430,7 +7531,7 @@ If the applications that you run on the instance use a core-based licensing mode
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
+def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, is_ai_enterprise_enabled, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -7519,6 +7620,9 @@ def launch_instance_amd_milan_bm_launch_instance_platform_config(ctx, from_json,
 
     if placement_constraint_details is not None:
         _details['placementConstraintDetails'] = cli_util.parse_json_parameter("placement_constraint_details", placement_constraint_details)
+
+    if is_ai_enterprise_enabled is not None:
+        _details['isAIEnterpriseEnabled'] = is_ai_enterprise_enabled
 
     if instance_configuration_id is not None:
         _details['instanceConfigurationId'] = instance_configuration_id
@@ -7700,6 +7804,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
 @cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
@@ -7708,7 +7813,7 @@ This option is a JSON list with items of type LaunchInstanceLicensingConfig.  Fo
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
 @cli_util.option('--platform-config-is-memory-encryption-enabled', type=click.BOOL, help=u"""Whether the instance is a confidential instance. If this value is `true`, the instance is a confidential instance. The default value is `false`.""")
-@cli_util.option('--platform-config-numa-nodes-per-socket', type=custom_types.CliCaseInsensitiveChoice(["NPS0", "NPS1", "NPS2", "NPS4"]), help=u"""The number of NUMA nodes per socket (NPS).""")
+@cli_util.option('--platform-config-numa-nodes-per-socket', type=custom_types.CliCaseInsensitiveChoice(["NPS0", "NPS1", "NPS2", "NPS4", "NPS6"]), help=u"""The number of NUMA nodes per socket (NPS).""")
 @cli_util.option('--platform-config-is-symmetric-multi-threading-enabled', type=click.BOOL, help=u"""Whether symmetric multithreading is enabled on the instance. Symmetric multithreading is also called simultaneous multithreading (SMT) or Intel Hyper-Threading.
 
 Intel and AMD processors have two hardware execution threads per core (OCPU). SMT permits multiple independent threads of execution, to better use the resources and increase the efficiency of the CPU. When multithreading is disabled, only one thread is permitted to run on each core, which can provide higher or more predictable performance for some workloads.""")
@@ -7727,7 +7832,7 @@ If the applications that you run on the instance use a core-based licensing mode
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_generic_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
+def launch_instance_generic_bm_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, is_ai_enterprise_enabled, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_percentage_of_cores_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -7816,6 +7921,9 @@ def launch_instance_generic_bm_launch_instance_platform_config(ctx, from_json, w
 
     if placement_constraint_details is not None:
         _details['placementConstraintDetails'] = cli_util.parse_json_parameter("placement_constraint_details", placement_constraint_details)
+
+    if is_ai_enterprise_enabled is not None:
+        _details['isAIEnterpriseEnabled'] = is_ai_enterprise_enabled
 
     if instance_configuration_id is not None:
         _details['instanceConfigurationId'] = instance_configuration_id
@@ -7997,6 +8105,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
 @cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
@@ -8005,7 +8114,7 @@ This option is a JSON list with items of type LaunchInstanceLicensingConfig.  Fo
 @cli_util.option('--platform-config-is-trusted-platform-module-enabled', type=click.BOOL, help=u"""Whether the Trusted Platform Module (TPM) is enabled on the instance.""")
 @cli_util.option('--platform-config-is-measured-boot-enabled', type=click.BOOL, help=u"""Whether the Measured Boot feature is enabled on the instance.""")
 @cli_util.option('--platform-config-is-memory-encryption-enabled', type=click.BOOL, help=u"""Whether the instance is a confidential instance. If this value is `true`, the instance is a confidential instance. The default value is `false`.""")
-@cli_util.option('--platform-config-numa-nodes-per-socket', type=custom_types.CliCaseInsensitiveChoice(["NPS0", "NPS1", "NPS2", "NPS4"]), help=u"""The number of NUMA nodes per socket (NPS).""")
+@cli_util.option('--platform-config-numa-nodes-per-socket', type=custom_types.CliCaseInsensitiveChoice(["NPS0", "NPS1", "NPS2", "NPS4", "NPS6"]), help=u"""The number of NUMA nodes per socket (NPS).""")
 @cli_util.option('--platform-config-is-symmetric-multi-threading-enabled', type=click.BOOL, help=u"""Whether symmetric multithreading is enabled on the instance. Symmetric multithreading is also called simultaneous multithreading (SMT) or Intel Hyper-Threading.
 
 Intel and AMD processors have two hardware execution threads per core (OCPU). SMT permits multiple independent threads of execution, to better use the resources and increase the efficiency of the CPU. When multithreading is disabled, only one thread is permitted to run on each core, which can provide higher or more predictable performance for some workloads.""")
@@ -8021,7 +8130,7 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}, 'platform-config-config-map': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_amd_milan_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_config_map):
+def launch_instance_amd_milan_bm_gpu_launch_instance_platform_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, placement_constraint_details, is_ai_enterprise_enabled, instance_configuration_id, licensing_configs, platform_config_is_secure_boot_enabled, platform_config_is_trusted_platform_module_enabled, platform_config_is_measured_boot_enabled, platform_config_is_memory_encryption_enabled, platform_config_numa_nodes_per_socket, platform_config_is_symmetric_multi_threading_enabled, platform_config_is_access_control_service_enabled, platform_config_are_virtual_instructions_enabled, platform_config_is_input_output_memory_management_unit_enabled, platform_config_config_map):
 
     kwargs = {}
 
@@ -8110,6 +8219,9 @@ def launch_instance_amd_milan_bm_gpu_launch_instance_platform_config(ctx, from_j
 
     if placement_constraint_details is not None:
         _details['placementConstraintDetails'] = cli_util.parse_json_parameter("placement_constraint_details", placement_constraint_details)
+
+    if is_ai_enterprise_enabled is not None:
+        _details['isAIEnterpriseEnabled'] = is_ai_enterprise_enabled
 
     if instance_configuration_id is not None:
         _details['instanceConfigurationId'] = instance_configuration_id
@@ -8289,6 +8401,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--platform-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
 @cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
@@ -8301,7 +8414,7 @@ This option is a JSON list with items of type LaunchInstanceLicensingConfig.  Fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_host_group_placement_constraint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, placement_constraint_details_compute_host_group_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, instance_configuration_id, licensing_configs):
+def launch_instance_host_group_placement_constraint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, placement_constraint_details_compute_host_group_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, is_ai_enterprise_enabled, instance_configuration_id, licensing_configs):
 
     kwargs = {}
 
@@ -8391,6 +8504,9 @@ def launch_instance_host_group_placement_constraint_details(ctx, from_json, wait
 
     if platform_config is not None:
         _details['platformConfig'] = cli_util.parse_json_parameter("platform_config", platform_config)
+
+    if is_ai_enterprise_enabled is not None:
+        _details['isAIEnterpriseEnabled'] = is_ai_enterprise_enabled
 
     if instance_configuration_id is not None:
         _details['instanceConfigurationId'] = instance_configuration_id
@@ -8540,6 +8656,7 @@ You can enumerate all available shapes by calling [ListShapes].""")
 This option is a JSON list with items of type LaunchAttachVolumeDetails.  For documentation on LaunchAttachVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/LaunchAttachVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
 @cli_util.option('--platform-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
 @cli_util.option('--instance-configuration-id', help=u"""The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.""")
 @cli_util.option('--licensing-configs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of licensing configurations associated with target launch values.
 
@@ -8552,7 +8669,7 @@ This option is a JSON list with items of type LaunchInstanceLicensingConfig.  Fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'preemptible-instance-config': {'module': 'core', 'class': 'PreemptibleInstanceConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-volume-attachments': {'module': 'core', 'class': 'list[LaunchAttachVolumeDetails]'}, 'platform-config': {'module': 'core', 'class': 'LaunchInstancePlatformConfig'}, 'licensing-configs': {'module': 'core', 'class': 'list[LaunchInstanceLicensingConfig]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_compute_bare_metal_host_placement_constraint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, placement_constraint_details_compute_bare_metal_host_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, instance_configuration_id, licensing_configs):
+def launch_instance_compute_bare_metal_host_placement_constraint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, placement_constraint_details_compute_bare_metal_host_id, capacity_reservation_id, create_vnic_details, dedicated_vm_host_id, defined_tags, security_attributes, display_name, extended_metadata, fault_domain, cluster_placement_group_id, freeform_tags, compute_cluster_id, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, preemptible_instance_config, metadata, agent_config, shape, shape_config, source_details, subnet_id, launch_volume_attachments, is_pv_encryption_in_transit_enabled, platform_config, is_ai_enterprise_enabled, instance_configuration_id, licensing_configs):
 
     kwargs = {}
 
@@ -8642,6 +8759,9 @@ def launch_instance_compute_bare_metal_host_placement_constraint_details(ctx, fr
 
     if platform_config is not None:
         _details['platformConfig'] = cli_util.parse_json_parameter("platform_config", platform_config)
+
+    if is_ai_enterprise_enabled is not None:
+        _details['isAIEnterpriseEnabled'] = is_ai_enterprise_enabled
 
     if instance_configuration_id is not None:
         _details['instanceConfigurationId'] = instance_configuration_id
@@ -11499,7 +11619,7 @@ def update_compute_gpu_memory_cluster(ctx, from_json, force, wait_for_state, max
     cli_util.render_response(result, ctx)
 
 
-@compute_gpu_memory_fabric_group.command(name=cli_util.override('compute.update_compute_gpu_memory_fabric.command_name', 'update'), help=u"""Customer can update displayName and tags for compute GPU memory fabric record \n[Command Reference](updateComputeGpuMemoryFabric)""")
+@compute_gpu_memory_fabric_group.command(name=cli_util.override('compute.update_compute_gpu_memory_fabric.command_name', 'update'), help=u"""Customer can update displayName, tags and for compute GPU memory fabric record \n[Command Reference](updateComputeGpuMemoryFabric)""")
 @cli_util.option('--compute-gpu-memory-fabric-id', required=True, help=u"""The OCID of the compute GPU memory fabric.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -11763,12 +11883,15 @@ This option is a JSON dictionary of type dict(str, ImageCapabilitySchemaDescript
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'schema-data': {'module': 'core', 'class': 'dict(str, ImageCapabilitySchemaDescriptor)'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'schema-data': {'module': 'core', 'class': 'dict(str, ImageCapabilitySchemaDescriptor)'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'core', 'class': 'ComputeImageCapabilitySchema'})
 @cli_util.wrap_exceptions
-def update_compute_image_capability_schema(ctx, from_json, force, compute_image_capability_schema_id, display_name, freeform_tags, schema_data, defined_tags, if_match):
+def update_compute_image_capability_schema(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_image_capability_schema_id, display_name, freeform_tags, schema_data, defined_tags, if_match):
 
     if isinstance(compute_image_capability_schema_id, six.string_types) and len(compute_image_capability_schema_id.strip()) == 0:
         raise click.UsageError('Parameter --compute-image-capability-schema-id cannot be whitespace or empty string')
@@ -11801,6 +11924,29 @@ def update_compute_image_capability_schema(ctx, from_json, force, compute_image_
         update_compute_image_capability_schema_details=_details,
         **kwargs
     )
+    if wait_for_state:
+
+        if hasattr(client, 'get_compute_image_capability_schema') and callable(getattr(client, 'get_compute_image_capability_schema')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_compute_image_capability_schema(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -12048,6 +12194,7 @@ Changes to metadata fields will be reflected in the instance metadata service (t
 
 The OCID of the instance remains the same. \n[Command Reference](updateInstance)""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can remove the instance from a reservation by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -12120,7 +12267,7 @@ This option is a JSON list with items of type UpdateInstanceLicensingConfig.  Fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'UpdateInstanceAgentConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'shape-config': {'module': 'core', 'class': 'UpdateInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'UpdateInstanceSourceDetails'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'launch-options': {'module': 'core', 'class': 'UpdateLaunchOptions'}, 'availability-config': {'module': 'core', 'class': 'UpdateInstanceAvailabilityConfigDetails'}, 'platform-config': {'module': 'core', 'class': 'UpdateInstancePlatformConfig'}, 'licensing-configs': {'module': 'core', 'class': 'list[UpdateInstanceLicensingConfig]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, capacity_reservation_id, defined_tags, security_attributes, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, source_details, update_operation_constraint, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, dedicated_vm_host_id, platform_config, licensing_configs, if_match):
+def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, is_ai_enterprise_enabled, capacity_reservation_id, defined_tags, security_attributes, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, source_details, update_operation_constraint, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, dedicated_vm_host_id, platform_config, licensing_configs, if_match):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
@@ -12134,6 +12281,9 @@ def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
         kwargs['if_match'] = if_match
 
     _details = {}
+
+    if is_ai_enterprise_enabled is not None:
+        _details['isAIEnterpriseEnabled'] = is_ai_enterprise_enabled
 
     if capacity_reservation_id is not None:
         _details['capacityReservationId'] = capacity_reservation_id
@@ -12234,6 +12384,7 @@ Changes to metadata fields will be reflected in the instance metadata service (t
 The OCID of the instance remains the same. \n[Command Reference](updateInstance)""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--source-details-boot-volume-id', required=True, help=u"""The OCID of the boot volume used to boot the instance.""")
+@cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can remove the instance from a reservation by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -12306,7 +12457,7 @@ This option is a JSON list with items of type UpdateInstanceLicensingConfig.  Fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'UpdateInstanceAgentConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'shape-config': {'module': 'core', 'class': 'UpdateInstanceShapeConfigDetails'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'launch-options': {'module': 'core', 'class': 'UpdateLaunchOptions'}, 'availability-config': {'module': 'core', 'class': 'UpdateInstanceAvailabilityConfigDetails'}, 'platform-config': {'module': 'core', 'class': 'UpdateInstancePlatformConfig'}, 'licensing-configs': {'module': 'core', 'class': 'list[UpdateInstanceLicensingConfig]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def update_instance_update_instance_source_via_boot_volume_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, source_details_boot_volume_id, capacity_reservation_id, defined_tags, security_attributes, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, update_operation_constraint, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, dedicated_vm_host_id, platform_config, licensing_configs, if_match, source_details_is_preserve_boot_volume_enabled):
+def update_instance_update_instance_source_via_boot_volume_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, source_details_boot_volume_id, is_ai_enterprise_enabled, capacity_reservation_id, defined_tags, security_attributes, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, update_operation_constraint, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, dedicated_vm_host_id, platform_config, licensing_configs, if_match, source_details_is_preserve_boot_volume_enabled):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
@@ -12322,6 +12473,9 @@ def update_instance_update_instance_source_via_boot_volume_details(ctx, from_jso
     _details = {}
     _details['sourceDetails'] = {}
     _details['sourceDetails']['bootVolumeId'] = source_details_boot_volume_id
+
+    if is_ai_enterprise_enabled is not None:
+        _details['isAIEnterpriseEnabled'] = is_ai_enterprise_enabled
 
     if capacity_reservation_id is not None:
         _details['capacityReservationId'] = capacity_reservation_id
@@ -12424,6 +12578,7 @@ Changes to metadata fields will be reflected in the instance metadata service (t
 The OCID of the instance remains the same. \n[Command Reference](updateInstance)""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
 @cli_util.option('--source-details-image-id', required=True, help=u"""The OCID of the image used to boot the instance.""")
+@cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can remove the instance from a reservation by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -12498,7 +12653,7 @@ This option is a JSON list with items of type UpdateInstanceLicensingConfig.  Fo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'UpdateInstanceAgentConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'shape-config': {'module': 'core', 'class': 'UpdateInstanceShapeConfigDetails'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'launch-options': {'module': 'core', 'class': 'UpdateLaunchOptions'}, 'availability-config': {'module': 'core', 'class': 'UpdateInstanceAvailabilityConfigDetails'}, 'platform-config': {'module': 'core', 'class': 'UpdateInstancePlatformConfig'}, 'licensing-configs': {'module': 'core', 'class': 'list[UpdateInstanceLicensingConfig]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def update_instance_update_instance_source_via_image_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, source_details_image_id, capacity_reservation_id, defined_tags, security_attributes, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, update_operation_constraint, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, dedicated_vm_host_id, platform_config, licensing_configs, if_match, source_details_is_preserve_boot_volume_enabled, source_details_boot_volume_size_in_gbs, source_details_kms_key_id):
+def update_instance_update_instance_source_via_image_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, source_details_image_id, is_ai_enterprise_enabled, capacity_reservation_id, defined_tags, security_attributes, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, update_operation_constraint, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, dedicated_vm_host_id, platform_config, licensing_configs, if_match, source_details_is_preserve_boot_volume_enabled, source_details_boot_volume_size_in_gbs, source_details_kms_key_id):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
@@ -12514,6 +12669,9 @@ def update_instance_update_instance_source_via_image_details(ctx, from_json, for
     _details = {}
     _details['sourceDetails'] = {}
     _details['sourceDetails']['imageId'] = source_details_image_id
+
+    if is_ai_enterprise_enabled is not None:
+        _details['isAIEnterpriseEnabled'] = is_ai_enterprise_enabled
 
     if capacity_reservation_id is not None:
         _details['capacityReservationId'] = capacity_reservation_id
@@ -12621,6 +12779,7 @@ Changes to metadata fields will be reflected in the instance metadata service (t
 
 The OCID of the instance remains the same. \n[Command Reference](updateInstance)""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can remove the instance from a reservation by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -12695,7 +12854,7 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'UpdateInstanceAgentConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'shape-config': {'module': 'core', 'class': 'UpdateInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'UpdateInstanceSourceDetails'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'launch-options': {'module': 'core', 'class': 'UpdateLaunchOptions'}, 'availability-config': {'module': 'core', 'class': 'UpdateInstanceAvailabilityConfigDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[UpdateInstanceLicensingConfig]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def update_instance_amd_vm_update_instance_platform_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, capacity_reservation_id, defined_tags, security_attributes, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, source_details, update_operation_constraint, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, dedicated_vm_host_id, licensing_configs, if_match, platform_config_is_symmetric_multi_threading_enabled):
+def update_instance_amd_vm_update_instance_platform_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, is_ai_enterprise_enabled, capacity_reservation_id, defined_tags, security_attributes, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, source_details, update_operation_constraint, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, dedicated_vm_host_id, licensing_configs, if_match, platform_config_is_symmetric_multi_threading_enabled):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
@@ -12710,6 +12869,9 @@ def update_instance_amd_vm_update_instance_platform_config(ctx, from_json, force
 
     _details = {}
     _details['platformConfig'] = {}
+
+    if is_ai_enterprise_enabled is not None:
+        _details['isAIEnterpriseEnabled'] = is_ai_enterprise_enabled
 
     if capacity_reservation_id is not None:
         _details['capacityReservationId'] = capacity_reservation_id
@@ -12811,6 +12973,7 @@ Changes to metadata fields will be reflected in the instance metadata service (t
 
 The OCID of the instance remains the same. \n[Command Reference](updateInstance)""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@cli_util.option('--is-ai-enterprise-enabled', type=click.BOOL, help=u"""Whether to enable AI enterprise on the instance.""")
 @cli_util.option('--capacity-reservation-id', help=u"""The OCID of the compute capacity reservation this instance is launched under. You can remove the instance from a reservation by specifying an empty string as input for this field. For more information, see [Capacity Reservations].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -12885,7 +13048,7 @@ Intel and AMD processors have two hardware execution threads per core (OCPU). SM
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'UpdateInstanceAgentConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'shape-config': {'module': 'core', 'class': 'UpdateInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'UpdateInstanceSourceDetails'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'launch-options': {'module': 'core', 'class': 'UpdateLaunchOptions'}, 'availability-config': {'module': 'core', 'class': 'UpdateInstanceAvailabilityConfigDetails'}, 'licensing-configs': {'module': 'core', 'class': 'list[UpdateInstanceLicensingConfig]'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def update_instance_intel_vm_update_instance_platform_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, capacity_reservation_id, defined_tags, security_attributes, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, source_details, update_operation_constraint, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, dedicated_vm_host_id, licensing_configs, if_match, platform_config_is_symmetric_multi_threading_enabled):
+def update_instance_intel_vm_update_instance_platform_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, is_ai_enterprise_enabled, capacity_reservation_id, defined_tags, security_attributes, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, source_details, update_operation_constraint, instance_options, fault_domain, launch_options, availability_config, time_maintenance_reboot_due, dedicated_vm_host_id, licensing_configs, if_match, platform_config_is_symmetric_multi_threading_enabled):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
@@ -12900,6 +13063,9 @@ def update_instance_intel_vm_update_instance_platform_config(ctx, from_json, for
 
     _details = {}
     _details['platformConfig'] = {}
+
+    if is_ai_enterprise_enabled is not None:
+        _details['isAIEnterpriseEnabled'] = is_ai_enterprise_enabled
 
     if capacity_reservation_id is not None:
         _details['capacityReservationId'] = capacity_reservation_id
