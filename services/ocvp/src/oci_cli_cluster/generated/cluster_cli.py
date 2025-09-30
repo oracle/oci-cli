@@ -53,7 +53,7 @@ Use the [WorkRequest] operations to track the creation of the Cluster.
 
 **Note:** If you later delete EXSi hosts from a production Cluster to make SDDC total host count less than 3, you are still billed for the 3 minimum recommended ESXi hosts. Also, you cannot add more VMware workloads to the Cluster until the SDDC again has at least 3 ESXi hosts.""")
 @cli_util.option('--network-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A descriptive name for the Cluster. Cluster name requirements are 1-16 character length limit, Must start with a letter, Must be English letters, numbers, - only, No repeating hyphens, Must be unique within the region. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A descriptive name for the Cluster. Cluster name requirements are 1-22 character length limit, Must start with a letter, Must be English letters, numbers, - only, No repeating hyphens, Must be unique within the region. Avoid entering confidential information.""")
 @cli_util.option('--instance-display-name-prefix', help=u"""A prefix used in the name of each ESXi host and Compute instance in the Cluster. If this isn't set, the Cluster's `displayName` is used as the prefix.
 
 For example, if the value is `myCluster`, the ESXi hosts are named `myCluster-1`, `myCluster-2`, and so on.""")
@@ -66,6 +66,7 @@ For example, if the value is `myCluster`, the ESXi hosts are named `myCluster-1`
 @cli_util.option('--datastores', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of datastore info for the Cluster. This value is required only when `initialHostShapeName` is a standard shape.
 
 This option is a JSON list with items of type DatastoreInfo.  For documentation on DatastoreInfo please see our API reference: https://docs.cloud.oracle.com/api/#/en/cluster/20230701/datatypes/DatastoreInfo.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--datastore-cluster-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of datastore clusters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vmware-software-version', help=u"""The VMware software bundle to install on the ESXi hosts in the Cluster. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")
 @cli_util.option('--esxi-software-version', help=u"""The ESXi software bundle to install on the ESXi hosts in the Cluster. Only versions under the same vmwareSoftwareVersion and have been validate by Oracle Cloud VMware Solution will be accepted. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -77,12 +78,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'network-configuration': {'module': 'ocvp', 'class': 'NetworkConfiguration'}, 'datastores': {'module': 'ocvp', 'class': 'list[DatastoreInfo]'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'network-configuration': {'module': 'ocvp', 'class': 'NetworkConfiguration'}, 'datastores': {'module': 'ocvp', 'class': 'list[DatastoreInfo]'}, 'datastore-cluster-ids': {'module': 'ocvp', 'class': 'list[string]'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-configuration': {'module': 'ocvp', 'class': 'NetworkConfiguration'}, 'datastores': {'module': 'ocvp', 'class': 'list[DatastoreInfo]'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-configuration': {'module': 'ocvp', 'class': 'NetworkConfiguration'}, 'datastores': {'module': 'ocvp', 'class': 'list[DatastoreInfo]'}, 'datastore-cluster-ids': {'module': 'ocvp', 'class': 'list[string]'}, 'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, compute_availability_domain, esxi_hosts_count, network_configuration, display_name, instance_display_name_prefix, initial_commitment, workload_network_cidr, initial_host_shape_name, initial_host_ocpu_count, is_shielded_instance_enabled, capacity_reservation_id, datastores, vmware_software_version, esxi_software_version, freeform_tags, defined_tags):
+def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, compute_availability_domain, esxi_hosts_count, network_configuration, display_name, instance_display_name_prefix, initial_commitment, workload_network_cidr, initial_host_shape_name, initial_host_ocpu_count, is_shielded_instance_enabled, capacity_reservation_id, datastores, datastore_cluster_ids, vmware_software_version, esxi_software_version, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -119,6 +120,9 @@ def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if datastores is not None:
         _details['datastores'] = cli_util.parse_json_parameter("datastores", datastores)
+
+    if datastore_cluster_ids is not None:
+        _details['datastoreClusterIds'] = cli_util.parse_json_parameter("datastore_cluster_ids", datastore_cluster_ids)
 
     if vmware_software_version is not None:
         _details['vmwareSoftwareVersion'] = vmware_software_version
@@ -315,7 +319,7 @@ def list_clusters(ctx, from_json, all_pages, page_size, sddc_id, display_name, l
 
 **Important:** Updating a Cluster affects only certain attributes in the `Cluster` object and does not affect the VMware environment currently running in the Cluster. \n[Command Reference](updateCluster)""")
 @cli_util.option('--cluster-id', required=True, help=u"""The [OCID] of the SDDC Cluster.""")
-@cli_util.option('--display-name', help=u"""The [OCID] of the Cluster. Cluster name requirements are 1-16 character length limit, Must start with a letter, Must be English letters, numbers, - only, No repeating hyphens, Must be unique within the region.""")
+@cli_util.option('--display-name', help=u"""The [OCID] of the Cluster. Cluster name requirements are 1-22 character length limit, Must start with a letter, Must be English letters, numbers, - only, No repeating hyphens, Must be unique within the region.""")
 @cli_util.option('--network-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vmware-software-version', help=u"""The version of bundled VMware software that the Oracle Cloud VMware Solution will install on any new ESXi hosts that you add to this Cluster in the future. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")
 @cli_util.option('--esxi-software-version', help=u"""The version of bundled ESXi software that the Oracle Cloud VMware Solution will install on any new ESXi hosts that you add to this Cluster in the future unless a specific version is configured on the ESXi level. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")

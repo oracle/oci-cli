@@ -200,6 +200,9 @@ Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
 The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
 @cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--failure-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--success-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -210,12 +213,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
 @cli_util.wrap_exceptions
-def create_function(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, image, image_digest, source_details, config, timeout_in_seconds, provisioned_concurrency_config, trace_config, freeform_tags, defined_tags):
+def create_function(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, image, image_digest, source_details, config, timeout_in_seconds, provisioned_concurrency_config, detached_mode_timeout_in_seconds, failure_destination, success_destination, trace_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -242,6 +245,15 @@ def create_function(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if provisioned_concurrency_config is not None:
         _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if failure_destination is not None:
+        _details['failureDestination'] = cli_util.parse_json_parameter("failure_destination", failure_destination)
+
+    if success_destination is not None:
+        _details['successDestination'] = cli_util.parse_json_parameter("success_destination", success_destination)
 
     if trace_config is not None:
         _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
@@ -297,6 +309,9 @@ Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
 The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
 @cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--failure-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--success-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -307,12 +322,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
 @cli_util.wrap_exceptions
-def create_function_pre_built_function_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, source_details_pbf_listing_id, image, image_digest, config, timeout_in_seconds, provisioned_concurrency_config, trace_config, freeform_tags, defined_tags):
+def create_function_pre_built_function_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, source_details_pbf_listing_id, image, image_digest, config, timeout_in_seconds, provisioned_concurrency_config, detached_mode_timeout_in_seconds, failure_destination, success_destination, trace_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -338,6 +353,15 @@ def create_function_pre_built_function_source_details(ctx, from_json, wait_for_s
 
     if provisioned_concurrency_config is not None:
         _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if failure_destination is not None:
+        _details['failureDestination'] = cli_util.parse_json_parameter("failure_destination", failure_destination)
+
+    if success_destination is not None:
+        _details['successDestination'] = cli_util.parse_json_parameter("success_destination", success_destination)
 
     if trace_config is not None:
         _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
@@ -394,6 +418,9 @@ Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
 
 The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--failure-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--success-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -404,12 +431,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
 @cli_util.wrap_exceptions
-def create_function_none_provisioned_concurrency_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, image, image_digest, source_details, config, timeout_in_seconds, trace_config, freeform_tags, defined_tags):
+def create_function_none_provisioned_concurrency_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, image, image_digest, source_details, config, timeout_in_seconds, detached_mode_timeout_in_seconds, failure_destination, success_destination, trace_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -434,6 +461,15 @@ def create_function_none_provisioned_concurrency_config(ctx, from_json, wait_for
 
     if timeout_in_seconds is not None:
         _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if failure_destination is not None:
+        _details['failureDestination'] = cli_util.parse_json_parameter("failure_destination", failure_destination)
+
+    if success_destination is not None:
+        _details['successDestination'] = cli_util.parse_json_parameter("success_destination", success_destination)
 
     if trace_config is not None:
         _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
@@ -491,6 +527,9 @@ Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
 
 The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--failure-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--success-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -501,12 +540,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
 @cli_util.wrap_exceptions
-def create_function_constant_provisioned_concurrency_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, provisioned_concurrency_config_count, image, image_digest, source_details, config, timeout_in_seconds, trace_config, freeform_tags, defined_tags):
+def create_function_constant_provisioned_concurrency_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, provisioned_concurrency_config_count, image, image_digest, source_details, config, timeout_in_seconds, detached_mode_timeout_in_seconds, failure_destination, success_destination, trace_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -533,6 +572,15 @@ def create_function_constant_provisioned_concurrency_config(ctx, from_json, wait
     if timeout_in_seconds is not None:
         _details['timeoutInSeconds'] = timeout_in_seconds
 
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if failure_destination is not None:
+        _details['failureDestination'] = cli_util.parse_json_parameter("failure_destination", failure_destination)
+
+    if success_destination is not None:
+        _details['successDestination'] = cli_util.parse_json_parameter("success_destination", success_destination)
+
     if trace_config is not None:
         _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
 
@@ -543,6 +591,890 @@ def create_function_constant_provisioned_concurrency_config(ctx, from_json, wait
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['provisionedConcurrencyConfig']['strategy'] = 'CONSTANT'
+
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    result = client.create_function(
+        create_function_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_function(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@function_group.command(name=cli_util.override('functions_management.create_function_stream_failure_destination_details.command_name', 'create-function-stream-failure-destination-details'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
+@cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
+@cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
+@cli_util.option('--failure-destination-stream-id', required=True, help=u"""The [OCID] of the stream.""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
+@cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. If no value is specified, the digest currently associated with the image in the OCI Registry will be used. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
+
+Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
+
+The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--success-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@cli_util.wrap_exceptions
+def create_function_stream_failure_destination_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, failure_destination_stream_id, image, image_digest, source_details, config, timeout_in_seconds, provisioned_concurrency_config, detached_mode_timeout_in_seconds, success_destination, trace_config, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['failureDestination'] = {}
+    _details['displayName'] = display_name
+    _details['applicationId'] = application_id
+    _details['memoryInMBs'] = memory_in_mbs
+    _details['failureDestination']['streamId'] = failure_destination_stream_id
+
+    if image is not None:
+        _details['image'] = image
+
+    if image_digest is not None:
+        _details['imageDigest'] = image_digest
+
+    if source_details is not None:
+        _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+
+    if config is not None:
+        _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if provisioned_concurrency_config is not None:
+        _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if success_destination is not None:
+        _details['successDestination'] = cli_util.parse_json_parameter("success_destination", success_destination)
+
+    if trace_config is not None:
+        _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['failureDestination']['kind'] = 'STREAM'
+
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    result = client.create_function(
+        create_function_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_function(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@function_group.command(name=cli_util.override('functions_management.create_function_queue_failure_destination_details.command_name', 'create-function-queue-failure-destination-details'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
+@cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
+@cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
+@cli_util.option('--failure-destination-queue-id', required=True, help=u"""The [OCID] of the queue.""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
+@cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. If no value is specified, the digest currently associated with the image in the OCI Registry will be used. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
+
+Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
+
+The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--success-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--failure-destination-channel-id', help=u"""The ID of the channel in the queue.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@cli_util.wrap_exceptions
+def create_function_queue_failure_destination_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, failure_destination_queue_id, image, image_digest, source_details, config, timeout_in_seconds, provisioned_concurrency_config, detached_mode_timeout_in_seconds, success_destination, trace_config, freeform_tags, defined_tags, failure_destination_channel_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['failureDestination'] = {}
+    _details['displayName'] = display_name
+    _details['applicationId'] = application_id
+    _details['memoryInMBs'] = memory_in_mbs
+    _details['failureDestination']['queueId'] = failure_destination_queue_id
+
+    if image is not None:
+        _details['image'] = image
+
+    if image_digest is not None:
+        _details['imageDigest'] = image_digest
+
+    if source_details is not None:
+        _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+
+    if config is not None:
+        _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if provisioned_concurrency_config is not None:
+        _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if success_destination is not None:
+        _details['successDestination'] = cli_util.parse_json_parameter("success_destination", success_destination)
+
+    if trace_config is not None:
+        _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if failure_destination_channel_id is not None:
+        _details['failureDestination']['channelId'] = failure_destination_channel_id
+
+    _details['failureDestination']['kind'] = 'QUEUE'
+
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    result = client.create_function(
+        create_function_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_function(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@function_group.command(name=cli_util.override('functions_management.create_function_notification_failure_destination_details.command_name', 'create-function-notification-failure-destination-details'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
+@cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
+@cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
+@cli_util.option('--failure-destination-topic-id', required=True, help=u"""The [OCID] of the topic.""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
+@cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. If no value is specified, the digest currently associated with the image in the OCI Registry will be used. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
+
+Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
+
+The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--success-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@cli_util.wrap_exceptions
+def create_function_notification_failure_destination_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, failure_destination_topic_id, image, image_digest, source_details, config, timeout_in_seconds, provisioned_concurrency_config, detached_mode_timeout_in_seconds, success_destination, trace_config, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['failureDestination'] = {}
+    _details['displayName'] = display_name
+    _details['applicationId'] = application_id
+    _details['memoryInMBs'] = memory_in_mbs
+    _details['failureDestination']['topicId'] = failure_destination_topic_id
+
+    if image is not None:
+        _details['image'] = image
+
+    if image_digest is not None:
+        _details['imageDigest'] = image_digest
+
+    if source_details is not None:
+        _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+
+    if config is not None:
+        _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if provisioned_concurrency_config is not None:
+        _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if success_destination is not None:
+        _details['successDestination'] = cli_util.parse_json_parameter("success_destination", success_destination)
+
+    if trace_config is not None:
+        _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['failureDestination']['kind'] = 'NOTIFICATION'
+
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    result = client.create_function(
+        create_function_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_function(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@function_group.command(name=cli_util.override('functions_management.create_function_none_failure_destination_details.command_name', 'create-function-none-failure-destination-details'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
+@cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
+@cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
+@cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. If no value is specified, the digest currently associated with the image in the OCI Registry will be used. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
+
+Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
+
+The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--success-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@cli_util.wrap_exceptions
+def create_function_none_failure_destination_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, image, image_digest, source_details, config, timeout_in_seconds, provisioned_concurrency_config, detached_mode_timeout_in_seconds, success_destination, trace_config, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['failureDestination'] = {}
+    _details['displayName'] = display_name
+    _details['applicationId'] = application_id
+    _details['memoryInMBs'] = memory_in_mbs
+
+    if image is not None:
+        _details['image'] = image
+
+    if image_digest is not None:
+        _details['imageDigest'] = image_digest
+
+    if source_details is not None:
+        _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+
+    if config is not None:
+        _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if provisioned_concurrency_config is not None:
+        _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if success_destination is not None:
+        _details['successDestination'] = cli_util.parse_json_parameter("success_destination", success_destination)
+
+    if trace_config is not None:
+        _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['failureDestination']['kind'] = 'NONE'
+
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    result = client.create_function(
+        create_function_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_function(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@function_group.command(name=cli_util.override('functions_management.create_function_stream_success_destination_details.command_name', 'create-function-stream-success-destination-details'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
+@cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
+@cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
+@cli_util.option('--success-destination-stream-id', required=True, help=u"""The [OCID] of the stream.""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
+@cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. If no value is specified, the digest currently associated with the image in the OCI Registry will be used. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
+
+Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
+
+The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--failure-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@cli_util.wrap_exceptions
+def create_function_stream_success_destination_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, success_destination_stream_id, image, image_digest, source_details, config, timeout_in_seconds, provisioned_concurrency_config, detached_mode_timeout_in_seconds, failure_destination, trace_config, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['successDestination'] = {}
+    _details['displayName'] = display_name
+    _details['applicationId'] = application_id
+    _details['memoryInMBs'] = memory_in_mbs
+    _details['successDestination']['streamId'] = success_destination_stream_id
+
+    if image is not None:
+        _details['image'] = image
+
+    if image_digest is not None:
+        _details['imageDigest'] = image_digest
+
+    if source_details is not None:
+        _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+
+    if config is not None:
+        _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if provisioned_concurrency_config is not None:
+        _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if failure_destination is not None:
+        _details['failureDestination'] = cli_util.parse_json_parameter("failure_destination", failure_destination)
+
+    if trace_config is not None:
+        _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['successDestination']['kind'] = 'STREAM'
+
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    result = client.create_function(
+        create_function_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_function(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@function_group.command(name=cli_util.override('functions_management.create_function_notification_success_destination_details.command_name', 'create-function-notification-success-destination-details'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
+@cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
+@cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
+@cli_util.option('--success-destination-topic-id', required=True, help=u"""The [OCID] of the topic.""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
+@cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. If no value is specified, the digest currently associated with the image in the OCI Registry will be used. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
+
+Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
+
+The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--failure-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@cli_util.wrap_exceptions
+def create_function_notification_success_destination_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, success_destination_topic_id, image, image_digest, source_details, config, timeout_in_seconds, provisioned_concurrency_config, detached_mode_timeout_in_seconds, failure_destination, trace_config, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['successDestination'] = {}
+    _details['displayName'] = display_name
+    _details['applicationId'] = application_id
+    _details['memoryInMBs'] = memory_in_mbs
+    _details['successDestination']['topicId'] = success_destination_topic_id
+
+    if image is not None:
+        _details['image'] = image
+
+    if image_digest is not None:
+        _details['imageDigest'] = image_digest
+
+    if source_details is not None:
+        _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+
+    if config is not None:
+        _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if provisioned_concurrency_config is not None:
+        _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if failure_destination is not None:
+        _details['failureDestination'] = cli_util.parse_json_parameter("failure_destination", failure_destination)
+
+    if trace_config is not None:
+        _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['successDestination']['kind'] = 'NOTIFICATION'
+
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    result = client.create_function(
+        create_function_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_function(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@function_group.command(name=cli_util.override('functions_management.create_function_queue_success_destination_details.command_name', 'create-function-queue-success-destination-details'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
+@cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
+@cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
+@cli_util.option('--success-destination-queue-id', required=True, help=u"""The [OCID] of the queue.""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
+@cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. If no value is specified, the digest currently associated with the image in the OCI Registry will be used. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
+
+Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
+
+The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--failure-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--success-destination-channel-id', help=u"""The ID of the channel in the queue.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@cli_util.wrap_exceptions
+def create_function_queue_success_destination_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, success_destination_queue_id, image, image_digest, source_details, config, timeout_in_seconds, provisioned_concurrency_config, detached_mode_timeout_in_seconds, failure_destination, trace_config, freeform_tags, defined_tags, success_destination_channel_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['successDestination'] = {}
+    _details['displayName'] = display_name
+    _details['applicationId'] = application_id
+    _details['memoryInMBs'] = memory_in_mbs
+    _details['successDestination']['queueId'] = success_destination_queue_id
+
+    if image is not None:
+        _details['image'] = image
+
+    if image_digest is not None:
+        _details['imageDigest'] = image_digest
+
+    if source_details is not None:
+        _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+
+    if config is not None:
+        _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if provisioned_concurrency_config is not None:
+        _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if failure_destination is not None:
+        _details['failureDestination'] = cli_util.parse_json_parameter("failure_destination", failure_destination)
+
+    if trace_config is not None:
+        _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if success_destination_channel_id is not None:
+        _details['successDestination']['channelId'] = success_destination_channel_id
+
+    _details['successDestination']['kind'] = 'QUEUE'
+
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    result = client.create_function(
+        create_function_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_function(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@function_group.command(name=cli_util.override('functions_management.create_function_none_success_destination_details.command_name', 'create-function-none-success-destination-details'), help=u"""Creates a new function. \n[Command Reference](createFunction)""")
+@cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
+@cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
+@cli_util.option('--memory-in-mbs', required=True, type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
+@cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. If no value is specified, the digest currently associated with the image in the OCI Registry will be used. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
+
+Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
+
+The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--failure-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-details': {'module': 'functions', 'class': 'FunctionSourceDetails'}, 'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@cli_util.wrap_exceptions
+def create_function_none_success_destination_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, application_id, memory_in_mbs, image, image_digest, source_details, config, timeout_in_seconds, provisioned_concurrency_config, detached_mode_timeout_in_seconds, failure_destination, trace_config, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['successDestination'] = {}
+    _details['displayName'] = display_name
+    _details['applicationId'] = application_id
+    _details['memoryInMBs'] = memory_in_mbs
+
+    if image is not None:
+        _details['image'] = image
+
+    if image_digest is not None:
+        _details['imageDigest'] = image_digest
+
+    if source_details is not None:
+        _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+
+    if config is not None:
+        _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if provisioned_concurrency_config is not None:
+        _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if failure_destination is not None:
+        _details['failureDestination'] = cli_util.parse_json_parameter("failure_destination", failure_destination)
+
+    if trace_config is not None:
+        _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['successDestination']['kind'] = 'NONE'
 
     client = cli_util.build_client('functions', 'functions_management', ctx)
     result = client.create_function(
@@ -1241,6 +2173,9 @@ Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
 The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
 @cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--failure-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--success-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -1251,18 +2186,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
 @cli_util.wrap_exceptions
-def update_function(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, function_id, image, image_digest, memory_in_mbs, config, timeout_in_seconds, provisioned_concurrency_config, trace_config, freeform_tags, defined_tags, if_match):
+def update_function(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, function_id, image, image_digest, memory_in_mbs, config, timeout_in_seconds, provisioned_concurrency_config, detached_mode_timeout_in_seconds, failure_destination, success_destination, trace_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(function_id, six.string_types) and len(function_id.strip()) == 0:
         raise click.UsageError('Parameter --function-id cannot be whitespace or empty string')
     if not force:
-        if config or provisioned_concurrency_config or trace_config or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to config and provisioned-concurrency-config and trace-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if config or provisioned_concurrency_config or failure_destination or success_destination or trace_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to config and provisioned-concurrency-config and failure-destination and success-destination and trace-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1289,6 +2224,15 @@ def update_function(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if provisioned_concurrency_config is not None:
         _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if failure_destination is not None:
+        _details['failureDestination'] = cli_util.parse_json_parameter("failure_destination", failure_destination)
+
+    if success_destination is not None:
+        _details['successDestination'] = cli_util.parse_json_parameter("success_destination", success_destination)
 
     if trace_config is not None:
         _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
@@ -1342,6 +2286,9 @@ Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
 
 The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--failure-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--success-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -1352,18 +2299,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
 @cli_util.wrap_exceptions
-def update_function_none_provisioned_concurrency_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, function_id, image, image_digest, memory_in_mbs, config, timeout_in_seconds, trace_config, freeform_tags, defined_tags, if_match):
+def update_function_none_provisioned_concurrency_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, function_id, image, image_digest, memory_in_mbs, config, timeout_in_seconds, detached_mode_timeout_in_seconds, failure_destination, success_destination, trace_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(function_id, six.string_types) and len(function_id.strip()) == 0:
         raise click.UsageError('Parameter --function-id cannot be whitespace or empty string')
     if not force:
-        if config or trace_config or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to config and trace-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if config or failure_destination or success_destination or trace_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to config and failure-destination and success-destination and trace-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1388,6 +2335,15 @@ def update_function_none_provisioned_concurrency_config(ctx, from_json, force, w
 
     if timeout_in_seconds is not None:
         _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if failure_destination is not None:
+        _details['failureDestination'] = cli_util.parse_json_parameter("failure_destination", failure_destination)
+
+    if success_destination is not None:
+        _details['successDestination'] = cli_util.parse_json_parameter("success_destination", success_destination)
 
     if trace_config is not None:
         _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
@@ -1444,6 +2400,9 @@ Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
 
 The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--failure-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--success-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -1454,18 +2413,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
 @cli_util.wrap_exceptions
-def update_function_constant_provisioned_concurrency_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, function_id, provisioned_concurrency_config_count, image, image_digest, memory_in_mbs, config, timeout_in_seconds, trace_config, freeform_tags, defined_tags, if_match):
+def update_function_constant_provisioned_concurrency_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, function_id, provisioned_concurrency_config_count, image, image_digest, memory_in_mbs, config, timeout_in_seconds, detached_mode_timeout_in_seconds, failure_destination, success_destination, trace_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(function_id, six.string_types) and len(function_id.strip()) == 0:
         raise click.UsageError('Parameter --function-id cannot be whitespace or empty string')
     if not force:
-        if config or trace_config or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to config and trace-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if config or failure_destination or success_destination or trace_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to config and failure-destination and success-destination and trace-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1492,6 +2451,15 @@ def update_function_constant_provisioned_concurrency_config(ctx, from_json, forc
     if timeout_in_seconds is not None:
         _details['timeoutInSeconds'] = timeout_in_seconds
 
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if failure_destination is not None:
+        _details['failureDestination'] = cli_util.parse_json_parameter("failure_destination", failure_destination)
+
+    if success_destination is not None:
+        _details['successDestination'] = cli_util.parse_json_parameter("success_destination", success_destination)
+
     if trace_config is not None:
         _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
 
@@ -1502,6 +2470,930 @@ def update_function_constant_provisioned_concurrency_config(ctx, from_json, forc
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['provisionedConcurrencyConfig']['strategy'] = 'CONSTANT'
+
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    result = client.update_function(
+        function_id=function_id,
+        update_function_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_function(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@function_group.command(name=cli_util.override('functions_management.update_function_stream_failure_destination_details.command_name', 'update-function-stream-failure-destination-details'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
+@cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
+@cli_util.option('--failure-destination-stream-id', required=True, help=u"""The [OCID] of the stream.""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
+@cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--memory-in-mbs', type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
+@cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
+
+Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
+
+The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--success-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@cli_util.wrap_exceptions
+def update_function_stream_failure_destination_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, function_id, failure_destination_stream_id, image, image_digest, memory_in_mbs, config, timeout_in_seconds, provisioned_concurrency_config, detached_mode_timeout_in_seconds, success_destination, trace_config, freeform_tags, defined_tags, if_match):
+
+    if isinstance(function_id, six.string_types) and len(function_id.strip()) == 0:
+        raise click.UsageError('Parameter --function-id cannot be whitespace or empty string')
+    if not force:
+        if config or provisioned_concurrency_config or success_destination or trace_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to config and provisioned-concurrency-config and success-destination and trace-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['failureDestination'] = {}
+    _details['failureDestination']['streamId'] = failure_destination_stream_id
+
+    if image is not None:
+        _details['image'] = image
+
+    if image_digest is not None:
+        _details['imageDigest'] = image_digest
+
+    if memory_in_mbs is not None:
+        _details['memoryInMBs'] = memory_in_mbs
+
+    if config is not None:
+        _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if provisioned_concurrency_config is not None:
+        _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if success_destination is not None:
+        _details['successDestination'] = cli_util.parse_json_parameter("success_destination", success_destination)
+
+    if trace_config is not None:
+        _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['failureDestination']['kind'] = 'STREAM'
+
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    result = client.update_function(
+        function_id=function_id,
+        update_function_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_function(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@function_group.command(name=cli_util.override('functions_management.update_function_queue_failure_destination_details.command_name', 'update-function-queue-failure-destination-details'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
+@cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
+@cli_util.option('--failure-destination-queue-id', required=True, help=u"""The [OCID] of the queue.""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
+@cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--memory-in-mbs', type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
+@cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
+
+Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
+
+The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--success-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--failure-destination-channel-id', help=u"""The ID of the channel in the queue.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@cli_util.wrap_exceptions
+def update_function_queue_failure_destination_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, function_id, failure_destination_queue_id, image, image_digest, memory_in_mbs, config, timeout_in_seconds, provisioned_concurrency_config, detached_mode_timeout_in_seconds, success_destination, trace_config, freeform_tags, defined_tags, if_match, failure_destination_channel_id):
+
+    if isinstance(function_id, six.string_types) and len(function_id.strip()) == 0:
+        raise click.UsageError('Parameter --function-id cannot be whitespace or empty string')
+    if not force:
+        if config or provisioned_concurrency_config or success_destination or trace_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to config and provisioned-concurrency-config and success-destination and trace-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['failureDestination'] = {}
+    _details['failureDestination']['queueId'] = failure_destination_queue_id
+
+    if image is not None:
+        _details['image'] = image
+
+    if image_digest is not None:
+        _details['imageDigest'] = image_digest
+
+    if memory_in_mbs is not None:
+        _details['memoryInMBs'] = memory_in_mbs
+
+    if config is not None:
+        _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if provisioned_concurrency_config is not None:
+        _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if success_destination is not None:
+        _details['successDestination'] = cli_util.parse_json_parameter("success_destination", success_destination)
+
+    if trace_config is not None:
+        _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if failure_destination_channel_id is not None:
+        _details['failureDestination']['channelId'] = failure_destination_channel_id
+
+    _details['failureDestination']['kind'] = 'QUEUE'
+
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    result = client.update_function(
+        function_id=function_id,
+        update_function_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_function(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@function_group.command(name=cli_util.override('functions_management.update_function_notification_failure_destination_details.command_name', 'update-function-notification-failure-destination-details'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
+@cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
+@cli_util.option('--failure-destination-topic-id', required=True, help=u"""The [OCID] of the topic.""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
+@cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--memory-in-mbs', type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
+@cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
+
+Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
+
+The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--success-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@cli_util.wrap_exceptions
+def update_function_notification_failure_destination_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, function_id, failure_destination_topic_id, image, image_digest, memory_in_mbs, config, timeout_in_seconds, provisioned_concurrency_config, detached_mode_timeout_in_seconds, success_destination, trace_config, freeform_tags, defined_tags, if_match):
+
+    if isinstance(function_id, six.string_types) and len(function_id.strip()) == 0:
+        raise click.UsageError('Parameter --function-id cannot be whitespace or empty string')
+    if not force:
+        if config or provisioned_concurrency_config or success_destination or trace_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to config and provisioned-concurrency-config and success-destination and trace-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['failureDestination'] = {}
+    _details['failureDestination']['topicId'] = failure_destination_topic_id
+
+    if image is not None:
+        _details['image'] = image
+
+    if image_digest is not None:
+        _details['imageDigest'] = image_digest
+
+    if memory_in_mbs is not None:
+        _details['memoryInMBs'] = memory_in_mbs
+
+    if config is not None:
+        _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if provisioned_concurrency_config is not None:
+        _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if success_destination is not None:
+        _details['successDestination'] = cli_util.parse_json_parameter("success_destination", success_destination)
+
+    if trace_config is not None:
+        _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['failureDestination']['kind'] = 'NOTIFICATION'
+
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    result = client.update_function(
+        function_id=function_id,
+        update_function_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_function(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@function_group.command(name=cli_util.override('functions_management.update_function_none_failure_destination_details.command_name', 'update-function-none-failure-destination-details'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
+@cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
+@cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--memory-in-mbs', type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
+@cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
+
+Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
+
+The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--success-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'success-destination': {'module': 'functions', 'class': 'SuccessDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@cli_util.wrap_exceptions
+def update_function_none_failure_destination_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, function_id, image, image_digest, memory_in_mbs, config, timeout_in_seconds, provisioned_concurrency_config, detached_mode_timeout_in_seconds, success_destination, trace_config, freeform_tags, defined_tags, if_match):
+
+    if isinstance(function_id, six.string_types) and len(function_id.strip()) == 0:
+        raise click.UsageError('Parameter --function-id cannot be whitespace or empty string')
+    if not force:
+        if config or provisioned_concurrency_config or success_destination or trace_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to config and provisioned-concurrency-config and success-destination and trace-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['failureDestination'] = {}
+
+    if image is not None:
+        _details['image'] = image
+
+    if image_digest is not None:
+        _details['imageDigest'] = image_digest
+
+    if memory_in_mbs is not None:
+        _details['memoryInMBs'] = memory_in_mbs
+
+    if config is not None:
+        _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if provisioned_concurrency_config is not None:
+        _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if success_destination is not None:
+        _details['successDestination'] = cli_util.parse_json_parameter("success_destination", success_destination)
+
+    if trace_config is not None:
+        _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['failureDestination']['kind'] = 'NONE'
+
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    result = client.update_function(
+        function_id=function_id,
+        update_function_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_function(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@function_group.command(name=cli_util.override('functions_management.update_function_stream_success_destination_details.command_name', 'update-function-stream-success-destination-details'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
+@cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
+@cli_util.option('--success-destination-stream-id', required=True, help=u"""The [OCID] of the stream.""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
+@cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--memory-in-mbs', type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
+@cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
+
+Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
+
+The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--failure-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@cli_util.wrap_exceptions
+def update_function_stream_success_destination_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, function_id, success_destination_stream_id, image, image_digest, memory_in_mbs, config, timeout_in_seconds, provisioned_concurrency_config, detached_mode_timeout_in_seconds, failure_destination, trace_config, freeform_tags, defined_tags, if_match):
+
+    if isinstance(function_id, six.string_types) and len(function_id.strip()) == 0:
+        raise click.UsageError('Parameter --function-id cannot be whitespace or empty string')
+    if not force:
+        if config or provisioned_concurrency_config or failure_destination or trace_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to config and provisioned-concurrency-config and failure-destination and trace-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['successDestination'] = {}
+    _details['successDestination']['streamId'] = success_destination_stream_id
+
+    if image is not None:
+        _details['image'] = image
+
+    if image_digest is not None:
+        _details['imageDigest'] = image_digest
+
+    if memory_in_mbs is not None:
+        _details['memoryInMBs'] = memory_in_mbs
+
+    if config is not None:
+        _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if provisioned_concurrency_config is not None:
+        _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if failure_destination is not None:
+        _details['failureDestination'] = cli_util.parse_json_parameter("failure_destination", failure_destination)
+
+    if trace_config is not None:
+        _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['successDestination']['kind'] = 'STREAM'
+
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    result = client.update_function(
+        function_id=function_id,
+        update_function_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_function(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@function_group.command(name=cli_util.override('functions_management.update_function_notification_success_destination_details.command_name', 'update-function-notification-success-destination-details'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
+@cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
+@cli_util.option('--success-destination-topic-id', required=True, help=u"""The [OCID] of the topic.""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
+@cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--memory-in-mbs', type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
+@cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
+
+Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
+
+The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--failure-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@cli_util.wrap_exceptions
+def update_function_notification_success_destination_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, function_id, success_destination_topic_id, image, image_digest, memory_in_mbs, config, timeout_in_seconds, provisioned_concurrency_config, detached_mode_timeout_in_seconds, failure_destination, trace_config, freeform_tags, defined_tags, if_match):
+
+    if isinstance(function_id, six.string_types) and len(function_id.strip()) == 0:
+        raise click.UsageError('Parameter --function-id cannot be whitespace or empty string')
+    if not force:
+        if config or provisioned_concurrency_config or failure_destination or trace_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to config and provisioned-concurrency-config and failure-destination and trace-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['successDestination'] = {}
+    _details['successDestination']['topicId'] = success_destination_topic_id
+
+    if image is not None:
+        _details['image'] = image
+
+    if image_digest is not None:
+        _details['imageDigest'] = image_digest
+
+    if memory_in_mbs is not None:
+        _details['memoryInMBs'] = memory_in_mbs
+
+    if config is not None:
+        _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if provisioned_concurrency_config is not None:
+        _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if failure_destination is not None:
+        _details['failureDestination'] = cli_util.parse_json_parameter("failure_destination", failure_destination)
+
+    if trace_config is not None:
+        _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['successDestination']['kind'] = 'NOTIFICATION'
+
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    result = client.update_function(
+        function_id=function_id,
+        update_function_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_function(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@function_group.command(name=cli_util.override('functions_management.update_function_queue_success_destination_details.command_name', 'update-function-queue-success-destination-details'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
+@cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
+@cli_util.option('--success-destination-queue-id', required=True, help=u"""The [OCID] of the queue.""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
+@cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--memory-in-mbs', type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
+@cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
+
+Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
+
+The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--failure-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--success-destination-channel-id', help=u"""The ID of the channel in the queue.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@cli_util.wrap_exceptions
+def update_function_queue_success_destination_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, function_id, success_destination_queue_id, image, image_digest, memory_in_mbs, config, timeout_in_seconds, provisioned_concurrency_config, detached_mode_timeout_in_seconds, failure_destination, trace_config, freeform_tags, defined_tags, if_match, success_destination_channel_id):
+
+    if isinstance(function_id, six.string_types) and len(function_id.strip()) == 0:
+        raise click.UsageError('Parameter --function-id cannot be whitespace or empty string')
+    if not force:
+        if config or provisioned_concurrency_config or failure_destination or trace_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to config and provisioned-concurrency-config and failure-destination and trace-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['successDestination'] = {}
+    _details['successDestination']['queueId'] = success_destination_queue_id
+
+    if image is not None:
+        _details['image'] = image
+
+    if image_digest is not None:
+        _details['imageDigest'] = image_digest
+
+    if memory_in_mbs is not None:
+        _details['memoryInMBs'] = memory_in_mbs
+
+    if config is not None:
+        _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if provisioned_concurrency_config is not None:
+        _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if failure_destination is not None:
+        _details['failureDestination'] = cli_util.parse_json_parameter("failure_destination", failure_destination)
+
+    if trace_config is not None:
+        _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if success_destination_channel_id is not None:
+        _details['successDestination']['channelId'] = success_destination_channel_id
+
+    _details['successDestination']['kind'] = 'QUEUE'
+
+    client = cli_util.build_client('functions', 'functions_management', ctx)
+    result = client.update_function(
+        function_id=function_id,
+        update_function_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_function(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@function_group.command(name=cli_util.override('functions_management.update_function_none_success_destination_details.command_name', 'update-function-none-success-destination-details'), help=u"""Modifies a function \n[Command Reference](updateFunction)""")
+@cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
+@cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
+@cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")
+@cli_util.option('--memory-in-mbs', type=click.INT, help=u"""Maximum usable memory for the function (MiB).""")
+@cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Function configuration. These values are passed on to the function as environment variables, this overrides application configuration values. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
+
+Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
+
+The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--timeout-in-seconds', type=click.INT, help=u"""Timeout for executions of the function. Value in seconds.""")
+@cli_util.option('--provisioned-concurrency-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--detached-mode-timeout-in-seconds', type=click.INT, help=u"""Timeout for detached function invocations. Value in seconds.""")
+@cli_util.option('--failure-destination', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--trace-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'provisioned-concurrency-config': {'module': 'functions', 'class': 'FunctionProvisionedConcurrencyConfig'}, 'failure-destination': {'module': 'functions', 'class': 'FailureDestinationDetails'}, 'trace-config': {'module': 'functions', 'class': 'FunctionTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Function'})
+@cli_util.wrap_exceptions
+def update_function_none_success_destination_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, function_id, image, image_digest, memory_in_mbs, config, timeout_in_seconds, provisioned_concurrency_config, detached_mode_timeout_in_seconds, failure_destination, trace_config, freeform_tags, defined_tags, if_match):
+
+    if isinstance(function_id, six.string_types) and len(function_id.strip()) == 0:
+        raise click.UsageError('Parameter --function-id cannot be whitespace or empty string')
+    if not force:
+        if config or provisioned_concurrency_config or failure_destination or trace_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to config and provisioned-concurrency-config and failure-destination and trace-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['successDestination'] = {}
+
+    if image is not None:
+        _details['image'] = image
+
+    if image_digest is not None:
+        _details['imageDigest'] = image_digest
+
+    if memory_in_mbs is not None:
+        _details['memoryInMBs'] = memory_in_mbs
+
+    if config is not None:
+        _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if timeout_in_seconds is not None:
+        _details['timeoutInSeconds'] = timeout_in_seconds
+
+    if provisioned_concurrency_config is not None:
+        _details['provisionedConcurrencyConfig'] = cli_util.parse_json_parameter("provisioned_concurrency_config", provisioned_concurrency_config)
+
+    if detached_mode_timeout_in_seconds is not None:
+        _details['detachedModeTimeoutInSeconds'] = detached_mode_timeout_in_seconds
+
+    if failure_destination is not None:
+        _details['failureDestination'] = cli_util.parse_json_parameter("failure_destination", failure_destination)
+
+    if trace_config is not None:
+        _details['traceConfig'] = cli_util.parse_json_parameter("trace_config", trace_config)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    _details['successDestination']['kind'] = 'NONE'
 
     client = cli_util.build_client('functions', 'functions_management', ctx)
     result = client.update_function(

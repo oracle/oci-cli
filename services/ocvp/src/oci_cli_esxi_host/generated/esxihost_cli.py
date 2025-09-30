@@ -48,7 +48,7 @@ esxi_host_root_group.add_command(esxi_host_summary_group)
 
 Use the [WorkRequest] operations to track the creation of the ESXi host. \n[Command Reference](createEsxiHost)""")
 @cli_util.option('--cluster-id', required=True, help=u"""The [OCID] of the Cluster to add the ESXi host to.""")
-@cli_util.option('--display-name', help=u"""A descriptive name for the ESXi host. It's changeable. Esxi Host name requirements are 1-16 character length limit, Must start with a letter, Must be English letters, numbers, - only, No repeating hyphens, Must be unique within the Cluster.
+@cli_util.option('--display-name', help=u"""A descriptive name for the ESXi host. It's changeable. Esxi Host name requirements are 1-25 character length limit, Must start with a letter, Must be English letters, numbers, - only, No repeating hyphens, Must be unique within the Cluster.
 
 If this attribute is not specified, the Cluster's `instanceDisplayNamePrefix` attribute is used to name and incrementally number the ESXi host. For example, if you're creating the fourth ESXi host in the Cluster, and `instanceDisplayNamePrefix` is `MyCluster`, the host's display name is `MyCluster-4`.
 
@@ -490,11 +490,13 @@ def swap_billing(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 @esxi_host_group.command(name=cli_util.override('esxi_host.update_esxi_host.command_name', 'update'), help=u"""Updates the specified ESXi host. \n[Command Reference](updateEsxiHost)""")
 @cli_util.option('--esxi-host-id', required=True, help=u"""The [OCID] of the ESXi host.""")
-@cli_util.option('--display-name', help=u"""A descriptive name for the ESXi host. It's changeable. Esxi Host name requirements are 1-16 character length limit, Must start with a letter, Must be English letters, numbers, - only, No repeating hyphens, Must be unique within the Cluster.
+@cli_util.option('--display-name', help=u"""A descriptive name for the ESXi host. It's changeable. Esxi Host name requirements are 1-25 character length limit, Must start with a letter, Must be English letters, numbers, - only, No repeating hyphens, Must be unique within the Cluster.
 
 Avoid entering confidential information.""")
 @cli_util.option('--next-commitment', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "MONTH", "ONE_YEAR", "THREE_YEARS"]), help=u"""The billing option to switch to after the existing billing cycle ends. If `nextCommitment` is null or empty, `currentCommitment` continues to the next billing cycle. [ListSupportedCommitments].""")
-@cli_util.option('--billing-donor-host-id', help=u"""The [OCID] of the deleted ESXi Host with LeftOver billing cycle.""")
+@cli_util.option('--billing-donor-host-id', help=u"""The [OCID] of the deleted ESXi Host with leftover billing cycle.
+
+**Note:** This option also requires the `nextCommitment` parameter to be populated with a value other than `HOUR`. Otherwise, any update request fails with the error \u201CNext SKU can\u2019t be NULL or Hourly.\u201D""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

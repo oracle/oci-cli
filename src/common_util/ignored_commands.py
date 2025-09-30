@@ -263,7 +263,8 @@ IGNORED_COMMANDS = [
     ['apm-synthetics', 'monitor', 'update-scripted-browser-monitor'],
     ['fleet-software-update', 'fsu-cycle', 'create-fsu-cycle-create-upgrade-fsu-cycle'],
     ['fleet-software-update', 'fsu-cycle', 'update-fsu-cycle-update-upgrade-fsu-cycle'],
-    ['db', 'exascale-db-storage-vault', 'list']
+    ['db', 'exascale-db-storage-vault', 'list'],
+    ['db', 'database', 'update'],
 ]
 
 IGNORED_COMMANDS_DOCS = [

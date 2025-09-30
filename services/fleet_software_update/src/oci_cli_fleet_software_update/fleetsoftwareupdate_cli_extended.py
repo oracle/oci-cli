@@ -295,3 +295,19 @@ def update_fsu_cycle_version_fsu_target_details_extended(ctx, **kwargs):
         kwargs.pop('gvd_new_home_prefix')
 
     ctx.invoke(fleetsoftwareupdate_cli.update_fsu_cycle_version_fsu_target_details, **kwargs)
+
+
+# oci fleet-software-update fsu-collection create-fsu-collection-create-guest-os-fsu-collection-details -> oci fleet-software-update fsu-collection create-guest-os
+cli_util.rename_command(fleetsoftwareupdate_cli, fleetsoftwareupdate_cli.fsu_collection_group, fleetsoftwareupdate_cli.create_fsu_collection_create_guest_os_fsu_collection_details, "create-guest-os")
+
+
+# oci fleet-software-update fsu-discovery create-fsu-discovery-guest-os-discovery-details -> oci fleet-software-update fsu-discovery create-guest-os
+cli_util.rename_command(fleetsoftwareupdate_cli, fleetsoftwareupdate_cli.fsu_discovery_group, fleetsoftwareupdate_cli.create_fsu_discovery_guest_os_discovery_details, "create-guest-os")
+
+
+# oci fleet-software-update fsu-collection create-fsu-collection-create-exadb-stack-fsu-collection-details -> oci fleet-software-update fsu-collection create-exadb-stack
+cli_util.rename_command(fleetsoftwareupdate_cli, fleetsoftwareupdate_cli.fsu_collection_group, fleetsoftwareupdate_cli.create_fsu_collection_create_exadb_stack_fsu_collection_details, "create-exadb-stack")
+
+
+# oci fleet-software-update fsu-discovery create-fsu-discovery-exadb-stack-discovery-details -> oci fleet-software-update fsu-discovery create-exadb-stack
+cli_util.rename_command(fleetsoftwareupdate_cli, fleetsoftwareupdate_cli.fsu_discovery_group, fleetsoftwareupdate_cli.create_fsu_discovery_exadb_stack_discovery_details, "create-exadb-stack")

@@ -314,6 +314,7 @@ def create_data_masking_activity(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.option('--kms-key-id', help=u"""byok kms keyId""")
 @cli_util.option('--dns-prefix', help=u"""DNS prefix.""")
 @cli_util.option('--additional-language-packs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Language packs.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-i-pv6-dual-stack-enabled', type=click.BOOL, help=u"""Enable IPv4/IPv6 dual stack support for the environment.  Setting to true will assign an IPv6 address to the environment in addition to an IPv4 address. Default value will be false if not set""")
 @cli_util.option('--rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Rules.
 
 This option is a JSON list with items of type Rule.  For documentation on Rule please see our API reference: https://docs.cloud.oracle.com/api/#/en/fusionapplications/20211201/datatypes/Rule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -327,7 +328,7 @@ This option is a JSON list with items of type Rule.  For documentation on Rule p
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-policy': {'module': 'fusion_apps', 'class': 'MaintenancePolicy'}, 'additional-language-packs': {'module': 'fusion_apps', 'class': 'list[string]'}, 'rules': {'module': 'fusion_apps', 'class': 'list[Rule]'}, 'create-fusion-environment-admin-user-details': {'module': 'fusion_apps', 'class': 'CreateFusionEnvironmentAdminUserDetails'}, 'freeform-tags': {'module': 'fusion_apps', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fusion_apps', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_fusion_environment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, fusion_environment_family_id, fusion_environment_type, create_fusion_environment_admin_user_details, maintenance_policy, kms_key_id, dns_prefix, additional_language_packs, rules, freeform_tags, defined_tags):
+def create_fusion_environment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, fusion_environment_family_id, fusion_environment_type, create_fusion_environment_admin_user_details, maintenance_policy, kms_key_id, dns_prefix, additional_language_packs, is_i_pv6_dual_stack_enabled, rules, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -350,6 +351,9 @@ def create_fusion_environment(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if additional_language_packs is not None:
         _details['additionalLanguagePacks'] = cli_util.parse_json_parameter("additional_language_packs", additional_language_packs)
+
+    if is_i_pv6_dual_stack_enabled is not None:
+        _details['isIPv6DualStackEnabled'] = is_i_pv6_dual_stack_enabled
 
     if rules is not None:
         _details['rules'] = cli_util.parse_json_parameter("rules", rules)
@@ -1992,6 +1996,7 @@ def reset_fusion_environment_password(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.option('--kms-key-id', help=u"""byok kms keyId""")
 @cli_util.option('--maintenance-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--additional-language-packs', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Language packs""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-i-pv6-dual-stack-enabled', type=click.BOOL, help=u"""Enable IPv4/IPv6 dual stack support for the environment.  Setting to true will assign an IPv6 address to the environment in addition to an IPv4 address.""")
 @cli_util.option('--rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Network access control rules to limit internet traffic that can access the environment. For more information, see [AllowRule Reference].
 
 This option is a JSON list with items of type Rule.  For documentation on Rule please see our API reference: https://docs.cloud.oracle.com/api/#/en/fusionapplications/20211201/datatypes/Rule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2007,7 +2012,7 @@ This option is a JSON list with items of type Rule.  For documentation on Rule p
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-policy': {'module': 'fusion_apps', 'class': 'MaintenancePolicy'}, 'additional-language-packs': {'module': 'fusion_apps', 'class': 'list[string]'}, 'rules': {'module': 'fusion_apps', 'class': 'list[Rule]'}, 'freeform-tags': {'module': 'fusion_apps', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fusion_apps', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_fusion_environment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, display_name, kms_key_id, maintenance_policy, additional_language_packs, rules, freeform_tags, defined_tags, if_match):
+def update_fusion_environment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fusion_environment_id, display_name, kms_key_id, maintenance_policy, additional_language_packs, is_i_pv6_dual_stack_enabled, rules, freeform_tags, defined_tags, if_match):
 
     if isinstance(fusion_environment_id, six.string_types) and len(fusion_environment_id.strip()) == 0:
         raise click.UsageError('Parameter --fusion-environment-id cannot be whitespace or empty string')
@@ -2034,6 +2039,9 @@ def update_fusion_environment(ctx, from_json, force, wait_for_state, max_wait_se
 
     if additional_language_packs is not None:
         _details['additionalLanguagePacks'] = cli_util.parse_json_parameter("additional_language_packs", additional_language_packs)
+
+    if is_i_pv6_dual_stack_enabled is not None:
+        _details['isIPv6DualStackEnabled'] = is_i_pv6_dual_stack_enabled
 
     if rules is not None:
         _details['rules'] = cli_util.parse_json_parameter("rules", rules)
