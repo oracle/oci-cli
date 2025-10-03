@@ -6,6 +6,7 @@ import click
 import oci
 import tempfile
 import unittest
+from unittest.mock import patch
 from oci_cli import cli_util
 
 
@@ -31,6 +32,36 @@ class Mock():
 
 
 class TestCliUtil(unittest.TestCase):
+
+    @patch('oci.signer.load_private_key')
+    @patch('oci.signer.load_private_key_from_file')
+    def test_get_session_token_signer(self, mock_load_private_key, mock_load_private_key_from_file):
+        # Test when 'key_content' is not in client_config
+        client_config_key_file = {
+            'key_file': 'test_key_file',
+            'pass_phrase': 'test_passphrase',
+        }
+        cli_util.get_session_token_signer(client_config_key_file)
+        mock_load_private_key_from_file.assert_called_once_with(
+            client_config_key_file.get('key_file'),
+            client_config_key_file.get('pass_phrase'),
+        )
+        mock_load_private_key.assert_not_called()
+
+        # Test when 'key_content' is in client_config
+        mock_load_private_key.reset_mock()
+        mock_load_private_key_from_file.reset_mock()
+
+        client_config_key_content = {
+            'key_content': 'test_key_content',
+            'pass_phrase': 'test_passphrase'
+        }
+        cli_util.get_session_token_signer(client_config_key_content)
+        mock_load_private_key.assert_called_once_with(
+            client_config_key_content.get('key_content'),
+            client_config_key_content.get('pass_phrase'),
+        )
+        mock_load_private_key_from_file.assert_not_called()
 
     def test_iam_coalesce_provided_and_default_value(self):
         ctx = Obj()
@@ -142,3 +173,5 @@ class TestCliUtil(unittest.TestCase):
 
         subtype = cli_util.get_possible_subtype_based_on_payload(oci.core.models.InstanceConfigurationInstanceDetails, 'core', payload)
         assert subtype.__class__.__name__ == 'ComputeInstanceDetails'
+
+        # Add the import statement for patch
