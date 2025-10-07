@@ -265,6 +265,7 @@ IGNORED_COMMANDS = [
     ['fleet-software-update', 'fsu-cycle', 'update-fsu-cycle-update-upgrade-fsu-cycle'],
     ['db', 'exascale-db-storage-vault', 'list'],
     ['db', 'database', 'update'],
+    ['opsi', 'database-insights', 'create-macs-managed-autonomous-database-insight'],
 ]
 
 IGNORED_COMMANDS_DOCS = [

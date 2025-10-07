@@ -634,6 +634,7 @@ def create_node_pool_node_source_via_image_details(ctx, from_json, wait_for_stat
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment of the virtual node pool.""")
 @cli_util.option('--cluster-id', required=True, help=u"""The cluster the virtual node pool is associated with. A virtual node pool can only be associated with one cluster.""")
 @cli_util.option('--display-name', required=True, help=u"""Display name of the virtual node pool. This is a non-unique value.""")
+@cli_util.option('--size', required=True, type=click.INT, help=u"""The number of Virtual Nodes that should be in the Virtual Node Pool. The placement configurations determine where these virtual nodes are placed.""")
 @cli_util.option('--placement-configurations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of placement configurations which determines where Virtual Nodes will be provisioned across as it relates to the subnet and availability domains. The size attribute determines how many we evenly spread across these placement configurations""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--initial-virtual-node-labels', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Initial labels that will be added to the Kubernetes Virtual Node object when it registers.
 
@@ -641,7 +642,6 @@ This option is a JSON list with items of type InitialVirtualNodeLabel.  For docu
 @cli_util.option('--taints', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A taint is a collection of <key, value, effect>. These taints will be applied to the Virtual Nodes of this Virtual Node Pool for Kubernetes scheduling.
 
 This option is a JSON list with items of type Taint.  For documentation on Taint please see our API reference: https://docs.cloud.oracle.com/api/#/en/containerengine/20180222/datatypes/Taint.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--size', type=click.INT, help=u"""The number of Virtual Nodes that should be in the Virtual Node Pool. The placement configurations determine where these virtual nodes are placed.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of network security group id's applied to the Virtual Node VNIC.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--pod-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The pod configuration for pods run on virtual nodes of this virtual node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -655,7 +655,7 @@ This option is a JSON list with items of type Taint.  For documentation on Taint
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'initial-virtual-node-labels': {'module': 'container_engine', 'class': 'list[InitialVirtualNodeLabel]'}, 'taints': {'module': 'container_engine', 'class': 'list[Taint]'}, 'placement-configurations': {'module': 'container_engine', 'class': 'list[PlacementConfiguration]'}, 'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'pod-configuration': {'module': 'container_engine', 'class': 'PodConfiguration'}, 'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'}, 'virtual-node-tags': {'module': 'container_engine', 'class': 'VirtualNodeTags'}})
 @cli_util.wrap_exceptions
-def create_virtual_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cluster_id, display_name, placement_configurations, initial_virtual_node_labels, taints, size, nsg_ids, pod_configuration, freeform_tags, defined_tags, virtual_node_tags):
+def create_virtual_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cluster_id, display_name, size, placement_configurations, initial_virtual_node_labels, taints, nsg_ids, pod_configuration, freeform_tags, defined_tags, virtual_node_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -664,6 +664,7 @@ def create_virtual_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, w
     _details['compartmentId'] = compartment_id
     _details['clusterId'] = cluster_id
     _details['displayName'] = display_name
+    _details['size'] = size
     _details['placementConfigurations'] = cli_util.parse_json_parameter("placement_configurations", placement_configurations)
 
     if initial_virtual_node_labels is not None:
@@ -671,9 +672,6 @@ def create_virtual_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if taints is not None:
         _details['taints'] = cli_util.parse_json_parameter("taints", taints)
-
-    if size is not None:
-        _details['size'] = size
 
     if nsg_ids is not None:
         _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
@@ -1507,6 +1505,7 @@ def install_addon(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The optional order in which to sort the results.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "TIME_CREATED"]), help=u"""The optional field to sort the results by.""")
+@cli_util.option('--should-show-all-versions', type=click.BOOL, help=u"""Whether to show all add-on versions""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1514,7 +1513,7 @@ def install_addon(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'container_engine', 'class': 'list[AddonOptionSummary]'})
 @cli_util.wrap_exceptions
-def list_addon_options(ctx, from_json, all_pages, page_size, kubernetes_version, addon_name, limit, page, sort_order, sort_by):
+def list_addon_options(ctx, from_json, all_pages, page_size, kubernetes_version, addon_name, limit, page, sort_order, sort_by, should_show_all_versions):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1530,6 +1529,8 @@ def list_addon_options(ctx, from_json, all_pages, page_size, kubernetes_version,
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if should_show_all_versions is not None:
+        kwargs['should_show_all_versions'] = should_show_all_versions
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('container_engine', 'container_engine', ctx)
     if all_pages:

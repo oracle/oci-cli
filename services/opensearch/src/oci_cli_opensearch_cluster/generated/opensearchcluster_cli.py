@@ -241,22 +241,27 @@ def configure_outbound_cluster(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.option('--security-master-user-password-hash', help=u"""The password hash of the master user that are used to manage security config""")
 @cli_util.option('--security-saml-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--backup-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--nsg-id', help=u"""The OCID of the NSG where the private endpoint vnic will be attached.""")
 @cli_util.option('--reverse-connection-endpoint-customer-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The customer IP addresses of the endpoint in customer VCN""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--inbound-cluster-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of inbound clusters that will be queried using cross cluster search""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--outbound-cluster-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--maintenance-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--certificate-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of system tag keys. These predefined keys are scoped to namespaces. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'security-saml-config': {'module': 'opensearch', 'class': 'SecuritySamlConfig'}, 'backup-policy': {'module': 'opensearch', 'class': 'BackupPolicy'}, 'reverse-connection-endpoint-customer-ips': {'module': 'opensearch', 'class': 'list[string]'}, 'inbound-cluster-ids': {'module': 'opensearch', 'class': 'list[string]'}, 'outbound-cluster-config': {'module': 'opensearch', 'class': 'OutboundClusterConfig'}, 'maintenance-details': {'module': 'opensearch', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'security-saml-config': {'module': 'opensearch', 'class': 'SecuritySamlConfig'}, 'backup-policy': {'module': 'opensearch', 'class': 'BackupPolicy'}, 'reverse-connection-endpoint-customer-ips': {'module': 'opensearch', 'class': 'list[string]'}, 'inbound-cluster-ids': {'module': 'opensearch', 'class': 'list[string]'}, 'outbound-cluster-config': {'module': 'opensearch', 'class': 'OutboundClusterConfig'}, 'maintenance-details': {'module': 'opensearch', 'class': 'CreateMaintenanceDetails'}, 'certificate-config': {'module': 'opensearch', 'class': 'CertificateConfig'}, 'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'security-saml-config': {'module': 'opensearch', 'class': 'SecuritySamlConfig'}, 'backup-policy': {'module': 'opensearch', 'class': 'BackupPolicy'}, 'reverse-connection-endpoint-customer-ips': {'module': 'opensearch', 'class': 'list[string]'}, 'inbound-cluster-ids': {'module': 'opensearch', 'class': 'list[string]'}, 'outbound-cluster-config': {'module': 'opensearch', 'class': 'OutboundClusterConfig'}, 'maintenance-details': {'module': 'opensearch', 'class': 'CreateMaintenanceDetails'}, 'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'security-saml-config': {'module': 'opensearch', 'class': 'SecuritySamlConfig'}, 'backup-policy': {'module': 'opensearch', 'class': 'BackupPolicy'}, 'reverse-connection-endpoint-customer-ips': {'module': 'opensearch', 'class': 'list[string]'}, 'inbound-cluster-ids': {'module': 'opensearch', 'class': 'list[string]'}, 'outbound-cluster-config': {'module': 'opensearch', 'class': 'OutboundClusterConfig'}, 'maintenance-details': {'module': 'opensearch', 'class': 'CreateMaintenanceDetails'}, 'certificate-config': {'module': 'opensearch', 'class': 'CertificateConfig'}, 'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, software_version, master_node_count, master_node_host_type, master_node_host_ocpu_count, master_node_host_memory_gb, data_node_count, data_node_host_type, data_node_host_ocpu_count, data_node_host_memory_gb, data_node_storage_gb, opendashboard_node_count, opendashboard_node_host_ocpu_count, opendashboard_node_host_memory_gb, vcn_id, subnet_id, vcn_compartment_id, subnet_compartment_id, master_node_host_bare_metal_shape, master_node_host_shape, data_node_host_bare_metal_shape, data_node_host_shape, opendashboard_node_host_shape, search_node_count, search_node_host_type, search_node_host_shape, search_node_host_ocpu_count, search_node_host_memory_gb, search_node_storage_gb, security_mode, security_master_user_name, security_master_user_password_hash, security_saml_config, backup_policy, reverse_connection_endpoint_customer_ips, inbound_cluster_ids, outbound_cluster_config, maintenance_details, freeform_tags, defined_tags, system_tags):
+def create_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, software_version, master_node_count, master_node_host_type, master_node_host_ocpu_count, master_node_host_memory_gb, data_node_count, data_node_host_type, data_node_host_ocpu_count, data_node_host_memory_gb, data_node_storage_gb, opendashboard_node_count, opendashboard_node_host_ocpu_count, opendashboard_node_host_memory_gb, vcn_id, subnet_id, vcn_compartment_id, subnet_compartment_id, master_node_host_bare_metal_shape, master_node_host_shape, data_node_host_bare_metal_shape, data_node_host_shape, opendashboard_node_host_shape, search_node_count, search_node_host_type, search_node_host_shape, search_node_host_ocpu_count, search_node_host_memory_gb, search_node_storage_gb, security_mode, security_master_user_name, security_master_user_password_hash, security_saml_config, backup_policy, nsg_id, reverse_connection_endpoint_customer_ips, inbound_cluster_ids, outbound_cluster_config, maintenance_details, certificate_config, freeform_tags, defined_tags, system_tags, security_attributes):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -330,6 +335,9 @@ def create_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, 
     if backup_policy is not None:
         _details['backupPolicy'] = cli_util.parse_json_parameter("backup_policy", backup_policy)
 
+    if nsg_id is not None:
+        _details['nsgId'] = nsg_id
+
     if reverse_connection_endpoint_customer_ips is not None:
         _details['reverseConnectionEndpointCustomerIps'] = cli_util.parse_json_parameter("reverse_connection_endpoint_customer_ips", reverse_connection_endpoint_customer_ips)
 
@@ -342,6 +350,9 @@ def create_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, 
     if maintenance_details is not None:
         _details['maintenanceDetails'] = cli_util.parse_json_parameter("maintenance_details", maintenance_details)
 
+    if certificate_config is not None:
+        _details['certificateConfig'] = cli_util.parse_json_parameter("certificate_config", certificate_config)
+
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
@@ -350,6 +361,9 @@ def create_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     if system_tags is not None:
         _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('opensearch', 'opensearch_cluster', ctx)
     result = client.create_opensearch_cluster(
@@ -487,17 +501,19 @@ def get_work_request(ctx, from_json, work_request_id):
 
 
 @shapes_details_group.command(name=cli_util.override('opensearch_cluster.list_opensearch_cluster_shapes.command_name', 'list-opensearch-cluster-shapes'), help=u"""Retrieves available OpenSearch Cluster node shapes. \n[Command Reference](listOpensearchClusterShapes)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'opensearch', 'class': 'ShapesDetails'})
 @cli_util.wrap_exceptions
-def list_opensearch_cluster_shapes(ctx, from_json, all_pages, ):
+def list_opensearch_cluster_shapes(ctx, from_json, all_pages, compartment_id):
 
     kwargs = {}
     client = cli_util.build_client('opensearch', 'opensearch_cluster', ctx)
     result = client.list_opensearch_cluster_shapes(
+        compartment_id=compartment_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1054,25 +1070,29 @@ def resize_opensearch_cluster_vertical(ctx, from_json, wait_for_state, max_wait_
 @cli_util.option('--reverse-connection-endpoint-customer-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The customer IP addresses of the endpoint in customer VCN""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--outbound-cluster-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--maintenance-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--certificate-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'security-saml-config': {'module': 'opensearch', 'class': 'SecuritySamlConfig'}, 'backup-policy': {'module': 'opensearch', 'class': 'BackupPolicy'}, 'reverse-connection-endpoint-customer-ips': {'module': 'opensearch', 'class': 'list[string]'}, 'outbound-cluster-config': {'module': 'opensearch', 'class': 'OutboundClusterConfig'}, 'maintenance-details': {'module': 'opensearch', 'class': 'UpdateMaintenanceDetails'}, 'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'security-saml-config': {'module': 'opensearch', 'class': 'SecuritySamlConfig'}, 'backup-policy': {'module': 'opensearch', 'class': 'BackupPolicy'}, 'reverse-connection-endpoint-customer-ips': {'module': 'opensearch', 'class': 'list[string]'}, 'outbound-cluster-config': {'module': 'opensearch', 'class': 'OutboundClusterConfig'}, 'maintenance-details': {'module': 'opensearch', 'class': 'UpdateMaintenanceDetails'}, 'certificate-config': {'module': 'opensearch', 'class': 'CertificateConfig'}, 'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'security-saml-config': {'module': 'opensearch', 'class': 'SecuritySamlConfig'}, 'backup-policy': {'module': 'opensearch', 'class': 'BackupPolicy'}, 'reverse-connection-endpoint-customer-ips': {'module': 'opensearch', 'class': 'list[string]'}, 'outbound-cluster-config': {'module': 'opensearch', 'class': 'OutboundClusterConfig'}, 'maintenance-details': {'module': 'opensearch', 'class': 'UpdateMaintenanceDetails'}, 'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'security-saml-config': {'module': 'opensearch', 'class': 'SecuritySamlConfig'}, 'backup-policy': {'module': 'opensearch', 'class': 'BackupPolicy'}, 'reverse-connection-endpoint-customer-ips': {'module': 'opensearch', 'class': 'list[string]'}, 'outbound-cluster-config': {'module': 'opensearch', 'class': 'OutboundClusterConfig'}, 'maintenance-details': {'module': 'opensearch', 'class': 'UpdateMaintenanceDetails'}, 'certificate-config': {'module': 'opensearch', 'class': 'CertificateConfig'}, 'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_opensearch_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, display_name, software_version, security_mode, security_master_user_name, security_master_user_password_hash, security_saml_config, backup_policy, reverse_connection_endpoint_customer_ips, outbound_cluster_config, maintenance_details, freeform_tags, defined_tags, if_match):
+def update_opensearch_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, display_name, software_version, security_mode, security_master_user_name, security_master_user_password_hash, security_saml_config, backup_policy, reverse_connection_endpoint_customer_ips, outbound_cluster_config, maintenance_details, certificate_config, freeform_tags, defined_tags, security_attributes, if_match):
 
     if isinstance(opensearch_cluster_id, six.string_types) and len(opensearch_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --opensearch-cluster-id cannot be whitespace or empty string')
     if not force:
-        if security_saml_config or backup_policy or reverse_connection_endpoint_customer_ips or outbound_cluster_config or maintenance_details or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to security-saml-config and backup-policy and reverse-connection-endpoint-customer-ips and outbound-cluster-config and maintenance-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if security_saml_config or backup_policy or reverse_connection_endpoint_customer_ips or outbound_cluster_config or maintenance_details or certificate_config or freeform_tags or defined_tags or security_attributes:
+            if not click.confirm("WARNING: Updates to security-saml-config and backup-policy and reverse-connection-endpoint-customer-ips and outbound-cluster-config and maintenance-details and certificate-config and freeform-tags and defined-tags and security-attributes will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1110,11 +1130,17 @@ def update_opensearch_cluster(ctx, from_json, force, wait_for_state, max_wait_se
     if maintenance_details is not None:
         _details['maintenanceDetails'] = cli_util.parse_json_parameter("maintenance_details", maintenance_details)
 
+    if certificate_config is not None:
+        _details['certificateConfig'] = cli_util.parse_json_parameter("certificate_config", certificate_config)
+
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('opensearch', 'opensearch_cluster', ctx)
     result = client.update_opensearch_cluster(
@@ -1161,16 +1187,19 @@ def update_opensearch_cluster(ctx, from_json, force, wait_for_state, max_wait_se
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of system tag keys. These predefined keys are scoped to namespaces. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'opensearch', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'opensearch', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def upgrade_open_search_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, original_cluster_display_name, desired_software_version, upgrade_type, is_clone, freeform_tags, defined_tags, system_tags, if_match):
+def upgrade_open_search_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, original_cluster_display_name, desired_software_version, upgrade_type, is_clone, freeform_tags, defined_tags, system_tags, security_attributes, if_match):
 
     if isinstance(opensearch_cluster_id, six.string_types) and len(opensearch_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --opensearch-cluster-id cannot be whitespace or empty string')
@@ -1196,6 +1225,9 @@ def upgrade_open_search_cluster(ctx, from_json, wait_for_state, max_wait_seconds
 
     if system_tags is not None:
         _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('opensearch', 'opensearch_cluster', ctx)
     result = client.upgrade_open_search_cluster(

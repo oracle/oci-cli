@@ -524,6 +524,9 @@ def change_private_endpoint_outbound_connection_none_outbound_connection(ctx, fr
 @cli_util.option('--message-packs', required=True, type=click.INT, help=u"""The number of configured message packs""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--idcs-at', help=u"""IDCS Authentication token. This is required for all realms with IDCS. Its optional as its not required for non IDCS realms.""")
 @cli_util.option('--is-visual-builder-enabled', type=click.BOOL, help=u"""Visual Builder is enabled or not.""")
 @cli_util.option('--custom-endpoint', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -539,12 +542,12 @@ This option is a JSON list with items of type CreateCustomEndpointDetails.  For 
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details': {'module': 'integration', 'class': 'NetworkEndpointDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details': {'module': 'integration', 'class': 'NetworkEndpointDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details': {'module': 'integration', 'class': 'NetworkEndpointDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details': {'module': 'integration', 'class': 'NetworkEndpointDetails'}})
 @cli_util.wrap_exceptions
-def create_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, integration_instance_type, is_byol, message_packs, freeform_tags, defined_tags, idcs_at, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, consumption_model, is_file_server_enabled, is_disaster_recovery_enabled, network_endpoint_details, shape, domain_id):
+def create_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, integration_instance_type, is_byol, message_packs, freeform_tags, defined_tags, security_attributes, idcs_at, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, consumption_model, is_file_server_enabled, is_disaster_recovery_enabled, network_endpoint_details, shape, domain_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -561,6 +564,9 @@ def create_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     if idcs_at is not None:
         _details['idcsAt'] = idcs_at
@@ -635,6 +641,9 @@ def create_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.option('--message-packs', required=True, type=click.INT, help=u"""The number of configured message packs""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--idcs-at', help=u"""IDCS Authentication token. This is required for all realms with IDCS. Its optional as its not required for non IDCS realms.""")
 @cli_util.option('--is-visual-builder-enabled', type=click.BOOL, help=u"""Visual Builder is enabled or not.""")
 @cli_util.option('--custom-endpoint', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -654,12 +663,12 @@ This option is a JSON list with items of type VirtualCloudNetwork.  For document
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details-allowlisted-http-ips': {'module': 'integration', 'class': 'list[string]'}, 'network-endpoint-details-allowlisted-http-vcns': {'module': 'integration', 'class': 'list[VirtualCloudNetwork]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details-allowlisted-http-ips': {'module': 'integration', 'class': 'list[string]'}, 'network-endpoint-details-allowlisted-http-vcns': {'module': 'integration', 'class': 'list[VirtualCloudNetwork]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details-allowlisted-http-ips': {'module': 'integration', 'class': 'list[string]'}, 'network-endpoint-details-allowlisted-http-vcns': {'module': 'integration', 'class': 'list[VirtualCloudNetwork]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'CreateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[CreateCustomEndpointDetails]'}, 'network-endpoint-details-allowlisted-http-ips': {'module': 'integration', 'class': 'list[string]'}, 'network-endpoint-details-allowlisted-http-vcns': {'module': 'integration', 'class': 'list[VirtualCloudNetwork]'}})
 @cli_util.wrap_exceptions
-def create_integration_instance_public_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, integration_instance_type, is_byol, message_packs, freeform_tags, defined_tags, idcs_at, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, consumption_model, is_file_server_enabled, is_disaster_recovery_enabled, shape, domain_id, network_endpoint_details_allowlisted_http_ips, network_endpoint_details_allowlisted_http_vcns, network_endpoint_details_is_integration_vcn_allowlisted):
+def create_integration_instance_public_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, integration_instance_type, is_byol, message_packs, freeform_tags, defined_tags, security_attributes, idcs_at, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, consumption_model, is_file_server_enabled, is_disaster_recovery_enabled, shape, domain_id, network_endpoint_details_allowlisted_http_ips, network_endpoint_details_allowlisted_http_vcns, network_endpoint_details_is_integration_vcn_allowlisted):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -677,6 +686,9 @@ def create_integration_instance_public_endpoint_details(ctx, from_json, wait_for
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     if idcs_at is not None:
         _details['idcsAt'] = idcs_at
@@ -1416,6 +1428,9 @@ def stop_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--integration-instance-type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD", "ENTERPRISE", "STANDARDX", "ENTERPRISEX", "HEALTHCARE"]), help=u"""Standard or Enterprise type, Oracle Integration Generation 2 uses ENTERPRISE and STANDARD, Oracle Integration 3 uses ENTERPRISEX and STANDARDX""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-byol', type=click.BOOL, help=u"""Bring your own license.""")
 @cli_util.option('--message-packs', type=click.INT, help=u"""The number of configured message packs""")
 @cli_util.option('--is-file-server-enabled', type=click.BOOL, help=u"""The file server is enabled or not.""")
@@ -1429,18 +1444,18 @@ This option is a JSON list with items of type UpdateCustomEndpointDetails.  For 
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'UpdateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[UpdateCustomEndpointDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'UpdateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[UpdateCustomEndpointDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'UpdateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[UpdateCustomEndpointDetails]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}, 'custom-endpoint': {'module': 'integration', 'class': 'UpdateCustomEndpointDetails'}, 'alternate-custom-endpoints': {'module': 'integration', 'class': 'list[UpdateCustomEndpointDetails]'}})
 @cli_util.wrap_exceptions
-def update_integration_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, display_name, integration_instance_type, freeform_tags, defined_tags, is_byol, message_packs, is_file_server_enabled, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, if_match):
+def update_integration_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, display_name, integration_instance_type, freeform_tags, defined_tags, security_attributes, is_byol, message_packs, is_file_server_enabled, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, if_match):
 
     if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags or custom_endpoint or alternate_custom_endpoints:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and custom-endpoint and alternate-custom-endpoints will replace any existing values. Are you sure you want to continue?"):
+        if freeform_tags or defined_tags or security_attributes or custom_endpoint or alternate_custom_endpoints:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and security-attributes and custom-endpoint and alternate-custom-endpoints will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1461,6 +1476,9 @@ def update_integration_instance(ctx, from_json, force, wait_for_state, max_wait_
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     if is_byol is not None:
         _details['isByol'] = is_byol

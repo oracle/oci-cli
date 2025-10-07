@@ -6,6 +6,165 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.68.0 - 2025-10-07
+--------------------
+Added
+~~~~~
+
+* Support for Internet of Things Service
+
+    * ``oci iot digital-twin-adapter create``
+    * ``oci iot digital-twin-adapter delete``
+    * ``oci iot digital-twin-adapter get``
+    * ``oci iot digital-twin-adapter list``
+    * ``oci iot digital-twin-adapter update``
+    * ``oci iot digital-twin-instance create``
+    * ``oci iot digital-twin-instance delete``
+    * ``oci iot digital-twin-instance get``
+    * ``oci iot digital-twin-instance get``
+    * ``oci iot digital-twin-instance get-content``
+    * ``oci iot digital-twin-instance invoke-raw-binary-command``
+    * ``oci iot digital-twin-instance invoke-raw-json-command``
+    * ``oci iot digital-twin-instance invoke-raw-text-command``
+    * ``oci iot digital-twin-instance list``
+    * ``oci iot digital-twin-instance update``
+    * ``oci iot digital-twin-model create``
+    * ``oci iot digital-twin-model delete``
+    * ``oci iot digital-twin-model get``
+    * ``oci iot digital-twin-model get-spec``
+    * ``oci iot digital-twin-model list``
+    * ``oci iot digital-twin-model update``
+    * ``oci iot digital-twin-relationship create``
+    * ``oci iot digital-twin-relationship delete``
+    * ``oci iot digital-twin-relationship get``
+    * ``oci iot digital-twin-relationship list``
+    * ``oci iot digital-twin-relationship update``
+    * ``oci iot domain change-compartment``
+    * ``oci iot domain change-data-retention-period``
+    * ``oci iot domain configure-apex-data-access``
+    * ``oci iot domain configure-direct-data-access``
+    * ``oci iot domain configure-ords-data-access``
+    * ``oci iot domain create``
+    * ``oci iot domain delete``
+    * ``oci iot domain get``
+    * ``oci iot domain list``
+    * ``oci iot domain update``
+    * ``oci iot domain-group change-compartment``
+    * ``oci iot domain-group configure-data-access``
+    * ``oci iot domain-group create``
+    * ``oci iot domain-group delete``
+    * ``oci iot domain-group get``
+    * ``oci iot domain-group list``
+    * ``oci iot domain-group update``
+    * ``oci iot work-request get``
+    * ``oci iot work-request list``
+    * ``oci iot work-request list-errors``
+    * ``oci iot work-request list-logs``
+
+* Database Tools Service
+
+    * Support for ZPR Security Attributes
+
+      * ``oci dbtools private-endpoint create --security-attributes``
+      * ``oci dbtools private-endpoint update --security-attributes``
+
+* Streaming Service
+
+    * Support for new optional ZPR Security Attributes parameter for creating/updating stream pool
+
+      * ``oci streaming stream-pool create``
+      * ``oci streaming stream-pool update``
+
+* Redis Service
+
+    * Support for new SecurityAttributes parameters in create redis-cluster
+
+      * ``oci redis redis-cluster redis-cluster create --security-attributes``
+
+* GoldenGate service
+
+    * Support for new optional parameters ZPR security attribute
+
+      * ``oci goldengate connection  --security-attributes``
+
+    * Support for add/remove subscription for resources
+
+      * ``oci goldengate connection change-subscription``
+      * ``oci goldengate deployment change-subscription``
+
+    * Support for creating/updating new connection type
+
+      * ``oci goldengate connection create-oracle-ai-data-platform-connection``
+      * ``oci goldengate connection update-oracle-ai-data-platform-connection``
+
+    * Support for creating new technology type
+
+      * ``oci goldengate connection create-kafka-connection --technology-type oci_streaming_with_apache_kafka``
+
+    * Support for creating and updating OCI Streaming connection should-use-resource-principal
+
+      * ``oci goldengate connection create-kafka-connection --technology-type OCI_STREAMING --should-use-resource-principal true``
+      * ``oci goldengate connection update-kafka-connection --technology-type OCI_STREAMING --should-use-resource-principal true``
+
+* Resource Manager Service
+
+    * Support for Security Attributes in Resource Manager Service
+
+      * ``oci resource-manager --security-attributes``
+
+* Database service
+
+    * Data Guard support to convert Physical Standby to Snapshot Standby and vice versa
+
+      * ``oci db database convert-standby-database-type``
+
+* Opensearch Service
+
+    * Support for Security Attributes and NSG ID for OpenSearchCluster
+
+      * ``oci opensearch cluster create --certificate-config, --nsg-id, --security-attributes``
+      * ``oci opensearch cluster update --certificate-config, --nsg-id, --security-attributes``
+      * ``oci opensearch cluster upgrade --certificate-config, --nsg-id, --security-attributes``
+
+* Container engine service
+
+    * Support for a new optional parameter "should-show-all-versions" in OKE list add-on options API for showing all add-on versions
+
+      * ``oci ce addon list-options --should-show-all-versions``
+
+* Functions Service
+
+    * Support for new optional ZPR Security Attributes parameter for creating/updating Application
+
+      * ``oci fn application create --security-attributes``
+      * ``oci fn application update--security-attributes``
+
+* Integration Service
+
+    * Support for ZPR security attribute support for private endpoint
+
+      * ``oci integration integration-instance create --security-attributes``
+      * ``oci integration integration-instance update --security-attributes``
+
+* MySQL Service
+
+    * Support for ZPR security attribute support for private endpoint
+
+      * ``oci mysql db-system clone --security-attributes``
+      * ``oci mysql db-system create --security-attributes``
+      * ``oci mysql db-system import --security-attributes``
+      * ``oci mysql db-system update --security-attributes``
+
+Modified
+~~~~~~~~
+* OpenSearch Service
+
+  * [BREAKING] Addition of required parameter --compartment-id in shape-details list command
+
+    * ``oci opensearch cluster shapes-details list``
+
+
+
 3.67.0 - 2025-09-30
 --------------------
 Added

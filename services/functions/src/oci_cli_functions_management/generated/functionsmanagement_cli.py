@@ -113,15 +113,18 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--image-policy-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'subnet-ids': {'module': 'functions', 'class': 'list[string]'}, 'network-security-group-ids': {'module': 'functions', 'class': 'list[string]'}, 'trace-config': {'module': 'functions', 'class': 'ApplicationTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}, 'image-policy-config': {'module': 'functions', 'class': 'ImagePolicyConfig'}})
+@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'subnet-ids': {'module': 'functions', 'class': 'list[string]'}, 'network-security-group-ids': {'module': 'functions', 'class': 'list[string]'}, 'trace-config': {'module': 'functions', 'class': 'ApplicationTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}, 'image-policy-config': {'module': 'functions', 'class': 'ImagePolicyConfig'}, 'security-attributes': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'subnet-ids': {'module': 'functions', 'class': 'list[string]'}, 'network-security-group-ids': {'module': 'functions', 'class': 'list[string]'}, 'trace-config': {'module': 'functions', 'class': 'ApplicationTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}, 'image-policy-config': {'module': 'functions', 'class': 'ImagePolicyConfig'}}, output_type={'module': 'functions', 'class': 'Application'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'subnet-ids': {'module': 'functions', 'class': 'list[string]'}, 'network-security-group-ids': {'module': 'functions', 'class': 'list[string]'}, 'trace-config': {'module': 'functions', 'class': 'ApplicationTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}, 'image-policy-config': {'module': 'functions', 'class': 'ImagePolicyConfig'}, 'security-attributes': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, subnet_ids, config, shape, network_security_group_ids, syslog_url, trace_config, freeform_tags, defined_tags, image_policy_config):
+def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, subnet_ids, config, shape, network_security_group_ids, syslog_url, trace_config, freeform_tags, defined_tags, image_policy_config, security_attributes):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -154,6 +157,9 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if image_policy_config is not None:
         _details['imagePolicyConfig'] = cli_util.parse_json_parameter("image_policy_config", image_policy_config)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('functions', 'functions_management', ctx)
     result = client.create_application(
@@ -2082,23 +2088,26 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--image-policy-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'network-security-group-ids': {'module': 'functions', 'class': 'list[string]'}, 'trace-config': {'module': 'functions', 'class': 'ApplicationTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}, 'image-policy-config': {'module': 'functions', 'class': 'ImagePolicyConfig'}})
+@json_skeleton_utils.get_cli_json_input_option({'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'network-security-group-ids': {'module': 'functions', 'class': 'list[string]'}, 'trace-config': {'module': 'functions', 'class': 'ApplicationTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}, 'image-policy-config': {'module': 'functions', 'class': 'ImagePolicyConfig'}, 'security-attributes': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'network-security-group-ids': {'module': 'functions', 'class': 'list[string]'}, 'trace-config': {'module': 'functions', 'class': 'ApplicationTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}, 'image-policy-config': {'module': 'functions', 'class': 'ImagePolicyConfig'}}, output_type={'module': 'functions', 'class': 'Application'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'network-security-group-ids': {'module': 'functions', 'class': 'list[string]'}, 'trace-config': {'module': 'functions', 'class': 'ApplicationTraceConfig'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}, 'image-policy-config': {'module': 'functions', 'class': 'ImagePolicyConfig'}, 'security-attributes': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, config, network_security_group_ids, syslog_url, trace_config, freeform_tags, defined_tags, image_policy_config, if_match):
+def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, config, network_security_group_ids, syslog_url, trace_config, freeform_tags, defined_tags, image_policy_config, security_attributes, if_match):
 
     if isinstance(application_id, six.string_types) and len(application_id.strip()) == 0:
         raise click.UsageError('Parameter --application-id cannot be whitespace or empty string')
     if not force:
-        if config or network_security_group_ids or trace_config or freeform_tags or defined_tags or image_policy_config:
-            if not click.confirm("WARNING: Updates to config and network-security-group-ids and trace-config and freeform-tags and defined-tags and image-policy-config will replace any existing values. Are you sure you want to continue?"):
+        if config or network_security_group_ids or trace_config or freeform_tags or defined_tags or image_policy_config or security_attributes:
+            if not click.confirm("WARNING: Updates to config and network-security-group-ids and trace-config and freeform-tags and defined-tags and image-policy-config and security-attributes will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -2128,6 +2137,9 @@ def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
     if image_policy_config is not None:
         _details['imagePolicyConfig'] = cli_util.parse_json_parameter("image_policy_config", image_policy_config)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('functions', 'functions_management', ctx)
     result = client.update_application(

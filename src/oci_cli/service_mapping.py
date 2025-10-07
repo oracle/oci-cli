@@ -393,6 +393,11 @@ service_mapping = {
         "Oracle Integration",
         "Others"
     ],
+    "iot": [
+        "iot",
+        "Internet of Things",
+        "Others"
+    ],
     "jms": [
         "jms",
         "Java Management Service Fleets",
