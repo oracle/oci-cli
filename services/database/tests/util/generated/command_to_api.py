@@ -53,6 +53,7 @@ SDK_client_map = {
     "db.configure_saas_admin_user": "oci.database.DatabaseClient.configure_saas_admin_user",
     "db.confirm_key_store_details_are_correct": "oci.database.DatabaseClient.confirm_key_store_details_are_correct",
     "db.convert_standby_autonomous_container_database": "oci.database.DatabaseClient.convert_standby_autonomous_container_database",
+    "db.convert_standby_database_type": "oci.database.DatabaseClient.convert_standby_database_type",
     "db.convert_to_pdb": "oci.database.DatabaseClient.convert_to_pdb",
     "db.convert_to_regular_pluggable_database": "oci.database.DatabaseClient.convert_to_regular_pluggable_database",
     "db.convert_to_standalone": "oci.database.DatabaseClient.convert_to_standalone",

@@ -555,3 +555,7 @@ api-gateway, certificate, create
 generative-ai-inference, chat-result, chat-generic-chat-request
 db, database, updatefn, function, update
 fn, function, update
+integration, integration-instance, create
+integration, integration-instance, update
+goldengate, connection, create-oracle-ai-data-platform-connection
+goldengate, connection, update-oracle-ai-data-platform-connection
