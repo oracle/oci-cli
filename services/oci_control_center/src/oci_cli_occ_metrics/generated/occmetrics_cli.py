@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -62,7 +61,7 @@ def list_metric_properties(ctx, from_json, all_pages, page_size, namespace_name,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+    if isinstance(namespace_name, str) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
 
     kwargs = {}

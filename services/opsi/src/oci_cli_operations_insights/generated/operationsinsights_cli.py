@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -149,7 +148,7 @@ opsi_root_group.add_command(work_requests_group)
 @cli_util.wrap_exceptions
 def add_exadata_insight_members(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, entity_source, exadata_insight_id, if_match):
 
-    if isinstance(exadata_insight_id, six.string_types) and len(exadata_insight_id.strip()) == 0:
+    if isinstance(exadata_insight_id, str) and len(exadata_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -212,7 +211,7 @@ This option is a JSON list with items of type CreatePeComanagedExadataVmclusterD
 @cli_util.wrap_exceptions
 def add_exadata_insight_members_add_pe_comanaged_exadata_insight_members_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_insight_id, member_entity_details, if_match):
 
-    if isinstance(exadata_insight_id, six.string_types) and len(exadata_insight_id.strip()) == 0:
+    if isinstance(exadata_insight_id, str) and len(exadata_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -279,7 +278,7 @@ This option is a JSON list with items of type CreateEmManagedExternalExadataMemb
 @cli_util.wrap_exceptions
 def add_exadata_insight_members_add_em_managed_external_exadata_insight_members_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_insight_id, member_entity_details, if_match):
 
-    if isinstance(exadata_insight_id, six.string_types) and len(exadata_insight_id.strip()) == 0:
+    if isinstance(exadata_insight_id, str) and len(exadata_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -346,7 +345,7 @@ This option is a JSON list with items of type CreateMacsManagedCloudExadataVmclu
 @cli_util.wrap_exceptions
 def add_exadata_insight_members_add_macs_managed_cloud_exadata_insight_members_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_insight_id, member_entity_details, if_match):
 
-    if isinstance(exadata_insight_id, six.string_types) and len(exadata_insight_id.strip()) == 0:
+    if isinstance(exadata_insight_id, str) and len(exadata_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -413,7 +412,7 @@ def add_exadata_insight_members_add_macs_managed_cloud_exadata_insight_members_d
 @cli_util.wrap_exceptions
 def change_autonomous_database_insight_advanced_features(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, credential_details, database_insight_id, opsi_private_endpoint_id, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -481,7 +480,7 @@ def change_autonomous_database_insight_advanced_features(ctx, from_json, wait_fo
 @cli_util.wrap_exceptions
 def change_autonomous_database_insight_advanced_features_credential_by_named_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, opsi_private_endpoint_id, if_match, credential_details_credential_source_name, credential_details_named_credential_id):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -556,7 +555,7 @@ def change_autonomous_database_insight_advanced_features_credential_by_named_cre
 @cli_util.wrap_exceptions
 def change_autonomous_database_insight_advanced_features_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, opsi_private_endpoint_id, if_match, credential_details_credential_source_name):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -632,7 +631,7 @@ def change_autonomous_database_insight_advanced_features_credentials_by_source(c
 @cli_util.wrap_exceptions
 def change_autonomous_database_insight_advanced_features_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, opsi_private_endpoint_id, if_match, credential_details_credential_source_name, credential_details_user_name, credential_details_password_secret_id, credential_details_wallet_secret_id, credential_details_role):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -716,7 +715,7 @@ def change_autonomous_database_insight_advanced_features_credential_by_vault(ctx
 @cli_util.wrap_exceptions
 def change_autonomous_database_insight_advanced_features_credential_by_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, opsi_private_endpoint_id, if_match, credential_details_credential_source_name):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -786,7 +785,7 @@ def change_autonomous_database_insight_advanced_features_credential_by_iam(ctx, 
 @cli_util.wrap_exceptions
 def change_awr_hub_source_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, awr_hub_source_id, compartment_id, if_match):
 
-    if isinstance(awr_hub_source_id, six.string_types) and len(awr_hub_source_id.strip()) == 0:
+    if isinstance(awr_hub_source_id, str) and len(awr_hub_source_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -847,7 +846,7 @@ def change_awr_hub_source_compartment(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def change_database_insight_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, compartment_id, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -908,7 +907,7 @@ def change_database_insight_compartment(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def change_enterprise_manager_bridge_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, enterprise_manager_bridge_id, compartment_id, if_match):
 
-    if isinstance(enterprise_manager_bridge_id, six.string_types) and len(enterprise_manager_bridge_id.strip()) == 0:
+    if isinstance(enterprise_manager_bridge_id, str) and len(enterprise_manager_bridge_id.strip()) == 0:
         raise click.UsageError('Parameter --enterprise-manager-bridge-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -969,7 +968,7 @@ def change_enterprise_manager_bridge_compartment(ctx, from_json, wait_for_state,
 @cli_util.wrap_exceptions
 def change_exadata_insight_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_insight_id, compartment_id, if_match):
 
-    if isinstance(exadata_insight_id, six.string_types) and len(exadata_insight_id.strip()) == 0:
+    if isinstance(exadata_insight_id, str) and len(exadata_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1030,7 +1029,7 @@ def change_exadata_insight_compartment(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def change_external_mysql_database_insight_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, database_connector_id, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1091,7 +1090,7 @@ def change_external_mysql_database_insight_connection(ctx, from_json, wait_for_s
 @cli_util.wrap_exceptions
 def change_host_insight_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, host_insight_id, compartment_id, if_match):
 
-    if isinstance(host_insight_id, six.string_types) and len(host_insight_id.strip()) == 0:
+    if isinstance(host_insight_id, str) and len(host_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --host-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1154,7 +1153,7 @@ def change_host_insight_compartment(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def change_macs_managed_autonomous_database_insight_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, connection_credential_details, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1220,7 +1219,7 @@ def change_macs_managed_autonomous_database_insight_connection(ctx, from_json, w
 @cli_util.wrap_exceptions
 def change_macs_managed_autonomous_database_insight_connection_credential_by_named_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, if_match, connection_credential_details_credential_source_name, connection_credential_details_named_credential_id):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1293,7 +1292,7 @@ def change_macs_managed_autonomous_database_insight_connection_credential_by_nam
 @cli_util.wrap_exceptions
 def change_macs_managed_autonomous_database_insight_connection_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, if_match, connection_credential_details_credential_source_name):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1367,7 +1366,7 @@ def change_macs_managed_autonomous_database_insight_connection_credentials_by_so
 @cli_util.wrap_exceptions
 def change_macs_managed_autonomous_database_insight_connection_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, if_match, connection_credential_details_credential_source_name, connection_credential_details_user_name, connection_credential_details_password_secret_id, connection_credential_details_wallet_secret_id, connection_credential_details_role):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1449,7 +1448,7 @@ def change_macs_managed_autonomous_database_insight_connection_credential_by_vau
 @cli_util.wrap_exceptions
 def change_macs_managed_autonomous_database_insight_connection_credential_by_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, if_match, connection_credential_details_credential_source_name):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1519,7 +1518,7 @@ def change_macs_managed_autonomous_database_insight_connection_credential_by_iam
 @cli_util.wrap_exceptions
 def change_macs_managed_cloud_database_insight_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, connection_credential_details, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1585,7 +1584,7 @@ def change_macs_managed_cloud_database_insight_connection(ctx, from_json, wait_f
 @cli_util.wrap_exceptions
 def change_macs_managed_cloud_database_insight_connection_credential_by_named_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, if_match, connection_credential_details_credential_source_name, connection_credential_details_named_credential_id):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1658,7 +1657,7 @@ def change_macs_managed_cloud_database_insight_connection_credential_by_named_cr
 @cli_util.wrap_exceptions
 def change_macs_managed_cloud_database_insight_connection_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, if_match, connection_credential_details_credential_source_name):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1732,7 +1731,7 @@ def change_macs_managed_cloud_database_insight_connection_credentials_by_source(
 @cli_util.wrap_exceptions
 def change_macs_managed_cloud_database_insight_connection_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, if_match, connection_credential_details_credential_source_name, connection_credential_details_user_name, connection_credential_details_password_secret_id, connection_credential_details_wallet_secret_id, connection_credential_details_role):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1814,7 +1813,7 @@ def change_macs_managed_cloud_database_insight_connection_credential_by_vault(ct
 @cli_util.wrap_exceptions
 def change_macs_managed_cloud_database_insight_connection_credential_by_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, management_agent_id, connection_details, if_match, connection_credential_details_credential_source_name):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1882,7 +1881,7 @@ def change_macs_managed_cloud_database_insight_connection_credential_by_iam(ctx,
 @cli_util.wrap_exceptions
 def change_news_report_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, news_report_id, compartment_id, if_match):
 
-    if isinstance(news_report_id, six.string_types) and len(news_report_id.strip()) == 0:
+    if isinstance(news_report_id, str) and len(news_report_id.strip()) == 0:
         raise click.UsageError('Parameter --news-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1943,7 +1942,7 @@ def change_news_report_compartment(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def change_operations_insights_private_endpoint_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_private_endpoint_id, compartment_id, if_match):
 
-    if isinstance(operations_insights_private_endpoint_id, six.string_types) and len(operations_insights_private_endpoint_id.strip()) == 0:
+    if isinstance(operations_insights_private_endpoint_id, str) and len(operations_insights_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --operations-insights-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2006,7 +2005,7 @@ def change_operations_insights_private_endpoint_compartment(ctx, from_json, wait
 @cli_util.wrap_exceptions
 def change_operations_insights_warehouse_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_warehouse_id, compartment_id, if_match):
 
-    if isinstance(operations_insights_warehouse_id, six.string_types) and len(operations_insights_warehouse_id.strip()) == 0:
+    if isinstance(operations_insights_warehouse_id, str) and len(operations_insights_warehouse_id.strip()) == 0:
         raise click.UsageError('Parameter --operations-insights-warehouse-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2067,7 +2066,7 @@ def change_operations_insights_warehouse_compartment(ctx, from_json, wait_for_st
 @cli_util.wrap_exceptions
 def change_opsi_configuration_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opsi_configuration_id, compartment_id, if_match):
 
-    if isinstance(opsi_configuration_id, six.string_types) and len(opsi_configuration_id.strip()) == 0:
+    if isinstance(opsi_configuration_id, str) and len(opsi_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --opsi-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2131,7 +2130,7 @@ def change_opsi_configuration_compartment(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def change_pe_comanaged_database_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, credential_details, opsi_private_endpoint_id, connection_details, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2201,7 +2200,7 @@ def change_pe_comanaged_database_insight(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def change_pe_comanaged_database_insight_credential_by_named_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, opsi_private_endpoint_id, connection_details, if_match, credential_details_credential_source_name, credential_details_named_credential_id):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2278,7 +2277,7 @@ def change_pe_comanaged_database_insight_credential_by_named_credentials(ctx, fr
 @cli_util.wrap_exceptions
 def change_pe_comanaged_database_insight_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, opsi_private_endpoint_id, connection_details, if_match, credential_details_credential_source_name):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2356,7 +2355,7 @@ def change_pe_comanaged_database_insight_credentials_by_source(ctx, from_json, w
 @cli_util.wrap_exceptions
 def change_pe_comanaged_database_insight_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, opsi_private_endpoint_id, connection_details, if_match, credential_details_credential_source_name, credential_details_user_name, credential_details_password_secret_id, credential_details_wallet_secret_id, credential_details_role):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2442,7 +2441,7 @@ def change_pe_comanaged_database_insight_credential_by_vault(ctx, from_json, wai
 @cli_util.wrap_exceptions
 def change_pe_comanaged_database_insight_credential_by_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, service_name, opsi_private_endpoint_id, connection_details, if_match, credential_details_credential_source_name):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4386,7 +4385,7 @@ def create_opsi_configuration_create_opsi_ux_configuration_details(ctx, from_jso
 @cli_util.wrap_exceptions
 def delete_awr_hub(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, awr_hub_id, if_match):
 
-    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+    if isinstance(awr_hub_id, str) and len(awr_hub_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4440,10 +4439,10 @@ def delete_awr_hub(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_awr_hub_object(ctx, from_json, awr_hub_source_id, object_name, if_match):
 
-    if isinstance(awr_hub_source_id, six.string_types) and len(awr_hub_source_id.strip()) == 0:
+    if isinstance(awr_hub_source_id, str) and len(awr_hub_source_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-source-id cannot be whitespace or empty string')
 
-    if isinstance(object_name, six.string_types) and len(object_name.strip()) == 0:
+    if isinstance(object_name, str) and len(object_name.strip()) == 0:
         raise click.UsageError('Parameter --object-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4473,7 +4472,7 @@ def delete_awr_hub_object(ctx, from_json, awr_hub_source_id, object_name, if_mat
 @cli_util.wrap_exceptions
 def delete_awr_hub_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, awr_hub_source_id, if_match):
 
-    if isinstance(awr_hub_source_id, six.string_types) and len(awr_hub_source_id.strip()) == 0:
+    if isinstance(awr_hub_source_id, str) and len(awr_hub_source_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4529,7 +4528,7 @@ def delete_awr_hub_source(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_database_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4585,7 +4584,7 @@ def delete_database_insight(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_enterprise_manager_bridge(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, enterprise_manager_bridge_id, if_match):
 
-    if isinstance(enterprise_manager_bridge_id, six.string_types) and len(enterprise_manager_bridge_id.strip()) == 0:
+    if isinstance(enterprise_manager_bridge_id, str) and len(enterprise_manager_bridge_id.strip()) == 0:
         raise click.UsageError('Parameter --enterprise-manager-bridge-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4641,7 +4640,7 @@ def delete_enterprise_manager_bridge(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def delete_exadata_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_insight_id, if_match):
 
-    if isinstance(exadata_insight_id, six.string_types) and len(exadata_insight_id.strip()) == 0:
+    if isinstance(exadata_insight_id, str) and len(exadata_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4697,7 +4696,7 @@ def delete_exadata_insight(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_host_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, host_insight_id, if_match):
 
-    if isinstance(host_insight_id, six.string_types) and len(host_insight_id.strip()) == 0:
+    if isinstance(host_insight_id, str) and len(host_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --host-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4753,7 +4752,7 @@ def delete_host_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def delete_news_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, news_report_id, if_match):
 
-    if isinstance(news_report_id, six.string_types) and len(news_report_id.strip()) == 0:
+    if isinstance(news_report_id, str) and len(news_report_id.strip()) == 0:
         raise click.UsageError('Parameter --news-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4809,7 +4808,7 @@ def delete_news_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_operations_insights_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_private_endpoint_id, if_match):
 
-    if isinstance(operations_insights_private_endpoint_id, six.string_types) and len(operations_insights_private_endpoint_id.strip()) == 0:
+    if isinstance(operations_insights_private_endpoint_id, str) and len(operations_insights_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --operations-insights-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4865,7 +4864,7 @@ def delete_operations_insights_private_endpoint(ctx, from_json, wait_for_state, 
 @cli_util.wrap_exceptions
 def delete_operations_insights_warehouse(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_warehouse_id, if_match):
 
-    if isinstance(operations_insights_warehouse_id, six.string_types) and len(operations_insights_warehouse_id.strip()) == 0:
+    if isinstance(operations_insights_warehouse_id, str) and len(operations_insights_warehouse_id.strip()) == 0:
         raise click.UsageError('Parameter --operations-insights-warehouse-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4921,7 +4920,7 @@ def delete_operations_insights_warehouse(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def delete_operations_insights_warehouse_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_warehouse_user_id, if_match):
 
-    if isinstance(operations_insights_warehouse_user_id, six.string_types) and len(operations_insights_warehouse_user_id.strip()) == 0:
+    if isinstance(operations_insights_warehouse_user_id, str) and len(operations_insights_warehouse_user_id.strip()) == 0:
         raise click.UsageError('Parameter --operations-insights-warehouse-user-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4977,7 +4976,7 @@ def delete_operations_insights_warehouse_user(ctx, from_json, wait_for_state, ma
 @cli_util.wrap_exceptions
 def delete_opsi_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opsi_configuration_id, if_match):
 
-    if isinstance(opsi_configuration_id, six.string_types) and len(opsi_configuration_id.strip()) == 0:
+    if isinstance(opsi_configuration_id, str) and len(opsi_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --opsi-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5032,7 +5031,7 @@ def delete_opsi_configuration(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def disable_autonomous_database_insight_advanced_features(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5087,7 +5086,7 @@ def disable_autonomous_database_insight_advanced_features(ctx, from_json, wait_f
 @cli_util.wrap_exceptions
 def disable_awr_hub_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, awr_hub_source_id, if_match):
 
-    if isinstance(awr_hub_source_id, six.string_types) and len(awr_hub_source_id.strip()) == 0:
+    if isinstance(awr_hub_source_id, str) and len(awr_hub_source_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5142,7 +5141,7 @@ def disable_awr_hub_source(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def disable_database_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5197,7 +5196,7 @@ def disable_database_insight(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def disable_exadata_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_insight_id, if_match):
 
-    if isinstance(exadata_insight_id, six.string_types) and len(exadata_insight_id.strip()) == 0:
+    if isinstance(exadata_insight_id, str) and len(exadata_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5252,7 +5251,7 @@ def disable_exadata_insight(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def disable_host_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, host_insight_id, if_match):
 
-    if isinstance(host_insight_id, six.string_types) and len(host_insight_id.strip()) == 0:
+    if isinstance(host_insight_id, str) and len(host_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --host-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5305,7 +5304,7 @@ def disable_host_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def download_operations_insights_warehouse_wallet(ctx, from_json, file, operations_insights_warehouse_id, operations_insights_warehouse_wallet_password):
 
-    if isinstance(operations_insights_warehouse_id, six.string_types) and len(operations_insights_warehouse_id.strip()) == 0:
+    if isinstance(operations_insights_warehouse_id, str) and len(operations_insights_warehouse_id.strip()) == 0:
         raise click.UsageError('Parameter --operations-insights-warehouse-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5361,7 +5360,7 @@ def download_operations_insights_warehouse_wallet(ctx, from_json, file, operatio
 @cli_util.wrap_exceptions
 def enable_autonomous_database_insight_advanced_features(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, credential_details, database_insight_id, opsi_private_endpoint_id, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5429,7 +5428,7 @@ def enable_autonomous_database_insight_advanced_features(ctx, from_json, wait_fo
 @cli_util.wrap_exceptions
 def enable_autonomous_database_insight_advanced_features_credential_by_named_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, opsi_private_endpoint_id, if_match, credential_details_credential_source_name, credential_details_named_credential_id):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5504,7 +5503,7 @@ def enable_autonomous_database_insight_advanced_features_credential_by_named_cre
 @cli_util.wrap_exceptions
 def enable_autonomous_database_insight_advanced_features_credentials_by_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, opsi_private_endpoint_id, if_match, credential_details_credential_source_name):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5580,7 +5579,7 @@ def enable_autonomous_database_insight_advanced_features_credentials_by_source(c
 @cli_util.wrap_exceptions
 def enable_autonomous_database_insight_advanced_features_credential_by_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, opsi_private_endpoint_id, if_match, credential_details_credential_source_name, credential_details_user_name, credential_details_password_secret_id, credential_details_wallet_secret_id, credential_details_role):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5664,7 +5663,7 @@ def enable_autonomous_database_insight_advanced_features_credential_by_vault(ctx
 @cli_util.wrap_exceptions
 def enable_autonomous_database_insight_advanced_features_credential_by_iam(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, connection_details, database_insight_id, opsi_private_endpoint_id, if_match, credential_details_credential_source_name):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5733,7 +5732,7 @@ def enable_autonomous_database_insight_advanced_features_credential_by_iam(ctx, 
 @cli_util.wrap_exceptions
 def enable_awr_hub_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, awr_hub_source_id, if_match):
 
-    if isinstance(awr_hub_source_id, six.string_types) and len(awr_hub_source_id.strip()) == 0:
+    if isinstance(awr_hub_source_id, str) and len(awr_hub_source_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5789,7 +5788,7 @@ def enable_awr_hub_source(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def enable_database_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, entity_source, database_insight_id, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5849,7 +5848,7 @@ def enable_database_insight(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def enable_database_insight_enable_em_managed_external_database_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5910,7 +5909,7 @@ def enable_database_insight_enable_em_managed_external_database_insight_details(
 @cli_util.wrap_exceptions
 def enable_database_insight_enable_mds_my_sql_database_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5978,7 +5977,7 @@ def enable_database_insight_enable_mds_my_sql_database_insight_details(ctx, from
 @cli_util.wrap_exceptions
 def enable_database_insight_enable_macs_managed_autonomous_database_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, management_agent_id, connection_details, connection_credential_details, database_insight_id, freeform_tags, defined_tags, system_tags, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6053,7 +6052,7 @@ def enable_database_insight_enable_macs_managed_autonomous_database_insight_deta
 @cli_util.wrap_exceptions
 def enable_database_insight_enable_external_mysql_database_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_connector_id, database_insight_id, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6123,7 +6122,7 @@ def enable_database_insight_enable_external_mysql_database_insight_details(ctx, 
 @cli_util.wrap_exceptions
 def enable_database_insight_enable_autonomous_database_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, is_advanced_features_enabled, database_insight_id, database_resource_type, connection_details, credential_details, opsi_private_endpoint_id, freeform_tags, defined_tags, system_tags, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6213,7 +6212,7 @@ def enable_database_insight_enable_autonomous_database_insight_details(ctx, from
 @cli_util.wrap_exceptions
 def enable_database_insight_enable_macs_managed_cloud_database_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, management_agent_id, connection_details, connection_credential_details, database_insight_id, freeform_tags, defined_tags, system_tags, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6295,7 +6294,7 @@ def enable_database_insight_enable_macs_managed_cloud_database_insight_details(c
 @cli_util.wrap_exceptions
 def enable_database_insight_enable_pe_comanaged_database_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, opsi_private_endpoint_id, service_name, credential_details, database_insight_id, connection_details, freeform_tags, defined_tags, system_tags, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6373,7 +6372,7 @@ def enable_database_insight_enable_pe_comanaged_database_insight_details(ctx, fr
 @cli_util.wrap_exceptions
 def enable_exadata_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, entity_source, exadata_insight_id, if_match):
 
-    if isinstance(exadata_insight_id, six.string_types) and len(exadata_insight_id.strip()) == 0:
+    if isinstance(exadata_insight_id, str) and len(exadata_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6433,7 +6432,7 @@ def enable_exadata_insight(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def enable_exadata_insight_enable_macs_managed_cloud_exadata_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_insight_id, if_match):
 
-    if isinstance(exadata_insight_id, six.string_types) and len(exadata_insight_id.strip()) == 0:
+    if isinstance(exadata_insight_id, str) and len(exadata_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6494,7 +6493,7 @@ def enable_exadata_insight_enable_macs_managed_cloud_exadata_insight_details(ctx
 @cli_util.wrap_exceptions
 def enable_exadata_insight_enable_pe_comanaged_exadata_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_insight_id, if_match):
 
-    if isinstance(exadata_insight_id, six.string_types) and len(exadata_insight_id.strip()) == 0:
+    if isinstance(exadata_insight_id, str) and len(exadata_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6555,7 +6554,7 @@ def enable_exadata_insight_enable_pe_comanaged_exadata_insight_details(ctx, from
 @cli_util.wrap_exceptions
 def enable_exadata_insight_enable_em_managed_external_exadata_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_insight_id, if_match):
 
-    if isinstance(exadata_insight_id, six.string_types) and len(exadata_insight_id.strip()) == 0:
+    if isinstance(exadata_insight_id, str) and len(exadata_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6617,7 +6616,7 @@ def enable_exadata_insight_enable_em_managed_external_exadata_insight_details(ct
 @cli_util.wrap_exceptions
 def enable_host_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, entity_source, host_insight_id, if_match):
 
-    if isinstance(host_insight_id, six.string_types) and len(host_insight_id.strip()) == 0:
+    if isinstance(host_insight_id, str) and len(host_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --host-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6677,7 +6676,7 @@ def enable_host_insight(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def enable_host_insight_enable_macs_managed_external_host_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, host_insight_id, if_match):
 
-    if isinstance(host_insight_id, six.string_types) and len(host_insight_id.strip()) == 0:
+    if isinstance(host_insight_id, str) and len(host_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --host-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6738,7 +6737,7 @@ def enable_host_insight_enable_macs_managed_external_host_insight_details(ctx, f
 @cli_util.wrap_exceptions
 def enable_host_insight_enable_macs_managed_cloud_host_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, host_insight_id, if_match):
 
-    if isinstance(host_insight_id, six.string_types) and len(host_insight_id.strip()) == 0:
+    if isinstance(host_insight_id, str) and len(host_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --host-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6799,7 +6798,7 @@ def enable_host_insight_enable_macs_managed_cloud_host_insight_details(ctx, from
 @cli_util.wrap_exceptions
 def enable_host_insight_enable_em_managed_external_host_insight_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, host_insight_id, if_match):
 
-    if isinstance(host_insight_id, six.string_types) and len(host_insight_id.strip()) == 0:
+    if isinstance(host_insight_id, str) and len(host_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --host-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6864,7 +6863,7 @@ def enable_host_insight_enable_em_managed_external_host_insight_details(ctx, fro
 @cli_util.wrap_exceptions
 def get_awr_database_report(ctx, from_json, awr_hub_id, awr_source_database_identifier, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, report_type, report_format):
 
-    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+    if isinstance(awr_hub_id, str) and len(awr_hub_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6909,7 +6908,7 @@ def get_awr_database_report(ctx, from_json, awr_hub_id, awr_source_database_iden
 @cli_util.wrap_exceptions
 def get_awr_database_sql_report(ctx, from_json, awr_hub_id, awr_source_database_identifier, sql_id, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, report_format):
 
-    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+    if isinstance(awr_hub_id, str) and len(awr_hub_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6945,7 +6944,7 @@ def get_awr_database_sql_report(ctx, from_json, awr_hub_id, awr_source_database_
 @cli_util.wrap_exceptions
 def get_awr_hub(ctx, from_json, awr_hub_id):
 
-    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+    if isinstance(awr_hub_id, str) and len(awr_hub_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6969,10 +6968,10 @@ def get_awr_hub(ctx, from_json, awr_hub_id):
 @cli_util.wrap_exceptions
 def get_awr_hub_object(ctx, from_json, file, awr_hub_source_id, object_name):
 
-    if isinstance(awr_hub_source_id, six.string_types) and len(awr_hub_source_id.strip()) == 0:
+    if isinstance(awr_hub_source_id, str) and len(awr_hub_source_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-source-id cannot be whitespace or empty string')
 
-    if isinstance(object_name, six.string_types) and len(object_name.strip()) == 0:
+    if isinstance(object_name, str) and len(object_name.strip()) == 0:
         raise click.UsageError('Parameter --object-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7017,7 +7016,7 @@ def get_awr_hub_object(ctx, from_json, file, awr_hub_source_id, object_name):
 @cli_util.wrap_exceptions
 def get_awr_hub_source(ctx, from_json, awr_hub_source_id):
 
-    if isinstance(awr_hub_source_id, six.string_types) and len(awr_hub_source_id.strip()) == 0:
+    if isinstance(awr_hub_source_id, str) and len(awr_hub_source_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7046,7 +7045,7 @@ def get_awr_hub_source(ctx, from_json, awr_hub_source_id):
 @cli_util.wrap_exceptions
 def get_awr_report(ctx, from_json, awr_hub_id, awr_source_database_identifier, report_format, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to):
 
-    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+    if isinstance(awr_hub_id, str) and len(awr_hub_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7081,7 +7080,7 @@ def get_awr_report(ctx, from_json, awr_hub_id, awr_source_database_identifier, r
 @cli_util.wrap_exceptions
 def get_database_insight(ctx, from_json, database_insight_id):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7103,7 +7102,7 @@ def get_database_insight(ctx, from_json, database_insight_id):
 @cli_util.wrap_exceptions
 def get_enterprise_manager_bridge(ctx, from_json, enterprise_manager_bridge_id):
 
-    if isinstance(enterprise_manager_bridge_id, six.string_types) and len(enterprise_manager_bridge_id.strip()) == 0:
+    if isinstance(enterprise_manager_bridge_id, str) and len(enterprise_manager_bridge_id.strip()) == 0:
         raise click.UsageError('Parameter --enterprise-manager-bridge-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7125,7 +7124,7 @@ def get_enterprise_manager_bridge(ctx, from_json, enterprise_manager_bridge_id):
 @cli_util.wrap_exceptions
 def get_exadata_insight(ctx, from_json, exadata_insight_id):
 
-    if isinstance(exadata_insight_id, six.string_types) and len(exadata_insight_id.strip()) == 0:
+    if isinstance(exadata_insight_id, str) and len(exadata_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7147,7 +7146,7 @@ def get_exadata_insight(ctx, from_json, exadata_insight_id):
 @cli_util.wrap_exceptions
 def get_host_insight(ctx, from_json, host_insight_id):
 
-    if isinstance(host_insight_id, six.string_types) and len(host_insight_id.strip()) == 0:
+    if isinstance(host_insight_id, str) and len(host_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --host-insight-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7169,7 +7168,7 @@ def get_host_insight(ctx, from_json, host_insight_id):
 @cli_util.wrap_exceptions
 def get_news_report(ctx, from_json, news_report_id):
 
-    if isinstance(news_report_id, six.string_types) and len(news_report_id.strip()) == 0:
+    if isinstance(news_report_id, str) and len(news_report_id.strip()) == 0:
         raise click.UsageError('Parameter --news-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7191,7 +7190,7 @@ def get_news_report(ctx, from_json, news_report_id):
 @cli_util.wrap_exceptions
 def get_operations_insights_private_endpoint(ctx, from_json, operations_insights_private_endpoint_id):
 
-    if isinstance(operations_insights_private_endpoint_id, six.string_types) and len(operations_insights_private_endpoint_id.strip()) == 0:
+    if isinstance(operations_insights_private_endpoint_id, str) and len(operations_insights_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --operations-insights-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7213,7 +7212,7 @@ def get_operations_insights_private_endpoint(ctx, from_json, operations_insights
 @cli_util.wrap_exceptions
 def get_operations_insights_warehouse(ctx, from_json, operations_insights_warehouse_id):
 
-    if isinstance(operations_insights_warehouse_id, six.string_types) and len(operations_insights_warehouse_id.strip()) == 0:
+    if isinstance(operations_insights_warehouse_id, str) and len(operations_insights_warehouse_id.strip()) == 0:
         raise click.UsageError('Parameter --operations-insights-warehouse-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7235,7 +7234,7 @@ def get_operations_insights_warehouse(ctx, from_json, operations_insights_wareho
 @cli_util.wrap_exceptions
 def get_operations_insights_warehouse_user(ctx, from_json, operations_insights_warehouse_user_id):
 
-    if isinstance(operations_insights_warehouse_user_id, six.string_types) and len(operations_insights_warehouse_user_id.strip()) == 0:
+    if isinstance(operations_insights_warehouse_user_id, str) and len(operations_insights_warehouse_user_id.strip()) == 0:
         raise click.UsageError('Parameter --operations-insights-warehouse-user-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7261,7 +7260,7 @@ def get_operations_insights_warehouse_user(ctx, from_json, operations_insights_w
 @cli_util.wrap_exceptions
 def get_opsi_configuration(ctx, from_json, opsi_configuration_id, opsi_config_field, config_item_custom_status, config_items_applicable_context, config_item_field):
 
-    if isinstance(opsi_configuration_id, six.string_types) and len(opsi_configuration_id.strip()) == 0:
+    if isinstance(opsi_configuration_id, str) and len(opsi_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --opsi-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7292,7 +7291,7 @@ def get_opsi_configuration(ctx, from_json, opsi_configuration_id, opsi_config_fi
 @cli_util.wrap_exceptions
 def get_opsi_data_object(ctx, from_json, compartment_id, opsi_data_object_identifier):
 
-    if isinstance(opsi_data_object_identifier, six.string_types) and len(opsi_data_object_identifier.strip()) == 0:
+    if isinstance(opsi_data_object_identifier, str) and len(opsi_data_object_identifier.strip()) == 0:
         raise click.UsageError('Parameter --opsi-data-object-identifier cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7315,7 +7314,7 @@ def get_opsi_data_object(ctx, from_json, compartment_id, opsi_data_object_identi
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -7338,10 +7337,10 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.wrap_exceptions
 def head_awr_hub_object(ctx, from_json, awr_hub_source_id, object_name):
 
-    if isinstance(awr_hub_source_id, six.string_types) and len(awr_hub_source_id.strip()) == 0:
+    if isinstance(awr_hub_source_id, str) and len(awr_hub_source_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-source-id cannot be whitespace or empty string')
 
-    if isinstance(object_name, six.string_types) and len(object_name.strip()) == 0:
+    if isinstance(object_name, str) and len(object_name.strip()) == 0:
         raise click.UsageError('Parameter --object-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8219,7 +8218,7 @@ def list_awr_database_snapshots(ctx, from_json, all_pages, page_size, awr_hub_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+    if isinstance(awr_hub_id, str) and len(awr_hub_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8292,7 +8291,7 @@ def list_awr_databases(ctx, from_json, all_pages, page_size, awr_hub_id, name, t
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+    if isinstance(awr_hub_id, str) and len(awr_hub_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8359,7 +8358,7 @@ def list_awr_hub_objects(ctx, from_json, all_pages, page_size, awr_hub_source_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(awr_hub_source_id, six.string_types) and len(awr_hub_source_id.strip()) == 0:
+    if isinstance(awr_hub_source_id, str) and len(awr_hub_source_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-source-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -8565,7 +8564,7 @@ def list_awr_snapshots(ctx, from_json, all_pages, page_size, awr_hub_id, awr_sou
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+    if isinstance(awr_hub_id, str) and len(awr_hub_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9374,7 +9373,7 @@ def list_importable_enterprise_manager_entities(ctx, from_json, all_pages, page_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(enterprise_manager_bridge_id, six.string_types) and len(enterprise_manager_bridge_id.strip()) == 0:
+    if isinstance(enterprise_manager_bridge_id, str) and len(enterprise_manager_bridge_id.strip()) == 0:
         raise click.UsageError('Parameter --enterprise-manager-bridge-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9984,10 +9983,10 @@ def list_warehouse_data_objects(ctx, from_json, all_pages, page_size, warehouse_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(warehouse_type, six.string_types) and len(warehouse_type.strip()) == 0:
+    if isinstance(warehouse_type, str) and len(warehouse_type.strip()) == 0:
         raise click.UsageError('Parameter --warehouse-type cannot be whitespace or empty string')
 
-    if isinstance(warehouse_id, six.string_types) and len(warehouse_id.strip()) == 0:
+    if isinstance(warehouse_id, str) and len(warehouse_id.strip()) == 0:
         raise click.UsageError('Parameter --warehouse-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10055,7 +10054,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10112,7 +10111,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10228,10 +10227,10 @@ def list_work_requests(ctx, from_json, all_pages, page_size, page, limit, compar
 @cli_util.wrap_exceptions
 def put_awr_hub_object(ctx, from_json, put_awr_hub_object_body, awr_hub_source_id, object_name, if_match):
 
-    if isinstance(awr_hub_source_id, six.string_types) and len(awr_hub_source_id.strip()) == 0:
+    if isinstance(awr_hub_source_id, str) and len(awr_hub_source_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-source-id cannot be whitespace or empty string')
 
-    if isinstance(object_name, six.string_types) and len(object_name.strip()) == 0:
+    if isinstance(object_name, str) and len(object_name.strip()) == 0:
         raise click.UsageError('Parameter --object-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10458,10 +10457,10 @@ def query_opsi_data_object_data_data_object_templatized_query(ctx, from_json, co
 @cli_util.wrap_exceptions
 def query_warehouse_data_object_data(ctx, from_json, warehouse_type, warehouse_id, query_parameterconflict, limit, page):
 
-    if isinstance(warehouse_type, six.string_types) and len(warehouse_type.strip()) == 0:
+    if isinstance(warehouse_type, str) and len(warehouse_type.strip()) == 0:
         raise click.UsageError('Parameter --warehouse-type cannot be whitespace or empty string')
 
-    if isinstance(warehouse_id, six.string_types) and len(warehouse_id.strip()) == 0:
+    if isinstance(warehouse_id, str) and len(warehouse_id.strip()) == 0:
         raise click.UsageError('Parameter --warehouse-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10502,10 +10501,10 @@ This option is a JSON list with items of type DataObjectBindParameter.  For docu
 @cli_util.wrap_exceptions
 def query_warehouse_data_object_data_data_object_standard_query(ctx, from_json, warehouse_type, warehouse_id, limit, page, query_bind_params, query_query_execution_timeout_in_seconds, query_statement, query_time_filters):
 
-    if isinstance(warehouse_type, six.string_types) and len(warehouse_type.strip()) == 0:
+    if isinstance(warehouse_type, str) and len(warehouse_type.strip()) == 0:
         raise click.UsageError('Parameter --warehouse-type cannot be whitespace or empty string')
 
-    if isinstance(warehouse_id, six.string_types) and len(warehouse_id.strip()) == 0:
+    if isinstance(warehouse_id, str) and len(warehouse_id.strip()) == 0:
         raise click.UsageError('Parameter --warehouse-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10565,10 +10564,10 @@ This option is a JSON list with items of type DataObjectBindParameter.  For docu
 @cli_util.wrap_exceptions
 def query_warehouse_data_object_data_data_object_templatized_query(ctx, from_json, warehouse_type, warehouse_id, limit, page, query_bind_params, query_query_execution_timeout_in_seconds, query_select_list, query_from_clause, query_where_conditions_list, query_group_by_list, query_having_conditions_list, query_order_by_list, query_time_filters):
 
-    if isinstance(warehouse_type, six.string_types) and len(warehouse_type.strip()) == 0:
+    if isinstance(warehouse_type, str) and len(warehouse_type.strip()) == 0:
         raise click.UsageError('Parameter --warehouse-type cannot be whitespace or empty string')
 
-    if isinstance(warehouse_id, six.string_types) and len(warehouse_id.strip()) == 0:
+    if isinstance(warehouse_id, str) and len(warehouse_id.strip()) == 0:
         raise click.UsageError('Parameter --warehouse-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10633,7 +10632,7 @@ def query_warehouse_data_object_data_data_object_templatized_query(ctx, from_jso
 @cli_util.wrap_exceptions
 def rotate_operations_insights_warehouse_wallet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_warehouse_id, if_match):
 
-    if isinstance(operations_insights_warehouse_id, six.string_types) and len(operations_insights_warehouse_id.strip()) == 0:
+    if isinstance(operations_insights_warehouse_id, str) and len(operations_insights_warehouse_id.strip()) == 0:
         raise click.UsageError('Parameter --operations-insights-warehouse-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11088,7 +11087,7 @@ def summarize_addm_db_sql_statements(ctx, from_json, compartment_id, sql_identif
 @cli_util.wrap_exceptions
 def summarize_awr_database_cpu_usages(ctx, from_json, awr_hub_id, awr_source_database_identifier, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, session_type, page, limit, sort_by, sort_order):
 
-    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+    if isinstance(awr_hub_id, str) and len(awr_hub_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11142,7 +11141,7 @@ def summarize_awr_database_cpu_usages(ctx, from_json, awr_hub_id, awr_source_dat
 @cli_util.wrap_exceptions
 def summarize_awr_database_metrics(ctx, from_json, awr_hub_id, awr_source_database_identifier, name, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, page, limit, sort_by, sort_order):
 
-    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+    if isinstance(awr_hub_id, str) and len(awr_hub_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11195,7 +11194,7 @@ def summarize_awr_database_metrics(ctx, from_json, awr_hub_id, awr_source_databa
 @cli_util.wrap_exceptions
 def summarize_awr_database_parameter_changes(ctx, from_json, awr_hub_id, awr_source_database_identifier, name, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, page, limit, sort_by, sort_order):
 
-    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+    if isinstance(awr_hub_id, str) and len(awr_hub_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11256,7 +11255,7 @@ Note that this API does not return information on the number of times each datab
 @cli_util.wrap_exceptions
 def summarize_awr_database_parameters(ctx, from_json, awr_hub_id, awr_source_database_identifier, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, name, name_contains, value_changed, value_default, value_modified, page, limit, sort_by, sort_order):
 
-    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+    if isinstance(awr_hub_id, str) and len(awr_hub_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11314,7 +11313,7 @@ def summarize_awr_database_parameters(ctx, from_json, awr_hub_id, awr_source_dat
 @cli_util.wrap_exceptions
 def summarize_awr_database_snapshot_ranges(ctx, from_json, awr_hub_id, name, time_greater_than_or_equal_to, time_less_than_or_equal_to, page, limit, sort_by, sort_order):
 
-    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+    if isinstance(awr_hub_id, str) and len(awr_hub_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11361,7 +11360,7 @@ def summarize_awr_database_snapshot_ranges(ctx, from_json, awr_hub_id, name, tim
 @cli_util.wrap_exceptions
 def summarize_awr_database_sysstats(ctx, from_json, awr_hub_id, awr_source_database_identifier, name, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, page, limit, sort_by, sort_order):
 
-    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+    if isinstance(awr_hub_id, str) and len(awr_hub_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11413,7 +11412,7 @@ def summarize_awr_database_sysstats(ctx, from_json, awr_hub_id, awr_source_datab
 @cli_util.wrap_exceptions
 def summarize_awr_database_top_wait_events(ctx, from_json, awr_hub_id, awr_source_database_identifier, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, session_type, top_n, sort_by, sort_order):
 
-    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+    if isinstance(awr_hub_id, str) and len(awr_hub_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11468,7 +11467,7 @@ def summarize_awr_database_top_wait_events(ctx, from_json, awr_hub_id, awr_sourc
 @cli_util.wrap_exceptions
 def summarize_awr_database_wait_event_buckets(ctx, from_json, awr_hub_id, awr_source_database_identifier, name, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, num_bucket, min_value, max_value, page, limit, sort_by, sort_order):
 
-    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+    if isinstance(awr_hub_id, str) and len(awr_hub_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11528,7 +11527,7 @@ def summarize_awr_database_wait_event_buckets(ctx, from_json, awr_hub_id, awr_so
 @cli_util.wrap_exceptions
 def summarize_awr_database_wait_events(ctx, from_json, awr_hub_id, awr_source_database_identifier, instance_number, begin_snapshot_identifier_greater_than_or_equal_to, end_snapshot_identifier_less_than_or_equal_to, time_greater_than_or_equal_to, time_less_than_or_equal_to, name, session_type, page, limit, sort_by, sort_order):
 
-    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+    if isinstance(awr_hub_id, str) and len(awr_hub_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11579,7 +11578,7 @@ def summarize_awr_database_wait_events(ctx, from_json, awr_hub_id, awr_source_da
 @cli_util.wrap_exceptions
 def summarize_awr_sources_summaries(ctx, from_json, awr_hub_id, compartment_id, name, limit, page, sort_by, sort_order):
 
-    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+    if isinstance(awr_hub_id, str) and len(awr_hub_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -13568,7 +13567,7 @@ def summarize_host_insight_top_processes_usage_trend(ctx, from_json, compartment
 @cli_util.wrap_exceptions
 def summarize_operations_insights_warehouse_resource_usage(ctx, from_json, operations_insights_warehouse_id):
 
-    if isinstance(operations_insights_warehouse_id, six.string_types) and len(operations_insights_warehouse_id.strip()) == 0:
+    if isinstance(operations_insights_warehouse_id, str) and len(operations_insights_warehouse_id.strip()) == 0:
         raise click.UsageError('Parameter --operations-insights-warehouse-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -14713,7 +14712,7 @@ def test_macs_managed_cloud_database_insight_connection_credential_by_iam(ctx, f
 @cli_util.wrap_exceptions
 def update_awr_hub(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, awr_hub_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(awr_hub_id, six.string_types) and len(awr_hub_id.strip()) == 0:
+    if isinstance(awr_hub_id, str) and len(awr_hub_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -14789,7 +14788,7 @@ def update_awr_hub(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def update_awr_hub_source(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, awr_hub_source_id, type, freeform_tags, defined_tags, if_match):
 
-    if isinstance(awr_hub_source_id, six.string_types) and len(awr_hub_source_id.strip()) == 0:
+    if isinstance(awr_hub_source_id, str) and len(awr_hub_source_id.strip()) == 0:
         raise click.UsageError('Parameter --awr-hub-source-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -14865,7 +14864,7 @@ def update_awr_hub_source(ctx, from_json, force, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def update_database_insight(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, entity_source, freeform_tags, defined_tags, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -14938,7 +14937,7 @@ def update_database_insight(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def update_database_insight_update_macs_managed_external_database_insight_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -15012,7 +15011,7 @@ def update_database_insight_update_macs_managed_external_database_insight_detail
 @cli_util.wrap_exceptions
 def update_database_insight_update_em_managed_external_database_insight_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -15086,7 +15085,7 @@ def update_database_insight_update_em_managed_external_database_insight_details(
 @cli_util.wrap_exceptions
 def update_database_insight_update_pe_comanaged_database_insight_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -15160,7 +15159,7 @@ def update_database_insight_update_pe_comanaged_database_insight_details(ctx, fr
 @cli_util.wrap_exceptions
 def update_database_insight_update_autonomous_database_insight_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -15234,7 +15233,7 @@ def update_database_insight_update_autonomous_database_insight_details(ctx, from
 @cli_util.wrap_exceptions
 def update_database_insight_update_mds_my_sql_database_insight(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -15308,7 +15307,7 @@ def update_database_insight_update_mds_my_sql_database_insight(ctx, from_json, f
 @cli_util.wrap_exceptions
 def update_database_insight_update_macs_managed_cloud_database_insight_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -15382,7 +15381,7 @@ def update_database_insight_update_macs_managed_cloud_database_insight_details(c
 @cli_util.wrap_exceptions
 def update_database_insight_update_external_mysql_database_insight_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -15456,7 +15455,7 @@ def update_database_insight_update_external_mysql_database_insight_details(ctx, 
 @cli_util.wrap_exceptions
 def update_database_insight_update_macs_managed_autonomous_database_insight_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_insight_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(database_insight_id, six.string_types) and len(database_insight_id.strip()) == 0:
+    if isinstance(database_insight_id, str) and len(database_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --database-insight-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -15532,7 +15531,7 @@ def update_database_insight_update_macs_managed_autonomous_database_insight_deta
 @cli_util.wrap_exceptions
 def update_enterprise_manager_bridge(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, enterprise_manager_bridge_id, display_name, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(enterprise_manager_bridge_id, six.string_types) and len(enterprise_manager_bridge_id.strip()) == 0:
+    if isinstance(enterprise_manager_bridge_id, str) and len(enterprise_manager_bridge_id.strip()) == 0:
         raise click.UsageError('Parameter --enterprise-manager-bridge-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -15611,7 +15610,7 @@ def update_enterprise_manager_bridge(ctx, from_json, force, wait_for_state, max_
 @cli_util.wrap_exceptions
 def update_exadata_insight(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_insight_id, entity_source, freeform_tags, defined_tags, if_match):
 
-    if isinstance(exadata_insight_id, six.string_types) and len(exadata_insight_id.strip()) == 0:
+    if isinstance(exadata_insight_id, str) and len(exadata_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-insight-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -15684,7 +15683,7 @@ def update_exadata_insight(ctx, from_json, force, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def update_exadata_insight_update_pe_comanaged_exadata_insight_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_insight_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(exadata_insight_id, six.string_types) and len(exadata_insight_id.strip()) == 0:
+    if isinstance(exadata_insight_id, str) and len(exadata_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-insight-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -15758,7 +15757,7 @@ def update_exadata_insight_update_pe_comanaged_exadata_insight_details(ctx, from
 @cli_util.wrap_exceptions
 def update_exadata_insight_update_macs_managed_cloud_exadata_insight_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_insight_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(exadata_insight_id, six.string_types) and len(exadata_insight_id.strip()) == 0:
+    if isinstance(exadata_insight_id, str) and len(exadata_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-insight-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -15833,7 +15832,7 @@ def update_exadata_insight_update_macs_managed_cloud_exadata_insight_details(ctx
 @cli_util.wrap_exceptions
 def update_exadata_insight_update_em_managed_external_exadata_insight_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_insight_id, freeform_tags, defined_tags, is_auto_sync_enabled, if_match):
 
-    if isinstance(exadata_insight_id, six.string_types) and len(exadata_insight_id.strip()) == 0:
+    if isinstance(exadata_insight_id, str) and len(exadata_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --exadata-insight-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -15911,7 +15910,7 @@ def update_exadata_insight_update_em_managed_external_exadata_insight_details(ct
 @cli_util.wrap_exceptions
 def update_host_insight(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, host_insight_id, entity_source, freeform_tags, defined_tags, if_match):
 
-    if isinstance(host_insight_id, six.string_types) and len(host_insight_id.strip()) == 0:
+    if isinstance(host_insight_id, str) and len(host_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --host-insight-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -15984,7 +15983,7 @@ def update_host_insight(ctx, from_json, force, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def update_host_insight_update_macs_managed_cloud_database_host_insight_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, host_insight_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(host_insight_id, six.string_types) and len(host_insight_id.strip()) == 0:
+    if isinstance(host_insight_id, str) and len(host_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --host-insight-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -16058,7 +16057,7 @@ def update_host_insight_update_macs_managed_cloud_database_host_insight_details(
 @cli_util.wrap_exceptions
 def update_host_insight_update_em_managed_external_host_insight_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, host_insight_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(host_insight_id, six.string_types) and len(host_insight_id.strip()) == 0:
+    if isinstance(host_insight_id, str) and len(host_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --host-insight-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -16132,7 +16131,7 @@ def update_host_insight_update_em_managed_external_host_insight_details(ctx, fro
 @cli_util.wrap_exceptions
 def update_host_insight_update_macs_managed_external_host_insight_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, host_insight_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(host_insight_id, six.string_types) and len(host_insight_id.strip()) == 0:
+    if isinstance(host_insight_id, str) and len(host_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --host-insight-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -16206,7 +16205,7 @@ def update_host_insight_update_macs_managed_external_host_insight_details(ctx, f
 @cli_util.wrap_exceptions
 def update_host_insight_update_macs_managed_cloud_host_insight_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, host_insight_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(host_insight_id, six.string_types) and len(host_insight_id.strip()) == 0:
+    if isinstance(host_insight_id, str) and len(host_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --host-insight-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -16280,7 +16279,7 @@ def update_host_insight_update_macs_managed_cloud_host_insight_details(ctx, from
 @cli_util.wrap_exceptions
 def update_host_insight_update_pe_comanaged_host_insight_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, host_insight_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(host_insight_id, six.string_types) and len(host_insight_id.strip()) == 0:
+    if isinstance(host_insight_id, str) and len(host_insight_id.strip()) == 0:
         raise click.UsageError('Parameter --host-insight-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -16365,7 +16364,7 @@ def update_host_insight_update_pe_comanaged_host_insight_details(ctx, from_json,
 @cli_util.wrap_exceptions
 def update_news_report(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, news_report_id, status, news_frequency, locale, content_types, ons_topic_id, freeform_tags, defined_tags, name, description, day_of_week, are_child_compartments_included, tag_filters, match_rule, if_match):
 
-    if isinstance(news_report_id, six.string_types) and len(news_report_id.strip()) == 0:
+    if isinstance(news_report_id, str) and len(news_report_id.strip()) == 0:
         raise click.UsageError('Parameter --news-report-id cannot be whitespace or empty string')
     if not force:
         if content_types or freeform_tags or defined_tags or tag_filters:
@@ -16473,7 +16472,7 @@ def update_news_report(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def update_operations_insights_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_private_endpoint_id, display_name, description, nsg_ids, freeform_tags, defined_tags, if_match):
 
-    if isinstance(operations_insights_private_endpoint_id, six.string_types) and len(operations_insights_private_endpoint_id.strip()) == 0:
+    if isinstance(operations_insights_private_endpoint_id, str) and len(operations_insights_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --operations-insights-private-endpoint-id cannot be whitespace or empty string')
     if not force:
         if nsg_ids or freeform_tags or defined_tags:
@@ -16558,7 +16557,7 @@ def update_operations_insights_private_endpoint(ctx, from_json, force, wait_for_
 @cli_util.wrap_exceptions
 def update_operations_insights_warehouse(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_warehouse_id, display_name, cpu_allocated, compute_model, storage_allocated_in_gbs, freeform_tags, defined_tags, if_match):
 
-    if isinstance(operations_insights_warehouse_id, six.string_types) and len(operations_insights_warehouse_id.strip()) == 0:
+    if isinstance(operations_insights_warehouse_id, str) and len(operations_insights_warehouse_id.strip()) == 0:
         raise click.UsageError('Parameter --operations-insights-warehouse-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -16646,7 +16645,7 @@ def update_operations_insights_warehouse(ctx, from_json, force, wait_for_state, 
 @cli_util.wrap_exceptions
 def update_operations_insights_warehouse_user(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, operations_insights_warehouse_user_id, connection_password, is_awr_data_access, is_em_data_access, is_opsi_data_access, freeform_tags, defined_tags, if_match):
 
-    if isinstance(operations_insights_warehouse_user_id, six.string_types) and len(operations_insights_warehouse_user_id.strip()) == 0:
+    if isinstance(operations_insights_warehouse_user_id, str) and len(operations_insights_warehouse_user_id.strip()) == 0:
         raise click.UsageError('Parameter --operations-insights-warehouse-user-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -16737,7 +16736,7 @@ This option is a JSON list with items of type UpdateConfigurationItemDetails.  F
 @cli_util.wrap_exceptions
 def update_opsi_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, opsi_configuration_id, opsi_config_type, display_name, description, freeform_tags, defined_tags, system_tags, config_items, if_match):
 
-    if isinstance(opsi_configuration_id, six.string_types) and len(opsi_configuration_id.strip()) == 0:
+    if isinstance(opsi_configuration_id, str) and len(opsi_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --opsi-configuration-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or system_tags or config_items:
@@ -16828,7 +16827,7 @@ This option is a JSON list with items of type UpdateConfigurationItemDetails.  F
 @cli_util.wrap_exceptions
 def update_opsi_configuration_update_opsi_ux_configuration_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, opsi_configuration_id, display_name, description, freeform_tags, defined_tags, system_tags, config_items, if_match):
 
-    if isinstance(opsi_configuration_id, six.string_types) and len(opsi_configuration_id.strip()) == 0:
+    if isinstance(opsi_configuration_id, str) and len(opsi_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --opsi-configuration-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or system_tags or config_items:

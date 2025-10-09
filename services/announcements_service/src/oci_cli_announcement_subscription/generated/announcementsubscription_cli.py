@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -52,7 +51,7 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.wrap_exceptions
 def change_announcement_subscription_compartment(ctx, from_json, announcement_subscription_id, compartment_id, if_match):
 
-    if isinstance(announcement_subscription_id, six.string_types) and len(announcement_subscription_id.strip()) == 0:
+    if isinstance(announcement_subscription_id, str) and len(announcement_subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --announcement-subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -167,7 +166,7 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.wrap_exceptions
 def create_filter_group(ctx, from_json, announcement_subscription_id, name, filters, if_match):
 
-    if isinstance(announcement_subscription_id, six.string_types) and len(announcement_subscription_id.strip()) == 0:
+    if isinstance(announcement_subscription_id, str) and len(announcement_subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --announcement-subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -204,7 +203,7 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.wrap_exceptions
 def delete_announcement_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, announcement_subscription_id, if_match):
 
-    if isinstance(announcement_subscription_id, six.string_types) and len(announcement_subscription_id.strip()) == 0:
+    if isinstance(announcement_subscription_id, str) and len(announcement_subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --announcement-subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -268,10 +267,10 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.wrap_exceptions
 def delete_filter_group(ctx, from_json, announcement_subscription_id, filter_group_name, if_match):
 
-    if isinstance(announcement_subscription_id, six.string_types) and len(announcement_subscription_id.strip()) == 0:
+    if isinstance(announcement_subscription_id, str) and len(announcement_subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --announcement-subscription-id cannot be whitespace or empty string')
 
-    if isinstance(filter_group_name, six.string_types) and len(filter_group_name.strip()) == 0:
+    if isinstance(filter_group_name, str) and len(filter_group_name.strip()) == 0:
         raise click.UsageError('Parameter --filter-group-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -298,7 +297,7 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.wrap_exceptions
 def get_announcement_subscription(ctx, from_json, announcement_subscription_id):
 
-    if isinstance(announcement_subscription_id, six.string_types) and len(announcement_subscription_id.strip()) == 0:
+    if isinstance(announcement_subscription_id, str) and len(announcement_subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --announcement-subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -399,7 +398,7 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.wrap_exceptions
 def update_announcement_subscription(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, announcement_subscription_id, display_name, description, ons_topic_id, preferred_language, preferred_time_zone, freeform_tags, defined_tags, if_match):
 
-    if isinstance(announcement_subscription_id, six.string_types) and len(announcement_subscription_id.strip()) == 0:
+    if isinstance(announcement_subscription_id, str) and len(announcement_subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --announcement-subscription-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -481,10 +480,10 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.wrap_exceptions
 def update_filter_group(ctx, from_json, force, announcement_subscription_id, filter_group_name, filters, if_match):
 
-    if isinstance(announcement_subscription_id, six.string_types) and len(announcement_subscription_id.strip()) == 0:
+    if isinstance(announcement_subscription_id, str) and len(announcement_subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --announcement-subscription-id cannot be whitespace or empty string')
 
-    if isinstance(filter_group_name, six.string_types) and len(filter_group_name.strip()) == 0:
+    if isinstance(filter_group_name, str) and len(filter_group_name.strip()) == 0:
         raise click.UsageError('Parameter --filter-group-name cannot be whitespace or empty string')
     if not force:
         if filters:

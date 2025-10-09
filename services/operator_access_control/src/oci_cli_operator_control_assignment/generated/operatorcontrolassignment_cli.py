@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -46,7 +45,7 @@ operator_control_assignment_root_group.add_command(operator_control_assignment_g
 @cli_util.wrap_exceptions
 def change_operator_control_assignment_compartment(ctx, from_json, operator_control_assignment_id, compartment_id, if_match):
 
-    if isinstance(operator_control_assignment_id, six.string_types) and len(operator_control_assignment_id.strip()) == 0:
+    if isinstance(operator_control_assignment_id, str) and len(operator_control_assignment_id.strip()) == 0:
         raise click.UsageError('Parameter --operator-control-assignment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -188,7 +187,7 @@ def create_operator_control_assignment(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def delete_operator_control_assignment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, operator_control_assignment_id, description, if_match):
 
-    if isinstance(operator_control_assignment_id, six.string_types) and len(operator_control_assignment_id.strip()) == 0:
+    if isinstance(operator_control_assignment_id, str) and len(operator_control_assignment_id.strip()) == 0:
         raise click.UsageError('Parameter --operator-control-assignment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -249,7 +248,7 @@ def delete_operator_control_assignment(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def get_assignment_validation_status(ctx, from_json, operator_control_assignment_id):
 
-    if isinstance(operator_control_assignment_id, six.string_types) and len(operator_control_assignment_id.strip()) == 0:
+    if isinstance(operator_control_assignment_id, str) and len(operator_control_assignment_id.strip()) == 0:
         raise click.UsageError('Parameter --operator-control-assignment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -271,7 +270,7 @@ def get_assignment_validation_status(ctx, from_json, operator_control_assignment
 @cli_util.wrap_exceptions
 def get_operator_control_assignment(ctx, from_json, operator_control_assignment_id):
 
-    if isinstance(operator_control_assignment_id, six.string_types) and len(operator_control_assignment_id.strip()) == 0:
+    if isinstance(operator_control_assignment_id, str) and len(operator_control_assignment_id.strip()) == 0:
         raise click.UsageError('Parameter --operator-control-assignment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -376,7 +375,7 @@ def list_operator_control_assignments(ctx, from_json, all_pages, page_size, comp
 @cli_util.wrap_exceptions
 def update_operator_control_assignment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, operator_control_assignment_id, is_enforced_always, time_assignment_from, time_assignment_to, comment, is_log_forwarded, remote_syslog_server_address, remote_syslog_server_port, remote_syslog_server_ca_cert, is_hypervisor_log_forwarded, is_auto_approve_during_maintenance, freeform_tags, defined_tags, if_match):
 
-    if isinstance(operator_control_assignment_id, six.string_types) and len(operator_control_assignment_id.strip()) == 0:
+    if isinstance(operator_control_assignment_id, str) and len(operator_control_assignment_id.strip()) == 0:
         raise click.UsageError('Parameter --operator-control-assignment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -467,7 +466,7 @@ def update_operator_control_assignment(ctx, from_json, force, wait_for_state, ma
 @cli_util.wrap_exceptions
 def validate_operator_assignment(ctx, from_json, operator_control_assignment_id, action_name, if_match):
 
-    if isinstance(operator_control_assignment_id, six.string_types) and len(operator_control_assignment_id.strip()) == 0:
+    if isinstance(operator_control_assignment_id, str) and len(operator_control_assignment_id.strip()) == 0:
         raise click.UsageError('Parameter --operator-control-assignment-id cannot be whitespace or empty string')
 
     kwargs = {}

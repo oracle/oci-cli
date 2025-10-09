@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -179,7 +178,7 @@ stack_monitoring_root_group.add_command(work_request_log_entry_collection_group)
 @cli_util.wrap_exceptions
 def apply_monitoring_template(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, monitoring_template_id, if_match):
 
-    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+    if isinstance(monitoring_template_id, str) and len(monitoring_template_id.strip()) == 0:
         raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -270,7 +269,7 @@ When provided, If-Match is checked against ETag values of the resource. \n[Comma
 @cli_util.wrap_exceptions
 def change_config_compartment(ctx, from_json, config_id, compartment_id, if_match):
 
-    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+    if isinstance(config_id, str) and len(config_id.strip()) == 0:
         raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -301,7 +300,7 @@ def change_config_compartment(ctx, from_json, config_id, compartment_id, if_matc
 @cli_util.wrap_exceptions
 def change_metric_extension_compartment(ctx, from_json, metric_extension_id, compartment_id, if_match):
 
-    if isinstance(metric_extension_id, six.string_types) and len(metric_extension_id.strip()) == 0:
+    if isinstance(metric_extension_id, str) and len(metric_extension_id.strip()) == 0:
         raise click.UsageError('Parameter --metric-extension-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -335,7 +334,7 @@ def change_metric_extension_compartment(ctx, from_json, metric_extension_id, com
 @cli_util.wrap_exceptions
 def change_monitored_resource_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_id, compartment_id, if_match):
 
-    if isinstance(monitored_resource_id, six.string_types) and len(monitored_resource_id.strip()) == 0:
+    if isinstance(monitored_resource_id, str) and len(monitored_resource_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -393,7 +392,7 @@ def change_monitored_resource_compartment(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def change_monitored_resource_task_compartment(ctx, from_json, monitored_resource_task_id, compartment_id, if_match):
 
-    if isinstance(monitored_resource_task_id, six.string_types) and len(monitored_resource_task_id.strip()) == 0:
+    if isinstance(monitored_resource_task_id, str) and len(monitored_resource_task_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-task-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -424,7 +423,7 @@ def change_monitored_resource_task_compartment(ctx, from_json, monitored_resourc
 @cli_util.wrap_exceptions
 def change_process_set_compartment(ctx, from_json, process_set_id, compartment_id, if_match):
 
-    if isinstance(process_set_id, six.string_types) and len(process_set_id.strip()) == 0:
+    if isinstance(process_set_id, str) and len(process_set_id.strip()) == 0:
         raise click.UsageError('Parameter --process-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -464,7 +463,7 @@ def change_process_set_compartment(ctx, from_json, process_set_id, compartment_i
 @cli_util.wrap_exceptions
 def create_alarm_condition(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace, resource_type, metric_name, condition_type, conditions, monitoring_template_id, composite_type, freeform_tags, defined_tags):
 
-    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+    if isinstance(monitoring_template_id, str) and len(monitoring_template_id.strip()) == 0:
         raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2929,10 +2928,10 @@ def create_process_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_alarm_condition(ctx, from_json, alarm_condition_id, monitoring_template_id, if_match):
 
-    if isinstance(alarm_condition_id, six.string_types) and len(alarm_condition_id.strip()) == 0:
+    if isinstance(alarm_condition_id, str) and len(alarm_condition_id.strip()) == 0:
         raise click.UsageError('Parameter --alarm-condition-id cannot be whitespace or empty string')
 
-    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+    if isinstance(monitoring_template_id, str) and len(monitoring_template_id.strip()) == 0:
         raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2962,7 +2961,7 @@ def delete_alarm_condition(ctx, from_json, alarm_condition_id, monitoring_templa
 @cli_util.wrap_exceptions
 def delete_baselineable_metric(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, baselineable_metric_id, if_match):
 
-    if isinstance(baselineable_metric_id, six.string_types) and len(baselineable_metric_id.strip()) == 0:
+    if isinstance(baselineable_metric_id, str) and len(baselineable_metric_id.strip()) == 0:
         raise click.UsageError('Parameter --baselineable-metric-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3026,7 +3025,7 @@ def delete_baselineable_metric(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def delete_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, config_id, if_match):
 
-    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+    if isinstance(config_id, str) and len(config_id.strip()) == 0:
         raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3090,7 +3089,7 @@ def delete_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def delete_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, discovery_job_id, if_match):
 
-    if isinstance(discovery_job_id, six.string_types) and len(discovery_job_id.strip()) == 0:
+    if isinstance(discovery_job_id, str) and len(discovery_job_id.strip()) == 0:
         raise click.UsageError('Parameter --discovery-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3154,7 +3153,7 @@ def delete_discovery_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_maintenance_window(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, if_match):
 
-    if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
+    if isinstance(maintenance_window_id, str) and len(maintenance_window_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3210,7 +3209,7 @@ def delete_maintenance_window(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_metric_extension(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, metric_extension_id, if_match):
 
-    if isinstance(metric_extension_id, six.string_types) and len(metric_extension_id.strip()) == 0:
+    if isinstance(metric_extension_id, str) and len(metric_extension_id.strip()) == 0:
         raise click.UsageError('Parameter --metric-extension-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3275,7 +3274,7 @@ def delete_metric_extension(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_monitored_resource(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_id, if_match, is_delete_members):
 
-    if isinstance(monitored_resource_id, six.string_types) and len(monitored_resource_id.strip()) == 0:
+    if isinstance(monitored_resource_id, str) and len(monitored_resource_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3333,7 +3332,7 @@ def delete_monitored_resource(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_monitored_resource_type(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_type_id, if_match):
 
-    if isinstance(monitored_resource_type_id, six.string_types) and len(monitored_resource_type_id.strip()) == 0:
+    if isinstance(monitored_resource_type_id, str) and len(monitored_resource_type_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-type-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3397,7 +3396,7 @@ def delete_monitored_resource_type(ctx, from_json, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def delete_monitoring_template(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, monitoring_template_id, if_match):
 
-    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+    if isinstance(monitoring_template_id, str) and len(monitoring_template_id.strip()) == 0:
         raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3461,7 +3460,7 @@ def delete_monitoring_template(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def delete_process_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, process_set_id, if_match):
 
-    if isinstance(process_set_id, six.string_types) and len(process_set_id.strip()) == 0:
+    if isinstance(process_set_id, str) and len(process_set_id.strip()) == 0:
         raise click.UsageError('Parameter --process-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3524,7 +3523,7 @@ def delete_process_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def disable_external_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_id, if_match):
 
-    if isinstance(monitored_resource_id, six.string_types) and len(monitored_resource_id.strip()) == 0:
+    if isinstance(monitored_resource_id, str) and len(monitored_resource_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3580,7 +3579,7 @@ def disable_external_database(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def disable_metric_extension(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, metric_extension_id, resource_ids, if_match):
 
-    if isinstance(metric_extension_id, six.string_types) and len(metric_extension_id.strip()) == 0:
+    if isinstance(metric_extension_id, str) and len(metric_extension_id.strip()) == 0:
         raise click.UsageError('Parameter --metric-extension-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3679,7 +3678,7 @@ def disassociate_monitored_resources(ctx, from_json, compartment_id, association
 @cli_util.wrap_exceptions
 def enable_metric_extension(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, metric_extension_id, resource_ids, if_match):
 
-    if isinstance(metric_extension_id, six.string_types) and len(metric_extension_id.strip()) == 0:
+    if isinstance(metric_extension_id, str) and len(metric_extension_id.strip()) == 0:
         raise click.UsageError('Parameter --metric-extension-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3738,7 +3737,7 @@ def enable_metric_extension(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def evaluate_baselineable_metric(ctx, from_json, resource_id, items, baselineable_metric_id, if_match):
 
-    if isinstance(baselineable_metric_id, six.string_types) and len(baselineable_metric_id.strip()) == 0:
+    if isinstance(baselineable_metric_id, str) and len(baselineable_metric_id.strip()) == 0:
         raise click.UsageError('Parameter --baselineable-metric-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3770,7 +3769,7 @@ def evaluate_baselineable_metric(ctx, from_json, resource_id, items, baselineabl
 @cli_util.wrap_exceptions
 def export_metric_extension(ctx, from_json, file, metric_extension_id, if_match):
 
-    if isinstance(metric_extension_id, six.string_types) and len(metric_extension_id.strip()) == 0:
+    if isinstance(metric_extension_id, str) and len(metric_extension_id.strip()) == 0:
         raise click.UsageError('Parameter --metric-extension-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3818,7 +3817,7 @@ def export_metric_extension(ctx, from_json, file, metric_extension_id, if_match)
 @cli_util.wrap_exceptions
 def export_monitoring_template(ctx, from_json, file, monitoring_template_id, if_match):
 
-    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+    if isinstance(monitoring_template_id, str) and len(monitoring_template_id.strip()) == 0:
         raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3865,10 +3864,10 @@ def export_monitoring_template(ctx, from_json, file, monitoring_template_id, if_
 @cli_util.wrap_exceptions
 def get_alarm_condition(ctx, from_json, alarm_condition_id, monitoring_template_id):
 
-    if isinstance(alarm_condition_id, six.string_types) and len(alarm_condition_id.strip()) == 0:
+    if isinstance(alarm_condition_id, str) and len(alarm_condition_id.strip()) == 0:
         raise click.UsageError('Parameter --alarm-condition-id cannot be whitespace or empty string')
 
-    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+    if isinstance(monitoring_template_id, str) and len(monitoring_template_id.strip()) == 0:
         raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3891,7 +3890,7 @@ def get_alarm_condition(ctx, from_json, alarm_condition_id, monitoring_template_
 @cli_util.wrap_exceptions
 def get_baselineable_metric(ctx, from_json, baselineable_metric_id):
 
-    if isinstance(baselineable_metric_id, six.string_types) and len(baselineable_metric_id.strip()) == 0:
+    if isinstance(baselineable_metric_id, str) and len(baselineable_metric_id.strip()) == 0:
         raise click.UsageError('Parameter --baselineable-metric-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3913,7 +3912,7 @@ def get_baselineable_metric(ctx, from_json, baselineable_metric_id):
 @cli_util.wrap_exceptions
 def get_config(ctx, from_json, config_id):
 
-    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+    if isinstance(config_id, str) and len(config_id.strip()) == 0:
         raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3935,7 +3934,7 @@ def get_config(ctx, from_json, config_id):
 @cli_util.wrap_exceptions
 def get_discovery_job(ctx, from_json, discovery_job_id):
 
-    if isinstance(discovery_job_id, six.string_types) and len(discovery_job_id.strip()) == 0:
+    if isinstance(discovery_job_id, str) and len(discovery_job_id.strip()) == 0:
         raise click.UsageError('Parameter --discovery-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3957,7 +3956,7 @@ def get_discovery_job(ctx, from_json, discovery_job_id):
 @cli_util.wrap_exceptions
 def get_maintenance_window(ctx, from_json, maintenance_window_id):
 
-    if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
+    if isinstance(maintenance_window_id, str) and len(maintenance_window_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3979,7 +3978,7 @@ def get_maintenance_window(ctx, from_json, maintenance_window_id):
 @cli_util.wrap_exceptions
 def get_metric_extension(ctx, from_json, metric_extension_id):
 
-    if isinstance(metric_extension_id, six.string_types) and len(metric_extension_id.strip()) == 0:
+    if isinstance(metric_extension_id, str) and len(metric_extension_id.strip()) == 0:
         raise click.UsageError('Parameter --metric-extension-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4001,7 +4000,7 @@ def get_metric_extension(ctx, from_json, metric_extension_id):
 @cli_util.wrap_exceptions
 def get_monitored_resource(ctx, from_json, monitored_resource_id):
 
-    if isinstance(monitored_resource_id, six.string_types) and len(monitored_resource_id.strip()) == 0:
+    if isinstance(monitored_resource_id, str) and len(monitored_resource_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4023,7 +4022,7 @@ def get_monitored_resource(ctx, from_json, monitored_resource_id):
 @cli_util.wrap_exceptions
 def get_monitored_resource_task(ctx, from_json, monitored_resource_task_id):
 
-    if isinstance(monitored_resource_task_id, six.string_types) and len(monitored_resource_task_id.strip()) == 0:
+    if isinstance(monitored_resource_task_id, str) and len(monitored_resource_task_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-task-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4045,7 +4044,7 @@ def get_monitored_resource_task(ctx, from_json, monitored_resource_task_id):
 @cli_util.wrap_exceptions
 def get_monitored_resource_type(ctx, from_json, monitored_resource_type_id):
 
-    if isinstance(monitored_resource_type_id, six.string_types) and len(monitored_resource_type_id.strip()) == 0:
+    if isinstance(monitored_resource_type_id, str) and len(monitored_resource_type_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-type-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4067,7 +4066,7 @@ def get_monitored_resource_type(ctx, from_json, monitored_resource_type_id):
 @cli_util.wrap_exceptions
 def get_monitoring_template(ctx, from_json, monitoring_template_id):
 
-    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+    if isinstance(monitoring_template_id, str) and len(monitoring_template_id.strip()) == 0:
         raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4089,7 +4088,7 @@ def get_monitoring_template(ctx, from_json, monitoring_template_id):
 @cli_util.wrap_exceptions
 def get_process_set(ctx, from_json, process_set_id):
 
-    if isinstance(process_set_id, six.string_types) and len(process_set_id.strip()) == 0:
+    if isinstance(process_set_id, str) and len(process_set_id.strip()) == 0:
         raise click.UsageError('Parameter --process-set-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4111,7 +4110,7 @@ def get_process_set(ctx, from_json, process_set_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4146,7 +4145,7 @@ def list_alarm_conditions(ctx, from_json, all_pages, page_size, monitoring_templ
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+    if isinstance(monitoring_template_id, str) and len(monitoring_template_id.strip()) == 0:
         raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4406,7 +4405,7 @@ def list_discovery_job_logs(ctx, from_json, all_pages, page_size, discovery_job_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(discovery_job_id, six.string_types) and len(discovery_job_id.strip()) == 0:
+    if isinstance(discovery_job_id, str) and len(discovery_job_id.strip()) == 0:
         raise click.UsageError('Parameter --discovery-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -4987,7 +4986,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5044,7 +5043,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5157,7 +5156,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def manage_license(ctx, from_json, monitored_resource_id, license, if_match):
 
-    if isinstance(monitored_resource_id, six.string_types) and len(monitored_resource_id.strip()) == 0:
+    if isinstance(monitored_resource_id, str) and len(monitored_resource_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5190,7 +5189,7 @@ def manage_license(ctx, from_json, monitored_resource_id, license, if_match):
 @cli_util.wrap_exceptions
 def publish_metric_extension(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, metric_extension_id, if_match):
 
-    if isinstance(metric_extension_id, six.string_types) and len(metric_extension_id.strip()) == 0:
+    if isinstance(metric_extension_id, str) and len(metric_extension_id.strip()) == 0:
         raise click.UsageError('Parameter --metric-extension-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5391,7 +5390,7 @@ def request_summarized_metric_extensions_resources(ctx, from_json, metric_extens
 @cli_util.wrap_exceptions
 def retry_failed_maintenance_window_operation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, if_match):
 
-    if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
+    if isinstance(maintenance_window_id, str) and len(maintenance_window_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5571,7 +5570,7 @@ def search_monitored_resource_associations(ctx, from_json, compartment_id, sourc
 @cli_util.wrap_exceptions
 def search_monitored_resource_members(ctx, from_json, monitored_resource_id, destination_resource_id, limit_level, sort_by, sort_order, page, limit, if_match):
 
-    if isinstance(monitored_resource_id, six.string_types) and len(monitored_resource_id.strip()) == 0:
+    if isinstance(monitored_resource_id, str) and len(monitored_resource_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5749,7 +5748,7 @@ def search_monitored_resources(ctx, from_json, compartment_id, compartment_ids, 
 @cli_util.wrap_exceptions
 def stop_maintenance_window(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, if_match):
 
-    if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
+    if isinstance(maintenance_window_id, str) and len(maintenance_window_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5805,7 +5804,7 @@ def stop_maintenance_window(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def test_metric_extension(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, metric_extension_id, resource_ids, if_match):
 
-    if isinstance(metric_extension_id, six.string_types) and len(metric_extension_id.strip()) == 0:
+    if isinstance(metric_extension_id, str) and len(metric_extension_id.strip()) == 0:
         raise click.UsageError('Parameter --metric-extension-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5865,7 +5864,7 @@ def test_metric_extension(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def unapply_monitoring_template(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, monitoring_template_id, if_match):
 
-    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+    if isinstance(monitoring_template_id, str) and len(monitoring_template_id.strip()) == 0:
         raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -5932,10 +5931,10 @@ This option is a JSON list with items of type Condition.  For documentation on C
 @cli_util.wrap_exceptions
 def update_alarm_condition(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, alarm_condition_id, monitoring_template_id, namespace, composite_type, resource_type, metric_name, condition_type, conditions, freeform_tags, defined_tags, if_match):
 
-    if isinstance(alarm_condition_id, six.string_types) and len(alarm_condition_id.strip()) == 0:
+    if isinstance(alarm_condition_id, str) and len(alarm_condition_id.strip()) == 0:
         raise click.UsageError('Parameter --alarm-condition-id cannot be whitespace or empty string')
 
-    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+    if isinstance(monitoring_template_id, str) and len(monitoring_template_id.strip()) == 0:
         raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
     if not force:
         if conditions or freeform_tags or defined_tags:
@@ -6022,7 +6021,7 @@ def update_alarm_condition(ctx, from_json, force, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def update_and_propagate_tags(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_id, freeform_tags, defined_tags, association_types, if_match):
 
-    if isinstance(monitored_resource_id, six.string_types) and len(monitored_resource_id.strip()) == 0:
+    if isinstance(monitored_resource_id, str) and len(monitored_resource_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -6104,7 +6103,7 @@ def update_and_propagate_tags(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def update_baselineable_metric(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, id, name, column, namespace, resource_group, is_out_of_box, baselineable_metric_id, lifecycle_state, tenancy_id, compartment_id, resource_type, freeform_tags, defined_tags, system_tags, if_match):
 
-    if isinstance(baselineable_metric_id, six.string_types) and len(baselineable_metric_id.strip()) == 0:
+    if isinstance(baselineable_metric_id, str) and len(baselineable_metric_id.strip()) == 0:
         raise click.UsageError('Parameter --baselineable-metric-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or system_tags:
@@ -6195,7 +6194,7 @@ def update_baselineable_metric(ctx, from_json, force, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def update_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, config_id, display_name, config_type, freeform_tags, defined_tags, if_match):
 
-    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+    if isinstance(config_id, str) and len(config_id.strip()) == 0:
         raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -6271,7 +6270,7 @@ def update_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def update_config_update_compute_auto_activate_plugin_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, config_id, display_name, freeform_tags, defined_tags, is_enabled, if_match):
 
-    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+    if isinstance(config_id, str) and len(config_id.strip()) == 0:
         raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -6349,7 +6348,7 @@ def update_config_update_compute_auto_activate_plugin_config_details(ctx, from_j
 @cli_util.wrap_exceptions
 def update_config_update_license_enterprise_extensibility_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, config_id, display_name, freeform_tags, defined_tags, is_enabled, if_match):
 
-    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+    if isinstance(config_id, str) and len(config_id.strip()) == 0:
         raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -6427,7 +6426,7 @@ def update_config_update_license_enterprise_extensibility_config_details(ctx, fr
 @cli_util.wrap_exceptions
 def update_config_update_auto_promote_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, config_id, display_name, freeform_tags, defined_tags, is_enabled, if_match):
 
-    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+    if isinstance(config_id, str) and len(config_id.strip()) == 0:
         raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -6505,7 +6504,7 @@ def update_config_update_auto_promote_config_details(ctx, from_json, force, wait
 @cli_util.wrap_exceptions
 def update_config_update_license_auto_assign_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, config_id, display_name, freeform_tags, defined_tags, license, if_match):
 
-    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+    if isinstance(config_id, str) and len(config_id.strip()) == 0:
         raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -6592,7 +6591,7 @@ This option is a JSON list with items of type GroupDetails.  For documentation o
 @cli_util.wrap_exceptions
 def update_config_update_onboard_config_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, config_id, display_name, freeform_tags, defined_tags, version_parameterconflict, is_manually_onboarded, policy_names, dynamic_groups, user_groups, additional_configurations, if_match):
 
-    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+    if isinstance(config_id, str) and len(config_id.strip()) == 0:
         raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or policy_names or dynamic_groups or user_groups or additional_configurations:
@@ -6688,7 +6687,7 @@ This option is a JSON list with items of type CreateMaintenanceWindowResourceDet
 @cli_util.wrap_exceptions
 def update_maintenance_window(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, description, resources, schedule, freeform_tags, defined_tags, if_match):
 
-    if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
+    if isinstance(maintenance_window_id, str) and len(maintenance_window_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
     if not force:
         if resources or schedule or freeform_tags or defined_tags:
@@ -6777,7 +6776,7 @@ This option is a JSON list with items of type CreateMaintenanceWindowResourceDet
 @cli_util.wrap_exceptions
 def update_maintenance_window_recurrent_maintenance_window_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, schedule_maintenance_window_recurrences, description, resources, freeform_tags, defined_tags, if_match, schedule_time_maintenance_window_start, schedule_time_maintenance_window_end, schedule_maintenance_window_duration):
 
-    if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
+    if isinstance(maintenance_window_id, str) and len(maintenance_window_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
     if not force:
         if resources or freeform_tags or defined_tags:
@@ -6874,7 +6873,7 @@ This option is a JSON list with items of type CreateMaintenanceWindowResourceDet
 @cli_util.wrap_exceptions
 def update_maintenance_window_one_time_maintenance_window_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_window_id, description, resources, freeform_tags, defined_tags, if_match, schedule_time_maintenance_window_start, schedule_time_maintenance_window_end):
 
-    if isinstance(maintenance_window_id, six.string_types) and len(maintenance_window_id.strip()) == 0:
+    if isinstance(maintenance_window_id, str) and len(maintenance_window_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-window-id cannot be whitespace or empty string')
     if not force:
         if resources or freeform_tags or defined_tags:
@@ -6966,7 +6965,7 @@ This option is a JSON list with items of type Metric.  For documentation on Metr
 @cli_util.wrap_exceptions
 def update_metric_extension(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, metric_extension_id, display_name, description, collection_recurrences, metric_list, query_properties, if_match):
 
-    if isinstance(metric_extension_id, six.string_types) and len(metric_extension_id.strip()) == 0:
+    if isinstance(metric_extension_id, str) and len(metric_extension_id.strip()) == 0:
         raise click.UsageError('Parameter --metric-extension-id cannot be whitespace or empty string')
     if not force:
         if metric_list or query_properties:
@@ -7053,7 +7052,7 @@ This option is a JSON list with items of type SqlInParamDetails.  For documentat
 @cli_util.wrap_exceptions
 def update_metric_extension_sql_update_query_properties(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, metric_extension_id, display_name, description, collection_recurrences, metric_list, if_match, query_properties_sql_type, query_properties_sql_details, query_properties_in_param_details, query_properties_out_param_details):
 
-    if isinstance(metric_extension_id, six.string_types) and len(metric_extension_id.strip()) == 0:
+    if isinstance(metric_extension_id, str) and len(metric_extension_id.strip()) == 0:
         raise click.UsageError('Parameter --metric-extension-id cannot be whitespace or empty string')
     if not force:
         if metric_list:
@@ -7151,7 +7150,7 @@ This option is a JSON list with items of type Metric.  For documentation on Metr
 @cli_util.wrap_exceptions
 def update_metric_extension_jmx_update_query_properties(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, metric_extension_id, display_name, description, collection_recurrences, metric_list, if_match, query_properties_managed_bean_query, query_properties_jmx_attributes, query_properties_identity_metric, query_properties_auto_row_prefix, query_properties_is_metric_service_enabled):
 
-    if isinstance(metric_extension_id, six.string_types) and len(metric_extension_id.strip()) == 0:
+    if isinstance(metric_extension_id, str) and len(metric_extension_id.strip()) == 0:
         raise click.UsageError('Parameter --metric-extension-id cannot be whitespace or empty string')
     if not force:
         if metric_list:
@@ -7252,7 +7251,7 @@ This option is a JSON list with items of type Metric.  For documentation on Metr
 @cli_util.wrap_exceptions
 def update_metric_extension_os_command_update_query_properties(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, metric_extension_id, display_name, description, collection_recurrences, metric_list, if_match, query_properties_command, query_properties_delimiter, query_properties_script_details, query_properties_arguments, query_properties_starts_with):
 
-    if isinstance(metric_extension_id, six.string_types) and len(metric_extension_id.strip()) == 0:
+    if isinstance(metric_extension_id, str) and len(metric_extension_id.strip()) == 0:
         raise click.UsageError('Parameter --metric-extension-id cannot be whitespace or empty string')
     if not force:
         if metric_list:
@@ -7352,7 +7351,7 @@ This option is a JSON list with items of type Metric.  For documentation on Metr
 @cli_util.wrap_exceptions
 def update_metric_extension_http_update_query_properties(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, metric_extension_id, display_name, description, collection_recurrences, metric_list, if_match, query_properties_url, query_properties_response_content_type, query_properties_protocol_type, query_properties_script_details):
 
-    if isinstance(metric_extension_id, six.string_types) and len(metric_extension_id.strip()) == 0:
+    if isinstance(metric_extension_id, str) and len(metric_extension_id.strip()) == 0:
         raise click.UsageError('Parameter --metric-extension-id cannot be whitespace or empty string')
     if not force:
         if metric_list:
@@ -7456,7 +7455,7 @@ This option is a JSON list with items of type MonitoredResourceAliasCredential. 
 @cli_util.wrap_exceptions
 def update_monitored_resource(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_id, display_name, host_name, resource_time_zone, properties, database_connection_details, credentials, aliases, additional_credentials, additional_aliases, freeform_tags, defined_tags, if_match):
 
-    if isinstance(monitored_resource_id, six.string_types) and len(monitored_resource_id.strip()) == 0:
+    if isinstance(monitored_resource_id, str) and len(monitored_resource_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-id cannot be whitespace or empty string')
     if not force:
         if properties or database_connection_details or credentials or aliases or additional_credentials or additional_aliases or freeform_tags or defined_tags:
@@ -7573,7 +7572,7 @@ This option is a JSON list with items of type MonitoredResourceAliasCredential. 
 @cli_util.wrap_exceptions
 def update_monitored_resource_pre_existing_credentials(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_id, display_name, host_name, resource_time_zone, properties, database_connection_details, aliases, additional_credentials, additional_aliases, freeform_tags, defined_tags, if_match, credentials_source, credentials_name, credentials_type, credentials_description):
 
-    if isinstance(monitored_resource_id, six.string_types) and len(monitored_resource_id.strip()) == 0:
+    if isinstance(monitored_resource_id, str) and len(monitored_resource_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-id cannot be whitespace or empty string')
     if not force:
         if properties or database_connection_details or aliases or additional_credentials or additional_aliases or freeform_tags or defined_tags:
@@ -7704,7 +7703,7 @@ This option is a JSON list with items of type MonitoredResourceAliasCredential. 
 @cli_util.wrap_exceptions
 def update_monitored_resource_encrypted_credentials(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_id, credentials_key_id, credentials_properties, display_name, host_name, resource_time_zone, properties, database_connection_details, aliases, additional_credentials, additional_aliases, freeform_tags, defined_tags, if_match, credentials_source, credentials_name, credentials_type, credentials_description):
 
-    if isinstance(monitored_resource_id, six.string_types) and len(monitored_resource_id.strip()) == 0:
+    if isinstance(monitored_resource_id, str) and len(monitored_resource_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-id cannot be whitespace or empty string')
     if not force:
         if properties or database_connection_details or aliases or additional_credentials or additional_aliases or freeform_tags or defined_tags:
@@ -7836,7 +7835,7 @@ This option is a JSON list with items of type MonitoredResourceAliasCredential. 
 @cli_util.wrap_exceptions
 def update_monitored_resource_plain_text_credentials(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_id, credentials_properties, display_name, host_name, resource_time_zone, properties, database_connection_details, aliases, additional_credentials, additional_aliases, freeform_tags, defined_tags, if_match, credentials_source, credentials_name, credentials_type, credentials_description):
 
-    if isinstance(monitored_resource_id, six.string_types) and len(monitored_resource_id.strip()) == 0:
+    if isinstance(monitored_resource_id, str) and len(monitored_resource_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-id cannot be whitespace or empty string')
     if not force:
         if properties or database_connection_details or aliases or additional_credentials or additional_aliases or freeform_tags or defined_tags:
@@ -7948,7 +7947,7 @@ def update_monitored_resource_plain_text_credentials(ctx, from_json, force, wait
 @cli_util.wrap_exceptions
 def update_monitored_resource_task(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_task_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(monitored_resource_task_id, six.string_types) and len(monitored_resource_task_id.strip()) == 0:
+    if isinstance(monitored_resource_task_id, str) and len(monitored_resource_task_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-task-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -8022,7 +8021,7 @@ def update_monitored_resource_task(ctx, from_json, force, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def update_monitored_resource_type(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_type_id, display_name, description, metric_namespace, source_type, resource_category, metadata, freeform_tags, defined_tags, if_match):
 
-    if isinstance(monitored_resource_type_id, six.string_types) and len(monitored_resource_type_id.strip()) == 0:
+    if isinstance(monitored_resource_type_id, str) and len(monitored_resource_type_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-type-id cannot be whitespace or empty string')
     if not force:
         if metadata or freeform_tags or defined_tags:
@@ -8122,7 +8121,7 @@ This option is a JSON list with items of type UniquePropertySet.  For documentat
 @cli_util.wrap_exceptions
 def update_monitored_resource_type_system_format_resource_type_metadata_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitored_resource_type_id, display_name, description, metric_namespace, source_type, resource_category, freeform_tags, defined_tags, if_match, metadata_required_properties, metadata_agent_properties, metadata_valid_properties_for_create, metadata_valid_properties_for_update, metadata_unique_property_sets, metadata_valid_property_values, metadata_valid_sub_resource_types):
 
-    if isinstance(monitored_resource_type_id, six.string_types) and len(monitored_resource_type_id.strip()) == 0:
+    if isinstance(monitored_resource_type_id, str) and len(monitored_resource_type_id.strip()) == 0:
         raise click.UsageError('Parameter --monitored-resource-type-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -8239,7 +8238,7 @@ This option is a JSON list with items of type MemberReference.  For documentatio
 @cli_util.wrap_exceptions
 def update_monitoring_template(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, monitoring_template_id, display_name, description, destinations, is_alarms_enabled, is_split_notification_enabled, members, repeat_notification_duration, message_format, freeform_tags, defined_tags, if_match):
 
-    if isinstance(monitoring_template_id, six.string_types) and len(monitoring_template_id.strip()) == 0:
+    if isinstance(monitoring_template_id, str) and len(monitoring_template_id.strip()) == 0:
         raise click.UsageError('Parameter --monitoring-template-id cannot be whitespace or empty string')
     if not force:
         if destinations or members or freeform_tags or defined_tags:
@@ -8333,7 +8332,7 @@ def update_monitoring_template(ctx, from_json, force, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def update_process_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, process_set_id, display_name, specification, freeform_tags, defined_tags, if_match):
 
-    if isinstance(process_set_id, six.string_types) and len(process_set_id.strip()) == 0:
+    if isinstance(process_set_id, str) and len(process_set_id.strip()) == 0:
         raise click.UsageError('Parameter --process-set-id cannot be whitespace or empty string')
     if not force:
         if specification or freeform_tags or defined_tags:

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -51,7 +50,7 @@ connector_plugins_root_group.add_command(connector_plugin_group)
 @cli_util.wrap_exceptions
 def get_connector_plugin(ctx, from_json, connector_plugin_name):
 
-    if isinstance(connector_plugin_name, six.string_types) and len(connector_plugin_name.strip()) == 0:
+    if isinstance(connector_plugin_name, str) and len(connector_plugin_name.strip()) == 0:
         raise click.UsageError('Parameter --connector-plugin-name cannot be whitespace or empty string')
 
     kwargs = {}

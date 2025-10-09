@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -43,7 +42,7 @@ rover_entitlement_root_group.add_command(rover_entitlement_group)
 @cli_util.wrap_exceptions
 def change_rover_entitlement_compartment(ctx, from_json, rover_entitlement_id, compartment_id, if_match):
 
-    if isinstance(rover_entitlement_id, six.string_types) and len(rover_entitlement_id.strip()) == 0:
+    if isinstance(rover_entitlement_id, str) and len(rover_entitlement_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-entitlement-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -162,7 +161,7 @@ def create_rover_entitlement(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_rover_entitlement(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, rover_entitlement_id, if_match):
 
-    if isinstance(rover_entitlement_id, six.string_types) and len(rover_entitlement_id.strip()) == 0:
+    if isinstance(rover_entitlement_id, str) and len(rover_entitlement_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-entitlement-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -222,7 +221,7 @@ def delete_rover_entitlement(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def get_rover_entitlement(ctx, from_json, rover_entitlement_id, compartment_id):
 
-    if isinstance(rover_entitlement_id, six.string_types) and len(rover_entitlement_id.strip()) == 0:
+    if isinstance(rover_entitlement_id, str) and len(rover_entitlement_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-entitlement-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -323,7 +322,7 @@ def list_rover_entitlements(ctx, from_json, all_pages, page_size, compartment_id
 @cli_util.wrap_exceptions
 def update_rover_entitlement(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, rover_entitlement_id, display_name, tenant_id, requestor_name, requestor_email, entitlement_details, lifecycle_state, lifecycle_state_details, freeform_tags, defined_tags, system_tags, if_match):
 
-    if isinstance(rover_entitlement_id, six.string_types) and len(rover_entitlement_id.strip()) == 0:
+    if isinstance(rover_entitlement_id, str) and len(rover_entitlement_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-entitlement-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or system_tags:

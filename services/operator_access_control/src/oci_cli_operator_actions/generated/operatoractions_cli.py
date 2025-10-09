@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -48,7 +47,7 @@ operator_actions_root_group.add_command(operator_action_group)
 @cli_util.wrap_exceptions
 def get_operator_action(ctx, from_json, operator_action_id):
 
-    if isinstance(operator_action_id, six.string_types) and len(operator_action_id.strip()) == 0:
+    if isinstance(operator_action_id, str) and len(operator_action_id.strip()) == 0:
         raise click.UsageError('Parameter --operator-action-id cannot be whitespace or empty string')
 
     kwargs = {}

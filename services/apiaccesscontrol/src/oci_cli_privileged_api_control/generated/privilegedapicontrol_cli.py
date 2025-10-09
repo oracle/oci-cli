@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -60,7 +59,7 @@ privileged_api_control_root_group.add_command(privileged_api_control_collection_
 @cli_util.wrap_exceptions
 def change_privileged_api_control_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, privileged_api_control_id, compartment_id, if_match):
 
-    if isinstance(privileged_api_control_id, six.string_types) and len(privileged_api_control_id.strip()) == 0:
+    if isinstance(privileged_api_control_id, str) and len(privileged_api_control_id.strip()) == 0:
         raise click.UsageError('Parameter --privileged-api-control-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -209,7 +208,7 @@ def create_privileged_api_control(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def delete_privileged_api_control(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, privileged_api_control_id, description, if_match):
 
-    if isinstance(privileged_api_control_id, six.string_types) and len(privileged_api_control_id.strip()) == 0:
+    if isinstance(privileged_api_control_id, str) and len(privileged_api_control_id.strip()) == 0:
         raise click.UsageError('Parameter --privileged-api-control-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -262,7 +261,7 @@ def delete_privileged_api_control(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def get_privileged_api_control(ctx, from_json, privileged_api_control_id):
 
-    if isinstance(privileged_api_control_id, six.string_types) and len(privileged_api_control_id.strip()) == 0:
+    if isinstance(privileged_api_control_id, str) and len(privileged_api_control_id.strip()) == 0:
         raise click.UsageError('Parameter --privileged-api-control-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -370,7 +369,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_privileged_api_control(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, privileged_api_control_id, display_name, description, resource_type, resources, notification_topic_id, approver_group_id_list, privileged_operation_list, number_of_approvers, freeform_tags, defined_tags, if_match):
 
-    if isinstance(privileged_api_control_id, six.string_types) and len(privileged_api_control_id.strip()) == 0:
+    if isinstance(privileged_api_control_id, str) and len(privileged_api_control_id.strip()) == 0:
         raise click.UsageError('Parameter --privileged-api-control-id cannot be whitespace or empty string')
     if not force:
         if resources or approver_group_id_list or privileged_operation_list or freeform_tags or defined_tags:

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -45,7 +44,7 @@ sender_invitation_root_group.add_command(sender_invitation_group)
 @cli_util.wrap_exceptions
 def cancel_sender_invitation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, sender_invitation_id, if_match):
 
-    if isinstance(sender_invitation_id, six.string_types) and len(sender_invitation_id.strip()) == 0:
+    if isinstance(sender_invitation_id, str) and len(sender_invitation_id.strip()) == 0:
         raise click.UsageError('Parameter --sender-invitation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -173,7 +172,7 @@ def create_sender_invitation(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def get_sender_invitation(ctx, from_json, sender_invitation_id):
 
-    if isinstance(sender_invitation_id, six.string_types) and len(sender_invitation_id.strip()) == 0:
+    if isinstance(sender_invitation_id, str) and len(sender_invitation_id.strip()) == 0:
         raise click.UsageError('Parameter --sender-invitation-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -269,7 +268,7 @@ def list_sender_invitations(ctx, from_json, all_pages, page_size, compartment_id
 @cli_util.wrap_exceptions
 def update_sender_invitation(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sender_invitation_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(sender_invitation_id, six.string_types) and len(sender_invitation_id.strip()) == 0:
+    if isinstance(sender_invitation_id, str) and len(sender_invitation_id.strip()) == 0:
         raise click.UsageError('Parameter --sender-invitation-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

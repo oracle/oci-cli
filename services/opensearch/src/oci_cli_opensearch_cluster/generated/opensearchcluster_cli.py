@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -96,7 +95,7 @@ opensearch_cluster_root_group.add_command(work_request_log_entry_collection_grou
 @cli_util.wrap_exceptions
 def backup_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, compartment_id, display_name, if_match):
 
-    if isinstance(opensearch_cluster_id, six.string_types) and len(opensearch_cluster_id.strip()) == 0:
+    if isinstance(opensearch_cluster_id, str) and len(opensearch_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --opensearch-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -158,7 +157,7 @@ def backup_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def configure_outbound_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, inbound_cluster_ids, if_match):
 
-    if isinstance(opensearch_cluster_id, six.string_types) and len(opensearch_cluster_id.strip()) == 0:
+    if isinstance(opensearch_cluster_id, str) and len(opensearch_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --opensearch-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -414,7 +413,7 @@ def create_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def delete_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, if_match):
 
-    if isinstance(opensearch_cluster_id, six.string_types) and len(opensearch_cluster_id.strip()) == 0:
+    if isinstance(opensearch_cluster_id, str) and len(opensearch_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --opensearch-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -465,7 +464,7 @@ def delete_opensearch_cluster(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def get_opensearch_cluster(ctx, from_json, opensearch_cluster_id):
 
-    if isinstance(opensearch_cluster_id, six.string_types) and len(opensearch_cluster_id.strip()) == 0:
+    if isinstance(opensearch_cluster_id, str) and len(opensearch_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --opensearch-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -487,7 +486,7 @@ def get_opensearch_cluster(ctx, from_json, opensearch_cluster_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -645,7 +644,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -696,7 +695,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -801,7 +800,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def opensearch_cluster_restore(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, opensearch_cluster_backup_id, compartment_id, prefix, if_match):
 
-    if isinstance(opensearch_cluster_id, six.string_types) and len(opensearch_cluster_id.strip()) == 0:
+    if isinstance(opensearch_cluster_id, str) and len(opensearch_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --opensearch-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -871,7 +870,7 @@ def opensearch_cluster_restore(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def resize_opensearch_cluster_horizontal(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, master_node_count, data_node_count, opendashboard_node_count, search_node_count, freeform_tags, defined_tags, if_match):
 
-    if isinstance(opensearch_cluster_id, six.string_types) and len(opensearch_cluster_id.strip()) == 0:
+    if isinstance(opensearch_cluster_id, str) and len(opensearch_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --opensearch-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -964,7 +963,7 @@ def resize_opensearch_cluster_horizontal(ctx, from_json, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def resize_opensearch_cluster_vertical(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, master_node_host_ocpu_count, master_node_host_memory_gb, master_node_host_shape, data_node_host_ocpu_count, data_node_host_memory_gb, data_node_storage_gb, data_node_host_shape, opendashboard_node_host_ocpu_count, opendashboard_node_host_memory_gb, opendashboard_node_host_shape, search_node_host_shape, search_node_host_ocpu_count, search_node_host_memory_gb, search_node_storage_gb, freeform_tags, defined_tags, if_match):
 
-    if isinstance(opensearch_cluster_id, six.string_types) and len(opensearch_cluster_id.strip()) == 0:
+    if isinstance(opensearch_cluster_id, str) and len(opensearch_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --opensearch-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1088,7 +1087,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_opensearch_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, display_name, software_version, security_mode, security_master_user_name, security_master_user_password_hash, security_saml_config, backup_policy, reverse_connection_endpoint_customer_ips, outbound_cluster_config, maintenance_details, certificate_config, freeform_tags, defined_tags, security_attributes, if_match):
 
-    if isinstance(opensearch_cluster_id, six.string_types) and len(opensearch_cluster_id.strip()) == 0:
+    if isinstance(opensearch_cluster_id, str) and len(opensearch_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --opensearch-cluster-id cannot be whitespace or empty string')
     if not force:
         if security_saml_config or backup_policy or reverse_connection_endpoint_customer_ips or outbound_cluster_config or maintenance_details or certificate_config or freeform_tags or defined_tags or security_attributes:
@@ -1201,7 +1200,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def upgrade_open_search_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, opensearch_cluster_id, original_cluster_display_name, desired_software_version, upgrade_type, is_clone, freeform_tags, defined_tags, system_tags, security_attributes, if_match):
 
-    if isinstance(opensearch_cluster_id, six.string_types) and len(opensearch_cluster_id.strip()) == 0:
+    if isinstance(opensearch_cluster_id, str) and len(opensearch_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --opensearch-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}

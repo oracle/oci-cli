@@ -7,6 +7,7 @@ from __future__ import print_function
 import collections.abc as abc
 import contextlib
 import functools
+import io
 import json
 import os
 import random
@@ -18,9 +19,7 @@ from os.path import abspath
 
 import oci
 import pytest
-import six
 from oci.object_storage.transfer.constants import MEBIBYTE
-from six import StringIO
 
 import oci_cli.cli_util
 from conftest import runner
@@ -512,7 +511,7 @@ def _collect_commands(command, prefix=None, leaf_commands_only=False):
         if not leaf_commands_only:
             yield prefix, 0, 0
 
-        for name, command in six.iteritems(subcommands):
+        for name, command in subcommands.items():
             for path, params_count, req_params_count in \
                     _collect_commands(command, prefix + [name], leaf_commands_only=leaf_commands_only):
                 yield path, params_count, req_params_count
@@ -528,7 +527,7 @@ def collect_commands_with_given_args(command, include_args=[], match_mode='any',
     subcommands = getattr(command, "commands", {})
 
     if subcommands:
-        for name, command in six.iteritems(subcommands):
+        for name, command in subcommands.items():
             for path in collect_commands_with_given_args(command, include_args=include_args, match_mode=match_mode, prefix=prefix + [name]):
                 yield path
     else:
@@ -586,10 +585,10 @@ def check_json_key_format(json_data):
     """Ensure that all keys in the json data are in the correct format.
     The exceptions include metadata dictionaries and tags, which must reflect user
     input"""
-    if isinstance(json_data, six.string_types):
+    if isinstance(json_data, str):
         pass
     elif isinstance(json_data, abc.Mapping):
-        for key, value in six.iteritems(json_data):
+        for key, value in json_data.items():
             if key not in SKIP_JSON_KEY_FORMAT_CHECK:
                 assert "_" not in key
                 assert key.islower()
@@ -766,7 +765,7 @@ def vcr_mode_aware_sleep(duration):
 def capture():
     oldout, olderr = sys.stdout, sys.stderr
     try:
-        out = [StringIO(), StringIO()]
+        out = [io.StringIO(), io.StringIO()]
         sys.stdout, sys.stderr = out
         yield out
     finally:

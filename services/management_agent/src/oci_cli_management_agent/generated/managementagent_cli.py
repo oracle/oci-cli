@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -97,7 +96,7 @@ management_agent_root_group.add_command(management_agent_image_group)
 @cli_util.wrap_exceptions
 def create_data_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_id, type, name, compartment_id, if_match):
 
-    if isinstance(management_agent_id, six.string_types) and len(management_agent_id.strip()) == 0:
+    if isinstance(management_agent_id, str) and len(management_agent_id.strip()) == 0:
         raise click.UsageError('Parameter --management-agent-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -173,7 +172,7 @@ This option is a JSON list with items of type MetricDimension.  For documentatio
 @cli_util.wrap_exceptions
 def create_data_source_create_prometheus_emitter_data_source_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_id, name, compartment_id, url, namespace, allow_metrics, proxy_url, connection_timeout, read_timeout, read_data_limit_in_kilobytes, schedule_mins, resource_group, metric_dimensions, if_match):
 
-    if isinstance(management_agent_id, six.string_types) and len(management_agent_id.strip()) == 0:
+    if isinstance(management_agent_id, str) and len(management_agent_id.strip()) == 0:
         raise click.UsageError('Parameter --management-agent-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -401,10 +400,10 @@ def create_named_credential(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_data_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_id, data_source_key, if_match):
 
-    if isinstance(management_agent_id, six.string_types) and len(management_agent_id.strip()) == 0:
+    if isinstance(management_agent_id, str) and len(management_agent_id.strip()) == 0:
         raise click.UsageError('Parameter --management-agent-id cannot be whitespace or empty string')
 
-    if isinstance(data_source_key, six.string_types) and len(data_source_key.strip()) == 0:
+    if isinstance(data_source_key, str) and len(data_source_key.strip()) == 0:
         raise click.UsageError('Parameter --data-source-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -461,7 +460,7 @@ def delete_data_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_management_agent(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_id, if_match):
 
-    if isinstance(management_agent_id, six.string_types) and len(management_agent_id.strip()) == 0:
+    if isinstance(management_agent_id, str) and len(management_agent_id.strip()) == 0:
         raise click.UsageError('Parameter --management-agent-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -525,7 +524,7 @@ def delete_management_agent(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_management_agent_install_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_install_key_id, if_match):
 
-    if isinstance(management_agent_install_key_id, six.string_types) and len(management_agent_install_key_id.strip()) == 0:
+    if isinstance(management_agent_install_key_id, str) and len(management_agent_install_key_id.strip()) == 0:
         raise click.UsageError('Parameter --management-agent-install-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -589,7 +588,7 @@ def delete_management_agent_install_key(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def delete_named_credential(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, named_credential_id, if_match):
 
-    if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
+    if isinstance(named_credential_id, str) and len(named_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -642,7 +641,7 @@ def delete_named_credential(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -743,10 +742,10 @@ def get_auto_upgradable_config(ctx, from_json, compartment_id):
 @cli_util.wrap_exceptions
 def get_data_source(ctx, from_json, management_agent_id, data_source_key):
 
-    if isinstance(management_agent_id, six.string_types) and len(management_agent_id.strip()) == 0:
+    if isinstance(management_agent_id, str) and len(management_agent_id.strip()) == 0:
         raise click.UsageError('Parameter --management-agent-id cannot be whitespace or empty string')
 
-    if isinstance(data_source_key, six.string_types) and len(data_source_key.strip()) == 0:
+    if isinstance(data_source_key, str) and len(data_source_key.strip()) == 0:
         raise click.UsageError('Parameter --data-source-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -769,7 +768,7 @@ def get_data_source(ctx, from_json, management_agent_id, data_source_key):
 @cli_util.wrap_exceptions
 def get_management_agent(ctx, from_json, management_agent_id):
 
-    if isinstance(management_agent_id, six.string_types) and len(management_agent_id.strip()) == 0:
+    if isinstance(management_agent_id, str) and len(management_agent_id.strip()) == 0:
         raise click.UsageError('Parameter --management-agent-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -791,7 +790,7 @@ def get_management_agent(ctx, from_json, management_agent_id):
 @cli_util.wrap_exceptions
 def get_management_agent_install_key(ctx, from_json, management_agent_install_key_id):
 
-    if isinstance(management_agent_install_key_id, six.string_types) and len(management_agent_install_key_id.strip()) == 0:
+    if isinstance(management_agent_install_key_id, str) and len(management_agent_install_key_id.strip()) == 0:
         raise click.UsageError('Parameter --management-agent-install-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -815,7 +814,7 @@ def get_management_agent_install_key(ctx, from_json, management_agent_install_ke
 @cli_util.wrap_exceptions
 def get_management_agent_install_key_content(ctx, from_json, file, management_agent_install_key_id, plugin_name):
 
-    if isinstance(management_agent_install_key_id, six.string_types) and len(management_agent_install_key_id.strip()) == 0:
+    if isinstance(management_agent_install_key_id, str) and len(management_agent_install_key_id.strip()) == 0:
         raise click.UsageError('Parameter --management-agent-install-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -861,7 +860,7 @@ def get_management_agent_install_key_content(ctx, from_json, file, management_ag
 @cli_util.wrap_exceptions
 def get_named_credential(ctx, from_json, named_credential_id):
 
-    if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
+    if isinstance(named_credential_id, str) and len(named_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -905,7 +904,7 @@ def get_named_credentials_metadatum(ctx, from_json, compartment_id, management_a
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -938,7 +937,7 @@ def list_availability_histories(ctx, from_json, all_pages, page_size, management
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(management_agent_id, six.string_types) and len(management_agent_id.strip()) == 0:
+    if isinstance(management_agent_id, str) and len(management_agent_id.strip()) == 0:
         raise click.UsageError('Parameter --management-agent-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1000,7 +999,7 @@ def list_data_sources(ctx, from_json, all_pages, page_size, management_agent_id,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(management_agent_id, six.string_types) and len(management_agent_id.strip()) == 0:
+    if isinstance(management_agent_id, str) and len(management_agent_id.strip()) == 0:
         raise click.UsageError('Parameter --management-agent-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1398,7 +1397,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1455,7 +1454,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1660,10 +1659,10 @@ def summarize_management_agent_plugin_counts(ctx, from_json, compartment_id, gro
 @cli_util.wrap_exceptions
 def update_data_source(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_id, data_source_key, type, if_match):
 
-    if isinstance(management_agent_id, six.string_types) and len(management_agent_id.strip()) == 0:
+    if isinstance(management_agent_id, str) and len(management_agent_id.strip()) == 0:
         raise click.UsageError('Parameter --management-agent-id cannot be whitespace or empty string')
 
-    if isinstance(data_source_key, six.string_types) and len(data_source_key.strip()) == 0:
+    if isinstance(data_source_key, str) and len(data_source_key.strip()) == 0:
         raise click.UsageError('Parameter --data-source-key cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1737,10 +1736,10 @@ This option is a JSON list with items of type MetricDimension.  For documentatio
 @cli_util.wrap_exceptions
 def update_data_source_update_prometheus_emitter_data_source_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_id, data_source_key, url, allow_metrics, proxy_url, connection_timeout, read_timeout, read_data_limit_in_kilobytes, schedule_mins, resource_group, metric_dimensions, if_match):
 
-    if isinstance(management_agent_id, six.string_types) and len(management_agent_id.strip()) == 0:
+    if isinstance(management_agent_id, str) and len(management_agent_id.strip()) == 0:
         raise click.UsageError('Parameter --management-agent-id cannot be whitespace or empty string')
 
-    if isinstance(data_source_key, six.string_types) and len(data_source_key.strip()) == 0:
+    if isinstance(data_source_key, str) and len(data_source_key.strip()) == 0:
         raise click.UsageError('Parameter --data-source-key cannot be whitespace or empty string')
     if not force:
         if metric_dimensions:
@@ -1835,7 +1834,7 @@ def update_data_source_update_prometheus_emitter_data_source_details(ctx, from_j
 @cli_util.wrap_exceptions
 def update_management_agent(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(management_agent_id, six.string_types) and len(management_agent_id.strip()) == 0:
+    if isinstance(management_agent_id, str) and len(management_agent_id.strip()) == 0:
         raise click.UsageError('Parameter --management-agent-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1905,7 +1904,7 @@ def update_management_agent(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def update_management_agent_install_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, management_agent_install_key_id, is_key_active, display_name, if_match):
 
-    if isinstance(management_agent_install_key_id, six.string_types) and len(management_agent_install_key_id.strip()) == 0:
+    if isinstance(management_agent_install_key_id, str) and len(management_agent_install_key_id.strip()) == 0:
         raise click.UsageError('Parameter --management-agent-install-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1971,7 +1970,7 @@ def update_management_agent_install_key(ctx, from_json, wait_for_state, max_wait
 @cli_util.wrap_exceptions
 def update_named_credential(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, named_credential_id, properties, description, freeform_tags, defined_tags, if_match):
 
-    if isinstance(named_credential_id, six.string_types) and len(named_credential_id.strip()) == 0:
+    if isinstance(named_credential_id, str) and len(named_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --named-credential-id cannot be whitespace or empty string')
     if not force:
         if properties or freeform_tags or defined_tags:

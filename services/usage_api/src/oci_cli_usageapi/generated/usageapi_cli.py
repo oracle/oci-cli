@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -142,7 +141,7 @@ def create_custom_table(ctx, from_json, compartment_id, saved_report_id, saved_c
 @cli_util.wrap_exceptions
 def create_email_recipients_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, recipients_list, subscription_id):
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -414,7 +413,7 @@ def create_usage_carbon_emissions_query(ctx, from_json, compartment_id, query_de
 @cli_util.wrap_exceptions
 def delete_custom_table(ctx, from_json, custom_table_id, if_match):
 
-    if isinstance(custom_table_id, six.string_types) and len(custom_table_id.strip()) == 0:
+    if isinstance(custom_table_id, str) and len(custom_table_id.strip()) == 0:
         raise click.UsageError('Parameter --custom-table-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -442,10 +441,10 @@ def delete_custom_table(ctx, from_json, custom_table_id, if_match):
 @cli_util.wrap_exceptions
 def delete_email_recipients_group(ctx, from_json, email_recipients_group_id, subscription_id, compartment_id, if_match):
 
-    if isinstance(email_recipients_group_id, six.string_types) and len(email_recipients_group_id.strip()) == 0:
+    if isinstance(email_recipients_group_id, str) and len(email_recipients_group_id.strip()) == 0:
         raise click.UsageError('Parameter --email-recipients-group-id cannot be whitespace or empty string')
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -473,7 +472,7 @@ def delete_email_recipients_group(ctx, from_json, email_recipients_group_id, sub
 @cli_util.wrap_exceptions
 def delete_query(ctx, from_json, query_id, if_match):
 
-    if isinstance(query_id, six.string_types) and len(query_id.strip()) == 0:
+    if isinstance(query_id, str) and len(query_id.strip()) == 0:
         raise click.UsageError('Parameter --query-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -502,7 +501,7 @@ def delete_query(ctx, from_json, query_id, if_match):
 @cli_util.wrap_exceptions
 def delete_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, if_match):
 
-    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+    if isinstance(schedule_id, str) and len(schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -563,7 +562,7 @@ def delete_schedule(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def delete_usage_carbon_emissions_query(ctx, from_json, usage_carbon_emissions_query_id, if_match):
 
-    if isinstance(usage_carbon_emissions_query_id, six.string_types) and len(usage_carbon_emissions_query_id.strip()) == 0:
+    if isinstance(usage_carbon_emissions_query_id, str) and len(usage_carbon_emissions_query_id.strip()) == 0:
         raise click.UsageError('Parameter --usage-carbon-emissions-query-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -587,7 +586,7 @@ def delete_usage_carbon_emissions_query(ctx, from_json, usage_carbon_emissions_q
 @cli_util.wrap_exceptions
 def get_custom_table(ctx, from_json, custom_table_id):
 
-    if isinstance(custom_table_id, six.string_types) and len(custom_table_id.strip()) == 0:
+    if isinstance(custom_table_id, str) and len(custom_table_id.strip()) == 0:
         raise click.UsageError('Parameter --custom-table-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -611,10 +610,10 @@ def get_custom_table(ctx, from_json, custom_table_id):
 @cli_util.wrap_exceptions
 def get_email_recipients_group(ctx, from_json, email_recipients_group_id, subscription_id, compartment_id):
 
-    if isinstance(email_recipients_group_id, six.string_types) and len(email_recipients_group_id.strip()) == 0:
+    if isinstance(email_recipients_group_id, str) and len(email_recipients_group_id.strip()) == 0:
         raise click.UsageError('Parameter --email-recipients-group-id cannot be whitespace or empty string')
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -638,7 +637,7 @@ def get_email_recipients_group(ctx, from_json, email_recipients_group_id, subscr
 @cli_util.wrap_exceptions
 def get_query(ctx, from_json, query_id):
 
-    if isinstance(query_id, six.string_types) and len(query_id.strip()) == 0:
+    if isinstance(query_id, str) and len(query_id.strip()) == 0:
         raise click.UsageError('Parameter --query-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -660,7 +659,7 @@ def get_query(ctx, from_json, query_id):
 @cli_util.wrap_exceptions
 def get_schedule(ctx, from_json, schedule_id):
 
-    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+    if isinstance(schedule_id, str) and len(schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -682,7 +681,7 @@ def get_schedule(ctx, from_json, schedule_id):
 @cli_util.wrap_exceptions
 def get_scheduled_run(ctx, from_json, scheduled_run_id):
 
-    if isinstance(scheduled_run_id, six.string_types) and len(scheduled_run_id.strip()) == 0:
+    if isinstance(scheduled_run_id, str) and len(scheduled_run_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-run-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -704,7 +703,7 @@ def get_scheduled_run(ctx, from_json, scheduled_run_id):
 @cli_util.wrap_exceptions
 def get_usage_carbon_emissions_query(ctx, from_json, usage_carbon_emissions_query_id):
 
-    if isinstance(usage_carbon_emissions_query_id, six.string_types) and len(usage_carbon_emissions_query_id.strip()) == 0:
+    if isinstance(usage_carbon_emissions_query_id, str) and len(usage_carbon_emissions_query_id.strip()) == 0:
         raise click.UsageError('Parameter --usage-carbon-emissions-query-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -794,7 +793,7 @@ def list_email_recipients_groups(ctx, from_json, all_pages, page_size, subscript
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1064,7 +1063,7 @@ def list_usage_carbon_emissions_queries(ctx, from_json, all_pages, page_size, co
 @cli_util.wrap_exceptions
 def request_average_carbon_emission(ctx, from_json, sku_part_number):
 
-    if isinstance(sku_part_number, six.string_types) and len(sku_part_number.strip()) == 0:
+    if isinstance(sku_part_number, str) and len(sku_part_number.strip()) == 0:
         raise click.UsageError('Parameter --sku-part-number cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1087,7 +1086,7 @@ def request_average_carbon_emission(ctx, from_json, sku_part_number):
 @cli_util.wrap_exceptions
 def request_clean_energy_usage(ctx, from_json, region_parameterconflict, ad):
 
-    if isinstance(region_parameterconflict, six.string_types) and len(region_parameterconflict.strip()) == 0:
+    if isinstance(region_parameterconflict, str) and len(region_parameterconflict.strip()) == 0:
         raise click.UsageError('Parameter --region-parameterconflict cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1284,7 +1283,7 @@ def request_usage_carbon_emissions(ctx, from_json, tenant_id, time_usage_started
 @cli_util.wrap_exceptions
 def update_custom_table(ctx, from_json, force, saved_custom_table, custom_table_id, if_match):
 
-    if isinstance(custom_table_id, six.string_types) and len(custom_table_id.strip()) == 0:
+    if isinstance(custom_table_id, str) and len(custom_table_id.strip()) == 0:
         raise click.UsageError('Parameter --custom-table-id cannot be whitespace or empty string')
     if not force:
         if saved_custom_table:
@@ -1325,10 +1324,10 @@ def update_custom_table(ctx, from_json, force, saved_custom_table, custom_table_
 @cli_util.wrap_exceptions
 def update_email_recipients_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, recipients_list, email_recipients_group_id, subscription_id, compartment_id, if_match):
 
-    if isinstance(email_recipients_group_id, six.string_types) and len(email_recipients_group_id.strip()) == 0:
+    if isinstance(email_recipients_group_id, str) and len(email_recipients_group_id.strip()) == 0:
         raise click.UsageError('Parameter --email-recipients-group-id cannot be whitespace or empty string')
 
-    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+    if isinstance(subscription_id, str) and len(subscription_id.strip()) == 0:
         raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
     if not force:
         if recipients_list:
@@ -1389,7 +1388,7 @@ def update_email_recipients_group(ctx, from_json, force, wait_for_state, max_wai
 @cli_util.wrap_exceptions
 def update_query(ctx, from_json, force, query_definition, query_id, if_match):
 
-    if isinstance(query_id, six.string_types) and len(query_id.strip()) == 0:
+    if isinstance(query_id, str) and len(query_id.strip()) == 0:
         raise click.UsageError('Parameter --query-id cannot be whitespace or empty string')
     if not force:
         if query_definition:
@@ -1432,7 +1431,7 @@ def update_query(ctx, from_json, force, query_definition, query_id, if_match):
 @cli_util.wrap_exceptions
 def update_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, description, output_file_format, result_location, freeform_tags, defined_tags, if_match):
 
-    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+    if isinstance(schedule_id, str) and len(schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
     if not force:
         if result_location or freeform_tags or defined_tags:
@@ -1514,7 +1513,7 @@ def update_schedule(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def update_schedule_object_storage_location(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, schedule_id, result_location_region, result_location_namespace, result_location_bucket_name, description, output_file_format, freeform_tags, defined_tags, if_match):
 
-    if isinstance(schedule_id, six.string_types) and len(schedule_id.strip()) == 0:
+    if isinstance(schedule_id, str) and len(schedule_id.strip()) == 0:
         raise click.UsageError('Parameter --schedule-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1590,7 +1589,7 @@ def update_schedule_object_storage_location(ctx, from_json, force, wait_for_stat
 @cli_util.wrap_exceptions
 def update_usage_carbon_emissions_query(ctx, from_json, force, query_definition, usage_carbon_emissions_query_id, if_match):
 
-    if isinstance(usage_carbon_emissions_query_id, six.string_types) and len(usage_carbon_emissions_query_id.strip()) == 0:
+    if isinstance(usage_carbon_emissions_query_id, str) and len(usage_carbon_emissions_query_id.strip()) == 0:
         raise click.UsageError('Parameter --usage-carbon-emissions-query-id cannot be whitespace or empty string')
     if not force:
         if query_definition:

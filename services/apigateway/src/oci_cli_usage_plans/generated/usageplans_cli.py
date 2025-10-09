@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -49,7 +48,7 @@ usage_plans_root_group.add_command(usage_plan_group)
 @cli_util.wrap_exceptions
 def add_usage_plan_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, usage_plan_id, type, message, if_match):
 
-    if isinstance(usage_plan_id, six.string_types) and len(usage_plan_id.strip()) == 0:
+    if isinstance(usage_plan_id, str) and len(usage_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --usage-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -110,7 +109,7 @@ def add_usage_plan_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def change_usage_plan_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, usage_plan_id, compartment_id, if_match, is_lock_override):
 
-    if isinstance(usage_plan_id, six.string_types) and len(usage_plan_id.strip()) == 0:
+    if isinstance(usage_plan_id, str) and len(usage_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --usage-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -257,7 +256,7 @@ def create_usage_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_usage_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, usage_plan_id, if_match, is_lock_override):
 
-    if isinstance(usage_plan_id, six.string_types) and len(usage_plan_id.strip()) == 0:
+    if isinstance(usage_plan_id, str) and len(usage_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --usage-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -312,7 +311,7 @@ def delete_usage_plan(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def get_usage_plan(ctx, from_json, usage_plan_id):
 
-    if isinstance(usage_plan_id, six.string_types) and len(usage_plan_id.strip()) == 0:
+    if isinstance(usage_plan_id, str) and len(usage_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --usage-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -401,7 +400,7 @@ def list_usage_plans(ctx, from_json, all_pages, page_size, compartment_id, displ
 @cli_util.wrap_exceptions
 def remove_usage_plan_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, usage_plan_id, type, if_match):
 
-    if isinstance(usage_plan_id, six.string_types) and len(usage_plan_id.strip()) == 0:
+    if isinstance(usage_plan_id, str) and len(usage_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --usage-plan-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -471,7 +470,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.wrap_exceptions
 def update_usage_plan(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, usage_plan_id, display_name, entitlements, freeform_tags, defined_tags, if_match, is_lock_override):
 
-    if isinstance(usage_plan_id, six.string_types) and len(usage_plan_id.strip()) == 0:
+    if isinstance(usage_plan_id, str) and len(usage_plan_id.strip()) == 0:
         raise click.UsageError('Parameter --usage-plan-id cannot be whitespace or empty string')
     if not force:
         if entitlements or freeform_tags or defined_tags:

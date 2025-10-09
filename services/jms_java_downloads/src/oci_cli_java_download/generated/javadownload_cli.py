@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -105,7 +104,7 @@ jms_java_downloads_root_group.add_command(java_download_count_aggregation_group)
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -349,7 +348,7 @@ def create_java_license_acceptance_record(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def delete_java_download_report(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, java_download_report_id, if_match):
 
-    if isinstance(java_download_report_id, six.string_types) and len(java_download_report_id.strip()) == 0:
+    if isinstance(java_download_report_id, str) and len(java_download_report_id.strip()) == 0:
         raise click.UsageError('Parameter --java-download-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -405,7 +404,7 @@ def delete_java_download_report(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def delete_java_download_token(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, java_download_token_id, if_match):
 
-    if isinstance(java_download_token_id, six.string_types) and len(java_download_token_id.strip()) == 0:
+    if isinstance(java_download_token_id, str) and len(java_download_token_id.strip()) == 0:
         raise click.UsageError('Parameter --java-download-token-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -461,7 +460,7 @@ def delete_java_download_token(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def delete_java_license_acceptance_record(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, java_license_acceptance_record_id, if_match):
 
-    if isinstance(java_license_acceptance_record_id, six.string_types) and len(java_license_acceptance_record_id.strip()) == 0:
+    if isinstance(java_license_acceptance_record_id, str) and len(java_license_acceptance_record_id.strip()) == 0:
         raise click.UsageError('Parameter --java-license-acceptance-record-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -549,7 +548,7 @@ def generate_artifact_download_url(ctx, from_json, artifact_id, compartment_id):
 @cli_util.wrap_exceptions
 def get_java_download_report(ctx, from_json, java_download_report_id):
 
-    if isinstance(java_download_report_id, six.string_types) and len(java_download_report_id.strip()) == 0:
+    if isinstance(java_download_report_id, str) and len(java_download_report_id.strip()) == 0:
         raise click.UsageError('Parameter --java-download-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -572,7 +571,7 @@ def get_java_download_report(ctx, from_json, java_download_report_id):
 @cli_util.wrap_exceptions
 def get_java_download_report_content(ctx, from_json, file, java_download_report_id):
 
-    if isinstance(java_download_report_id, six.string_types) and len(java_download_report_id.strip()) == 0:
+    if isinstance(java_download_report_id, str) and len(java_download_report_id.strip()) == 0:
         raise click.UsageError('Parameter --java-download-report-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -616,7 +615,7 @@ def get_java_download_report_content(ctx, from_json, file, java_download_report_
 @cli_util.wrap_exceptions
 def get_java_download_token(ctx, from_json, java_download_token_id):
 
-    if isinstance(java_download_token_id, six.string_types) and len(java_download_token_id.strip()) == 0:
+    if isinstance(java_download_token_id, str) and len(java_download_token_id.strip()) == 0:
         raise click.UsageError('Parameter --java-download-token-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -638,7 +637,7 @@ def get_java_download_token(ctx, from_json, java_download_token_id):
 @cli_util.wrap_exceptions
 def get_java_license(ctx, from_json, license_type):
 
-    if isinstance(license_type, six.string_types) and len(license_type.strip()) == 0:
+    if isinstance(license_type, str) and len(license_type.strip()) == 0:
         raise click.UsageError('Parameter --license-type cannot be whitespace or empty string')
 
     kwargs = {}
@@ -660,7 +659,7 @@ def get_java_license(ctx, from_json, license_type):
 @cli_util.wrap_exceptions
 def get_java_license_acceptance_record(ctx, from_json, java_license_acceptance_record_id):
 
-    if isinstance(java_license_acceptance_record_id, six.string_types) and len(java_license_acceptance_record_id.strip()) == 0:
+    if isinstance(java_license_acceptance_record_id, str) and len(java_license_acceptance_record_id.strip()) == 0:
         raise click.UsageError('Parameter --java-license-acceptance-record-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -682,7 +681,7 @@ def get_java_license_acceptance_record(ctx, from_json, java_license_acceptance_r
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1045,7 +1044,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1102,7 +1101,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1284,7 +1283,7 @@ This option is a JSON list with items of type LicenseType.  For documentation on
 @cli_util.wrap_exceptions
 def update_java_download_token(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, java_download_token_id, display_name, description, is_default, time_expires, license_type, freeform_tags, defined_tags, if_match):
 
-    if isinstance(java_download_token_id, six.string_types) and len(java_download_token_id.strip()) == 0:
+    if isinstance(java_download_token_id, str) and len(java_download_token_id.strip()) == 0:
         raise click.UsageError('Parameter --java-download-token-id cannot be whitespace or empty string')
     if not force:
         if license_type or freeform_tags or defined_tags:
@@ -1372,7 +1371,7 @@ def update_java_download_token(ctx, from_json, force, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def update_java_license_acceptance_record(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, java_license_acceptance_record_id, license_acceptance_status, freeform_tags, defined_tags, if_match):
 
-    if isinstance(java_license_acceptance_record_id, six.string_types) and len(java_license_acceptance_record_id.strip()) == 0:
+    if isinstance(java_license_acceptance_record_id, str) and len(java_license_acceptance_record_id.strip()) == 0:
         raise click.UsageError('Parameter --java-license-acceptance-record-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

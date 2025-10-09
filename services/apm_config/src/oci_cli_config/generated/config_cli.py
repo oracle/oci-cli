@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -442,7 +441,7 @@ def create_config_create_apdex_rules_details(ctx, from_json, apm_domain_id, rule
 @cli_util.wrap_exceptions
 def delete_config(ctx, from_json, apm_domain_id, config_id, if_match):
 
-    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+    if isinstance(config_id, str) and len(config_id.strip()) == 0:
         raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -493,7 +492,7 @@ def export_configuration(ctx, from_json, configuration_map, apm_domain_id):
 @cli_util.wrap_exceptions
 def get_config(ctx, from_json, apm_domain_id, config_id):
 
-    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+    if isinstance(config_id, str) and len(config_id.strip()) == 0:
         raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -748,7 +747,7 @@ def test_test_span_enrichment_details(ctx, from_json, apm_domain_id, options, sp
 @cli_util.wrap_exceptions
 def update_config(ctx, from_json, force, apm_domain_id, config_id, config_type, freeform_tags, defined_tags, if_match, opc_dry_run):
 
-    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+    if isinstance(config_id, str) and len(config_id.strip()) == 0:
         raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -805,7 +804,7 @@ This option is a JSON list with items of type Metric.  For documentation on Metr
 @cli_util.wrap_exceptions
 def update_config_update_metric_group_details(ctx, from_json, force, apm_domain_id, config_id, freeform_tags, defined_tags, display_name, filter_id, namespace, dimensions, metrics, if_match, opc_dry_run):
 
-    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+    if isinstance(config_id, str) and len(config_id.strip()) == 0:
         raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or dimensions or metrics:
@@ -871,7 +870,7 @@ def update_config_update_metric_group_details(ctx, from_json, force, apm_domain_
 @cli_util.wrap_exceptions
 def update_config_update_agent_config_details(ctx, from_json, force, apm_domain_id, config_id, freeform_tags, defined_tags, config, overrides, if_match, opc_dry_run):
 
-    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+    if isinstance(config_id, str) and len(config_id.strip()) == 0:
         raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or config or overrides:
@@ -932,7 +931,7 @@ def update_config_update_agent_config_details(ctx, from_json, force, apm_domain_
 @cli_util.wrap_exceptions
 def update_config_update_macs_apm_extension_details(ctx, from_json, force, apm_domain_id, config_id, freeform_tags, defined_tags, display_name, process_filter, run_as_user, service_name, agent_version, attach_install_dir, if_match, opc_dry_run):
 
-    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+    if isinstance(config_id, str) and len(config_id.strip()) == 0:
         raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or process_filter:
@@ -1001,7 +1000,7 @@ def update_config_update_macs_apm_extension_details(ctx, from_json, force, apm_d
 @cli_util.wrap_exceptions
 def update_config_update_apdex_rules_details(ctx, from_json, force, apm_domain_id, config_id, rules, freeform_tags, defined_tags, display_name, if_match, opc_dry_run):
 
-    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+    if isinstance(config_id, str) and len(config_id.strip()) == 0:
         raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or rules:
@@ -1057,7 +1056,7 @@ def update_config_update_apdex_rules_details(ctx, from_json, force, apm_domain_i
 @cli_util.wrap_exceptions
 def update_config_update_span_filter_details(ctx, from_json, force, apm_domain_id, config_id, freeform_tags, defined_tags, display_name, filter_text, description, if_match, opc_dry_run):
 
-    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+    if isinstance(config_id, str) and len(config_id.strip()) == 0:
         raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1119,7 +1118,7 @@ def update_config_update_span_filter_details(ctx, from_json, force, apm_domain_i
 @cli_util.wrap_exceptions
 def update_config_update_options_details(ctx, from_json, force, apm_domain_id, config_id, freeform_tags, defined_tags, display_name, options, group, description, if_match, opc_dry_run):
 
-    if isinstance(config_id, six.string_types) and len(config_id.strip()) == 0:
+    if isinstance(config_id, str) and len(config_id.strip()) == 0:
         raise click.UsageError('Parameter --config-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or options:

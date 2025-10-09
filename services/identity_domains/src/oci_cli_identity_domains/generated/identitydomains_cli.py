@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -9029,7 +9028,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_api_key(ctx, from_json, api_key_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(api_key_id, six.string_types) and len(api_key_id.strip()) == 0:
+    if isinstance(api_key_id, str) and len(api_key_id.strip()) == 0:
         raise click.UsageError('Parameter --api-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9065,7 +9064,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_app(ctx, from_json, app_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(app_id, six.string_types) and len(app_id.strip()) == 0:
+    if isinstance(app_id, str) and len(app_id.strip()) == 0:
         raise click.UsageError('Parameter --app-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9101,7 +9100,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_app_role(ctx, from_json, app_role_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(app_role_id, six.string_types) and len(app_role_id.strip()) == 0:
+    if isinstance(app_role_id, str) and len(app_role_id.strip()) == 0:
         raise click.UsageError('Parameter --app-role-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9137,7 +9136,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_approval_workflow(ctx, from_json, approval_workflow_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(approval_workflow_id, six.string_types) and len(approval_workflow_id.strip()) == 0:
+    if isinstance(approval_workflow_id, str) and len(approval_workflow_id.strip()) == 0:
         raise click.UsageError('Parameter --approval-workflow-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9173,7 +9172,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_approval_workflow_assignment(ctx, from_json, approval_workflow_assignment_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(approval_workflow_assignment_id, six.string_types) and len(approval_workflow_assignment_id.strip()) == 0:
+    if isinstance(approval_workflow_assignment_id, str) and len(approval_workflow_assignment_id.strip()) == 0:
         raise click.UsageError('Parameter --approval-workflow-assignment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9209,7 +9208,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_approval_workflow_step(ctx, from_json, approval_workflow_step_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(approval_workflow_step_id, six.string_types) and len(approval_workflow_step_id.strip()) == 0:
+    if isinstance(approval_workflow_step_id, str) and len(approval_workflow_step_id.strip()) == 0:
         raise click.UsageError('Parameter --approval-workflow-step-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9245,7 +9244,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_auth_token(ctx, from_json, auth_token_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(auth_token_id, six.string_types) and len(auth_token_id.strip()) == 0:
+    if isinstance(auth_token_id, str) and len(auth_token_id.strip()) == 0:
         raise click.UsageError('Parameter --auth-token-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9281,7 +9280,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_cloud_gate(ctx, from_json, cloud_gate_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(cloud_gate_id, six.string_types) and len(cloud_gate_id.strip()) == 0:
+    if isinstance(cloud_gate_id, str) and len(cloud_gate_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-gate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9317,7 +9316,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_cloud_gate_mapping(ctx, from_json, cloud_gate_mapping_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(cloud_gate_mapping_id, six.string_types) and len(cloud_gate_mapping_id.strip()) == 0:
+    if isinstance(cloud_gate_mapping_id, str) and len(cloud_gate_mapping_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-gate-mapping-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9353,7 +9352,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_cloud_gate_server(ctx, from_json, cloud_gate_server_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(cloud_gate_server_id, six.string_types) and len(cloud_gate_server_id.strip()) == 0:
+    if isinstance(cloud_gate_server_id, str) and len(cloud_gate_server_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-gate-server-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9389,7 +9388,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_condition(ctx, from_json, condition_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(condition_id, six.string_types) and len(condition_id.strip()) == 0:
+    if isinstance(condition_id, str) and len(condition_id.strip()) == 0:
         raise click.UsageError('Parameter --condition-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9425,7 +9424,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_customer_secret_key(ctx, from_json, customer_secret_key_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(customer_secret_key_id, six.string_types) and len(customer_secret_key_id.strip()) == 0:
+    if isinstance(customer_secret_key_id, str) and len(customer_secret_key_id.strip()) == 0:
         raise click.UsageError('Parameter --customer-secret-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9461,7 +9460,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_dynamic_resource_group(ctx, from_json, dynamic_resource_group_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(dynamic_resource_group_id, six.string_types) and len(dynamic_resource_group_id.strip()) == 0:
+    if isinstance(dynamic_resource_group_id, str) and len(dynamic_resource_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dynamic-resource-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9497,7 +9496,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_grant(ctx, from_json, grant_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(grant_id, six.string_types) and len(grant_id.strip()) == 0:
+    if isinstance(grant_id, str) and len(grant_id.strip()) == 0:
         raise click.UsageError('Parameter --grant-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9533,7 +9532,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_group(ctx, from_json, group_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(group_id, six.string_types) and len(group_id.strip()) == 0:
+    if isinstance(group_id, str) and len(group_id.strip()) == 0:
         raise click.UsageError('Parameter --group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9569,7 +9568,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_identity_propagation_trust(ctx, from_json, identity_propagation_trust_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(identity_propagation_trust_id, six.string_types) and len(identity_propagation_trust_id.strip()) == 0:
+    if isinstance(identity_propagation_trust_id, str) and len(identity_propagation_trust_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-propagation-trust-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9605,7 +9604,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_identity_provider(ctx, from_json, identity_provider_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
+    if isinstance(identity_provider_id, str) and len(identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9641,7 +9640,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_my_api_key(ctx, from_json, my_api_key_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(my_api_key_id, six.string_types) and len(my_api_key_id.strip()) == 0:
+    if isinstance(my_api_key_id, str) and len(my_api_key_id.strip()) == 0:
         raise click.UsageError('Parameter --my-api-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9677,7 +9676,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_my_auth_token(ctx, from_json, my_auth_token_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(my_auth_token_id, six.string_types) and len(my_auth_token_id.strip()) == 0:
+    if isinstance(my_auth_token_id, str) and len(my_auth_token_id.strip()) == 0:
         raise click.UsageError('Parameter --my-auth-token-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9713,7 +9712,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_my_customer_secret_key(ctx, from_json, my_customer_secret_key_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(my_customer_secret_key_id, six.string_types) and len(my_customer_secret_key_id.strip()) == 0:
+    if isinstance(my_customer_secret_key_id, str) and len(my_customer_secret_key_id.strip()) == 0:
         raise click.UsageError('Parameter --my-customer-secret-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9749,7 +9748,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_my_device(ctx, from_json, my_device_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(my_device_id, six.string_types) and len(my_device_id.strip()) == 0:
+    if isinstance(my_device_id, str) and len(my_device_id.strip()) == 0:
         raise click.UsageError('Parameter --my-device-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9785,7 +9784,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_my_o_auth2_client_credential(ctx, from_json, my_o_auth2_client_credential_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(my_o_auth2_client_credential_id, six.string_types) and len(my_o_auth2_client_credential_id.strip()) == 0:
+    if isinstance(my_o_auth2_client_credential_id, str) and len(my_o_auth2_client_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --my-o-auth2-client-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9821,7 +9820,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_my_smtp_credential(ctx, from_json, my_smtp_credential_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(my_smtp_credential_id, six.string_types) and len(my_smtp_credential_id.strip()) == 0:
+    if isinstance(my_smtp_credential_id, str) and len(my_smtp_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --my-smtp-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9857,7 +9856,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_my_support_account(ctx, from_json, my_support_account_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(my_support_account_id, six.string_types) and len(my_support_account_id.strip()) == 0:
+    if isinstance(my_support_account_id, str) and len(my_support_account_id.strip()) == 0:
         raise click.UsageError('Parameter --my-support-account-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9893,7 +9892,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_my_trusted_user_agent(ctx, from_json, my_trusted_user_agent_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(my_trusted_user_agent_id, six.string_types) and len(my_trusted_user_agent_id.strip()) == 0:
+    if isinstance(my_trusted_user_agent_id, str) and len(my_trusted_user_agent_id.strip()) == 0:
         raise click.UsageError('Parameter --my-trusted-user-agent-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9929,7 +9928,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_my_user_db_credential(ctx, from_json, my_user_db_credential_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(my_user_db_credential_id, six.string_types) and len(my_user_db_credential_id.strip()) == 0:
+    if isinstance(my_user_db_credential_id, str) and len(my_user_db_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --my-user-db-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -9965,7 +9964,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_network_perimeter(ctx, from_json, network_perimeter_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(network_perimeter_id, six.string_types) and len(network_perimeter_id.strip()) == 0:
+    if isinstance(network_perimeter_id, str) and len(network_perimeter_id.strip()) == 0:
         raise click.UsageError('Parameter --network-perimeter-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10001,7 +10000,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_o_auth2_client_credential(ctx, from_json, o_auth2_client_credential_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(o_auth2_client_credential_id, six.string_types) and len(o_auth2_client_credential_id.strip()) == 0:
+    if isinstance(o_auth2_client_credential_id, str) and len(o_auth2_client_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --o-auth2-client-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10037,7 +10036,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_o_auth_client_certificate(ctx, from_json, o_auth_client_certificate_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(o_auth_client_certificate_id, six.string_types) and len(o_auth_client_certificate_id.strip()) == 0:
+    if isinstance(o_auth_client_certificate_id, str) and len(o_auth_client_certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --o-auth-client-certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10073,7 +10072,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_o_auth_partner_certificate(ctx, from_json, o_auth_partner_certificate_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(o_auth_partner_certificate_id, six.string_types) and len(o_auth_partner_certificate_id.strip()) == 0:
+    if isinstance(o_auth_partner_certificate_id, str) and len(o_auth_partner_certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --o-auth-partner-certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10109,7 +10108,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_password_policy(ctx, from_json, password_policy_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(password_policy_id, six.string_types) and len(password_policy_id.strip()) == 0:
+    if isinstance(password_policy_id, str) and len(password_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --password-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10145,7 +10144,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_policy(ctx, from_json, policy_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
+    if isinstance(policy_id, str) and len(policy_id.strip()) == 0:
         raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10181,7 +10180,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_rule(ctx, from_json, rule_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(rule_id, six.string_types) and len(rule_id.strip()) == 0:
+    if isinstance(rule_id, str) and len(rule_id.strip()) == 0:
         raise click.UsageError('Parameter --rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10217,7 +10216,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_security_question(ctx, from_json, security_question_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(security_question_id, six.string_types) and len(security_question_id.strip()) == 0:
+    if isinstance(security_question_id, str) and len(security_question_id.strip()) == 0:
         raise click.UsageError('Parameter --security-question-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10253,7 +10252,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_self_registration_profile(ctx, from_json, self_registration_profile_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(self_registration_profile_id, six.string_types) and len(self_registration_profile_id.strip()) == 0:
+    if isinstance(self_registration_profile_id, str) and len(self_registration_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --self-registration-profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10289,7 +10288,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_smtp_credential(ctx, from_json, smtp_credential_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(smtp_credential_id, six.string_types) and len(smtp_credential_id.strip()) == 0:
+    if isinstance(smtp_credential_id, str) and len(smtp_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --smtp-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10325,7 +10324,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_social_identity_provider(ctx, from_json, social_identity_provider_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(social_identity_provider_id, six.string_types) and len(social_identity_provider_id.strip()) == 0:
+    if isinstance(social_identity_provider_id, str) and len(social_identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --social-identity-provider-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10361,7 +10360,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_user(ctx, from_json, user_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+    if isinstance(user_id, str) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10397,7 +10396,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def delete_user_db_credential(ctx, from_json, user_db_credential_id, authorization, resource_type_schema_version, force_delete, if_match):
 
-    if isinstance(user_db_credential_id, six.string_types) and len(user_db_credential_id.strip()) == 0:
+    if isinstance(user_db_credential_id, str) and len(user_db_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --user-db-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10432,7 +10431,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_account_mgmt_info(ctx, from_json, account_mgmt_info_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(account_mgmt_info_id, six.string_types) and len(account_mgmt_info_id.strip()) == 0:
+    if isinstance(account_mgmt_info_id, str) and len(account_mgmt_info_id.strip()) == 0:
         raise click.UsageError('Parameter --account-mgmt-info-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10467,7 +10466,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_account_recovery_setting(ctx, from_json, account_recovery_setting_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(account_recovery_setting_id, six.string_types) and len(account_recovery_setting_id.strip()) == 0:
+    if isinstance(account_recovery_setting_id, str) and len(account_recovery_setting_id.strip()) == 0:
         raise click.UsageError('Parameter --account-recovery-setting-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10502,7 +10501,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_api_key(ctx, from_json, api_key_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(api_key_id, six.string_types) and len(api_key_id.strip()) == 0:
+    if isinstance(api_key_id, str) and len(api_key_id.strip()) == 0:
         raise click.UsageError('Parameter --api-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10537,7 +10536,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_app(ctx, from_json, app_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(app_id, six.string_types) and len(app_id.strip()) == 0:
+    if isinstance(app_id, str) and len(app_id.strip()) == 0:
         raise click.UsageError('Parameter --app-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10572,7 +10571,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_app_role(ctx, from_json, app_role_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(app_role_id, six.string_types) and len(app_role_id.strip()) == 0:
+    if isinstance(app_role_id, str) and len(app_role_id.strip()) == 0:
         raise click.UsageError('Parameter --app-role-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10607,7 +10606,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_approval_workflow(ctx, from_json, approval_workflow_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(approval_workflow_id, six.string_types) and len(approval_workflow_id.strip()) == 0:
+    if isinstance(approval_workflow_id, str) and len(approval_workflow_id.strip()) == 0:
         raise click.UsageError('Parameter --approval-workflow-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10642,7 +10641,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_approval_workflow_assignment(ctx, from_json, approval_workflow_assignment_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(approval_workflow_assignment_id, six.string_types) and len(approval_workflow_assignment_id.strip()) == 0:
+    if isinstance(approval_workflow_assignment_id, str) and len(approval_workflow_assignment_id.strip()) == 0:
         raise click.UsageError('Parameter --approval-workflow-assignment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10677,7 +10676,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_approval_workflow_step(ctx, from_json, approval_workflow_step_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(approval_workflow_step_id, six.string_types) and len(approval_workflow_step_id.strip()) == 0:
+    if isinstance(approval_workflow_step_id, str) and len(approval_workflow_step_id.strip()) == 0:
         raise click.UsageError('Parameter --approval-workflow-step-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10712,7 +10711,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_auth_token(ctx, from_json, auth_token_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(auth_token_id, six.string_types) and len(auth_token_id.strip()) == 0:
+    if isinstance(auth_token_id, str) and len(auth_token_id.strip()) == 0:
         raise click.UsageError('Parameter --auth-token-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10747,7 +10746,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_authentication_factor_setting(ctx, from_json, authentication_factor_setting_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(authentication_factor_setting_id, six.string_types) and len(authentication_factor_setting_id.strip()) == 0:
+    if isinstance(authentication_factor_setting_id, str) and len(authentication_factor_setting_id.strip()) == 0:
         raise click.UsageError('Parameter --authentication-factor-setting-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10782,7 +10781,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_branding_setting(ctx, from_json, branding_setting_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(branding_setting_id, six.string_types) and len(branding_setting_id.strip()) == 0:
+    if isinstance(branding_setting_id, str) and len(branding_setting_id.strip()) == 0:
         raise click.UsageError('Parameter --branding-setting-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10817,7 +10816,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_cloud_gate(ctx, from_json, cloud_gate_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(cloud_gate_id, six.string_types) and len(cloud_gate_id.strip()) == 0:
+    if isinstance(cloud_gate_id, str) and len(cloud_gate_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-gate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10852,7 +10851,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_cloud_gate_mapping(ctx, from_json, cloud_gate_mapping_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(cloud_gate_mapping_id, six.string_types) and len(cloud_gate_mapping_id.strip()) == 0:
+    if isinstance(cloud_gate_mapping_id, str) and len(cloud_gate_mapping_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-gate-mapping-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10887,7 +10886,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_cloud_gate_server(ctx, from_json, cloud_gate_server_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(cloud_gate_server_id, six.string_types) and len(cloud_gate_server_id.strip()) == 0:
+    if isinstance(cloud_gate_server_id, str) and len(cloud_gate_server_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-gate-server-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10922,7 +10921,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_condition(ctx, from_json, condition_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(condition_id, six.string_types) and len(condition_id.strip()) == 0:
+    if isinstance(condition_id, str) and len(condition_id.strip()) == 0:
         raise click.UsageError('Parameter --condition-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10957,7 +10956,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_customer_secret_key(ctx, from_json, customer_secret_key_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(customer_secret_key_id, six.string_types) and len(customer_secret_key_id.strip()) == 0:
+    if isinstance(customer_secret_key_id, str) and len(customer_secret_key_id.strip()) == 0:
         raise click.UsageError('Parameter --customer-secret-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -10992,7 +10991,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_dynamic_resource_group(ctx, from_json, dynamic_resource_group_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(dynamic_resource_group_id, six.string_types) and len(dynamic_resource_group_id.strip()) == 0:
+    if isinstance(dynamic_resource_group_id, str) and len(dynamic_resource_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dynamic-resource-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11027,7 +11026,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_grant(ctx, from_json, grant_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(grant_id, six.string_types) and len(grant_id.strip()) == 0:
+    if isinstance(grant_id, str) and len(grant_id.strip()) == 0:
         raise click.UsageError('Parameter --grant-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11062,7 +11061,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_group(ctx, from_json, group_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(group_id, six.string_types) and len(group_id.strip()) == 0:
+    if isinstance(group_id, str) and len(group_id.strip()) == 0:
         raise click.UsageError('Parameter --group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11097,7 +11096,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_identity_propagation_trust(ctx, from_json, identity_propagation_trust_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(identity_propagation_trust_id, six.string_types) and len(identity_propagation_trust_id.strip()) == 0:
+    if isinstance(identity_propagation_trust_id, str) and len(identity_propagation_trust_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-propagation-trust-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11132,7 +11131,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_identity_provider(ctx, from_json, identity_provider_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
+    if isinstance(identity_provider_id, str) and len(identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11167,7 +11166,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_identity_setting(ctx, from_json, identity_setting_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(identity_setting_id, six.string_types) and len(identity_setting_id.strip()) == 0:
+    if isinstance(identity_setting_id, str) and len(identity_setting_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-setting-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11202,7 +11201,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_kmsi_setting(ctx, from_json, kmsi_setting_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(kmsi_setting_id, six.string_types) and len(kmsi_setting_id.strip()) == 0:
+    if isinstance(kmsi_setting_id, str) and len(kmsi_setting_id.strip()) == 0:
         raise click.UsageError('Parameter --kmsi-setting-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11265,7 +11264,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_my_api_key(ctx, from_json, my_api_key_id, authorization, resource_type_schema_version):
 
-    if isinstance(my_api_key_id, six.string_types) and len(my_api_key_id.strip()) == 0:
+    if isinstance(my_api_key_id, str) and len(my_api_key_id.strip()) == 0:
         raise click.UsageError('Parameter --my-api-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11294,7 +11293,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_my_auth_token(ctx, from_json, my_auth_token_id, authorization, resource_type_schema_version):
 
-    if isinstance(my_auth_token_id, six.string_types) and len(my_auth_token_id.strip()) == 0:
+    if isinstance(my_auth_token_id, str) and len(my_auth_token_id.strip()) == 0:
         raise click.UsageError('Parameter --my-auth-token-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11323,7 +11322,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_my_completed_approval(ctx, from_json, my_completed_approval_id, authorization, resource_type_schema_version):
 
-    if isinstance(my_completed_approval_id, six.string_types) and len(my_completed_approval_id.strip()) == 0:
+    if isinstance(my_completed_approval_id, str) and len(my_completed_approval_id.strip()) == 0:
         raise click.UsageError('Parameter --my-completed-approval-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11352,7 +11351,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_my_customer_secret_key(ctx, from_json, my_customer_secret_key_id, authorization, resource_type_schema_version):
 
-    if isinstance(my_customer_secret_key_id, six.string_types) and len(my_customer_secret_key_id.strip()) == 0:
+    if isinstance(my_customer_secret_key_id, str) and len(my_customer_secret_key_id.strip()) == 0:
         raise click.UsageError('Parameter --my-customer-secret-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11383,7 +11382,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_my_device(ctx, from_json, my_device_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(my_device_id, six.string_types) and len(my_device_id.strip()) == 0:
+    if isinstance(my_device_id, str) and len(my_device_id.strip()) == 0:
         raise click.UsageError('Parameter --my-device-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11416,7 +11415,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_my_o_auth2_client_credential(ctx, from_json, my_o_auth2_client_credential_id, authorization, resource_type_schema_version):
 
-    if isinstance(my_o_auth2_client_credential_id, six.string_types) and len(my_o_auth2_client_credential_id.strip()) == 0:
+    if isinstance(my_o_auth2_client_credential_id, str) and len(my_o_auth2_client_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --my-o-auth2-client-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11445,7 +11444,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_my_pending_approval(ctx, from_json, my_pending_approval_id, authorization, resource_type_schema_version):
 
-    if isinstance(my_pending_approval_id, six.string_types) and len(my_pending_approval_id.strip()) == 0:
+    if isinstance(my_pending_approval_id, str) and len(my_pending_approval_id.strip()) == 0:
         raise click.UsageError('Parameter --my-pending-approval-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11476,7 +11475,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_my_request(ctx, from_json, my_request_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(my_request_id, six.string_types) and len(my_request_id.strip()) == 0:
+    if isinstance(my_request_id, str) and len(my_request_id.strip()) == 0:
         raise click.UsageError('Parameter --my-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11509,7 +11508,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_my_smtp_credential(ctx, from_json, my_smtp_credential_id, authorization, resource_type_schema_version):
 
-    if isinstance(my_smtp_credential_id, six.string_types) and len(my_smtp_credential_id.strip()) == 0:
+    if isinstance(my_smtp_credential_id, str) and len(my_smtp_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --my-smtp-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11538,7 +11537,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_my_support_account(ctx, from_json, my_support_account_id, authorization, resource_type_schema_version):
 
-    if isinstance(my_support_account_id, six.string_types) and len(my_support_account_id.strip()) == 0:
+    if isinstance(my_support_account_id, str) and len(my_support_account_id.strip()) == 0:
         raise click.UsageError('Parameter --my-support-account-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11569,7 +11568,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_my_trusted_user_agent(ctx, from_json, my_trusted_user_agent_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(my_trusted_user_agent_id, six.string_types) and len(my_trusted_user_agent_id.strip()) == 0:
+    if isinstance(my_trusted_user_agent_id, str) and len(my_trusted_user_agent_id.strip()) == 0:
         raise click.UsageError('Parameter --my-trusted-user-agent-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11602,7 +11601,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_my_user_db_credential(ctx, from_json, my_user_db_credential_id, authorization, resource_type_schema_version):
 
-    if isinstance(my_user_db_credential_id, six.string_types) and len(my_user_db_credential_id.strip()) == 0:
+    if isinstance(my_user_db_credential_id, str) and len(my_user_db_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --my-user-db-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11633,7 +11632,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_network_perimeter(ctx, from_json, network_perimeter_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(network_perimeter_id, six.string_types) and len(network_perimeter_id.strip()) == 0:
+    if isinstance(network_perimeter_id, str) and len(network_perimeter_id.strip()) == 0:
         raise click.UsageError('Parameter --network-perimeter-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11668,7 +11667,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_notification_setting(ctx, from_json, notification_setting_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(notification_setting_id, six.string_types) and len(notification_setting_id.strip()) == 0:
+    if isinstance(notification_setting_id, str) and len(notification_setting_id.strip()) == 0:
         raise click.UsageError('Parameter --notification-setting-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11703,7 +11702,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_o_auth2_client_credential(ctx, from_json, o_auth2_client_credential_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(o_auth2_client_credential_id, six.string_types) and len(o_auth2_client_credential_id.strip()) == 0:
+    if isinstance(o_auth2_client_credential_id, str) and len(o_auth2_client_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --o-auth2-client-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11736,7 +11735,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_o_auth_client_certificate(ctx, from_json, o_auth_client_certificate_id, authorization, resource_type_schema_version):
 
-    if isinstance(o_auth_client_certificate_id, six.string_types) and len(o_auth_client_certificate_id.strip()) == 0:
+    if isinstance(o_auth_client_certificate_id, str) and len(o_auth_client_certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --o-auth-client-certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11765,7 +11764,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_o_auth_partner_certificate(ctx, from_json, o_auth_partner_certificate_id, authorization, resource_type_schema_version):
 
-    if isinstance(o_auth_partner_certificate_id, six.string_types) and len(o_auth_partner_certificate_id.strip()) == 0:
+    if isinstance(o_auth_partner_certificate_id, str) and len(o_auth_partner_certificate_id.strip()) == 0:
         raise click.UsageError('Parameter --o-auth-partner-certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11796,7 +11795,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_oci_console_sign_on_policy_consent(ctx, from_json, oci_console_sign_on_policy_consent_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(oci_console_sign_on_policy_consent_id, six.string_types) and len(oci_console_sign_on_policy_consent_id.strip()) == 0:
+    if isinstance(oci_console_sign_on_policy_consent_id, str) and len(oci_console_sign_on_policy_consent_id.strip()) == 0:
         raise click.UsageError('Parameter --oci-console-sign-on-policy-consent-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11831,7 +11830,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_password_policy(ctx, from_json, password_policy_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(password_policy_id, six.string_types) and len(password_policy_id.strip()) == 0:
+    if isinstance(password_policy_id, str) and len(password_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --password-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11866,7 +11865,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_policy(ctx, from_json, policy_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
+    if isinstance(policy_id, str) and len(policy_id.strip()) == 0:
         raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11901,7 +11900,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_rule(ctx, from_json, rule_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(rule_id, six.string_types) and len(rule_id.strip()) == 0:
+    if isinstance(rule_id, str) and len(rule_id.strip()) == 0:
         raise click.UsageError('Parameter --rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11934,7 +11933,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_schema(ctx, from_json, schema_id, authorization, resource_type_schema_version):
 
-    if isinstance(schema_id, six.string_types) and len(schema_id.strip()) == 0:
+    if isinstance(schema_id, str) and len(schema_id.strip()) == 0:
         raise click.UsageError('Parameter --schema-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -11965,7 +11964,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_security_question(ctx, from_json, security_question_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(security_question_id, six.string_types) and len(security_question_id.strip()) == 0:
+    if isinstance(security_question_id, str) and len(security_question_id.strip()) == 0:
         raise click.UsageError('Parameter --security-question-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12000,7 +11999,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_security_question_setting(ctx, from_json, security_question_setting_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(security_question_setting_id, six.string_types) and len(security_question_setting_id.strip()) == 0:
+    if isinstance(security_question_setting_id, str) and len(security_question_setting_id.strip()) == 0:
         raise click.UsageError('Parameter --security-question-setting-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12035,7 +12034,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_self_registration_profile(ctx, from_json, self_registration_profile_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(self_registration_profile_id, six.string_types) and len(self_registration_profile_id.strip()) == 0:
+    if isinstance(self_registration_profile_id, str) and len(self_registration_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --self-registration-profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12070,7 +12069,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_setting(ctx, from_json, setting_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(setting_id, six.string_types) and len(setting_id.strip()) == 0:
+    if isinstance(setting_id, str) and len(setting_id.strip()) == 0:
         raise click.UsageError('Parameter --setting-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12105,7 +12104,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_smtp_credential(ctx, from_json, smtp_credential_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(smtp_credential_id, six.string_types) and len(smtp_credential_id.strip()) == 0:
+    if isinstance(smtp_credential_id, str) and len(smtp_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --smtp-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12138,7 +12137,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_social_identity_provider(ctx, from_json, social_identity_provider_id, authorization, resource_type_schema_version):
 
-    if isinstance(social_identity_provider_id, six.string_types) and len(social_identity_provider_id.strip()) == 0:
+    if isinstance(social_identity_provider_id, str) and len(social_identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --social-identity-provider-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12169,7 +12168,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_user(ctx, from_json, user_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+    if isinstance(user_id, str) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12204,7 +12203,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_user_attributes_setting(ctx, from_json, user_attributes_setting_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(user_attributes_setting_id, six.string_types) and len(user_attributes_setting_id.strip()) == 0:
+    if isinstance(user_attributes_setting_id, str) and len(user_attributes_setting_id.strip()) == 0:
         raise click.UsageError('Parameter --user-attributes-setting-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -12239,7 +12238,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_user_db_credential(ctx, from_json, user_db_credential_id, authorization, resource_type_schema_version, attributes, attribute_sets):
 
-    if isinstance(user_db_credential_id, six.string_types) and len(user_db_credential_id.strip()) == 0:
+    if isinstance(user_db_credential_id, str) and len(user_db_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --user-db-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16225,7 +16224,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_account_recovery_setting(ctx, from_json, account_recovery_setting_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(account_recovery_setting_id, six.string_types) and len(account_recovery_setting_id.strip()) == 0:
+    if isinstance(account_recovery_setting_id, str) and len(account_recovery_setting_id.strip()) == 0:
         raise click.UsageError('Parameter --account-recovery-setting-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16271,7 +16270,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_api_key(ctx, from_json, api_key_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(api_key_id, six.string_types) and len(api_key_id.strip()) == 0:
+    if isinstance(api_key_id, str) and len(api_key_id.strip()) == 0:
         raise click.UsageError('Parameter --api-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16317,7 +16316,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_app(ctx, from_json, app_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(app_id, six.string_types) and len(app_id.strip()) == 0:
+    if isinstance(app_id, str) and len(app_id.strip()) == 0:
         raise click.UsageError('Parameter --app-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16363,7 +16362,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_app_role(ctx, from_json, app_role_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(app_role_id, six.string_types) and len(app_role_id.strip()) == 0:
+    if isinstance(app_role_id, str) and len(app_role_id.strip()) == 0:
         raise click.UsageError('Parameter --app-role-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16409,7 +16408,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_approval_workflow(ctx, from_json, approval_workflow_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(approval_workflow_id, six.string_types) and len(approval_workflow_id.strip()) == 0:
+    if isinstance(approval_workflow_id, str) and len(approval_workflow_id.strip()) == 0:
         raise click.UsageError('Parameter --approval-workflow-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16455,7 +16454,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_approval_workflow_step(ctx, from_json, approval_workflow_step_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(approval_workflow_step_id, six.string_types) and len(approval_workflow_step_id.strip()) == 0:
+    if isinstance(approval_workflow_step_id, str) and len(approval_workflow_step_id.strip()) == 0:
         raise click.UsageError('Parameter --approval-workflow-step-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16501,7 +16500,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_auth_token(ctx, from_json, auth_token_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(auth_token_id, six.string_types) and len(auth_token_id.strip()) == 0:
+    if isinstance(auth_token_id, str) and len(auth_token_id.strip()) == 0:
         raise click.UsageError('Parameter --auth-token-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16547,7 +16546,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_cloud_gate(ctx, from_json, cloud_gate_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(cloud_gate_id, six.string_types) and len(cloud_gate_id.strip()) == 0:
+    if isinstance(cloud_gate_id, str) and len(cloud_gate_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-gate-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16593,7 +16592,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_cloud_gate_mapping(ctx, from_json, cloud_gate_mapping_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(cloud_gate_mapping_id, six.string_types) and len(cloud_gate_mapping_id.strip()) == 0:
+    if isinstance(cloud_gate_mapping_id, str) and len(cloud_gate_mapping_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-gate-mapping-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16639,7 +16638,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_cloud_gate_server(ctx, from_json, cloud_gate_server_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(cloud_gate_server_id, six.string_types) and len(cloud_gate_server_id.strip()) == 0:
+    if isinstance(cloud_gate_server_id, str) and len(cloud_gate_server_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-gate-server-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16685,7 +16684,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_condition(ctx, from_json, condition_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(condition_id, six.string_types) and len(condition_id.strip()) == 0:
+    if isinstance(condition_id, str) and len(condition_id.strip()) == 0:
         raise click.UsageError('Parameter --condition-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16731,7 +16730,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_customer_secret_key(ctx, from_json, customer_secret_key_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(customer_secret_key_id, six.string_types) and len(customer_secret_key_id.strip()) == 0:
+    if isinstance(customer_secret_key_id, str) and len(customer_secret_key_id.strip()) == 0:
         raise click.UsageError('Parameter --customer-secret-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16777,7 +16776,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_dynamic_resource_group(ctx, from_json, dynamic_resource_group_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(dynamic_resource_group_id, six.string_types) and len(dynamic_resource_group_id.strip()) == 0:
+    if isinstance(dynamic_resource_group_id, str) and len(dynamic_resource_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dynamic-resource-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16823,7 +16822,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_grant(ctx, from_json, grant_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(grant_id, six.string_types) and len(grant_id.strip()) == 0:
+    if isinstance(grant_id, str) and len(grant_id.strip()) == 0:
         raise click.UsageError('Parameter --grant-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16869,7 +16868,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_group(ctx, from_json, group_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(group_id, six.string_types) and len(group_id.strip()) == 0:
+    if isinstance(group_id, str) and len(group_id.strip()) == 0:
         raise click.UsageError('Parameter --group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16915,7 +16914,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_identity_propagation_trust(ctx, from_json, identity_propagation_trust_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(identity_propagation_trust_id, six.string_types) and len(identity_propagation_trust_id.strip()) == 0:
+    if isinstance(identity_propagation_trust_id, str) and len(identity_propagation_trust_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-propagation-trust-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -16961,7 +16960,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_identity_provider(ctx, from_json, identity_provider_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
+    if isinstance(identity_provider_id, str) and len(identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17007,7 +17006,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_identity_setting(ctx, from_json, identity_setting_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(identity_setting_id, six.string_types) and len(identity_setting_id.strip()) == 0:
+    if isinstance(identity_setting_id, str) and len(identity_setting_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-setting-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17053,7 +17052,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_kmsi_setting(ctx, from_json, kmsi_setting_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(kmsi_setting_id, six.string_types) and len(kmsi_setting_id.strip()) == 0:
+    if isinstance(kmsi_setting_id, str) and len(kmsi_setting_id.strip()) == 0:
         raise click.UsageError('Parameter --kmsi-setting-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17138,7 +17137,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_my_api_key(ctx, from_json, my_api_key_id, schemas, operations, authorization, resource_type_schema_version, if_match):
 
-    if isinstance(my_api_key_id, six.string_types) and len(my_api_key_id.strip()) == 0:
+    if isinstance(my_api_key_id, str) and len(my_api_key_id.strip()) == 0:
         raise click.UsageError('Parameter --my-api-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17178,7 +17177,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_my_auth_token(ctx, from_json, my_auth_token_id, schemas, operations, authorization, resource_type_schema_version, if_match):
 
-    if isinstance(my_auth_token_id, six.string_types) and len(my_auth_token_id.strip()) == 0:
+    if isinstance(my_auth_token_id, str) and len(my_auth_token_id.strip()) == 0:
         raise click.UsageError('Parameter --my-auth-token-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17218,7 +17217,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_my_customer_secret_key(ctx, from_json, my_customer_secret_key_id, schemas, operations, authorization, resource_type_schema_version, if_match):
 
-    if isinstance(my_customer_secret_key_id, six.string_types) and len(my_customer_secret_key_id.strip()) == 0:
+    if isinstance(my_customer_secret_key_id, str) and len(my_customer_secret_key_id.strip()) == 0:
         raise click.UsageError('Parameter --my-customer-secret-key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17260,7 +17259,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_my_device(ctx, from_json, my_device_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(my_device_id, six.string_types) and len(my_device_id.strip()) == 0:
+    if isinstance(my_device_id, str) and len(my_device_id.strip()) == 0:
         raise click.UsageError('Parameter --my-device-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17304,7 +17303,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_my_o_auth2_client_credential(ctx, from_json, my_o_auth2_client_credential_id, schemas, operations, authorization, resource_type_schema_version, if_match):
 
-    if isinstance(my_o_auth2_client_credential_id, six.string_types) and len(my_o_auth2_client_credential_id.strip()) == 0:
+    if isinstance(my_o_auth2_client_credential_id, str) and len(my_o_auth2_client_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --my-o-auth2-client-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17344,7 +17343,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_my_pending_approval(ctx, from_json, my_pending_approval_id, schemas, operations, authorization, resource_type_schema_version, if_match):
 
-    if isinstance(my_pending_approval_id, six.string_types) and len(my_pending_approval_id.strip()) == 0:
+    if isinstance(my_pending_approval_id, str) and len(my_pending_approval_id.strip()) == 0:
         raise click.UsageError('Parameter --my-pending-approval-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17386,7 +17385,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_my_request(ctx, from_json, my_request_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(my_request_id, six.string_types) and len(my_request_id.strip()) == 0:
+    if isinstance(my_request_id, str) and len(my_request_id.strip()) == 0:
         raise click.UsageError('Parameter --my-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17430,7 +17429,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_my_smtp_credential(ctx, from_json, my_smtp_credential_id, schemas, operations, authorization, resource_type_schema_version, if_match):
 
-    if isinstance(my_smtp_credential_id, six.string_types) and len(my_smtp_credential_id.strip()) == 0:
+    if isinstance(my_smtp_credential_id, str) and len(my_smtp_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --my-smtp-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17472,7 +17471,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_network_perimeter(ctx, from_json, network_perimeter_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(network_perimeter_id, six.string_types) and len(network_perimeter_id.strip()) == 0:
+    if isinstance(network_perimeter_id, str) and len(network_perimeter_id.strip()) == 0:
         raise click.UsageError('Parameter --network-perimeter-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17518,7 +17517,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_o_auth2_client_credential(ctx, from_json, o_auth2_client_credential_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(o_auth2_client_credential_id, six.string_types) and len(o_auth2_client_credential_id.strip()) == 0:
+    if isinstance(o_auth2_client_credential_id, str) and len(o_auth2_client_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --o-auth2-client-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17564,7 +17563,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_password_policy(ctx, from_json, password_policy_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(password_policy_id, six.string_types) and len(password_policy_id.strip()) == 0:
+    if isinstance(password_policy_id, str) and len(password_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --password-policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17610,7 +17609,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_policy(ctx, from_json, policy_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
+    if isinstance(policy_id, str) and len(policy_id.strip()) == 0:
         raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17656,7 +17655,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_rule(ctx, from_json, rule_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(rule_id, six.string_types) and len(rule_id.strip()) == 0:
+    if isinstance(rule_id, str) and len(rule_id.strip()) == 0:
         raise click.UsageError('Parameter --rule-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17700,7 +17699,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_schema(ctx, from_json, schema_id, schemas, operations, authorization, resource_type_schema_version, if_match):
 
-    if isinstance(schema_id, six.string_types) and len(schema_id.strip()) == 0:
+    if isinstance(schema_id, str) and len(schema_id.strip()) == 0:
         raise click.UsageError('Parameter --schema-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17742,7 +17741,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_security_question(ctx, from_json, security_question_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(security_question_id, six.string_types) and len(security_question_id.strip()) == 0:
+    if isinstance(security_question_id, str) and len(security_question_id.strip()) == 0:
         raise click.UsageError('Parameter --security-question-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17788,7 +17787,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_security_question_setting(ctx, from_json, security_question_setting_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(security_question_setting_id, six.string_types) and len(security_question_setting_id.strip()) == 0:
+    if isinstance(security_question_setting_id, str) and len(security_question_setting_id.strip()) == 0:
         raise click.UsageError('Parameter --security-question-setting-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17834,7 +17833,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_self_registration_profile(ctx, from_json, self_registration_profile_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(self_registration_profile_id, six.string_types) and len(self_registration_profile_id.strip()) == 0:
+    if isinstance(self_registration_profile_id, str) and len(self_registration_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --self-registration-profile-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17880,7 +17879,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_setting(ctx, from_json, setting_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(setting_id, six.string_types) and len(setting_id.strip()) == 0:
+    if isinstance(setting_id, str) and len(setting_id.strip()) == 0:
         raise click.UsageError('Parameter --setting-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17926,7 +17925,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_smtp_credential(ctx, from_json, smtp_credential_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(smtp_credential_id, six.string_types) and len(smtp_credential_id.strip()) == 0:
+    if isinstance(smtp_credential_id, str) and len(smtp_credential_id.strip()) == 0:
         raise click.UsageError('Parameter --smtp-credential-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -17970,7 +17969,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_social_identity_provider(ctx, from_json, social_identity_provider_id, schemas, operations, authorization, resource_type_schema_version, if_match):
 
-    if isinstance(social_identity_provider_id, six.string_types) and len(social_identity_provider_id.strip()) == 0:
+    if isinstance(social_identity_provider_id, str) and len(social_identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --social-identity-provider-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18012,7 +18011,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_user(ctx, from_json, user_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+    if isinstance(user_id, str) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18058,7 +18057,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def patch_user_attributes_setting(ctx, from_json, user_attributes_setting_id, schemas, operations, authorization, resource_type_schema_version, attributes, attribute_sets, if_match):
 
-    if isinstance(user_attributes_setting_id, six.string_types) and len(user_attributes_setting_id.strip()) == 0:
+    if isinstance(user_attributes_setting_id, str) and len(user_attributes_setting_id.strip()) == 0:
         raise click.UsageError('Parameter --user-attributes-setting-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -18150,7 +18149,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.wrap_exceptions
 def put_account_recovery_setting(ctx, from_json, force, account_recovery_setting_id, schemas, factors, max_incorrect_attempts, lockout_duration, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, if_match):
 
-    if isinstance(account_recovery_setting_id, six.string_types) and len(account_recovery_setting_id.strip()) == 0:
+    if isinstance(account_recovery_setting_id, str) and len(account_recovery_setting_id.strip()) == 0:
         raise click.UsageError('Parameter --account-recovery-setting-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or factors:
@@ -18635,7 +18634,7 @@ This option is a JSON list with items of type AppScopes.  For documentation on A
 @cli_util.wrap_exceptions
 def put_app(ctx, from_json, force, app_id, schemas, display_name, based_on_template, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, meter_as_opc_service, name, client_secret, hashed_client_secret, description, id_token_enc_algo, delegated_service_names, active, app_icon, app_thumbnail, migrated, infrastructure, is_login_target, show_in_my_apps, login_mechanism, landing_page_url, product_logo_url, privacy_policy_url, terms_of_service_url, contact_email_address, product_name, home_page_url, is_form_fill, is_o_auth_client, is_radius_app, client_type, redirect_uris, all_url_schemes_allowed, logout_uri, post_logout_redirect_uris, allowed_grants, allowed_operations, client_ip_checking, is_opc_service, is_unmanaged_app, allow_access_control, is_o_auth_resource, access_token_expiry, refresh_token_expiry, allow_offline, callback_service_url, audience, is_mobile_target, login_page_url, linking_callback_url, logout_page_url, error_page_url, is_saml_service_provider, is_web_tier_policy, is_kerberos_realm, icon, is_alias_app, is_managed_app, service_type_urn, service_type_version, is_obligation_capable, ready_to_upgrade, trust_scope, is_database_service, secondary_audiences, is_enterprise_app, bypass_consent, disable_kmsi_token_authentication, is_multicloud_service_app, radius_policy, apps_network_perimeters, cloud_control_properties, editable_attributes, terms_of_use, protectable_secondary_audiences, idp_policy, allowed_tags, app_signon_policy, trust_policies, signon_policy, identity_providers, accounts, grants, service_params, attr_rendering_metadata, granted_app_roles, saml_service_provider, allowed_scopes, certificates, alias_apps, as_opc_service, admin_roles, user_roles, scopes, urnietfparamsscimschemasoracleidcsextensionradius_app_app, urnietfparamsscimschemasoracleidcsextensionsaml_service_provider_app, urnietfparamsscimschemasoracleidcsextensionweb_tier_policy_app, urnietfparamsscimschemasoracleidcsextensionmanagedapp_app, urnietfparamsscimschemasoracleidcsextensionform_fill_app_template_app_template, urnietfparamsscimschemasoracleidcsextensionopc_service_app, urnietfparamsscimschemasoracleidcsextensionkerberos_realm_app, urnietfparamsscimschemasoracleidcsextensionrequestable_app, urnietfparamsscimschemasoracleidcsextensionform_fill_app_app, urnietfparamsscimschemasoracleidcsextensiondbcs_app, urnietfparamsscimschemasoracleidcsextensionenterprise_app_app, urnietfparamsscimschemasoracleidcsextension_oci_tags, urnietfparamsscimschemasoracleidcsextensionmulticloud_service_app_app, if_match):
 
-    if isinstance(app_id, six.string_types) and len(app_id.strip()) == 0:
+    if isinstance(app_id, str) and len(app_id.strip()) == 0:
         raise click.UsageError('Parameter --app-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or delegated_service_names or redirect_uris or post_logout_redirect_uris or allowed_grants or allowed_operations or secondary_audiences or radius_policy or apps_network_perimeters or cloud_control_properties or editable_attributes or terms_of_use or protectable_secondary_audiences or idp_policy or allowed_tags or app_signon_policy or trust_policies or signon_policy or identity_providers or accounts or grants or service_params or attr_rendering_metadata or based_on_template or granted_app_roles or saml_service_provider or allowed_scopes or certificates or alias_apps or as_opc_service or admin_roles or user_roles or scopes or urnietfparamsscimschemasoracleidcsextensionradius_app_app or urnietfparamsscimschemasoracleidcsextensionsaml_service_provider_app or urnietfparamsscimschemasoracleidcsextensionweb_tier_policy_app or urnietfparamsscimschemasoracleidcsextensionmanagedapp_app or urnietfparamsscimschemasoracleidcsextensionform_fill_app_template_app_template or urnietfparamsscimschemasoracleidcsextensionopc_service_app or urnietfparamsscimschemasoracleidcsextensionkerberos_realm_app or urnietfparamsscimschemasoracleidcsextensionrequestable_app or urnietfparamsscimschemasoracleidcsextensionform_fill_app_app or urnietfparamsscimschemasoracleidcsextensiondbcs_app or urnietfparamsscimschemasoracleidcsextensionenterprise_app_app or urnietfparamsscimschemasoracleidcsextension_oci_tags or urnietfparamsscimschemasoracleidcsextensionmulticloud_service_app_app:
@@ -19065,7 +19064,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.wrap_exceptions
 def put_app_status_changer(ctx, from_json, force, app_status_changer_id, schemas, active, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, if_match):
 
-    if isinstance(app_status_changer_id, six.string_types) and len(app_status_changer_id.strip()) == 0:
+    if isinstance(app_status_changer_id, str) and len(app_status_changer_id.strip()) == 0:
         raise click.UsageError('Parameter --app-status-changer-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags:
@@ -19197,7 +19196,7 @@ This option is a JSON list with items of type ApprovalWorkflowApprovalWorkflowSt
 @cli_util.wrap_exceptions
 def put_approval_workflow(ctx, from_json, force, approval_workflow_id, schemas, name, max_duration, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, approval_workflow_steps, if_match):
 
-    if isinstance(approval_workflow_id, six.string_types) and len(approval_workflow_id.strip()) == 0:
+    if isinstance(approval_workflow_id, str) and len(approval_workflow_id.strip()) == 0:
         raise click.UsageError('Parameter --approval-workflow-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or max_duration or approval_workflow_steps:
@@ -19397,7 +19396,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.wrap_exceptions
 def put_authentication_factor_setting(ctx, from_json, force, authentication_factor_setting_id, schemas, sms_enabled, totp_enabled, push_enabled, bypass_code_enabled, security_questions_enabled, mfa_enrollment_type, notification_settings, bypass_code_settings, client_app_settings, endpoint_restrictions, compliance_policy, totp_settings, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, email_enabled, phone_call_enabled, fido_authenticator_enabled, yubico_otp_enabled, mfa_enabled_category, hide_backup_factor_enabled, auto_enroll_email_factor_disabled, user_enrollment_disabled_factors, email_settings, third_party_factor, identity_store_settings, urnietfparamsscimschemasoracleidcsextensionthird_party_authentication_factor_settings, urnietfparamsscimschemasoracleidcsextensionfido_authentication_factor_settings, if_match):
 
-    if isinstance(authentication_factor_setting_id, six.string_types) and len(authentication_factor_setting_id.strip()) == 0:
+    if isinstance(authentication_factor_setting_id, str) and len(authentication_factor_setting_id.strip()) == 0:
         raise click.UsageError('Parameter --authentication-factor-setting-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or user_enrollment_disabled_factors or email_settings or third_party_factor or notification_settings or identity_store_settings or bypass_code_settings or client_app_settings or endpoint_restrictions or compliance_policy or totp_settings or urnietfparamsscimschemasoracleidcsextensionthird_party_authentication_factor_settings or urnietfparamsscimschemasoracleidcsextensionfido_authentication_factor_settings:
@@ -19620,7 +19619,7 @@ This option is a JSON list with items of type CloudGateExtMappings.  For documen
 @cli_util.wrap_exceptions
 def put_cloud_gate(ctx, from_json, force, cloud_gate_id, schemas, display_name, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, is_opc_service, last_modified_time, description, active, type, upstream_server_groups, upstream_servers, oauth_client, servers, mappings, if_match):
 
-    if isinstance(cloud_gate_id, six.string_types) and len(cloud_gate_id.strip()) == 0:
+    if isinstance(cloud_gate_id, str) and len(cloud_gate_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-gate-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or upstream_server_groups or upstream_servers or oauth_client or servers or mappings:
@@ -19794,7 +19793,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.wrap_exceptions
 def put_cloud_gate_mapping(ctx, from_json, force, cloud_gate_mapping_id, schemas, resource_prefix, policy_name, server, gateway_app, cloud_gate, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, is_opc_service, description, proxy_pass, nginx_settings, upstream_server_group, if_match):
 
-    if isinstance(cloud_gate_mapping_id, six.string_types) and len(cloud_gate_mapping_id.strip()) == 0:
+    if isinstance(cloud_gate_mapping_id, str) and len(cloud_gate_mapping_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-gate-mapping-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or upstream_server_group or server or gateway_app or cloud_gate:
@@ -19957,7 +19956,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.wrap_exceptions
 def put_cloud_gate_server(ctx, from_json, force, cloud_gate_server_id, schemas, display_name, host_name, port, ssl, cloud_gate, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, is_opc_service, description, nginx_settings, if_match):
 
-    if isinstance(cloud_gate_server_id, six.string_types) and len(cloud_gate_server_id.strip()) == 0:
+    if isinstance(cloud_gate_server_id, str) and len(cloud_gate_server_id.strip()) == 0:
         raise click.UsageError('Parameter --cloud-gate-server-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or cloud_gate:
@@ -20112,7 +20111,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.wrap_exceptions
 def put_condition(ctx, from_json, force, condition_id, schemas, name, attribute_name, operator, attribute_value, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, evaluate_condition_if, urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy, if_match):
 
-    if isinstance(condition_id, six.string_types) and len(condition_id.strip()) == 0:
+    if isinstance(condition_id, str) and len(condition_id.strip()) == 0:
         raise click.UsageError('Parameter --condition-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy:
@@ -20267,7 +20266,7 @@ This option is a JSON list with items of type DynamicResourceGroupDynamicGroupAp
 @cli_util.wrap_exceptions
 def put_dynamic_resource_group(ctx, from_json, force, dynamic_resource_group_id, schemas, matching_rule, display_name, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, grants, dynamic_group_app_roles, urnietfparamsscimschemasoracleidcsextension_oci_tags, if_match):
 
-    if isinstance(dynamic_resource_group_id, six.string_types) and len(dynamic_resource_group_id.strip()) == 0:
+    if isinstance(dynamic_resource_group_id, str) and len(dynamic_resource_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dynamic-resource-group-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or grants or dynamic_group_app_roles or urnietfparamsscimschemasoracleidcsextension_oci_tags:
@@ -20422,7 +20421,7 @@ This option is a JSON list with items of type GroupMembers.  For documentation o
 @cli_util.wrap_exceptions
 def put_group(ctx, from_json, force, group_id, schemas, display_name, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, non_unique_display_name, members, urnietfparamsscimschemasoracleidcsextensiongroup_group, urnietfparamsscimschemasoracleidcsextensionposix_group, urnietfparamsscimschemasoracleidcsextensionrequestable_group, urnietfparamsscimschemasoracleidcsextensiondbcs_group, urnietfparamsscimschemasoracleidcsextensiondynamic_group, urnietfparamsscimschemasoracleidcsextension_oci_tags, if_match):
 
-    if isinstance(group_id, six.string_types) and len(group_id.strip()) == 0:
+    if isinstance(group_id, str) and len(group_id.strip()) == 0:
         raise click.UsageError('Parameter --group-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or members or urnietfparamsscimschemasoracleidcsextensiongroup_group or urnietfparamsscimschemasoracleidcsextensionposix_group or urnietfparamsscimschemasoracleidcsextensionrequestable_group or urnietfparamsscimschemasoracleidcsextensiondbcs_group or urnietfparamsscimschemasoracleidcsextensiondynamic_group or urnietfparamsscimschemasoracleidcsextension_oci_tags:
@@ -20625,7 +20624,7 @@ This option is a JSON list with items of type IdentityPropagationTrustImpersonat
 @cli_util.wrap_exceptions
 def put_identity_propagation_trust(ctx, from_json, force, identity_propagation_trust_id, schemas, name, type, issuer, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, account_id, subject_claim_name, subject_mapping_attribute, subject_type, client_claim_name, client_claim_values, active, public_key_endpoint, public_certificate, oauth_clients, allow_impersonation, clock_skew_seconds, impersonation_service_users, keytab, if_match):
 
-    if isinstance(identity_propagation_trust_id, six.string_types) and len(identity_propagation_trust_id.strip()) == 0:
+    if isinstance(identity_propagation_trust_id, str) and len(identity_propagation_trust_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-propagation-trust-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or client_claim_values or oauth_clients or impersonation_service_users or keytab:
@@ -20970,7 +20969,7 @@ This option is a JSON list with items of type IdentityProviderJitUserProvAssigne
 @cli_util.wrap_exceptions
 def put_identity_provider(ctx, from_json, force, identity_provider_id, schemas, partner_name, enabled, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, metadata, partner_provider_id, tenant_provider_id, succinct_id, idp_sso_url, logout_request_url, logout_response_url, signing_certificate, encryption_certificate, name_id_format, include_signing_cert_in_signature, authn_request_binding, logout_binding, logout_enabled, signature_hash_algorithm, icon_url, shown_on_login_page, jit_user_prov_enabled, jit_user_prov_group_assertion_attribute_enabled, jit_user_prov_group_static_list_enabled, jit_user_prov_create_user_enabled, jit_user_prov_attribute_update_enabled, jit_user_prov_group_assignment_method, jit_user_prov_group_mapping_mode, jit_user_prov_group_saml_attribute_name, service_instance_identifier, user_mapping_method, user_mapping_store_attribute, assertion_attribute, type, require_force_authn, requires_encrypted_assertion, saml_ho_k_required, requested_authentication_context, jit_user_prov_ignore_error_on_absent_groups, last_notification_sent_time, jit_user_prov_group_mappings, jit_user_prov_attributes, jit_user_prov_assigned_groups, correlation_policy, urnietfparamsscimschemasoracleidcsextensionsocial_identity_provider, urnietfparamsscimschemasoracleidcsextensionx509_identity_provider, if_match):
 
-    if isinstance(identity_provider_id, six.string_types) and len(identity_provider_id.strip()) == 0:
+    if isinstance(identity_provider_id, str) and len(identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or requested_authentication_context or jit_user_prov_group_mappings or jit_user_prov_attributes or jit_user_prov_assigned_groups or correlation_policy or urnietfparamsscimschemasoracleidcsextensionsocial_identity_provider or urnietfparamsscimschemasoracleidcsextensionx509_identity_provider:
@@ -21255,7 +21254,7 @@ This option is a JSON list with items of type IdentitySettingsTokens.  For docum
 @cli_util.wrap_exceptions
 def put_identity_setting(ctx, from_json, force, identity_setting_id, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, user_allowed_to_set_recovery_email, emit_locked_message_when_user_is_locked, primary_email_required, remove_invalid_emails, return_inactive_over_locked_message, my_profile, posix_uid, posix_gid, tokens, if_match):
 
-    if isinstance(identity_setting_id, six.string_types) and len(identity_setting_id.strip()) == 0:
+    if isinstance(identity_setting_id, str) and len(identity_setting_id.strip()) == 0:
         raise click.UsageError('Parameter --identity-setting-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or my_profile or posix_uid or posix_gid or tokens:
@@ -21430,7 +21429,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.wrap_exceptions
 def put_kmsi_setting(ctx, from_json, force, kmsi_setting_id, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, token_validity_in_days, last_used_validity_in_days, max_allowed_sessions, kmsi_feature_enabled, kmsi_prompt_enabled, tou_prompt_disabled, last_enabled_on, if_match):
 
-    if isinstance(kmsi_setting_id, six.string_types) and len(kmsi_setting_id.strip()) == 0:
+    if isinstance(kmsi_setting_id, str) and len(kmsi_setting_id.strip()) == 0:
         raise click.UsageError('Parameter --kmsi-setting-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags:
@@ -22031,7 +22030,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.wrap_exceptions
 def put_network_perimeter(ctx, from_json, force, network_perimeter_id, schemas, name, ip_addresses, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, if_match):
 
-    if isinstance(network_perimeter_id, six.string_types) and len(network_perimeter_id.strip()) == 0:
+    if isinstance(network_perimeter_id, str) and len(network_perimeter_id.strip()) == 0:
         raise click.UsageError('Parameter --network-perimeter-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or ip_addresses:
@@ -22184,7 +22183,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.wrap_exceptions
 def put_notification_setting(ctx, from_json, force, notification_setting_id, schemas, notification_enabled, from_email_address, event_settings, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, test_mode_enabled, test_recipients, send_notifications_to_secondary_email, send_notification_to_old_and_new_primary_emails_when_admin_changes_primary_email, if_match):
 
-    if isinstance(notification_setting_id, six.string_types) and len(notification_setting_id.strip()) == 0:
+    if isinstance(notification_setting_id, str) and len(notification_setting_id.strip()) == 0:
         raise click.UsageError('Parameter --notification-setting-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or test_recipients or from_email_address or event_settings:
@@ -22447,7 +22446,7 @@ This option is a JSON list with items of type PasswordPolicyConfiguredPasswordPo
 @cli_util.wrap_exceptions
 def put_password_policy(ctx, from_json, force, password_policy_id, schemas, name, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, max_length, min_length, min_alphas, min_numerals, min_alpha_numerals, min_special_chars, max_special_chars, min_lower_case, min_upper_case, min_unique_chars, max_repeated_chars, starts_with_alphabet, first_name_disallowed, last_name_disallowed, user_name_disallowed, disallowed_user_attribute_values, min_password_age, password_expires_after, password_expire_warning, required_chars, disallowed_chars, allowed_chars, disallowed_substrings, dictionary_word_disallowed, dictionary_location, dictionary_delimiter, max_incorrect_attempts, lockout_duration, num_passwords_in_history, password_strength, force_password_reset, distinct_characters, priority, groups, configured_password_policy_rules, if_match):
 
-    if isinstance(password_policy_id, six.string_types) and len(password_policy_id.strip()) == 0:
+    if isinstance(password_policy_id, str) and len(password_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --password-policy-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or disallowed_user_attribute_values or disallowed_substrings or groups or configured_password_policy_rules:
@@ -22700,7 +22699,7 @@ This option is a JSON list with items of type PolicyRules.  For documentation on
 @cli_util.wrap_exceptions
 def put_policy(ctx, from_json, force, policy_id, schemas, name, policy_type, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, active, policy_groovy, rules, urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy, if_match):
 
-    if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
+    if isinstance(policy_id, str) and len(policy_id.strip()) == 0:
         raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or rules or policy_type or urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy:
@@ -22868,7 +22867,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.wrap_exceptions
 def put_rule(ctx, from_json, force, rule_id, schemas, name, condition, policy_type, _return, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, active, locked, rule_groovy, condition_group, urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy, if_match):
 
-    if isinstance(rule_id, six.string_types) and len(rule_id.strip()) == 0:
+    if isinstance(rule_id, str) and len(rule_id.strip()) == 0:
         raise click.UsageError('Parameter --rule-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or condition_group or policy_type or _return or urnietfparamsscimschemasoracleidcsextensionociconsolesignonpolicyconsent_policy:
@@ -23013,7 +23012,7 @@ This option is a JSON list with items of type SchemaAttributes.  For documentati
 @cli_util.wrap_exceptions
 def put_schema(ctx, from_json, force, schema_id, schemas, idcs_mappable, authorization, resource_type_schema_version, idcs_maps_to_same_target_attribute_name_as, external_id, name, idcs_resource_types, description, idcs_attribute_cacheable, idcs_override_common_attribute, attributes, if_match):
 
-    if isinstance(schema_id, six.string_types) and len(schema_id.strip()) == 0:
+    if isinstance(schema_id, str) and len(schema_id.strip()) == 0:
         raise click.UsageError('Parameter --schema-id cannot be whitespace or empty string')
     if not force:
         if schemas or idcs_resource_types or attributes:
@@ -23132,7 +23131,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.wrap_exceptions
 def put_security_question_setting(ctx, from_json, force, security_question_setting_id, schemas, num_questions_to_setup, min_answer_length, max_field_length, num_questions_to_ans, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, if_match):
 
-    if isinstance(security_question_setting_id, six.string_types) and len(security_question_setting_id.strip()) == 0:
+    if isinstance(security_question_setting_id, str) and len(security_question_setting_id.strip()) == 0:
         raise click.UsageError('Parameter --security-question-setting-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags:
@@ -23324,7 +23323,7 @@ This option is a JSON list with items of type SelfRegistrationProfileConsentText
 @cli_util.wrap_exceptions
 def put_self_registration_profile(ctx, from_json, force, self_registration_profile_id, schemas, name, activation_email_required, number_of_days_redirect_url_is_valid, show_on_login_page, redirect_url, consent_text_present, display_name, email_template, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, active, allowed_email_domains, disallowed_email_domains, header_logo, footer_logo, after_submit_text, user_attributes, default_groups, header_text, footer_text, consent_text, if_match):
 
-    if isinstance(self_registration_profile_id, six.string_types) and len(self_registration_profile_id.strip()) == 0:
+    if isinstance(self_registration_profile_id, str) and len(self_registration_profile_id.strip()) == 0:
         raise click.UsageError('Parameter --self-registration-profile-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or allowed_email_domains or disallowed_email_domains or display_name or after_submit_text or user_attributes or email_template or default_groups or header_text or footer_text or consent_text:
@@ -23705,7 +23704,7 @@ This option is a JSON list with items of type SettingsImages.  For documentation
 @cli_util.wrap_exceptions
 def put_setting(ctx, from_json, force, setting_id, schemas, csr_access, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, contact_emails, custom_branding, preferred_language, timezone, diagnostic_record_for_search_identifies_returned_resources, re_auth_when_changing_my_authentication_factors, re_auth_factor, locale, signing_cert_public_access, sub_mapping_attr, account_always_trust_scope, default_trust_scope, issuer, prev_issuer, diagnostic_level, diagnostic_tracing_upto, allowed_domains, enable_terms_of_use, terms_of_use_url, privacy_policy_url, migration_status, on_premises_provisioning, allowed_forgot_password_flow_return_urls, allowed_notification_redirect_urls, audit_event_retention_period, is_hosted_page, custom_html_location, custom_css_location, custom_translation, cloud_account_name, cloud_migration_url_enabled, cloud_migration_custom_url, service_admin_cannot_list_other_users, max_no_of_app_role_members_to_return, max_no_of_app_cmva_to_return, iam_upst_session_expiry, cloud_gate_cors_settings, certificate_validation, tenant_custom_claims, purge_configs, default_company_names, default_login_texts, default_images, company_names, login_texts, images, if_match):
 
-    if isinstance(setting_id, six.string_types) and len(setting_id.strip()) == 0:
+    if isinstance(setting_id, str) and len(setting_id.strip()) == 0:
         raise click.UsageError('Parameter --setting-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or contact_emails or re_auth_factor or allowed_domains or allowed_forgot_password_flow_return_urls or allowed_notification_redirect_urls or cloud_gate_cors_settings or certificate_validation or tenant_custom_claims or purge_configs or default_company_names or default_login_texts or default_images or company_names or login_texts or images:
@@ -24069,7 +24068,7 @@ This option is a JSON list with items of type SocialIdentityProviderRelayIdpPara
 @cli_util.wrap_exceptions
 def put_social_identity_provider(ctx, from_json, force, social_identity_provider_id, schemas, name, enabled, account_linking_enabled, registration_enabled, show_on_login, consumer_key, consumer_secret, service_provider_name, authorization, resource_type_schema_version, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, social_jit_provisioning_enabled, jit_prov_group_static_list_enabled, jit_prov_assigned_groups, auto_redirect_enabled, status, id_attribute, authz_url, access_token_url, profile_url, scope, admin_scope, clock_skew_in_seconds, redirect_url, icon_url, discovery_url, client_credential_in_payload, refresh_token_url, relay_idp_param_mappings, if_match):
 
-    if isinstance(social_identity_provider_id, six.string_types) and len(social_identity_provider_id.strip()) == 0:
+    if isinstance(social_identity_provider_id, str) and len(social_identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --social-identity-provider-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or jit_prov_assigned_groups or scope or admin_scope or relay_idp_param_mappings:
@@ -24356,7 +24355,7 @@ This option is a JSON list with items of type UserX509Certificates.  For documen
 @cli_util.wrap_exceptions
 def put_user(ctx, from_json, force, user_id, schemas, user_name, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, description, display_name, nick_name, profile_url, title, user_type, locale, preferred_language, timezone, active, password, name, emails, phone_numbers, ims, photos, addresses, groups, entitlements, roles, x509_certificates, urnietfparamsscimschemasextensionenterprise2_0_user, urnietfparamsscimschemasoracleidcsextensionuser_user, urnietfparamsscimschemasoracleidcsextensionpassword_state_user, urnietfparamsscimschemasoracleidcsextensionuser_state_user, urnietfparamsscimschemasoracleidcsextensionposix_user, urnietfparamsscimschemasoracleidcsextensionkerberos_user_user, urnietfparamsscimschemasoracleidcsextensionmfa_user, urnietfparamsscimschemasoracleidcsextensionadaptive_user, urnietfparamsscimschemasoracleidcsextensionsff_user, urnietfparamsscimschemasoracleidcsextensionsecurity_questions_user, urnietfparamsscimschemasoracleidcsextensionself_registration_user, urnietfparamsscimschemasoracleidcsextensionsocial_account_user, urnietfparamsscimschemasoracleidcsextensiondb_user_user, urnietfparamsscimschemasoracleidcsextensionterms_of_use_user, urnietfparamsscimschemasoracleidcsextensionpasswordless_user, urnietfparamsscimschemasoracleidcsextension_oci_tags, urnietfparamsscimschemasoracleidcsextensionuser_credentials_user, urnietfparamsscimschemasoracleidcsextensioncapabilities_user, urnietfparamsscimschemasoracleidcsextensiondb_credentials_user, urnietfparamsscimschemasoracleidcsextensionself_change_user, if_match):
 
-    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+    if isinstance(user_id, str) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or name or emails or phone_numbers or ims or photos or addresses or groups or entitlements or roles or x509_certificates or urnietfparamsscimschemasextensionenterprise2_0_user or urnietfparamsscimschemasoracleidcsextensionuser_user or urnietfparamsscimschemasoracleidcsextensionpassword_state_user or urnietfparamsscimschemasoracleidcsextensionuser_state_user or urnietfparamsscimschemasoracleidcsextensionposix_user or urnietfparamsscimschemasoracleidcsextensionkerberos_user_user or urnietfparamsscimschemasoracleidcsextensionmfa_user or urnietfparamsscimschemasoracleidcsextensionadaptive_user or urnietfparamsscimschemasoracleidcsextensionsff_user or urnietfparamsscimschemasoracleidcsextensionsecurity_questions_user or urnietfparamsscimschemasoracleidcsextensionself_registration_user or urnietfparamsscimschemasoracleidcsextensionsocial_account_user or urnietfparamsscimschemasoracleidcsextensiondb_user_user or urnietfparamsscimschemasoracleidcsextensionterms_of_use_user or urnietfparamsscimschemasoracleidcsextensionpasswordless_user or urnietfparamsscimschemasoracleidcsextension_oci_tags or urnietfparamsscimschemasoracleidcsextensionuser_credentials_user or urnietfparamsscimschemasoracleidcsextensioncapabilities_user or urnietfparamsscimschemasoracleidcsextensiondb_credentials_user or urnietfparamsscimschemasoracleidcsextensionself_change_user:
@@ -24625,7 +24624,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.wrap_exceptions
 def put_user_capabilities_changer(ctx, from_json, force, user_capabilities_changer_id, schemas, authorization, resource_type_schema_version, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, can_use_api_keys, can_use_auth_tokens, can_use_console_password, can_use_customer_secret_keys, can_use_o_auth2_client_credentials, can_use_smtp_credentials, can_use_db_credentials, can_use_console, urnietfparamsscimschemasoracleidcsextensionself_change_user, if_match):
 
-    if isinstance(user_capabilities_changer_id, six.string_types) and len(user_capabilities_changer_id.strip()) == 0:
+    if isinstance(user_capabilities_changer_id, str) and len(user_capabilities_changer_id.strip()) == 0:
         raise click.UsageError('Parameter --user-capabilities-changer-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or urnietfparamsscimschemasoracleidcsextensionself_change_user:
@@ -24778,7 +24777,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.wrap_exceptions
 def put_user_password_changer(ctx, from_json, force, user_password_changer_id, schemas, password, authorization, resource_type_schema_version, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, bypass_notification, notification_email_template_id, urnietfparamsscimschemasoracleidcsextensionself_change_user, if_match):
 
-    if isinstance(user_password_changer_id, six.string_types) and len(user_password_changer_id.strip()) == 0:
+    if isinstance(user_password_changer_id, str) and len(user_password_changer_id.strip()) == 0:
         raise click.UsageError('Parameter --user-password-changer-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or urnietfparamsscimschemasoracleidcsextensionself_change_user:
@@ -24921,7 +24920,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.wrap_exceptions
 def put_user_password_resetter(ctx, from_json, force, user_password_resetter_id, schemas, authorization, resource_type_schema_version, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, bypass_notification, user_flow_controlled_by_external_client, user_token, notification_email_template_id, one_time_password, urnietfparamsscimschemasoracleidcsextensionself_change_user, if_match):
 
-    if isinstance(user_password_resetter_id, six.string_types) and len(user_password_resetter_id.strip()) == 0:
+    if isinstance(user_password_resetter_id, str) and len(user_password_resetter_id.strip()) == 0:
         raise click.UsageError('Parameter --user-password-resetter-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or user_token or urnietfparamsscimschemasoracleidcsextensionself_change_user:
@@ -25064,7 +25063,7 @@ This option is a JSON list with items of type Tags.  For documentation on tags p
 @cli_util.wrap_exceptions
 def put_user_status_changer(ctx, from_json, force, user_status_changer_id, schemas, authorization, resource_type_schema_version, attributes, attribute_sets, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, external_id, active, urnietfparamsscimschemasoracleidcsextensionself_change_user, if_match):
 
-    if isinstance(user_status_changer_id, six.string_types) and len(user_status_changer_id.strip()) == 0:
+    if isinstance(user_status_changer_id, str) and len(user_status_changer_id.strip()) == 0:
         raise click.UsageError('Parameter --user-status-changer-id cannot be whitespace or empty string')
     if not force:
         if schemas or meta or idcs_created_by or idcs_last_modified_by or idcs_prevented_operations or tags or urnietfparamsscimschemasoracleidcsextensionself_change_user:

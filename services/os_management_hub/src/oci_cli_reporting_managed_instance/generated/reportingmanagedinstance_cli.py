@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -150,7 +149,7 @@ Example: `ELSA-2020-5804`""")
 @cli_util.wrap_exceptions
 def get_managed_instance_content(ctx, from_json, file, managed_instance_id, vulnerability_type, advisory_name, advisory_name_contains, advisory_type, vulnerability_name, vulnerability_name_contains, report_format):
 
-    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+    if isinstance(managed_instance_id, str) and len(managed_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
 
     kwargs = {}

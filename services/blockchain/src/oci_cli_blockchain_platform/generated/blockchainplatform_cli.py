@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -80,7 +79,7 @@ blockchain_root_group.add_command(work_request_group)
 @cli_util.wrap_exceptions
 def change_blockchain_platform_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, blockchain_platform_id, compartment_id, if_match):
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -231,7 +230,7 @@ def create_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def create_osn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, blockchain_platform_id, ad, ocpu_allocation_param, if_match):
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -297,7 +296,7 @@ def create_osn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.wrap_exceptions
 def create_peer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, blockchain_platform_id, role, ocpu_allocation_param, ad, alias):
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -361,7 +360,7 @@ def create_peer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def delete_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, blockchain_platform_id, if_match):
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -418,10 +417,10 @@ def delete_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def delete_osn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, blockchain_platform_id, osn_id, if_match):
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
 
-    if isinstance(osn_id, six.string_types) and len(osn_id.strip()) == 0:
+    if isinstance(osn_id, str) and len(osn_id.strip()) == 0:
         raise click.UsageError('Parameter --osn-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -479,10 +478,10 @@ def delete_osn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @cli_util.wrap_exceptions
 def delete_peer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, blockchain_platform_id, peer_id, if_match):
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
 
-    if isinstance(peer_id, six.string_types) and len(peer_id.strip()) == 0:
+    if isinstance(peer_id, str) and len(peer_id.strip()) == 0:
         raise click.UsageError('Parameter --peer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -539,7 +538,7 @@ def delete_peer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def delete_work_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -590,7 +589,7 @@ def delete_work_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def get_blockchain_platform(ctx, from_json, blockchain_platform_id):
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -613,10 +612,10 @@ def get_blockchain_platform(ctx, from_json, blockchain_platform_id):
 @cli_util.wrap_exceptions
 def get_osn(ctx, from_json, blockchain_platform_id, osn_id):
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
 
-    if isinstance(osn_id, six.string_types) and len(osn_id.strip()) == 0:
+    if isinstance(osn_id, str) and len(osn_id.strip()) == 0:
         raise click.UsageError('Parameter --osn-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -640,10 +639,10 @@ def get_osn(ctx, from_json, blockchain_platform_id, osn_id):
 @cli_util.wrap_exceptions
 def get_peer(ctx, from_json, blockchain_platform_id, peer_id):
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
 
-    if isinstance(peer_id, six.string_types) and len(peer_id.strip()) == 0:
+    if isinstance(peer_id, str) and len(peer_id.strip()) == 0:
         raise click.UsageError('Parameter --peer-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -666,7 +665,7 @@ def get_peer(ctx, from_json, blockchain_platform_id, peer_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -695,7 +694,7 @@ def list_blockchain_platform_patches(ctx, from_json, all_pages, page_size, block
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -809,7 +808,7 @@ def list_osns(ctx, from_json, all_pages, page_size, blockchain_platform_id, disp
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -869,7 +868,7 @@ def list_peers(ctx, from_json, all_pages, page_size, blockchain_platform_id, dis
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -926,7 +925,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -977,7 +976,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1093,7 +1092,7 @@ This option is a JSON list with items of type ModifyPeerDetails.  For documentat
 @cli_util.wrap_exceptions
 def preview_scale_blockchain_platform(ctx, from_json, blockchain_platform_id, add_osns, add_replicas, add_peers, add_storage, modify_peers, remove_replicas, remove_osns, remove_peers):
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1161,7 +1160,7 @@ This option is a JSON list with items of type ModifyPeerDetails.  For documentat
 @cli_util.wrap_exceptions
 def scale_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, blockchain_platform_id, add_osns, add_replicas, add_peers, add_storage, modify_peers, remove_replicas, remove_osns, remove_peers, if_match):
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1244,7 +1243,7 @@ def scale_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def start_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, blockchain_platform_id, if_match):
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1299,7 +1298,7 @@ def start_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def stop_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, blockchain_platform_id, if_match):
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1362,7 +1361,7 @@ def stop_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def update_blockchain_platform(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, blockchain_platform_id, description, storage_size_in_tbs, replicas, total_ocpu_capacity, load_balancer_shape, freeform_tags, defined_tags, if_match):
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
     if not force:
         if replicas or freeform_tags or defined_tags:
@@ -1449,10 +1448,10 @@ def update_blockchain_platform(ctx, from_json, force, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def update_osn(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, blockchain_platform_id, osn_id, ocpu_allocation_param, if_match):
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
 
-    if isinstance(osn_id, six.string_types) and len(osn_id.strip()) == 0:
+    if isinstance(osn_id, str) and len(osn_id.strip()) == 0:
         raise click.UsageError('Parameter --osn-id cannot be whitespace or empty string')
     if not force:
         if ocpu_allocation_param:
@@ -1520,10 +1519,10 @@ def update_osn(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def update_peer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, blockchain_platform_id, peer_id, ocpu_allocation_param, if_match):
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
 
-    if isinstance(peer_id, six.string_types) and len(peer_id.strip()) == 0:
+    if isinstance(peer_id, str) and len(peer_id.strip()) == 0:
         raise click.UsageError('Parameter --peer-id cannot be whitespace or empty string')
     if not force:
         if ocpu_allocation_param:
@@ -1589,7 +1588,7 @@ def update_peer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def upgrade_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, patch_id, blockchain_platform_id, if_match):
 
-    if isinstance(blockchain_platform_id, six.string_types) and len(blockchain_platform_id.strip()) == 0:
+    if isinstance(blockchain_platform_id, str) and len(blockchain_platform_id.strip()) == 0:
         raise click.UsageError('Parameter --blockchain-platform-id cannot be whitespace or empty string')
 
     kwargs = {}

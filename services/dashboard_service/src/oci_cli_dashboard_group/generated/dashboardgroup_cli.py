@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -57,7 +56,7 @@ dashboard_group_root_group.add_command(dashboard_group_group)
 @cli_util.wrap_exceptions
 def change_dashboard_group_compartment(ctx, from_json, dashboard_group_id, compartment_id, if_match):
 
-    if isinstance(dashboard_group_id, six.string_types) and len(dashboard_group_id.strip()) == 0:
+    if isinstance(dashboard_group_id, str) and len(dashboard_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dashboard-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -162,7 +161,7 @@ def create_dashboard_group(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def delete_dashboard_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dashboard_group_id, if_match, opc_cross_region):
 
-    if isinstance(dashboard_group_id, six.string_types) and len(dashboard_group_id.strip()) == 0:
+    if isinstance(dashboard_group_id, str) and len(dashboard_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dashboard-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -224,7 +223,7 @@ def delete_dashboard_group(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def get_dashboard_group(ctx, from_json, dashboard_group_id, opc_cross_region):
 
-    if isinstance(dashboard_group_id, six.string_types) and len(dashboard_group_id.strip()) == 0:
+    if isinstance(dashboard_group_id, str) and len(dashboard_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dashboard-group-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -324,7 +323,7 @@ def list_dashboard_groups(ctx, from_json, all_pages, page_size, compartment_id, 
 @cli_util.wrap_exceptions
 def update_dashboard_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, dashboard_group_id, display_name, description, freeform_tags, defined_tags, if_match, opc_cross_region):
 
-    if isinstance(dashboard_group_id, six.string_types) and len(dashboard_group_id.strip()) == 0:
+    if isinstance(dashboard_group_id, str) and len(dashboard_group_id.strip()) == 0:
         raise click.UsageError('Parameter --dashboard-group-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -117,7 +116,7 @@ def create_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def delete_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, domain_id, if_match):
 
-    if isinstance(domain_id, six.string_types) and len(domain_id.strip()) == 0:
+    if isinstance(domain_id, str) and len(domain_id.strip()) == 0:
         raise click.UsageError('Parameter --domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -176,7 +175,7 @@ def delete_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def get_domain(ctx, from_json, domain_id):
 
-    if isinstance(domain_id, six.string_types) and len(domain_id.strip()) == 0:
+    if isinstance(domain_id, str) and len(domain_id.strip()) == 0:
         raise click.UsageError('Parameter --domain-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -271,7 +270,7 @@ def list_domains(ctx, from_json, all_pages, page_size, compartment_id, domain_id
 @cli_util.wrap_exceptions
 def update_domain(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, domain_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(domain_id, six.string_types) and len(domain_id.strip()) == 0:
+    if isinstance(domain_id, str) and len(domain_id.strip()) == 0:
         raise click.UsageError('Parameter --domain-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

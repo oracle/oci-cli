@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -95,7 +94,7 @@ ocb_agent_svc_root_group.add_command(agent_collection_group)
 @cli_util.wrap_exceptions
 def add_agent_dependency(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, environment_id, agent_dependency_id, if_match):
 
-    if isinstance(environment_id, six.string_types) and len(environment_id.strip()) == 0:
+    if isinstance(environment_id, str) and len(environment_id.strip()) == 0:
         raise click.UsageError('Parameter --environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -152,7 +151,7 @@ def add_agent_dependency(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def change_agent_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, agent_id, compartment_id, if_match):
 
-    if isinstance(agent_id, six.string_types) and len(agent_id.strip()) == 0:
+    if isinstance(agent_id, str) and len(agent_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -210,7 +209,7 @@ def change_agent_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def change_agent_dependency_compartment(ctx, from_json, agent_dependency_id, compartment_id, if_match):
 
-    if isinstance(agent_dependency_id, six.string_types) and len(agent_dependency_id.strip()) == 0:
+    if isinstance(agent_dependency_id, str) and len(agent_dependency_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-dependency-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -244,7 +243,7 @@ def change_agent_dependency_compartment(ctx, from_json, agent_dependency_id, com
 @cli_util.wrap_exceptions
 def change_environment_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, environment_id, compartment_id, if_match):
 
-    if isinstance(environment_id, six.string_types) and len(environment_id.strip()) == 0:
+    if isinstance(environment_id, str) and len(environment_id.strip()) == 0:
         raise click.UsageError('Parameter --environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -516,7 +515,7 @@ def create_environment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def delete_agent(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, agent_id, if_match):
 
-    if isinstance(agent_id, six.string_types) and len(agent_id.strip()) == 0:
+    if isinstance(agent_id, str) and len(agent_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -580,7 +579,7 @@ def delete_agent(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 @cli_util.wrap_exceptions
 def delete_agent_dependency(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, agent_dependency_id, if_match):
 
-    if isinstance(agent_dependency_id, six.string_types) and len(agent_dependency_id.strip()) == 0:
+    if isinstance(agent_dependency_id, str) and len(agent_dependency_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-dependency-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -644,7 +643,7 @@ def delete_agent_dependency(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_environment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, environment_id, if_match):
 
-    if isinstance(environment_id, six.string_types) and len(environment_id.strip()) == 0:
+    if isinstance(environment_id, str) and len(environment_id.strip()) == 0:
         raise click.UsageError('Parameter --environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -703,7 +702,7 @@ def delete_environment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.wrap_exceptions
 def get_agent(ctx, from_json, agent_id):
 
-    if isinstance(agent_id, six.string_types) and len(agent_id.strip()) == 0:
+    if isinstance(agent_id, str) and len(agent_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -725,7 +724,7 @@ def get_agent(ctx, from_json, agent_id):
 @cli_util.wrap_exceptions
 def get_agent_dependency(ctx, from_json, agent_dependency_id):
 
-    if isinstance(agent_dependency_id, six.string_types) and len(agent_dependency_id.strip()) == 0:
+    if isinstance(agent_dependency_id, str) and len(agent_dependency_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-dependency-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -747,7 +746,7 @@ def get_agent_dependency(ctx, from_json, agent_dependency_id):
 @cli_util.wrap_exceptions
 def get_environment(ctx, from_json, environment_id):
 
-    if isinstance(environment_id, six.string_types) and len(environment_id.strip()) == 0:
+    if isinstance(environment_id, str) and len(environment_id.strip()) == 0:
         raise click.UsageError('Parameter --environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -770,10 +769,10 @@ def get_environment(ctx, from_json, environment_id):
 @cli_util.wrap_exceptions
 def get_plugin(ctx, from_json, agent_id, plugin_name):
 
-    if isinstance(agent_id, six.string_types) and len(agent_id.strip()) == 0:
+    if isinstance(agent_id, str) and len(agent_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-id cannot be whitespace or empty string')
 
-    if isinstance(plugin_name, six.string_types) and len(plugin_name.strip()) == 0:
+    if isinstance(plugin_name, str) and len(plugin_name.strip()) == 0:
         raise click.UsageError('Parameter --plugin-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1053,7 +1052,7 @@ def list_environments(ctx, from_json, all_pages, page_size, compartment_id, life
 @cli_util.wrap_exceptions
 def remove_agent_dependency(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, environment_id, agent_dependency_id, if_match):
 
-    if isinstance(environment_id, six.string_types) and len(environment_id.strip()) == 0:
+    if isinstance(environment_id, str) and len(environment_id.strip()) == 0:
         raise click.UsageError('Parameter --environment-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1113,7 +1112,7 @@ def remove_agent_dependency(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def update_agent(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, agent_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(agent_id, six.string_types) and len(agent_id.strip()) == 0:
+    if isinstance(agent_id, str) and len(agent_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1192,7 +1191,7 @@ def update_agent(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def update_agent_dependency(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, agent_dependency_id, display_name, dependency_name, dependency_version, description, namespace, bucket, object_name, freeform_tags, defined_tags, system_tags, if_match):
 
-    if isinstance(agent_dependency_id, six.string_types) and len(agent_dependency_id.strip()) == 0:
+    if isinstance(agent_dependency_id, str) and len(agent_dependency_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-dependency-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or system_tags:
@@ -1289,7 +1288,7 @@ def update_agent_dependency(ctx, from_json, force, wait_for_state, max_wait_seco
 @cli_util.wrap_exceptions
 def update_environment(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, environment_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(environment_id, six.string_types) and len(environment_id.strip()) == 0:
+    if isinstance(environment_id, str) and len(environment_id.strip()) == 0:
         raise click.UsageError('Parameter --environment-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -1359,10 +1358,10 @@ def update_environment(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def update_plugin(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, agent_id, plugin_name, desired_state, if_match):
 
-    if isinstance(agent_id, six.string_types) and len(agent_id.strip()) == 0:
+    if isinstance(agent_id, str) and len(agent_id.strip()) == 0:
         raise click.UsageError('Parameter --agent-id cannot be whitespace or empty string')
 
-    if isinstance(plugin_name, six.string_types) and len(plugin_name.strip()) == 0:
+    if isinstance(plugin_name, str) and len(plugin_name.strip()) == 0:
         raise click.UsageError('Parameter --plugin-name cannot be whitespace or empty string')
 
     kwargs = {}

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -68,7 +67,7 @@ integration_root_group.add_command(work_request_group)
 @cli_util.wrap_exceptions
 def add_oracle_managed_custom_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, hostname, integration_instance_id, dns_type, dns_zone_name, if_match):
 
-    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+    if isinstance(integration_instance_id, str) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -135,7 +134,7 @@ def add_oracle_managed_custom_endpoint(ctx, from_json, wait_for_state, max_wait_
 @cli_util.wrap_exceptions
 def change_integration_instance_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, compartment_id, if_match):
 
-    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+    if isinstance(integration_instance_id, str) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -198,7 +197,7 @@ def change_integration_instance_compartment(ctx, from_json, wait_for_state, max_
 @cli_util.wrap_exceptions
 def change_integration_instance_network_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, network_endpoint_details, if_match):
 
-    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+    if isinstance(integration_instance_id, str) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -265,7 +264,7 @@ This option is a JSON list with items of type VirtualCloudNetwork.  For document
 @cli_util.wrap_exceptions
 def change_integration_instance_network_endpoint_public_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, if_match, network_endpoint_details_allowlisted_http_ips, network_endpoint_details_allowlisted_http_vcns, network_endpoint_details_is_integration_vcn_allowlisted):
 
-    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+    if isinstance(integration_instance_id, str) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -337,7 +336,7 @@ def change_integration_instance_network_endpoint_public_endpoint_details(ctx, fr
 @cli_util.wrap_exceptions
 def change_private_endpoint_outbound_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, private_endpoint_outbound_connection, if_match):
 
-    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+    if isinstance(integration_instance_id, str) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -401,7 +400,7 @@ def change_private_endpoint_outbound_connection(ctx, from_json, wait_for_state, 
 @cli_util.wrap_exceptions
 def change_private_endpoint_outbound_connection_private_endpoint_outbound_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, private_endpoint_outbound_connection_subnet_id, if_match, private_endpoint_outbound_connection_nsg_ids):
 
-    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+    if isinstance(integration_instance_id, str) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -467,7 +466,7 @@ def change_private_endpoint_outbound_connection_private_endpoint_outbound_connec
 @cli_util.wrap_exceptions
 def change_private_endpoint_outbound_connection_none_outbound_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, if_match):
 
-    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+    if isinstance(integration_instance_id, str) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -777,7 +776,7 @@ def create_integration_instance_public_endpoint_details(ctx, from_json, wait_for
 @cli_util.wrap_exceptions
 def delete_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, if_match):
 
-    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+    if isinstance(integration_instance_id, str) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -832,7 +831,7 @@ def delete_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.wrap_exceptions
 def disaster_recovery_failover(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, if_match):
 
-    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+    if isinstance(integration_instance_id, str) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -887,7 +886,7 @@ def disaster_recovery_failover(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def enable_process_automation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, if_match):
 
-    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+    if isinstance(integration_instance_id, str) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -943,7 +942,7 @@ def enable_process_automation(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def extend_data_retention(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, data_retention_period, if_match):
 
-    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+    if isinstance(integration_instance_id, str) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -999,7 +998,7 @@ def extend_data_retention(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def get_integration_instance(ctx, from_json, integration_instance_id):
 
-    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+    if isinstance(integration_instance_id, str) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1021,7 +1020,7 @@ def get_integration_instance(ctx, from_json, integration_instance_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1113,7 +1112,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, compartment_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1168,7 +1167,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, compartment_id,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1270,7 +1269,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
 @cli_util.wrap_exceptions
 def remove_oracle_managed_custom_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, if_match):
 
-    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+    if isinstance(integration_instance_id, str) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1325,7 +1324,7 @@ def remove_oracle_managed_custom_endpoint(ctx, from_json, wait_for_state, max_wa
 @cli_util.wrap_exceptions
 def start_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, if_match):
 
-    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+    if isinstance(integration_instance_id, str) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1380,7 +1379,7 @@ def start_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def stop_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, if_match):
 
-    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+    if isinstance(integration_instance_id, str) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1451,7 +1450,7 @@ This option is a JSON list with items of type UpdateCustomEndpointDetails.  For 
 @cli_util.wrap_exceptions
 def update_integration_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, display_name, integration_instance_type, freeform_tags, defined_tags, security_attributes, is_byol, message_packs, is_file_server_enabled, is_visual_builder_enabled, custom_endpoint, alternate_custom_endpoints, if_match):
 
-    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+    if isinstance(integration_instance_id, str) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or security_attributes or custom_endpoint or alternate_custom_endpoints:

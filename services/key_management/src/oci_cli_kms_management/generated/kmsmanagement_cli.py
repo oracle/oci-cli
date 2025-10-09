@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -69,7 +68,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def backup_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, if_match, backup_location):
 
-    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+    if isinstance(key_id, str) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -132,7 +131,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def backup_key_backup_location_bucket(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, backup_location_namespace, backup_location_bucket_name, backup_location_object_name, if_match):
 
-    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+    if isinstance(key_id, str) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -196,7 +195,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def backup_key_backup_location_uri(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, backup_location_uri, if_match):
 
-    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+    if isinstance(key_id, str) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -259,7 +258,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def cancel_key_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, if_match):
 
-    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+    if isinstance(key_id, str) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -315,10 +314,10 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def cancel_key_version_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, key_version_id, if_match):
 
-    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+    if isinstance(key_id, str) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
-    if isinstance(key_version_id, six.string_types) and len(key_version_id.strip()) == 0:
+    if isinstance(key_version_id, str) and len(key_version_id.strip()) == 0:
         raise click.UsageError('Parameter --key-version-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -374,7 +373,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def change_key_compartment(ctx, from_json, key_id, compartment_id, if_match):
 
-    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+    if isinstance(key_id, str) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -492,7 +491,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def create_key_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, external_key_version_id):
 
-    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+    if isinstance(key_id, str) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -552,7 +551,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def disable_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, if_match):
 
-    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+    if isinstance(key_id, str) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -607,7 +606,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def enable_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, if_match):
 
-    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+    if isinstance(key_id, str) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -658,7 +657,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_key(ctx, from_json, key_id):
 
-    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+    if isinstance(key_id, str) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -685,10 +684,10 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_key_version(ctx, from_json, key_id, key_version_id):
 
-    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+    if isinstance(key_id, str) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
-    if isinstance(key_version_id, six.string_types) and len(key_version_id.strip()) == 0:
+    if isinstance(key_version_id, str) and len(key_version_id.strip()) == 0:
         raise click.UsageError('Parameter --key-version-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -713,7 +712,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def get_replication_status(ctx, from_json, replication_id):
 
-    if isinstance(replication_id, six.string_types) and len(replication_id.strip()) == 0:
+    if isinstance(replication_id, str) and len(replication_id.strip()) == 0:
         raise click.UsageError('Parameter --replication-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -810,7 +809,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def import_key_version(ctx, from_json, key_id, wrapped_import_key, defined_tags, freeform_tags):
 
-    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+    if isinstance(key_id, str) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -856,7 +855,7 @@ def list_key_versions(ctx, from_json, all_pages, page_size, key_id, limit, page,
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+    if isinstance(key_id, str) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1113,7 +1112,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def schedule_key_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, time_of_deletion, if_match):
 
-    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+    if isinstance(key_id, str) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1177,10 +1176,10 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def schedule_key_version_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, key_version_id, time_of_deletion, if_match):
 
-    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+    if isinstance(key_id, str) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
 
-    if isinstance(key_version_id, six.string_types) and len(key_version_id.strip()) == 0:
+    if isinstance(key_version_id, str) and len(key_version_id.strip()) == 0:
         raise click.UsageError('Parameter --key-version-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1249,7 +1248,7 @@ The top level --endpoint parameter must be supplied for this operation. \n[Comma
 @cli_util.wrap_exceptions
 def update_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, is_auto_rotation_enabled, auto_key_rotation_details, defined_tags, display_name, freeform_tags, if_match):
 
-    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+    if isinstance(key_id, str) and len(key_id.strip()) == 0:
         raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
     if not force:
         if auto_key_rotation_details or defined_tags or freeform_tags:

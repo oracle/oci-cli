@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -64,7 +63,7 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.wrap_exceptions
 def get_announcement(ctx, from_json, announcement_id):
 
-    if isinstance(announcement_id, six.string_types) and len(announcement_id.strip()) == 0:
+    if isinstance(announcement_id, str) and len(announcement_id.strip()) == 0:
         raise click.UsageError('Parameter --announcement-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -86,7 +85,7 @@ def get_announcement(ctx, from_json, announcement_id):
 @cli_util.wrap_exceptions
 def get_announcement_compartment(ctx, from_json, announcement_id):
 
-    if isinstance(announcement_id, six.string_types) and len(announcement_id.strip()) == 0:
+    if isinstance(announcement_id, str) and len(announcement_id.strip()) == 0:
         raise click.UsageError('Parameter --announcement-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -110,7 +109,7 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.wrap_exceptions
 def get_announcement_user_status(ctx, from_json, announcement_id):
 
-    if isinstance(announcement_id, six.string_types) and len(announcement_id.strip()) == 0:
+    if isinstance(announcement_id, str) and len(announcement_id.strip()) == 0:
         raise click.UsageError('Parameter --announcement-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -227,7 +226,7 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.wrap_exceptions
 def update_announcement_user_status(ctx, from_json, announcement_id, user_status_announcement_id, user_id, time_acknowledged, if_match):
 
-    if isinstance(announcement_id, six.string_types) and len(announcement_id.strip()) == 0:
+    if isinstance(announcement_id, str) and len(announcement_id.strip()) == 0:
         raise click.UsageError('Parameter --announcement-id cannot be whitespace or empty string')
 
     kwargs = {}

@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -147,7 +146,7 @@ fleet_software_update_root_group.add_command(fsu_discovery_summary_group)
 @cli_util.wrap_exceptions
 def abort_fsu_discovery(ctx, from_json, fsu_discovery_id, if_match):
 
-    if isinstance(fsu_discovery_id, six.string_types) and len(fsu_discovery_id.strip()) == 0:
+    if isinstance(fsu_discovery_id, str) and len(fsu_discovery_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-discovery-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -176,7 +175,7 @@ def abort_fsu_discovery(ctx, from_json, fsu_discovery_id, if_match):
 @cli_util.wrap_exceptions
 def add_fsu_collection_targets(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_collection_id, targets, if_match):
 
-    if isinstance(fsu_collection_id, six.string_types) and len(fsu_collection_id.strip()) == 0:
+    if isinstance(fsu_collection_id, str) and len(fsu_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-collection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -233,7 +232,7 @@ def add_fsu_collection_targets(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.wrap_exceptions
 def cancel_fsu_action(ctx, from_json, fsu_action_id, if_match):
 
-    if isinstance(fsu_action_id, six.string_types) and len(fsu_action_id.strip()) == 0:
+    if isinstance(fsu_action_id, str) and len(fsu_action_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-action-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -262,7 +261,7 @@ def cancel_fsu_action(ctx, from_json, fsu_action_id, if_match):
 @cli_util.wrap_exceptions
 def change_fsu_action_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_action_id, compartment_id, if_match):
 
-    if isinstance(fsu_action_id, six.string_types) and len(fsu_action_id.strip()) == 0:
+    if isinstance(fsu_action_id, str) and len(fsu_action_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-action-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -323,7 +322,7 @@ def change_fsu_action_compartment(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def change_fsu_collection_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_collection_id, compartment_id, if_match):
 
-    if isinstance(fsu_collection_id, six.string_types) and len(fsu_collection_id.strip()) == 0:
+    if isinstance(fsu_collection_id, str) and len(fsu_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-collection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -384,7 +383,7 @@ def change_fsu_collection_compartment(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.wrap_exceptions
 def change_fsu_cycle_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, compartment_id, if_match):
 
-    if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
+    if isinstance(fsu_cycle_id, str) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -442,7 +441,7 @@ def change_fsu_cycle_compartment(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def change_fsu_discovery_compartment(ctx, from_json, fsu_discovery_id, compartment_id, if_match):
 
-    if isinstance(fsu_discovery_id, six.string_types) and len(fsu_discovery_id.strip()) == 0:
+    if isinstance(fsu_discovery_id, str) and len(fsu_discovery_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-discovery-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -481,7 +480,7 @@ def change_fsu_discovery_compartment(ctx, from_json, fsu_discovery_id, compartme
 @cli_util.wrap_exceptions
 def clone_fsu_cycle(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, goal_version_details, display_name, compartment_id, fsu_collection_id, batching_strategy, stage_action_schedule, apply_action_schedule):
 
-    if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
+    if isinstance(fsu_cycle_id, str) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2068,7 +2067,7 @@ def create_fsu_discovery_guest_os_discovery_details(ctx, from_json, wait_for_sta
 @cli_util.wrap_exceptions
 def delete_fsu_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_action_id, if_match):
 
-    if isinstance(fsu_action_id, six.string_types) and len(fsu_action_id.strip()) == 0:
+    if isinstance(fsu_action_id, str) and len(fsu_action_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-action-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2124,7 +2123,7 @@ def delete_fsu_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def delete_fsu_collection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_collection_id, if_match):
 
-    if isinstance(fsu_collection_id, six.string_types) and len(fsu_collection_id.strip()) == 0:
+    if isinstance(fsu_collection_id, str) and len(fsu_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-collection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2181,10 +2180,10 @@ def delete_fsu_collection(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def delete_fsu_collection_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_collection_id, target_id, if_match):
 
-    if isinstance(fsu_collection_id, six.string_types) and len(fsu_collection_id.strip()) == 0:
+    if isinstance(fsu_collection_id, str) and len(fsu_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-collection-id cannot be whitespace or empty string')
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2241,7 +2240,7 @@ def delete_fsu_collection_target(ctx, from_json, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def delete_fsu_cycle(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, if_match):
 
-    if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
+    if isinstance(fsu_cycle_id, str) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2297,7 +2296,7 @@ def delete_fsu_cycle(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def delete_fsu_discovery(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_discovery_id, if_match):
 
-    if isinstance(fsu_discovery_id, six.string_types) and len(fsu_discovery_id.strip()) == 0:
+    if isinstance(fsu_discovery_id, str) and len(fsu_discovery_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-discovery-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2353,7 +2352,7 @@ def delete_fsu_discovery(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_fsu_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_job_id, if_match):
 
-    if isinstance(fsu_job_id, six.string_types) and len(fsu_job_id.strip()) == 0:
+    if isinstance(fsu_job_id, str) and len(fsu_job_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2412,7 +2411,7 @@ def delete_fsu_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def get_fsu_action(ctx, from_json, fsu_action_id):
 
-    if isinstance(fsu_action_id, six.string_types) and len(fsu_action_id.strip()) == 0:
+    if isinstance(fsu_action_id, str) and len(fsu_action_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-action-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2435,7 +2434,7 @@ def get_fsu_action(ctx, from_json, fsu_action_id):
 @cli_util.wrap_exceptions
 def get_fsu_action_output_content(ctx, from_json, file, fsu_action_id):
 
-    if isinstance(fsu_action_id, six.string_types) and len(fsu_action_id.strip()) == 0:
+    if isinstance(fsu_action_id, str) and len(fsu_action_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-action-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2479,7 +2478,7 @@ def get_fsu_action_output_content(ctx, from_json, file, fsu_action_id):
 @cli_util.wrap_exceptions
 def get_fsu_collection(ctx, from_json, fsu_collection_id):
 
-    if isinstance(fsu_collection_id, six.string_types) and len(fsu_collection_id.strip()) == 0:
+    if isinstance(fsu_collection_id, str) and len(fsu_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-collection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2502,10 +2501,10 @@ def get_fsu_collection(ctx, from_json, fsu_collection_id):
 @cli_util.wrap_exceptions
 def get_fsu_collection_target(ctx, from_json, fsu_collection_id, target_id):
 
-    if isinstance(fsu_collection_id, six.string_types) and len(fsu_collection_id.strip()) == 0:
+    if isinstance(fsu_collection_id, str) and len(fsu_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-collection-id cannot be whitespace or empty string')
 
-    if isinstance(target_id, six.string_types) and len(target_id.strip()) == 0:
+    if isinstance(target_id, str) and len(target_id.strip()) == 0:
         raise click.UsageError('Parameter --target-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2528,7 +2527,7 @@ def get_fsu_collection_target(ctx, from_json, fsu_collection_id, target_id):
 @cli_util.wrap_exceptions
 def get_fsu_cycle(ctx, from_json, fsu_cycle_id):
 
-    if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
+    if isinstance(fsu_cycle_id, str) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2550,7 +2549,7 @@ def get_fsu_cycle(ctx, from_json, fsu_cycle_id):
 @cli_util.wrap_exceptions
 def get_fsu_discovery(ctx, from_json, fsu_discovery_id):
 
-    if isinstance(fsu_discovery_id, six.string_types) and len(fsu_discovery_id.strip()) == 0:
+    if isinstance(fsu_discovery_id, str) and len(fsu_discovery_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-discovery-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2572,7 +2571,7 @@ def get_fsu_discovery(ctx, from_json, fsu_discovery_id):
 @cli_util.wrap_exceptions
 def get_fsu_job(ctx, from_json, fsu_job_id):
 
-    if isinstance(fsu_job_id, six.string_types) and len(fsu_job_id.strip()) == 0:
+    if isinstance(fsu_job_id, str) and len(fsu_job_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2595,7 +2594,7 @@ def get_fsu_job(ctx, from_json, fsu_job_id):
 @cli_util.wrap_exceptions
 def get_fsu_job_output_content(ctx, from_json, file, fsu_job_id):
 
-    if isinstance(fsu_job_id, six.string_types) and len(fsu_job_id.strip()) == 0:
+    if isinstance(fsu_job_id, str) and len(fsu_job_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2639,7 +2638,7 @@ def get_fsu_job_output_content(ctx, from_json, file, fsu_job_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2739,7 +2738,7 @@ def list_fsu_collection_targets(ctx, from_json, all_pages, page_size, fsu_collec
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(fsu_collection_id, six.string_types) and len(fsu_collection_id.strip()) == 0:
+    if isinstance(fsu_collection_id, str) and len(fsu_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-collection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2997,7 +2996,7 @@ def list_fsu_discovery_targets(ctx, from_json, all_pages, page_size, fsu_discove
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(fsu_discovery_id, six.string_types) and len(fsu_discovery_id.strip()) == 0:
+    if isinstance(fsu_discovery_id, str) and len(fsu_discovery_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-discovery-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3058,7 +3057,7 @@ def list_fsu_job_outputs(ctx, from_json, all_pages, page_size, fsu_job_id, limit
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(fsu_job_id, six.string_types) and len(fsu_job_id.strip()) == 0:
+    if isinstance(fsu_job_id, str) and len(fsu_job_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3171,7 +3170,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3228,7 +3227,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3344,7 +3343,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
 @cli_util.wrap_exceptions
 def remove_fsu_collection_targets(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_collection_id, removal_strategy, if_match):
 
-    if isinstance(fsu_collection_id, six.string_types) and len(fsu_collection_id.strip()) == 0:
+    if isinstance(fsu_collection_id, str) and len(fsu_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-collection-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3406,7 +3405,7 @@ def remove_fsu_collection_targets(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def remove_fsu_collection_targets_target_ids_remove_targets_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_collection_id, targets, if_match):
 
-    if isinstance(fsu_collection_id, six.string_types) and len(fsu_collection_id.strip()) == 0:
+    if isinstance(fsu_collection_id, str) and len(fsu_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-collection-id cannot be whitespace or empty string')
     if not force:
         if targets:
@@ -3469,7 +3468,7 @@ def remove_fsu_collection_targets_target_ids_remove_targets_details(ctx, from_js
 @cli_util.wrap_exceptions
 def resume_fsu_action(ctx, from_json, fsu_action_id, if_match):
 
-    if isinstance(fsu_action_id, six.string_types) and len(fsu_action_id.strip()) == 0:
+    if isinstance(fsu_action_id, str) and len(fsu_action_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-action-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3494,7 +3493,7 @@ def resume_fsu_action(ctx, from_json, fsu_action_id, if_match):
 @cli_util.wrap_exceptions
 def retry_fsu_job(ctx, from_json, fsu_job_id, if_match):
 
-    if isinstance(fsu_job_id, six.string_types) and len(fsu_job_id.strip()) == 0:
+    if isinstance(fsu_job_id, str) and len(fsu_job_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-job-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -3527,7 +3526,7 @@ def retry_fsu_job(ctx, from_json, fsu_job_id, if_match):
 @cli_util.wrap_exceptions
 def update_fsu_action(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_action_id, type, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(fsu_action_id, six.string_types) and len(fsu_action_id.strip()) == 0:
+    if isinstance(fsu_action_id, str) and len(fsu_action_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-action-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3604,7 +3603,7 @@ def update_fsu_action(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def update_fsu_action_update_rollback_cycle_action_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_action_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(fsu_action_id, six.string_types) and len(fsu_action_id.strip()) == 0:
+    if isinstance(fsu_action_id, str) and len(fsu_action_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-action-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -3683,7 +3682,7 @@ def update_fsu_action_update_rollback_cycle_action_details(ctx, from_json, force
 @cli_util.wrap_exceptions
 def update_fsu_action_update_stage_action_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_action_id, display_name, freeform_tags, defined_tags, schedule_details, if_match):
 
-    if isinstance(fsu_action_id, six.string_types) and len(fsu_action_id.strip()) == 0:
+    if isinstance(fsu_action_id, str) and len(fsu_action_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-action-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or schedule_details:
@@ -3765,7 +3764,7 @@ def update_fsu_action_update_stage_action_details(ctx, from_json, force, wait_fo
 @cli_util.wrap_exceptions
 def update_fsu_action_update_apply_action_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_action_id, display_name, freeform_tags, defined_tags, schedule_details, if_match):
 
-    if isinstance(fsu_action_id, six.string_types) and len(fsu_action_id.strip()) == 0:
+    if isinstance(fsu_action_id, str) and len(fsu_action_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-action-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or schedule_details:
@@ -3847,7 +3846,7 @@ def update_fsu_action_update_apply_action_details(ctx, from_json, force, wait_fo
 @cli_util.wrap_exceptions
 def update_fsu_action_update_rollback_action_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_action_id, display_name, freeform_tags, defined_tags, schedule_details, if_match):
 
-    if isinstance(fsu_action_id, six.string_types) and len(fsu_action_id.strip()) == 0:
+    if isinstance(fsu_action_id, str) and len(fsu_action_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-action-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or schedule_details:
@@ -3929,7 +3928,7 @@ def update_fsu_action_update_rollback_action_details(ctx, from_json, force, wait
 @cli_util.wrap_exceptions
 def update_fsu_action_update_precheck_action_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_action_id, display_name, freeform_tags, defined_tags, schedule_details, if_match):
 
-    if isinstance(fsu_action_id, six.string_types) and len(fsu_action_id.strip()) == 0:
+    if isinstance(fsu_action_id, str) and len(fsu_action_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-action-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or schedule_details:
@@ -4011,7 +4010,7 @@ def update_fsu_action_update_precheck_action_details(ctx, from_json, force, wait
 @cli_util.wrap_exceptions
 def update_fsu_action_update_cleanup_action_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_action_id, display_name, freeform_tags, defined_tags, schedule_details, if_match):
 
-    if isinstance(fsu_action_id, six.string_types) and len(fsu_action_id.strip()) == 0:
+    if isinstance(fsu_action_id, str) and len(fsu_action_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-action-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or schedule_details:
@@ -4092,7 +4091,7 @@ def update_fsu_action_update_cleanup_action_details(ctx, from_json, force, wait_
 @cli_util.wrap_exceptions
 def update_fsu_collection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_collection_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(fsu_collection_id, six.string_types) and len(fsu_collection_id.strip()) == 0:
+    if isinstance(fsu_collection_id, str) and len(fsu_collection_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-collection-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -4172,7 +4171,7 @@ def update_fsu_collection(ctx, from_json, force, wait_for_state, max_wait_second
 @cli_util.wrap_exceptions
 def update_fsu_cycle(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, type, display_name, goal_version_details, batching_strategy, diagnostics_collection, freeform_tags, defined_tags, if_match):
 
-    if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
+    if isinstance(fsu_cycle_id, str) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
     if not force:
         if goal_version_details or batching_strategy or diagnostics_collection or freeform_tags or defined_tags:
@@ -4265,7 +4264,7 @@ def update_fsu_cycle(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def update_fsu_cycle_update_patch_fsu_cycle(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, batching_strategy, diagnostics_collection, freeform_tags, defined_tags, is_ignore_patches, is_ignore_missing_patches, max_drain_timeout_in_seconds, is_keep_placement, if_match):
 
-    if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
+    if isinstance(fsu_cycle_id, str) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
     if not force:
         if goal_version_details or batching_strategy or diagnostics_collection or freeform_tags or defined_tags or is_ignore_missing_patches:
@@ -4368,7 +4367,7 @@ def update_fsu_cycle_update_patch_fsu_cycle(ctx, from_json, force, wait_for_stat
 @cli_util.wrap_exceptions
 def update_fsu_cycle_update_upgrade_fsu_cycle(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, batching_strategy, diagnostics_collection, freeform_tags, defined_tags, upgrade_details, if_match):
 
-    if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
+    if isinstance(fsu_cycle_id, str) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
     if not force:
         if goal_version_details or batching_strategy or diagnostics_collection or freeform_tags or defined_tags or upgrade_details:
@@ -4560,7 +4559,7 @@ def update_fsu_cycle_exadb_stack_fsu_goal_version_details(ctx, from_json, force,
 @cli_util.wrap_exceptions
 def update_fsu_cycle_version_fsu_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, goal_version_details_version, display_name, batching_strategy, diagnostics_collection, freeform_tags, defined_tags, if_match, goal_version_details_home_policy, goal_version_details_new_home_prefix):
 
-    if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
+    if isinstance(fsu_cycle_id, str) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
     if not force:
         if batching_strategy or diagnostics_collection or freeform_tags or defined_tags:
@@ -4657,7 +4656,7 @@ def update_fsu_cycle_version_fsu_target_details(ctx, from_json, force, wait_for_
 @cli_util.wrap_exceptions
 def update_fsu_cycle_image_id_fsu_target_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, goal_version_details_software_image_id, display_name, batching_strategy, diagnostics_collection, freeform_tags, defined_tags, if_match, goal_version_details_home_policy, goal_version_details_new_home_prefix):
 
-    if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
+    if isinstance(fsu_cycle_id, str) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
     if not force:
         if batching_strategy or diagnostics_collection or freeform_tags or defined_tags:
@@ -4752,7 +4751,7 @@ def update_fsu_cycle_image_id_fsu_target_details(ctx, from_json, force, wait_for
 @cli_util.wrap_exceptions
 def update_fsu_cycle_update_sequential_batching_strategy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, diagnostics_collection, freeform_tags, defined_tags, if_match, batching_strategy_is_force_rolling):
 
-    if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
+    if isinstance(fsu_cycle_id, str) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
     if not force:
         if goal_version_details or diagnostics_collection or freeform_tags or defined_tags:
@@ -4842,7 +4841,7 @@ def update_fsu_cycle_update_sequential_batching_strategy_details(ctx, from_json,
 @cli_util.wrap_exceptions
 def update_fsu_cycle_update_non_rolling_batching_strategy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, diagnostics_collection, freeform_tags, defined_tags, if_match):
 
-    if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
+    if isinstance(fsu_cycle_id, str) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
     if not force:
         if goal_version_details or diagnostics_collection or freeform_tags or defined_tags:
@@ -4931,7 +4930,7 @@ def update_fsu_cycle_update_non_rolling_batching_strategy_details(ctx, from_json
 @cli_util.wrap_exceptions
 def update_fsu_cycle_update_service_availability_factor_batching_strategy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, diagnostics_collection, freeform_tags, defined_tags, if_match, batching_strategy_percentage, batching_strategy_is_force_rolling):
 
-    if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
+    if isinstance(fsu_cycle_id, str) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
     if not force:
         if goal_version_details or diagnostics_collection or freeform_tags or defined_tags:
@@ -5026,7 +5025,7 @@ def update_fsu_cycle_update_service_availability_factor_batching_strategy_detail
 @cli_util.wrap_exceptions
 def update_fsu_cycle_update_fifty_fifty_batching_strategy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, diagnostics_collection, freeform_tags, defined_tags, if_match, batching_strategy_is_wait_for_batch_resume, batching_strategy_is_force_rolling):
 
-    if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
+    if isinstance(fsu_cycle_id, str) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
     if not force:
         if goal_version_details or diagnostics_collection or freeform_tags or defined_tags:
@@ -5119,7 +5118,7 @@ def update_fsu_cycle_update_fifty_fifty_batching_strategy_details(ctx, from_json
 @cli_util.wrap_exceptions
 def update_fsu_cycle_none_batching_strategy_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_cycle_id, display_name, goal_version_details, diagnostics_collection, freeform_tags, defined_tags, if_match):
 
-    if isinstance(fsu_cycle_id, six.string_types) and len(fsu_cycle_id.strip()) == 0:
+    if isinstance(fsu_cycle_id, str) and len(fsu_cycle_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-cycle-id cannot be whitespace or empty string')
     if not force:
         if goal_version_details or diagnostics_collection or freeform_tags or defined_tags:
@@ -5201,7 +5200,7 @@ def update_fsu_cycle_none_batching_strategy_details(ctx, from_json, force, wait_
 @cli_util.wrap_exceptions
 def update_fsu_discovery(ctx, from_json, force, fsu_discovery_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(fsu_discovery_id, six.string_types) and len(fsu_discovery_id.strip()) == 0:
+    if isinstance(fsu_discovery_id, str) and len(fsu_discovery_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-discovery-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
@@ -5250,7 +5249,7 @@ def update_fsu_discovery(ctx, from_json, force, fsu_discovery_id, display_name, 
 @cli_util.wrap_exceptions
 def update_fsu_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fsu_job_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(fsu_job_id, six.string_types) and len(fsu_job_id.strip()) == 0:
+    if isinstance(fsu_job_id, str) and len(fsu_job_id.strip()) == 0:
         raise click.UsageError('Parameter --fsu-job-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

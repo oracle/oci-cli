@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -53,7 +52,7 @@ distributed_db_private_endpoint_service_root_group.add_command(distributed_datab
 @cli_util.wrap_exceptions
 def change_distributed_database_private_endpoint_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, distributed_database_private_endpoint_id, if_match):
 
-    if isinstance(distributed_database_private_endpoint_id, six.string_types) and len(distributed_database_private_endpoint_id.strip()) == 0:
+    if isinstance(distributed_database_private_endpoint_id, str) and len(distributed_database_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -187,7 +186,7 @@ def create_distributed_database_private_endpoint(ctx, from_json, wait_for_state,
 @cli_util.wrap_exceptions
 def delete_distributed_database_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_database_private_endpoint_id, if_match):
 
-    if isinstance(distributed_database_private_endpoint_id, six.string_types) and len(distributed_database_private_endpoint_id.strip()) == 0:
+    if isinstance(distributed_database_private_endpoint_id, str) and len(distributed_database_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -239,7 +238,7 @@ def delete_distributed_database_private_endpoint(ctx, from_json, wait_for_state,
 @cli_util.wrap_exceptions
 def get_distributed_database_private_endpoint(ctx, from_json, distributed_database_private_endpoint_id, if_none_match):
 
-    if isinstance(distributed_database_private_endpoint_id, six.string_types) and len(distributed_database_private_endpoint_id.strip()) == 0:
+    if isinstance(distributed_database_private_endpoint_id, str) and len(distributed_database_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -327,7 +326,7 @@ def list_distributed_database_private_endpoints(ctx, from_json, all_pages, page_
 @cli_util.wrap_exceptions
 def reinstate_proxy_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_database_private_endpoint_id, if_match):
 
-    if isinstance(distributed_database_private_endpoint_id, six.string_types) and len(distributed_database_private_endpoint_id.strip()) == 0:
+    if isinstance(distributed_database_private_endpoint_id, str) and len(distributed_database_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-private-endpoint-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -388,7 +387,7 @@ def reinstate_proxy_instance(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def update_distributed_database_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_database_private_endpoint_id, display_name, description, nsg_ids, freeform_tags, defined_tags, if_match):
 
-    if isinstance(distributed_database_private_endpoint_id, six.string_types) and len(distributed_database_private_endpoint_id.strip()) == 0:
+    if isinstance(distributed_database_private_endpoint_id, str) and len(distributed_database_private_endpoint_id.strip()) == 0:
         raise click.UsageError('Parameter --distributed-database-private-endpoint-id cannot be whitespace or empty string')
     if not force:
         if nsg_ids or freeform_tags or defined_tags:

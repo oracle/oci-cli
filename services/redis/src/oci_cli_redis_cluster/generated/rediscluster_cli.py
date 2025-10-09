@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -88,7 +87,7 @@ redis_cluster_root_group.add_command(node_summary_group)
 @cli_util.wrap_exceptions
 def attach_oci_cache_users(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, redis_cluster_id, oci_cache_users, if_match):
 
-    if isinstance(redis_cluster_id, six.string_types) and len(redis_cluster_id.strip()) == 0:
+    if isinstance(redis_cluster_id, str) and len(redis_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --redis-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -146,7 +145,7 @@ def attach_oci_cache_users(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def cancel_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -175,7 +174,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def change_redis_cluster_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, redis_cluster_id, compartment_id, if_match):
 
-    if isinstance(redis_cluster_id, six.string_types) and len(redis_cluster_id.strip()) == 0:
+    if isinstance(redis_cluster_id, str) and len(redis_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --redis-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -329,7 +328,7 @@ def create_redis_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_redis_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, redis_cluster_id, if_match):
 
-    if isinstance(redis_cluster_id, six.string_types) and len(redis_cluster_id.strip()) == 0:
+    if isinstance(redis_cluster_id, str) and len(redis_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --redis-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -385,7 +384,7 @@ def delete_redis_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def detach_oci_cache_users(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, redis_cluster_id, oci_cache_users, if_match):
 
-    if isinstance(redis_cluster_id, six.string_types) and len(redis_cluster_id.strip()) == 0:
+    if isinstance(redis_cluster_id, str) and len(redis_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --redis-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -441,7 +440,7 @@ def detach_oci_cache_users(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.wrap_exceptions
 def get_redis_cluster(ctx, from_json, redis_cluster_id):
 
-    if isinstance(redis_cluster_id, six.string_types) and len(redis_cluster_id.strip()) == 0:
+    if isinstance(redis_cluster_id, str) and len(redis_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --redis-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -463,7 +462,7 @@ def get_redis_cluster(ctx, from_json, redis_cluster_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -496,7 +495,7 @@ def list_attached_oci_cache_users(ctx, from_json, all_pages, page_size, redis_cl
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(redis_cluster_id, six.string_types) and len(redis_cluster_id.strip()) == 0:
+    if isinstance(redis_cluster_id, str) and len(redis_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --redis-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -558,7 +557,7 @@ def list_redis_cluster_nodes(ctx, from_json, all_pages, page_size, redis_cluster
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(redis_cluster_id, six.string_types) and len(redis_cluster_id.strip()) == 0:
+    if isinstance(redis_cluster_id, str) and len(redis_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --redis-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -679,7 +678,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -736,7 +735,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -863,7 +862,7 @@ Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"
 @cli_util.wrap_exceptions
 def update_redis_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, redis_cluster_id, oci_cache_config_set_id, shard_count, display_name, node_count, node_memory_in_gbs, software_version, nsg_ids, security_attributes, freeform_tags, defined_tags, if_match):
 
-    if isinstance(redis_cluster_id, six.string_types) and len(redis_cluster_id.strip()) == 0:
+    if isinstance(redis_cluster_id, str) and len(redis_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --redis-cluster-id cannot be whitespace or empty string')
     if not force:
         if nsg_ids or security_attributes or freeform_tags or defined_tags:

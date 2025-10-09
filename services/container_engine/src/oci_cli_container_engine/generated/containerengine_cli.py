@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
@@ -132,7 +131,7 @@ ce_root_group.add_command(cluster_options_group)
 @cli_util.wrap_exceptions
 def cluster_migrate_to_native_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, endpoint_config, decommission_delay_duration, if_match):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -195,7 +194,7 @@ def cluster_migrate_to_native_vcn(ctx, from_json, wait_for_state, max_wait_secon
 @cli_util.wrap_exceptions
 def complete_credential_rotation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, if_match):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -343,7 +342,7 @@ def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiration, endpoint_parameterconflict):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -739,7 +738,7 @@ def create_virtual_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def create_workload_mapping(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, namespace, mapped_compartment_id, freeform_tags, defined_tags):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -801,7 +800,7 @@ def create_workload_mapping(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def delete_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, if_match):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -861,10 +860,10 @@ def delete_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def delete_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, node_pool_id, node_id, is_decrement_size, if_match, override_eviction_grace_duration, is_force_deletion_after_override_grace_duration):
 
-    if isinstance(node_pool_id, six.string_types) and len(node_pool_id.strip()) == 0:
+    if isinstance(node_pool_id, str) and len(node_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --node-pool-id cannot be whitespace or empty string')
 
-    if isinstance(node_id, six.string_types) and len(node_id.strip()) == 0:
+    if isinstance(node_id, str) and len(node_id.strip()) == 0:
         raise click.UsageError('Parameter --node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -929,7 +928,7 @@ def delete_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.wrap_exceptions
 def delete_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, node_pool_id, if_match, override_eviction_grace_duration, is_force_deletion_after_override_grace_duration):
 
-    if isinstance(node_pool_id, six.string_types) and len(node_pool_id.strip()) == 0:
+    if isinstance(node_pool_id, str) and len(node_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --node-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -991,7 +990,7 @@ def delete_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def delete_virtual_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, virtual_node_pool_id, if_match, override_eviction_grace_duration_vnp, is_force_deletion_after_override_grace_duration_vnp):
 
-    if isinstance(virtual_node_pool_id, six.string_types) and len(virtual_node_pool_id.strip()) == 0:
+    if isinstance(virtual_node_pool_id, str) and len(virtual_node_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-node-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1048,7 +1047,7 @@ def delete_virtual_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def delete_work_request(ctx, from_json, work_request_id, if_match):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1075,10 +1074,10 @@ def delete_work_request(ctx, from_json, work_request_id, if_match):
 @cli_util.wrap_exceptions
 def delete_workload_mapping(ctx, from_json, cluster_id, workload_mapping_id, if_match):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
-    if isinstance(workload_mapping_id, six.string_types) and len(workload_mapping_id.strip()) == 0:
+    if isinstance(workload_mapping_id, str) and len(workload_mapping_id.strip()) == 0:
         raise click.UsageError('Parameter --workload-mapping-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1110,10 +1109,10 @@ def delete_workload_mapping(ctx, from_json, cluster_id, workload_mapping_id, if_
 @cli_util.wrap_exceptions
 def disable_addon(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, addon_name, is_remove_existing_add_on, if_match):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
-    if isinstance(addon_name, six.string_types) and len(addon_name.strip()) == 0:
+    if isinstance(addon_name, str) and len(addon_name.strip()) == 0:
         raise click.UsageError('Parameter --addon-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1167,10 +1166,10 @@ def disable_addon(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.wrap_exceptions
 def get_addon(ctx, from_json, cluster_id, addon_name):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
-    if isinstance(addon_name, six.string_types) and len(addon_name.strip()) == 0:
+    if isinstance(addon_name, str) and len(addon_name.strip()) == 0:
         raise click.UsageError('Parameter --addon-name cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1194,7 +1193,7 @@ def get_addon(ctx, from_json, cluster_id, addon_name):
 @cli_util.wrap_exceptions
 def get_cluster(ctx, from_json, cluster_id, should_include_oidc_config_file):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1218,7 +1217,7 @@ def get_cluster(ctx, from_json, cluster_id, should_include_oidc_config_file):
 @cli_util.wrap_exceptions
 def get_cluster_migrate_to_native_vcn_status(ctx, from_json, cluster_id):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1241,7 +1240,7 @@ def get_cluster_migrate_to_native_vcn_status(ctx, from_json, cluster_id):
 @cli_util.wrap_exceptions
 def get_cluster_options(ctx, from_json, cluster_option_id, compartment_id):
 
-    if isinstance(cluster_option_id, six.string_types) and len(cluster_option_id.strip()) == 0:
+    if isinstance(cluster_option_id, str) and len(cluster_option_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-option-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1265,7 +1264,7 @@ def get_cluster_options(ctx, from_json, cluster_option_id, compartment_id):
 @cli_util.wrap_exceptions
 def get_credential_rotation_status(ctx, from_json, cluster_id):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1287,7 +1286,7 @@ def get_credential_rotation_status(ctx, from_json, cluster_id):
 @cli_util.wrap_exceptions
 def get_node_pool(ctx, from_json, node_pool_id):
 
-    if isinstance(node_pool_id, six.string_types) and len(node_pool_id.strip()) == 0:
+    if isinstance(node_pool_id, str) and len(node_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --node-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1310,7 +1309,7 @@ def get_node_pool(ctx, from_json, node_pool_id):
 @cli_util.wrap_exceptions
 def get_node_pool_options(ctx, from_json, node_pool_option_id, compartment_id):
 
-    if isinstance(node_pool_option_id, six.string_types) and len(node_pool_option_id.strip()) == 0:
+    if isinstance(node_pool_option_id, str) and len(node_pool_option_id.strip()) == 0:
         raise click.UsageError('Parameter --node-pool-option-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1335,10 +1334,10 @@ def get_node_pool_options(ctx, from_json, node_pool_option_id, compartment_id):
 @cli_util.wrap_exceptions
 def get_virtual_node(ctx, from_json, virtual_node_pool_id, virtual_node_id):
 
-    if isinstance(virtual_node_pool_id, six.string_types) and len(virtual_node_pool_id.strip()) == 0:
+    if isinstance(virtual_node_pool_id, str) and len(virtual_node_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-node-pool-id cannot be whitespace or empty string')
 
-    if isinstance(virtual_node_id, six.string_types) and len(virtual_node_id.strip()) == 0:
+    if isinstance(virtual_node_id, str) and len(virtual_node_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1361,7 +1360,7 @@ def get_virtual_node(ctx, from_json, virtual_node_pool_id, virtual_node_id):
 @cli_util.wrap_exceptions
 def get_virtual_node_pool(ctx, from_json, virtual_node_pool_id):
 
-    if isinstance(virtual_node_pool_id, six.string_types) and len(virtual_node_pool_id.strip()) == 0:
+    if isinstance(virtual_node_pool_id, str) and len(virtual_node_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-node-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1383,7 +1382,7 @@ def get_virtual_node_pool(ctx, from_json, virtual_node_pool_id):
 @cli_util.wrap_exceptions
 def get_work_request(ctx, from_json, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1406,10 +1405,10 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.wrap_exceptions
 def get_workload_mapping(ctx, from_json, cluster_id, workload_mapping_id):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
-    if isinstance(workload_mapping_id, six.string_types) and len(workload_mapping_id.strip()) == 0:
+    if isinstance(workload_mapping_id, str) and len(workload_mapping_id.strip()) == 0:
         raise click.UsageError('Parameter --workload-mapping-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1442,7 +1441,7 @@ This option is a JSON list with items of type AddonConfiguration.  For documenta
 @cli_util.wrap_exceptions
 def install_addon(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, addon_name, version_parameterconflict, configurations, is_override_existing, if_match):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1576,7 +1575,7 @@ def list_addons(ctx, from_json, all_pages, page_size, cluster_id, limit, page, s
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1882,7 +1881,7 @@ def list_virtual_nodes(ctx, from_json, all_pages, page_size, virtual_node_pool_i
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(virtual_node_pool_id, six.string_types) and len(virtual_node_pool_id.strip()) == 0:
+    if isinstance(virtual_node_pool_id, str) and len(virtual_node_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-node-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1934,7 +1933,7 @@ def list_virtual_nodes(ctx, from_json, all_pages, page_size, virtual_node_pool_i
 @cli_util.wrap_exceptions
 def list_work_request_errors(ctx, from_json, all_pages, compartment_id, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1959,7 +1958,7 @@ def list_work_request_errors(ctx, from_json, all_pages, compartment_id, work_req
 @cli_util.wrap_exceptions
 def list_work_request_logs(ctx, from_json, all_pages, compartment_id, work_request_id):
 
-    if isinstance(work_request_id, six.string_types) and len(work_request_id.strip()) == 0:
+    if isinstance(work_request_id, str) and len(work_request_id.strip()) == 0:
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2057,7 +2056,7 @@ def list_workload_mappings(ctx, from_json, all_pages, page_size, cluster_id, lim
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2110,10 +2109,10 @@ def list_workload_mappings(ctx, from_json, all_pages, page_size, cluster_id, lim
 @cli_util.wrap_exceptions
 def reboot_cluster_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, node_id, node_eviction_settings):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
-    if isinstance(node_id, six.string_types) and len(node_id.strip()) == 0:
+    if isinstance(node_id, str) and len(node_id.strip()) == 0:
         raise click.UsageError('Parameter --node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2175,10 +2174,10 @@ def reboot_cluster_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def replace_boot_volume_cluster_node(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, node_id, node_eviction_settings):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
-    if isinstance(node_id, six.string_types) and len(node_id.strip()) == 0:
+    if isinstance(node_id, str) and len(node_id.strip()) == 0:
         raise click.UsageError('Parameter --node-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2240,7 +2239,7 @@ def replace_boot_volume_cluster_node(ctx, from_json, wait_for_state, max_wait_se
 @cli_util.wrap_exceptions
 def start_credential_rotation(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, auto_completion_delay_duration, if_match):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2306,10 +2305,10 @@ This option is a JSON list with items of type AddonConfiguration.  For documenta
 @cli_util.wrap_exceptions
 def update_addon(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, addon_name, version_parameterconflict, configurations, if_match):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
-    if isinstance(addon_name, six.string_types) and len(addon_name.strip()) == 0:
+    if isinstance(addon_name, str) and len(addon_name.strip()) == 0:
         raise click.UsageError('Parameter --addon-name cannot be whitespace or empty string')
     if not force:
         if configurations:
@@ -2387,7 +2386,7 @@ def update_addon(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 @cli_util.wrap_exceptions
 def update_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, name, kubernetes_version, options, freeform_tags, defined_tags, image_policy_config, type, if_match):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
     if not force:
         if options or freeform_tags or defined_tags or image_policy_config:
@@ -2473,7 +2472,7 @@ def update_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 @cli_util.wrap_exceptions
 def update_cluster_endpoint_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, nsg_ids, is_public_ip_enabled, if_match):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -2558,7 +2557,7 @@ This option is a JSON list with items of type KeyValue.  For documentation on Ke
 @cli_util.wrap_exceptions
 def update_node_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, node_pool_id, name, kubernetes_version, initial_node_labels, quantity_per_subnet, subnet_ids, node_config_details, node_metadata, node_source_details, ssh_public_key, node_shape, node_shape_config, freeform_tags, defined_tags, node_eviction_node_pool_settings, node_pool_cycling_details, if_match, override_eviction_grace_duration, is_force_deletion_after_override_grace_duration):
 
-    if isinstance(node_pool_id, six.string_types) and len(node_pool_id.strip()) == 0:
+    if isinstance(node_pool_id, str) and len(node_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --node-pool-id cannot be whitespace or empty string')
     if not force:
         if initial_node_labels or subnet_ids or node_config_details or node_metadata or node_source_details or node_shape_config or freeform_tags or defined_tags or node_eviction_node_pool_settings or node_pool_cycling_details:
@@ -2691,7 +2690,7 @@ This option is a JSON list with items of type KeyValue.  For documentation on Ke
 @cli_util.wrap_exceptions
 def update_node_pool_node_source_via_image_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, node_pool_id, node_source_details_image_id, name, kubernetes_version, initial_node_labels, quantity_per_subnet, subnet_ids, node_config_details, node_metadata, ssh_public_key, node_shape, node_shape_config, freeform_tags, defined_tags, node_eviction_node_pool_settings, node_pool_cycling_details, if_match, override_eviction_grace_duration, is_force_deletion_after_override_grace_duration, node_source_details_boot_volume_size_in_gbs):
 
-    if isinstance(node_pool_id, six.string_types) and len(node_pool_id.strip()) == 0:
+    if isinstance(node_pool_id, str) and len(node_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --node-pool-id cannot be whitespace or empty string')
     if not force:
         if initial_node_labels or subnet_ids or node_config_details or node_metadata or node_shape_config or freeform_tags or defined_tags or node_eviction_node_pool_settings or node_pool_cycling_details:
@@ -2824,7 +2823,7 @@ This option is a JSON list with items of type PlacementConfiguration.  For docum
 @cli_util.wrap_exceptions
 def update_virtual_node_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, virtual_node_pool_id, display_name, initial_virtual_node_labels, taints, size, placement_configurations, nsg_ids, pod_configuration, freeform_tags, defined_tags, virtual_node_tags, if_match):
 
-    if isinstance(virtual_node_pool_id, six.string_types) and len(virtual_node_pool_id.strip()) == 0:
+    if isinstance(virtual_node_pool_id, str) and len(virtual_node_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-node-pool-id cannot be whitespace or empty string')
     if not force:
         if initial_virtual_node_labels or taints or placement_configurations or nsg_ids or pod_configuration or freeform_tags or defined_tags or virtual_node_tags:
@@ -2922,10 +2921,10 @@ def update_virtual_node_pool(ctx, from_json, force, wait_for_state, max_wait_sec
 @cli_util.wrap_exceptions
 def update_workload_mapping(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cluster_id, workload_mapping_id, mapped_compartment_id, freeform_tags, defined_tags, if_match):
 
-    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+    if isinstance(cluster_id, str) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
-    if isinstance(workload_mapping_id, six.string_types) and len(workload_mapping_id.strip()) == 0:
+    if isinstance(workload_mapping_id, str) and len(workload_mapping_id.strip()) == 0:
         raise click.UsageError('Parameter --workload-mapping-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:

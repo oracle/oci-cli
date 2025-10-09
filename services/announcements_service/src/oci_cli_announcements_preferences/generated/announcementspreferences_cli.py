@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -84,7 +83,7 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.wrap_exceptions
 def get_announcements_preference(ctx, from_json, preference_id):
 
-    if isinstance(preference_id, six.string_types) and len(preference_id.strip()) == 0:
+    if isinstance(preference_id, str) and len(preference_id.strip()) == 0:
         raise click.UsageError('Parameter --preference-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -164,7 +163,7 @@ This call is subject to an Announcements limit that applies to the total number 
 @cli_util.wrap_exceptions
 def update_announcements_preference(ctx, from_json, preference_id, type, preference_type, is_unsubscribed, compartment_id, preferred_time_zone, if_match):
 
-    if isinstance(preference_id, six.string_types) and len(preference_id.strip()) == 0:
+    if isinstance(preference_id, str) and len(preference_id.strip()) == 0:
         raise click.UsageError('Parameter --preference-id cannot be whitespace or empty string')
 
     kwargs = {}

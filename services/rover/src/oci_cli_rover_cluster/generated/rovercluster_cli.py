@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -50,7 +49,7 @@ rover_cluster_root_group.add_command(rover_cluster_certificate_group)
 @cli_util.wrap_exceptions
 def change_rover_cluster_compartment(ctx, from_json, rover_cluster_id, compartment_id, if_match):
 
-    if isinstance(rover_cluster_id, six.string_types) and len(rover_cluster_id.strip()) == 0:
+    if isinstance(rover_cluster_id, str) and len(rover_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -231,7 +230,7 @@ def create_rover_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def delete_rover_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, rover_cluster_id, if_match):
 
-    if isinstance(rover_cluster_id, six.string_types) and len(rover_cluster_id.strip()) == 0:
+    if isinstance(rover_cluster_id, str) and len(rover_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -290,7 +289,7 @@ def delete_rover_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.wrap_exceptions
 def get_rover_cluster(ctx, from_json, rover_cluster_id):
 
-    if isinstance(rover_cluster_id, six.string_types) and len(rover_cluster_id.strip()) == 0:
+    if isinstance(rover_cluster_id, str) and len(rover_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -312,7 +311,7 @@ def get_rover_cluster(ctx, from_json, rover_cluster_id):
 @cli_util.wrap_exceptions
 def get_rover_cluster_certificate(ctx, from_json, rover_cluster_id):
 
-    if isinstance(rover_cluster_id, six.string_types) and len(rover_cluster_id.strip()) == 0:
+    if isinstance(rover_cluster_id, str) and len(rover_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -402,7 +401,7 @@ def list_rover_clusters(ctx, from_json, all_pages, page_size, compartment_id, di
 @cli_util.wrap_exceptions
 def request_additional_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, rover_cluster_id, number_of_additional_nodes, if_match):
 
-    if isinstance(rover_cluster_id, six.string_types) and len(rover_cluster_id.strip()) == 0:
+    if isinstance(rover_cluster_id, str) and len(rover_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-cluster-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -490,7 +489,7 @@ This option is a JSON list with items of type RoverWorkload.  For documentation 
 @cli_util.wrap_exceptions
 def update_rover_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, rover_cluster_id, display_name, cluster_size, customer_shipping_address, cluster_workloads, super_user_password, lifecycle_state, lifecycle_state_details, unlock_passphrase, enclosure_type, point_of_contact, point_of_contact_phone_number, shipping_preference, oracle_shipping_tracking_url, subscription_id, shipping_vendor, time_pickup_expected, is_import_requested, import_compartment_id, import_file_bucket, data_validation_code, freeform_tags, defined_tags, system_tags, if_match):
 
-    if isinstance(rover_cluster_id, six.string_types) and len(rover_cluster_id.strip()) == 0:
+    if isinstance(rover_cluster_id, str) and len(rover_cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --rover-cluster-id cannot be whitespace or empty string')
     if not force:
         if customer_shipping_address or cluster_workloads or freeform_tags or defined_tags or system_tags:

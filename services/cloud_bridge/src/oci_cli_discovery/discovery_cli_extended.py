@@ -3,7 +3,6 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 import click  # noqa: F401
 import json  # noqa: F401
@@ -193,7 +192,7 @@ def update_asset_source(ctx, from_json, force, wait_for_state, max_wait_seconds,
                         vcenter_endpoint, discovery_credentials, replication_credentials,
                         are_historical_metrics_collected, are_realtime_metrics_collected, is_cost_information_collected,
                         discovery_schedule_id, if_match):
-    if isinstance(asset_source_id, six.string_types) and len(asset_source_id.strip()) == 0:
+    if isinstance(asset_source_id, str) and len(asset_source_id.strip()) == 0:
         raise click.UsageError('Parameter --asset-source-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags or system_tags:

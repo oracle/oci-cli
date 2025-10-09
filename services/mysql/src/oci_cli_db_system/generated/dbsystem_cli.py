@@ -6,7 +6,6 @@
 from __future__ import print_function
 import click
 import oci  # noqa: F401
-import six  # noqa: F401
 import sys  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
@@ -62,7 +61,7 @@ db_system_root_group.add_command(db_system_group)
 @cli_util.wrap_exceptions
 def add_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, shape_name, cluster_size, is_lakehouse_enabled, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1150,7 +1149,7 @@ def create_db_system_create_db_system_source_from_pitr_details(ctx, from_json, w
 @cli_util.wrap_exceptions
 def delete_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1208,7 +1207,7 @@ def delete_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.wrap_exceptions
 def delete_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1264,7 +1263,7 @@ def delete_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.wrap_exceptions
 def generate_heat_wave_cluster_memory_estimate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1316,7 +1315,7 @@ def generate_heat_wave_cluster_memory_estimate(ctx, from_json, wait_for_state, m
 @cli_util.wrap_exceptions
 def get_db_system(ctx, from_json, db_system_id, if_none_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1341,7 +1340,7 @@ def get_db_system(ctx, from_json, db_system_id, if_none_match):
 @cli_util.wrap_exceptions
 def get_heat_wave_cluster(ctx, from_json, db_system_id, if_none_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1365,7 +1364,7 @@ def get_heat_wave_cluster(ctx, from_json, db_system_id, if_none_match):
 @cli_util.wrap_exceptions
 def get_heat_wave_cluster_memory_estimate(ctx, from_json, db_system_id):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1467,7 +1466,7 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, is_hea
 @cli_util.wrap_exceptions
 def restart_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, shutdown_type, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1529,7 +1528,7 @@ def restart_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.wrap_exceptions
 def restart_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1586,7 +1585,7 @@ def restart_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.wrap_exceptions
 def start_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1643,7 +1642,7 @@ def start_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.wrap_exceptions
 def start_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1703,7 +1702,7 @@ A stopped DB System is not billed. \n[Command Reference](stopDbSystem)""")
 @cli_util.wrap_exceptions
 def stop_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, shutdown_type, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1765,7 +1764,7 @@ def stop_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @cli_util.wrap_exceptions
 def stop_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
@@ -1876,7 +1875,7 @@ This option is a JSON list with items of type CustomerContact.  For documentatio
 @cli_util.wrap_exceptions
 def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, display_name, description, subnet_id, nsg_ids, security_attributes, database_mode, access_mode, rest, is_highly_available, availability_domain, fault_domain, shape_name, mysql_version, configuration_id, admin_username, admin_password, data_storage_size_in_gbs, data_storage, hostname_label, ip_address, port, port_x, backup_policy, maintenance, freeform_tags, defined_tags, deletion_policy, crash_recovery, database_management, secure_connections, encrypt_data, customer_contacts, read_endpoint, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
     if not force:
         if nsg_ids or security_attributes or rest or data_storage or backup_policy or maintenance or freeform_tags or defined_tags or deletion_policy or secure_connections or encrypt_data or customer_contacts or read_endpoint:
@@ -2043,7 +2042,7 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 @cli_util.wrap_exceptions
 def update_heat_wave_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, shape_name, cluster_size, is_lakehouse_enabled, if_match):
 
-    if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
+    if isinstance(db_system_id, str) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
