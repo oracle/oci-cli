@@ -30,7 +30,7 @@ with open_relative("README.rst") as f:
     readme = f.read()
 
 requires = [
-    'oci==2.161.0',
+    'oci==2.161.1',
     'arrow>=1.0.0',
     'certifi>=2025.1.31',
     'click==8.0.4',
@@ -44,7 +44,7 @@ requires = [
     'PyYAML>=5.4,<=6.0.2',
     'prompt-toolkit>=3.0.38,<=3.0.43; python_version > "3.6"',
     'prompt-toolkit==3.0.29; python_version == "3.6"',
-    'setuptools>70.0.0; python_version == "3.12"'
+    'setuptools>=78.1.1; python_version >= "3.12"' # distutils is deprecated from 3.12, however setuptools still provides it
 ]
 
 extras = {
@@ -106,7 +106,11 @@ setup_parameters = {
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9"
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13"
     ]
 }
 
