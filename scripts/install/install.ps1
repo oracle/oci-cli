@@ -37,7 +37,7 @@
 
     Default options:
     - Install required version of Python if not already installed (to $env:USERPROFILE\Python)
-    - Create virtualenv in $env:USERPROFILE\lib\oracle-cli
+    - Create virtualenv in $env:USERPROFILE\lib\oracle-cli or in $env:USERPROFILE\lib\ocli (windows builds < 14393)
     - Upgrade / replace any current installation in $env:USERPROFILE\lib\oracle-cli
     - Place oci executable in $env:USERPROFILE\bin
     - Add $env:USERPROFILE\bin to PATH
@@ -69,7 +69,9 @@ if ([System.Enum]::GetNames('System.Net.SecurityProtocolType') -Contains 'Tls12'
 }
 
 
-$PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/v3.2.1/scripts/install/install.py"
+# The python script also has to be changed, and the right one will be released to GitHub in oci-cli v3.68.1
+# Should this be changed to https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.py instead?
+$PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/v3.68.1/scripts/install/install.py"
 $FallbackPythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/v2.22.0/scripts/install/install.py"
 $PythonVersionToInstall = "3.8.5"    # version of Python to install if none exists
 $MinValidPython3Version = "3.6.0"    # minimum required version of Python 3 on system

@@ -11,7 +11,9 @@
 #           individual params > accept_all_defaults > interactive inputs
 #
 SHELL_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh"
-INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v3.2.1/scripts/install/install.py"
+# The python script also has to be changed, and the right one will be released to GitHub in oci-cli v3.68.1
+# Should this be changed to https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.py instead?
+INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v3.68.1/scripts/install/install.py"
 FALLBACK_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.22.0/scripts/install/install.py"
 _TTY=/dev/tty
 NO_TTY_REQUIRED=false

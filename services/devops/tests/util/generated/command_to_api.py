@@ -123,6 +123,7 @@ SDK_client_map = {
     "devops.summarize_project_repository_analytics": "oci.devops.DevopsClient.summarize_project_repository_analytics",
     "devops.summarize_repository_analytics": "oci.devops.DevopsClient.summarize_repository_analytics",
     "devops.sync_repository": "oci.devops.DevopsClient.sync_repository",
+    "devops.trigger_deployment_dry_run": "oci.devops.DevopsClient.trigger_deployment_dry_run",
     "devops.unlike_pull_request_comment": "oci.devops.DevopsClient.unlike_pull_request_comment",
     "devops.unsubscribe_pull_request": "oci.devops.DevopsClient.unsubscribe_pull_request",
     "devops.update_build_pipeline": "oci.devops.DevopsClient.update_build_pipeline",

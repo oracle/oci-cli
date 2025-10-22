@@ -6,6 +6,57 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.68.1 - 2025-10-21
+--------------------
+Added
+~~~~~
+* Support for Helm Critical Resource Protection in DevOps Deploy service
+
+  * ``oci devops trigger-dry-run-result trigger-deployment-dry-run``
+  * ``oci devops trigger-dry-run-result trigger-deployment-dry-run-create-deploy-pipeline-deployment-details``
+  * ``oci devops trigger-dry-run-result trigger-deployment-dry-run-create-single-deploy-stage-deployment-details``
+  * ``oci devops trigger-dry-run-result trigger-deployment-dry-run-create-deploy-pipeline-redeployment-details``
+  * ``oci devops trigger-dry-run-result trigger-deployment-dry-run-create-single-deploy-stage-deployment-details``
+  * ``oci devops trigger-dry-run-result trigger-deployment-dry-run-create-single-deploy-stage-redeployment-details``
+
+* Support for Parameterized Pipelines as a part of the Data Science Service
+
+  * ``oci data-science pipeline create --parameters``
+  * ``oci data-science pipeline update --parameters``
+  * ``oci data-science pipeline-run create --parameters-override``
+  * ``oci data-science pipeline-run create --storage-mount-configuration-override-details-list``
+  * ``oci data-science job-run create --job-storage-mount-configuration-override-details-list``
+
+* Support for new optional ZPR Security Attributes parameter for creating/updating stream pool in Streaming Service
+
+  * ``oci streaming stream-pool create --security-attributes``
+  * ``oci streaming stream-pool update --security-attributes``
+
+* Support for Configurable Version Upgrade Policies in MySQL HeatWave Service
+
+  * ``oci mysql db-system update --maintenance``
+  * ``oci mysql db-system import --maintenance``
+  * ``oci mysql db-system create --maintenance``
+  * ``oci mysql db-system clone --maintenance``
+
+* Support for 26ai version in Fleet Software Update Service
+
+  * ``oci fleet-software-update fsu-collection create-db --source-major-version``
+  * ``oci fleet-software-update fsu-collection create-gi --source-major-version``
+  * ``oci fleet-software-update fsu-discovery create-db --details-source-major-version``
+  * ``oci fleet-software-update fsu-discovery create-gi --details-source-major-version``
+
+* Support to use LDAP schema version RFC2307bis when creating or updating a mount target to set the LDAP ID map in File Storage Service
+
+  * ``oci fs mount-target create --ldap-idmap``
+  * ``oci fs mount-target update --ldap-idmap``
+
+* Support for python 3.13
+
+Security
+~~~~~~~
+* updated setuptools dependency to `>= 78.1.1` for python version `>3.8` per: https://www.cve.org/CVERecord?id=CVE-2025-47273.
+
 3.68.0 - 2025-10-07
 --------------------
 Added

@@ -28,6 +28,17 @@ def is_windows():
     return sys.platform == 'win32'
 
 
+def is_long_path_supported():
+    # Using build number to differentiate windows kernels. Not sure if this is the most robust way.
+    # Starting in Windows 10, version 1607 (build 14393), MAX_PATH limitations have been removed. Not removed by default
+    # For windows builds prior build 14393, MAX_PATH limitations exist.
+    if not is_windows():
+        return True
+    if sys.getwindowsversion().build < 14393:
+        return False
+    return True
+
+
 def get_linux_distribution_id_like():
     # An example of a line in /etc/os-release is ID_LIKE=ubuntu
     # An example of a line in /etc/os-release is ID=debian
@@ -80,7 +91,9 @@ VIRTUALENV_ARCHIVE = 'virtualenv-{}.pyz'.format(VIRTUALENV_VERSION)
 VIRTUALENV_DOWNLOAD_URL = 'https://github.com/pypa/get-virtualenv/blob/{}/public/virtualenv.pyz?raw=true'.format(VIRTUALENV_VERSION)
 VIRTUALENV_ARCHIVE_SHA256 = 'a5d9b1f27bc790423f7910876c0e46cf476044f4ebd76d29dc6c06a3ab019e93'
 
-DEFAULT_INSTALL_DIR = os.path.expanduser(os.path.join('~', 'lib', 'oracle-cli'))
+# Temporary fix of reducing installation dirname to prevent file path length to exceed MAX_PATH in windows builds that
+# don't support long paths (windows builds starting from 14393, support long paths)
+DEFAULT_INSTALL_DIR = os.path.expanduser(os.path.join('~', 'lib', 'oracle-cli')) if is_long_path_supported() else os.path.expanduser(os.path.join('~', 'lib', 'ocli'))
 DEFAULT_EXEC_DIR = os.path.expanduser(os.path.join('~', 'bin'))
 DEFAULT_SCRIPT_DIR = os.path.expanduser(os.path.join('~', 'bin', 'oci-cli-scripts'))
 OCI_EXECUTABLE_NAME = 'oci.exe' if is_windows() else 'oci'

@@ -52,6 +52,12 @@ def project_group():
     pass
 
 
+@click.command(cli_util.override('devops.trigger_dry_run_result_group.command_name', 'trigger-dry-run-result'), cls=CommandGroupWithAlias, help="""Details about helm diff command execution.""")
+@cli_util.help_option_group
+def trigger_dry_run_result_group():
+    pass
+
+
 @click.command(cli_util.override('devops.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""Details of the work request status.""")
 @cli_util.help_option_group
 def work_request_group():
@@ -267,6 +273,7 @@ devops_root_group.add_command(pull_request_notification_preference_group)
 devops_root_group.add_command(build_pipeline_collection_group)
 devops_root_group.add_command(deploy_artifact_summary_group)
 devops_root_group.add_command(project_group)
+devops_root_group.add_command(trigger_dry_run_result_group)
 devops_root_group.add_command(work_request_group)
 devops_root_group.add_command(repository_group)
 devops_root_group.add_command(project_repository_settings_group)
@@ -10543,6 +10550,225 @@ def sync_repository(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@trigger_dry_run_result_group.command(name=cli_util.override('devops.trigger_deployment_dry_run.command_name', 'trigger-deployment-dry-run'), help=u"""Sends a request to trigger a dry run, passing a HelmDiffArgumentCollection This is an internal-only endpoint, access to this endpoint is restricted.  Any request from non-internal tenancies will receive 403 Forbidden response. \n[Command Reference](triggerDeploymentDryRun)""")
+@cli_util.option('--helm-diff-arguments', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--create-deployment-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'helm-diff-arguments': {'module': 'devops', 'class': 'HelmDiffArgumentCollection'}, 'create-deployment-details': {'module': 'devops', 'class': 'CreateDeploymentDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'helm-diff-arguments': {'module': 'devops', 'class': 'HelmDiffArgumentCollection'}, 'create-deployment-details': {'module': 'devops', 'class': 'CreateDeploymentDetails'}}, output_type={'module': 'devops', 'class': 'TriggerDryRunResult'})
+@cli_util.wrap_exceptions
+def trigger_deployment_dry_run(ctx, from_json, helm_diff_arguments, create_deployment_details):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['helmDiffArguments'] = cli_util.parse_json_parameter("helm_diff_arguments", helm_diff_arguments)
+    _details['createDeploymentDetails'] = cli_util.parse_json_parameter("create_deployment_details", create_deployment_details)
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.trigger_deployment_dry_run(
+        trigger_deployment_dry_run_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@trigger_dry_run_result_group.command(name=cli_util.override('devops.trigger_deployment_dry_run_create_deploy_pipeline_redeployment_details.command_name', 'trigger-deployment-dry-run-create-deploy-pipeline-redeployment-details'), help=u"""Sends a request to trigger a dry run, passing a HelmDiffArgumentCollection This is an internal-only endpoint, access to this endpoint is restricted.  Any request from non-internal tenancies will receive 403 Forbidden response. \n[Command Reference](triggerDeploymentDryRun)""")
+@cli_util.option('--helm-diff-arguments', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--create-deployment-details-deploy-pipeline-id', required=True, help=u"""The OCID of a pipeline.""")
+@cli_util.option('--create-deployment-details-previous-deployment-id', required=True, help=u"""Specifies the OCID of the previous deployment to be redeployed.""")
+@cli_util.option('--create-deployment-details-display-name', help=u"""Deployment display name. Avoid entering confidential information.""")
+@cli_util.option('--create-deployment-details-freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--create-deployment-details-defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'helm-diff-arguments': {'module': 'devops', 'class': 'HelmDiffArgumentCollection'}, 'create-deployment-details-freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'create-deployment-details-defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'helm-diff-arguments': {'module': 'devops', 'class': 'HelmDiffArgumentCollection'}, 'create-deployment-details-freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'create-deployment-details-defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'TriggerDryRunResult'})
+@cli_util.wrap_exceptions
+def trigger_deployment_dry_run_create_deploy_pipeline_redeployment_details(ctx, from_json, helm_diff_arguments, create_deployment_details_deploy_pipeline_id, create_deployment_details_previous_deployment_id, create_deployment_details_display_name, create_deployment_details_freeform_tags, create_deployment_details_defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['createDeploymentDetails'] = {}
+    _details['helmDiffArguments'] = cli_util.parse_json_parameter("helm_diff_arguments", helm_diff_arguments)
+    _details['createDeploymentDetails']['deployPipelineId'] = create_deployment_details_deploy_pipeline_id
+    _details['createDeploymentDetails']['previousDeploymentId'] = create_deployment_details_previous_deployment_id
+
+    if create_deployment_details_display_name is not None:
+        _details['createDeploymentDetails']['displayName'] = create_deployment_details_display_name
+
+    if create_deployment_details_freeform_tags is not None:
+        _details['createDeploymentDetails']['freeformTags'] = cli_util.parse_json_parameter("create_deployment_details_freeform_tags", create_deployment_details_freeform_tags)
+
+    if create_deployment_details_defined_tags is not None:
+        _details['createDeploymentDetails']['definedTags'] = cli_util.parse_json_parameter("create_deployment_details_defined_tags", create_deployment_details_defined_tags)
+
+    _details['createDeploymentDetails']['deploymentType'] = 'PIPELINE_REDEPLOYMENT'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.trigger_deployment_dry_run(
+        trigger_deployment_dry_run_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@trigger_dry_run_result_group.command(name=cli_util.override('devops.trigger_deployment_dry_run_create_deploy_pipeline_deployment_details.command_name', 'trigger-deployment-dry-run-create-deploy-pipeline-deployment-details'), help=u"""Sends a request to trigger a dry run, passing a HelmDiffArgumentCollection This is an internal-only endpoint, access to this endpoint is restricted.  Any request from non-internal tenancies will receive 403 Forbidden response. \n[Command Reference](triggerDeploymentDryRun)""")
+@cli_util.option('--helm-diff-arguments', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--create-deployment-details-deploy-pipeline-id', required=True, help=u"""The OCID of a pipeline.""")
+@cli_util.option('--create-deployment-details-display-name', help=u"""Deployment display name. Avoid entering confidential information.""")
+@cli_util.option('--create-deployment-details-freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--create-deployment-details-defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--create-deployment-details-deployment-arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--create-deployment-details-deploy-stage-override-arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--create-deployment-details-deploy-artifact-override-arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'helm-diff-arguments': {'module': 'devops', 'class': 'HelmDiffArgumentCollection'}, 'create-deployment-details-freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'create-deployment-details-defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'create-deployment-details-deployment-arguments': {'module': 'devops', 'class': 'DeploymentArgumentCollection'}, 'create-deployment-details-deploy-stage-override-arguments': {'module': 'devops', 'class': 'DeployStageOverrideArgumentCollection'}, 'create-deployment-details-deploy-artifact-override-arguments': {'module': 'devops', 'class': 'DeployArtifactOverrideArgumentCollection'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'helm-diff-arguments': {'module': 'devops', 'class': 'HelmDiffArgumentCollection'}, 'create-deployment-details-freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'create-deployment-details-defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'create-deployment-details-deployment-arguments': {'module': 'devops', 'class': 'DeploymentArgumentCollection'}, 'create-deployment-details-deploy-stage-override-arguments': {'module': 'devops', 'class': 'DeployStageOverrideArgumentCollection'}, 'create-deployment-details-deploy-artifact-override-arguments': {'module': 'devops', 'class': 'DeployArtifactOverrideArgumentCollection'}}, output_type={'module': 'devops', 'class': 'TriggerDryRunResult'})
+@cli_util.wrap_exceptions
+def trigger_deployment_dry_run_create_deploy_pipeline_deployment_details(ctx, from_json, helm_diff_arguments, create_deployment_details_deploy_pipeline_id, create_deployment_details_display_name, create_deployment_details_freeform_tags, create_deployment_details_defined_tags, create_deployment_details_deployment_arguments, create_deployment_details_deploy_stage_override_arguments, create_deployment_details_deploy_artifact_override_arguments):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['createDeploymentDetails'] = {}
+    _details['helmDiffArguments'] = cli_util.parse_json_parameter("helm_diff_arguments", helm_diff_arguments)
+    _details['createDeploymentDetails']['deployPipelineId'] = create_deployment_details_deploy_pipeline_id
+
+    if create_deployment_details_display_name is not None:
+        _details['createDeploymentDetails']['displayName'] = create_deployment_details_display_name
+
+    if create_deployment_details_freeform_tags is not None:
+        _details['createDeploymentDetails']['freeformTags'] = cli_util.parse_json_parameter("create_deployment_details_freeform_tags", create_deployment_details_freeform_tags)
+
+    if create_deployment_details_defined_tags is not None:
+        _details['createDeploymentDetails']['definedTags'] = cli_util.parse_json_parameter("create_deployment_details_defined_tags", create_deployment_details_defined_tags)
+
+    if create_deployment_details_deployment_arguments is not None:
+        _details['createDeploymentDetails']['deploymentArguments'] = cli_util.parse_json_parameter("create_deployment_details_deployment_arguments", create_deployment_details_deployment_arguments)
+
+    if create_deployment_details_deploy_stage_override_arguments is not None:
+        _details['createDeploymentDetails']['deployStageOverrideArguments'] = cli_util.parse_json_parameter("create_deployment_details_deploy_stage_override_arguments", create_deployment_details_deploy_stage_override_arguments)
+
+    if create_deployment_details_deploy_artifact_override_arguments is not None:
+        _details['createDeploymentDetails']['deployArtifactOverrideArguments'] = cli_util.parse_json_parameter("create_deployment_details_deploy_artifact_override_arguments", create_deployment_details_deploy_artifact_override_arguments)
+
+    _details['createDeploymentDetails']['deploymentType'] = 'PIPELINE_DEPLOYMENT'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.trigger_deployment_dry_run(
+        trigger_deployment_dry_run_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@trigger_dry_run_result_group.command(name=cli_util.override('devops.trigger_deployment_dry_run_create_single_deploy_stage_deployment_details.command_name', 'trigger-deployment-dry-run-create-single-deploy-stage-deployment-details'), help=u"""Sends a request to trigger a dry run, passing a HelmDiffArgumentCollection This is an internal-only endpoint, access to this endpoint is restricted.  Any request from non-internal tenancies will receive 403 Forbidden response. \n[Command Reference](triggerDeploymentDryRun)""")
+@cli_util.option('--helm-diff-arguments', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--create-deployment-details-deploy-pipeline-id', required=True, help=u"""The OCID of a pipeline.""")
+@cli_util.option('--create-deployment-details-deploy-stage-id', required=True, help=u"""Specifies the OCID of the stage to be redeployed.""")
+@cli_util.option('--create-deployment-details-display-name', help=u"""Deployment display name. Avoid entering confidential information.""")
+@cli_util.option('--create-deployment-details-freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--create-deployment-details-defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--create-deployment-details-deployment-arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--create-deployment-details-deploy-stage-override-arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--create-deployment-details-deploy-artifact-override-arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'helm-diff-arguments': {'module': 'devops', 'class': 'HelmDiffArgumentCollection'}, 'create-deployment-details-freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'create-deployment-details-defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'create-deployment-details-deployment-arguments': {'module': 'devops', 'class': 'DeploymentArgumentCollection'}, 'create-deployment-details-deploy-stage-override-arguments': {'module': 'devops', 'class': 'DeployStageOverrideArgumentCollection'}, 'create-deployment-details-deploy-artifact-override-arguments': {'module': 'devops', 'class': 'DeployArtifactOverrideArgumentCollection'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'helm-diff-arguments': {'module': 'devops', 'class': 'HelmDiffArgumentCollection'}, 'create-deployment-details-freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'create-deployment-details-defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}, 'create-deployment-details-deployment-arguments': {'module': 'devops', 'class': 'DeploymentArgumentCollection'}, 'create-deployment-details-deploy-stage-override-arguments': {'module': 'devops', 'class': 'DeployStageOverrideArgumentCollection'}, 'create-deployment-details-deploy-artifact-override-arguments': {'module': 'devops', 'class': 'DeployArtifactOverrideArgumentCollection'}}, output_type={'module': 'devops', 'class': 'TriggerDryRunResult'})
+@cli_util.wrap_exceptions
+def trigger_deployment_dry_run_create_single_deploy_stage_deployment_details(ctx, from_json, helm_diff_arguments, create_deployment_details_deploy_pipeline_id, create_deployment_details_deploy_stage_id, create_deployment_details_display_name, create_deployment_details_freeform_tags, create_deployment_details_defined_tags, create_deployment_details_deployment_arguments, create_deployment_details_deploy_stage_override_arguments, create_deployment_details_deploy_artifact_override_arguments):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['createDeploymentDetails'] = {}
+    _details['helmDiffArguments'] = cli_util.parse_json_parameter("helm_diff_arguments", helm_diff_arguments)
+    _details['createDeploymentDetails']['deployPipelineId'] = create_deployment_details_deploy_pipeline_id
+    _details['createDeploymentDetails']['deployStageId'] = create_deployment_details_deploy_stage_id
+
+    if create_deployment_details_display_name is not None:
+        _details['createDeploymentDetails']['displayName'] = create_deployment_details_display_name
+
+    if create_deployment_details_freeform_tags is not None:
+        _details['createDeploymentDetails']['freeformTags'] = cli_util.parse_json_parameter("create_deployment_details_freeform_tags", create_deployment_details_freeform_tags)
+
+    if create_deployment_details_defined_tags is not None:
+        _details['createDeploymentDetails']['definedTags'] = cli_util.parse_json_parameter("create_deployment_details_defined_tags", create_deployment_details_defined_tags)
+
+    if create_deployment_details_deployment_arguments is not None:
+        _details['createDeploymentDetails']['deploymentArguments'] = cli_util.parse_json_parameter("create_deployment_details_deployment_arguments", create_deployment_details_deployment_arguments)
+
+    if create_deployment_details_deploy_stage_override_arguments is not None:
+        _details['createDeploymentDetails']['deployStageOverrideArguments'] = cli_util.parse_json_parameter("create_deployment_details_deploy_stage_override_arguments", create_deployment_details_deploy_stage_override_arguments)
+
+    if create_deployment_details_deploy_artifact_override_arguments is not None:
+        _details['createDeploymentDetails']['deployArtifactOverrideArguments'] = cli_util.parse_json_parameter("create_deployment_details_deploy_artifact_override_arguments", create_deployment_details_deploy_artifact_override_arguments)
+
+    _details['createDeploymentDetails']['deploymentType'] = 'SINGLE_STAGE_DEPLOYMENT'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.trigger_deployment_dry_run(
+        trigger_deployment_dry_run_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@trigger_dry_run_result_group.command(name=cli_util.override('devops.trigger_deployment_dry_run_create_single_deploy_stage_redeployment_details.command_name', 'trigger-deployment-dry-run-create-single-deploy-stage-redeployment-details'), help=u"""Sends a request to trigger a dry run, passing a HelmDiffArgumentCollection This is an internal-only endpoint, access to this endpoint is restricted.  Any request from non-internal tenancies will receive 403 Forbidden response. \n[Command Reference](triggerDeploymentDryRun)""")
+@cli_util.option('--helm-diff-arguments', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--create-deployment-details-deploy-pipeline-id', required=True, help=u"""The OCID of a pipeline.""")
+@cli_util.option('--create-deployment-details-deploy-stage-id', required=True, help=u"""Specifies the OCID of the stage to be redeployed.""")
+@cli_util.option('--create-deployment-details-display-name', help=u"""Deployment display name. Avoid entering confidential information.""")
+@cli_util.option('--create-deployment-details-freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only.  See [Resource Tags]. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--create-deployment-details-defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. See [Resource Tags]. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--create-deployment-details-previous-deployment-id', help=u"""Specifies the OCID of the previous deployment to be redeployed.""")
+@json_skeleton_utils.get_cli_json_input_option({'helm-diff-arguments': {'module': 'devops', 'class': 'HelmDiffArgumentCollection'}, 'create-deployment-details-freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'create-deployment-details-defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'helm-diff-arguments': {'module': 'devops', 'class': 'HelmDiffArgumentCollection'}, 'create-deployment-details-freeform-tags': {'module': 'devops', 'class': 'dict(str, string)'}, 'create-deployment-details-defined-tags': {'module': 'devops', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'devops', 'class': 'TriggerDryRunResult'})
+@cli_util.wrap_exceptions
+def trigger_deployment_dry_run_create_single_deploy_stage_redeployment_details(ctx, from_json, helm_diff_arguments, create_deployment_details_deploy_pipeline_id, create_deployment_details_deploy_stage_id, create_deployment_details_display_name, create_deployment_details_freeform_tags, create_deployment_details_defined_tags, create_deployment_details_previous_deployment_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['createDeploymentDetails'] = {}
+    _details['helmDiffArguments'] = cli_util.parse_json_parameter("helm_diff_arguments", helm_diff_arguments)
+    _details['createDeploymentDetails']['deployPipelineId'] = create_deployment_details_deploy_pipeline_id
+    _details['createDeploymentDetails']['deployStageId'] = create_deployment_details_deploy_stage_id
+
+    if create_deployment_details_display_name is not None:
+        _details['createDeploymentDetails']['displayName'] = create_deployment_details_display_name
+
+    if create_deployment_details_freeform_tags is not None:
+        _details['createDeploymentDetails']['freeformTags'] = cli_util.parse_json_parameter("create_deployment_details_freeform_tags", create_deployment_details_freeform_tags)
+
+    if create_deployment_details_defined_tags is not None:
+        _details['createDeploymentDetails']['definedTags'] = cli_util.parse_json_parameter("create_deployment_details_defined_tags", create_deployment_details_defined_tags)
+
+    if create_deployment_details_previous_deployment_id is not None:
+        _details['createDeploymentDetails']['previousDeploymentId'] = create_deployment_details_previous_deployment_id
+
+    _details['createDeploymentDetails']['deploymentType'] = 'SINGLE_STAGE_REDEPLOYMENT'
+
+    client = cli_util.build_client('devops', 'devops', ctx)
+    result = client.trigger_deployment_dry_run(
+        trigger_deployment_dry_run_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
