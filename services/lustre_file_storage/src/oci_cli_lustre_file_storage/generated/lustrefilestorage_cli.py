@@ -22,6 +22,14 @@ def lfs_root_group():
     pass
 
 
+@click.command(cli_util.override('lfs.object_storage_link_group.command_name', 'object-storage-link'), cls=CommandGroupWithAlias, help="""Object Storage links create the relationship between a directory in an File Storage with Lustre file system and a path within an Object Storage bucket. For more information, see [Syncing Lustre file systems with Object Storage].
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@cli_util.help_option_group
+def object_storage_link_group():
+    pass
+
+
 @click.command(cli_util.override('lfs.lustre_file_system_group.command_name', 'lustre-file-system'), cls=CommandGroupWithAlias, help="""A Lustre file system is a parallel file system that is used as a storage solution for HPC/AI/ML workloads. For more information, see [File Storage with Lustre].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
@@ -54,11 +62,19 @@ def work_request_group():
     pass
 
 
+@click.command(cli_util.override('lfs.object_storage_link_collection_group.command_name', 'object-storage-link-collection'), cls=CommandGroupWithAlias, help="""Results of a Object Storage link search. Contains both ObjectStorageLinkSummary items and other information, such as metadata.""")
+@cli_util.help_option_group
+def object_storage_link_collection_group():
+    pass
+
+
+lfs_root_group.add_command(object_storage_link_group)
 lfs_root_group.add_command(lustre_file_system_group)
 lfs_root_group.add_command(lustre_file_system_collection_group)
 lfs_root_group.add_command(work_request_error_group)
 lfs_root_group.add_command(work_request_log_entry_group)
 lfs_root_group.add_command(work_request_group)
+lfs_root_group.add_command(object_storage_link_collection_group)
 
 
 @work_request_group.command(name=cli_util.override('lfs.cancel_work_request.command_name', 'cancel'), help=u"""Cancels a work request. \n[Command Reference](cancelWorkRequest)""")
@@ -145,6 +161,63 @@ def change_lustre_file_system_compartment(ctx, from_json, wait_for_state, max_wa
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@object_storage_link_group.command(name=cli_util.override('lfs.change_object_storage_link_compartment.command_name', 'change-compartment'), help=u"""Moves an Object Storage link into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeObjectStorageLinkCompartment)""")
+@cli_util.option('--object-storage-link-id', required=True, help=u"""The [OCID] of the Object Storage link.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Object Storage link to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'lustre_file_storage', 'class': 'ObjectStorageLink'})
+@cli_util.wrap_exceptions
+def change_object_storage_link_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, object_storage_link_id, compartment_id, if_match):
+
+    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+        raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
+    result = client.change_object_storage_link_compartment(
+        object_storage_link_id=object_storage_link_id,
+        change_object_storage_link_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_object_storage_link') and callable(getattr(client, 'get_object_storage_link')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_object_storage_link(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -249,6 +322,89 @@ def create_lustre_file_system(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
+@object_storage_link_group.command(name=cli_util.override('lfs.create_object_storage_link.command_name', 'create'), help=u"""Creates an Object Storage link. \n[Command Reference](createObjectStorageLink)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that contains the Object Storage link.""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain that the Lustre file system is in. May be unset as a blank or NULL value.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--lustre-file-system-id', required=True, help=u"""The [OCID] of the associated Lustre file system.""")
+@cli_util.option('--file-system-path', required=True, help=u"""The path in the Lustre file system used for this Object Storage link.
+
+Example: `myFileSystem/mount/myDirectory`""")
+@cli_util.option('--object-storage-prefix', required=True, help=u"""The Object Storage namespace and bucket name, including optional object prefix string, to use as the source for imports or destination for exports.
+
+Example: `objectStorageNamespace:/bucketName/optionalFolder/optionalPrefix`""")
+@cli_util.option('--is-overwrite', required=True, type=click.BOOL, help=u"""The flag is an identifier to tell whether the job run has overwrite enabled. If `isOverwrite` is false, the file to be imported or exported will be skipped if it already exists. If `isOverwrite` is true, the file to be imported or exported will be overwritten if it already exists.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
+
+Example: `My Object Storage Link`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'lustre_file_storage', 'class': 'ObjectStorageLink'})
+@cli_util.wrap_exceptions
+def create_object_storage_link(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, lustre_file_system_id, file_system_path, object_storage_prefix, is_overwrite, display_name, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['availabilityDomain'] = availability_domain
+    _details['lustreFileSystemId'] = lustre_file_system_id
+    _details['fileSystemPath'] = file_system_path
+    _details['objectStoragePrefix'] = object_storage_prefix
+    _details['isOverwrite'] = is_overwrite
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
+    result = client.create_object_storage_link(
+        create_object_storage_link_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_object_storage_link') and callable(getattr(client, 'get_object_storage_link')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_object_storage_link(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @lustre_file_system_group.command(name=cli_util.override('lfs.delete_lustre_file_system.command_name', 'delete'), help=u"""Deletes a Lustre file system. \n[Command Reference](deleteLustreFileSystem)""")
 @cli_util.option('--lustre-file-system-id', required=True, help=u"""The [OCID] of the Lustre file system.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -305,6 +461,62 @@ def delete_lustre_file_system(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
+@object_storage_link_group.command(name=cli_util.override('lfs.delete_object_storage_link.command_name', 'delete'), help=u"""Deletes an Object Storage link. \n[Command Reference](deleteObjectStorageLink)""")
+@cli_util.option('--object-storage-link-id', required=True, help=u"""The [OCID] of the Object Storage link.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_object_storage_link(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, object_storage_link_id, if_match):
+
+    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+        raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
+    result = client.delete_object_storage_link(
+        object_storage_link_id=object_storage_link_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @lustre_file_system_group.command(name=cli_util.override('lfs.get_lustre_file_system.command_name', 'get'), help=u"""Gets information about a Lustre file system. \n[Command Reference](getLustreFileSystem)""")
 @cli_util.option('--lustre-file-system-id', required=True, help=u"""The [OCID] of the Lustre file system.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -322,6 +534,58 @@ def get_lustre_file_system(ctx, from_json, lustre_file_system_id):
     client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
     result = client.get_lustre_file_system(
         lustre_file_system_id=lustre_file_system_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@object_storage_link_group.command(name=cli_util.override('lfs.get_object_storage_link.command_name', 'get'), help=u"""Gets information about an Object Storage link. \n[Command Reference](getObjectStorageLink)""")
+@cli_util.option('--object-storage-link-id', required=True, help=u"""The [OCID] of the Object Storage link.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'lustre_file_storage', 'class': 'ObjectStorageLink'})
+@cli_util.wrap_exceptions
+def get_object_storage_link(ctx, from_json, object_storage_link_id):
+
+    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+        raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
+    result = client.get_object_storage_link(
+        object_storage_link_id=object_storage_link_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@object_storage_link_group.command(name=cli_util.override('lfs.get_sync_job.command_name', 'get-sync-job'), help=u"""Gets details of a sync job associated with an Object Storage link when `objectStorageLink` and a unique ID are provided. \n[Command Reference](getSyncJob)""")
+@cli_util.option('--object-storage-link-id', required=True, help=u"""The [OCID] of the Object Storage link.""")
+@cli_util.option('--sync-job-id', required=True, help=u"""The [OCID] of the sync job.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'lustre_file_storage', 'class': 'SyncJob'})
+@cli_util.wrap_exceptions
+def get_sync_job(ctx, from_json, object_storage_link_id, sync_job_id, if_match):
+
+    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+        raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
+
+    if isinstance(sync_job_id, six.string_types) and len(sync_job_id.strip()) == 0:
+        raise click.UsageError('Parameter --sync-job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
+    result = client.get_sync_job(
+        object_storage_link_id=object_storage_link_id,
+        sync_job_id=sync_job_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -413,6 +677,141 @@ def list_lustre_file_systems(ctx, from_json, all_pages, page_size, compartment_i
         )
     else:
         result = client.list_lustre_file_systems(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@object_storage_link_collection_group.command(name=cli_util.override('lfs.list_object_storage_links.command_name', 'list-object-storage-links'), help=u"""Gets a list of Object Storage links. \n[Command Reference](listObjectStorageLinks)""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--id', help=u"""The [OCID] of the Object Storage link.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. You can provide only one sort order. Default order for `timeCreated` is descending. Default order for `displayName` is ascending.""")
+@cli_util.option('--lustre-file-system-id', help=u"""The [OCID] of the Lustre file system.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'lustre_file_storage', 'class': 'ObjectStorageLinkCollection'})
+@cli_util.wrap_exceptions
+def list_object_storage_links(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, lifecycle_state, display_name, id, limit, page, sort_order, sort_by, lustre_file_system_id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if lustre_file_system_id is not None:
+        kwargs['lustre_file_system_id'] = lustre_file_system_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_object_storage_links,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_object_storage_links,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_object_storage_links(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@object_storage_link_group.command(name=cli_util.override('lfs.list_sync_jobs.command_name', 'list-sync-jobs'), help=u"""Lists all sync jobs associated with the Object Storage link. Contains a unique ID for each sync job. \n[Command Reference](listSyncJobs)""")
+@cli_util.option('--object-storage-link-id', required=True, help=u"""The [OCID] of the Object Storage link.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["IN_PROGRESS", "SUCCEEDED", "CANCELING", "CANCELED", "FAILED", "FAILING"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated"]), help=u"""The field to sort by. You can provide only one sort order. Default order for `timeCreated` is descending. Default order for `displayName` is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'lustre_file_storage', 'class': 'SyncJobCollection'})
+@cli_util.wrap_exceptions
+def list_sync_jobs(ctx, from_json, all_pages, page_size, object_storage_link_id, limit, page, sort_order, if_match, lifecycle_state, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+        raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_sync_jobs,
+            object_storage_link_id=object_storage_link_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_sync_jobs,
+            limit,
+            page_size,
+            object_storage_link_id=object_storage_link_id,
+            **kwargs
+        )
+    else:
+        result = client.list_sync_jobs(
+            object_storage_link_id=object_storage_link_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -594,6 +993,106 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, wor
     cli_util.render_response(result, ctx)
 
 
+@object_storage_link_group.command(name=cli_util.override('lfs.start_export_to_object.command_name', 'start-export-to-object'), help=u"""Starts the export of data from the Lustre file system to Object Storage. The Lustre file system path and Object Storage object prefix are defined in the Object Storage link resource. \n[Command Reference](startExportToObject)""")
+@cli_util.option('--object-storage-link-id', required=True, help=u"""The [OCID] of the Object Storage link.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'lustre_file_storage', 'class': 'SyncJob'})
+@cli_util.wrap_exceptions
+def start_export_to_object(ctx, from_json, object_storage_link_id, if_match):
+
+    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+        raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
+    result = client.start_export_to_object(
+        object_storage_link_id=object_storage_link_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@object_storage_link_group.command(name=cli_util.override('lfs.start_import_from_object.command_name', 'start-import-from-object'), help=u"""Starts the import of data from Object Storage to the Lustre file system. The Lustre file system path and Object Storage object prefix are defined in the Object Storage link resource. \n[Command Reference](startImportFromObject)""")
+@cli_util.option('--object-storage-link-id', required=True, help=u"""The [OCID] of the Object Storage link.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'lustre_file_storage', 'class': 'SyncJob'})
+@cli_util.wrap_exceptions
+def start_import_from_object(ctx, from_json, object_storage_link_id, if_match):
+
+    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+        raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
+    result = client.start_import_from_object(
+        object_storage_link_id=object_storage_link_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@object_storage_link_group.command(name=cli_util.override('lfs.stop_export_to_object.command_name', 'stop-export-to-object'), help=u"""Stops the export of data from the Lustre file system to Object Storage. The Lustre file system path and Object Storage object prefix are defined in the Object Storage link resource. \n[Command Reference](stopExportToObject)""")
+@cli_util.option('--object-storage-link-id', required=True, help=u"""The [OCID] of the Object Storage link.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def stop_export_to_object(ctx, from_json, object_storage_link_id, if_match):
+
+    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+        raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
+    result = client.stop_export_to_object(
+        object_storage_link_id=object_storage_link_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@object_storage_link_group.command(name=cli_util.override('lfs.stop_import_from_object.command_name', 'stop-import-from-object'), help=u"""Stops the import of data from Object Storage to the Lustre file system. The Lustre file system path and Object Storage object prefix are defined in the Object Storage link resource. \n[Command Reference](stopImportFromObject)""")
+@cli_util.option('--object-storage-link-id', required=True, help=u"""The [OCID] of the Object Storage link.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def stop_import_from_object(ctx, from_json, object_storage_link_id, if_match):
+
+    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+        raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
+    result = client.stop_import_from_object(
+        object_storage_link_id=object_storage_link_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @lustre_file_system_group.command(name=cli_util.override('lfs.update_lustre_file_system.command_name', 'update'), help=u"""Updates a Lustre file system. \n[Command Reference](updateLustreFileSystem)""")
 @cli_util.option('--lustre-file-system-id', required=True, help=u"""The [OCID] of the Lustre file system.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
@@ -693,4 +1192,86 @@ def update_lustre_file_system(ctx, from_json, force, wait_for_state, max_wait_se
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@object_storage_link_group.command(name=cli_util.override('lfs.update_object_storage_link.command_name', 'update'), help=u"""Updates an Object Storage link. \n[Command Reference](updateObjectStorageLink)""")
+@cli_util.option('--object-storage-link-id', required=True, help=u"""The [OCID] of the Object Storage link.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
+
+Example: `My Object Storage Link`""")
+@cli_util.option('--is-overwrite', type=click.BOOL, help=u"""The flag is an identifier to tell whether the job run has overwrite enabled. If `isOverwrite` is false, the file to be imported or exported will be skipped if it already exists. If `isOverwrite` is true, the file to be imported or exported will be overwritten if it already exists.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'lustre_file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'lustre_file_storage', 'class': 'ObjectStorageLink'})
+@cli_util.wrap_exceptions
+def update_object_storage_link(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, object_storage_link_id, display_name, is_overwrite, freeform_tags, defined_tags, if_match):
+
+    if isinstance(object_storage_link_id, six.string_types) and len(object_storage_link_id.strip()) == 0:
+        raise click.UsageError('Parameter --object-storage-link-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if is_overwrite is not None:
+        _details['isOverwrite'] = is_overwrite
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('lustre_file_storage', 'lustre_file_storage', ctx)
+    result = client.update_object_storage_link(
+        object_storage_link_id=object_storage_link_id,
+        update_object_storage_link_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_object_storage_link') and callable(getattr(client, 'get_object_storage_link')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_object_storage_link(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)

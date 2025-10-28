@@ -693,6 +693,79 @@ def add_drg_route_rules(ctx, from_json, drg_route_table_id, route_rules):
     cli_util.render_response(result, ctx)
 
 
+@subnet_group.command(name=cli_util.override('virtual_network.add_ipv4_subnet_cidr.command_name', 'add'), help=u"""Add an IPv4 prefix to a subnet. \n[Command Reference](addIpv4SubnetCidr)""")
+@cli_util.option('--subnet-id', required=True, help=u"""Specify the [OCID] of the subnet.""")
+@cli_util.option('--ipv4-cidr-block', required=True, help=u"""The CIDR IP address range of the subnet. The CIDR must maintain the following rules -
+
+a. The CIDR block is valid and correctly formatted. b. The new range is within one of the parent VCN ranges.
+
+Example: `10.0.1.0/24`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def add_ipv4_subnet_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subnet_id, ipv4_cidr_block, if_match):
+
+    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+        raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['ipv4CidrBlock'] = ipv4_cidr_block
+
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.add_ipv4_subnet_cidr(
+        subnet_id=subnet_id,
+        add_ipv4_subnet_cidr_details=_details,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @subnet_group.command(name=cli_util.override('virtual_network.add_ipv6_subnet_cidr.command_name', 'add'), help=u"""Add an IPv6 prefix to a subnet. \n[Command Reference](addIpv6SubnetCidr)""")
 @cli_util.option('--subnet-id', required=True, help=u"""Specify the [OCID] of the subnet.""")
 @cli_util.option('--ipv6-cidr-block', required=True, help=u"""This field is not required and should only be specified when adding an IPv6 prefix to a subnet's IPv6 address space. See[IPv6 Addresses].
@@ -3580,11 +3653,15 @@ Example: `bminstance1`""")
 @cli_util.option('--ip-address', help=u"""A private IP address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet.
 
 Example: `10.0.3.3`""")
+@cli_util.option('--cidr-prefix-length', type=click.INT, help=u"""An optional field that when combined with the ipAddress field, will be used to allocate secondary IPv4 CIDRs. The CIDR range created by this combination must be within the subnet's CIDR and the CIDR range should not collide with any existing IPv4 address allocation. The VNIC ID specified in the request object should not already been assigned more than the max IPv4 addresses. If you don't specify a value, this option will be ignored.
+
+Example: 18""")
 @cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC to assign the private IP to. The VNIC and private IP must be in the same subnet.""")
 @cli_util.option('--vlan-id', help=u"""Use this attribute only with the Oracle Cloud VMware Solution.
 
 The [OCID] of the VLAN from which the private IP is to be drawn. The IP address, *if supplied*, must be valid for the given VLAN. See [Vlan].""")
 @cli_util.option('--subnet-id', help=u"""The [OCID] of the subnet from which the private IP is to be drawn. The IP address, *if supplied*, must be valid for the given subnet.""")
+@cli_util.option('--ipv4-subnet-cidr-at-creation', help=u"""Any one of the IPv4 CIDRs allocated to the subnet.""")
 @cli_util.option('--lifetime', type=custom_types.CliCaseInsensitiveChoice(["EPHEMERAL", "RESERVED"]), help=u"""Lifetime of the IP address. There are two types of IPs:  - Ephemeral  - Reserved""")
 @cli_util.option('--route-table-id', help=u"""The [OCID] of the route table the IP address or VNIC will use. For more information, see [Per-resource Routing].""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
@@ -3592,7 +3669,7 @@ The [OCID] of the VLAN from which the private IP is to be drawn. The IP address,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
-def create_private_ip(ctx, from_json, defined_tags, display_name, freeform_tags, hostname_label, ip_address, vnic_id, vlan_id, subnet_id, lifetime, route_table_id):
+def create_private_ip(ctx, from_json, defined_tags, display_name, freeform_tags, hostname_label, ip_address, cidr_prefix_length, vnic_id, vlan_id, subnet_id, ipv4_subnet_cidr_at_creation, lifetime, route_table_id):
 
     kwargs = {}
 
@@ -3613,6 +3690,9 @@ def create_private_ip(ctx, from_json, defined_tags, display_name, freeform_tags,
     if ip_address is not None:
         _details['ipAddress'] = ip_address
 
+    if cidr_prefix_length is not None:
+        _details['cidrPrefixLength'] = cidr_prefix_length
+
     if vnic_id is not None:
         _details['vnicId'] = vnic_id
 
@@ -3621,6 +3701,9 @@ def create_private_ip(ctx, from_json, defined_tags, display_name, freeform_tags,
 
     if subnet_id is not None:
         _details['subnetId'] = subnet_id
+
+    if ipv4_subnet_cidr_at_creation is not None:
+        _details['ipv4SubnetCidrAtCreation'] = ipv4_subnet_cidr_at_creation
 
     if lifetime is not None:
         _details['lifetime'] = lifetime
@@ -4096,11 +4179,6 @@ You may optionally associate a set of DHCP options with the subnet. If you don't
 You may optionally specify a *display name* for the subnet, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
 You can also add a DNS label for the subnet, which is required if you want the Internet and VCN Resolver to resolve hostnames for instances in the subnet. For more information, see [DNS in Your Virtual Cloud Network]. \n[Command Reference](createSubnet)""")
-@cli_util.option('--cidr-block', required=True, help=u"""The CIDR IP address range of the subnet. The CIDR must maintain the following rules -
-
-a. The CIDR block is valid and correctly formatted. b. The new range is within one of the parent VCN ranges.
-
-Example: `10.0.1.0/24`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to contain the subnet.""")
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN to contain the subnet.""")
 @cli_util.option('--availability-domain', help=u"""Controls whether the subnet is regional or specific to an availability domain. Oracle recommends creating regional subnets because they're more flexible and make it easier to implement failover across availability domains. Originally, AD-specific subnets were the only kind available to use.
@@ -4110,6 +4188,12 @@ To create a regional subnet, omit this attribute. Then any resources later creat
 To instead create an AD-specific subnet, set this attribute to the availability domain you want this subnet to be in. Then any resources later created in this subnet can only be created in that availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--cidr-block', help=u"""The CIDR IP address range of the subnet. The CIDR must maintain the following rules -
+
+a. The CIDR block is valid and correctly formatted. b. The new range is within one of the parent VCN ranges.
+
+Example: `10.0.1.0/24`""")
+@cli_util.option('--ipv4-cidr-blocks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of all IPv4 CIDR blocks for the subnet that meets the following criteria: - Ipv4 CIDR blocks must be valid. - Multiple Ipv4 CIDR blocks must not overlap each other or the on-premises network CIDR block. - The number of prefixes must not exceed the limit of IPv4 prefixes allowed to a subnet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4148,22 +4232,27 @@ Example: `true`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'ipv6-cidr-blocks': {'module': 'core', 'class': 'list[string]'}, 'security-list-ids': {'module': 'core', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'ipv4-cidr-blocks': {'module': 'core', 'class': 'list[string]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'ipv6-cidr-blocks': {'module': 'core', 'class': 'list[string]'}, 'security-list-ids': {'module': 'core', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'ipv6-cidr-blocks': {'module': 'core', 'class': 'list[string]'}, 'security-list-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'Subnet'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ipv4-cidr-blocks': {'module': 'core', 'class': 'list[string]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'ipv6-cidr-blocks': {'module': 'core', 'class': 'list[string]'}, 'security-list-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'Subnet'})
 @cli_util.wrap_exceptions
-def create_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cidr_block, compartment_id, vcn_id, availability_domain, defined_tags, dhcp_options_id, display_name, dns_label, freeform_tags, ipv6_cidr_block, ipv6_cidr_blocks, prohibit_internet_ingress, prohibit_public_ip_on_vnic, route_table_id, security_list_ids):
+def create_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vcn_id, availability_domain, cidr_block, ipv4_cidr_blocks, defined_tags, dhcp_options_id, display_name, dns_label, freeform_tags, ipv6_cidr_block, ipv6_cidr_blocks, prohibit_internet_ingress, prohibit_public_ip_on_vnic, route_table_id, security_list_ids):
 
     kwargs = {}
 
     _details = {}
-    _details['cidrBlock'] = cidr_block
     _details['compartmentId'] = compartment_id
     _details['vcnId'] = vcn_id
 
     if availability_domain is not None:
         _details['availabilityDomain'] = availability_domain
+
+    if cidr_block is not None:
+        _details['cidrBlock'] = cidr_block
+
+    if ipv4_cidr_blocks is not None:
+        _details['ipv4CidrBlocks'] = cli_util.parse_json_parameter("ipv4_cidr_blocks", ipv4_cidr_blocks)
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -10925,6 +11014,79 @@ def list_vtaps(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, sou
     cli_util.render_response(result, ctx)
 
 
+@subnet_group.command(name=cli_util.override('virtual_network.modify_ipv4_subnet_cidr.command_name', 'modify-ipv4-subnet-cidr'), help=u"""Updates the specified Ipv4 CIDR block of a Subnet. The new Ipv4 CIDR IP range must meet the following criteria:
+
+- Must be valid. - Must not overlap with another Ipv4 CIDR block in the Subnet or the on-premises network CIDR block. - Must not exceed the limit of Ipv4 CIDR blocks allowed per Subnet. - Must include IP addresses from the original CIDR block that are used in the VCN's existing route rules. - No IP address in an existing subnet should be outside of the new CIDR block range. \n[Command Reference](modifyIpv4SubnetCidr)""")
+@cli_util.option('--subnet-id', required=True, help=u"""Specify the [OCID] of the subnet.""")
+@cli_util.option('--ipv4-cidr-block', required=True, help=u"""The Ipv4 CIDR IP address to update.""")
+@cli_util.option('--updated-ipv4-cidr-block', required=True, help=u"""The new Ipv4 CIDR IP address.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def modify_ipv4_subnet_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subnet_id, ipv4_cidr_block, updated_ipv4_cidr_block, if_match):
+
+    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+        raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['ipv4CidrBlock'] = ipv4_cidr_block
+    _details['updatedIpv4CidrBlock'] = updated_ipv4_cidr_block
+
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.modify_ipv4_subnet_cidr(
+        subnet_id=subnet_id,
+        modify_ipv4_subnet_cidr_details=_details,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @vcn_group.command(name=cli_util.override('virtual_network.modify_vcn_cidr.command_name', 'modify-vcn-cidr'), help=u"""Updates the specified CIDR block of a VCN. The new CIDR IP range must meet the following criteria:
 
 - Must be valid. - Must not overlap with another CIDR block in the VCN, a CIDR block of a peered VCN, or the on-premises network CIDR block. - Must not exceed the limit of CIDR blocks allowed per VCN. - Must include IP addresses from the original CIDR block that are used in the VCN's existing route rules. - No IP address in an existing subnet should be outside of the new CIDR block range.
@@ -11182,6 +11344,79 @@ def remove_import_drg_route_distribution(ctx, from_json, wait_for_state, max_wai
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@subnet_group.command(name=cli_util.override('virtual_network.remove_ipv4_subnet_cidr.command_name', 'remove'), help=u"""Remove an IPv4 prefix from a subnet \n[Command Reference](removeIpv4SubnetCidr)""")
+@cli_util.option('--subnet-id', required=True, help=u"""Specify the [OCID] of the subnet.""")
+@cli_util.option('--ipv4-cidr-block', required=True, help=u"""This field should only be specified when removing an IPv4 prefix from a subnet's IPv4 address space. The CIDR must maintain the following rules -
+
+a. The CIDR block is valid and correctly formatted. b. The CIDR range is within one of the parent VCN ranges. c. The CIDR range to be removed is already present in the list of ipv4CidrBlocks
+
+Example: `10.0.1.0/24`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def remove_ipv4_subnet_cidr(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, subnet_id, ipv4_cidr_block, if_match):
+
+    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+        raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['ipv4CidrBlock'] = ipv4_cidr_block
+
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.remove_ipv4_subnet_cidr(
+        subnet_id=subnet_id,
+        remove_ipv4_subnet_cidr_details=_details,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                if hasattr(result, "data") and hasattr(result.data, "resources") and len(result.data.resources) == 1:
+                    entity_type = result.data.resources[0].entity_type
+                    identifier = result.data.resources[0].identifier
+                    get_operation = 'get_' + entity_type
+                    if hasattr(client, get_operation) and callable(getattr(client, get_operation)):
+                        result = getattr(client, get_operation)(identifier)
+
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

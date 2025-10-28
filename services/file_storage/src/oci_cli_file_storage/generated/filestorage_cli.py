@@ -1124,6 +1124,9 @@ Example: `10.0.3.3`""")
 @cli_util.option('--kerberos', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""[Security attributes] are labels for a resource that can be referenced in a [Zero Trust Packet Routing] (ZPR) policy to control access to ZPR-supported resources.
+
+Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
 
 This option is a JSON list with items of type ResourceLock.  For documentation on ResourceLock please see our API reference: https://docs.cloud.oracle.com/api/#/en/filestorage/20171215/datatypes/ResourceLock.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1132,12 +1135,12 @@ This option is a JSON list with items of type ResourceLock.  For documentation o
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'ldap-idmap': {'module': 'file_storage', 'class': 'CreateLdapIdmapDetails'}, 'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'kerberos': {'module': 'file_storage', 'class': 'CreateKerberosDetails'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'file_storage', 'class': 'list[ResourceLock]'}})
+@json_skeleton_utils.get_cli_json_input_option({'ldap-idmap': {'module': 'file_storage', 'class': 'CreateLdapIdmapDetails'}, 'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'kerberos': {'module': 'file_storage', 'class': 'CreateKerberosDetails'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'file_storage', 'class': 'list[ResourceLock]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ldap-idmap': {'module': 'file_storage', 'class': 'CreateLdapIdmapDetails'}, 'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'kerberos': {'module': 'file_storage', 'class': 'CreateKerberosDetails'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'file_storage', 'class': 'list[ResourceLock]'}}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ldap-idmap': {'module': 'file_storage', 'class': 'CreateLdapIdmapDetails'}, 'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'kerberos': {'module': 'file_storage', 'class': 'CreateKerberosDetails'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'file_storage', 'class': 'list[ResourceLock]'}}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
 @cli_util.wrap_exceptions
-def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, subnet_id, display_name, hostname_label, ip_address, idmap_type, ldap_idmap, nsg_ids, kerberos, freeform_tags, defined_tags, locks, requested_throughput, is_lock_override):
+def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, subnet_id, display_name, hostname_label, ip_address, idmap_type, ldap_idmap, nsg_ids, kerberos, freeform_tags, defined_tags, security_attributes, locks, requested_throughput, is_lock_override):
 
     kwargs = {}
     if is_lock_override is not None:
@@ -1175,6 +1178,9 @@ def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     if locks is not None:
         _details['locks'] = cli_util.parse_json_parameter("locks", locks)
@@ -4244,24 +4250,27 @@ Example: `My mount target`""")
 @cli_util.option('--kerberos', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--security-attributes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""[Security attributes] are labels for a resource that can be referenced in a [Zero Trust Packet Routing] (ZPR) policy to control access to ZPR-supported resources.
+
+Example: `{\"Oracle-ZPR\": {\"MaxEgressCount\": {\"value\": \"42\", \"mode\": \"enforce\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'ldap-idmap': {'module': 'file_storage', 'class': 'UpdateLdapIdmapDetails'}, 'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'kerberos': {'module': 'file_storage', 'class': 'UpdateKerberosDetails'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'ldap-idmap': {'module': 'file_storage', 'class': 'UpdateLdapIdmapDetails'}, 'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'kerberos': {'module': 'file_storage', 'class': 'UpdateKerberosDetails'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ldap-idmap': {'module': 'file_storage', 'class': 'UpdateLdapIdmapDetails'}, 'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'kerberos': {'module': 'file_storage', 'class': 'UpdateKerberosDetails'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ldap-idmap': {'module': 'file_storage', 'class': 'UpdateLdapIdmapDetails'}, 'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'kerberos': {'module': 'file_storage', 'class': 'UpdateKerberosDetails'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
 @cli_util.wrap_exceptions
-def update_mount_target(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mount_target_id, display_name, idmap_type, ldap_idmap, nsg_ids, kerberos, freeform_tags, defined_tags, if_match, is_lock_override):
+def update_mount_target(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mount_target_id, display_name, idmap_type, ldap_idmap, nsg_ids, kerberos, freeform_tags, defined_tags, security_attributes, if_match, is_lock_override):
 
     if isinstance(mount_target_id, six.string_types) and len(mount_target_id.strip()) == 0:
         raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
     if not force:
-        if ldap_idmap or nsg_ids or kerberos or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to ldap-idmap and nsg-ids and kerberos and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if ldap_idmap or nsg_ids or kerberos or freeform_tags or defined_tags or security_attributes:
+            if not click.confirm("WARNING: Updates to ldap-idmap and nsg-ids and kerberos and freeform-tags and defined-tags and security-attributes will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -4293,6 +4302,9 @@ def update_mount_target(ctx, from_json, force, wait_for_state, max_wait_seconds,
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if security_attributes is not None:
+        _details['securityAttributes'] = cli_util.parse_json_parameter("security_attributes", security_attributes)
 
     client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.update_mount_target(

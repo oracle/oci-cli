@@ -680,7 +680,6 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] compartment identifier for the endpoint""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model to associate with the endpoint.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. It should be unique and can be modified. Avoid entering confidential information.""")
-@cli_util.option('--compute-type', type=custom_types.CliCaseInsensitiveChoice(["CPU", "GPU"]), help=u"""Compute infra type for endpoint.""")
 @cli_util.option('--alias', help=u"""Unique name across user tenancy in a region to identify an endpoint to be used for inferencing.""")
 @cli_util.option('--description', help=u"""A short description of the an endpoint.""")
 @cli_util.option('--inference-units', type=click.INT, help=u"""Number of replicas required for this endpoint. This will be optional parameter. Default will be 1.""")
@@ -694,7 +693,7 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ai_language', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ai_language', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ai_language', 'class': 'Endpoint'})
 @cli_util.wrap_exceptions
-def create_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, model_id, display_name, compute_type, alias, description, inference_units, freeform_tags, defined_tags):
+def create_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, model_id, display_name, alias, description, inference_units, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -705,9 +704,6 @@ def create_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if display_name is not None:
         _details['displayName'] = display_name
-
-    if compute_type is not None:
-        _details['computeType'] = compute_type
 
     if alias is not None:
         _details['alias'] = alias

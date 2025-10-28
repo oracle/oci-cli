@@ -77,9 +77,7 @@ The order of precedence in which this scripts applies input parameters is as fol
 
 Checksums
 -----------
-..
-   These checksums must also be changed if we change install scripts right?
 
-install.sh   eff201279e7198101e8cbbe4cea2ca559732f3cd502e145354d7477d2a4621ce
-install.ps1   8dba598ded1718cfa2e52ca8785ece31d0b573868eaec9ad2af535d43797a70c
-install.py   9d2714cad813a47e725a644a74621f29093c4e82ec9db149a09aa4d731e74e83
+install.sh   ad4dd0e3cbd98ab2cc9465353ac8e98ed5c35dc94fd733a7ecba5898f1556e7d
+install.ps1   a9993193340e3f0f9f5abd36191cedfacd73af3173e286350eb4f7277caa029e
+install.py   d44cf21648196668f03a7e0248aeb6eb35a995a47a9ab98acb66359643a13ed5
