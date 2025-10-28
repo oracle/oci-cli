@@ -3712,6 +3712,12 @@ Example: `example_load_balancer`""")
   If \"IPV6\", the service assigns an IPv6 address and the load balancer supports IPv6 traffic.
 
   Example: \"ipMode\":\"IPV6\"""")
+@cli_util.option('--ipv6-subnet-cidr', help=u"""Used to disambiguate which subnet prefix should be used to create an IPv6 LB.
+
+Example: \"2002::1234:abcd:ffff:c0a8:101/64\"""")
+@cli_util.option('--reserved-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of reserved Ips.
+
+This option is a JSON list with items of type ReservedIP.  For documentation on ReservedIP please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/ReservedIP.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-delete-protection-enabled', type=click.BOOL, help=u"""Whether or not the load balancer has delete protection enabled.
 
 If \"true\", the loadbalancer will be protected against deletion if configured to accept traffic.
@@ -3757,18 +3763,18 @@ Example: `example-etag`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'reserved-ips': {'module': 'load_balancer', 'class': 'list[ReservedIP]'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'reserved-ips': {'module': 'load_balancer', 'class': 'list[ReservedIP]'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'security-attributes': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, display_name, ip_mode, is_delete_protection_enabled, is_request_id_enabled, request_id_header, freeform_tags, defined_tags, security_attributes, if_match):
+def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, display_name, ip_mode, ipv6_subnet_cidr, reserved_ips, is_delete_protection_enabled, is_request_id_enabled, request_id_header, freeform_tags, defined_tags, security_attributes, if_match):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags or security_attributes:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and security-attributes will replace any existing values. Are you sure you want to continue?"):
+        if reserved_ips or freeform_tags or defined_tags or security_attributes:
+            if not click.confirm("WARNING: Updates to reserved-ips and freeform-tags and defined-tags and security-attributes will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -3783,6 +3789,12 @@ def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     if ip_mode is not None:
         _details['ipMode'] = ip_mode
+
+    if ipv6_subnet_cidr is not None:
+        _details['ipv6SubnetCidr'] = ipv6_subnet_cidr
+
+    if reserved_ips is not None:
+        _details['reservedIps'] = cli_util.parse_json_parameter("reserved_ips", reserved_ips)
 
     if is_delete_protection_enabled is not None:
         _details['isDeleteProtectionEnabled'] = is_delete_protection_enabled

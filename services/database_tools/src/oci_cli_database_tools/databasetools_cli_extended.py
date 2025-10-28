@@ -348,7 +348,7 @@ def validate_database_tools_connection_validate_database_tools_connection_postgr
 
 
 @cli_util.copy_params_from_generated_command(databasetools_cli.add_database_tools_connection_lock, params_to_exclude=['database_tools_connection_id'])
-@databasetools_cli.database_tools_connection_group.command(name=databasetools_cli.add_database_tools_connection_lock.name, help=databasetools_cli.add_database_tools_connection_lock.help)
+@databasetools_cli.database_tools_connection_group.command(name=databasetools_cli.add_database_tools_connection_lock.name, help="Adds a lock to a Database Tools connection resource. \n[Command Reference](addDatabaseToolsConnectionLock)")
 @cli_util.option('--connection-id', required=True, help=u"""The [OCID] of a Database Tools connection. [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsConnection'})
@@ -363,7 +363,7 @@ def add_database_tools_connection_lock_extended(ctx, **kwargs):
 
 
 @cli_util.copy_params_from_generated_command(databasetools_cli.remove_database_tools_connection_lock, params_to_exclude=['database_tools_connection_id'])
-@databasetools_cli.database_tools_connection_group.command(name=databasetools_cli.remove_database_tools_connection_lock.name, help=databasetools_cli.remove_database_tools_connection_lock.help)
+@databasetools_cli.database_tools_connection_group.command(name=databasetools_cli.remove_database_tools_connection_lock.name, help="Removes a lock from a Database Tools connection resource. \n[Command Reference](removeDatabaseToolsConnectionLock)")
 @cli_util.option('--connection-id', required=True, help=u"""The [OCID] of a Database Tools connection. [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsConnection'})
@@ -378,7 +378,7 @@ def remove_database_tools_connection_lock_extended(ctx, **kwargs):
 
 
 @cli_util.copy_params_from_generated_command(databasetools_cli.add_database_tools_private_endpoint_lock, params_to_exclude=['database_tools_private_endpoint_id'])
-@databasetools_cli.database_tools_private_endpoint_group.command(name=databasetools_cli.add_database_tools_private_endpoint_lock.name, help=databasetools_cli.add_database_tools_private_endpoint_lock.help)
+@databasetools_cli.database_tools_private_endpoint_group.command(name=databasetools_cli.add_database_tools_private_endpoint_lock.name, help="Adds a lock to a Database Tools private endpoint resource. \n[Command Reference](addDatabaseToolsPrivateEndpointLock)")
 @cli_util.option('--private-endpoint-id', required=True, help=u"""The [OCID] of a Database Tools private endpoint. [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsPrivateEndpoint'})
@@ -393,7 +393,7 @@ def add_database_tools_private_endpoint_lock_extended(ctx, **kwargs):
 
 
 @cli_util.copy_params_from_generated_command(databasetools_cli.remove_database_tools_private_endpoint_lock, params_to_exclude=['database_tools_private_endpoint_id'])
-@databasetools_cli.database_tools_private_endpoint_group.command(name=databasetools_cli.remove_database_tools_private_endpoint_lock.name, help=databasetools_cli.remove_database_tools_private_endpoint_lock.help)
+@databasetools_cli.database_tools_private_endpoint_group.command(name=databasetools_cli.remove_database_tools_private_endpoint_lock.name, help="Removes a lock from a Database Tools private endpoint resource. \n[Command Reference](removeDatabaseToolsPrivateEndpointLock)")
 @cli_util.option('--private-endpoint-id', required=True, help=u"""The [OCID] of a Database Tools private endpoint. [required]""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsPrivateEndpoint'})
@@ -499,3 +499,197 @@ def create_database_tools_connection_create_database_tools_connection_postgresql
     kwargs.pop('user_password_secret_id', None)
 
     ctx.invoke(databasetools_cli.create_database_tools_connection_create_database_tools_connection_postgresql_details, **kwargs)
+
+
+# oci dbtools database-tools-identity add -> oci dbtools database-tools-identity add-lock
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_identity_group, databasetools_cli.add_database_tools_identity_lock, "add-lock")
+
+
+# oci dbtools database-tools-identity remove -> oci dbtools database-tools-identity remove-lock
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_identity_group, databasetools_cli.remove_database_tools_identity_lock, "remove-lock")
+
+
+# oci dbtools database-tools-identity create-database-tools-identity-create-database-tools-identity-oracle-database-resource-principal-details -> oci dbtools database-tools-identity create-oracle-database-resource-principal
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_identity_group, databasetools_cli.create_database_tools_identity_create_database_tools_identity_oracle_database_resource_principal_details, "create-oracle-database-resource-principal")
+
+
+# oci dbtools database-tools-identity refresh-database-tools-identity-credential-refresh-database-tools-identity-oracle-database-resource-principal-credential-details -> oci dbtools database-tools-identity refresh-oracle-database-resource-principal-credential
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_identity_group, databasetools_cli.refresh_database_tools_identity_credential_refresh_database_tools_identity_oracle_database_resource_principal_credential_details, "refresh-oracle-database-resource-principal-credential")
+
+
+# oci dbtools database-tools-identity update-database-tools-identity-update-database-tools-identity-oracle-database-resource-principal-details -> oci dbtools database-tools-identity update-oracle-database-resource-principal
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_identity_group, databasetools_cli.update_database_tools_identity_update_database_tools_identity_oracle_database_resource_principal_details, "update-oracle-database-resource-principal")
+
+
+# oci dbtools database-tools-identity validate-database-tools-identity-credential-validate-database-tools-identity-credential-oracle-database-resource-principal-details -> oci dbtools database-tools-identity validate-oracle-database-resource-principal-credential
+cli_util.rename_command(databasetools_cli, databasetools_cli.database_tools_identity_group, databasetools_cli.validate_database_tools_identity_credential_validate_database_tools_identity_credential_oracle_database_resource_principal_details, "validate-oracle-database-resource-principal-credential")
+
+
+# oci dbtools database-tools-identity -> oci dbtools identity
+cli_util.rename_command(databasetools_cli, databasetools_cli.dbtools_root_group, databasetools_cli.database_tools_identity_group, "identity")
+
+
+# Remove create from oci dbtools database-tools-identity
+databasetools_cli.database_tools_identity_group.commands.pop(databasetools_cli.create_database_tools_identity.name)
+
+
+# Remove refresh-database-tools-identity-credential from oci dbtools database-tools-identity
+databasetools_cli.database_tools_identity_group.commands.pop(databasetools_cli.refresh_database_tools_identity_credential.name)
+
+
+# Remove update from oci dbtools database-tools-identity
+databasetools_cli.database_tools_identity_group.commands.pop(databasetools_cli.update_database_tools_identity.name)
+
+
+# Remove validate-database-tools-identity-credential from oci dbtools database-tools-identity
+databasetools_cli.database_tools_identity_group.commands.pop(databasetools_cli.validate_database_tools_identity_credential.name)
+
+
+@cli_util.copy_params_from_generated_command(databasetools_cli.add_database_tools_identity_lock, params_to_exclude=['database_tools_identity_id'])
+@databasetools_cli.database_tools_identity_group.command(name=databasetools_cli.add_database_tools_identity_lock.name, help="Adds a lock to a Database Tools identity resource. \n[Command Reference](addDatabaseToolsIdentityLock)")
+@cli_util.option('--identity-id', required=True, help=u"""The [OCID] of a Database Tools identity. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsIdentity'})
+@cli_util.wrap_exceptions
+def add_database_tools_identity_lock_extended(ctx, **kwargs):
+
+    if 'identity_id' in kwargs:
+        kwargs['database_tools_identity_id'] = kwargs['identity_id']
+        kwargs.pop('identity_id')
+
+    ctx.invoke(databasetools_cli.add_database_tools_identity_lock, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(databasetools_cli.change_database_tools_identity_compartment, params_to_exclude=['database_tools_identity_id'])
+@databasetools_cli.database_tools_identity_group.command(name=databasetools_cli.change_database_tools_identity_compartment.name, help=databasetools_cli.change_database_tools_identity_compartment.help)
+@cli_util.option('--identity-id', required=True, help=u"""The [OCID] of a Database Tools identity. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_database_tools_identity_compartment_extended(ctx, **kwargs):
+
+    if 'identity_id' in kwargs:
+        kwargs['database_tools_identity_id'] = kwargs['identity_id']
+        kwargs.pop('identity_id')
+
+    ctx.invoke(databasetools_cli.change_database_tools_identity_compartment, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(databasetools_cli.create_database_tools_identity_create_database_tools_identity_oracle_database_resource_principal_details, params_to_exclude=['database_tools_connection_id'])
+@databasetools_cli.database_tools_identity_group.command(name=databasetools_cli.create_database_tools_identity_create_database_tools_identity_oracle_database_resource_principal_details.name, help=databasetools_cli.create_database_tools_identity_create_database_tools_identity_oracle_database_resource_principal_details.help)
+@cli_util.option('--connection-id', required=True, help=u"""The [OCID] of the related Database Tools Connection. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}, 'locks': {'module': 'database_tools', 'class': 'list[ResourceLock]'}}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsIdentity'})
+@cli_util.wrap_exceptions
+def create_database_tools_identity_create_database_tools_identity_oracle_database_resource_principal_details_extended(ctx, **kwargs):
+
+    if 'connection_id' in kwargs:
+        kwargs['database_tools_connection_id'] = kwargs['connection_id']
+        kwargs.pop('connection_id')
+
+    ctx.invoke(databasetools_cli.create_database_tools_identity_create_database_tools_identity_oracle_database_resource_principal_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(databasetools_cli.delete_database_tools_identity, params_to_exclude=['database_tools_identity_id'])
+@databasetools_cli.database_tools_identity_group.command(name=databasetools_cli.delete_database_tools_identity.name, help=databasetools_cli.delete_database_tools_identity.help)
+@cli_util.option('--identity-id', required=True, help=u"""The [OCID] of a Database Tools identity. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_database_tools_identity_extended(ctx, **kwargs):
+
+    if 'identity_id' in kwargs:
+        kwargs['database_tools_identity_id'] = kwargs['identity_id']
+        kwargs.pop('identity_id')
+
+    ctx.invoke(databasetools_cli.delete_database_tools_identity, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(databasetools_cli.get_database_tools_identity, params_to_exclude=['database_tools_identity_id'])
+@databasetools_cli.database_tools_identity_group.command(name=databasetools_cli.get_database_tools_identity.name, help=databasetools_cli.get_database_tools_identity.help)
+@cli_util.option('--identity-id', required=True, help=u"""The [OCID] of a Database Tools identity. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsIdentity'})
+@cli_util.wrap_exceptions
+def get_database_tools_identity_extended(ctx, **kwargs):
+
+    if 'identity_id' in kwargs:
+        kwargs['database_tools_identity_id'] = kwargs['identity_id']
+        kwargs.pop('identity_id')
+
+    ctx.invoke(databasetools_cli.get_database_tools_identity, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(databasetools_cli.list_database_tools_identities, params_to_exclude=['database_tools_connection_id'])
+@databasetools_cli.database_tools_identity_group.command(name=databasetools_cli.list_database_tools_identities.name, help=databasetools_cli.list_database_tools_identities.help)
+@cli_util.option('--connection-id', help=u"""A filter to return only resources their `databaseToolsConnectionId` matches the specified `databaseToolsConnectionId`.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsIdentityCollection'})
+@cli_util.wrap_exceptions
+def list_database_tools_identities_extended(ctx, **kwargs):
+
+    if 'connection_id' in kwargs:
+        kwargs['database_tools_connection_id'] = kwargs['connection_id']
+        kwargs.pop('connection_id')
+
+    ctx.invoke(databasetools_cli.list_database_tools_identities, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(databasetools_cli.refresh_database_tools_identity_credential_refresh_database_tools_identity_oracle_database_resource_principal_credential_details, params_to_exclude=['database_tools_identity_id'])
+@databasetools_cli.database_tools_identity_group.command(name=databasetools_cli.refresh_database_tools_identity_credential_refresh_database_tools_identity_oracle_database_resource_principal_credential_details.name, help=databasetools_cli.refresh_database_tools_identity_credential_refresh_database_tools_identity_oracle_database_resource_principal_credential_details.help)
+@cli_util.option('--identity-id', required=True, help=u"""The [OCID] of a Database Tools identity. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def refresh_database_tools_identity_credential_refresh_database_tools_identity_oracle_database_resource_principal_credential_details_extended(ctx, **kwargs):
+
+    if 'identity_id' in kwargs:
+        kwargs['database_tools_identity_id'] = kwargs['identity_id']
+        kwargs.pop('identity_id')
+
+    ctx.invoke(databasetools_cli.refresh_database_tools_identity_credential_refresh_database_tools_identity_oracle_database_resource_principal_credential_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(databasetools_cli.remove_database_tools_identity_lock, params_to_exclude=['database_tools_identity_id'])
+@databasetools_cli.database_tools_identity_group.command(name=databasetools_cli.remove_database_tools_identity_lock.name, help="Removes a lock from a Database Tools identity resource. \n[Command Reference](removeDatabaseToolsIdentityLock)")
+@cli_util.option('--identity-id', required=True, help=u"""The [OCID] of a Database Tools identity. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'DatabaseToolsIdentity'})
+@cli_util.wrap_exceptions
+def remove_database_tools_identity_lock_extended(ctx, **kwargs):
+
+    if 'identity_id' in kwargs:
+        kwargs['database_tools_identity_id'] = kwargs['identity_id']
+        kwargs.pop('identity_id')
+
+    ctx.invoke(databasetools_cli.remove_database_tools_identity_lock, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(databasetools_cli.update_database_tools_identity_update_database_tools_identity_oracle_database_resource_principal_details, params_to_exclude=['database_tools_identity_id'])
+@databasetools_cli.database_tools_identity_group.command(name=databasetools_cli.update_database_tools_identity_update_database_tools_identity_oracle_database_resource_principal_details.name, help=databasetools_cli.update_database_tools_identity_update_database_tools_identity_oracle_database_resource_principal_details.help)
+@cli_util.option('--identity-id', required=True, help=u"""The [OCID] of a Database Tools identity. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database_tools', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database_tools', 'class': 'dict(str, string)'}})
+@cli_util.wrap_exceptions
+def update_database_tools_identity_update_database_tools_identity_oracle_database_resource_principal_details_extended(ctx, **kwargs):
+
+    if 'identity_id' in kwargs:
+        kwargs['database_tools_identity_id'] = kwargs['identity_id']
+        kwargs.pop('identity_id')
+
+    ctx.invoke(databasetools_cli.update_database_tools_identity_update_database_tools_identity_oracle_database_resource_principal_details, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(databasetools_cli.validate_database_tools_identity_credential_validate_database_tools_identity_credential_oracle_database_resource_principal_details, params_to_exclude=['database_tools_identity_id'])
+@databasetools_cli.database_tools_identity_group.command(name=databasetools_cli.validate_database_tools_identity_credential_validate_database_tools_identity_credential_oracle_database_resource_principal_details.name, help=databasetools_cli.validate_database_tools_identity_credential_validate_database_tools_identity_credential_oracle_database_resource_principal_details.help)
+@cli_util.option('--identity-id', required=True, help=u"""The [OCID] of a Database Tools identity. [required]""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database_tools', 'class': 'ValidateDatabaseToolsIdentityCredentialResult'})
+@cli_util.wrap_exceptions
+def validate_database_tools_identity_credential_validate_database_tools_identity_credential_oracle_database_resource_principal_details_extended(ctx, **kwargs):
+
+    if 'identity_id' in kwargs:
+        kwargs['database_tools_identity_id'] = kwargs['identity_id']
+        kwargs.pop('identity_id')
+
+    ctx.invoke(databasetools_cli.validate_database_tools_identity_credential_validate_database_tools_identity_credential_oracle_database_resource_principal_details, **kwargs)

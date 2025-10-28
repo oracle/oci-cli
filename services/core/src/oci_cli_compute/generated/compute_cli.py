@@ -10016,6 +10016,7 @@ Example: `50`""")
 @cli_util.option('--compute-host-lifecycle-state', help=u"""A filter to return only ComputeHostSummary resources that match the given Compute Host lifecycle State OCID exactly.""")
 @cli_util.option('--compute-host-health', help=u"""A filter to return only ComputeHostSummary resources that match the given Compute Host health State OCID exactly.""")
 @cli_util.option('--compute-host-group-id', help=u"""The [OCID] of the compute host group.""")
+@cli_util.option('--compute-host-in-subtree', type=click.BOOL, help=u"""When set to true, all the compartments in the tenancy are traversed and the hosts in the specified tenancy and its compartments are fetched. Default is false.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -10023,7 +10024,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeHostCollection'})
 @cli_util.wrap_exceptions
-def list_compute_hosts(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, display_name, network_resource_id, limit, page, sort_by, sort_order, compute_host_lifecycle_state, compute_host_health, compute_host_group_id):
+def list_compute_hosts(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, display_name, network_resource_id, limit, page, sort_by, sort_order, compute_host_lifecycle_state, compute_host_health, compute_host_group_id, compute_host_in_subtree):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -10051,6 +10052,8 @@ def list_compute_hosts(ctx, from_json, all_pages, page_size, compartment_id, ava
         kwargs['compute_host_health'] = compute_host_health
     if compute_host_group_id is not None:
         kwargs['compute_host_group_id'] = compute_host_group_id
+    if compute_host_in_subtree is not None:
+        kwargs['compute_host_in_subtree'] = compute_host_in_subtree
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:

@@ -558,4 +558,4 @@ fn, function, update
 integration, integration-instance, create
 integration, integration-instance, update
 goldengate, connection, create-oracle-ai-data-platform-connection
-goldengate, connection, update-oracle-ai-data-platform-connection
+goldengate, connection, update-oracle-ai-data-platform-connectionidentity-domains, social-identity-provider, search

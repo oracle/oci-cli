@@ -266,6 +266,7 @@ IGNORED_COMMANDS = [
     ['db', 'exascale-db-storage-vault', 'list'],
     ['db', 'database', 'update'],
     ['opsi', 'database-insights', 'create-macs-managed-autonomous-database-insight'],
+    ['identity-domains', 'social-identity-provider', 'search']
 ]
 
 IGNORED_COMMANDS_DOCS = [

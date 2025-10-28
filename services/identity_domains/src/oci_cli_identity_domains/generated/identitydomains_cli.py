@@ -96,12 +96,6 @@ def app_group():
     pass
 
 
-@click.command(cli_util.override('identity_domains.social_identity_providers_group.command_name', 'social-identity-providers'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
-@cli_util.help_option_group
-def social_identity_providers_group():
-    pass
-
-
 @click.command(cli_util.override('identity_domains.resource_type_schema_attributes_group.command_name', 'resource-type-schema-attributes'), cls=CommandGroupWithAlias, help="""The SCIM protocol defines a standard set of query parameters that can be used to filter, sort, and paginate to return zero or more resources in a query response. Queries MAY be made against a single resource or a resource type endpoint (e.g., /Users), or the service provider Base URI.""")
 @cli_util.help_option_group
 def resource_type_schema_attributes_group():
@@ -750,7 +744,6 @@ identity_domains_root_group.add_command(branding_setting_group)
 identity_domains_root_group.add_command(identity_providers_group)
 identity_domains_root_group.add_command(user_password_changer_group)
 identity_domains_root_group.add_command(app_group)
-identity_domains_root_group.add_command(social_identity_providers_group)
 identity_domains_root_group.add_command(resource_type_schema_attributes_group)
 identity_domains_root_group.add_command(my_device_group)
 identity_domains_root_group.add_command(authentication_factors_remover_group)
@@ -8335,6 +8328,16 @@ This option is a JSON list with items of type SocialIdentityProviderJitProvAssig
 @cli_util.option('--admin-scope', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Admin scope to request
 
 **SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--apple-dev-id', help=u"""Apple Developer ID
+
+**Added In:** 2311180004
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--apple-key-id', help=u"""Apple Private Key ID
+
+**Added In:** 2311180004
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
 @cli_util.option('--clock-skew-in-seconds', type=click.INT, help=u"""Social IDP allowed clock skew time
 
 **SCIM++ Properties:**  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: integer  - uniqueness: none""")
@@ -8373,7 +8376,7 @@ This option is a JSON list with items of type SocialIdentityProviderRelayIdpPara
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'jit-prov-assigned-groups': {'module': 'identity_domains', 'class': 'list[SocialIdentityProviderJitProvAssignedGroups]'}, 'scope': {'module': 'identity_domains', 'class': 'list[string]'}, 'admin-scope': {'module': 'identity_domains', 'class': 'list[string]'}, 'relay-idp-param-mappings': {'module': 'identity_domains', 'class': 'list[SocialIdentityProviderRelayIdpParamMappings]'}}, output_type={'module': 'identity_domains', 'class': 'SocialIdentityProvider'})
 @cli_util.wrap_exceptions
-def create_social_identity_provider(ctx, from_json, schemas, name, enabled, account_linking_enabled, registration_enabled, show_on_login, consumer_key, consumer_secret, service_provider_name, authorization, resource_type_schema_version, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, social_jit_provisioning_enabled, jit_prov_group_static_list_enabled, jit_prov_assigned_groups, auto_redirect_enabled, status, id_attribute, authz_url, access_token_url, profile_url, scope, admin_scope, clock_skew_in_seconds, redirect_url, icon_url, discovery_url, client_credential_in_payload, refresh_token_url, relay_idp_param_mappings):
+def create_social_identity_provider(ctx, from_json, schemas, name, enabled, account_linking_enabled, registration_enabled, show_on_login, consumer_key, consumer_secret, service_provider_name, authorization, resource_type_schema_version, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, social_jit_provisioning_enabled, jit_prov_group_static_list_enabled, jit_prov_assigned_groups, auto_redirect_enabled, status, id_attribute, authz_url, access_token_url, profile_url, scope, admin_scope, apple_dev_id, apple_key_id, clock_skew_in_seconds, redirect_url, icon_url, discovery_url, client_credential_in_payload, refresh_token_url, relay_idp_param_mappings):
 
     kwargs = {}
     if authorization is not None:
@@ -8463,6 +8466,12 @@ def create_social_identity_provider(ctx, from_json, schemas, name, enabled, acco
 
     if admin_scope is not None:
         _details['adminScope'] = cli_util.parse_json_parameter("admin_scope", admin_scope)
+
+    if apple_dev_id is not None:
+        _details['appleDevId'] = apple_dev_id
+
+    if apple_key_id is not None:
+        _details['appleKeyId'] = apple_key_id
 
     if clock_skew_in_seconds is not None:
         _details['clockSkewInSeconds'] = clock_skew_in_seconds
@@ -15940,7 +15949,7 @@ def list_smtp_credentials(ctx, from_json, all_pages, page_size, filter, sort_by,
     cli_util.render_response(result, ctx)
 
 
-@social_identity_providers_group.command(name=cli_util.override('identity_domains.list_social_identity_providers.command_name', 'list'), help=u"""Search Social Identity Providers
+@social_identity_provider_group.command(name=cli_util.override('identity_domains.list_social_identity_providers.command_name', 'list'), help=u"""Search Social Identity Providers
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listSocialIdentityProviders)""")
 @cli_util.option('--filter', help=u"""OPTIONAL. The filter string that is used to request a subset of resources. The filter string MUST be a valid filter expression. See the Filtering section of the SCIM specification for more information (Section 3.4.2.2). The string should contain at least one condition that each item must match in order to be returned in the search results. Each condition specifies an attribute, an operator, and a value. Conditions within a filter can be connected by logical operators (such as AND and OR). Sets of conditions can be grouped together using parentheses.""")
@@ -24027,6 +24036,16 @@ This option is a JSON list with items of type SocialIdentityProviderJitProvAssig
 @cli_util.option('--admin-scope', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Admin scope to request
 
 **SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: true  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--apple-dev-id', help=u"""Apple Developer ID
+
+**Added In:** 2311180004
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
+@cli_util.option('--apple-key-id', help=u"""Apple Private Key ID
+
+**Added In:** 2311180004
+
+**SCIM++ Properties:**  - caseExact: true  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: string  - uniqueness: none""")
 @cli_util.option('--clock-skew-in-seconds', type=click.INT, help=u"""Social IDP allowed clock skew time
 
 **SCIM++ Properties:**  - idcsSearchable: false  - multiValued: false  - mutability: readWrite  - required: false  - returned: default  - type: integer  - uniqueness: none""")
@@ -24067,7 +24086,7 @@ This option is a JSON list with items of type SocialIdentityProviderRelayIdpPara
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schemas': {'module': 'identity_domains', 'class': 'list[string]'}, 'meta': {'module': 'identity_domains', 'class': 'Meta'}, 'idcs-created-by': {'module': 'identity_domains', 'class': 'IdcsCreatedBy'}, 'idcs-last-modified-by': {'module': 'identity_domains', 'class': 'IdcsLastModifiedBy'}, 'tags': {'module': 'identity_domains', 'class': 'list[Tags]'}, 'jit-prov-assigned-groups': {'module': 'identity_domains', 'class': 'list[SocialIdentityProviderJitProvAssignedGroups]'}, 'scope': {'module': 'identity_domains', 'class': 'list[string]'}, 'admin-scope': {'module': 'identity_domains', 'class': 'list[string]'}, 'relay-idp-param-mappings': {'module': 'identity_domains', 'class': 'list[SocialIdentityProviderRelayIdpParamMappings]'}}, output_type={'module': 'identity_domains', 'class': 'SocialIdentityProvider'})
 @cli_util.wrap_exceptions
-def put_social_identity_provider(ctx, from_json, force, social_identity_provider_id, schemas, name, enabled, account_linking_enabled, registration_enabled, show_on_login, consumer_key, consumer_secret, service_provider_name, authorization, resource_type_schema_version, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, social_jit_provisioning_enabled, jit_prov_group_static_list_enabled, jit_prov_assigned_groups, auto_redirect_enabled, status, id_attribute, authz_url, access_token_url, profile_url, scope, admin_scope, clock_skew_in_seconds, redirect_url, icon_url, discovery_url, client_credential_in_payload, refresh_token_url, relay_idp_param_mappings, if_match):
+def put_social_identity_provider(ctx, from_json, force, social_identity_provider_id, schemas, name, enabled, account_linking_enabled, registration_enabled, show_on_login, consumer_key, consumer_secret, service_provider_name, authorization, resource_type_schema_version, id, ocid, meta, idcs_created_by, idcs_last_modified_by, idcs_prevented_operations, tags, delete_in_progress, idcs_last_upgraded_in_release, domain_ocid, compartment_ocid, tenancy_ocid, description, social_jit_provisioning_enabled, jit_prov_group_static_list_enabled, jit_prov_assigned_groups, auto_redirect_enabled, status, id_attribute, authz_url, access_token_url, profile_url, scope, admin_scope, apple_dev_id, apple_key_id, clock_skew_in_seconds, redirect_url, icon_url, discovery_url, client_credential_in_payload, refresh_token_url, relay_idp_param_mappings, if_match):
 
     if isinstance(social_identity_provider_id, six.string_types) and len(social_identity_provider_id.strip()) == 0:
         raise click.UsageError('Parameter --social-identity-provider-id cannot be whitespace or empty string')
@@ -24166,6 +24185,12 @@ def put_social_identity_provider(ctx, from_json, force, social_identity_provider
 
     if admin_scope is not None:
         _details['adminScope'] = cli_util.parse_json_parameter("admin_scope", admin_scope)
+
+    if apple_dev_id is not None:
+        _details['appleDevId'] = apple_dev_id
+
+    if apple_key_id is not None:
+        _details['appleKeyId'] = apple_key_id
 
     if clock_skew_in_seconds is not None:
         _details['clockSkewInSeconds'] = clock_skew_in_seconds
@@ -27384,7 +27409,7 @@ def search_smtp_credentials(ctx, from_json, schemas, authorization, resource_typ
     cli_util.render_response(result, ctx)
 
 
-@social_identity_providers_group.command(name=cli_util.override('identity_domains.search_social_identity_providers.command_name', 'search'), help=u"""Search Social Identity Providers Using POST
+@social_identity_provider_group.command(name=cli_util.override('identity_domains.search_social_identity_providers.command_name', 'search'), help=u"""Search Social Identity Providers Using POST
 
 The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](searchSocialIdentityProviders)""")
 @cli_util.option('--schemas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The schemas attribute is an array of Strings which allows introspection of the supported schema version for a SCIM representation as well any schema extensions supported by that representation. Each String value must be a unique URI. Query requests MUST be identified using the following URI: \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\" REQUIRED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

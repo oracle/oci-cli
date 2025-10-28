@@ -60,6 +60,8 @@ cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.vcn_group, virtua
 cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.vcn_group, virtualnetwork_cli.remove_ipv6_vcn_cidr, "remove-ipv6-vcn-cidr")
 cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.subnet_group, virtualnetwork_cli.add_ipv6_subnet_cidr, "add-ipv6-subnet-cidr")
 cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.subnet_group, virtualnetwork_cli.remove_ipv6_subnet_cidr, "remove-ipv6-subnet-cidr")
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.subnet_group, virtualnetwork_cli.add_ipv4_subnet_cidr, "add-ipv4-subnet-cidr")
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.subnet_group, virtualnetwork_cli.remove_ipv4_subnet_cidr, "remove-ipv4-subnet-cidr")
 
 # help for oci network ip-sec-connection create --static-routes
 network_create_ip_sec_connection_static_routes_example = """'["10.0.0.0/16"]'"""
@@ -122,7 +124,7 @@ For more information about secondary private IPs, see [IP Addresses]
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
-def assign_private_ip(ctx, from_json, vnic_id, vlan_id, ip_address, display_name, hostname_label, unassign_if_already_assigned, defined_tags, freeform_tags, route_table_id, lifetime):
+def assign_private_ip(ctx, from_json, vnic_id, vlan_id, ip_address, display_name, hostname_label, unassign_if_already_assigned, cidr_prefix_length, ipv4_subnet_cidr_at_creation, route_table_id, lifetime, defined_tags, freeform_tags):
     networking_client = cli_util.build_client('core', 'virtual_network', ctx)
     assign_private_ip_request_body = {}
     is_ip_reassignment = False
@@ -214,6 +216,10 @@ def assign_private_ip(ctx, from_json, vnic_id, vlan_id, ip_address, display_name
         assign_private_ip_request_body['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
     if freeform_tags is not None:
         assign_private_ip_request_body['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+    if lifetime is not None:
+        assign_private_ip_request_body['lifetime'] = lifetime
+    if route_table_id is not None:
+        assign_private_ip_request_body['routeTableId'] = route_table_id
 
     if lifetime is not None:
         assign_private_ip_request_body['lifetime'] = lifetime
@@ -222,6 +228,10 @@ def assign_private_ip(ctx, from_json, vnic_id, vlan_id, ip_address, display_name
     if not is_ip_reassignment:
         if ip_address is not None:
             assign_private_ip_request_body['ipAddress'] = ip_address
+        if cidr_prefix_length is not None:
+            assign_private_ip_request_body['cidrPrefixLength'] = cidr_prefix_length
+        if ipv4_subnet_cidr_at_creation is not None:
+            assign_private_ip_request_body['ipv4SubnetCidrAtCreation'] = ipv4_subnet_cidr_at_creation
 
         result = networking_client.create_private_ip(assign_private_ip_request_body)
     else:

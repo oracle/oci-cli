@@ -6,6 +6,132 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.69.0 - 2025-10-28
+--------------------
+Added
+~~~~~
+* File Storage Service
+
+  * Support for using security attribute for Mount Target in File Storage Service
+
+    * ``oci fs mount-target create --security-attributes``
+    * ``oci fs mount-target update --security-attributes``
+
+
+* Lustre File Storage Service
+
+  * Support for the Lustre File service object-storage-link
+
+    * ``oci lfs object-storage-link change-compartment``
+    * ``oci lfs object-storage-link create``
+    * ``oci lfs object-storage-link delete``
+    * ``oci lfs object-storage-link get``
+    * ``oci lfs object-storage-link get-sync-job``
+    * ``oci lfs object-storage-link list-sync-jobs``
+    * ``oci lfs object-storage-link start-export-to-object``
+    * ``oci lfs object-storage-link start-import-from-object``
+    * ``oci lfs object-storage-link stop-export-to-object``
+    * ``oci lfs object-storage-link stop-import-from-object``
+    * ``oci lfs object-storage-link update``
+    * ``oci lfs object-storage-link-collection``
+
+* Database Service
+
+  * Support for VanityUrlDetails parameter in Update Autonomous Database command
+
+    * ``oci db autonomous-database update --vanity-url-details``
+    * ``oci db autonomous-database update-autonomous-database-gcp-key-details --vanity-url-details``
+    * ``oci db autonomous-database update-autonomous-database-okv-key-details --vanity-url-details``
+    * ``oci db autonomous-database update-autonomous-database-azure-key-details --vanity-url-details``
+    * ``oci db autonomous-database update-autonomous-database-aws-key-details --vanity-url-details``
+    * ``oci db autonomous-database update-autonomous-database-oci-key-details --vanity-url-details``
+    * ``oci db autonomous-database update-autonomous-database-oracle-managed-key-details --vanity-url-details``
+
+* Disaster Recovery Service
+
+  * Support for Automatic DR (Switchover/Failover) in OCI Full Stack Disaster Recovery Service based on Database Events
+
+    * ``oci disaster-recovery automatic-dr-configuration create``
+    * ``oci disaster-recovery automatic-dr-configuration delete``
+    * ``oci disaster-recovery automatic-dr-configuration get``
+    * ``oci disaster-recovery automatic-dr-configuration list``
+    * ``oci disaster-recovery automatic-dr-configuration update``
+
+* AI Language Service
+
+  * Support for new optional parameters in the language service.
+
+    * ``oci ai language batch-detect-pii-entities --masking``
+
+* Load Balancer Service
+
+  * LBaaS Support for online conversion of IPv4 LB to dual stack IPv4 and IPv6
+
+    * ``oci lb load-balancer update --reserved-ips --ipv6-subnet-cidr``
+
+* Compute Service
+
+  * Add computeHostInSubtree query param to ListComputeHosts command
+
+    * ``oci compute compute-host list --compute-host-in-subtree``
+
+* Identity Domains Service
+
+  * Support for Apple as a Social IDP in the Identity Domains service
+
+    * ``oci identity-domains social-identity-provider create --apple-dev-id, --apple-key-id``
+    * ``oci identity-domains social-identity-provider put --apple-dev-id, --apple-key-id``
+
+* Database Tools Service
+
+  * Support for new Database Tools identity commands
+
+    * ``oci dbtools identity add-lock``
+    * ``oci dbtools identity change-compartment``
+    * ``oci dbtools identity create-oracle-database-resource-principal``
+    * ``oci dbtools identity delete``
+    * ``oci dbtools identity get``
+    * ``oci dbtools identity list``
+    * ``oci dbtools identity refresh-oracle-database-resource-principal-credential``
+    * ``oci dbtools identity remove-lock``
+    * ``oci dbtools identity update-oracle-database-resource-principal``
+    * ``oci dbtools identity validate-oracle-database-resource-principal-credential``
+
+  * Support for parameter runtime-identity in Database Tools connection commands
+
+    * ``oci dbtools connection list --runtime-identity``
+    * ``oci dbtools connection create-postgresql --runtime-identity``
+    * ``oci dbtools connection create-oracle-database --runtime-identity``
+    * ``oci dbtools connection create-mysql-database --runtime-identity``
+    * ``oci dbtools connection create-generic-jdbc --runtime-identity``
+
+* Network Service
+
+  * Additonal parameters for creating IPv4 Flex CIDR
+
+    * ``oci network private create --cidr-prefix-length, --ipv4-subnet-cidr-at-creation``
+    * ``oci network vnic assign-private-ip --cidr-prefix-length, --ipv4-subnet-cidr-at-creation``
+
+  * Additional paramters for creating subnet with multiple CIDR blocks
+
+    * ``oci network subnet create --ipv4-cidr-blocks``
+
+  * Addtional commands for adding / modifying / removing CIDR blocks from subnets
+
+    * ``oci network subnet add-ipv4-subnet-cidr``
+    * ``oci network subnet modify-ipv4-subnet-cidr``
+    * ``oci network subnet remove-ipv4-subnet-cidr``
+
+Modified
+~~~~~~~~
+* AI Language Service
+
+  * [BREAKING] Support for optional parameter compute-type is removed in the language service.
+
+    * ``oci ai language endpoint create --compute-type``
+
+* Upgraded the pyOpenSSL version to (>=17.5.0,<=25.1.0)
+
 3.68.1 - 2025-10-21
 --------------------
 Added
