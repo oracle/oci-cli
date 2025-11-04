@@ -638,6 +638,11 @@ service_mapping = {
         "OneSubscription  Usage Computation",
         "Billing & Cost Management"
     ],
+    "psa": [
+        "psa",
+        "PrivateServiceAccess Control Plane",
+        "Others"
+    ],
     "psql": [
         "psql",
         "PGSQL Control Plane",

@@ -6,6 +6,115 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.70.0 - 2025-11-04
+--------------------
+Added
+~~~~~
+* Data Intelligence Foundation Service
+
+  * Support for the Data Intelligence Foundation Service
+
+    * ``oci dif stack add``
+    * ``oci dif stack change-compartment``
+    * ``oci dif stack create``
+    * ``oci dif stack delete``
+    * ``oci dif stack deploy-artifacts``
+    * ``oci dif stack get``
+    * ``oci dif stack update``
+    * ``oci dif stack-collection list-stacks``
+    * ``oci dif work-request cancel``
+    * ``oci dif work-request get``
+    * ``oci dif work-request list``
+    * ``oci dif work-request-error list``
+    * ``oci dif work-request-log-entry list-work-request-logs``
+
+* Database Service
+
+  * Support for pluggable database snapshots for exadata databases in the Database Service
+
+    * ``oci db exadb-vm-cluster add --exadb-vm-cluster-id``
+    * ``oci db dbnode-snapshot delete``
+    * ``oci db dbnode-snapshot get``
+    * ``oci db dbnode-snapshot list``
+    * ``oci db dbnode-snapshot mount``
+    * ``oci db dbnode-snapshot unmount``
+  
+  * Support for backup configurations for globally distributed databases in the Database service
+
+    * ``oci distributed-database distributed-autonomous-db-service distributed-autonomous-database change-distributed-autonomous-db-backup-config``
+    * ``oci distributed-database distributed-autonomous-db-service distributed-autonomous-database create --db-backup-config``
+
+* Compute Service
+
+  * Support for instance pool pre-termination action in the Compute Service
+
+    * ``oci compute-management instance-pool create --lifecycle-management``
+    * ``oci compute-management instance-pool update --lifecycle-management``
+    * ``oci compute-management instance-pool-instance termination-proceed --instance-id, --instance-pool-id``
+
+* Network Monitoring Service
+
+  * Support for Zero trust Packet Routing (ZPR) policy analysis in the Network Monitoring Service
+
+    * ``oci vn-monitoring path-analysis get-path-analysis-adhoc``
+
+* Private Service Access Service
+
+  * Support for Private Service Access (PSA) service
+
+    * ``oci psa private-service-access change-compartment``
+    * ``oci psa private-service-access create``
+    * ``oci psa private-service-access delete``
+    * ``oci psa private-service-access get``
+    * ``oci psa private-service-access list``
+    * ``oci psa private-service-access update``
+    * ``oci psa psa-services list``
+    * ``oci psa work-request cancel``
+    * ``oci psa work-request get``
+    * ``oci psa work-request list``
+    * ``oci psa work-request-error list``
+    * ``oci psa work-request-log list``
+
+Modified
+~~~~~~~~
+* Multicloud Database Service
+
+  * [BREAKING] Renamed command oci dbmulticloud work-request work-request-error list-errors to the below command
+
+    * ``oci dbmulticloud work-request work-request-error list``
+  
+  * [BREAKING] Renamed command oci dbmulticloud work-request work-request-log list to the below command
+
+    * ``oci dbmulticloud work-request work-request-log-entry list-work-request-logs``
+
+* Delegate Access Control service
+
+  * [BREAKING] Renamed command oci delegate-access-control work-request work-request-error list to the below command
+
+    * ``oci delegate-access-control work-request work-request-error list-errors``
+  
+  * [BREAKING] Renamed command oci delegate-access-control work-request work-request-log-entry list-work-request-logs to the below command
+
+    * ``oci delegate-access-control work-request work-request-log list-logs``
+
+* Governance Rules Control Plane service
+
+  * [BREAKING] Renamed command oci governance-rules-control-plane work-request work-request-log list to the below command
+
+    * ``oci governance-rules-control-plane work-request work-request-log list-logs``
+
+* Oracle Cloud VMware Provisioning service
+  
+  * [BREAKING] Renamed command oci ocvs work-request-error list to the below command
+
+    * ``oci ocvs work-request-error list-errors``
+
+* Web Application Acceleration (WAA) service
+  
+  * [BREAKING] Renamed command oci waa work-request-error list-errors to the below command
+
+    * ``oci waa work-request-error list``
+
 3.69.0 - 2025-10-28
 --------------------
 Added

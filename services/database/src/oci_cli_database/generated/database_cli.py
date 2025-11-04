@@ -308,6 +308,12 @@ def console_connection_group():
     pass
 
 
+@click.command(cli_util.override('db.dbnode_snapshot_group.command_name', 'dbnode-snapshot'), cls=CommandGroupWithAlias, help="""Details of the Database Node Snapshot.""")
+@cli_util.help_option_group
+def dbnode_snapshot_group():
+    pass
+
+
 @click.command(cli_util.override('db.external_database_connector_group.command_name', 'external-database-connector'), cls=CommandGroupWithAlias, help="""An Oracle Cloud Infrastructure resource used to connect to an external Oracle Database. This resource stores the database connection string, user credentials, and related details that allow you to manage your external database using the Oracle Cloud Infrastructure Console and API interfaces.""")
 @cli_util.help_option_group
 def external_database_connector_group():
@@ -574,6 +580,7 @@ db_root_group.add_command(system_version_collection_group)
 db_root_group.add_command(backup_destination_summary_group)
 db_root_group.add_command(db_node_group)
 db_root_group.add_command(console_connection_group)
+db_root_group.add_command(dbnode_snapshot_group)
 db_root_group.add_command(external_database_connector_group)
 db_root_group.add_command(console_history_group)
 db_root_group.add_command(db_server_group)
@@ -661,6 +668,49 @@ def activate_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_sec
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@exadb_vm_cluster_group.command(name=cli_util.override('db.add_dbnode_snapshots_for_exadb_vm_cluster.command_name', 'add'), help=u"""Add a database node snapshots to the Exadb VM cluster.. \n[Command Reference](addDbnodeSnapshotsForExadbVmCluster)""")
+@cli_util.option('--name', required=True, help=u"""The user-friendly name for the Database Node Snapshot. The name should be unique.""")
+@cli_util.option('--source-dbnode-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The [OCID] of the Exadata Database Node.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--exadb-vm-cluster-id', required=True, help=u"""The Exadata VM cluster [OCID] on Exascale Infrastructure.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({'source-dbnode-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'source-dbnode-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DbnodeSnapshots'})
+@cli_util.wrap_exceptions
+def add_dbnode_snapshots_for_exadb_vm_cluster(ctx, from_json, name, source_dbnode_ids, exadb_vm_cluster_id, freeform_tags, defined_tags, if_match):
+
+    if isinstance(exadb_vm_cluster_id, six.string_types) and len(exadb_vm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --exadb-vm-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['sourceDbnodeIds'] = cli_util.parse_json_parameter("source_dbnode_ids", source_dbnode_ids)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.add_dbnode_snapshots_for_exadb_vm_cluster(
+        exadb_vm_cluster_id=exadb_vm_cluster_id,
+        add_dbnode_snapshots_for_exadb_vm_cluster_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -16539,6 +16589,63 @@ def delete_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
+@dbnode_snapshot_group.command(name=cli_util.override('db.delete_dbnode_snapshot.command_name', 'delete'), help=u"""Deletes the specified Exadata Database Node Snapshot. \n[Command Reference](deleteDbnodeSnapshot)""")
+@cli_util.option('--dbnode-snapshot-id', required=True, help=u"""The Exadata Database Node Snapshot [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_dbnode_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dbnode_snapshot_id, if_match):
+
+    if isinstance(dbnode_snapshot_id, six.string_types) and len(dbnode_snapshot_id.strip()) == 0:
+        raise click.UsageError('Parameter --dbnode-snapshot-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.delete_dbnode_snapshot(
+        dbnode_snapshot_id=dbnode_snapshot_id,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_requests', 'work_request', ctx)
+    if wait_for_state:
+
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @exadata_infrastructure_group.command(name=cli_util.override('db.delete_exadata_infrastructure.command_name', 'delete'), help=u"""Deletes the Exadata Cloud@Customer infrastructure. \n[Command Reference](deleteExadataInfrastructure)""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -20901,6 +21008,28 @@ def get_db_system_upgrade_history_entry(ctx, from_json, db_system_id, upgrade_hi
     result = client.get_db_system_upgrade_history_entry(
         db_system_id=db_system_id,
         upgrade_history_entry_id=upgrade_history_entry_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@dbnode_snapshot_group.command(name=cli_util.override('db.get_dbnode_snapshot.command_name', 'get'), help=u"""Gets information about the specified Exadata Database Node Snapshot in the specified compartment. \n[Command Reference](getDbnodeSnapshot)""")
+@cli_util.option('--dbnode-snapshot-id', required=True, help=u"""The Exadata Database Node Snapshot [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DbnodeSnapshot'})
+@cli_util.wrap_exceptions
+def get_dbnode_snapshot(ctx, from_json, dbnode_snapshot_id):
+
+    if isinstance(dbnode_snapshot_id, six.string_types) and len(dbnode_snapshot_id.strip()) == 0:
+        raise click.UsageError('Parameter --dbnode-snapshot-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_dbnode_snapshot(
+        dbnode_snapshot_id=dbnode_snapshot_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -25679,6 +25808,72 @@ def list_db_versions(ctx, from_json, all_pages, page_size, compartment_id, limit
     cli_util.render_response(result, ctx)
 
 
+@dbnode_snapshot_group.command(name=cli_util.override('db.list_dbnode_snapshots.command_name', 'list'), help=u"""Gets a list of the Exadata Database Node Snapshots in the specified compartment. \n[Command Reference](listDbnodeSnapshots)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for NAME is ascending. The NAME sort order is case sensitive.""")
+@cli_util.option('--name', help=u"""A filter to return only resources that match the entire name given. The match is not case sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAILED", "MOUNTED", "MOUNTING", "UNMOUNTING"]), help=u"""A filter to return only Exadata Database Snapshots that match the given lifecycle state exactly.""")
+@cli_util.option('--cluster-id', help=u"""A filter to return only Exadata Database Node Snapshots that match the given VM cluster.""")
+@cli_util.option('--source-dbnode-id', help=u"""A filter to return only Exadata Database Snapshots that match the given database node.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DbnodeSnapshotSummary]'})
+@cli_util.wrap_exceptions
+def list_dbnode_snapshots(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, name, sort_order, lifecycle_state, cluster_id, source_dbnode_id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if name is not None:
+        kwargs['name'] = name
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if cluster_id is not None:
+        kwargs['cluster_id'] = cluster_id
+    if source_dbnode_id is not None:
+        kwargs['source_dbnode_id'] = source_dbnode_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_dbnode_snapshots,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_dbnode_snapshots,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_dbnode_snapshots(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @exadata_infrastructure_group.command(name=cli_util.override('db.list_exadata_infrastructures.command_name', 'list'), help=u"""Lists the Exadata infrastructure resources in the specified compartment. Applies to Exadata Cloud@Customer instances only. To list the Exadata Cloud Service infrastructure resources in a compartment, use the  [ListCloudExadataInfrastructures] operation. \n[Command Reference](listExadataInfrastructures)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
@@ -28356,6 +28551,63 @@ def modify_pluggable_database_management(ctx, from_json, wait_for_state, max_wai
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_pluggable_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@dbnode_snapshot_group.command(name=cli_util.override('db.mount_dbnode_snapshot.command_name', 'mount'), help=u"""Mounts the snapshot for the provided dbNode. \n[Command Reference](mountDbnodeSnapshot)""")
+@cli_util.option('--db-node-id', required=True, help=u"""The [OCID] of the Exadata Database Node where snapshot needs to be mounted.""")
+@cli_util.option('--dbnode-snapshot-id', required=True, help=u"""The Exadata Database Node Snapshot [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAILED", "MOUNTED", "MOUNTING", "UNMOUNTING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DbnodeSnapshot'})
+@cli_util.wrap_exceptions
+def mount_dbnode_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_node_id, dbnode_snapshot_id, if_match):
+
+    if isinstance(dbnode_snapshot_id, six.string_types) and len(dbnode_snapshot_id.strip()) == 0:
+        raise click.UsageError('Parameter --dbnode-snapshot-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dbNodeId'] = db_node_id
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.mount_dbnode_snapshot(
+        dbnode_snapshot_id=dbnode_snapshot_id,
+        mount_dbnode_snapshot_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_dbnode_snapshot') and callable(getattr(client, 'get_dbnode_snapshot')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_dbnode_snapshot(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -31293,6 +31545,63 @@ def terminate_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@dbnode_snapshot_group.command(name=cli_util.override('db.unmount_dbnode_snapshot.command_name', 'unmount'), help=u"""Unmounts the snapshot for the provided dbNode. \n[Command Reference](unmountDbnodeSnapshot)""")
+@cli_util.option('--db-node-id', required=True, help=u"""The [OCID] of the Exadata Database Node where snapshot needs to be unmounted.""")
+@cli_util.option('--dbnode-snapshot-id', required=True, help=u"""The Exadata Database Node Snapshot [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAILED", "MOUNTED", "MOUNTING", "UNMOUNTING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DbnodeSnapshot'})
+@cli_util.wrap_exceptions
+def unmount_dbnode_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_node_id, dbnode_snapshot_id, if_match):
+
+    if isinstance(dbnode_snapshot_id, six.string_types) and len(dbnode_snapshot_id.strip()) == 0:
+        raise click.UsageError('Parameter --dbnode-snapshot-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dbNodeId'] = db_node_id
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.unmount_dbnode_snapshot(
+        dbnode_snapshot_id=dbnode_snapshot_id,
+        unmount_dbnode_snapshot_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_dbnode_snapshot') and callable(getattr(client, 'get_dbnode_snapshot')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_dbnode_snapshot(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
