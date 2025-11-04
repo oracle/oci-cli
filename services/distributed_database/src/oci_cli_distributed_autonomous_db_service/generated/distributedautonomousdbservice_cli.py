@@ -165,6 +165,67 @@ def change_distributed_autonomous_database_compartment(ctx, from_json, wait_for_
     cli_util.render_response(result, ctx)
 
 
+@distributed_autonomous_database_group.command(name=cli_util.override('distributed_autonomous_db_service.change_distributed_autonomous_db_backup_config.command_name', 'change-distributed-autonomous-db-backup-config'), help=u"""Change the DbBackupConfig for the Globally distributed autonomous database. \n[Command Reference](changeDistributedAutonomousDbBackupConfig)""")
+@cli_util.option('--distributed-autonomous-database-id', required=True, help=u"""Globally distributed autonomous database identifier""")
+@cli_util.option('--db-backup-config', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'db-backup-config': {'module': 'distributed_database', 'class': 'DistributedAutonomousDbBackupConfig'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-backup-config': {'module': 'distributed_database', 'class': 'DistributedAutonomousDbBackupConfig'}})
+@cli_util.wrap_exceptions
+def change_distributed_autonomous_db_backup_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, distributed_autonomous_database_id, db_backup_config, if_match):
+
+    if isinstance(distributed_autonomous_database_id, six.string_types) and len(distributed_autonomous_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --distributed-autonomous-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dbBackupConfig'] = cli_util.parse_json_parameter("db_backup_config", db_backup_config)
+
+    client = cli_util.build_client('distributed_database', 'distributed_autonomous_db_service', ctx)
+    result = client.change_distributed_autonomous_db_backup_config(
+        distributed_autonomous_database_id=distributed_autonomous_database_id,
+        change_distributed_autonomous_db_backup_config_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @distributed_autonomous_database_group.command(name=cli_util.override('distributed_autonomous_db_service.configure_distributed_autonomous_database_gsms.command_name', 'configure-distributed-autonomous-database-gsms'), help=u"""Configure new Global Service Manager(GSM aka shard manager) instances for the Globally distributed autonomous database. \n[Command Reference](configureDistributedAutonomousDatabaseGsms)""")
 @cli_util.option('--old-gsm-names', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Names of old global service manager(GSM) instances corresponding to which new GSM instances need to be configured.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-latest-gsm-image', required=True, type=click.BOOL, help=u"""Flag to indicate if new global service manager(GSM) instances shall use latest image or re-use image used by existing GSM instances.""")
@@ -293,31 +354,32 @@ def configure_distributed_autonomous_database_sharding(ctx, from_json, wait_for_
 @cli_util.option('--prefix', required=True, help=u"""Unique name prefix for the Globally distributed autonomous databases. Only alpha-numeric values are allowed. First character has to be a letter followed by any combination of letter and number.""")
 @cli_util.option('--private-endpoint-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The collection of [OCID] of the private endpoint associated with Globally distributed autonomous database.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--sharding-method', required=True, type=custom_types.CliCaseInsensitiveChoice(["USER", "SYSTEM"]), help=u"""Sharding Methods for the Globally distributed autonomous database.""")
-@cli_util.option('--db-workload', required=True, type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW"]), help=u"""Possible workload types.""")
+@cli_util.option('--db-workload', required=True, type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DW"]), help=u"""Possible workload types. Currently only OLTP workload type is supported.""")
 @cli_util.option('--character-set', required=True, help=u"""The character set for the database.""")
 @cli_util.option('--ncharacter-set', required=True, help=u"""The national character set for the database.""")
-@cli_util.option('--listener-port', required=True, type=click.INT, help=u"""The listener port number for the Globally distributed autonomous database.""")
-@cli_util.option('--ons-port-local', required=True, type=click.INT, help=u"""Ons local port number.""")
-@cli_util.option('--ons-port-remote', required=True, type=click.INT, help=u"""Ons remote port number.""")
+@cli_util.option('--listener-port', required=True, type=click.INT, help=u"""The listener port number for the Globally distributed autonomous database. The listener port number has to be unique for a customer tenancy across all distributed autonomous databases. Same port number should not be re-used for any other distributed autonomous database.""")
+@cli_util.option('--ons-port-local', required=True, type=click.INT, help=u"""Ons local port number for Globally distributed autonomous database. The onsPortLocal has to be unique for a customer tenancy across all distributed autonomous databases. Same port number should not be re-used for any other distributed autonomous database.""")
+@cli_util.option('--ons-port-remote', required=True, type=click.INT, help=u"""Ons remote port number for Globally distributed autonomous database. The onsPortRemote has to be unique for a customer tenancy across all distributed autonomous databases. Same port number should not be re-used for any other distributed autonomous database.""")
 @cli_util.option('--db-deployment-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ADB_D"]), help=u"""The distributed autonomous database deployment type.""")
 @cli_util.option('--shard-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of shards for the Globally distributed autonomous database.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--catalog-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of catalog for the Globally distributed autonomous database.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--chunks', type=click.INT, help=u"""The default number of unique chunks in a shardspace. The value of chunks must be greater than 2 times the size of the largest shardgroup in any shardspace.""")
-@cli_util.option('--listener-port-tls', type=click.INT, help=u"""The TLS listener port number for Globally distributed autonomous database.""")
-@cli_util.option('--replication-method', type=custom_types.CliCaseInsensitiveChoice(["RAFT", "DG"]), help=u"""The Replication method for Globally distributed autonomous database. Use RAFT for Raft replication, and DG for DataGuard. If replicationMethod is not provided, it defaults to DG.""")
+@cli_util.option('--chunks', type=click.INT, help=u"""Number of chunks in a shardspace. The value of chunks must be greater than 2 times the size of the largest shardgroup in any shardspace. Chunks is required to be provided for distributed autonomous databases being created with SYSTEM shardingMethod. For USER shardingMethod, chunks should not be set in create payload.""")
+@cli_util.option('--listener-port-tls', type=click.INT, help=u"""The TLS listener port number for Globally distributed autonomous database. The TLS listener port number has to be unique for a customer tenancy across all distributed autonomous databases. Same port number should not be re-used for any other distributed autonomous database. The listenerPortTls is mandatory for dedicated infrastructure based distributed autonomous databases.""")
+@cli_util.option('--replication-method', type=custom_types.CliCaseInsensitiveChoice(["RAFT", "DG"]), help=u"""The Replication method for Globally distributed autonomous database. Use RAFT for Raft based replication. With RAFT replication, shards cannot have peers details set on them. In case shards need to have peers, please do not set RAFT replicationMethod. For all non RAFT replication cases (with or without peers), please set replicationMethod as DG or do not set any value for replicationMethod.""")
 @cli_util.option('--replication-factor', type=click.INT, help=u"""The Replication factor for RAFT replication based Globally distributed autonomous database. Currently supported values are 3, 5 and 7.""")
-@cli_util.option('--replication-unit', type=click.INT, help=u"""For RAFT replication based Globally distributed autonomous database, the value should be atleast twice the number of shards.""")
+@cli_util.option('--replication-unit', type=click.INT, help=u"""The replication unit count for RAFT based distributed autonomous database. For RAFT replication based Globally distributed autonomous database, the value should be at least twice the number of shards.""")
+@cli_util.option('--db-backup-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'private-endpoint-ids': {'module': 'distributed_database', 'class': 'list[string]'}, 'shard-details': {'module': 'distributed_database', 'class': 'list[CreateDistributedAutonomousDatabaseShardDetails]'}, 'catalog-details': {'module': 'distributed_database', 'class': 'list[CreateDistributedAutonomousDatabaseCatalogDetails]'}, 'freeform-tags': {'module': 'distributed_database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'distributed_database', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'private-endpoint-ids': {'module': 'distributed_database', 'class': 'list[string]'}, 'shard-details': {'module': 'distributed_database', 'class': 'list[CreateDistributedAutonomousDatabaseShardDetails]'}, 'catalog-details': {'module': 'distributed_database', 'class': 'list[CreateDistributedAutonomousDatabaseCatalogDetails]'}, 'db-backup-config': {'module': 'distributed_database', 'class': 'DistributedAutonomousDbBackupConfig'}, 'freeform-tags': {'module': 'distributed_database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'distributed_database', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'private-endpoint-ids': {'module': 'distributed_database', 'class': 'list[string]'}, 'shard-details': {'module': 'distributed_database', 'class': 'list[CreateDistributedAutonomousDatabaseShardDetails]'}, 'catalog-details': {'module': 'distributed_database', 'class': 'list[CreateDistributedAutonomousDatabaseCatalogDetails]'}, 'freeform-tags': {'module': 'distributed_database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'distributed_database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'distributed_database', 'class': 'DistributedAutonomousDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'private-endpoint-ids': {'module': 'distributed_database', 'class': 'list[string]'}, 'shard-details': {'module': 'distributed_database', 'class': 'list[CreateDistributedAutonomousDatabaseShardDetails]'}, 'catalog-details': {'module': 'distributed_database', 'class': 'list[CreateDistributedAutonomousDatabaseCatalogDetails]'}, 'db-backup-config': {'module': 'distributed_database', 'class': 'DistributedAutonomousDbBackupConfig'}, 'freeform-tags': {'module': 'distributed_database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'distributed_database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'distributed_database', 'class': 'DistributedAutonomousDatabase'})
 @cli_util.wrap_exceptions
-def create_distributed_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, database_version, prefix, private_endpoint_ids, sharding_method, db_workload, character_set, ncharacter_set, listener_port, ons_port_local, ons_port_remote, db_deployment_type, shard_details, catalog_details, chunks, listener_port_tls, replication_method, replication_factor, replication_unit, freeform_tags, defined_tags):
+def create_distributed_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, database_version, prefix, private_endpoint_ids, sharding_method, db_workload, character_set, ncharacter_set, listener_port, ons_port_local, ons_port_remote, db_deployment_type, shard_details, catalog_details, chunks, listener_port_tls, replication_method, replication_factor, replication_unit, db_backup_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -353,6 +415,9 @@ def create_distributed_autonomous_database(ctx, from_json, wait_for_state, max_w
 
     if replication_unit is not None:
         _details['replicationUnit'] = replication_unit
+
+    if db_backup_config is not None:
+        _details['dbBackupConfig'] = cli_util.parse_json_parameter("db_backup_config", db_backup_config)
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -769,7 +834,7 @@ def patch_distributed_autonomous_database(ctx, from_json, wait_for_state, max_wa
     cli_util.render_response(result, ctx)
 
 
-@distributed_autonomous_database_group.command(name=cli_util.override('distributed_autonomous_db_service.rotate_distributed_autonomous_database_passwords.command_name', 'rotate-distributed-autonomous-database-passwords'), help=u"""Rotate passwords for different components of the Globally distributed autonomous database. \n[Command Reference](rotateDistributedAutonomousDatabasePasswords)""")
+@distributed_autonomous_database_group.command(name=cli_util.override('distributed_autonomous_db_service.rotate_distributed_autonomous_database_passwords.command_name', 'rotate-distributed-autonomous-database-passwords'), help=u"""Rotate the gsmuser and gsmcatuser passwords for shards and catalog of the Globally distributed autonomous database. This operation will also remove GdsCtlNodes if present. \n[Command Reference](rotateDistributedAutonomousDatabasePasswords)""")
 @cli_util.option('--distributed-autonomous-database-id', required=True, help=u"""Globally distributed autonomous database identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED", "NEEDS_ATTENTION"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")

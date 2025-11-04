@@ -88,7 +88,7 @@ compute_management_root_group.add_command(instance_pool_instance_group)
 @instance_pool_instance_group.command(name=cli_util.override('compute_management.attach_instance_pool_instance.command_name', 'attach'), help=u"""Attaches an instance to an instance pool. For information about the prerequisites that an instance must meet before you can attach it to a pool, see [Attaching an Instance to an Instance Pool]. \n[Command Reference](attachInstancePoolInstance)""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ACTIVE", "DETACHING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ACTIVE", "DETACHING", "TERMINATION_AWAIT", "TERMINATION_PROCEED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -538,15 +538,16 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 This option is a JSON list with items of type AttachLoadBalancerDetails.  For documentation on AttachLoadBalancerDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AttachLoadBalancerDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--instance-display-name-formatter', help=u"""A user-friendly formatter for the instance pool's instances. Instance displaynames follow the format. The formatter does not retroactively change instance's displaynames, only instance displaynames in the future follow the format""")
 @cli_util.option('--instance-hostname-formatter', help=u"""A user-friendly formatter for the instance pool's instances. Instance hostnames follow the format. The formatter does not retroactively change instance's hostnames, only instance hostnames in the future follow the format""")
+@cli_util.option('--lifecycle-management', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[CreateInstancePoolPlacementConfigurationDetails]'}, 'load-balancers': {'module': 'core', 'class': 'list[AttachLoadBalancerDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[CreateInstancePoolPlacementConfigurationDetails]'}, 'load-balancers': {'module': 'core', 'class': 'list[AttachLoadBalancerDetails]'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[CreateInstancePoolPlacementConfigurationDetails]'}, 'load-balancers': {'module': 'core', 'class': 'list[AttachLoadBalancerDetails]'}}, output_type={'module': 'core', 'class': 'InstancePool'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[CreateInstancePoolPlacementConfigurationDetails]'}, 'load-balancers': {'module': 'core', 'class': 'list[AttachLoadBalancerDetails]'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}}, output_type={'module': 'core', 'class': 'InstancePool'})
 @cli_util.wrap_exceptions
-def create_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, instance_configuration_id, placement_configurations, size, defined_tags, display_name, freeform_tags, load_balancers, instance_display_name_formatter, instance_hostname_formatter):
+def create_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, instance_configuration_id, placement_configurations, size, defined_tags, display_name, freeform_tags, load_balancers, instance_display_name_formatter, instance_hostname_formatter, lifecycle_management):
 
     kwargs = {}
 
@@ -573,6 +574,9 @@ def create_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if instance_hostname_formatter is not None:
         _details['instanceHostnameFormatter'] = instance_hostname_formatter
+
+    if lifecycle_management is not None:
+        _details['lifecycleManagement'] = cli_util.parse_json_parameter("lifecycle_management", lifecycle_management)
 
     client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.create_instance_pool(
@@ -1687,6 +1691,33 @@ def terminate_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
+@instance_pool_instance_group.command(name=cli_util.override('compute_management.termination_proceed_instance_pool_instance.command_name', 'termination-proceed'), help=u"""Marks an instance in an instance pool to be ready for termination. \n[Command Reference](terminationProceedInstancePoolInstance)""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
+@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def termination_proceed_instance_pool_instance(ctx, from_json, instance_pool_id, instance_id):
+
+    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+
+    _details = {}
+    _details['instanceId'] = instance_id
+
+    client = cli_util.build_client('core', 'compute_management', ctx)
+    result = client.termination_proceed_instance_pool_instance(
+        instance_pool_id=instance_pool_id,
+        termination_proceed_instance_pool_instance_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @cluster_network_group.command(name=cli_util.override('compute_management.update_cluster_network.command_name', 'update'), help=u"""Updates a [cluster network with instance pools]. The OCID of the cluster network remains the same. \n[Command Reference](updateClusterNetwork)""")
 @cli_util.option('--cluster-network-id', required=True, help=u"""The [OCID] of the cluster network.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -1839,23 +1870,24 @@ This option is a JSON list with items of type UpdateInstancePoolPlacementConfigu
 To determine whether capacity is available for a specific shape before you resize an instance pool, use the [CreateComputeCapacityReport] operation.""")
 @cli_util.option('--instance-display-name-formatter', help=u"""A user-friendly formatter for the instance pool's instances. Instance displaynames follow the format. The formatter does not retroactively change instance's displaynames, only instance displaynames in the future follow the format""")
 @cli_util.option('--instance-hostname-formatter', help=u"""A user-friendly formatter for the instance pool's instances. Instance hostnames follow the format. The formatter does not retroactively change instance's hostnames, only instance hostnames in the future follow the format""")
+@cli_util.option('--lifecycle-management', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[UpdateInstancePoolPlacementConfigurationDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[UpdateInstancePoolPlacementConfigurationDetails]'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[UpdateInstancePoolPlacementConfigurationDetails]'}}, output_type={'module': 'core', 'class': 'InstancePool'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-configurations': {'module': 'core', 'class': 'list[UpdateInstancePoolPlacementConfigurationDetails]'}, 'lifecycle-management': {'module': 'core', 'class': 'InstancePoolLifecycleManagementDetails'}}, output_type={'module': 'core', 'class': 'InstancePool'})
 @cli_util.wrap_exceptions
-def update_instance_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, defined_tags, display_name, freeform_tags, instance_configuration_id, placement_configurations, size, instance_display_name_formatter, instance_hostname_formatter, if_match):
+def update_instance_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_pool_id, defined_tags, display_name, freeform_tags, instance_configuration_id, placement_configurations, size, instance_display_name_formatter, instance_hostname_formatter, lifecycle_management, if_match):
 
     if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags or placement_configurations:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and placement-configurations will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or placement_configurations or lifecycle_management:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and placement-configurations and lifecycle-management will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1887,6 +1919,9 @@ def update_instance_pool(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     if instance_hostname_formatter is not None:
         _details['instanceHostnameFormatter'] = instance_hostname_formatter
+
+    if lifecycle_management is not None:
+        _details['lifecycleManagement'] = cli_util.parse_json_parameter("lifecycle_management", lifecycle_management)
 
     client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.update_instance_pool(
