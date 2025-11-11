@@ -1234,12 +1234,13 @@ def get_cluster_migrate_to_native_vcn_status(ctx, from_json, cluster_id):
 @cluster_options_group.command(name=cli_util.override('ce.get_cluster_options.command_name', 'get'), help=u"""Get options available for clusters. \n[Command Reference](getClusterOptions)""")
 @cli_util.option('--cluster-option-id', required=True, help=u"""The id of the option set to retrieve. Use \"all\" get all options, or use a cluster ID to get options specific to the provided cluster.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment.""")
+@cli_util.option('--should-list-all-patch-versions', type=click.BOOL, help=u"""Option to show all kubernetes patch versions""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'container_engine', 'class': 'ClusterOptions'})
 @cli_util.wrap_exceptions
-def get_cluster_options(ctx, from_json, cluster_option_id, compartment_id):
+def get_cluster_options(ctx, from_json, cluster_option_id, compartment_id, should_list_all_patch_versions):
 
     if isinstance(cluster_option_id, six.string_types) and len(cluster_option_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-option-id cannot be whitespace or empty string')
@@ -1247,6 +1248,8 @@ def get_cluster_options(ctx, from_json, cluster_option_id, compartment_id):
     kwargs = {}
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    if should_list_all_patch_versions is not None:
+        kwargs['should_list_all_patch_versions'] = should_list_all_patch_versions
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.get_cluster_options(
@@ -1303,12 +1306,16 @@ def get_node_pool(ctx, from_json, node_pool_id):
 @node_pool_options_group.command(name=cli_util.override('ce.get_node_pool_options.command_name', 'get'), help=u"""Get options available for node pools. \n[Command Reference](getNodePoolOptions)""")
 @cli_util.option('--node-pool-option-id', required=True, help=u"""The id of the option set to retrieve. Use \"all\" get all options, or use a cluster ID to get options specific to the provided cluster.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment.""")
+@cli_util.option('--should-list-all-patch-versions', type=click.BOOL, help=u"""Option to show all kubernetes patch versions""")
+@cli_util.option('--node-pool-os-type', type=custom_types.CliCaseInsensitiveChoice(["OL7", "OL8", "UBUNTU"]), help=u"""Filter node pool options by OS type.""")
+@cli_util.option('--node-pool-os-arch', type=custom_types.CliCaseInsensitiveChoice(["X86_64", "AARCH64"]), help=u"""Filter node pool options by OS architecture.""")
+@cli_util.option('--node-pool-k8s-version', help=u"""Filter node pool options by Kubernetes version.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'container_engine', 'class': 'NodePoolOptions'})
 @cli_util.wrap_exceptions
-def get_node_pool_options(ctx, from_json, node_pool_option_id, compartment_id):
+def get_node_pool_options(ctx, from_json, node_pool_option_id, compartment_id, should_list_all_patch_versions, node_pool_os_type, node_pool_os_arch, node_pool_k8s_version):
 
     if isinstance(node_pool_option_id, six.string_types) and len(node_pool_option_id.strip()) == 0:
         raise click.UsageError('Parameter --node-pool-option-id cannot be whitespace or empty string')
@@ -1316,6 +1323,14 @@ def get_node_pool_options(ctx, from_json, node_pool_option_id, compartment_id):
     kwargs = {}
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    if should_list_all_patch_versions is not None:
+        kwargs['should_list_all_patch_versions'] = should_list_all_patch_versions
+    if node_pool_os_type is not None:
+        kwargs['node_pool_os_type'] = node_pool_os_type
+    if node_pool_os_arch is not None:
+        kwargs['node_pool_os_arch'] = node_pool_os_arch
+    if node_pool_k8s_version is not None:
+        kwargs['node_pool_k8s_version'] = node_pool_k8s_version
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.get_node_pool_options(
@@ -1505,7 +1520,7 @@ def install_addon(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The optional order in which to sort the results.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "TIME_CREATED"]), help=u"""The optional field to sort the results by.""")
-@cli_util.option('--should-show-all-versions', type=click.BOOL, help=u"""Whether to show all add-on versions""")
+@cli_util.option('--should-show-all-versions', type=click.BOOL, help=u"""Specifies whether all add-on versions should be displayed. The default value is false. If set to true, the API will return all available add-on versions, including deprecated versions and detailed build numbers. Please note that the use of deprecated versions, as well as the specification of a particular build of a supported version, is not recommended for standard operations.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})

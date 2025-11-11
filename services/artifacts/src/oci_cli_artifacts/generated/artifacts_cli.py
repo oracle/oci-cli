@@ -16,8 +16,13 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('artifacts.artifacts_root_group.command_name', 'artifacts'), cls=CommandGroupWithAlias, help=cli_util.override('artifacts.artifacts_root_group.help', """API covering the Artifacts and [Registry] services.
-Use this API to manage resources such as generic artifacts and container images."""), short_help=cli_util.override('artifacts.artifacts_root_group.short_help', """Artifacts and Container Images API"""))
+@cli.command(cli_util.override('artifacts.artifacts_root_group.command_name', 'artifacts'), cls=CommandGroupWithAlias, help=cli_util.override('artifacts.artifacts_root_group.help', """Use the Artifacts and Container Images API to manage container images and non-container generic artifacts.
+
+- For container images such as Docker images, use the [ContainerImage] resource. Save the images in a [container repository].
+
+- For non-container generic artifacts or blobs, use the [GenericArtifact] resource. Save the artifacts in an [artifact repository].
+- To upload and download non-container generic artifacts, instead of the Artifacts and Container Images API, use the Generic Artifacts Content API.
+For more information, see the user guides for [Container Registry] and [Artifact Registry]."""), short_help=cli_util.override('artifacts.artifacts_root_group.short_help', """Artifacts and Container Images API"""))
 @cli_util.help_option_group
 def artifacts_root_group():
     pass
@@ -1106,6 +1111,9 @@ Example: `foo` or `foo*`""")
 
 Example: `foo` or `foo*`""")
 @cli_util.option('--lifecycle-state', help=u"""A filter to return only resources that match the given lifecycle state name exactly.""")
+@cli_util.option('--image-digest', help=u"""The digest of the container image.
+
+Example: `sha256:e7d38b3517548a1c71e41bffe9c8ae6d6d29546ce46bf62159837aad072c90aa`""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -1121,7 +1129,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'artifacts', 'class': 'ContainerImageCollection'})
 @cli_util.wrap_exceptions
-def list_container_images(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, display_name, image_id, is_versioned, repository_id, repository_name, version_parameterconflict, lifecycle_state, limit, page, sort_by, sort_order):
+def list_container_images(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, display_name, image_id, is_versioned, repository_id, repository_name, version_parameterconflict, lifecycle_state, image_digest, limit, page, sort_by, sort_order):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1143,6 +1151,8 @@ def list_container_images(ctx, from_json, all_pages, page_size, compartment_id, 
         kwargs['version'] = version_parameterconflict
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
+    if image_digest is not None:
+        kwargs['image_digest'] = image_digest
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -1398,6 +1408,29 @@ def list_repositories(ctx, from_json, all_pages, page_size, compartment_id, id, 
             compartment_id=compartment_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@container_image_group.command(name=cli_util.override('artifacts.lookup_container_image_by_uri.command_name', 'lookup-container-image-by-uri'), help=u"""Get container image metadata by URI. \n[Command Reference](lookupContainerImageByUri)""")
+@cli_util.option('--image-uri', required=True, help=u"""The container image URI starting with the namespace. Example: namespace/reponame:version Example: namespace/reponame@sha256:50d858e0985ecc7f60418aaf0cc5ab587f42c2570a884095a9e8ccacd0f6545c""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'artifacts', 'class': 'ContainerImage'})
+@cli_util.wrap_exceptions
+def lookup_container_image_by_uri(ctx, from_json, image_uri):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['imageUri'] = image_uri
+
+    client = cli_util.build_client('artifacts', 'artifacts', ctx)
+    result = client.lookup_container_image_by_uri(
+        lookup_container_image_by_uri_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

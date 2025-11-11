@@ -25,6 +25,7 @@ SDK_client_map = {
     "artifacts.list_container_repositories": "oci.artifacts.ArtifactsClient.list_container_repositories",
     "artifacts.list_generic_artifacts": "oci.artifacts.ArtifactsClient.list_generic_artifacts",
     "artifacts.list_repositories": "oci.artifacts.ArtifactsClient.list_repositories",
+    "artifacts.lookup_container_image_by_uri": "oci.artifacts.ArtifactsClient.lookup_container_image_by_uri",
     "artifacts.remove_container_version": "oci.artifacts.ArtifactsClient.remove_container_version",
     "artifacts.restore_container_image": "oci.artifacts.ArtifactsClient.restore_container_image",
     "artifacts.update_container_configuration": "oci.artifacts.ArtifactsClient.update_container_configuration",

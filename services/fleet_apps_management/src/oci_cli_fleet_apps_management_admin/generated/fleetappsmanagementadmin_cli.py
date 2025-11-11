@@ -553,15 +553,17 @@ def create_compliance_policy_rule_patch_name_selection_details(ctx, from_json, w
 @cli_util.option('--compartment-id', required=True, help=u"""Tenancy OCID""")
 @cli_util.option('--is-fams-tag-enabled', type=click.BOOL, help=u"""A value determining if the Fleet Application Management tagging is enabled or not. Allow Fleet Application Management to tag resources with fleet name using \"Oracle$FAMS-Tags.FleetName\" tag.""")
 @cli_util.option('--is-cost-tracking-tag-enabled', type=click.BOOL, help=u"""A value determining if the cost tracking tag is enabled or not. Allow Fleet Application Management to tag resources with cost tracking tag using \"Oracle$FAMS-Tags.FAMSManaged\" tag.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'Onboarding'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'Onboarding'})
 @cli_util.wrap_exceptions
-def create_onboarding(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, is_fams_tag_enabled, is_cost_tracking_tag_enabled):
+def create_onboarding(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, is_fams_tag_enabled, is_cost_tracking_tag_enabled, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -574,6 +576,12 @@ def create_onboarding(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if is_cost_tracking_tag_enabled is not None:
         _details['isCostTrackingTagEnabled'] = is_cost_tracking_tag_enabled
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
     result = client.create_onboarding(
@@ -617,15 +625,17 @@ def create_onboarding(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 Example: `My new resource`""")
 @cli_util.option('--config-category-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config-category-details': {'module': 'fleet_apps_management', 'class': 'ConfigCategoryDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'config-category-details': {'module': 'fleet_apps_management', 'class': 'ConfigCategoryDetails'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-category-details': {'module': 'fleet_apps_management', 'class': 'ConfigCategoryDetails'}}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-category-details': {'module': 'fleet_apps_management', 'class': 'ConfigCategoryDetails'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
 @cli_util.wrap_exceptions
-def create_platform_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, config_category_details, description):
+def create_platform_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, config_category_details, description, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -637,6 +647,12 @@ def create_platform_configuration(ctx, from_json, wait_for_state, max_wait_secon
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
     result = client.create_platform_configuration(
@@ -680,16 +696,18 @@ def create_platform_configuration(ctx, from_json, wait_for_state, max_wait_secon
 Example: `My new resource`""")
 @cli_util.option('--config-category-details-products', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products that belong to the stack. For example, Oracle WebLogic and Java for the Oracle Fusion Middleware product stack.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-category-details-sub-category-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config-category-details-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-sub-category-details': {'module': 'fleet_apps_management', 'class': 'ProductStackSubCategoryDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}, 'config-category-details-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-sub-category-details': {'module': 'fleet_apps_management', 'class': 'ProductStackSubCategoryDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-category-details-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-sub-category-details': {'module': 'fleet_apps_management', 'class': 'ProductStackSubCategoryDetails'}}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}, 'config-category-details-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-sub-category-details': {'module': 'fleet_apps_management', 'class': 'ProductStackSubCategoryDetails'}}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
 @cli_util.wrap_exceptions
-def create_platform_configuration_product_stack_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, config_category_details_products, description, config_category_details_sub_category_details):
+def create_platform_configuration_product_stack_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, config_category_details_products, description, freeform_tags, defined_tags, config_category_details_sub_category_details):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -702,6 +720,12 @@ def create_platform_configuration_product_stack_config_category_details(ctx, fro
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if config_category_details_sub_category_details is not None:
         _details['configCategoryDetails']['subCategoryDetails'] = cli_util.parse_json_parameter("config_category_details_sub_category_details", config_category_details_sub_category_details)
@@ -749,15 +773,17 @@ def create_platform_configuration_product_stack_config_category_details(ctx, fro
 
 Example: `My new resource`""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
 @cli_util.wrap_exceptions
-def create_platform_configuration_environment_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description):
+def create_platform_configuration_environment_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -769,6 +795,12 @@ def create_platform_configuration_environment_config_category_details(ctx, from_
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['configCategoryDetails']['configCategory'] = 'ENVIRONMENT'
 
@@ -813,15 +845,17 @@ def create_platform_configuration_environment_config_category_details(ctx, from_
 
 Example: `My new resource`""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
 @cli_util.wrap_exceptions
-def create_platform_configuration_credential_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description):
+def create_platform_configuration_credential_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -833,6 +867,12 @@ def create_platform_configuration_credential_config_category_details(ctx, from_j
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['configCategoryDetails']['configCategory'] = 'CREDENTIAL'
 
@@ -877,15 +917,17 @@ def create_platform_configuration_credential_config_category_details(ctx, from_j
 
 Example: `My new resource`""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
 @cli_util.wrap_exceptions
-def create_platform_configuration_patch_type_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description):
+def create_platform_configuration_patch_type_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -897,6 +939,12 @@ def create_platform_configuration_patch_type_config_category_details(ctx, from_j
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['configCategoryDetails']['configCategory'] = 'PATCH_TYPE'
 
@@ -941,15 +989,17 @@ def create_platform_configuration_patch_type_config_category_details(ctx, from_j
 
 Example: `My new resource`""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
 @cli_util.wrap_exceptions
-def create_platform_configuration_lifecycle_operation_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description):
+def create_platform_configuration_lifecycle_operation_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, description, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -961,6 +1011,12 @@ def create_platform_configuration_lifecycle_operation_config_category_details(ct
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['configCategoryDetails']['configCategory'] = 'LIFECYCLE_OPERATION'
 
@@ -1006,6 +1062,8 @@ def create_platform_configuration_lifecycle_operation_config_category_details(ct
 Example: `My new resource`""")
 @cli_util.option('--config-category-details-versions', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Versions associated with the PRODUCT .""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-category-details-credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""OCID for the Credential name to be associated with the Product. These are useful for target discovery or lifecycle management activities, for example, Oracle WebLogic admin credentials for Oracle WebLogic Application server.
 
 This option is a JSON list with items of type ConfigAssociationDetails.  For documentation on ConfigAssociationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagementadmin/20250228/datatypes/ConfigAssociationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1019,12 +1077,12 @@ This option is a JSON list with items of type ConfigAssociationDetails.  For doc
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config-category-details-versions': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-credentials': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-components': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-compatible-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-patch-types': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}, 'config-category-details-versions': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-credentials': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-components': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-compatible-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-patch-types': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-category-details-versions': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-credentials': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-components': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-compatible-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-patch-types': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}, 'config-category-details-versions': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-credentials': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-components': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-compatible-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-patch-types': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
 @cli_util.wrap_exceptions
-def create_platform_configuration_product_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, config_category_details_versions, description, config_category_details_credentials, config_category_details_components, config_category_details_compatible_products, config_category_details_patch_types):
+def create_platform_configuration_product_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, config_category_details_versions, description, freeform_tags, defined_tags, config_category_details_credentials, config_category_details_components, config_category_details_compatible_products, config_category_details_patch_types):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1037,6 +1095,12 @@ def create_platform_configuration_product_config_category_details(ctx, from_json
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if config_category_details_credentials is not None:
         _details['configCategoryDetails']['credentials'] = cli_util.parse_json_parameter("config_category_details_credentials", config_category_details_credentials)
@@ -1094,18 +1158,20 @@ def create_platform_configuration_product_config_category_details(ctx, from_json
 Example: `My new resource`""")
 @cli_util.option('--config-category-details-instance-id', required=True, help=u"""The OCID of the resource.""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-category-details-instance-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'PlatformConfiguration'})
 @cli_util.wrap_exceptions
-def create_platform_configuration_self_hosted_instance_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, config_category_details_instance_id, description, config_category_details_instance_name):
+def create_platform_configuration_self_hosted_instance_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, config_category_details_instance_id, description, freeform_tags, defined_tags, config_category_details_instance_name):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1118,6 +1184,12 @@ def create_platform_configuration_self_hosted_instance_config_category_details(c
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if config_category_details_instance_name is not None:
         _details['configCategoryDetails']['instanceName'] = config_category_details_instance_name
@@ -1167,15 +1239,17 @@ Example: `My new resource`""")
 @cli_util.option('--selection', required=True, type=custom_types.CliCaseInsensitiveChoice(["SINGLE_CHOICE", "MULTI_CHOICE", "DEFAULT_TEXT"]), help=u"""Text selection of the property.""")
 @cli_util.option('--value-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["STRING", "NUMERIC"]), help=u"""Format of the value.""")
 @cli_util.option('--values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Values of the property (must be a single value if selection = 'SINGLE_CHOICE').""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'values': {'module': 'fleet_apps_management', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'values': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'values': {'module': 'fleet_apps_management', 'class': 'list[string]'}}, output_type={'module': 'fleet_apps_management', 'class': 'Property'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'values': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'Property'})
 @cli_util.wrap_exceptions
-def create_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, selection, value_type, values):
+def create_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, selection, value_type, values, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1188,6 +1262,12 @@ def create_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if values is not None:
         _details['values'] = cli_util.parse_json_parameter("values", values)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
     result = client.create_property(
@@ -1843,7 +1923,7 @@ def list_onboardings(ctx, from_json, all_pages, page_size, compartment_id, lifec
 
 @platform_configuration_collection_group.command(name=cli_util.override('fleet_apps_management_admin.list_platform_configurations.command_name', 'list-platform-configurations'), help=u"""Returns a list of all the Platform Configurations in the specified compartment. The query parameter `compartmentId` is required unless the query parameter `id` is specified. \n[Command Reference](listPlatformConfigurations)""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "DELETING", "UPDATING", "CREATING"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "DELETING", "UPDATING", "CREATING", "INACTIVE"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--id', help=u"""Unique identifier or OCID for listing a single Platform Configuration by id. Either compartmentId or id must be provided.""")
 @cli_util.option('--config-category', type=custom_types.CliCaseInsensitiveChoice(["PRODUCT", "PRODUCT_STACK", "ENVIRONMENT", "PATCH_TYPE", "CREDENTIAL", "SELF_HOSTED_INSTANCE", "LIFECYCLE_OPERATION"]), help=u"""Config Category""")
@@ -2388,19 +2468,26 @@ def update_compliance_policy_rule_patch_name_selection_details(ctx, from_json, f
 @cli_util.option('--onboarding-id', required=True, help=u"""A filter to return resources whose Onboarding identifier matches the given identifier.""")
 @cli_util.option('--is-fams-tag-enabled', type=click.BOOL, help=u"""A value determining Fleet Application Management tag is enabled or not""")
 @cli_util.option('--is-cost-tracking-tag-enabled', type=click.BOOL, help=u"""A value determining if cost tracking tag is enabled or not""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_onboarding(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, onboarding_id, is_fams_tag_enabled, is_cost_tracking_tag_enabled, if_match):
+def update_onboarding(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, onboarding_id, is_fams_tag_enabled, is_cost_tracking_tag_enabled, freeform_tags, defined_tags, if_match):
 
     if isinstance(onboarding_id, six.string_types) and len(onboarding_id.strip()) == 0:
         raise click.UsageError('Parameter --onboarding-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -2414,6 +2501,12 @@ def update_onboarding(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if is_cost_tracking_tag_enabled is not None:
         _details['isCostTrackingTagEnabled'] = is_cost_tracking_tag_enabled
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
     result = client.update_onboarding(
@@ -2458,23 +2551,25 @@ def update_onboarding(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 Example: `My new resource`""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
 @cli_util.option('--config-category-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config-category-details': {'module': 'fleet_apps_management', 'class': 'ConfigCategoryDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'config-category-details': {'module': 'fleet_apps_management', 'class': 'ConfigCategoryDetails'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-category-details': {'module': 'fleet_apps_management', 'class': 'ConfigCategoryDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-category-details': {'module': 'fleet_apps_management', 'class': 'ConfigCategoryDetails'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_platform_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, display_name, description, config_category_details, if_match):
+def update_platform_configuration(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, display_name, description, config_category_details, freeform_tags, defined_tags, if_match):
 
     if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
     if not force:
-        if config_category_details:
-            if not click.confirm("WARNING: Updates to config-category-details will replace any existing values. Are you sure you want to continue?"):
+        if config_category_details or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to config-category-details and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -2492,6 +2587,12 @@ def update_platform_configuration(ctx, from_json, force, wait_for_state, max_wai
 
     if config_category_details is not None:
         _details['configCategoryDetails'] = cli_util.parse_json_parameter("config_category_details", config_category_details)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
     result = client.update_platform_configuration(
@@ -2536,20 +2637,27 @@ def update_platform_configuration(ctx, from_json, force, wait_for_state, max_wai
 
 Example: `My new resource`""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--config-category-details-sub-category-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config-category-details-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-sub-category-details': {'module': 'fleet_apps_management', 'class': 'ProductStackSubCategoryDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}, 'config-category-details-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-sub-category-details': {'module': 'fleet_apps_management', 'class': 'ProductStackSubCategoryDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-category-details-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-sub-category-details': {'module': 'fleet_apps_management', 'class': 'ProductStackSubCategoryDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}, 'config-category-details-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-sub-category-details': {'module': 'fleet_apps_management', 'class': 'ProductStackSubCategoryDetails'}})
 @cli_util.wrap_exceptions
-def update_platform_configuration_product_stack_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, config_category_details_products, display_name, description, if_match, config_category_details_sub_category_details):
+def update_platform_configuration_product_stack_config_category_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, config_category_details_products, display_name, description, freeform_tags, defined_tags, if_match, config_category_details_sub_category_details):
 
     if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -2565,6 +2673,12 @@ def update_platform_configuration_product_stack_config_category_details(ctx, fro
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if config_category_details_sub_category_details is not None:
         _details['configCategoryDetails']['subCategoryDetails'] = cli_util.parse_json_parameter("config_category_details_sub_category_details", config_category_details_sub_category_details)
@@ -2613,19 +2727,26 @@ def update_platform_configuration_product_stack_config_category_details(ctx, fro
 
 Example: `My new resource`""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_platform_configuration_environment_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, display_name, description, if_match):
+def update_platform_configuration_environment_config_category_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, display_name, description, freeform_tags, defined_tags, if_match):
 
     if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -2640,6 +2761,12 @@ def update_platform_configuration_environment_config_category_details(ctx, from_
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['configCategoryDetails']['configCategory'] = 'ENVIRONMENT'
 
@@ -2685,19 +2812,26 @@ def update_platform_configuration_environment_config_category_details(ctx, from_
 
 Example: `My new resource`""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_platform_configuration_credential_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, display_name, description, if_match):
+def update_platform_configuration_credential_config_category_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, display_name, description, freeform_tags, defined_tags, if_match):
 
     if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -2712,6 +2846,12 @@ def update_platform_configuration_credential_config_category_details(ctx, from_j
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['configCategoryDetails']['configCategory'] = 'CREDENTIAL'
 
@@ -2757,19 +2897,26 @@ def update_platform_configuration_credential_config_category_details(ctx, from_j
 
 Example: `My new resource`""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_platform_configuration_patch_type_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, display_name, description, if_match):
+def update_platform_configuration_patch_type_config_category_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, display_name, description, freeform_tags, defined_tags, if_match):
 
     if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -2784,6 +2931,12 @@ def update_platform_configuration_patch_type_config_category_details(ctx, from_j
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['configCategoryDetails']['configCategory'] = 'PATCH_TYPE'
 
@@ -2829,19 +2982,26 @@ def update_platform_configuration_patch_type_config_category_details(ctx, from_j
 
 Example: `My new resource`""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_platform_configuration_lifecycle_operation_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, display_name, description, if_match):
+def update_platform_configuration_lifecycle_operation_config_category_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, display_name, description, freeform_tags, defined_tags, if_match):
 
     if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -2856,6 +3016,12 @@ def update_platform_configuration_lifecycle_operation_config_category_details(ct
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     _details['configCategoryDetails']['configCategory'] = 'LIFECYCLE_OPERATION'
 
@@ -2902,6 +3068,8 @@ def update_platform_configuration_lifecycle_operation_config_category_details(ct
 
 Example: `My new resource`""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--config-category-details-credentials', type=custom_types.CLI_COMPLEX_TYPE, help=u"""OCID for the Credential name to be associated with the Product. These are useful for target discovery or lifecycle management activities, for example, Oracle WebLogic admin credentials for Oracle WebLogic Application server.
 
@@ -2913,18 +3081,23 @@ This option is a JSON list with items of type ConfigAssociationDetails.  For doc
 @cli_util.option('--config-category-details-patch-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Patch Types associated with this Product.
 
 This option is a JSON list with items of type ConfigAssociationDetails.  For documentation on ConfigAssociationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagementadmin/20250228/datatypes/ConfigAssociationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'config-category-details-versions': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-credentials': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-components': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-compatible-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-patch-types': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}, 'config-category-details-versions': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-credentials': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-components': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-compatible-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-patch-types': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config-category-details-versions': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-credentials': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-components': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-compatible-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-patch-types': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}, 'config-category-details-versions': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-credentials': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-components': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'config-category-details-compatible-products': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}, 'config-category-details-patch-types': {'module': 'fleet_apps_management', 'class': 'list[ConfigAssociationDetails]'}})
 @cli_util.wrap_exceptions
-def update_platform_configuration_product_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, config_category_details_versions, display_name, description, if_match, config_category_details_credentials, config_category_details_components, config_category_details_compatible_products, config_category_details_patch_types):
+def update_platform_configuration_product_config_category_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, config_category_details_versions, display_name, description, freeform_tags, defined_tags, if_match, config_category_details_credentials, config_category_details_components, config_category_details_compatible_products, config_category_details_patch_types):
 
     if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -2940,6 +3113,12 @@ def update_platform_configuration_product_config_category_details(ctx, from_json
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if config_category_details_credentials is not None:
         _details['configCategoryDetails']['credentials'] = cli_util.parse_json_parameter("config_category_details_credentials", config_category_details_credentials)
@@ -2998,22 +3177,29 @@ def update_platform_configuration_product_config_category_details(ctx, from_json
 
 Example: `My new resource`""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--config-category-details-instance-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_platform_configuration_self_hosted_instance_config_category_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, config_category_details_instance_id, display_name, description, if_match, config_category_details_instance_name):
+def update_platform_configuration_self_hosted_instance_config_category_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, platform_configuration_id, config_category_details_instance_id, display_name, description, freeform_tags, defined_tags, if_match, config_category_details_instance_name):
 
     if isinstance(platform_configuration_id, six.string_types) and len(platform_configuration_id.strip()) == 0:
         raise click.UsageError('Parameter --platform-configuration-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -3029,6 +3215,12 @@ def update_platform_configuration_self_hosted_instance_config_category_details(c
 
     if description is not None:
         _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if config_category_details_instance_name is not None:
         _details['configCategoryDetails']['instanceName'] = config_category_details_instance_name
@@ -3079,23 +3271,25 @@ Example: `My new resource`""")
 @cli_util.option('--selection', type=custom_types.CliCaseInsensitiveChoice(["SINGLE_CHOICE", "MULTI_CHOICE", "DEFAULT_TEXT"]), help=u"""Text selection of the property.""")
 @cli_util.option('--value-type', type=custom_types.CliCaseInsensitiveChoice(["STRING", "NUMERIC"]), help=u"""Format of the value.""")
 @cli_util.option('--values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Values of the property (must be a single value if selection = 'SINGLE_CHOICE').""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'values': {'module': 'fleet_apps_management', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'values': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'values': {'module': 'fleet_apps_management', 'class': 'list[string]'}}, output_type={'module': 'fleet_apps_management', 'class': 'Property'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'values': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'Property'})
 @cli_util.wrap_exceptions
-def update_property(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, property_id, display_name, selection, value_type, values, if_match):
+def update_property(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, property_id, display_name, selection, value_type, values, freeform_tags, defined_tags, if_match):
 
     if isinstance(property_id, six.string_types) and len(property_id.strip()) == 0:
         raise click.UsageError('Parameter --property-id cannot be whitespace or empty string')
     if not force:
-        if values:
-            if not click.confirm("WARNING: Updates to values will replace any existing values. Are you sure you want to continue?"):
+        if values or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to values and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -3116,6 +3310,12 @@ def update_property(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if values is not None:
         _details['values'] = cli_util.parse_json_parameter("values", values)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_admin', ctx)
     result = client.update_property(

@@ -2206,6 +2206,8 @@ Example: `FAULT-DOMAIN-1`""")
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--placement-constraint-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--capacity-config', help=u"""The capacity configuration selected to be configured for the Dedicated Virtual Machine host. Run [ListDedicatedVmHostShapes] API first to see the capacity configuration options.""")
+@cli_util.option('--is-memory-encryption-enabled', type=click.BOOL, help=u"""Specifies if the Dedicated Virtual Machine Host (DVMH) is restricted to running only Confidential VMs. If `true`, only Confidential VMs can be launched. If `false`, Confidential VMs cannot be launched.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2214,7 +2216,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'placement-constraint-details': {'module': 'core', 'class': 'PlacementConstraintDetails'}}, output_type={'module': 'core', 'class': 'DedicatedVmHost'})
 @cli_util.wrap_exceptions
-def create_dedicated_vm_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, dedicated_vm_host_shape, defined_tags, display_name, fault_domain, freeform_tags, placement_constraint_details):
+def create_dedicated_vm_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, dedicated_vm_host_shape, defined_tags, display_name, fault_domain, freeform_tags, placement_constraint_details, capacity_config, is_memory_encryption_enabled):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2238,6 +2240,12 @@ def create_dedicated_vm_host(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if placement_constraint_details is not None:
         _details['placementConstraintDetails'] = cli_util.parse_json_parameter("placement_constraint_details", placement_constraint_details)
+
+    if capacity_config is not None:
+        _details['capacityConfig'] = capacity_config
+
+    if is_memory_encryption_enabled is not None:
+        _details['isMemoryEncryptionEnabled'] = is_memory_encryption_enabled
 
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.create_dedicated_vm_host(
@@ -2289,6 +2297,8 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--capacity-config', help=u"""The capacity configuration selected to be configured for the Dedicated Virtual Machine host. Run [ListDedicatedVmHostShapes] API first to see the capacity configuration options.""")
+@cli_util.option('--is-memory-encryption-enabled', type=click.BOOL, help=u"""Specifies if the Dedicated Virtual Machine Host (DVMH) is restricted to running only Confidential VMs. If `true`, only Confidential VMs can be launched. If `false`, Confidential VMs cannot be launched.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2297,7 +2307,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'DedicatedVmHost'})
 @cli_util.wrap_exceptions
-def create_dedicated_vm_host_host_group_placement_constraint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, dedicated_vm_host_shape, placement_constraint_details_compute_host_group_id, defined_tags, display_name, fault_domain, freeform_tags):
+def create_dedicated_vm_host_host_group_placement_constraint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, dedicated_vm_host_shape, placement_constraint_details_compute_host_group_id, defined_tags, display_name, fault_domain, freeform_tags, capacity_config, is_memory_encryption_enabled):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2320,6 +2330,12 @@ def create_dedicated_vm_host_host_group_placement_constraint_details(ctx, from_j
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if capacity_config is not None:
+        _details['capacityConfig'] = capacity_config
+
+    if is_memory_encryption_enabled is not None:
+        _details['isMemoryEncryptionEnabled'] = is_memory_encryption_enabled
 
     _details['placementConstraintDetails']['type'] = 'HOST_GROUP'
 
@@ -2373,6 +2389,8 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--capacity-config', help=u"""The capacity configuration selected to be configured for the Dedicated Virtual Machine host. Run [ListDedicatedVmHostShapes] API first to see the capacity configuration options.""")
+@cli_util.option('--is-memory-encryption-enabled', type=click.BOOL, help=u"""Specifies if the Dedicated Virtual Machine Host (DVMH) is restricted to running only Confidential VMs. If `true`, only Confidential VMs can be launched. If `false`, Confidential VMs cannot be launched.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2381,7 +2399,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'DedicatedVmHost'})
 @cli_util.wrap_exceptions
-def create_dedicated_vm_host_compute_bare_metal_host_placement_constraint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, dedicated_vm_host_shape, placement_constraint_details_compute_bare_metal_host_id, defined_tags, display_name, fault_domain, freeform_tags):
+def create_dedicated_vm_host_compute_bare_metal_host_placement_constraint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, dedicated_vm_host_shape, placement_constraint_details_compute_bare_metal_host_id, defined_tags, display_name, fault_domain, freeform_tags, capacity_config, is_memory_encryption_enabled):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2404,6 +2422,12 @@ def create_dedicated_vm_host_compute_bare_metal_host_placement_constraint_detail
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if capacity_config is not None:
+        _details['capacityConfig'] = capacity_config
+
+    if is_memory_encryption_enabled is not None:
+        _details['isMemoryEncryptionEnabled'] = is_memory_encryption_enabled
 
     _details['placementConstraintDetails']['type'] = 'COMPUTE_BARE_METAL_HOST'
 
@@ -10277,6 +10301,7 @@ def list_dedicated_vm_host_instance_shapes(ctx, from_json, all_pages, page_size,
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--is-memory-encryption-enabled', type=click.BOOL, help=u"""A filter to return only confidential Dedicated VM hosts (DVMH) or confidential VM instances on DVMH.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -10292,7 +10317,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[DedicatedVmHostInstanceSummary]'})
 @cli_util.wrap_exceptions
-def list_dedicated_vm_host_instances(ctx, from_json, all_pages, page_size, compartment_id, dedicated_vm_host_id, availability_domain, limit, page, sort_by, sort_order):
+def list_dedicated_vm_host_instances(ctx, from_json, all_pages, page_size, compartment_id, dedicated_vm_host_id, availability_domain, is_memory_encryption_enabled, limit, page, sort_by, sort_order):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -10305,6 +10330,8 @@ def list_dedicated_vm_host_instances(ctx, from_json, all_pages, page_size, compa
     kwargs = {}
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
+    if is_memory_encryption_enabled is not None:
+        kwargs['is_memory_encryption_enabled'] = is_memory_encryption_enabled
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -10421,6 +10448,7 @@ Example: `50`""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
 @cli_util.option('--remaining-memory-in-gbs-greater-than-or-equal-to', type=click.FLOAT, help=u"""The remaining memory of the dedicated VM host, in GBs.""")
 @cli_util.option('--remaining-ocpus-greater-than-or-equal-to', type=click.FLOAT, help=u"""The available OCPUs of the dedicated VM host.""")
+@cli_util.option('--is-memory-encryption-enabled', type=click.BOOL, help=u"""A filter to return only confidential Dedicated VM hosts (DVMH) or confidential VM instances on DVMH.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -10428,7 +10456,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[DedicatedVmHostSummary]'})
 @cli_util.wrap_exceptions
-def list_dedicated_vm_hosts(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, lifecycle_state, display_name, instance_shape_name, limit, page, sort_by, sort_order, remaining_memory_in_gbs_greater_than_or_equal_to, remaining_ocpus_greater_than_or_equal_to):
+def list_dedicated_vm_hosts(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, lifecycle_state, display_name, instance_shape_name, limit, page, sort_by, sort_order, remaining_memory_in_gbs_greater_than_or_equal_to, remaining_ocpus_greater_than_or_equal_to, is_memory_encryption_enabled):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -10456,6 +10484,8 @@ def list_dedicated_vm_hosts(ctx, from_json, all_pages, page_size, compartment_id
         kwargs['remaining_memory_in_gbs_greater_than_or_equal_to'] = remaining_memory_in_gbs_greater_than_or_equal_to
     if remaining_ocpus_greater_than_or_equal_to is not None:
         kwargs['remaining_ocpus_greater_than_or_equal_to'] = remaining_ocpus_greater_than_or_equal_to
+    if is_memory_encryption_enabled is not None:
+        kwargs['is_memory_encryption_enabled'] = is_memory_encryption_enabled
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:
