@@ -82,6 +82,12 @@ def fleet_resource_group():
     pass
 
 
+@click.command(cli_util.override('fleet_apps_management.compliance_group.command_name', 'compliance'), cls=CommandGroupWithAlias, help="""Compliance Summary""")
+@cli_util.help_option_group
+def compliance_group():
+    pass
+
+
 @click.command(cli_util.override('fleet_apps_management.fleet_property_group.command_name', 'fleet-property'), cls=CommandGroupWithAlias, help="""Property to manage fleet metadata details in Fleet Application Management.""")
 @cli_util.help_option_group
 def fleet_property_group():
@@ -111,6 +117,7 @@ fleet_apps_management_root_group.add_command(fleet_resource_collection_group)
 fleet_apps_management_root_group.add_command(compliance_report_group)
 fleet_apps_management_root_group.add_command(fleet_target_collection_group)
 fleet_apps_management_root_group.add_command(fleet_resource_group)
+fleet_apps_management_root_group.add_command(compliance_group)
 fleet_apps_management_root_group.add_command(fleet_property_group)
 fleet_apps_management_root_group.add_command(fleet_credential_collection_group)
 fleet_apps_management_root_group.add_command(fleet_collection_group)
@@ -126,6 +133,7 @@ fleet_apps_management_service_cli.fleet_apps_management_service_group.add_comman
 fleet_apps_management_service_cli.fleet_apps_management_service_group.add_command(compliance_report_group)
 fleet_apps_management_service_cli.fleet_apps_management_service_group.add_command(fleet_target_collection_group)
 fleet_apps_management_service_cli.fleet_apps_management_service_group.add_command(fleet_resource_group)
+fleet_apps_management_service_cli.fleet_apps_management_service_group.add_command(compliance_group)
 fleet_apps_management_service_cli.fleet_apps_management_service_group.add_command(fleet_property_group)
 fleet_apps_management_service_cli.fleet_apps_management_service_group.add_command(fleet_credential_collection_group)
 fleet_apps_management_service_cli.fleet_apps_management_service_group.add_command(fleet_collection_group)
@@ -287,7 +295,7 @@ Example: `My new resource`""")
 @cli_util.option('--resource-selection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
 @cli_util.option('--details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet. Provide PlatformConfiguration Ids corresponding to all the Products that need to be managed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--environment-type', help=u"""Environment Type associated with the Fleet. Applicable for ENVIRONMENT fleet types.""")
 @cli_util.option('--notification-preferences', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Notification Preferences associated with the Fleet.
 
@@ -402,7 +410,7 @@ Example: `My new resource`""")
 @cli_util.option('--resource-selection-rule-selection-criteria', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
 @cli_util.option('--details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet. Provide PlatformConfiguration Ids corresponding to all the Products that need to be managed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--environment-type', help=u"""Environment Type associated with the Fleet. Applicable for ENVIRONMENT fleet types.""")
 @cli_util.option('--notification-preferences', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Notification Preferences associated with the Fleet.
 
@@ -519,7 +527,7 @@ Example: `My new resource`""")
 @cli_util.option('--compartment-id', required=True, help=u"""compartment OCID""")
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
 @cli_util.option('--details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet. Provide PlatformConfiguration Ids corresponding to all the Products that need to be managed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--environment-type', help=u"""Environment Type associated with the Fleet. Applicable for ENVIRONMENT fleet types.""")
 @cli_util.option('--notification-preferences', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Notification Preferences associated with the Fleet.
 
@@ -635,7 +643,7 @@ Example: `My new resource`""")
 @cli_util.option('--compartment-id', required=True, help=u"""compartment OCID""")
 @cli_util.option('--resource-selection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
-@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet. Provide PlatformConfiguration Ids corresponding to all the Products that need to be managed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--environment-type', help=u"""Environment Type associated with the Fleet. Applicable for ENVIRONMENT fleet types.""")
 @cli_util.option('--notification-preferences', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Notification Preferences associated with the Fleet.
 
@@ -749,7 +757,7 @@ Example: `My new resource`""")
 @cli_util.option('--compartment-id', required=True, help=u"""compartment OCID""")
 @cli_util.option('--resource-selection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
-@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet. Provide PlatformConfiguration Ids corresponding to all the Products that need to be managed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--environment-type', help=u"""Environment Type associated with the Fleet. Applicable for ENVIRONMENT fleet types.""")
 @cli_util.option('--notification-preferences', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Notification Preferences associated with the Fleet.
 
@@ -863,7 +871,7 @@ Example: `My new resource`""")
 @cli_util.option('--compartment-id', required=True, help=u"""compartment OCID""")
 @cli_util.option('--resource-selection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
-@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet. Provide PlatformConfiguration Ids corresponding to all the Products that need to be managed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--environment-type', help=u"""Environment Type associated with the Fleet. Applicable for ENVIRONMENT fleet types.""")
 @cli_util.option('--notification-preferences', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Notification Preferences associated with the Fleet.
 
@@ -977,7 +985,7 @@ Example: `My new resource`""")
 @cli_util.option('--compartment-id', required=True, help=u"""compartment OCID""")
 @cli_util.option('--resource-selection', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. To provide some insight about the resource. Avoid entering confidential information.""")
-@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet. Provide PlatformConfiguration Ids corresponding to all the Products that need to be managed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--environment-type', help=u"""Environment Type associated with the Fleet. Applicable for ENVIRONMENT fleet types.""")
 @cli_util.option('--notification-preferences', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Notification Preferences associated with the Fleet.
 
@@ -1545,6 +1553,28 @@ def generate_compliance_report(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
+@compliance_group.command(name=cli_util.override('fleet_apps_management.get_compliance.command_name', 'get'), help=u"""Retrieve compliance for a fleet. \n[Command Reference](getCompliance)""")
+@cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'Compliance'})
+@cli_util.wrap_exceptions
+def get_compliance(ctx, from_json, fleet_id):
+
+    if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
+        raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management', ctx)
+    result = client.get_compliance(
+        fleet_id=fleet_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @compliance_report_group.command(name=cli_util.override('fleet_apps_management.get_compliance_report.command_name', 'get'), help=u"""Retrieve compliance report for a fleet. \n[Command Reference](getComplianceReport)""")
 @cli_util.option('--fleet-id', required=True, help=u"""Unique Fleet identifier.""")
 @cli_util.option('--compliance-report-id', required=True, help=u"""compliance report identifier.""")
@@ -2024,6 +2054,7 @@ def list_fleet_resources(ctx, from_json, all_pages, page_size, fleet_id, lifecyc
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "product", "resourceDisplayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for displayName,product and resourceDisplayName is ascending.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED"]), help=u"""A filter to return fleets whose lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2031,7 +2062,7 @@ def list_fleet_resources(ctx, from_json, all_pages, page_size, fleet_id, lifecyc
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'FleetTargetCollection'})
 @cli_util.wrap_exceptions
-def list_fleet_targets(ctx, from_json, all_pages, page_size, fleet_id, display_name, product, resource_id, resource_display_name, limit, page, sort_order, sort_by):
+def list_fleet_targets(ctx, from_json, all_pages, page_size, fleet_id, display_name, product, resource_id, resource_display_name, limit, page, sort_order, sort_by, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2056,6 +2087,8 @@ def list_fleet_targets(ctx, from_json, all_pages, page_size, fleet_id, display_n
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management', ctx)
     if all_pages:
@@ -2243,6 +2276,7 @@ def list_inventory_resources(ctx, from_json, all_pages, page_size, compartment_i
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
+@cli_util.option('--is-confirmed-targets', type=click.BOOL, help=u"""If set to true, confirmed targets will be returned.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2250,7 +2284,7 @@ def list_inventory_resources(ctx, from_json, all_pages, page_size, compartment_i
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'FleetTargetCollection'})
 @cli_util.wrap_exceptions
-def list_targets(ctx, from_json, all_pages, page_size, fleet_id, display_name, limit, page, sort_order, sort_by):
+def list_targets(ctx, from_json, all_pages, page_size, fleet_id, display_name, limit, page, sort_order, sort_by, is_confirmed_targets):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2269,6 +2303,8 @@ def list_targets(ctx, from_json, all_pages, page_size, fleet_id, display_name, l
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if is_confirmed_targets is not None:
+        kwargs['is_confirmed_targets'] = is_confirmed_targets
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management', ctx)
     if all_pages:
@@ -2435,9 +2471,10 @@ Example: `My new resource`""")
 This option is a JSON list with items of type NotificationPreference.  For documentation on NotificationPreference please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagement/20250228/datatypes/NotificationPreference.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-target-auto-confirm', type=click.BOOL, help=u"""A value that represents if auto-confirming of the targets can be enabled. This will allow targets to be auto-confirmed in the fleet without manual intervention.""")
 @cli_util.option('--resource-selection', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet. Provide PlatformConfiguration Ids corresponding to all the Products that need to be managed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--environment-type', help=u"""Environment Type associated with the Fleet. Applicable for ENVIRONMENT fleet types.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2448,7 +2485,7 @@ This option is a JSON list with items of type NotificationPreference.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'notification-preferences': {'module': 'fleet_apps_management', 'class': 'list[NotificationPreference]'}, 'resource-selection': {'module': 'fleet_apps_management', 'class': 'ResourceSelection'}, 'products': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'Fleet'})
 @cli_util.wrap_exceptions
-def update_fleet(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, display_name, description, notification_preferences, is_target_auto_confirm, resource_selection, products, freeform_tags, defined_tags, if_match):
+def update_fleet(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, display_name, description, notification_preferences, is_target_auto_confirm, resource_selection, products, freeform_tags, defined_tags, environment_type, if_match):
 
     if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
@@ -2487,6 +2524,9 @@ def update_fleet(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if environment_type is not None:
+        _details['environmentType'] = environment_type
 
     client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management', ctx)
     result = client.update_fleet(
@@ -2531,9 +2571,10 @@ Example: `My new resource`""")
 
 This option is a JSON list with items of type NotificationPreference.  For documentation on NotificationPreference please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagement/20250228/datatypes/NotificationPreference.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-target-auto-confirm', type=click.BOOL, help=u"""A value that represents if auto-confirming of the targets can be enabled. This will allow targets to be auto-confirmed in the fleet without manual intervention.""")
-@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet. Provide PlatformConfiguration Ids corresponding to all the Products that need to be managed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--environment-type', help=u"""Environment Type associated with the Fleet. Applicable for ENVIRONMENT fleet types.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2544,7 +2585,7 @@ This option is a JSON list with items of type NotificationPreference.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'notification-preferences': {'module': 'fleet_apps_management', 'class': 'list[NotificationPreference]'}, 'products': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}, 'resource-selection-rule-selection-criteria': {'module': 'fleet_apps_management', 'class': 'SelectionCriteria'}}, output_type={'module': 'fleet_apps_management', 'class': 'Fleet'})
 @cli_util.wrap_exceptions
-def update_fleet_dynamic_resource_selection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, resource_selection_rule_selection_criteria, display_name, description, notification_preferences, is_target_auto_confirm, products, freeform_tags, defined_tags, if_match):
+def update_fleet_dynamic_resource_selection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, resource_selection_rule_selection_criteria, display_name, description, notification_preferences, is_target_auto_confirm, products, freeform_tags, defined_tags, environment_type, if_match):
 
     if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
@@ -2582,6 +2623,9 @@ def update_fleet_dynamic_resource_selection(ctx, from_json, force, wait_for_stat
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if environment_type is not None:
+        _details['environmentType'] = environment_type
 
     _details['resourceSelection']['resourceSelectionType'] = 'DYNAMIC'
 
@@ -2627,9 +2671,10 @@ Example: `My new resource`""")
 
 This option is a JSON list with items of type NotificationPreference.  For documentation on NotificationPreference please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagement/20250228/datatypes/NotificationPreference.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-target-auto-confirm', type=click.BOOL, help=u"""A value that represents if auto-confirming of the targets can be enabled. This will allow targets to be auto-confirmed in the fleet without manual intervention.""")
-@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--products', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Products associated with the Fleet. Provide PlatformConfiguration Ids corresponding to all the Products that need to be managed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--environment-type', help=u"""Environment Type associated with the Fleet. Applicable for ENVIRONMENT fleet types.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING", "NEEDS_ATTENTION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2640,7 +2685,7 @@ This option is a JSON list with items of type NotificationPreference.  For docum
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'notification-preferences': {'module': 'fleet_apps_management', 'class': 'list[NotificationPreference]'}, 'products': {'module': 'fleet_apps_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'Fleet'})
 @cli_util.wrap_exceptions
-def update_fleet_manual_resource_selection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, display_name, description, notification_preferences, is_target_auto_confirm, products, freeform_tags, defined_tags, if_match):
+def update_fleet_manual_resource_selection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, fleet_id, display_name, description, notification_preferences, is_target_auto_confirm, products, freeform_tags, defined_tags, environment_type, if_match):
 
     if isinstance(fleet_id, six.string_types) and len(fleet_id.strip()) == 0:
         raise click.UsageError('Parameter --fleet-id cannot be whitespace or empty string')
@@ -2677,6 +2722,9 @@ def update_fleet_manual_resource_selection(ctx, from_json, force, wait_for_state
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if environment_type is not None:
+        _details['environmentType'] = environment_type
 
     _details['resourceSelection']['resourceSelectionType'] = 'MANUAL'
 

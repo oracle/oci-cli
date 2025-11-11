@@ -22,9 +22,57 @@ def fleet_apps_management_operations_root_group():
     pass
 
 
+@click.command(cli_util.override('fleet_apps_management_operations.scheduler_job_aggregation_collection_group.command_name', 'scheduler-job-aggregation-collection'), cls=CommandGroupWithAlias, help="""An array of SchedulerJob objects.""")
+@cli_util.help_option_group
+def scheduler_job_aggregation_collection_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_operations.report_collection_group.command_name', 'report-collection'), cls=CommandGroupWithAlias, help="""Results of a summarize report .""")
+@cli_util.help_option_group
+def report_collection_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_operations.patch_group.command_name', 'patch'), cls=CommandGroupWithAlias, help="""Patch metadata for Custom and Oracle patches.""")
+@cli_util.help_option_group
+def patch_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_operations.job_activity_group.command_name', 'job-activity'), cls=CommandGroupWithAlias, help="""Activity details including status corresponding to an Action Group.""")
+@cli_util.help_option_group
+def job_activity_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_operations.execution_collection_group.command_name', 'execution-collection'), cls=CommandGroupWithAlias, help="""A collection of ExecutionSummary.""")
+@cli_util.help_option_group
+def execution_collection_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_operations.target_property_collection_group.command_name', 'target-property-collection'), cls=CommandGroupWithAlias, help="""Results of an target property search.""")
+@cli_util.help_option_group
+def target_property_collection_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_operations.scheduled_fleet_collection_group.command_name', 'scheduled-fleet-collection'), cls=CommandGroupWithAlias, help="""Results of a Scheduled ActionGroup search.""")
+@cli_util.help_option_group
+def scheduled_fleet_collection_group():
+    pass
+
+
 @click.command(cli_util.override('fleet_apps_management_operations.execution_group.command_name', 'execution'), cls=CommandGroupWithAlias, help="""Task Execution associated with the Job.""")
 @cli_util.help_option_group
 def execution_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_operations.target_component_collection_group.command_name', 'target-component-collection'), cls=CommandGroupWithAlias, help="""Results of an target component search.""")
+@cli_util.help_option_group
+def target_component_collection_group():
     pass
 
 
@@ -34,9 +82,9 @@ def inventory_record_collection_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management_operations.scheduler_job_aggregation_collection_group.command_name', 'scheduler-job-aggregation-collection'), cls=CommandGroupWithAlias, help="""An array of SchedulerJob objects.""")
+@click.command(cli_util.override('fleet_apps_management_operations.report_metadata_collection_group.command_name', 'report-metadata-collection'), cls=CommandGroupWithAlias, help="""Results of a run report .""")
 @cli_util.help_option_group
-def scheduler_job_aggregation_collection_group():
+def report_metadata_collection_group():
     pass
 
 
@@ -49,12 +97,6 @@ def patch_collection_group():
 @click.command(cli_util.override('fleet_apps_management_operations.compliance_record_collection_group.command_name', 'compliance-record-collection'), cls=CommandGroupWithAlias, help="""Results of a compliancePolicy search. Contains both CompliancePolicySummary items and other information, such as metadata.""")
 @cli_util.help_option_group
 def compliance_record_collection_group():
-    pass
-
-
-@click.command(cli_util.override('fleet_apps_management_operations.patch_group.command_name', 'patch'), cls=CommandGroupWithAlias, help="""Patch metadata for Custom and Oracle patches.""")
-@cli_util.help_option_group
-def patch_group():
     pass
 
 
@@ -100,18 +142,6 @@ def compliance_record_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management_operations.job_activity_group.command_name', 'job-activity'), cls=CommandGroupWithAlias, help="""Activity details including status corresponding to an Action Group.""")
-@cli_util.help_option_group
-def job_activity_group():
-    pass
-
-
-@click.command(cli_util.override('fleet_apps_management_operations.execution_collection_group.command_name', 'execution-collection'), cls=CommandGroupWithAlias, help="""A collection of ExecutionSummary.""")
-@cli_util.help_option_group
-def execution_collection_group():
-    pass
-
-
 @click.command(cli_util.override('fleet_apps_management_operations.compliance_record_aggregation_collection_group.command_name', 'compliance-record-aggregation-collection'), cls=CommandGroupWithAlias, help="""An array of ComplianceRecord objects""")
 @cli_util.help_option_group
 def compliance_record_aggregation_collection_group():
@@ -124,9 +154,15 @@ def scheduler_job_group():
     pass
 
 
-@click.command(cli_util.override('fleet_apps_management_operations.scheduled_fleet_collection_group.command_name', 'scheduled-fleet-collection'), cls=CommandGroupWithAlias, help="""Results of a Scheduled ActionGroup search.""")
+@click.command(cli_util.override('fleet_apps_management_operations.installed_patch_collection_group.command_name', 'installed-patch-collection'), cls=CommandGroupWithAlias, help="""Results of an installed patches search.""")
 @cli_util.help_option_group
-def scheduled_fleet_collection_group():
+def installed_patch_collection_group():
+    pass
+
+
+@click.command(cli_util.override('fleet_apps_management_operations.recommended_patch_collection_group.command_name', 'recommended-patch-collection'), cls=CommandGroupWithAlias, help="""Results of an recommended patches search.""")
+@cli_util.help_option_group
+def recommended_patch_collection_group():
     pass
 
 
@@ -137,12 +173,19 @@ def step_collection_group():
 
 
 fleet_apps_management_service_cli.fleet_apps_management_service_group.add_command(fleet_apps_management_operations_root_group)
-fleet_apps_management_operations_root_group.add_command(execution_group)
-fleet_apps_management_operations_root_group.add_command(inventory_record_collection_group)
 fleet_apps_management_operations_root_group.add_command(scheduler_job_aggregation_collection_group)
+fleet_apps_management_operations_root_group.add_command(report_collection_group)
+fleet_apps_management_operations_root_group.add_command(patch_group)
+fleet_apps_management_operations_root_group.add_command(job_activity_group)
+fleet_apps_management_operations_root_group.add_command(execution_collection_group)
+fleet_apps_management_operations_root_group.add_command(target_property_collection_group)
+fleet_apps_management_operations_root_group.add_command(scheduled_fleet_collection_group)
+fleet_apps_management_operations_root_group.add_command(execution_group)
+fleet_apps_management_operations_root_group.add_command(target_component_collection_group)
+fleet_apps_management_operations_root_group.add_command(inventory_record_collection_group)
+fleet_apps_management_operations_root_group.add_command(report_metadata_collection_group)
 fleet_apps_management_operations_root_group.add_command(patch_collection_group)
 fleet_apps_management_operations_root_group.add_command(compliance_record_collection_group)
-fleet_apps_management_operations_root_group.add_command(patch_group)
 fleet_apps_management_operations_root_group.add_command(scheduler_definition_group)
 fleet_apps_management_operations_root_group.add_command(scheduler_definition_collection_group)
 fleet_apps_management_operations_root_group.add_command(managed_entity_aggregation_collection_group)
@@ -150,11 +193,10 @@ fleet_apps_management_operations_root_group.add_command(resource_collection_grou
 fleet_apps_management_operations_root_group.add_command(scheduler_job_collection_group)
 fleet_apps_management_operations_root_group.add_command(scheduler_execution_collection_group)
 fleet_apps_management_operations_root_group.add_command(compliance_record_group)
-fleet_apps_management_operations_root_group.add_command(job_activity_group)
-fleet_apps_management_operations_root_group.add_command(execution_collection_group)
 fleet_apps_management_operations_root_group.add_command(compliance_record_aggregation_collection_group)
 fleet_apps_management_operations_root_group.add_command(scheduler_job_group)
-fleet_apps_management_operations_root_group.add_command(scheduled_fleet_collection_group)
+fleet_apps_management_operations_root_group.add_command(installed_patch_collection_group)
+fleet_apps_management_operations_root_group.add_command(recommended_patch_collection_group)
 fleet_apps_management_operations_root_group.add_command(step_collection_group)
 
 
@@ -1012,12 +1054,13 @@ def get_execution(ctx, from_json, scheduler_job_id, job_activity_id, resource_id
 @job_activity_group.command(name=cli_util.override('fleet_apps_management_operations.get_job_activity.command_name', 'get'), help=u"""Gets activity details by identifier for a job. \n[Command Reference](getJobActivity)""")
 @cli_util.option('--scheduler-job-id', required=True, help=u"""unique SchedulerJob identifier""")
 @cli_util.option('--job-activity-id', required=True, help=u"""unique jobActivity identifier""")
+@cli_util.option('--is-details-required', type=click.BOOL, help=u"""If set to true, inventory details will be returned.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'JobActivity'})
 @cli_util.wrap_exceptions
-def get_job_activity(ctx, from_json, scheduler_job_id, job_activity_id):
+def get_job_activity(ctx, from_json, scheduler_job_id, job_activity_id, is_details_required):
 
     if isinstance(scheduler_job_id, six.string_types) and len(scheduler_job_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduler-job-id cannot be whitespace or empty string')
@@ -1026,6 +1069,8 @@ def get_job_activity(ctx, from_json, scheduler_job_id, job_activity_id):
         raise click.UsageError('Parameter --job-activity-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_details_required is not None:
+        kwargs['is_details_required'] = is_details_required
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
     result = client.get_job_activity(
@@ -1260,6 +1305,75 @@ def list_executions(ctx, from_json, all_pages, page_size, scheduler_job_id, job_
     cli_util.render_response(result, ctx)
 
 
+@installed_patch_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_installed_patches.command_name', 'list-installed-patches'), help=u"""Gets a list of installed patches. CompartmentId should be the compartmentId of resource(Containing the target). \n[Command Reference](listInstalledPatches)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--target-id', help=u"""Target Id.""")
+@cli_util.option('--target-name', help=u"""Target name.""")
+@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Patch severity.""")
+@cli_util.option('--patch-level', help=u"""Patch level.""")
+@cli_util.option('--patch-type', help=u"""Patch Type.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["patchName"]), help=u"""The field to sort by. Only one sort order may be provided.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'InstalledPatchCollection'})
+@cli_util.wrap_exceptions
+def list_installed_patches(ctx, from_json, all_pages, page_size, compartment_id, target_id, target_name, severity, patch_level, patch_type, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if target_name is not None:
+        kwargs['target_name'] = target_name
+    if severity is not None:
+        kwargs['severity'] = severity
+    if patch_level is not None:
+        kwargs['patch_level'] = patch_level
+    if patch_type is not None:
+        kwargs['patch_type'] = patch_type
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_installed_patches,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_installed_patches,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_installed_patches(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @inventory_record_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_inventory_records.command_name', 'list-inventory-records'), help=u"""Gets a list of inventoryDetails. \n[Command Reference](listInventoryRecords)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""If set to true, resources will be returned for not only the provided compartment, but all compartments which descend from it. Which resources are returned and their field contents depends on the value of accessLevel.""")
@@ -1268,6 +1382,7 @@ def list_executions(ctx, from_json, all_pages, page_size, scheduler_job_id, job_
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--is-details-required', type=click.BOOL, help=u"""If set to true, inventory details will be returned.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["targetName", "targetProductName", "targetResourceId", "osType", "architecture"]), help=u"""The field to sort by. Only one sort order may be provided.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -1276,7 +1391,7 @@ def list_executions(ctx, from_json, all_pages, page_size, scheduler_job_id, job_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'InventoryRecordCollection'})
 @cli_util.wrap_exceptions
-def list_inventory_records(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, fleet_id, resource_id, limit, page, sort_order, sort_by):
+def list_inventory_records(ctx, from_json, all_pages, page_size, compartment_id, compartment_id_in_subtree, fleet_id, resource_id, limit, page, sort_order, is_details_required, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1294,6 +1409,8 @@ def list_inventory_records(ctx, from_json, all_pages, page_size, compartment_id,
         kwargs['page'] = page
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if is_details_required is not None:
+        kwargs['is_details_required'] = is_details_required
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1401,6 +1518,135 @@ def list_patches(ctx, from_json, all_pages, page_size, compartment_id, product_i
         )
     else:
         result = client.list_patches(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@recommended_patch_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_recommended_patches.command_name', 'list-recommended-patches'), help=u"""Gets a list of recommended patches. \n[Command Reference](listRecommendedPatches)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--target-id', help=u"""Target identifier.""")
+@cli_util.option('--target-name', help=u"""Unique target name""")
+@cli_util.option('--patch-level', type=custom_types.CliCaseInsensitiveChoice(["LATEST", "LATEST_MINUS_ONE", "LATEST_MINUS_TWO"]), help=u"""Patch level.""")
+@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Patch severity.""")
+@cli_util.option('--patch-type', help=u"""Patch Type.""")
+@cli_util.option('--patch-id', help=u"""Patch identifier.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["patchName"]), help=u"""The field to sort by. Only one sort order may be provided.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'RecommendedPatchCollection'})
+@cli_util.wrap_exceptions
+def list_recommended_patches(ctx, from_json, all_pages, page_size, compartment_id, target_id, target_name, patch_level, severity, patch_type, patch_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if target_name is not None:
+        kwargs['target_name'] = target_name
+    if patch_level is not None:
+        kwargs['patch_level'] = patch_level
+    if severity is not None:
+        kwargs['severity'] = severity
+    if patch_type is not None:
+        kwargs['patch_type'] = patch_type
+    if patch_id is not None:
+        kwargs['patch_id'] = patch_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_recommended_patches,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_recommended_patches,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_recommended_patches(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@report_metadata_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_report_metadata.command_name', 'list-report-metadata'), help=u"""Returns a list of all the report metadata. \n[Command Reference](listReportMetadata)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--report-name', help=u"""A filter to return data for given report name.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for timeCreated is descending. Default order for displayName is ascending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'ReportMetadataCollection'})
+@cli_util.wrap_exceptions
+def list_report_metadata(ctx, from_json, all_pages, page_size, compartment_id, report_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if report_name is not None:
+        kwargs['report_name'] = report_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_report_metadata,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_report_metadata,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_report_metadata(
+            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -1625,7 +1871,7 @@ def list_scheduler_definitions(ctx, from_json, all_pages, page_size, compartment
     cli_util.render_response(result, ctx)
 
 
-@scheduler_execution_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_scheduler_executions.command_name', 'list-scheduler-executions'), help=u"""Returns a list of all Fleets that are scheduled. \n[Command Reference](listSchedulerExecutions)""")
+@scheduler_execution_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_scheduler_executions.command_name', 'list-scheduler-executions'), help=u"""Returns a list of all executions that are scheduled. \n[Command Reference](listSchedulerExecutions)""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. Empty only if the resource OCID query param is not specified.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--time-scheduled-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Scheduled Time""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -1636,6 +1882,8 @@ def list_scheduler_definitions(ctx, from_json, all_pages, page_size, compartment
 @cli_util.option('--runbook-id', help=u"""A filter to return only schedule definitions whose associated runbookId matches the given runbookId.""")
 @cli_util.option('--runbook-version-name', help=u"""RunbookVersion Name filter""")
 @cli_util.option('--substate', help=u"""A filter to return only resources their subState matches the given subState.""")
+@cli_util.option('--lifecycle-operation', help=u"""A filter to return only resources their lifecycleOperation matches the given lifecycleOperation.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""If set to true, resources will be returned for not only the provided compartment, but all compartments which descend from it. Which resources are returned and their field contents depends on the value of accessLevel.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
@@ -1647,7 +1895,7 @@ def list_scheduler_definitions(ctx, from_json, all_pages, page_size, compartment
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'SchedulerExecutionCollection'})
 @cli_util.wrap_exceptions
-def list_scheduler_executions(ctx, from_json, all_pages, page_size, compartment_id, display_name, time_scheduled_greater_than_or_equal_to, time_scheduled_less_than, scheduler_defintion_id, scheduler_job_id, resource_id, runbook_id, runbook_version_name, substate, limit, page, sort_order, sort_by):
+def list_scheduler_executions(ctx, from_json, all_pages, page_size, compartment_id, display_name, time_scheduled_greater_than_or_equal_to, time_scheduled_less_than, scheduler_defintion_id, scheduler_job_id, resource_id, runbook_id, runbook_version_name, substate, lifecycle_operation, compartment_id_in_subtree, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1673,6 +1921,10 @@ def list_scheduler_executions(ctx, from_json, all_pages, page_size, compartment_
         kwargs['runbook_version_name'] = runbook_version_name
     if substate is not None:
         kwargs['substate'] = substate
+    if lifecycle_operation is not None:
+        kwargs['lifecycle_operation'] = lifecycle_operation
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -1859,6 +2111,135 @@ def list_steps(ctx, from_json, all_pages, page_size, scheduler_job_id, job_activ
         result = client.list_steps(
             scheduler_job_id=scheduler_job_id,
             job_activity_id=job_activity_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@target_component_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_target_components.command_name', 'list-target-components'), help=u"""Gets a list of target component. \n[Command Reference](listTargetComponents)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--target-id', help=u"""Target Id.""")
+@cli_util.option('--target-name', help=u"""Target name.""")
+@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Patch severity.""")
+@cli_util.option('--name', help=u"""Target Component Name.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["componentName"]), help=u"""The field to sort by. Only one sort order may be provided.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'TargetComponentCollection'})
+@cli_util.wrap_exceptions
+def list_target_components(ctx, from_json, all_pages, page_size, compartment_id, target_id, target_name, severity, name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if target_name is not None:
+        kwargs['target_name'] = target_name
+    if severity is not None:
+        kwargs['severity'] = severity
+    if name is not None:
+        kwargs['name'] = name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_target_components,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_target_components,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_target_components(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@target_property_collection_group.command(name=cli_util.override('fleet_apps_management_operations.list_target_properties.command_name', 'list-target-properties'), help=u"""Gets a list of target properties. \n[Command Reference](listTargetProperties)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--target-id', help=u"""Target Id.""")
+@cli_util.option('--target-name', help=u"""Target name.""")
+@cli_util.option('--severity', type=custom_types.CliCaseInsensitiveChoice(["CRITICAL", "HIGH", "MEDIUM", "LOW"]), help=u"""Patch severity.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["propertyName"]), help=u"""The field to sort by. Only one sort order may be provided.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'TargetPropertyCollection'})
+@cli_util.wrap_exceptions
+def list_target_properties(ctx, from_json, all_pages, page_size, compartment_id, target_id, target_name, severity, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if target_id is not None:
+        kwargs['target_id'] = target_id
+    if target_name is not None:
+        kwargs['target_name'] = target_name
+    if severity is not None:
+        kwargs['severity'] = severity
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_target_properties,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_target_properties,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_target_properties(
+            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -2062,6 +2443,67 @@ def manage_job_execution_action_group_based_user_action_details(ctx, from_json, 
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@report_collection_group.command(name=cli_util.override('fleet_apps_management_operations.report.command_name', 'report'), help=u"""Report \n[Command Reference](report)""")
+@cli_util.option('--name', required=True, help=u"""Name of report.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--granularity', type=custom_types.CliCaseInsensitiveChoice(["DAY", "WEEK", "MONTH", "QUARTER", "YEAR"]), help=u"""Granularity.""")
+@cli_util.option('--report-time-range', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--condition', type=custom_types.CliCaseInsensitiveChoice(["ALL", "ANY"]), help=u"""Condition.""")
+@cli_util.option('--filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Filters for reports.
+
+This option is a JSON list with items of type Filter.  For documentation on Filter please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagementoperations/20250228/datatypes/Filter.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--order-clause', type=custom_types.CLI_COMPLEX_TYPE, help=u"""order clauses for reports.
+
+This option is a JSON list with items of type OrderClause.  For documentation on OrderClause please see our API reference: https://docs.cloud.oracle.com/api/#/en/fleetappsmanagementoperations/20250228/datatypes/OrderClause.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""If set to true, resources will be returned for not only the provided compartment, but all compartments which descend from it. Which resources are returned and their field contents depends on the value of accessLevel.""")
+@json_skeleton_utils.get_cli_json_input_option({'report-time-range': {'module': 'fleet_apps_management', 'class': 'ReportTimeRange'}, 'filters': {'module': 'fleet_apps_management', 'class': 'list[Filter]'}, 'order-clause': {'module': 'fleet_apps_management', 'class': 'list[OrderClause]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'report-time-range': {'module': 'fleet_apps_management', 'class': 'ReportTimeRange'}, 'filters': {'module': 'fleet_apps_management', 'class': 'list[Filter]'}, 'order-clause': {'module': 'fleet_apps_management', 'class': 'list[OrderClause]'}}, output_type={'module': 'fleet_apps_management', 'class': 'ReportCollection'})
+@cli_util.wrap_exceptions
+def report(ctx, from_json, name, compartment_id, granularity, report_time_range, condition, filters, order_clause, if_match, limit, page, compartment_id_in_subtree):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+
+    if granularity is not None:
+        _details['granularity'] = granularity
+
+    if report_time_range is not None:
+        _details['reportTimeRange'] = cli_util.parse_json_parameter("report_time_range", report_time_range)
+
+    if condition is not None:
+        _details['condition'] = condition
+
+    if filters is not None:
+        _details['filters'] = cli_util.parse_json_parameter("filters", filters)
+
+    if order_clause is not None:
+        _details['orderClause'] = cli_util.parse_json_parameter("order_clause", order_clause)
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_operations', ctx)
+    result = client.report(
+        compartment_id=compartment_id,
+        report_details=_details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

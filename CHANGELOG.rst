@@ -6,6 +6,107 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.70.1 - 2025-11-11
+--------------------
+Fixed
+~~~~~
+* Data Intelligence Foundation Service
+
+  * Fixed commands for the Data Intelligence Foundation Service
+
+    * ``oci dif stack add``
+    * ``oci dif stack change-compartment``
+    * ``oci dif stack create``
+    * ``oci dif stack delete``
+    * ``oci dif stack deploy-artifacts``
+    * ``oci dif stack get``
+    * ``oci dif stack update``
+    * ``oci dif stack-collection list-stacks``
+    * ``oci dif work-request cancel``
+    * ``oci dif work-request get``
+    * ``oci dif work-request list``
+    * ``oci dif work-request-error list``
+    * ``oci dif work-request-log-entry list-work-request-logs``
+
+Added
+~~~~~
+* Generative AI Service
+
+  * Support imported-model for Generative AI Service
+
+    * ``oci generative-ai imported-model``
+
+  * Support imported-model-collection for Generative AI Service
+
+    * ``oci generative-ai imported-model-collection list-imported-models``
+
+* Artifact Service
+
+  * Support for lookup image by URI in OCIR
+
+    * ``oci artifacts container image lookup``
+
+  * Support for new optional parameter --image-digest in image list
+
+    * ``oci artifacts container image list --image-digest``
+
+* Support for the externalLocation in Limits service
+
+  * ``oci limits resource-availability get --external-location``
+  * ``oci limits value list --external-location``
+
+* Support for additional optional parameters in OKE Service
+
+  * ``oci ce cluster-options get --should-list-all-patch-versions``
+  * ``oci ce node-pool-options get --should-list-all-patch-versions --node-pool-k8s-version --node-pool-os-arch --node-pool-os-type``
+
+* Added support to Dedicated Virtual Machine Hosts to have multiple capacity bucket configurations in Compute service
+
+  * ``oci compute dedicated-vm-host create --capacity-config, --is-memory-encryption-enabled``
+  * ``oci compute dedicated-vm-host list --is-memory-encryption-enabled``
+  * ``oci compute dedicated-vm-host-instance list --is-memory-encryption-enabled``
+
+* Fleet Application Management service
+
+  * Support for configuration of catalog item in the Fleet Application Management service
+
+    * ``oci fleet-apps-management fleet-apps-management-catalog catalog-item configure``
+    * ``oci fleet-apps-management fleet-apps-management-catalog catalog-item-variables-definition get``
+
+  * Support for reports in the Fleet Application Management service
+
+    * ``oci fleet-apps-management fleet-apps-management-operations report-metadata-collection list-report-metadata``
+    * ``oci fleet-apps-management fleet-apps-management-operations report-collection report``
+
+  * Support for fleet compliance retrieval in Fleet Application Management service
+
+    * ``oci fleet-apps-management compliance get``
+
+  * Support for export and import of runbook and version in the Fleet Application Management service
+
+    * ``oci fleet-apps-management fleet-apps-management-runbooks runbook export``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks runbook export-runbook-version``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks runbook export-runbook-transfer-runbook-object-storage-bucket-content-details``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks runbook export-runbook-version-transfer-runbook-object-storage-bucket-content-details``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks runbook export-runbook-transfer-runbook-par-url-content-details``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks runbook export-runbook-version-transfer-runbook-par-url-content-details``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks runbook-export-dependency-collection find-runbook-export-dependency``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks runbook-export-status-collection list-runbook-export-statuses``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks import-runbook-precheck-details import-runbook-precheck``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks import-runbook-details import-runbook``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks import-runbook-version-details import-runbook-version``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks runbook-import get``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks runbook-import-dependency-collection find-runbook-import-dependency``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks runbook-import-dependency-collection find-runbook-import-dependency-transfer-runbook-par-url-content-details``
+    * ``oci fleet-apps-management fleet-apps-management-runbooks runbook-import-status-collection list-runbook-import-statuses``
+
+  * Support for resource inventory detailed patch, target information in the Fleet Application Management service
+
+    * ``oci fleet-apps-management fleet-apps-management-operations installed-patch-collection list-installed-patches``
+    * ``oci fleet-apps-management fleet-apps-management-operations recommended-patch-collection list-recommended-patches``
+    * ``oci fleet-apps-management fleet-apps-management-operations target-property-collection list-target-properties``
+    * ``oci fleet-apps-management fleet-apps-management-operations target-component-collection list-target-components``
+
 3.70.0 - 2025-11-04
 --------------------
 Added

@@ -273,6 +273,11 @@ service_mapping = {
         "DevOps",
         "Developer Services"
     ],
+    "dif": [
+        "dif",
+        "DataIntelligences Control Plane",
+        "Others"
+    ],
     "disaster-recovery": [
         "disaster_recovery",
         "Full Stack Disaster Recovery",

@@ -842,3 +842,7 @@ def get_container_image_metadata(ctx, image_id, region):
     artifacts_client = cli_util.build_client("artifacts", "artifacts", ctx)
     container_image_response = artifacts_client.get_container_image(image_id)
     return artifacts_client, container_image_response.data
+
+
+# oci artifacts container image lookup-container-image-by-uri -> oci artifacts container image lookup
+cli_util.rename_command(artifacts_cli, artifacts_cli.container_image_group, artifacts_cli.lookup_container_image_by_uri, "lookup")
