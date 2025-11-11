@@ -22,6 +22,12 @@ def fleet_apps_management_catalog_root_group():
     pass
 
 
+@click.command(cli_util.override('fleet_apps_management_catalog.catalog_item_variables_definition_group.command_name', 'catalog-item-variables-definition'), cls=CommandGroupWithAlias, help="""Variables Definitions for a CatalogItem.""")
+@cli_util.help_option_group
+def catalog_item_variables_definition_group():
+    pass
+
+
 @click.command(cli_util.override('fleet_apps_management_catalog.catalog_item_group.command_name', 'catalog-item'), cls=CommandGroupWithAlias, help="""A description of a CatalogItem resource.
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
@@ -37,6 +43,7 @@ def catalog_item_collection_group():
 
 
 fleet_apps_management_service_cli.fleet_apps_management_service_group.add_command(fleet_apps_management_catalog_root_group)
+fleet_apps_management_catalog_root_group.add_command(catalog_item_variables_definition_group)
 fleet_apps_management_catalog_root_group.add_command(catalog_item_group)
 fleet_apps_management_catalog_root_group.add_command(catalog_item_collection_group)
 
@@ -167,6 +174,97 @@ def clone_catalog_item(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
+@catalog_item_group.command(name=cli_util.override('fleet_apps_management_catalog.configure_catalog_item.command_name', 'configure'), help=u"""Configures a CatalogItem. Creating new Catalog Item. \n[Command Reference](configureCatalogItem)""")
+@cli_util.option('--catalog-item-id', required=True, help=u"""The [OCID] of the CatalogItem.""")
+@cli_util.option('--storage-namespace', required=True, help=u"""The Oracle Cloud Object Storage namespace where the artifact or variables are stored.""")
+@cli_util.option('--bucket-name', required=True, help=u"""The name of the Object Storage bucket that contains the catalog item configuration object.""")
+@cli_util.option('--compartment-id', required=True, help=u"""OCID of the Compartment.""")
+@cli_util.option('--input-variables', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of key value pairs specifying variables or parameters to be used when configuring the catalog item.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--object-name', help=u"""The name of the object file in the specified bucket containing catalog item configuration details.""")
+@cli_util.option('--catalog-listing-id', help=u"""The unique identifier of the catalog listing to which configuration applies.""")
+@cli_util.option('--catalog-listing-version-id', help=u"""The unique identifier for the specific version of the catalog listing.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--system-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""System tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"orcl-cloud\": {\"free-tier-retained\": \"true\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'input-variables': {'module': 'fleet_apps_management', 'class': 'list[KeyValueProperty]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'input-variables': {'module': 'fleet_apps_management', 'class': 'list[KeyValueProperty]'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'CatalogItem'})
+@cli_util.wrap_exceptions
+def configure_catalog_item(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_item_id, storage_namespace, bucket_name, compartment_id, input_variables, object_name, catalog_listing_id, catalog_listing_version_id, freeform_tags, defined_tags, system_tags, if_match):
+
+    if isinstance(catalog_item_id, six.string_types) and len(catalog_item_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-item-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['storageNamespace'] = storage_namespace
+    _details['bucketName'] = bucket_name
+    _details['compartmentId'] = compartment_id
+    _details['inputVariables'] = cli_util.parse_json_parameter("input_variables", input_variables)
+
+    if object_name is not None:
+        _details['objectName'] = object_name
+
+    if catalog_listing_id is not None:
+        _details['catalogListingId'] = catalog_listing_id
+
+    if catalog_listing_version_id is not None:
+        _details['catalogListingVersionId'] = catalog_listing_version_id
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if system_tags is not None:
+        _details['systemTags'] = cli_util.parse_json_parameter("system_tags", system_tags)
+
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_catalog', ctx)
+    result = client.configure_catalog_item(
+        catalog_item_id=catalog_item_id,
+        configure_catalog_item_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @catalog_item_group.command(name=cli_util.override('fleet_apps_management_catalog.create_catalog_item.command_name', 'create'), help=u"""Creates a CatalogItem. \n[Command Reference](createCatalogItem)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--config-source-type', required=True, help=u"""Config source type Eg: STACK_TEMPLATE_CATALOG_SOURCE, PAR_CATALOG_SOURCE, GIT_CATALOG_SOURCE, MARKETPLACE_CATALOG_SOURCE.""")
@@ -179,6 +277,7 @@ def clone_catalog_item(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--catalog-source-payload', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--listing-id', help=u"""The catalog listing Id.""")
 @cli_util.option('--listing-version', help=u"""The catalog package version.""")
+@cli_util.option('--is-item-locked', type=click.BOOL, help=u"""Indicates if the CatalogItem is immutable or not.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -189,7 +288,7 @@ def clone_catalog_item(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'catalog-source-payload': {'module': 'fleet_apps_management', 'class': 'CatalogSourcePayload'}, 'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'CatalogItem'})
 @cli_util.wrap_exceptions
-def create_catalog_item(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_type, description, display_name, package_type, version_description, short_description, time_released, catalog_source_payload, listing_id, listing_version, freeform_tags, defined_tags):
+def create_catalog_item(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_type, description, display_name, package_type, version_description, short_description, time_released, catalog_source_payload, listing_id, listing_version, is_item_locked, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -218,6 +317,9 @@ def create_catalog_item(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if listing_version is not None:
         _details['listingVersion'] = listing_version
+
+    if is_item_locked is not None:
+        _details['isItemLocked'] = is_item_locked
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -271,6 +373,7 @@ def create_catalog_item(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.option('--time-released', type=custom_types.CLI_DATETIME, help=u"""The date and time the CatalogItem was released, in the format defined by [RFC 3339]. Example: `2016-08-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--listing-id', help=u"""The catalog listing Id.""")
 @cli_util.option('--listing-version', help=u"""The catalog package version.""")
+@cli_util.option('--is-item-locked', type=click.BOOL, help=u"""Indicates if the CatalogItem is immutable or not.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--catalog-source-payload-working-directory', help=u"""File path to the directory to use for running Terraform. If not specified, the root directory is used.""")
@@ -285,7 +388,7 @@ def create_catalog_item(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'CatalogItem'})
 @cli_util.wrap_exceptions
-def create_catalog_item_catalog_git_source_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_type, description, display_name, package_type, version_description, short_description, time_released, listing_id, listing_version, freeform_tags, defined_tags, catalog_source_payload_working_directory, catalog_source_payload_branch_name, catalog_source_payload_configuration_source_provider_id, catalog_source_payload_repository_url):
+def create_catalog_item_catalog_git_source_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_type, description, display_name, package_type, version_description, short_description, time_released, listing_id, listing_version, is_item_locked, freeform_tags, defined_tags, catalog_source_payload_working_directory, catalog_source_payload_branch_name, catalog_source_payload_configuration_source_provider_id, catalog_source_payload_repository_url):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -312,6 +415,9 @@ def create_catalog_item_catalog_git_source_config(ctx, from_json, wait_for_state
 
     if listing_version is not None:
         _details['listingVersion'] = listing_version
+
+    if is_item_locked is not None:
+        _details['isItemLocked'] = is_item_locked
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -379,6 +485,7 @@ def create_catalog_item_catalog_git_source_config(ctx, from_json, wait_for_state
 @cli_util.option('--time-released', type=custom_types.CLI_DATETIME, help=u"""The date and time the CatalogItem was released, in the format defined by [RFC 3339]. Example: `2016-08-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--listing-id', help=u"""The catalog listing Id.""")
 @cli_util.option('--listing-version', help=u"""The catalog package version.""")
+@cli_util.option('--is-item-locked', type=click.BOOL, help=u"""Indicates if the CatalogItem is immutable or not.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--catalog-source-payload-working-directory', help=u"""File path to the directory to use for running Terraform. If not specified, the root directory is used.""")
@@ -394,7 +501,7 @@ def create_catalog_item_catalog_git_source_config(ctx, from_json, wait_for_state
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'CatalogItem'})
 @cli_util.wrap_exceptions
-def create_catalog_item_catalog_source_template_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_type, description, display_name, package_type, version_description, short_description, time_released, listing_id, listing_version, freeform_tags, defined_tags, catalog_source_payload_working_directory, catalog_source_payload_zip_file_base64_encoded, catalog_source_payload_description, catalog_source_payload_long_description, catalog_source_payload_template_display_name):
+def create_catalog_item_catalog_source_template_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_type, description, display_name, package_type, version_description, short_description, time_released, listing_id, listing_version, is_item_locked, freeform_tags, defined_tags, catalog_source_payload_working_directory, catalog_source_payload_zip_file_base64_encoded, catalog_source_payload_description, catalog_source_payload_long_description, catalog_source_payload_template_display_name):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -421,6 +528,9 @@ def create_catalog_item_catalog_source_template_config(ctx, from_json, wait_for_
 
     if listing_version is not None:
         _details['listingVersion'] = listing_version
+
+    if is_item_locked is not None:
+        _details['isItemLocked'] = is_item_locked
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -491,6 +601,7 @@ def create_catalog_item_catalog_source_template_config(ctx, from_json, wait_for_
 @cli_util.option('--time-released', type=custom_types.CLI_DATETIME, help=u"""The date and time the CatalogItem was released, in the format defined by [RFC 3339]. Example: `2016-08-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--listing-id', help=u"""The catalog listing Id.""")
 @cli_util.option('--listing-version', help=u"""The catalog package version.""")
+@cli_util.option('--is-item-locked', type=click.BOOL, help=u"""Indicates if the CatalogItem is immutable or not.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--catalog-source-payload-working-directory', help=u"""File path to the directory to use for running Terraform. If not specified, the root directory is used.""")
@@ -509,7 +620,7 @@ Example: `2016-08-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIM
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'CatalogItem'})
 @cli_util.wrap_exceptions
-def create_catalog_item_catalog_par_source_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_type, description, display_name, package_type, version_description, short_description, time_released, listing_id, listing_version, freeform_tags, defined_tags, catalog_source_payload_working_directory, catalog_source_payload_namespace_name, catalog_source_payload_bucket_name, catalog_source_payload_object_name, catalog_source_payload_access_uri, catalog_source_payload_time_expires):
+def create_catalog_item_catalog_par_source_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_type, description, display_name, package_type, version_description, short_description, time_released, listing_id, listing_version, is_item_locked, freeform_tags, defined_tags, catalog_source_payload_working_directory, catalog_source_payload_namespace_name, catalog_source_payload_bucket_name, catalog_source_payload_object_name, catalog_source_payload_access_uri, catalog_source_payload_time_expires):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -536,6 +647,9 @@ def create_catalog_item_catalog_par_source_config(ctx, from_json, wait_for_state
 
     if listing_version is not None:
         _details['listingVersion'] = listing_version
+
+    if is_item_locked is not None:
+        _details['isItemLocked'] = is_item_locked
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -609,6 +723,7 @@ def create_catalog_item_catalog_par_source_config(ctx, from_json, wait_for_state
 @cli_util.option('--time-released', type=custom_types.CLI_DATETIME, help=u"""The date and time the CatalogItem was released, in the format defined by [RFC 3339]. Example: `2016-08-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--listing-id', help=u"""The catalog listing Id.""")
 @cli_util.option('--listing-version', help=u"""The catalog package version.""")
+@cli_util.option('--is-item-locked', type=click.BOOL, help=u"""Indicates if the CatalogItem is immutable or not.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--catalog-source-payload-working-directory', help=u"""File path to the directory to use for running Terraform. If not specified, the root directory is used.""")
@@ -622,7 +737,7 @@ def create_catalog_item_catalog_par_source_config(ctx, from_json, wait_for_state
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'fleet_apps_management', 'class': 'CatalogItem'})
 @cli_util.wrap_exceptions
-def create_catalog_item_catalog_marketplace_source_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_type, description, display_name, package_type, version_description, short_description, time_released, listing_id, listing_version, freeform_tags, defined_tags, catalog_source_payload_working_directory, catalog_source_payload_listing_id, catalog_source_payload_version):
+def create_catalog_item_catalog_marketplace_source_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, config_source_type, description, display_name, package_type, version_description, short_description, time_released, listing_id, listing_version, is_item_locked, freeform_tags, defined_tags, catalog_source_payload_working_directory, catalog_source_payload_listing_id, catalog_source_payload_version):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -649,6 +764,9 @@ def create_catalog_item_catalog_marketplace_source_config(ctx, from_json, wait_f
 
     if listing_version is not None:
         _details['listingVersion'] = listing_version
+
+    if is_item_locked is not None:
+        _details['isItemLocked'] = is_item_locked
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -780,6 +898,28 @@ def get_catalog_item(ctx, from_json, catalog_item_id):
     cli_util.render_response(result, ctx)
 
 
+@catalog_item_variables_definition_group.command(name=cli_util.override('fleet_apps_management_catalog.get_catalog_item_variables_definition.command_name', 'get'), help=u"""Gets information about a CatalogItem Variables. \n[Command Reference](getCatalogItemVariablesDefinition)""")
+@cli_util.option('--catalog-item-id', required=True, help=u"""The [OCID] of the CatalogItem.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'CatalogItemVariablesDefinition'})
+@cli_util.wrap_exceptions
+def get_catalog_item_variables_definition(ctx, from_json, catalog_item_id):
+
+    if isinstance(catalog_item_id, six.string_types) and len(catalog_item_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-item-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('fleet_apps_management', 'fleet_apps_management_catalog', ctx)
+    result = client.get_catalog_item_variables_definition(
+        catalog_item_id=catalog_item_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @catalog_item_collection_group.command(name=cli_util.override('fleet_apps_management_catalog.list_catalog_items.command_name', 'list-catalog-items'), help=u"""Gets a list of Catalog Items in a compartment. \n[Command Reference](listCatalogItems)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--config-source-type', help=u"""The [ConfigSourceType] Eg: STACK_TEMPLATE_CATALOG_SOURCE, PAR_CATALOG_SOURCE, URL_CATALOG_SOURCE, MARKETPLACE_CATALOG_SOURCE.""")
@@ -791,6 +931,7 @@ def get_catalog_item(ctx, from_json, catalog_item_id):
 @cli_util.option('--page', help=u"""A token representing the position at which to start retrieving results. This must come from the `opc-next-page` header field of a previous response.""")
 @cli_util.option('--catalog-listing-id', help=u"""catalogListingId of the package. This is an integer whose min and max length are specified.""")
 @cli_util.option('--catalog-listing-version-criteria', type=custom_types.CliCaseInsensitiveChoice(["LIST_ALL_VERSIONS", "LIST_EARLIEST_VERSION_ONLY", "LIST_LATEST_VERSION_ONLY"]), help=u"""Parameter to list all catalog items only with latest version or list all catalog items with all versions.""")
+@cli_util.option('--package-type', type=custom_types.CliCaseInsensitiveChoice(["TF_PACKAGE", "NON_TF_PACKAGE", "CONFIG_FILE"]), help=u"""A filter to return only resources that match the given package type. The state value is case-insensitive.""")
 @cli_util.option('--should-list-public-items', type=click.BOOL, help=u"""The indicator to append Public Items from the root compartment to any query, when set to TRUE.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -799,7 +940,7 @@ def get_catalog_item(ctx, from_json, catalog_item_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'fleet_apps_management', 'class': 'CatalogItemCollection'})
 @cli_util.wrap_exceptions
-def list_catalog_items(ctx, from_json, all_pages, page_size, compartment_id, config_source_type, lifecycle_state, sort_order, sort_by, display_name, limit, page, catalog_listing_id, catalog_listing_version_criteria, should_list_public_items):
+def list_catalog_items(ctx, from_json, all_pages, page_size, compartment_id, config_source_type, lifecycle_state, sort_order, sort_by, display_name, limit, page, catalog_listing_id, catalog_listing_version_criteria, package_type, should_list_public_items):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -823,6 +964,8 @@ def list_catalog_items(ctx, from_json, all_pages, page_size, compartment_id, con
         kwargs['catalog_listing_id'] = catalog_listing_id
     if catalog_listing_version_criteria is not None:
         kwargs['catalog_listing_version_criteria'] = catalog_listing_version_criteria
+    if package_type is not None:
+        kwargs['package_type'] = package_type
     if should_list_public_items is not None:
         kwargs['should_list_public_items'] = should_list_public_items
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -858,6 +1001,7 @@ def list_catalog_items(ctx, from_json, all_pages, page_size, compartment_id, con
 @cli_util.option('--version-description', help=u"""Version description about the catalog item.""")
 @cli_util.option('--short-description', help=u"""Short description about the catalog item.""")
 @cli_util.option('--display-name', help=u"""The CatalogItem name.""")
+@cli_util.option('--is-item-locked', type=click.BOOL, help=u"""Indicates if the CatalogItem is immutable or not.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -870,7 +1014,7 @@ def list_catalog_items(ctx, from_json, all_pages, page_size, compartment_id, con
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'fleet_apps_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_catalog_item(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_item_id, description, version_description, short_description, display_name, freeform_tags, defined_tags, if_match):
+def update_catalog_item(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_item_id, description, version_description, short_description, display_name, is_item_locked, freeform_tags, defined_tags, if_match):
 
     if isinstance(catalog_item_id, six.string_types) and len(catalog_item_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-item-id cannot be whitespace or empty string')
@@ -897,6 +1041,9 @@ def update_catalog_item(ctx, from_json, force, wait_for_state, max_wait_seconds,
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if is_item_locked is not None:
+        _details['isItemLocked'] = is_item_locked
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

@@ -28,17 +28,43 @@ def generative_ai_root_group():
     pass
 
 
+@click.command(cli_util.override('generative_ai.endpoint_collection_group.command_name', 'endpoint-collection'), cls=CommandGroupWithAlias, help="""Results of an endpoint search. Contains EndpointSummary items and other information such as metadata.""")
+@cli_util.help_option_group
+def endpoint_collection_group():
+    pass
+
+
+@click.command(cli_util.override('generative_ai.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""The log message from performing an operation that is tracked by this work request.""")
+@cli_util.help_option_group
+def work_request_log_entry_group():
+    pass
+
+
+@click.command(cli_util.override('generative_ai.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An asynchronous work request. When you start a long-running operation, the service creates a work request. Work requests help you monitor long-running operations.
+
+A work request is an activity log that lets you track each step in the operation's progress. Each work request has an OCID that lets you interact with it programmatically and use it for automation.""")
+@cli_util.help_option_group
+def work_request_group():
+    pass
+
+
+@click.command(cli_util.override('generative_ai.model_collection_group.command_name', 'model-collection'), cls=CommandGroupWithAlias, help="""Results of a model search. Contains ModelSummary items and other information such as metadata.""")
+@cli_util.help_option_group
+def model_collection_group():
+    pass
+
+
+@click.command(cli_util.override('generative_ai.generative_ai_private_endpoint_group.command_name', 'generative-ai-private-endpoint'), cls=CommandGroupWithAlias, help="""Generative AI private endpoint.""")
+@cli_util.help_option_group
+def generative_ai_private_endpoint_group():
+    pass
+
+
 @click.command(cli_util.override('generative_ai.endpoint_group.command_name', 'endpoint'), cls=CommandGroupWithAlias, help="""To host a custom model for inference, create an endpoint for that model on a dedicated AI cluster of type HOSTING.
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator who gives OCI resource access to users. See [Getting Started with Policies] and [Getting Access to Generative AI Resources].""")
 @cli_util.help_option_group
 def endpoint_group():
-    pass
-
-
-@click.command(cli_util.override('generative_ai.endpoint_collection_group.command_name', 'endpoint-collection'), cls=CommandGroupWithAlias, help="""Results of an endpoint search. Contains EndpointSummary items and other information such as metadata.""")
-@cli_util.help_option_group
-def endpoint_collection_group():
     pass
 
 
@@ -56,12 +82,6 @@ def model_group():
     pass
 
 
-@click.command(cli_util.override('generative_ai.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""The log message from performing an operation that is tracked by this work request.""")
-@cli_util.help_option_group
-def work_request_log_entry_group():
-    pass
-
-
 @click.command(cli_util.override('generative_ai.dedicated_ai_cluster_collection_group.command_name', 'dedicated-ai-cluster-collection'), cls=CommandGroupWithAlias, help="""Results of a dedicate AI cluster search. Contains  DedicatedAiClusterSummary items and other information such as metadata.""")
 @cli_util.help_option_group
 def dedicated_ai_cluster_collection_group():
@@ -76,43 +96,39 @@ def dedicated_ai_cluster_group():
     pass
 
 
-@click.command(cli_util.override('generative_ai.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An asynchronous work request. When you start a long-running operation, the service creates a work request. Work requests help you monitor long-running operations.
-
-A work request is an activity log that lets you track each step in the operation's progress. Each work request has an OCID that lets you interact with it programmatically and use it for automation.""")
-@cli_util.help_option_group
-def work_request_group():
-    pass
-
-
 @click.command(cli_util.override('generative_ai.generative_ai_private_endpoint_collection_group.command_name', 'generative-ai-private-endpoint-collection'), cls=CommandGroupWithAlias, help="""Collection of GenerativeAiPrivateEndpointSummary""")
 @cli_util.help_option_group
 def generative_ai_private_endpoint_collection_group():
     pass
 
 
-@click.command(cli_util.override('generative_ai.model_collection_group.command_name', 'model-collection'), cls=CommandGroupWithAlias, help="""Results of a model search. Contains ModelSummary items and other information such as metadata.""")
+@click.command(cli_util.override('generative_ai.imported_model_collection_group.command_name', 'imported-model-collection'), cls=CommandGroupWithAlias, help="""Represents the result of a list operation for imported models.""")
 @cli_util.help_option_group
-def model_collection_group():
+def imported_model_collection_group():
     pass
 
 
-@click.command(cli_util.override('generative_ai.generative_ai_private_endpoint_group.command_name', 'generative-ai-private-endpoint'), cls=CommandGroupWithAlias, help="""Generative AI private endpoint.""")
+@click.command(cli_util.override('generative_ai.imported_model_group.command_name', 'imported-model'), cls=CommandGroupWithAlias, help="""Represents a model imported into the system based on an external data source, such as Hugging Face or Object Storage.
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator who gives OCI resource access to users. See [Getting Started with Policies] and [Getting Access to Generative AI Resources].""")
 @cli_util.help_option_group
-def generative_ai_private_endpoint_group():
+def imported_model_group():
     pass
 
 
-generative_ai_root_group.add_command(endpoint_group)
 generative_ai_root_group.add_command(endpoint_collection_group)
-generative_ai_root_group.add_command(work_request_error_group)
-generative_ai_root_group.add_command(model_group)
 generative_ai_root_group.add_command(work_request_log_entry_group)
-generative_ai_root_group.add_command(dedicated_ai_cluster_collection_group)
-generative_ai_root_group.add_command(dedicated_ai_cluster_group)
 generative_ai_root_group.add_command(work_request_group)
-generative_ai_root_group.add_command(generative_ai_private_endpoint_collection_group)
 generative_ai_root_group.add_command(model_collection_group)
 generative_ai_root_group.add_command(generative_ai_private_endpoint_group)
+generative_ai_root_group.add_command(endpoint_group)
+generative_ai_root_group.add_command(work_request_error_group)
+generative_ai_root_group.add_command(model_group)
+generative_ai_root_group.add_command(dedicated_ai_cluster_collection_group)
+generative_ai_root_group.add_command(dedicated_ai_cluster_group)
+generative_ai_root_group.add_command(generative_ai_private_endpoint_collection_group)
+generative_ai_root_group.add_command(imported_model_collection_group)
+generative_ai_root_group.add_command(imported_model_group)
 
 
 @dedicated_ai_cluster_group.command(name=cli_util.override('generative_ai.change_dedicated_ai_cluster_compartment.command_name', 'change-compartment'), help=u"""Moves a dedicated AI cluster into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeDedicatedAiClusterCompartment)""")
@@ -238,6 +254,37 @@ def change_generative_ai_private_endpoint_compartment(ctx, from_json, wait_for_s
     cli_util.render_response(result, ctx)
 
 
+@imported_model_group.command(name=cli_util.override('generative_ai.change_imported_model_compartment.command_name', 'change-compartment'), help=u"""Moves an imported model into a different compartment. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeImportedModelCompartment)""")
+@cli_util.option('--imported-model-id', required=True, help=u"""The importedModel OCID""")
+@cli_util.option('--compartment-id', required=True, help=u"""The destination compartment OCID""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_imported_model_compartment(ctx, from_json, imported_model_id, compartment_id, if_match):
+
+    if isinstance(imported_model_id, six.string_types) and len(imported_model_id.strip()) == 0:
+        raise click.UsageError('Parameter --imported-model-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.change_imported_model_compartment(
+        imported_model_id=imported_model_id,
+        change_imported_model_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @model_group.command(name=cli_util.override('generative_ai.change_model_compartment.command_name', 'change-compartment'), help=u"""Moves a custom model into a different compartment. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeModelCompartment)""")
 @cli_util.option('--model-id', required=True, help=u"""The model OCID""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID to create the model in.""")
@@ -277,7 +324,9 @@ Allowed values are: - HOSTING - FINE_TUNING""")
 @cli_util.option('--unit-count', required=True, type=click.INT, help=u"""The number of dedicated units in this AI cluster.""")
 @cli_util.option('--unit-shape', required=True, help=u"""The shape of dedicated unit in this AI cluster. The underlying hardware configuration is hidden from customers.
 
-Allowed values are: - LARGE_COHERE - LARGE_COHERE_V2 - SMALL_COHERE - SMALL_COHERE_V2 - SMALL_COHERE_4 - EMBED_COHERE - LLAMA2_70 - LARGE_GENERIC - LARGE_COHERE_V2_2 - LARGE_GENERIC_4 - SMALL_GENERIC_V2 - LARGE_GENERIC_2 - LARGE_COHERE_V3 - RERANK_COHERE - SMALL_GENERIC_V1 - MEDIUM_GENERIC_V1 - LARGE_GENERIC_V1""")
+Allowed values are: - LARGE_COHERE - LARGE_COHERE_V2 - SMALL_COHERE - SMALL_COHERE_V2 - SMALL_COHERE_4 - EMBED_COHERE - LLAMA2_70 - LARGE_GENERIC - LARGE_COHERE_V2_2 - LARGE_GENERIC_4 - SMALL_GENERIC_V2 - LARGE_GENERIC_2 - LARGE_COHERE_V3 - RERANK_COHERE - SMALL_GENERIC_V1 - MEDIUM_GENERIC_V1 - LARGE_GENERIC_V1 - A10_X1 - A10_X2 - A10_X4 - A100_40G_X1 - A100_40G_X2 - A100_40G_X4 - A100_40G_X8 - A100_80G_X1 - A100_80G_X2 - A100_80G_X4 - A100_80G_X8 - H100_X1 - H100_X2 - H100_X4 - H100_X8 - H200_X1 - H200_X2 - H200_X4 - H200_X8
+
+The following shapes can only be used to deploy imported models: - A10_X1, A10_X2, A10_X4 - A100_40G_X1, A100_40G_X2, A100_40G_X4, A100_40G_X8 - A100_80G_X1, A100_80G_X2, A100_80G_X4, A100_80G_X8 - H100_X1, H100_X2, H100_X4, H100_X8 - H200_X1, H200_X2, H200_X4, H200_X8""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--description', help=u"""An optional description of the dedicated AI cluster.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -488,6 +537,299 @@ def create_generative_ai_private_endpoint(ctx, from_json, wait_for_state, max_wa
     client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
     result = client.create_generative_ai_private_endpoint(
         create_generative_ai_private_endpoint_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@imported_model_group.command(name=cli_util.override('generative_ai.create_imported_model.command_name', 'create'), help=u"""Import a model from ModelDataSource.
+
+The header contains an opc-work-request-id, which is the id for the WorkRequest that tracks the importedModel creation progress. \n[Command Reference](createImportedModel)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID from which the model is imported.""")
+@cli_util.option('--data-source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name for the imported model.""")
+@cli_util.option('--description', help=u"""An optional description of the imported model.""")
+@cli_util.option('--vendor', help=u"""The provider of the imported model.""")
+@cli_util.option('--version-parameterconflict', help=u"""The version of the imported model.""")
+@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK"]), help=u"""Specifies the intended use or supported capabilities of the imported model.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'data-source': {'module': 'generative_ai', 'class': 'ModelDataSource'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'data-source': {'module': 'generative_ai', 'class': 'ModelDataSource'}, 'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'ImportedModel'})
+@cli_util.wrap_exceptions
+def create_imported_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, data_source, display_name, description, vendor, version_parameterconflict, capabilities, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['dataSource'] = cli_util.parse_json_parameter("data_source", data_source)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if vendor is not None:
+        _details['vendor'] = vendor
+
+    if version_parameterconflict is not None:
+        _details['version'] = version_parameterconflict
+
+    if capabilities is not None:
+        _details['capabilities'] = cli_util.parse_json_parameter("capabilities", capabilities)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.create_imported_model(
+        create_imported_model_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@imported_model_group.command(name=cli_util.override('generative_ai.create_imported_model_object_storage_object.command_name', 'create-imported-model-object-storage-object'), help=u"""Import a model from ModelDataSource.
+
+The header contains an opc-work-request-id, which is the id for the WorkRequest that tracks the importedModel creation progress. \n[Command Reference](createImportedModel)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID from which the model is imported.""")
+@cli_util.option('--data-source-namespace-name', required=True, help=u"""The namespace of the Object Storage where the files are stored.""")
+@cli_util.option('--data-source-bucket-name', required=True, help=u"""The name of the Object Storage bucket.""")
+@cli_util.option('--data-source-prefix-name', required=True, help=u"""The prefix path (or folder) within the bucket where files are located.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the imported model.""")
+@cli_util.option('--description', help=u"""An optional description of the imported model.""")
+@cli_util.option('--vendor', help=u"""The provider of the imported model.""")
+@cli_util.option('--version-parameterconflict', help=u"""The version of the imported model.""")
+@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK"]), help=u"""Specifies the intended use or supported capabilities of the imported model.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-source-region', help=u"""The full canonical Oracle Cloud region identifier (e.g., \"us-ashburn-1\") where the object storage bucket containing the files resides.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'ImportedModel'})
+@cli_util.wrap_exceptions
+def create_imported_model_object_storage_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, data_source_namespace_name, data_source_bucket_name, data_source_prefix_name, display_name, description, vendor, version_parameterconflict, capabilities, freeform_tags, defined_tags, data_source_region):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataSource'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['dataSource']['namespaceName'] = data_source_namespace_name
+    _details['dataSource']['bucketName'] = data_source_bucket_name
+    _details['dataSource']['prefixName'] = data_source_prefix_name
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if vendor is not None:
+        _details['vendor'] = vendor
+
+    if version_parameterconflict is not None:
+        _details['version'] = version_parameterconflict
+
+    if capabilities is not None:
+        _details['capabilities'] = cli_util.parse_json_parameter("capabilities", capabilities)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if data_source_region is not None:
+        _details['dataSource']['region'] = data_source_region
+
+    _details['dataSource']['sourceType'] = 'OBJECT_STORAGE_OBJECT'
+
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.create_imported_model(
+        create_imported_model_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@imported_model_group.command(name=cli_util.override('generative_ai.create_imported_model_hugging_face_model.command_name', 'create-imported-model-hugging-face-model'), help=u"""Import a model from ModelDataSource.
+
+The header contains an opc-work-request-id, which is the id for the WorkRequest that tracks the importedModel creation progress. \n[Command Reference](createImportedModel)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID from which the model is imported.""")
+@cli_util.option('--data-source-model-id', required=True, help=u"""The full model OCID from Hugging Face, typically in the format \"org/model-name\" (e.g., \"meta-llama/Llama-2-7b\").""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the imported model.""")
+@cli_util.option('--description', help=u"""An optional description of the imported model.""")
+@cli_util.option('--vendor', help=u"""The provider of the imported model.""")
+@cli_util.option('--version-parameterconflict', help=u"""The version of the imported model.""")
+@cli_util.option('--capabilities', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK"]), help=u"""Specifies the intended use or supported capabilities of the imported model.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--data-source-access-token', help=u"""Hugging Face access token to authenticate requests for restricted models. This token will be securely stored in OCI Vault.""")
+@cli_util.option('--data-source-branch', help=u"""The name of the branch in the Hugging Face repository to import the model from. If not specified, \"main\" will be used by default. If you provide both a branch and a commit hash, the model will be imported from the specified commit.""")
+@cli_util.option('--data-source-commit', help=u"""The commit hash in the Hugging Face repository to import the model from. If both a branch and a commit are provided, the commit hash will be used.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'ImportedModel'})
+@cli_util.wrap_exceptions
+def create_imported_model_hugging_face_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, data_source_model_id, display_name, description, vendor, version_parameterconflict, capabilities, freeform_tags, defined_tags, data_source_access_token, data_source_branch, data_source_commit):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['dataSource'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['dataSource']['modelId'] = data_source_model_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if vendor is not None:
+        _details['vendor'] = vendor
+
+    if version_parameterconflict is not None:
+        _details['version'] = version_parameterconflict
+
+    if capabilities is not None:
+        _details['capabilities'] = cli_util.parse_json_parameter("capabilities", capabilities)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if data_source_access_token is not None:
+        _details['dataSource']['accessToken'] = data_source_access_token
+
+    if data_source_branch is not None:
+        _details['dataSource']['branch'] = data_source_branch
+
+    if data_source_commit is not None:
+        _details['dataSource']['commit'] = data_source_commit
+
+    _details['dataSource']['sourceType'] = 'HUGGING_FACE_MODEL'
+
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.create_imported_model(
+        create_imported_model_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -777,6 +1119,62 @@ def delete_generative_ai_private_endpoint(ctx, from_json, wait_for_state, max_wa
     cli_util.render_response(result, ctx)
 
 
+@imported_model_group.command(name=cli_util.override('generative_ai.delete_imported_model.command_name', 'delete'), help=u"""Deletes an imported model. An imported model shouldn't be deleted if there's one or more active endpoints associated with that imported model. \n[Command Reference](deleteImportedModel)""")
+@cli_util.option('--imported-model-id', required=True, help=u"""The importedModel OCID""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_imported_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, imported_model_id, if_match):
+
+    if isinstance(imported_model_id, six.string_types) and len(imported_model_id.strip()) == 0:
+        raise click.UsageError('Parameter --imported-model-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.delete_imported_model(
+        imported_model_id=imported_model_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @model_group.command(name=cli_util.override('generative_ai.delete_model.command_name', 'delete'), help=u"""Deletes a custom model. A model shouldn't be deleted if there's one or more active endpoints associated with that model. \n[Command Reference](deleteModel)""")
 @cli_util.option('--model-id', required=True, help=u"""The model OCID""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -894,6 +1292,28 @@ def get_generative_ai_private_endpoint(ctx, from_json, generative_ai_private_end
     client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
     result = client.get_generative_ai_private_endpoint(
         generative_ai_private_endpoint_id=generative_ai_private_endpoint_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@imported_model_group.command(name=cli_util.override('generative_ai.get_imported_model.command_name', 'get'), help=u"""Gets information about an imported model. \n[Command Reference](getImportedModel)""")
+@cli_util.option('--imported-model-id', required=True, help=u"""The importedModel OCID""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'generative_ai', 'class': 'ImportedModel'})
+@cli_util.wrap_exceptions
+def get_imported_model(ctx, from_json, imported_model_id):
+
+    if isinstance(imported_model_id, six.string_types) and len(imported_model_id.strip()) == 0:
+        raise click.UsageError('Parameter --imported-model-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.get_imported_model(
+        imported_model_id=imported_model_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1135,10 +1555,79 @@ def list_generative_ai_private_endpoints(ctx, from_json, all_pages, page_size, c
     cli_util.render_response(result, ctx)
 
 
+@imported_model_collection_group.command(name=cli_util.override('generative_ai.list_imported_models.command_name', 'list-imported-models'), help=u"""Lists imported models in a specific compartment. \n[Command Reference](listImportedModels)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
+@cli_util.option('--vendor', help=u"""A filter to return only resources that match the entire vendor given.""")
+@cli_util.option('--capability', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK"]), multiple=True, help=u"""A filter to return only resources their capability matches the given capability.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--id', help=u"""The ID of the importedModel.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'ASC' or 'DESC'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "lifecycleState", "timeCreated"]), help=u"""The field to sort by. You can provide only one sort order. Default order for `timeCreated` is descending.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'generative_ai', 'class': 'ImportedModelCollection'})
+@cli_util.wrap_exceptions
+def list_imported_models(ctx, from_json, all_pages, page_size, compartment_id, vendor, capability, lifecycle_state, display_name, id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if vendor is not None:
+        kwargs['vendor'] = vendor
+    if capability is not None and len(capability) > 0:
+        kwargs['capability'] = capability
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_imported_models,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_imported_models,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_imported_models(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @model_collection_group.command(name=cli_util.override('generative_ai.list_models.command_name', 'list-models'), help=u"""Lists the models in a specific compartment. Includes pretrained base models and fine-tuned custom models. \n[Command Reference](listModels)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to list resources.""")
 @cli_util.option('--vendor', help=u"""A filter to return only resources that match the entire vendor given.""")
-@cli_util.option('--capability', type=custom_types.CliCaseInsensitiveChoice(["TEXT_GENERATION", "TEXT_SUMMARIZATION", "TEXT_EMBEDDINGS", "FINE_TUNE", "CHAT", "TEXT_RERANK"]), multiple=True, help=u"""A filter to return only resources their capability matches the given capability.""")
+@cli_util.option('--capability', type=custom_types.CliCaseInsensitiveChoice(["TEXT_TO_TEXT", "IMAGE_TEXT_TO_TEXT", "EMBEDDING", "RERANK"]), multiple=True, help=u"""A filter to return only resources their capability matches the given capability.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources their lifecycleState matches the given lifecycleState.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--id', help=u"""The ID of the model.""")
@@ -1621,6 +2110,98 @@ def update_generative_ai_private_endpoint(ctx, from_json, force, wait_for_state,
     result = client.update_generative_ai_private_endpoint(
         generative_ai_private_endpoint_id=generative_ai_private_endpoint_id,
         update_generative_ai_private_endpoint_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@imported_model_group.command(name=cli_util.override('generative_ai.update_imported_model.command_name', 'update'), help=u"""Updates the properties of an imported model such as name, description, freeform tags, and defined tags. \n[Command Reference](updateImportedModel)""")
+@cli_util.option('--imported-model-id', required=True, help=u"""The importedModel OCID""")
+@cli_util.option('--display-name', help=u"""A user-friendly name.""")
+@cli_util.option('--description', help=u"""An optional description of the imported model.""")
+@cli_util.option('--vendor', help=u"""The provider of the imported model.""")
+@cli_util.option('--version-parameterconflict', help=u"""The version of the imported model.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'generative_ai', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'generative_ai', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'generative_ai', 'class': 'ImportedModel'})
+@cli_util.wrap_exceptions
+def update_imported_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, imported_model_id, display_name, description, vendor, version_parameterconflict, freeform_tags, defined_tags, if_match):
+
+    if isinstance(imported_model_id, six.string_types) and len(imported_model_id.strip()) == 0:
+        raise click.UsageError('Parameter --imported-model-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if vendor is not None:
+        _details['vendor'] = vendor
+
+    if version_parameterconflict is not None:
+        _details['version'] = version_parameterconflict
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('generative_ai', 'generative_ai', ctx)
+    result = client.update_imported_model(
+        imported_model_id=imported_model_id,
+        update_imported_model_details=_details,
         **kwargs
     )
     if wait_for_state:

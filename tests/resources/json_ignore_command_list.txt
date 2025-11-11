@@ -558,4 +558,14 @@ fn, function, update
 integration, integration-instance, create
 integration, integration-instance, update
 goldengate, connection, create-oracle-ai-data-platform-connection
-goldengate, connection, update-oracle-ai-data-platform-connectionidentity-domains, social-identity-provider, search
+goldengate, connection, update-oracle-ai-data-platform-connection
+generative-ai, imported-model, create
+generative-ai, imported-model, create-imported-model-hugging-face-model
+generative-ai, imported-model, create-imported-model-object-storage-object
+identity-domains, social-identity-provider, search
+generative-ai, imported-model, create-from-huggingface
+generative-ai, imported-model, create-from-objectstorage
+dif, stack, add
+dif, stack, create
+dif, stack, deploy-artifacts
+dif, stack, update
