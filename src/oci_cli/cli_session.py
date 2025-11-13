@@ -45,13 +45,81 @@ def session_group():
 @click.option('--profile-name', help='Name of the profile you are creating')
 @click.option('--config-location', help='Path to the config for the new session')
 @click.option('--use-passphrase', is_flag=True, help='Provide a passphrase to be used to encrypt the private key from the generated key pair')
+@click.option('--regions', help='Comma-separated list of regions to authenticate; may span realms')
 @cli_util.help_option
 @click.pass_context
 @cli_util.wrap_exceptions
-def authenticate(ctx, region, tenancy_name, profile_name, config_location, use_passphrase, no_browser, public_key_file_path, session_expiration_in_minutes, token_location):
+def authenticate(ctx, region, tenancy_name, profile_name, config_location, use_passphrase, no_browser, public_key_file_path, session_expiration_in_minutes, token_location, regions):
     region = ctx.obj['region']
-    if region is None:
+    if region is None and regions is None:
         region = cli_setup.prompt_for_region()
+    # Multi-realm concurrent browser authentication if --regions provided (and not --no-browser)
+    if (not no_browser) and regions:
+        # Parse and normalize regions
+        raw_regions = [r.strip() for r in regions.split(',') if r.strip()]
+        if not raw_regions:
+            click.echo('ERROR: --regions provided but no regions parsed', file=sys.stderr)
+            sys.exit(1)
+
+        normalized_regions = []
+        for r in raw_regions:
+            if r in oci.regions.REGIONS_SHORT_NAMES:
+                r = oci.regions.REGIONS_SHORT_NAMES[r]
+            if not oci.regions.is_region(r):
+                click.echo("Error: {} is not a valid region. Valid regions are \n{}".format(r, oci.regions.REGIONS), file=sys.stderr)
+                sys.exit(1)
+            normalized_regions.append(r)
+
+        # Group regions by realm
+        regions_by_realm = {}
+        for r in normalized_regions:
+            realm_code = oci.regions.REGION_REALMS[r]
+            regions_by_realm.setdefault(realm_code, []).append(r)
+
+        # Choose a primary region per realm (first in list)
+        realm_to_primary_region = {realm: rlist[0] for realm, rlist in regions_by_realm.items()}
+
+        # Drive concurrent multi-realm auth; returns tokens mapped by realm
+        public_key, private_key, fingerprint, tokens_by_realm = cli_setup_bootstrap.create_user_sessions_multi_realm(
+            realm_to_primary_region, tenancy_name
+        )
+
+        written_profiles = []
+        config_path = os.path.expanduser(config_location) if config_location else None
+
+        # Persist a per-region profile for each realm using the realm's token
+        for realm_code, token in tokens_by_realm.items():
+            # Parse user and tenancy from token
+            stc = oci.auth.security_token_container.SecurityTokenContainer(None, security_token=token)
+            token_data = stc.get_jwt()
+            user_ocid = token_data['sub']
+            tenancy_ocid = token_data['tenant']
+
+            for r in regions_by_realm.get(realm_code, []):
+                session = cli_setup_bootstrap.UserSession(user_ocid, tenancy_ocid, r, token, public_key, private_key, fingerprint)
+                _, config_path = cli_setup_bootstrap.persist_user_session(
+                    session,
+                    profile_name=realm_code.upper(),
+                    config=config_location,
+                    use_passphrase=use_passphrase,
+                    persist_token=True,
+                    session_auth=True,
+                    persist_only_public_key=False
+                )
+                written_profiles.append((r, config_path))
+
+        # Output summary and example usage
+        if written_profiles:
+            click.echo('Config written to: {}'.format(written_profiles[0][1]))
+            created = ', '.join([p for p, _ in written_profiles])
+            click.echo('Created profiles: {}'.format(created))
+            click.echo("""
+    Try out your newly created session credentials with the following example command:
+
+    oci iam region list --config-file {config_file} --profile {profile} --auth {auth}
+""".format(config_file=written_profiles[0][1], profile=written_profiles[0][0], auth=cli_constants.OCI_CLI_AUTH_SESSION_TOKEN))
+        return
+
     persist_only_public_key = False
     if no_browser:
         if int(session_expiration_in_minutes) > int(cli_constants.OCI_CLI_UPST_TOKEN_MAX_TTL):
