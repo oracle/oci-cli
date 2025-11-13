@@ -18,6 +18,7 @@ import os
 import sys
 import uuid
 import webbrowser
+import time
 from oci import identity
 
 from urllib.parse import urlparse, parse_qs, urlencode
@@ -198,6 +199,124 @@ def create_user_session(region='', tenancy_name=None):
     return UserSession(user_ocid, tenancy_ocid, region, token, public_key, private_key, fingerprint)
 
 
+def create_user_sessions_multi_realm(realm_to_primary_region, tenancy_name=None, timeout_seconds=600):
+    """
+    Concurrent multi-realm browser authentication.
+    - realm_to_primary_region: dict mapping realm code (e.g., 'oc1', 'oc8') to a primary region in that realm.
+    - tenancy_name: optional tenancy short name to pass to Console for login scoping.
+    - timeout_seconds: total time to wait for all realm callbacks.
+    Returns: (public_key, private_key, fingerprint, tokens_by_realm) where tokens_by_realm maps realm code -> UPST token.
+    """
+    # try to set up http server so we can fail early if the required port is in use
+    try:
+        server_address = ("", BOOTSTRAP_SERVICE_PORT)
+        httpd = StoppableHttpServer(server_address, StoppableHttpRequestHandler)
+    except OSError as e:
+        if e.errno == errno.EADDRINUSE:
+            click.echo(
+                "Could not complete bootstrap process because port {port} is already in use.".format(
+                    port=BOOTSTRAP_SERVICE_PORT
+                )
+            )
+            sys.exit(1)
+        raise e
+
+    # Generate single RSA keypair and fingerprint (reused for all realms)
+    private_key = cli_util.generate_key()
+    public_key = private_key.public_key()
+    fingerprint = cli_setup.public_key_to_fingerprint(public_key)
+
+    # Build base64url JWK for public key
+    jwk_content = cli_util.to_jwk(public_key)
+    bytes_jwk_content = jwk_content.encode("UTF-8")
+    public_key_jwk = base64.urlsafe_b64encode(bytes_jwk_content).decode("UTF-8")
+
+    # Prime the server for multi-realm collection
+    expected_realms = set(realm_to_primary_region.keys())
+    httpd.expected_realms = expected_realms
+    httpd.tokens_by_realm = {}
+    # Make handle_request return periodically so we can enforce overall timeout
+    httpd.timeout = 1
+    httpd.deadline = time.time() + timeout_seconds
+
+    # Open one authorize URL per realm (concurrently, i.e., back-to-back)
+    for realm_code, primary_region in realm_to_primary_region.items():
+        region = primary_region
+        if region in regions.REGIONS_SHORT_NAMES:
+            region = regions.REGIONS_SHORT_NAMES[region]
+
+        if regions.is_region(region):
+            console_url = CONSOLE_AUTH_URL_FORMAT.format(
+                region=region, realm=regions.REALMS[regions.REGION_REALMS[region]]
+            )
+        else:
+            click.echo(
+                "Error: {} is not a valid region. Valid regions are \n{}".format(
+                    region, regions.REGIONS
+                )
+            )
+            sys.exit(1)
+
+        query = {
+            "action": "login",
+            "client_id": "iaas_console",
+            "response_type": "token id_token",
+            "nonce": uuid.uuid4(),
+            "scope": "openid",
+            "public_key": public_key_jwk,
+            "redirect_uri": "http://localhost:{}".format(BOOTSTRAP_SERVICE_PORT),
+        }
+        if tenancy_name:
+            query["tenant"] = tenancy_name
+
+        url = "{console_auth_url}?{query_string}".format(
+            console_auth_url=console_url, query_string=urlencode(query)
+        )
+
+        # attempt to open browser to console log in page
+        try:
+            if webbrowser.open_new(url):
+                click.echo(
+                    "    Opened login for realm {realm} (primary region {region}).".format(
+                        realm=realm_code, region=primary_region
+                    )
+                )
+                click.echo(
+                    "    If the browser didn't open, copy/paste this URL:\n{url}".format(
+                        url=url
+                    )
+                )
+            else:
+                click.echo(
+                    "    Open this URL in a browser to authenticate realm {realm}:\n{url}".format(
+                        realm=realm_code, url=url
+                    )
+                )
+        except webbrowser.Error as e:
+            click.echo(
+                "Could not launch web browser to complete login process. Error: {exc}".format(
+                    exc=str(e)
+                )
+            )
+            sys.exit(1)
+
+    # Collect callbacks until complete or timeout
+    tokens_by_realm = httpd.serve_forever()
+
+    # If timed out or incomplete, error out
+    missing = set(expected_realms) - set(tokens_by_realm.keys())
+    if missing:
+        click.echo(
+            "Timeout or missing authentication for realms: {missing}".format(
+                missing=", ".join(sorted(missing))
+            ),
+            err=True,
+        )
+        sys.exit(1)
+
+    return public_key, private_key, fingerprint, tokens_by_realm
+
+
 def persist_user_session(user_session, profile_name=None, config=None, use_passphrase=False, persist_token=False, bootstrap=False, session_auth=False, persist_only_public_key=False):
     if not profile_name:
         # prompt for location of user config
@@ -305,26 +424,67 @@ class StoppableHttpRequestHandler (BaseHTTPRequestHandler):
                 self.wfile.write(bytes(javascript, 'UTF-8'))
         else:
             query_components = parse_qs(urlparse(self.path).query)
-            if 'security_token' in query_components:
-                security_token = query_components['security_token'][0]
-                self.server.ret_value = security_token
-                self.server.stop = True
+            if "security_token" in query_components:
+                security_token = query_components["security_token"][0]
+                # Multi-realm mode: if expected_realms is set, decode token and derive realm from tenancy OCID
+                if hasattr(self.server, "expected_realms") and self.server.expected_realms:
+                    try:
+                        stc = oci.auth.security_token_container.SecurityTokenContainer(None, security_token)
+                        jwt_payload = stc.get_jwt()
+                        tenancy_ocid = jwt_payload.get("tenant")
+                        realm_code = None
+                        if tenancy_ocid and tenancy_ocid.startswith("ocid1.tenancy.") and len(tenancy_ocid.split(".")) >= 3:
+                            # ocid1.tenancy.ocX.. -> third segment is realm code (e.g., oc8)
+                            realm_code = tenancy_ocid.split(".")[2]
+                        if realm_code:
+                            if not hasattr(self.server, "tokens_by_realm") or self.server.tokens_by_realm is None:
+                                self.server.tokens_by_realm = {}
+                            self.server.tokens_by_realm[realm_code] = security_token
+                            # Stop when all expected realms collected
+                            if set(self.server.tokens_by_realm.keys()) >= set(self.server.expected_realms):
+                                self.server.stop = True
+                        else:
+                            # Fallback to single-token mode if we cannot derive realm
+                            self.server.ret_value = security_token
+                            self.server.stop = True
+                    except Exception:
+                        # Fallback to single-token mode on any decode error
+                        self.server.ret_value = security_token
+                        self.server.stop = True
+                else:
+                    # Single-token legacy mode
+                    self.server.ret_value = security_token
+                    self.server.stop = True
 
 
 class StoppableHttpServer (HTTPServer):
     """http server that reacts to self.stop flag"""
 
     def serve_forever(self):
-        """Handle one request at a time until stopped."""
+        """Handle one request at a time until stopped, with optional timeout and multi-realm collection."""
 
         self.stop = False
         self.ret_value = None
+        # tokens_by_realm may be primed by caller for multi-realm mode
+        if not hasattr(self, "tokens_by_realm"):
+            self.tokens_by_realm = {}
+        self.timed_out = False
 
         while not self.stop:
+            # If caller set a timeout (socketserver respects self.timeout on handle_request)
             self.handle_request()
+            # Optional overall deadline set by caller: self.deadline
+            if hasattr(self, "deadline") and self.deadline is not None:
+                if time.time() >= self.deadline:
+                    self.timed_out = True
+                    self.stop = True
+                    break
 
         self.server_close()
 
+        # Return tokens_by_realm if multi-realm mode was used, else ret_value
+        if hasattr(self, "expected_realms") and self.expected_realms:
+            return self.tokens_by_realm
         return self.ret_value
 
 
