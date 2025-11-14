@@ -252,7 +252,7 @@ if [ "$OFFLINE_INSTALL" = true ]; then
 fi
 
 if [ "${install_script}" == "" ];then
-    install_script=$(mktemp -t oci_cli_install_tmp_XXXX) || exit
+    install_script=$(mktemp -t oci_cli_install_tmp_XXXXXX) || exit
     echo "Downloading Oracle Cloud Infrastructure CLI install script from $INSTALL_SCRIPT_URL to $install_script."
     curl -# -f $INSTALL_SCRIPT_URL > $install_script
     if [ $? -ne 0 ]; then
@@ -321,7 +321,7 @@ fi
 
 if [ "$need_to_install_python" = true ]; then
     # Many docker containers won't have sudo installed since they are already run as root.
-    if command -v dnf 
+    if command -v dnf
     then
         echo "Attempting to install Python 3."
         $sudo_cmd dnf install $yum_opts python3
