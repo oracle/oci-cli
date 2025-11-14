@@ -318,7 +318,11 @@ def get_session_token_signer(client_config):
         token = security_token_file.read()
 
     try:
-        private_key = oci.signer.load_private_key_from_file(client_config.get('key_file'), client_config.get('pass_phrase'))
+        key_content = client_config.get("key_content")
+        if key_content:
+            private_key = oci.signer.load_private_key(key_content, client_config.get('pass_phrase'))
+        else:
+            private_key = oci.signer.load_private_key_from_file(client_config.get('key_file'), client_config.get('pass_phrase'))
     except exceptions.MissingPrivateKeyPassphrase:
         client_config['pass_phrase'] = prompt_for_passphrase()
         private_key = oci.signer.load_private_key_from_file(client_config.get('key_file'), client_config.get('pass_phrase'))
