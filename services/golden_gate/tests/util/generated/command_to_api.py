@@ -70,6 +70,7 @@ SDK_client_map = {
     "goldengate.list_work_request_errors": "oci.golden_gate.GoldenGateClient.list_work_request_errors",
     "goldengate.list_work_request_logs": "oci.golden_gate.GoldenGateClient.list_work_request_logs",
     "goldengate.list_work_requests": "oci.golden_gate.GoldenGateClient.list_work_requests",
+    "goldengate.pause_pipeline": "oci.golden_gate.GoldenGateClient.pause_pipeline",
     "goldengate.refresh_connection": "oci.golden_gate.GoldenGateClient.refresh_connection",
     "goldengate.remove_connection_lock": "oci.golden_gate.GoldenGateClient.remove_connection_lock",
     "goldengate.remove_deployment_backup_lock": "oci.golden_gate.GoldenGateClient.remove_deployment_backup_lock",

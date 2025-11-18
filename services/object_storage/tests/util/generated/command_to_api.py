@@ -3,6 +3,7 @@
 
 SDK_client_map = {
     "os.abort_multipart_upload": "oci.object_storage.ObjectStorageClient.abort_multipart_upload",
+    "os.batch_delete_objects": "oci.object_storage.ObjectStorageClient.batch_delete_objects",
     "os.cancel_work_request": "oci.object_storage.ObjectStorageClient.cancel_work_request",
     "os.commit_multipart_upload": "oci.object_storage.ObjectStorageClient.commit_multipart_upload",
     "os.copy_object": "oci.object_storage.ObjectStorageClient.copy_object",

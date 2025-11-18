@@ -16,7 +16,8 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('service_catalog.service_catalog_root_group.command_name', 'service-catalog'), cls=CommandGroupWithAlias, help=cli_util.override('service_catalog.service_catalog_root_group.help', """Manage solutions in Oracle Cloud Infrastructure Service Catalog."""), short_help=cli_util.override('service_catalog.service_catalog_root_group.short_help', """Service Catalog API"""))
+@cli.command(cli_util.override('service_catalog.service_catalog_root_group.command_name', 'service-catalog'), cls=CommandGroupWithAlias, help=cli_util.override('service_catalog.service_catalog_root_group.help', """Use the Service Catalog API to manage solutions in Oracle Cloud Infrastructure Service Catalog.
+For more information, see [Overview of Service Catalog]."""), short_help=cli_util.override('service_catalog.service_catalog_root_group.short_help', """Service Catalog API"""))
 @cli_util.help_option_group
 def service_catalog_root_group():
     pass
@@ -25,6 +26,12 @@ def service_catalog_root_group():
 @click.command(cli_util.override('service_catalog.service_catalog_group.command_name', 'service-catalog'), cls=CommandGroupWithAlias, help="""The model for an Oracle Cloud Infrastructure Service Catalog.""")
 @cli_util.help_option_group
 def service_catalog_group():
+    pass
+
+
+@click.command(cli_util.override('service_catalog.configuration_group.command_name', 'configuration'), cls=CommandGroupWithAlias, help="""returns the service catalog mode""")
+@cli_util.help_option_group
+def configuration_group():
     pass
 
 
@@ -71,6 +78,7 @@ def application_summary_group():
 
 
 service_catalog_root_group.add_command(service_catalog_group)
+service_catalog_root_group.add_command(configuration_group)
 service_catalog_root_group.add_command(work_request_error_group)
 service_catalog_root_group.add_command(service_catalog_association_group)
 service_catalog_root_group.add_command(private_application_group)
@@ -292,11 +300,11 @@ def create_private_application(ctx, from_json, wait_for_state, max_wait_seconds,
 @cli_util.option('--display-name', required=True, help=u"""The name of the private application.""")
 @cli_util.option('--short-description', required=True, help=u"""A short description of the private application.""")
 @cli_util.option('--package-details-version', required=True, help=u"""The package version.""")
+@cli_util.option('--package-details-zip-file-base64-encoded', required=True, help=u"""Base-64 payload of the Terraform zip package.""")
 @cli_util.option('--long-description', help=u"""A long description of the private application.""")
 @cli_util.option('--logo-file-base64-encoded', help=u"""Base64-encoded logo to use as the private application icon. Template icon file requirements: PNG format, 50 KB maximum, 130 x 130 pixels.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--package-details-zip-file-base64-encoded', help=u"""Base-64 payload of the Terraform zip package.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -305,7 +313,7 @@ def create_private_application(ctx, from_json, wait_for_state, max_wait_seconds,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'service_catalog', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'service_catalog', 'class': 'dict(str, string)'}}, output_type={'module': 'service_catalog', 'class': 'PrivateApplication'})
 @cli_util.wrap_exceptions
-def create_private_application_create_private_application_stack_package(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, short_description, package_details_version, long_description, logo_file_base64_encoded, defined_tags, freeform_tags, package_details_zip_file_base64_encoded):
+def create_private_application_create_private_application_stack_package(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, short_description, package_details_version, package_details_zip_file_base64_encoded, long_description, logo_file_base64_encoded, defined_tags, freeform_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -316,6 +324,7 @@ def create_private_application_create_private_application_stack_package(ctx, fro
     _details['displayName'] = display_name
     _details['shortDescription'] = short_description
     _details['packageDetails']['version'] = package_details_version
+    _details['packageDetails']['zipFileBase64Encoded'] = package_details_zip_file_base64_encoded
 
     if long_description is not None:
         _details['longDescription'] = long_description
@@ -328,9 +337,6 @@ def create_private_application_create_private_application_stack_package(ctx, fro
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
-
-    if package_details_zip_file_base64_encoded is not None:
-        _details['packageDetails']['zipFileBase64Encoded'] = package_details_zip_file_base64_encoded
 
     _details['packageDetails']['packageType'] = 'STACK'
 
@@ -372,6 +378,7 @@ def create_private_application_create_private_application_stack_package(ctx, fro
 @service_catalog_group.command(name=cli_util.override('service_catalog.create_service_catalog.command_name', 'create'), help=u"""Creates a brand new service catalog in a given compartment. \n[Command Reference](createServiceCatalog)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment where the service catalog will be created.""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the service catalog.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help=u"""The status of a service catalog.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -382,7 +389,7 @@ def create_private_application_create_private_application_stack_package(ctx, fro
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'service_catalog', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'service_catalog', 'class': 'dict(str, string)'}}, output_type={'module': 'service_catalog', 'class': 'ServiceCatalog'})
 @cli_util.wrap_exceptions
-def create_service_catalog(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, defined_tags, freeform_tags):
+def create_service_catalog(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, status, defined_tags, freeform_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -390,6 +397,9 @@ def create_service_catalog(ctx, from_json, wait_for_state, max_wait_seconds, wai
     _details = {}
     _details['compartmentId'] = compartment_id
     _details['displayName'] = display_name
+
+    if status is not None:
+        _details['status'] = status
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -603,6 +613,25 @@ def delete_service_catalog_association(ctx, from_json, service_catalog_associati
     cli_util.render_response(result, ctx)
 
 
+@configuration_group.command(name=cli_util.override('service_catalog.get_configuration.command_name', 'get'), help=u"""Get the detail of whether the tenancy is in service catalog mode or not. \n[Command Reference](getConfiguration)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'service_catalog', 'class': 'Configuration'})
+@cli_util.wrap_exceptions
+def get_configuration(ctx, from_json, compartment_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('service_catalog', 'service_catalog', ctx)
+    result = client.get_configuration(
+        compartment_id=compartment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @private_application_group.command(name=cli_util.override('service_catalog.get_private_application.command_name', 'get'), help=u"""Gets the details of the specified private application. \n[Command Reference](getPrivateApplication)""")
 @cli_util.option('--private-application-id', required=True, help=u"""The unique identifier for the private application.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -803,6 +832,77 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
+@application_summary_group.command(name=cli_util.override('service_catalog.list_all_applications.command_name', 'list-all-applications'), help=u"""Lists all the available listings and private applications in a compartment. A new API for catalog manager use when creating/updating a service catalog. \n[Command Reference](listAllApplications)""")
+@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--entity-type', help=u"""The type of the application in the service catalog.""")
+@cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--display-name', help=u"""Exact match name filter.""")
+@cli_util.option('--entity-id', help=u"""The unique identifier of the entity associated with service catalog.""")
+@cli_util.option('--publisher-id', multiple=True, help=u"""Limit results to just this publisher.""")
+@cli_util.option('--package-type', type=custom_types.CliCaseInsensitiveChoice(["STACK", "IMAGE"]), multiple=True, help=u"""Name of the package type. If multiple package types are provided, then any resource with one or more matching package types will be returned.""")
+@cli_util.option('--pricing', type=custom_types.CliCaseInsensitiveChoice(["FREE", "BYOL", "PAYGO"]), multiple=True, help=u"""Name of the pricing type. If multiple pricing types are provided, then any resource with one or more matching pricing models will be returned.""")
+@cli_util.option('--is-featured', type=click.BOOL, help=u"""Indicates whether to show only featured resources. If this is set to `false` or is omitted, then all resources will be returned.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to apply, either `ASC` or `DESC`. Default is `ASC`.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'publisher-id': {'module': 'service_catalog', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'publisher-id': {'module': 'service_catalog', 'class': 'list[string]'}}, output_type={'module': 'service_catalog', 'class': 'ApplicationCollection'})
+@cli_util.wrap_exceptions
+def list_all_applications(ctx, from_json, all_pages, page_size, compartment_id, entity_type, limit, page, display_name, entity_id, publisher_id, package_type, pricing, is_featured, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if entity_type is not None:
+        kwargs['entity_type'] = entity_type
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if entity_id is not None:
+        kwargs['entity_id'] = entity_id
+    if publisher_id is not None and len(publisher_id) > 0:
+        kwargs['publisher_id'] = publisher_id
+    if package_type is not None and len(package_type) > 0:
+        kwargs['package_type'] = package_type
+    if pricing is not None and len(pricing) > 0:
+        kwargs['pricing'] = pricing
+    if is_featured is not None:
+        kwargs['is_featured'] = is_featured
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('service_catalog', 'service_catalog', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_all_applications,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_all_applications,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_all_applications(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @application_summary_group.command(name=cli_util.override('service_catalog.list_applications.command_name', 'list-applications'), help=u"""Lists all the applications in a service catalog or a tenancy. If no parameter is specified, all catalogs from all compartments in the tenancy will be scanned for any type of content. \n[Command Reference](listApplications)""")
 @cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--service-catalog-id', help=u"""The unique identifier for the service catalog.""")
@@ -812,7 +912,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.option('--display-name', help=u"""Exact match name filter.""")
 @cli_util.option('--entity-id', help=u"""The unique identifier of the entity associated with service catalog.""")
 @cli_util.option('--publisher-id', multiple=True, help=u"""Limit results to just this publisher.""")
-@cli_util.option('--package-type', type=custom_types.CliCaseInsensitiveChoice(["STACK"]), multiple=True, help=u"""Name of the package type. If multiple package types are provided, then any resource with one or more matching package types will be returned.""")
+@cli_util.option('--package-type', type=custom_types.CliCaseInsensitiveChoice(["STACK", "IMAGE"]), multiple=True, help=u"""Name of the package type. If multiple package types are provided, then any resource with one or more matching package types will be returned.""")
 @cli_util.option('--pricing', type=custom_types.CliCaseInsensitiveChoice(["FREE", "BYOL", "PAYGO"]), multiple=True, help=u"""Name of the pricing type. If multiple pricing types are provided, then any resource with one or more matching pricing models will be returned.""")
 @cli_util.option('--is-featured', type=click.BOOL, help=u"""Indicates whether to show only featured resources. If this is set to `false` or is omitted, then all resources will be returned.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to apply, either `ASC` or `DESC`. Default is `ASC`.""")
@@ -880,7 +980,7 @@ def list_applications(ctx, from_json, all_pages, page_size, compartment_id, serv
 @private_application_package_group.command(name=cli_util.override('service_catalog.list_private_application_packages.command_name', 'list'), help=u"""Lists the packages in the specified private application. \n[Command Reference](listPrivateApplicationPackages)""")
 @cli_util.option('--private-application-id', required=True, help=u"""The unique identifier for the private application.""")
 @cli_util.option('--private-application-package-id', help=u"""The unique identifier for the private application package.""")
-@cli_util.option('--package-type', type=custom_types.CliCaseInsensitiveChoice(["STACK"]), multiple=True, help=u"""Name of the package type. If multiple package types are provided, then any resource with one or more matching package types will be returned.""")
+@cli_util.option('--package-type', type=custom_types.CliCaseInsensitiveChoice(["STACK", "IMAGE"]), multiple=True, help=u"""Name of the package type. If multiple package types are provided, then any resource with one or more matching package types will be returned.""")
 @cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "VERSION"]), help=u"""The field to use to sort listed results. You can only specify one field to sort by. `TIMECREATED` displays results in descending order by default. You can change your preference by specifying a different sort order.""")
@@ -1065,6 +1165,7 @@ def list_service_catalog_associations(ctx, from_json, all_pages, page_size, serv
 @service_catalog_group.command(name=cli_util.override('service_catalog.list_service_catalogs.command_name', 'list'), help=u"""Lists all the service catalogs in the given compartment. \n[Command Reference](listServiceCatalogs)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--service-catalog-id', help=u"""The unique identifier for the service catalog.""")
+@cli_util.option('--status', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help=u"""Status of the service catalog, use as a filter to filter out all active catalogs.""")
 @cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED"]), help=u"""Default is `TIMECREATED`""")
@@ -1077,7 +1178,7 @@ def list_service_catalog_associations(ctx, from_json, all_pages, page_size, serv
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'service_catalog', 'class': 'ServiceCatalogCollection'})
 @cli_util.wrap_exceptions
-def list_service_catalogs(ctx, from_json, all_pages, page_size, compartment_id, service_catalog_id, limit, page, sort_by, sort_order, display_name):
+def list_service_catalogs(ctx, from_json, all_pages, page_size, compartment_id, service_catalog_id, status, limit, page, sort_by, sort_order, display_name):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1085,6 +1186,8 @@ def list_service_catalogs(ctx, from_json, all_pages, page_size, compartment_id, 
     kwargs = {}
     if service_catalog_id is not None:
         kwargs['service_catalog_id'] = service_catalog_id
+    if status is not None:
+        kwargs['status'] = status
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -1389,6 +1492,7 @@ def update_private_application(ctx, from_json, force, wait_for_state, max_wait_s
 @service_catalog_group.command(name=cli_util.override('service_catalog.update_service_catalog.command_name', 'update'), help=u"""Updates the details of a previously created service catalog. \n[Command Reference](updateServiceCatalog)""")
 @cli_util.option('--service-catalog-id', required=True, help=u"""The unique identifier for the service catalog.""")
 @cli_util.option('--display-name', required=True, help=u"""A display name of the service catalog.""")
+@cli_util.option('--status', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help=u"""The status of a service catalog.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1401,7 +1505,7 @@ def update_private_application(ctx, from_json, force, wait_for_state, max_wait_s
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'service_catalog', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'service_catalog', 'class': 'dict(str, string)'}}, output_type={'module': 'service_catalog', 'class': 'ServiceCatalog'})
 @cli_util.wrap_exceptions
-def update_service_catalog(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_catalog_id, display_name, defined_tags, freeform_tags, if_match):
+def update_service_catalog(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_catalog_id, display_name, status, defined_tags, freeform_tags, if_match):
 
     if isinstance(service_catalog_id, six.string_types) and len(service_catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --service-catalog-id cannot be whitespace or empty string')
@@ -1417,6 +1521,7 @@ def update_service_catalog(ctx, from_json, force, wait_for_state, max_wait_secon
 
     _details = {}
     _details['displayName'] = display_name
+    _details['status'] = status
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)

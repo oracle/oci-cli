@@ -568,6 +568,9 @@ def build_client(spec_name, service_name, ctx):
         # SDK uses 'client_level_realm_specific_endpoint_template_enabled' in their base_client as the realm-specific endpoint flag
         kwargs['client_level_realm_specific_endpoint_template_enabled'] = ctx.obj['realm_specific_endpoint']
 
+        # SDK uses 'client_level_dualstack_endpoints_enabled' in their base_client as the enable-dual-stack flag
+        kwargs['client_level_dualstack_endpoints_enabled'] = ctx.obj['enable_dual_stack']
+
         try:
             client = client_class(client_config, **kwargs)
         except exceptions.MissingPrivateKeyPassphrase:
@@ -1443,6 +1446,14 @@ def load_context_obj_values_from_defaults(ctx):
             ctx.obj['realm_specific_endpoint'] = get_default_value_from_defaults_file(ctx, 'realm-specific-endpoint', click.BOOL, False)
     else:
         populate_dict_key_with_default_value(ctx, 'realm_specific_endpoint', click.BOOL, param_name='realm-specific-endpoint')
+
+    if 'enable_dual_stack' in ctx.obj:
+        if not ctx.obj['enable_dual_stack']:
+            # False for enable-dual-stack means not provided, so just load it if there is a default value. If there's nothing there, then this'll be
+            # None, which is still false-y
+            ctx.obj['realm_specific_endpoint'] = get_default_value_from_defaults_file(ctx, 'enable-dual-stack', click.BOOL, False)
+    else:
+        populate_dict_key_with_default_value(ctx, 'enable_dual_stack', click.BOOL, param_name='enable-dual-stack')
 
 
 def populate_dict_key_with_default_value(ctx, key, param_type, param_name=None, param_takes_multiple=False):

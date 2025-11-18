@@ -1774,7 +1774,7 @@ def invoke_raw_command_invoke_raw_text_command_details(ctx, from_json, digital_t
 @cli_util.option('--response-duration', help=u"""Specified duration by which to receive the response by.""")
 @cli_util.option('--response-endpoint', help=u"""Device endpoint from which response is expected to come.""")
 @cli_util.option('--request-data-content-type', help=u"""Mime content type of json data, default is application/json""")
-@cli_util.option('--request-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""request data""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--request-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""request data, maximum 256k""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'request-data': {'module': 'iot', 'class': 'dict(str, object)'}})
 @cli_util.help_option
 @click.pass_context
@@ -2496,6 +2496,8 @@ def update_digital_twin_adapter(ctx, from_json, force, wait_for_state, max_wait_
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short description of the resource.""")
 @cli_util.option('--digital-twin-adapter-id', help=u"""The [OCID] of the digital twin adapter.""")
+@cli_util.option('--digital-twin-model-id', help=u"""The [OCID] of the digital twin model.""")
+@cli_util.option('--digital-twin-model-spec-uri', help=u"""The URI of the digital twin model specification.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2512,7 +2514,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'iot', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'iot', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'iot', 'class': 'DigitalTwinInstance'})
 @cli_util.wrap_exceptions
-def update_digital_twin_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, digital_twin_instance_id, auth_id, external_key, display_name, description, digital_twin_adapter_id, freeform_tags, defined_tags, if_match):
+def update_digital_twin_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, digital_twin_instance_id, auth_id, external_key, display_name, description, digital_twin_adapter_id, digital_twin_model_id, digital_twin_model_spec_uri, freeform_tags, defined_tags, if_match):
 
     if isinstance(digital_twin_instance_id, six.string_types) and len(digital_twin_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --digital-twin-instance-id cannot be whitespace or empty string')
@@ -2542,6 +2544,12 @@ def update_digital_twin_instance(ctx, from_json, force, wait_for_state, max_wait
 
     if digital_twin_adapter_id is not None:
         _details['digitalTwinAdapterId'] = digital_twin_adapter_id
+
+    if digital_twin_model_id is not None:
+        _details['digitalTwinModelId'] = digital_twin_model_id
+
+    if digital_twin_model_spec_uri is not None:
+        _details['digitalTwinModelSpecUri'] = digital_twin_model_spec_uri
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

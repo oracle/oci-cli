@@ -92,6 +92,20 @@ To use this flag by default, set this flag to true in your OCI CLI-specific conf
 If the flag is used for a service that does not support such feature, the default region-wide endpoint will be used.
 """
 
+ENABLE_DUAL_STACK_HELP = f"""enable dual stack support
+
+Example::
+    oci os ns get --enable-dual-stack
+
+With this flag, your request will be made to a IPV6 supported service endpoint, such as, "https://mynamespace.ds.objectstorage.mx-queretaro-1.oci.customer-oci.com". Use the --debug option to identify which endpoint is used for your request.
+
+This flag has priority over the environment variable OCI_DUAL_STACK_ENDPOINT_ENABLED.
+
+To use this flag by default, set this flag to true in your OCI CLI-specific configuration file. For more information, see {cli_constants.CLI_CONFIG_DOCUMENTATION}
+
+If the flag is used for a service that does not support such feature, the default endpoint will be used.
+"""
+
 GENERATE_PARAM_JSON_HELP = """Complex input, such as arrays and objects, are passed in JSON format.
 
 When passed the name of an option which takes complex input, this will print out example JSON of what needs to be passed to that option.
@@ -413,6 +427,7 @@ For more information about the cli configuration file, see {cli_constants.CLI_CO
 @click.option('--endpoint', callback=read_values_from_env, help='The value to use as the service endpoint, including any required API version path. For example: "https://iaas.us-phoenix-1.oracle.com/20160918". This will override the default service endpoint / API version path. Note: The --region parameter is the recommended way of targeting different regions.')
 @click.option('--realm-specific-endpoint', is_flag=True, help=REALM_SPECIFIC_ENDPOINT_HELP)
 @click.option('--connection-timeout', 'connection_timeout', type=click.INT, callback=read_values_from_env, help='The value of the connection timeout in seconds to make establish connection from sdk to services. This will override the default connection timeout value of 10 secs. ')
+@click.option('--enable-dual-stack', is_flag=True, help=ENABLE_DUAL_STACK_HELP)
 @click.option('--read-timeout', 'read_timeout', type=click.INT, callback=read_values_from_env, help='The value of the read timeout in seconds to wait for service calls to send response to sdk. This will override the default read timeout value of 60 secs. ')
 @click.option('--cert-bundle', callback=read_values_from_env, help='The full path to a CA certificate bundle to be used for SSL verification. This will override the default CA certificate bundle.')
 @click.option('--output', type=click.Choice(choices=['json', 'table']), help='The output format. [Default is json]')
@@ -440,7 +455,7 @@ http://user:pass@proxy.example.org:3128/ (if your proxy requires a username and 
 For information on interactive features, see {cli_constants.INTERACTIVE_CLI_DOCUMENTATION}.''')
 @click.option('-?', '-h', '--help', is_flag=True, help='For detailed help on the individual OCI CLI command, enter <command> --help.')
 @click.pass_context
-def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, realm_specific_endpoint, cert_bundle, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, proxy, debug, cli_auto_prompt, connection_timeout, read_timeout, help):
+def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, realm_specific_endpoint, cert_bundle, enable_dual_stack, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, proxy, debug, cli_auto_prompt, connection_timeout, read_timeout, help):
 
     click.exceptions.UsageError.show = cli_util.update_click_help_message
     if max_retries and no_retry:
@@ -478,6 +493,7 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, re
         'endpoint': endpoint,
         'realm_specific_endpoint': realm_specific_endpoint,
         'connection_timeout': connection_timeout,
+        'enable_dual_stack': enable_dual_stack,
         'read_timeout': read_timeout,
         'cert_bundle': cert_bundle,
         'output': output,

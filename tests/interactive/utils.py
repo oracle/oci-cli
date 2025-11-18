@@ -12,7 +12,7 @@ def set_up_context(command):
                    'settings': {}, 'config_file': 'internal_resources/config', 'default_values_from_file': {},
                    'profile': 'DEFAULT',
                    'cli_rc_file': '~/.oci/oci_cli_rc', 'request_id': None, 'region': None, 'endpoint': None,
-                   'realm_specific_endpoint': None, 'cert_bundle': None,
+                   'realm_specific_endpoint': None, 'cert_bundle': None, 'enable_dual_stack': None,
                    'output': 'json', 'query': None, 'raw_output': None, 'generate_full_command_json_input': None,
                    'generate_param_json_input': None, 'debug': None, 'auth': 'api_key', 'auth_purpose': None,
                    'proxy': None,

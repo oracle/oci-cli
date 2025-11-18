@@ -26,12 +26,6 @@ def email_root_group():
     pass
 
 
-@click.command(cli_util.override('email.work_request_error_collection_group.command_name', 'work-request-error-collection'), cls=CommandGroupWithAlias, help="""Results of a workRequestError search. Contains both WorkRequestError items and other information, such as metadata.""")
-@cli_util.help_option_group
-def work_request_error_collection_group():
-    pass
-
-
 @click.command(cli_util.override('email.dkim_group.command_name', 'dkim'), cls=CommandGroupWithAlias, help="""The properties that define a DKIM.""")
 @cli_util.help_option_group
 def dkim_group():
@@ -50,15 +44,45 @@ def configuration_group():
     pass
 
 
+@click.command(cli_util.override('email.work_request_summary_collection_group.command_name', 'work-request-summary-collection'), cls=CommandGroupWithAlias, help="""Results of a workRequest search. Contains both WorkRequest items and other information, such as metadata.""")
+@cli_util.help_option_group
+def work_request_summary_collection_group():
+    pass
+
+
+@click.command(cli_util.override('email.email_ip_pool_collection_group.command_name', 'email-ip-pool-collection'), cls=CommandGroupWithAlias, help="""Results of an IpPool search. Contains EmailIpPoolSummary items.""")
+@cli_util.help_option_group
+def email_ip_pool_collection_group():
+    pass
+
+
+@click.command(cli_util.override('email.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""A description of workrequest status""")
+@cli_util.help_option_group
+def work_request_group():
+    pass
+
+
+@click.command(cli_util.override('email.email_outbound_ip_collection_group.command_name', 'email-outbound-ip-collection'), cls=CommandGroupWithAlias, help="""Results of an outbound public IP search. Contains EmailOutboundIpSummary items.""")
+@cli_util.help_option_group
+def email_outbound_ip_collection_group():
+    pass
+
+
+@click.command(cli_util.override('email.work_request_error_collection_group.command_name', 'work-request-error-collection'), cls=CommandGroupWithAlias, help="""Results of a workRequestError search. Contains both WorkRequestError items and other information, such as metadata.""")
+@cli_util.help_option_group
+def work_request_error_collection_group():
+    pass
+
+
 @click.command(cli_util.override('email.sender_group.command_name', 'sender'), cls=CommandGroupWithAlias, help="""The full information representing an approved sender.""")
 @cli_util.help_option_group
 def sender_group():
     pass
 
 
-@click.command(cli_util.override('email.work_request_summary_collection_group.command_name', 'work-request-summary-collection'), cls=CommandGroupWithAlias, help="""Results of a workRequest search. Contains both WorkRequest items and other information, such as metadata.""")
+@click.command(cli_util.override('email.email_ip_pool_group.command_name', 'email-ip-pool'), cls=CommandGroupWithAlias, help="""A collection of IP addresses used by the Email Delivery service to submit an email.""")
 @cli_util.help_option_group
-def work_request_summary_collection_group():
+def email_ip_pool_group():
     pass
 
 
@@ -74,27 +98,24 @@ def email_domain_group():
     pass
 
 
-@click.command(cli_util.override('email.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""A description of workrequest status""")
-@cli_util.help_option_group
-def work_request_group():
-    pass
-
-
 @click.command(cli_util.override('email.work_request_log_entry_collection_group.command_name', 'work-request-log-entry-collection'), cls=CommandGroupWithAlias, help="""Results of a workRequestLog search. Contains both workRequestLog items and other information, such as metadata.""")
 @cli_util.help_option_group
 def work_request_log_entry_collection_group():
     pass
 
 
-email_root_group.add_command(work_request_error_collection_group)
 email_root_group.add_command(dkim_group)
 email_root_group.add_command(email_return_path_group)
 email_root_group.add_command(configuration_group)
-email_root_group.add_command(sender_group)
 email_root_group.add_command(work_request_summary_collection_group)
+email_root_group.add_command(email_ip_pool_collection_group)
+email_root_group.add_command(work_request_group)
+email_root_group.add_command(email_outbound_ip_collection_group)
+email_root_group.add_command(work_request_error_collection_group)
+email_root_group.add_command(sender_group)
+email_root_group.add_command(email_ip_pool_group)
 email_root_group.add_command(suppression_group)
 email_root_group.add_command(email_domain_group)
-email_root_group.add_command(work_request_group)
 email_root_group.add_command(work_request_log_entry_collection_group)
 
 
@@ -164,6 +185,136 @@ def add_email_domain_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@email_ip_pool_group.command(name=cli_util.override('email.add_email_ip_pool_lock.command_name', 'add'), help=u"""Adds a lock to a resource. \n[Command Reference](addEmailIpPoolLock)""")
+@cli_util.option('--email-ip-pool-id', required=True, help=u"""The [OCID] of the IpPool.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Lock type.""")
+@cli_util.option('--compartment-id', help=u"""The lock compartment ID.""")
+@cli_util.option('--related-resource-id', help=u"""The resource ID that is locking this resource. Indicates that deleting this resource removes the lock.""")
+@cli_util.option('--message', help=u"""A message added by the lock creator. The message typically gives an indication of why the resource is locked.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'email', 'class': 'EmailIpPool'})
+@cli_util.wrap_exceptions
+def add_email_ip_pool_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, email_ip_pool_id, type, compartment_id, related_resource_id, message, if_match):
+
+    if isinstance(email_ip_pool_id, six.string_types) and len(email_ip_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --email-ip-pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    client = cli_util.build_client('email', 'email', ctx)
+    result = client.add_email_ip_pool_lock(
+        email_ip_pool_id=email_ip_pool_id,
+        add_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_email_ip_pool') and callable(getattr(client, 'get_email_ip_pool')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_email_ip_pool(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@email_ip_pool_group.command(name=cli_util.override('email.add_email_outbound_ip.command_name', 'add'), help=u"""Add OutboundIps to EmailIpPool. \n[Command Reference](addEmailOutboundIp)""")
+@cli_util.option('--outbound-ips', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of public IPs to ADD to the IpPool. Public IPs must be in the AVAILABLE state to be assigned to the IpPool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--email-ip-pool-id', required=True, help=u"""The [OCID] of the IpPool.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'outbound-ips': {'module': 'email', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'outbound-ips': {'module': 'email', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def add_email_outbound_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, outbound_ips, email_ip_pool_id, if_match):
+
+    if isinstance(email_ip_pool_id, six.string_types) and len(email_ip_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --email-ip-pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['outboundIps'] = cli_util.parse_json_parameter("outbound_ips", outbound_ips)
+
+    client = cli_util.build_client('email', 'email', ctx)
+    result = client.add_email_outbound_ip(
+        email_ip_pool_id=email_ip_pool_id,
+        add_email_outbound_ip_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -243,7 +394,7 @@ def add_return_path_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.option('--related-resource-id', help=u"""The resource ID that is locking this resource. Indicates that deleting this resource removes the lock.""")
 @cli_util.option('--message', help=u"""A message added by the lock creator. The message typically gives an indication of why the resource is locked.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "NEEDS_ATTENTION", "INACTIVE", "FAILED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "NEEDS_ATTENTION", "INACTIVE", "FAILED", "DELETING", "DELETED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -339,6 +490,70 @@ def change_email_domain_compartment(ctx, from_json, wait_for_state, max_wait_sec
     result = client.change_email_domain_compartment(
         email_domain_id=email_domain_id,
         change_email_domain_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@email_ip_pool_group.command(name=cli_util.override('email.change_email_ip_pool_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeEmailIpPoolCompartment)""")
+@cli_util.option('--email-ip-pool-id', required=True, help=u"""The [OCID] of the IpPool.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_email_ip_pool_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, email_ip_pool_id, compartment_id, if_match, is_lock_override):
+
+    if isinstance(email_ip_pool_id, six.string_types) and len(email_ip_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --email-ip-pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('email', 'email', ctx)
+    result = client.change_email_ip_pool_compartment(
+        email_ip_pool_id=email_ip_pool_id,
+        change_email_ip_pool_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -561,6 +776,81 @@ def create_email_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
+@email_ip_pool_group.command(name=cli_util.override('email.create_email_ip_pool.command_name', 'create'), help=u"""Creates a new EmailIpPool. \n[Command Reference](createEmailIpPool)""")
+@cli_util.option('--name', required=True, help=u"""The name of the IpPool. The name must be unique within a region. The name is case sensitive and supported characters include alphanumeric, hyphens (\"-\") and underscore (\"_\") characters.
+
+Example: green_pool-1""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for this IpPool.""")
+@cli_util.option('--outbound-ips', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of outbound public IPs for assignment to the IpPool. These IPs must be in the AVAILABLE state to be eligible for assignment.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--description', help=u"""The description of the IpPool. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'outbound-ips': {'module': 'email', 'class': 'list[string]'}, 'freeform-tags': {'module': 'email', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'email', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'outbound-ips': {'module': 'email', 'class': 'list[string]'}, 'freeform-tags': {'module': 'email', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'email', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'email', 'class': 'EmailIpPool'})
+@cli_util.wrap_exceptions
+def create_email_ip_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, compartment_id, outbound_ips, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['compartmentId'] = compartment_id
+    _details['outboundIps'] = cli_util.parse_json_parameter("outbound_ips", outbound_ips)
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('email', 'email', ctx)
+    result = client.create_email_ip_pool(
+        create_email_ip_pool_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @email_return_path_group.command(name=cli_util.override('email.create_email_return_path.command_name', 'create'), help=u"""Creates a new email return path. Avoid entering confidential information. \n[Command Reference](createEmailReturnPath)""")
 @cli_util.option('--parent-resource-id', required=True, help=u"""The [OCID] of the EmailDomain for this email return path.""")
 @cli_util.option('--name', help=u"""The name of the email return path domain in the Internet Domain Name System (DNS). The name must be a subdomain of the email domain used to send emails. The email return path name must be globally unique for this tenancy. If you do not provide the email return path name, we will generate one for you. If you do provide the email return path name, we suggest adding a short region indicator to allow using the same parent domain in other regions you might be subscribed to. Domain names limited to ASCII characters use alphanumeric, dash (\"-\"), and dot (\".\") characters. The dash and dot are only allowed between alphanumeric characters. Non-ASCII domain names should adopt IDNA2008 normalization (RFC 5891-5892).""")
@@ -637,13 +927,14 @@ def create_email_return_path(ctx, from_json, wait_for_state, max_wait_seconds, w
 @sender_group.command(name=cli_util.override('email.create_sender.command_name', 'create'), help=u"""Creates a sender for a tenancy in a given compartment. \n[Command Reference](createSender)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the sender.""")
 @cli_util.option('--email-address', required=True, help=u"""The email address of the sender.""")
+@cli_util.option('--email-ip-pool-id', help=u"""An optional field. The IpPool [OCID] used to submit an email by Email Delivery when sent from this sender.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "NEEDS_ATTENTION", "INACTIVE", "FAILED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "NEEDS_ATTENTION", "INACTIVE", "FAILED", "DELETING", "DELETED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'email', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'email', 'class': 'dict(str, dict(str, object))'}})
@@ -651,7 +942,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'email', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'email', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'email', 'class': 'Sender'})
 @cli_util.wrap_exceptions
-def create_sender(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, email_address, freeform_tags, defined_tags):
+def create_sender(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, email_address, email_ip_pool_id, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -659,6 +950,9 @@ def create_sender(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     _details = {}
     _details['compartmentId'] = compartment_id
     _details['emailAddress'] = email_address
+
+    if email_ip_pool_id is not None:
+        _details['emailIpPoolId'] = email_ip_pool_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -837,6 +1131,65 @@ def delete_email_domain(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
+@email_ip_pool_group.command(name=cli_util.override('email.delete_email_ip_pool.command_name', 'delete'), help=u"""Deletes an EmailIpPool resource by identifier \n[Command Reference](deleteEmailIpPool)""")
+@cli_util.option('--email-ip-pool-id', required=True, help=u"""The [OCID] of the IpPool.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_email_ip_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, email_ip_pool_id, if_match, is_lock_override):
+
+    if isinstance(email_ip_pool_id, six.string_types) and len(email_ip_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --email-ip-pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('email', 'email', ctx)
+    result = client.delete_email_ip_pool(
+        email_ip_pool_id=email_ip_pool_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @email_return_path_group.command(name=cli_util.override('email.delete_email_return_path.command_name', 'delete'), help=u"""Deletes an email return path. \n[Command Reference](deleteEmailReturnPath)""")
 @cli_util.option('--email-return-path-id', required=True, help=u"""The [OCID] of this email return path.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -901,7 +1254,7 @@ def delete_email_return_path(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "NEEDS_ATTENTION", "INACTIVE", "FAILED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "NEEDS_ATTENTION", "INACTIVE", "FAILED", "DELETING", "DELETED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1044,6 +1397,28 @@ def get_email_domain(ctx, from_json, email_domain_id):
     client = cli_util.build_client('email', 'email', ctx)
     result = client.get_email_domain(
         email_domain_id=email_domain_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@email_ip_pool_group.command(name=cli_util.override('email.get_email_ip_pool.command_name', 'get'), help=u"""Retrieves the specified IpPool by identifier \n[Command Reference](getEmailIpPool)""")
+@cli_util.option('--email-ip-pool-id', required=True, help=u"""The [OCID] of the IpPool.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'email', 'class': 'EmailIpPool'})
+@cli_util.wrap_exceptions
+def get_email_ip_pool(ctx, from_json, email_ip_pool_id):
+
+    if isinstance(email_ip_pool_id, six.string_types) and len(email_ip_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --email-ip-pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('email', 'email', ctx)
+    result = client.get_email_ip_pool(
+        email_ip_pool_id=email_ip_pool_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1271,6 +1646,136 @@ def list_email_domains(ctx, from_json, all_pages, page_size, compartment_id, id,
     cli_util.render_response(result, ctx)
 
 
+@email_ip_pool_collection_group.command(name=cli_util.override('email.list_email_ip_pools.command_name', 'list-email-ip-pools'), help=u"""Returns a list of EmailIpPools. \n[Command Reference](listEmailIpPools)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID for the compartment.""")
+@cli_util.option('--id', help=u"""A filter to only return resources that match the given id exactly.""")
+@cli_util.option('--name', help=u"""A filter to only return resources that match the given name exactly.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "INACTIVE"]), help=u"""Filter returned list by specified lifecycle state. This parameter is case-insensitive.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. `1` is the minimum, `1000` is the maximum. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending or descending order.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""Specifies the attribute with which to sort the Email IpPools.
+
+Default: `TIMECREATED`
+
+* **TIMECREATED:** Sorts by timeCreated.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'email', 'class': 'EmailIpPoolCollection'})
+@cli_util.wrap_exceptions
+def list_email_ip_pools(ctx, from_json, all_pages, page_size, compartment_id, id, name, lifecycle_state, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if id is not None:
+        kwargs['id'] = id
+    if name is not None:
+        kwargs['name'] = name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('email', 'email', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_email_ip_pools,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_email_ip_pools,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_email_ip_pools(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@email_outbound_ip_collection_group.command(name=cli_util.override('email.list_email_outbound_ips.command_name', 'list-email-outbound-ips'), help=u"""Returns a list of all Outbound Public IPs assigned for a given tenant. \n[Command Reference](listEmailOutboundIps)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID for the compartment.""")
+@cli_util.option('--outbound-ip', help=u"""The outbound IP address assigned to the tenancy.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. `1` is the minimum, `1000` is the maximum. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending or descending order.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["UPDATING", "ACTIVE", "FAILED", "DRAINING"]), help=u"""Filter returned list by specified lifecycle state. This parameter is case-insensitive.""")
+@cli_util.option('--assignment-state', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "ASSIGNED"]), help=u"""Filter returned list by specified assignment state.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["OUTBOUNDIP"]), help=u"""The field to sort by. The `OUTBOUNDIP` value returns the list in ascending order or Outbound Ip address by default. Use the `SortOrderQueryParam` to change the direction of the returned list of items.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'email', 'class': 'EmailOutboundIpCollection'})
+@cli_util.wrap_exceptions
+def list_email_outbound_ips(ctx, from_json, all_pages, page_size, compartment_id, outbound_ip, limit, page, sort_order, lifecycle_state, assignment_state, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if outbound_ip is not None:
+        kwargs['outbound_ip'] = outbound_ip
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if assignment_state is not None:
+        kwargs['assignment_state'] = assignment_state
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('email', 'email', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_email_outbound_ips,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_email_outbound_ips,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_email_outbound_ips(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @email_return_path_group.command(name=cli_util.override('email.list_email_return_paths.command_name', 'list'), help=u"""Lists email return paths in the specified compartment or emaildomain. \n[Command Reference](listEmailReturnPaths)""")
 @cli_util.option('--compartment-id', help=u"""The OCID for the compartment.""")
 @cli_util.option('--parent-resource-id', help=u"""The [OCID] of the Email Domain to which this Email Return Path belongs.""")
@@ -1342,9 +1847,10 @@ def list_email_return_paths(ctx, from_json, all_pages, page_size, compartment_id
 
 @sender_group.command(name=cli_util.override('email.list_senders.command_name', 'list'), help=u"""Gets a collection of approved sender email addresses and sender IDs. \n[Command Reference](listSenders)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID for the compartment.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "NEEDS_ATTENTION", "INACTIVE", "FAILED", "DELETING", "DELETED"]), help=u"""The current state of a sender.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "NEEDS_ATTENTION", "INACTIVE", "FAILED", "DELETING", "DELETED", "UPDATING"]), help=u"""The current state of a sender.""")
 @cli_util.option('--domain', help=u"""A filter to only return resources that match the given domain exactly.""")
 @cli_util.option('--email-address', help=u"""The email address of the approved sender.""")
+@cli_util.option('--email-ip-pool-id', help=u"""A filter to only return resources that match the given IpPool resource exactly.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. `1` is the minimum, `1000` is the maximum. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "EMAILADDRESS"]), help=u"""The field to sort by. The `TIMECREATED` value returns the list in in descending order by default. The `EMAILADDRESS` value returns the list in ascending order by default. Use the `SortOrderQueryParam` to change the direction of the returned list of items.""")
@@ -1356,7 +1862,7 @@ def list_email_return_paths(ctx, from_json, all_pages, page_size, compartment_id
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'email', 'class': 'list[SenderSummary]'})
 @cli_util.wrap_exceptions
-def list_senders(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, domain, email_address, page, limit, sort_by, sort_order):
+def list_senders(ctx, from_json, all_pages, page_size, compartment_id, lifecycle_state, domain, email_address, email_ip_pool_id, page, limit, sort_by, sort_order):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1368,6 +1874,8 @@ def list_senders(ctx, from_json, all_pages, page_size, compartment_id, lifecycle
         kwargs['domain'] = domain
     if email_address is not None:
         kwargs['email_address'] = email_address
+    if email_ip_pool_id is not None:
+        kwargs['email_ip_pool_id'] = email_ip_pool_id
     if page is not None:
         kwargs['page'] = page
     if limit is not None:
@@ -1684,6 +2192,128 @@ def remove_email_domain_lock(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
+@email_ip_pool_group.command(name=cli_util.override('email.remove_email_ip_pool_lock.command_name', 'remove'), help=u"""Remove a lock to a resource. \n[Command Reference](removeEmailIpPoolLock)""")
+@cli_util.option('--email-ip-pool-id', required=True, help=u"""The [OCID] of the IpPool.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Lock type.""")
+@cli_util.option('--compartment-id', help=u"""The lock compartment ID.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'email', 'class': 'EmailIpPool'})
+@cli_util.wrap_exceptions
+def remove_email_ip_pool_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, email_ip_pool_id, type, compartment_id, if_match):
+
+    if isinstance(email_ip_pool_id, six.string_types) and len(email_ip_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --email-ip-pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if compartment_id is not None:
+        _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('email', 'email', ctx)
+    result = client.remove_email_ip_pool_lock(
+        email_ip_pool_id=email_ip_pool_id,
+        remove_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_email_ip_pool') and callable(getattr(client, 'get_email_ip_pool')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_email_ip_pool(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@email_ip_pool_group.command(name=cli_util.override('email.remove_email_outbound_ip.command_name', 'remove'), help=u"""Remove OutboundIps from EmailIpPool. \n[Command Reference](removeEmailOutboundIp)""")
+@cli_util.option('--outbound-ips', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of public IPs to REMOVE from the IpPool. After a public IP is unassigned, it will be marked as AVAILABLE and can be assigned to another IpPool. The last IP removed from the Pool will be deleted from the IP Pool after 24 hours.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--email-ip-pool-id', required=True, help=u"""The [OCID] of the IpPool.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'outbound-ips': {'module': 'email', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'outbound-ips': {'module': 'email', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def remove_email_outbound_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, outbound_ips, email_ip_pool_id, if_match):
+
+    if isinstance(email_ip_pool_id, six.string_types) and len(email_ip_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --email-ip-pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['outboundIps'] = cli_util.parse_json_parameter("outbound_ips", outbound_ips)
+
+    client = cli_util.build_client('email', 'email', ctx)
+    result = client.remove_email_outbound_ip(
+        email_ip_pool_id=email_ip_pool_id,
+        remove_email_outbound_ip_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @email_return_path_group.command(name=cli_util.override('email.remove_return_path_lock.command_name', 'remove'), help=u"""Remove a lock to a resource. \n[Command Reference](removeReturnPathLock)""")
 @cli_util.option('--email-return-path-id', required=True, help=u"""The [OCID] of this email return path.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Lock type.""")
@@ -1750,7 +2380,7 @@ def remove_return_path_lock(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Lock type.""")
 @cli_util.option('--compartment-id', help=u"""The lock compartment ID.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "NEEDS_ATTENTION", "INACTIVE", "FAILED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "NEEDS_ATTENTION", "INACTIVE", "FAILED", "DELETING", "DELETED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1973,6 +2603,89 @@ def update_email_domain(ctx, from_json, force, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
+@email_ip_pool_group.command(name=cli_util.override('email.update_email_ip_pool.command_name', 'update'), help=u"""Updates the EmailIpPool \n[Command Reference](updateEmailIpPool)""")
+@cli_util.option('--email-ip-pool-id', required=True, help=u"""The [OCID] of the IpPool.""")
+@cli_util.option('--description', help=u"""The description of the IpPool. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "WAITING", "NEEDS_ATTENTION", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'email', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'email', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'email', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'email', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.wrap_exceptions
+def update_email_ip_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, email_ip_pool_id, description, freeform_tags, defined_tags, if_match, is_lock_override):
+
+    if isinstance(email_ip_pool_id, six.string_types) and len(email_ip_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --email-ip-pool-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if description is not None:
+        _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('email', 'email', ctx)
+    result = client.update_email_ip_pool(
+        email_ip_pool_id=email_ip_pool_id,
+        update_email_ip_pool_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+                if 'opc-work-request-id' not in result.headers:
+                    click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state')
+                    cli_util.render_response(result, ctx)
+                    return
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @email_return_path_group.command(name=cli_util.override('email.update_email_return_path.command_name', 'update'), help=u"""Modifies an email return path. \n[Command Reference](updateEmailReturnPath)""")
 @cli_util.option('--email-return-path-id', required=True, help=u"""The [OCID] of this email return path.""")
 @cli_util.option('--description', help=u"""A string that describes the details about the email return path. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
@@ -2058,6 +2771,7 @@ def update_email_return_path(ctx, from_json, force, wait_for_state, max_wait_sec
 
 @sender_group.command(name=cli_util.override('email.update_sender.command_name', 'update'), help=u"""Replaces the set of tags for a sender with the tags provided. If either freeform or defined tags are omitted, the tags for that set remain the same. Each set must include the full set of tags for the sender, partial updates are not permitted. For more information about tagging, see [Resource Tags]. \n[Command Reference](updateSender)""")
 @cli_util.option('--sender-id', required=True, help=u"""The unique OCID of the sender.""")
+@cli_util.option('--email-ip-pool-id', help=u"""The IpPool [OCID] used to submit an email by Email Delivery when sent from this sender.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2067,7 +2781,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "NEEDS_ATTENTION", "INACTIVE", "FAILED", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "NEEDS_ATTENTION", "INACTIVE", "FAILED", "DELETING", "DELETED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'email', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'email', 'class': 'dict(str, dict(str, object))'}})
@@ -2075,7 +2789,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'email', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'email', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'email', 'class': 'Sender'})
 @cli_util.wrap_exceptions
-def update_sender(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sender_id, freeform_tags, defined_tags, if_match, is_lock_override):
+def update_sender(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sender_id, email_ip_pool_id, freeform_tags, defined_tags, if_match, is_lock_override):
 
     if isinstance(sender_id, six.string_types) and len(sender_id.strip()) == 0:
         raise click.UsageError('Parameter --sender-id cannot be whitespace or empty string')
@@ -2092,6 +2806,9 @@ def update_sender(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
+
+    if email_ip_pool_id is not None:
+        _details['emailIpPoolId'] = email_ip_pool_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

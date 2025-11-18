@@ -43,15 +43,16 @@ omhub_network_anchor_root_group.add_command(network_anchor_collection_group)
 
 @network_anchor_group.command(name=cli_util.override('omhub_network_anchor.get_network_anchor.command_name', 'get'), help=u"""Gets information about a NetworkAnchor. \n[Command Reference](getNetworkAnchor)""")
 @cli_util.option('--network-anchor-id', required=True, help=u"""The [OCID] of the NetworkAnchor.""")
-@cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The subscription service name values from [ORACLEDBATAZURE, ORACLEDBATGOOGLE, ORACLEDBATAWS]""")
-@cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the subscription in which to list resources.""")
-@cli_util.option('--external-location', help=u"""OMHub Control Plane must know underlying CSP CP Region External Location Name.""")
+@cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The subscription service name of the Cloud Service Provider.""")
+@cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the Multicloud subscription in which to list resources.""")
+@cli_util.option('--external-location', help=u"""The Cloud Service Provider region.""")
+@cli_util.option('--should-fetch-vcn-name', type=click.BOOL, help=u"""Whether to fetch and include the vcn display name, which may introduce additional latency.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'multicloud', 'class': 'NetworkAnchor'})
 @cli_util.wrap_exceptions
-def get_network_anchor(ctx, from_json, network_anchor_id, subscription_service_name, subscription_id, external_location):
+def get_network_anchor(ctx, from_json, network_anchor_id, subscription_service_name, subscription_id, external_location, should_fetch_vcn_name):
 
     if isinstance(network_anchor_id, six.string_types) and len(network_anchor_id.strip()) == 0:
         raise click.UsageError('Parameter --network-anchor-id cannot be whitespace or empty string')
@@ -59,6 +60,8 @@ def get_network_anchor(ctx, from_json, network_anchor_id, subscription_service_n
     kwargs = {}
     if external_location is not None:
         kwargs['external_location'] = external_location
+    if should_fetch_vcn_name is not None:
+        kwargs['should_fetch_vcn_name'] = should_fetch_vcn_name
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('multicloud', 'omhub_network_anchor', ctx)
     result = client.get_network_anchor(
@@ -71,17 +74,19 @@ def get_network_anchor(ctx, from_json, network_anchor_id, subscription_service_n
 
 
 @network_anchor_collection_group.command(name=cli_util.override('omhub_network_anchor.list_network_anchors.command_name', 'list-network-anchors'), help=u"""Gets a list of NetworkAnchors. \n[Command Reference](listNetworkAnchors)""")
-@cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the subscription in which to list resources.""")
-@cli_util.option('--subscription-service-name', required=True, type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The subscription service name values from [ORACLEDBATAZURE, ORACLEDBATGOOGLE, ORACLEDBATAWS]""")
-@cli_util.option('--external-location', required=True, help=u"""OMHub Control Plane must know underlying CSP CP Region External Location Name.""")
-@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment in which to list resources.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the Multicloud base compartment or sub-compartment in which to list resources. A Multicloud base compartment is an OCI compartment that maps to a subscription in a Cloud Service Provider (such as Azure, AWS, or Google Cloud).""")
+@cli_util.option('--subscription-id', help=u"""The [OCID] of the Multicloud subscription in which to list resources.""")
+@cli_util.option('--subscription-service-name', type=custom_types.CliCaseInsensitiveChoice(["ORACLEDBATAZURE", "ORACLEDBATGOOGLE", "ORACLEDBATAWS"]), help=u"""The subscription service name of the Cloud Service Provider.""")
+@cli_util.option('--network-anchor-lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--external-location', help=u"""The Cloud Service Provider region.""")
 @cli_util.option('--network-anchor-oci-subnet-id', help=u"""A filter to return only NetworkAnchor resources that match the given OCI subnet Id.""")
+@cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""If set to true, a list operation will return NetworkAnchors from all child compartments in the provided compartmentId parameter.""")
 @cli_util.option('--network-anchor-oci-vcn-id', help=u"""A filter to return only NetworkAnchor resources that match the given OCI Vcn Id.""")
 @cli_util.option('--id', help=u"""The [OCID] of the NetworkAnchor.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--should-fetch-vcn-name', type=click.BOOL, help=u"""Whether to fetch and include the vcn display name, which may introduce additional latency.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. You can provide only one sort order. Default order for `timeCreated` is descending. Default order for `displayName` is ascending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -91,7 +96,7 @@ def get_network_anchor(ctx, from_json, network_anchor_id, subscription_service_n
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'multicloud', 'class': 'NetworkAnchorCollection'})
 @cli_util.wrap_exceptions
-def list_network_anchors(ctx, from_json, all_pages, page_size, subscription_id, subscription_service_name, external_location, compartment_id, lifecycle_state, display_name, network_anchor_oci_subnet_id, network_anchor_oci_vcn_id, id, limit, page, sort_order, sort_by):
+def list_network_anchors(ctx, from_json, all_pages, page_size, compartment_id, subscription_id, subscription_service_name, network_anchor_lifecycle_state, display_name, external_location, network_anchor_oci_subnet_id, compartment_id_in_subtree, network_anchor_oci_vcn_id, id, limit, page, should_fetch_vcn_name, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -99,12 +104,20 @@ def list_network_anchors(ctx, from_json, all_pages, page_size, subscription_id, 
     kwargs = {}
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
-    if lifecycle_state is not None:
-        kwargs['lifecycle_state'] = lifecycle_state
+    if subscription_id is not None:
+        kwargs['subscription_id'] = subscription_id
+    if subscription_service_name is not None:
+        kwargs['subscription_service_name'] = subscription_service_name
+    if network_anchor_lifecycle_state is not None:
+        kwargs['network_anchor_lifecycle_state'] = network_anchor_lifecycle_state
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if external_location is not None:
+        kwargs['external_location'] = external_location
     if network_anchor_oci_subnet_id is not None:
         kwargs['network_anchor_oci_subnet_id'] = network_anchor_oci_subnet_id
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
     if network_anchor_oci_vcn_id is not None:
         kwargs['network_anchor_oci_vcn_id'] = network_anchor_oci_vcn_id
     if id is not None:
@@ -113,6 +126,8 @@ def list_network_anchors(ctx, from_json, all_pages, page_size, subscription_id, 
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if should_fetch_vcn_name is not None:
+        kwargs['should_fetch_vcn_name'] = should_fetch_vcn_name
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
@@ -125,9 +140,6 @@ def list_network_anchors(ctx, from_json, all_pages, page_size, subscription_id, 
 
         result = cli_util.list_call_get_all_results(
             client.list_network_anchors,
-            subscription_id=subscription_id,
-            subscription_service_name=subscription_service_name,
-            external_location=external_location,
             **kwargs
         )
     elif limit is not None:
@@ -135,16 +147,10 @@ def list_network_anchors(ctx, from_json, all_pages, page_size, subscription_id, 
             client.list_network_anchors,
             limit,
             page_size,
-            subscription_id=subscription_id,
-            subscription_service_name=subscription_service_name,
-            external_location=external_location,
             **kwargs
         )
     else:
         result = client.list_network_anchors(
-            subscription_id=subscription_id,
-            subscription_service_name=subscription_service_name,
-            external_location=external_location,
             **kwargs
         )
     cli_util.render_response(result, ctx)
